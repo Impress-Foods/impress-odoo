@@ -160,7 +160,7 @@ class TestSaleOrder(TransactionCase):
         backorder_wizard_dict = prep.button_validate()
         backorder_wizard_form = Form(
             self.env[backorder_wizard_dict["res_model"]].with_context(  # type: ignore
-                backorder_wizard_dict["context"]  # type: ignore
+                **backorder_wizard_dict["context"]  # type: ignore
             )
         )
         backorder_wizard_form.save().process()  # type: ignore
@@ -187,7 +187,7 @@ class TestSaleOrder(TransactionCase):
         backorder_wizard_dict = prep.button_validate()
         backorder_wizard_form = Form(
             self.env[backorder_wizard_dict["res_model"]].with_context(  # type: ignore
-                backorder_wizard_dict["context"]  # type: ignore
+                **backorder_wizard_dict["context"]  # type: ignore
             )
         )
         backorder_wizard_form.save().process()  # type: ignore
@@ -236,7 +236,7 @@ class TestSaleOrder(TransactionCase):
         backorder_wizard_dict = delivery.button_validate()
         backorder_wizard_form = Form(
             self.env[backorder_wizard_dict["res_model"]].with_context(  # type: ignore
-                backorder_wizard_dict["context"]  # type: ignore
+                **backorder_wizard_dict["context"]  # type: ignore
             )
         )
         backorder_wizard_form.save().process()  # type: ignore

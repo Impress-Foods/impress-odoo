@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <!-- View sale.order form -->
@@ -23,11 +23,14 @@
         <field name="priority">90</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='invoice_status']" position="after">
-                <field name="delivery_status" widget="badge"
+                <field
+                    name="delivery_status"
+                    widget="badge"
                     decoration-success="delivery_status == 'full'"
                     decoration-warning="delivery_status in ['in_prep']"
                     decoration-info="delivery_status in ['ready','prep_ready']"
-                    decoration-danger="delivery_status in ['partial']" />
+                    decoration-danger="delivery_status in ['partial']"
+                />
             </xpath>
         </field>
     </record>
