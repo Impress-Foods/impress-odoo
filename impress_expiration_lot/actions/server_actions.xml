@@ -1,35 +1,15 @@
-<?xml version='1.0' encoding="utf-8" ?>
+<?xml version='1.0' encoding="utf-8"?>
 <odoo>
-        <record
+    <record
         id="impress_expiration_parse_lot_number_action"
         model="ir.actions.server"
     >
-            <field name="name">Parse lot number and set correct dates</field>
-            <field name="model_id" ref="stock.model_stock_lot" />
-            <field name="binding_view_types">list,form</field>
-            <field name="state">code</field>
-            <field name="code">
-                for record in records:
-                    lot_number = record.name
-                    if (len(lot_number) &lt; 5) or (not record.use_expiration_date) or (record.product_id.default_code[0] != 'E'):
-                        pass
-
-                    else:
-                        lot_number = lot_number[0:5]
-                        year, day = "20"+lot_number[:2], int(lot_number[2:])
-                        year_date = datetime.datetime.fromisoformat(year+"-01-01")
-                        create_date = year_date + datetime.timedelta(days=(day))
-                        expiration_date = create_date + datetime.timedelta(days=record.product_id[0].expiration_time)
-                        best_before_date = expiration_date - datetime.timedelta(days=record.product_id[0].use_time)
-                        removal_date = expiration_date - datetime.timedelta(days=record.product_id[0].removal_time+1)
-                        alert_date = expiration_date - datetime.timedelta(days=record.product_id[0].alert_time+1)
-                        record.write({
-                            "expiration_date": expiration_date.strftime("%Y-%m-%d %H:%M:%S"),
-                            "use_date": best_before_date.strftime("%Y-%m-%d %H:%M:%S"),
-                            "removal_date": removal_date.strftime("%Y-%m-%d %H:%M:%S"),
-                            "alert_date": alert_date.strftime("%Y-%m-%d %H:%M:%S")
-
-                            })
-            </field>
-        </record>
+        <field name="name">Parse lot number and set correct dates</field>
+        <field name="model_id" ref="stock.model_stock_lot" />
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
+            records._calculate_expiration_date()
+        </field>
+    </record>
 </odoo>
