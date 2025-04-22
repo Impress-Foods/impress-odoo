@@ -6,7 +6,9 @@
     "website": "",
     "category": "Hidden",
     "depends": ["base", "sale_stock"],
-    "data": [],
+    "data": [
+        "views/sale_order_views.xml"
+    ],
     "installable": True,
     "auto_install": ["sale_stock"],
     "license": "GPL-2",
