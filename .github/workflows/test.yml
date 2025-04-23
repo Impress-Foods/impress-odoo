@@ -70,4 +70,6 @@ jobs:
         run:
           oca_export_and_push_pot https://x-access-token:${{
           secrets.GIT_PUSH_TOKEN}}@github.com/${{ github.repository }}
-        if: ${{ matrix.makepot == 'true'}}
+        if:
+          ${{ matrix.makepot == 'true'}} and ${{ github.event.pull_request.base.ref ==
+          17.0}}
