@@ -13,8 +13,8 @@ class StockLot(models.Model):
         for lot in self:
             if (
                 lot.product_id.use_expiration_date
-                and len(lot.name) < 5
-                and lot.product_id.default_code[0] != "E"
+                and len(lot.name) >= 5
+                and lot.product_id.default_code[0] == "E"
             ):
                 lot_number = lot.name[:5]
                 year, day = "20" + lot_number[:2], int(lot_number[2:])
@@ -33,6 +33,7 @@ class StockLot(models.Model):
                 alert_date = expiration_date - timedelta(
                     days=lot.product_id.alert_time + 1
                 )
+
                 lot.write(
                     {
                         "expiration_date": expiration_date.strftime(
