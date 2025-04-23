@@ -1,5 +1,5 @@
-<data>
-
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
     <template
         id="portal_my_home_menu_manufacturing"
         name="Portal Layout: manufacturing menu entries"
@@ -46,6 +46,29 @@
         </div>
     </template>
 
+    <template name="My manufacturings" id="portal_my_manufacturings">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True" />
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Manufacturings</t>
+            </t>
+
+            <t t-if="not manufacturings">
+                <p
+                    class="alert alert-warning"
+                >There are currently no
+                    manufacturings for your
+                    account.</p>
+            </t>
+            <t
+                t-else=""
+                t-call="impress_production_billing.portal_manufacturings_list"
+            />
+
+        </t>
+    </template>
+
     <template name="manufacturings_list" id="portal_manufacturings_list">
         <t t-if="grouped_productions" t-call="portal.portal_table">
             <!-- Main table headings -->
@@ -55,7 +78,7 @@
                         t-set="group_by_in_headers_list"
                         t-value="['state','product_id', 'production_id']"
                     />
-                    <t t-set="number_of_header" t-value="7" />
+                    <t t-set="number_of_header" t-value="9" />
                     <t
                         t-set="grouped_manufacturings_colspan"
                         t-value="number_of_header - 1 if groupby in group_by_in_headers_list else number_of_header"
@@ -75,7 +98,7 @@
                 </tr>
             </thead>
 
-            <t t-foreach="grouped_productions(0)" t-as="mos">
+            <t t-foreach="grouped_productions(pager['offset'])" t-as="mos">
                 <tbody>
                     <!-- Row for groups -->
                     <tr t-if="not groupby == 'none'" class="table-light">
@@ -84,6 +107,7 @@
                             t-attf-colspan="{{grouped_manufacturings_colspan}}"
                         >
                             <span t-field="mos[0].state" />
+
                         </th>
                         <th
                             t-if="groupby == 'product'"
@@ -102,12 +126,16 @@
                     <!-- Row for single elements -->
                     <t t-foreach="mos" t-as="mo">
                         <tr>
-                            <!-- <td><a t-attf-href="/my/manufacturings/#{mo.id}?{{ keep_query()
+                            <!-- <td><a
+                            t-attf-href="/my/manufacturings/#{mo.id}?{{
+                            keep_query()
                             }}"><span t-field="mo.name"/></a></td>-->
                             <td>
                                 <span t-field="mo.name" />
+
                             </td>
-                            <td t-if="groupby != 'purchase_order'" class="text-end">
+                            <td t-if="groupby != 'purchase_order'"
+                                class="text-end">
                                 <span t-field="mo.billing_sale_order_ref" />
                             </td>
                             <td t-if="groupby != 'product'" class="text-center">
@@ -125,10 +153,10 @@
                             <td class="text-end">
                                 <span t-field="mo.product_qty" />
                             </td>
-                            <td t-if="groupby != 'state'" class="text-end">
+                            <td class="text-end">
                                 <span t-field="mo.lot_producing_id.display_name" />
                             </td>
-                            <td t-if="groupby != 'state'" class="text-end">
+                            <td class="text-end">
                                 <span
                                     t-field="mo.lot_producing_id.expiration_date"
                                     t-options='{"widget": "date","format": "dd-MM-yyyy"}'
@@ -144,27 +172,6 @@
         </t>
     </template>
 
-    <template name="My manufacturings" id="portal_my_manufacturings">
-        <t t-call="portal.portal_layout">
-            <t t-set="breadcrumbs_searchbar" t-value="True" />
-
-            <t t-call="portal.portal_searchbar">
-                <t t-set="title">Manufacturings</t>
-            </t>
-
-            <t t-if="not manufacturings">
-                <p
-                    class="alert alert-warning"
-                >There are currently no manufacturings for your
-                    account.</p>
-            </t>
-            <t
-                t-else=""
-                t-call="impress_production_billing.portal_manufacturings_list"
-            />
-
-        </t>
-    </template>
 
     <template id="manufacturing_portal" name="Manufacturing View in Portal">
         <t t-call="portal.frontend_layout">
@@ -213,7 +220,8 @@
                 <t t-call="web.conditional_assets_tests" />
             </t>
             <t t-set="head" t-value="head_manufacturing_portal + (head or '')" />
-            <t t-set="body_classname" t-value="'o_web_client o_manufacturing_portal'" />
+            <t t-set="body_classname"
+                t-value="'o_web_client o_manufacturing_portal'" />
         </t>
     </template>
-</data>
+</odoo>
