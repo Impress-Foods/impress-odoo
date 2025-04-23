@@ -17,6 +17,8 @@ class StockLot(models.Model):
                 and lot.product_id.default_code[0] == "E"
             ):
                 lot_number = lot.name[:5]
+                # Assuming 'lot.name' follows the 'YYDDD' format,
+                # where 'YY' is the year and 'DDD' is the day of the year.
                 year, day = "20" + lot_number[:2], int(lot_number[2:])
                 year_date = datetime.fromisoformat(year + "-01-01")
                 create_date = year_date + timedelta(days=(day))
