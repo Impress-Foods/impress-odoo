@@ -36,6 +36,7 @@ jobs:
       matrix:
         include:
           - container: ghcr.io/impress-foods/odoo-ci/py3.10-odoo17.0:latest
+            include: all
             exclude:
               impress_quality_customizations, impress_stock_customizations,
               impress_project_billing_production, impress_lot_lab
