@@ -149,6 +149,11 @@ class CustomerPortal(portal.CustomerPortal):
                 "input": "purchase_order",
                 "domain": [("billing_sale_order_ref", "ilike", search)],
             },
+            "lot": {
+                "label": _("Search in Lot"),
+                "input": "lot",
+                "domain": [("lot_id.name", "ilike", search)],
+            },
         }
         return searchbar_inputs
 
