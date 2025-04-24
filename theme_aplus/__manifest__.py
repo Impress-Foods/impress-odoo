@@ -12,7 +12,7 @@
         "views/snippets/options.xml",
         "views/snippets/s_scrolling_banner.xml",
         "views/snippets/s_wave_transition.xml",
-        "views/snippets/templates.xml"
+        "views/snippets/templates.xml",
     ],
     "assets": {
         "web._assets_primary_variables": [
