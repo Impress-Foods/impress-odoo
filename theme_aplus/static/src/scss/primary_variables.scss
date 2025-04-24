@@ -1,0 +1,44 @@
+@use "./aplus_colors";
+@use "./fonts";
+
+
+$o-theme-font-configs: map-merge(
+    $o-theme-font-configs,
+    (
+        "Gooper": (
+            "family": (
+                "Gooper", sans-serif
+            ),
+        ),
+    )
+);
+
+
+$o-website-values-palettes: (
+   (
+      'font':                             'Gooper',
+      'headings-font':                    'Gooper',
+      'navbar-font':                      'Gooper',
+      'buttons-font':                     'Gooper',
+   ),
+);
+
+
+$o-color-palettes: map-merge(
+    $o-color-palettes,
+    (
+        "aplus": (
+            "o-color-1": $aplus-orange,
+            "o-color-2": $aplus-red,
+            "o-color-3": $aplus-white,
+            "o-color-4": $aplus-white,
+            "o-color-5": #000000,
+        ),
+    )
+);
+$o-selected-color-palettes-names: append($o-selected-color-palettes-names, "aplus");
+$o-website-values-palettes: (
+    (
+        "color-palettes-name": "aplus",
+    ),
+);
