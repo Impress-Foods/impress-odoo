@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="s_wave_transition_snippet" name="wave_transition">
+        <section class="wave-transition-container"
+            data-name="Wave Transition"
+            data-snippet="wave_transition">
+
+            <div class="wave-transition">
+                <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path
+                        d=" M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"
+                    />
+                </svg>
+            </div>
+
+        </section>
+    </template>
+
+    <template id="s_wave_transition_snippet_options"
+        inherit_id="website.snippet_options" name="A+ - Wave Transition Options">
+        <xpath expr="." position="inside">
+            <div data-selector=".wave-transition-container">
+                <we-colorpicker
+                    string="Wave Color"
+                    data-name="wave_transition_colorpicking"
+                    data-select-style="true"
+                    data-css-property="fill"
+                    data-target="svg"
+                />
+                <we-colorpicker
+                    string="Background Color"
+                    data-name="wave_transition_colorpicking_bg"
+                    data-select-style="true"
+                    data-css-property="background-color"
+                    data-target=".wave-transition"
+                />
+            </div>
+
+
+        </xpath>
+    </template>
+
+</odoo>
