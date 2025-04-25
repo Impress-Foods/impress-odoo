@@ -16,10 +16,10 @@ $o-theme-font-configs: map-merge(
 
 $o-website-values-palettes: (
    (
-      'font':                             'Gooper',
-      'headings-font':                    'Gooper',
-      'navbar-font':                      'Gooper',
-      'buttons-font':                     'Gooper',
+    'font': 'Gooper',
+    'headings-font': 'Gooper',
+    'navbar-font': 'Gooper',
+    'buttons-font': 'Gooper',
    ),
 );
 
@@ -33,12 +33,31 @@ $o-color-palettes: map-merge(
             "o-color-3": $aplus-white,
             "o-color-4": $aplus-white,
             "o-color-5": #000000,
+            "o-cc-headings": $aplus-white,
+        ),
+        "aplus-alt": (
+            "o-color-1": $aplus-white,
+            "o-color-2": $aplus-columbia-blue,
+            "o-color-3": $aplus-red,
+            "o-color-4": $aplus-red,
+            "o-color-5": #000000,
+            "o-cc1-headings": $aplus-pale-magenta,
         ),
     )
 );
+
 $o-selected-color-palettes-names: append($o-selected-color-palettes-names, "aplus");
+$o-selected-color-palettes-names: append($o-selected-color-palettes-names, "aplus-alt");
+
 $o-website-values-palettes: (
     (
         "color-palettes-name": "aplus",
+        "font": "Gooper",
+        "headings-font": "Gooper",
+        "navbar-font": "Gooper",
+        "buttons-font": "Gooper",
+        "footer-template": 'minimalist',
     ),
 );
+
+
