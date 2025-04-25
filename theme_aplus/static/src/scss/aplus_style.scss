@@ -1,0 +1,14 @@
+@use "./aplus_colors.scss";
+@use "./fonts";
+
+.display-1 {
+    font-family: 'Gooper';
+    color: $aplus-pale-magenta;
+    font-weight: bold;
+    font-style: italic;
+}
+.display-2 {
+    font-family: 'Gooper';
+    color: $aplus-pale-magenta;
+    font-style: italic;
+}

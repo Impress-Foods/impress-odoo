@@ -12,14 +12,14 @@
         animation-name: wave-animation;
         animation-timing-function: linear;
         animation-iteration-count: infinite;
-        animation-duration: 5s;
+        animation-duration: 2s;
 
         @keyframes wave-animation {
             0% {
                 transform: translateX(0px);
             }
             50% {
-                transform: translateX(-100px);
+                transform: translateX(-150px);
             }
             100% {
                 transform: translateX(0px);

@@ -5,10 +5,15 @@
     "author": "Cédric Paradis",
     "website": "",
     "category": "Theme/Website",
-    "depends": ["web", "website", "web_editor"],
-    "data": ["views/snippets/options.xml", "views/snippets/s_wave_transition.xml"],
+    "depends": ["web", "website_sale", "web_editor"],
+    "data": [
+        "views/snippets/options.xml",
+        "views/snippets/s_wave_transition.xml",
+        "views/snippets/templates.xml",
+    ],
     "assets": {
         "web._assets_primary_variables": [
+            "theme_aplus/static/src/scss/_fonts.scss",
             "theme_aplus/static/src/scss/_aplus_colors.scss",
             "theme_aplus/static/src/scss/primary_variables.scss",
         ],
@@ -16,6 +21,7 @@
             "theme_aplus/static/src/snippets/s_wave_transition/000.js",
             "theme_aplus/static/src/snippets/s_wave_transition/000.scss",
             "theme_aplus/static/src/snippets/s_wave_transition/000.xml",
+            "theme_aplus/static/src/scss/aplus_style.scss",
         ],
     },
     "application": False,

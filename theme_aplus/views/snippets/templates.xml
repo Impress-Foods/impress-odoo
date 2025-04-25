@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <template id="header_cart_link" inherit_id="website_sale.header_cart_link"
+        name="HeaderCart Link">
+        <xpath expr="//i[1]" position="replace">
+            <img src="theme_aplus/static/src/images/APLUS_Shot_Harvest.png"
+                width="60" height="60" />
+        </xpath>
+        <xpath expr="//a[1]/div[1]" position="attributes">
+            <attribute name="t-attf-class"></attribute>
+        </xpath>
+    </template>
+
+</odoo>
