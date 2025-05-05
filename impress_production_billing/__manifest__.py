@@ -5,7 +5,7 @@
     "author": "Cédric Paradis",
     "website": "https://github.com/cparadis-impressfoods/impress-odoo",
     "category": "Sales",
-    "depends": ["base", "web", "mrp", "purchase", "sale_management", "portal"],
+    "depends": ["mrp", "purchase", "sale_management", "portal", "product_expiry"],
     "data": [
         "security/impress_production_billing_security.xml",
         "security/ir.model.access.csv",
