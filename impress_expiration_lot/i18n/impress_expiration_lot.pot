@@ -19,6 +19,11 @@ msgid "Execute Code"
 msgstr ""
 
 #. module: impress_expiration_lot
+#: model:ir.model,name:impress_expiration_lot.model_stock_lot
+msgid "Lot/Serial"
+msgstr ""
+
+#. module: impress_expiration_lot
 #: model:base.automation,name:impress_expiration_lot.impress_expiration_parse_lot_number_rule
 msgid "Parse lot number and set correct dates on lot creation"
 msgstr ""

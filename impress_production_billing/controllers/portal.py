@@ -24,35 +24,9 @@ class CustomerPortal(portal.CustomerPortal):
     )
     def portal_my_manufacturings(
         self,
-        page=1,
-        date_begin=None,
-        date_end=None,
-        sortby="date",
-        filterby="all",
-        groupby="none",
-        so=None,
-        product=None,
+        **kwargs,
     ):
-        commercial_partner = request.env.user.partner_id.commercial_partner_id
-        SaleOrder = request.env["sale.order"]
-
-        # If no SO is specified, get all SOs for the user
-        if so is None:
-            so_domain = [("partner_id", "=", commercial_partner.id)]
-            so_ids = [so.id for so in SaleOrder.search(so_domain)]
-        else:
-            # If SO is specified, cast the SO id to an int and make it the search domain
-            so_ids = [int(so)]
-
-        domain = [("billing_sale_order_id", "in", so_ids)]
-
-        if product is not None:
-            product_domain = [("product_id", "=", int(product))]
-            domain += product_domain
-
-        values = self._prepare_manufacturings_values(
-            domain, page, date_begin, date_end, sortby, filterby, groupby
-        )
+        values = self._prepare_manufacturings_values(**kwargs)
 
         return http.request.render(
             "impress_production_billing.portal_my_manufacturings", values
@@ -73,7 +47,7 @@ class CustomerPortal(portal.CustomerPortal):
 
         manufacturing = request.env["mrp.production"].browse(manufacturing_id)
         return request.render(
-            "impress_production_billing.manufacturing_portal",
+            "impress_production_billing.manufacturing_portal",  # type: ignore
             {"manufacturing": manufacturing},
         )
 
@@ -89,7 +63,7 @@ class CustomerPortal(portal.CustomerPortal):
                 "mrp.production", manufacturing_id
             )
         except (AccessError, MissingError) as err:
-            raise werkzeug.exceptions.NotFound from err
+            raise werkzeug.exceptions.NotFound from err  # type: ignore
 
         session_info = request.env["ir.http"].session_info()
         user_context = dict(request.env.context) if request.session.uid else {}
@@ -99,7 +73,7 @@ class CustomerPortal(portal.CustomerPortal):
         cache_hashes = {
             "translations": translation_hash,
         }
-        production_company = manufacturing.company_id
+        production_company = manufacturing.company_id  # type: ignore
         session_info.update(
             cache_hashes=cache_hashes,
             action_name="impress_production_billing.manufacturing_portal_view_production_action",
@@ -116,7 +90,7 @@ class CustomerPortal(portal.CustomerPortal):
         )
 
         return request.render(
-            "impress_production_billing.manufacturing_portal_embed",
+            "impress_production_billing.manufacturing_portal_embed",  # type: ignore
             {"session_info": session_info},
         )
 
@@ -147,6 +121,42 @@ class CustomerPortal(portal.CustomerPortal):
         }
         return searchbar_sortings
 
+    def _get_searchbar_inputs(self, search=""):
+        searchbar_inputs = {
+            "all": {
+                "label": _("Search in All"),
+                "input": "all",
+                "domain": [],
+            },
+            "name": {
+                "label": _("Search in Name"),
+                "input": "name",
+                "domain": [("name", "ilike", search)],
+            },
+            "product": {
+                "label": _("Search in Product"),
+                "input": "product",
+                "domain": [
+                    "|",
+                    "|",
+                    ("product_id.default_code", "ilike", search),
+                    ("product_id.name", "ilike", search),
+                    ("product_id.barcode", "ilike", search),
+                ],
+            },
+            "purchase_order": {
+                "label": _("Search in Purchase Order"),
+                "input": "purchase_order",
+                "domain": [("billing_sale_order_ref", "ilike", search)],
+            },
+            "lot": {
+                "label": _("Search in Lot"),
+                "input": "lot",
+                "domain": [("lot_id.name", "ilike", search)],
+            },
+        }
+        return searchbar_inputs
+
     def _production_get_groupby_mapping(self):
         return {
             "product": "product_id",
@@ -155,31 +165,81 @@ class CustomerPortal(portal.CustomerPortal):
         }
 
     def _prepare_manufacturings_values(
-        self, domain, page, date_begin, date_end, sortby, filterby, groupby
+        self,
+        page=1,
+        date_begin=None,
+        date_end=None,
+        sortby="date",
+        filterby="all",
+        groupby="none",
+        product=None,
+        so=None,
+        search="",
+        search_in="all",
     ):
         ProductionOrder = request.env["mrp.production"]
+
+        values = self._prepare_portal_layout_values()
+
+        commercial_partner = request.env.user.partner_id.commercial_partner_id
+        SaleOrder = request.env["sale.order"]
 
         searchbar_filters = self._get_searchbar_filters()
         searchbar_groupby = self._get_searchbar_groupby()
         searchbar_sortings = self._get_searchbar_sortings()
+        searchbar_inputs = self._get_searchbar_inputs(search=search)
 
-        domain += searchbar_filters[filterby]["domain"]
-        order = searchbar_sortings[sortby]["order"]
+        domain = searchbar_filters[filterby]["domain"]  # type: ignore
+
+        # If no SO is specified, get all SOs for the user
+        if so is None:
+            so_domain = [("partner_id", "=", commercial_partner.id)]
+            so_ids = [so.id for so in SaleOrder.search(so_domain)]
+            domain += [("billing_sale_order_id.partner_id", "=", commercial_partner.id)]
+        else:
+            # If SO is specified, cast the SO id to an int and make it the search domain
+            so_ids = [int(so)]
+            domain += [("billing_sale_order_id", "in", so_ids)]
+
+        if product is not None:
+            product_domain = [("product_id", "=", int(product))]
+            domain += product_domain
+
+        if search != "":
+            domain += searchbar_inputs[search_in]["domain"]  # type: ignore
+
+        order = searchbar_sortings[sortby]["order"]  # type: ignore
 
         # Default sort by value
         if not sortby or sortby not in searchbar_sortings:
             sortby = "date"
+
         order = searchbar_sortings[sortby]["order"]
 
-        count = 0
+        count = ProductionOrder.search_count(domain)
+
+        # Allows to persist the state of filters across pagination
+        url_args = {"search_in": search_in}
+        if date_begin is not None:
+            url_args["date_begin"] = date_begin
+        if date_end is not None:
+            url_args["date_end"] = date_end
+        if filterby != "all":
+            url_args["filterby"] = filterby
+        if groupby != "none":
+            url_args["groupby"] = groupby
+        if sortby != "date":
+            url_args["sortby"] = sortby
+        if search != "":
+            url_args["search"] = search
+
         pager = portal_pager(
             url="/my/manufacturings",
-            url_args={"date_begin": date_begin, "date_end": date_end, "sortby": sortby},
+            url_args=url_args,
             total=count,
             page=page,
             step=self._items_per_page,
         )
-
         mo_ids = ProductionOrder.search(
             domain, order=order, limit=self._items_per_page, offset=pager["offset"]
         )
@@ -190,7 +250,7 @@ class CustomerPortal(portal.CustomerPortal):
             )
 
             groupby_mapping = self._production_get_groupby_mapping()
-            group = groupby_mapping.get(groupby)
+            group = groupby_mapping.get(groupby)  # type: ignore
             if group:
                 grouped_productions = [
                     ProductionOrder.concat(*g)
@@ -200,7 +260,7 @@ class CustomerPortal(portal.CustomerPortal):
                 grouped_productions = [productions] if productions else []
 
             production_states = dict(
-                ProductionOrder._fields["state"]._description_selection(request.env)
+                ProductionOrder._fields["state"]._description_selection(request.env)  # type: ignore
             )
             if sortby == "status":
                 if groupby == "none" and grouped_productions:
@@ -211,24 +271,27 @@ class CustomerPortal(portal.CustomerPortal):
                     grouped_productions.sort(
                         key=lambda productions: production_states.get(
                             productions[0].state
-                        )
-                    )
+                        )  # type: ignore
+                    )  # type: ignore
             return grouped_productions
 
-        count = ProductionOrder.search_count(domain)
-        values = {
-            "date": date_begin,
-            "manufacturings": mo_ids,
-            "grouped_productions": get_grouped_manufacturings,
-            "page_name": "manufacturing",
-            "pager": pager,
-            "searchbar_sortings": searchbar_sortings,
-            "sortby": sortby,
-            "searchbar_filters": OrderedDict(sorted(searchbar_filters.items())),
-            "filterby": filterby,
-            "searchbar_groupby": searchbar_groupby,
-            "groupby": groupby,
-            "default_url": "/my/manufacturings",
-        }
-        # _logger.warning(values)
+        values.update(
+            {
+                "date": date_begin,
+                "manufacturings": mo_ids,
+                "grouped_productions": get_grouped_manufacturings,
+                "page_name": "manufacturing",
+                "pager": pager,
+                "searchbar_sortings": searchbar_sortings,
+                "sortby": sortby,
+                "searchbar_filters": OrderedDict(sorted(searchbar_filters.items())),
+                "filterby": filterby,
+                "searchbar_groupby": searchbar_groupby,
+                "groupby": groupby,
+                "default_url": "/my/manufacturings",
+                "search": search,
+                "search_in": search_in,
+                "searchbar_inputs": searchbar_inputs,
+            }
+        )
         return values

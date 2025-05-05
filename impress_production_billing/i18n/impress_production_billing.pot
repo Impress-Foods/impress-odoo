@@ -233,6 +233,41 @@ msgid "Scheduled Date"
 msgstr ""
 
 #. module: impress_production_billing
+#. odoo-python
+#: code:addons/impress_production_billing/controllers/portal.py:0
+#, python-format
+msgid "Search in All"
+msgstr ""
+
+#. module: impress_production_billing
+#. odoo-python
+#: code:addons/impress_production_billing/controllers/portal.py:0
+#, python-format
+msgid "Search in Lot"
+msgstr ""
+
+#. module: impress_production_billing
+#. odoo-python
+#: code:addons/impress_production_billing/controllers/portal.py:0
+#, python-format
+msgid "Search in Name"
+msgstr ""
+
+#. module: impress_production_billing
+#. odoo-python
+#: code:addons/impress_production_billing/controllers/portal.py:0
+#, python-format
+msgid "Search in Product"
+msgstr ""
+
+#. module: impress_production_billing
+#. odoo-python
+#: code:addons/impress_production_billing/controllers/portal.py:0
+#, python-format
+msgid "Search in Purchase Order"
+msgstr ""
+
+#. module: impress_production_billing
 #: model_terms:ir.ui.view,arch_db:impress_production_billing.sale_order_portal_content_inherit
 msgid "See MOs"
 msgstr ""
@@ -264,7 +299,8 @@ msgstr ""
 #. module: impress_production_billing
 #: model_terms:ir.ui.view,arch_db:impress_production_billing.portal_my_manufacturings
 msgid ""
-"There are currently no manufacturings for your\n"
+"There are currently no\n"
+"                    manufacturings for your\n"
 "                    account."
 msgstr ""
 
