@@ -3,16 +3,16 @@
 <odoo>
 
     <template id="snippets" inherit_id="website.snippets" name="A+ - Snippets">
-        <xpath expr="//*[@id='default_snippets']" position="before">
-            <t id="x_theme_snippets">
-                <div id="x_theme_snippets_category" class="o_panel">
-                    <div class="o_panel_header">Theme</div>
-                    <div class="o_panel_body">
-                        <t t-snippet="theme_aplus.s_wave_transition_snippet">
-                            <keywords>Transition</keywords>
-                        </t>
-                    </div>
-                </div>
+        <xpath
+            expr="//div[@id='snippet_structure']/div[2]"
+            position="inside">
+
+            <t t-snippet="theme_aplus.s_wave_transition_snippet">
+                <keywords>Transition</keywords>
+            </t>
+
+            <t t-snippet="theme_aplus.s_scrolling_text_banner">
+                <keywords>Banner</keywords>
             </t>
         </xpath>
 

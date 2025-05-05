@@ -7,9 +7,12 @@
     "category": "Theme/Website",
     "depends": ["web", "website_sale", "web_editor"],
     "data": [
+        "views/product_card.xml",
+        "views/product_template_views.xml",
         "views/snippets/options.xml",
+        "views/snippets/s_scrolling_banner.xml",
         "views/snippets/s_wave_transition.xml",
-        "views/snippets/templates.xml",
+        "views/snippets/templates.xml"
     ],
     "assets": {
         "web._assets_primary_variables": [
@@ -21,7 +24,16 @@
             "theme_aplus/static/src/snippets/s_wave_transition/000.js",
             "theme_aplus/static/src/snippets/s_wave_transition/000.scss",
             "theme_aplus/static/src/snippets/s_wave_transition/000.xml",
+            "theme_aplus/static/src/snippets/s_scrolling_banner/000.scss",
+            "theme_aplus/static/src/snippets/s_scrolling_banner/000.xml",
+            "theme_aplus/static/src/snippets/s_scrolling_banner/000.js",
             "theme_aplus/static/src/scss/aplus_style.scss",
+            "theme_aplus/static/src/scss/ecom.scss",
+        ],
+        "website.assets_wysiwyg": [
+            "theme_aplus/static/src/scss/aplus_style.scss",
+            "theme_aplus/static/src/scss/ecom.scss",
+            "theme_aplus/static/src/snippets/s_scrolling_banner/options.js",
         ],
     },
     "application": False,
