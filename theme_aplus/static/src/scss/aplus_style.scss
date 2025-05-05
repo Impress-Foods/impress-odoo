@@ -1,14 +1,31 @@
 @use "./aplus_colors.scss";
 @use "./fonts";
 
-.display-1 {
-    font-family: 'Gooper';
-    color: $aplus-pale-magenta;
-    font-weight: bold;
-    font-style: italic;
+
+
+// Shopping Cart modifications
+// Remove the background on header buttons
+.o_navlink_background {
+    background: #00000000;
+
+    &:hover {
+        background: #00000000;
+    }
 }
-.display-2 {
-    font-family: 'Gooper';
-    color: $aplus-pale-magenta;
-    font-style: italic;
+
+.reversed{
+    transform: scaleX(-1);
 }
+
+.shake-on-hover:hover {
+    animation-name: bob;
+    animation-duration: 0.6s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+
+
+  @keyframes bob {
+    from { transform: translateY(0) rotate(0deg); }
+    to   { transform: translateY(-4px) rotate(-1deg); } /* Added a small rotation here */
+  }

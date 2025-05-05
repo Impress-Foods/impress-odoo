@@ -4,11 +4,55 @@
     <template id="header_cart_link" inherit_id="website_sale.header_cart_link"
         name="HeaderCart Link">
         <xpath expr="//i[1]" position="replace">
-            <img src="theme_aplus/static/src/images/APLUS_Shot_Harvest.png"
-                width="60" height="60" />
+            <div class="shake-on-hover">
+                <img src="/theme_aplus/static/src/images/APLUS_Shot_Harvest.png"
+                    width="60" height="60"
+                    class="reversed" />
+            </div>
+
         </xpath>
-        <xpath expr="//a[1]/div[1]" position="attributes">
-            <attribute name="t-attf-class"></attribute>
+    </template>
+
+
+    <template id="template_header_default"
+        inherit_id="website.layout"
+        name="Template Header Default">
+        <xpath expr="//t[@t-call='portal.placeholder_user_sign_in']/t"
+            position="replace">
+            <t
+                t-set="_link_class" t-valuef="btn btn-outline-primary" />
+        </xpath>
+        <xpath expr="//t[@t-call='portal.user_dropdown']/t[2]"
+            position="attributes">
+            <attribute name="t-valuef">dropdown-aplus</attribute>
+        </xpath>
+    </template>
+
+    <template id="product_card_options"
+        inherit_id="website.snippet_options" name="A+ - Product Card options">
+        <xpath expr="//div[hasclass('o_wsale_soptions_menu_sizes')]"
+            position="after">
+            <!--
+             <we-colorpicker string="Main Color"
+                data-name="product_card_colorpicking"
+                data-select-style="true"
+                data-css-property="background-color"
+                data-apply-to=".color-block"
+            />
+            <we-colorpicker string="Wave Color"
+                data-name="product_card_colorpicking_wave_color"
+                data-select-style="true"
+                data-css-property="fill"
+                data-apply-to=".wave"
+            />
+            <we-colorpicker string="Secondary Color"
+                data-name="product_card_colorpicking_secondary"
+                data-select-style="true"
+                data-css-property="background-color"
+                data-apply-to=".ap_product_cart"
+            />
+        -->
+
         </xpath>
     </template>
 
