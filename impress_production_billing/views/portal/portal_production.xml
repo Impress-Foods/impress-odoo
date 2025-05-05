@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <template
         id="portal_my_home_menu_manufacturing"
@@ -55,9 +55,7 @@
             </t>
 
             <t t-if="not manufacturings">
-                <p
-                    class="alert alert-warning"
-                >There are currently no
+                <p class="alert alert-warning">There are currently no
                     manufacturings for your
                     account.</p>
             </t>
@@ -134,8 +132,7 @@
                                 <span t-field="mo.name" />
 
                             </td>
-                            <td t-if="groupby != 'purchase_order'"
-                                class="text-end">
+                            <td t-if="groupby != 'purchase_order'" class="text-end">
                                 <span t-field="mo.billing_sale_order_ref" />
                             </td>
                             <td t-if="groupby != 'product'" class="text-center">
@@ -220,8 +217,7 @@
                 <t t-call="web.conditional_assets_tests" />
             </t>
             <t t-set="head" t-value="head_manufacturing_portal + (head or '')" />
-            <t t-set="body_classname"
-                t-value="'o_web_client o_manufacturing_portal'" />
+            <t t-set="body_classname" t-value="'o_web_client o_manufacturing_portal'" />
         </t>
     </template>
 </odoo>
