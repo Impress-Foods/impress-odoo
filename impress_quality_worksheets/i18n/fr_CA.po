@@ -7,26 +7,26 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:06+0000\n"
-"PO-Revision-Date: 2025-03-03 15:12-0500\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-05-05 13:17+0000\n"
+"Last-Translator: Weblate Admin <admin@example.com>\n"
+"Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
+"impress-odoo/impress_quality_worksheets/fr_CA/>\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.5\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.11\n"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20250303_form_view
-#, fuzzy
 msgid ""
 "<span style=\"font-weight: bold;\">Frequency: </span>\n"
 "                            <span>At the start of every finished product "
 "format</span>"
 msgstr ""
-"<span style=\"font-weight: bold;\">Fréquence: </span><span>Au début de "
-"chaque format de produit fini</span>"
+"<span style=\"font-weight: bold;\">Fréquence: </span>\n"
+"<span>Au début de chaque format de produit fini</span>"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
@@ -93,7 +93,7 @@ msgstr "Au début de la journée."
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 msgid "Au début de l'embouteillage"
-msgstr ""
+msgstr "Au début de l'embouteillage"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
@@ -101,6 +101,8 @@ msgid ""
 "Aux 2 heures si aucun changement lors\n"
 "                            d'une production en continue"
 msgstr ""
+"Aux 2 heures si aucun changement lors\n"
+"                            d'une production en continue"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_average_threshold
@@ -126,6 +128,16 @@ msgid ""
 "bouteille ne reste dans les\n"
 "                            bacs de rejet. <br/>"
 msgstr ""
+"Calibration : Comparer le poids d'une bouteille avec la balance de table\n"
+"                            et la Loma, si l'écart est de 2g et +, faire une "
+"calibration. <br/>\n"
+"                            Remplissage : Comparer le poids moyen des "
+"bouteilles vs le poids visé.\n"
+"                            Si l'écart est de + / - 3g, ajuster "
+"l'embouteilleuse. <br/> Lors de la\n"
+"                            dernière vérification, vérifier qu'aucune "
+"bouteille ne reste dans les\n"
+"                            bacs de rejet. <br/>"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_case_check
@@ -144,13 +156,13 @@ msgstr "Seuil de détection de la céramique (2.381mm)"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
-#, fuzzy
 msgid ""
 "During the last check (end of production), check that no cup is left\n"
 "                                in the reject bin."
 msgstr ""
 "Lors de la dernière vérification (fin de la production), vérifier qu'aucun "
-"cup n'est présent dans le réceptacle des rejets."
+"cup \n"
+"n'est présent dans le réceptacle des rejets."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
@@ -164,6 +176,14 @@ msgid ""
 "rejet de métal durant la\n"
 "                            production, aviser le contrôle de la qualité."
 msgstr ""
+"Détecteur métal : Si l'éjection de l'un des témoins de métal est\n"
+"                            Non-Conforme, appeler le contrôle de la qualité, "
+"remplir un registre\n"
+"                            d'écart, réajuster l'appareil et repasser tous "
+"les produits depuis la\n"
+"                            dernière vérification conforme. S'il y a un "
+"rejet de métal durant la\n"
+"                            production, aviser le contrôle de la qualité."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
@@ -183,7 +203,7 @@ msgstr "À tout changement de produit (format, recette, lot)."
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 msgid "Fréquence :"
-msgstr ""
+msgstr "Fréquence :"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
@@ -202,13 +222,12 @@ msgstr "Lignes de registre HPP"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
-#, fuzzy
 msgid ""
 "If there is a metal reject during production, inform quality\n"
 "                                control."
 msgstr ""
-"Si un reject dû à la présence de métal a lieu pendant la production, aviser "
-"le contrôle qualité."
+"Si un reject dû à la présence de métal a lieu pendant\n"
+" la production, aviser le contrôle qualité."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20250303_form_view
@@ -294,7 +313,7 @@ msgstr "Vérification sous-emballage"
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 msgid "Une fois l'embouteillage terminé"
-msgstr ""
+msgstr "Une fois l'embouteillage terminé"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_unit_check
@@ -323,7 +342,7 @@ msgstr "FdC 2024-12-02"
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 msgid "X-Ray Frequency:"
-msgstr "Fréquence Rayon-X"
+msgstr "Fréquence Rayon-X:"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_x_ray_log_id
@@ -380,3 +399,7 @@ msgid ""
 "d'étiquette US/CAD ou lors de\n"
 "                            réglage de l'appareil)"
 msgstr ""
+"À chaque changement de produit\n"
+"                            (changement de format, de recette, de lot, "
+"d'étiquette US/CAD ou lors de\n"
+"                            réglage de l'appareil)"
