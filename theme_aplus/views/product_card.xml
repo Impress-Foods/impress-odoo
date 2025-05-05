@@ -57,7 +57,7 @@
                     <div class="o_wsale_product_information_text flex-grow-1">
                         <h6 class="o_wsale_products_item_title mb-2">
                             <h1 class="ap_product_name"
-                                t-attf-style="color: {{product.secondary_color}};"
+                                t-attf-style="color: {{product.text_color}};"
                                 itemprop="name"
                                 t-att-content="product.name"
                                 t-field="product.name" />
@@ -95,10 +95,12 @@
                                 </del>
                             </t>
                             <span class="h6 mb-0"
+                                t-attf-style="color: {{product.text_color}};"
                                 t-if="template_price_vals['price_reduce'] or not website.prevent_zero_price_sale"
                                 t-esc="template_price_vals['price_reduce']"
                                 t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
                             <span class="h6 mb-0"
+                                t-attf-style="color: {{product.text_color}};"
                                 t-else=""
                                 t-field="website.prevent_zero_price_sale_text" />
                             <span itemprop="price"
@@ -114,8 +116,8 @@
                 </div>
 
                 <div class="ap_buy_button"
-                    t-attf-style="background-color: {{product.secondary_color}}; color: {{product.primary_color}};">
-                    <a
+                    t-attf-style="background-color: {{product.secondary_color}}; color: {{product.text_color}};">
+                    <a t-attf-style="color: {{product.text_color}};"
                         t-attf-href="{{product_href}}">
                         Buy Now
                     </a>
@@ -141,10 +143,12 @@
 
     <template id="product_description" name="Product Description"
         inherit_id="website_sale.products_description">
-        <xpath expr="//div[1]" position="attributes">
-            <!--
-            <attribute name="class">ap_subdescription mb-2 text-muted small</attribute>
-             -->
+        <xpath expr="//div[hasclass('oe_subdescription')]" position="replace">
+            <div class="ap_subdescription mb-2 text-muted small"
+                contenteditable="false"
+                t-attf-style="color: {{product.text_color}};">
+                <div itemprop="description" t-field="product.description_sale" />
+            </div>
         </xpath>
     </template>
 </odoo>

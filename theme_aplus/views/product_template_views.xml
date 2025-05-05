@@ -11,6 +11,7 @@
             <xpath expr="//field[@name='website_ribbon_id']" position="after">
                 <field name="primary_color" widget="color" />
                 <field name="secondary_color" widget="color" />
+                <field name="text_color" widget="color" />
                 <field name="background_image" widget="image" />
             </xpath>
         </field>

@@ -10,25 +10,26 @@
         display:100%;
         height: 120px;
         animation-name: wave-animation;
-        animation-timing-function: linear;
+        animation-timing-function: cubic-bezier(.18,.01,.9,1);
         animation-iteration-count: infinite;
-        animation-duration: 2s;
+        animation-direction: alternate;
+        animation-duration: 10s;
 
         @keyframes wave-animation {
             0% {
-                transform: translateX(0px);
-            }
-            50% {
-                transform: translateX(-150px);
+                transform: translateX(-10%);
+
+
             }
             100% {
-                transform: translateX(0px);
+                transform: translateX(-1%);
+
             }
         }
         svg {
             position: relative;
             display: block;
-            width: calc(100% + 1.3px);
+            width: 150%;
             height: 120px;
 
 

@@ -59,7 +59,7 @@
         .ap_product_text_container {
             transform: translateY(-35%);
 
-            .oe_subdescription {
+            .ap_subdescription {
                 opacity: 1;
             }
 
@@ -146,7 +146,7 @@
         transition-timing-function: ease-in-out;
         display: block;
 
-        .oe_subdescription {
+        .ap_subdescription {
             height: calc(#{$font-size-sm * 1.1} * 2);
             opacity: 0;
             transition-property: opacity;

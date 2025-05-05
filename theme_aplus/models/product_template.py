@@ -10,5 +10,6 @@ class ProductTemplate(models.Model):
 
     primary_color = fields.Char()
     secondary_color = fields.Char()
+    text_color = fields.Char()
 
     background_image = fields.Binary()
