@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <tree default_order='create_date desc'>
                 <field name="sequence" />
-                <field name="date" />
+                <field name="start_date" />
                 <field name="case_code" />
                 <field name="unit_code" />
                 <field
@@ -57,7 +57,7 @@
                                 />
                             </group>
                             <group>
-                                <field name="date" />
+                                <field name="start_date" />
                             </group>
                         </group>
                     </div>
