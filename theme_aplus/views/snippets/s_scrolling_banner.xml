@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
     <!-- Scrolling Text Banner Template -->
@@ -6,10 +6,10 @@
         <section class="s_scrolling_text_banner pt16 pb16">
             <div class="container">
                 <div
-                    class="scrolling-banner-container position-relative overflow-hidden py-3">
+                    class="scrolling-banner-container position-relative overflow-hidden py-3"
+                >
                     <div class="scrolling-text-wrapper d-flex">
-                        <div
-                            class="scrolling-text d-inline-block">
+                        <div class="scrolling-text d-inline-block">
                             <span>Your important announcement here</span>
                             <span class="mx-4">•</span>
                             <span>Special promotion: Use code WELCOME
@@ -25,22 +25,24 @@
 
 
     <!-- Snippet Options -->
-    <template id="s_scrolling_text_banner_options"
-        inherit_id="website.snippet_options">
+    <template id="s_scrolling_text_banner_options" inherit_id="website.snippet_options">
         <xpath expr="//div[@data-js='Box']" position="after">
-            <div data-selector=".s_scrolling_text_banner"
-                data-js="ScrollingBanner">
-                <we-colorpicker string="Banner Color"
+            <div data-selector=".s_scrolling_text_banner" data-js="ScrollingBanner">
+                <we-colorpicker
+                    string="Banner Color"
                     data-dependencies="banner_bg_custom_opt"
                     data-select-style="true"
                     data-css-property="background-color"
                     data-color-prefix="bg-"
-                    data-apply-to=".scrolling-banner-container" />
+                    data-apply-to=".scrolling-banner-container"
+                />
 
-                <we-colorpicker string="Text Color"
+                <we-colorpicker
+                    string="Text Color"
                     data-select-style="true"
                     data-css-property="color"
-                    data-apply-to=".scrolling-text" />
+                    data-apply-to=".scrolling-text"
+                />
 
             </div>
         </xpath>

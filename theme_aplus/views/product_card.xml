@@ -1,37 +1,93 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <template id="products_item" name="Product Item" inherit_id="website_sale.products_item">
+    <template
+        id="products_item"
+        name="Product Item"
+        inherit_id="website_sale.products_item"
+    >
         <xpath expr="//form[1]" position="replace">
-            <form action="/shop/cart/update" method="post" class="ap_product_cart h-100 d-flex" t-att-data-publish="product.website_published and 'on' or 'off'" itemscope="itemscope" itemtype="http://schema.org/Product" t-attf-style="background-color: {{product.secondary_color}}">
+            <form
+                action="/shop/cart/update"
+                method="post"
+                class="ap_product_cart h-100 d-flex"
+                t-att-data-publish="product.website_published and 'on' or 'off'"
+                itemscope="itemscope"
+                itemtype="http://schema.org/Product"
+                t-attf-style="background-color: {{product.secondary_color}}"
+            >
 
                 <!-- Product Links and Settings -->
-                <t t-set="product_href" t-value="keep(product.website_url, page=(pager['page']['num'] if pager['page']['num']>1 else None))" />
-                <t t-set="image_type" t-value="product._get_suitable_image_size(ppr, td_product['x'], td_product['y'])" />
+                <t
+                    t-set="product_href"
+                    t-value="keep(product.website_url, page=(pager['page']['num'] if pager['page']['num']>1 else None))"
+                />
+                <t
+                    t-set="image_type"
+                    t-value="product._get_suitable_image_size(ppr, td_product['x'], td_product['y'])"
+                />
 
                 <!-- Background Image -->
-                <span t-field="product.background_image" t-options="{'widget': 'image', 'class': 'h-50 w-100 position-absolute'}" class="d-flex" />
+                <span
+                    t-field="product.background_image"
+                    t-options="{'widget': 'image', 'class': 'h-50 w-100 position-absolute'}"
+                    class="d-flex"
+                />
 
                 <!-- Color Block with Wave -->
-                <div class="color-block" t-attf-style="background-color: {{product.primary_color}}; box-shadow: 0px -2px 2px 1px {{product.primary_color}};">
-                    <svg class="wave" t-attf-style="fill: {{product.primary_color}};" viewBox="0 0 740 200" preserveAspectRatio="none">
-                        <path d="M440.2 4.9133C446.4 5.6133 452.2 6.3133 457.8 7.1133 469.4 8.6133 480.8 10.1133 494.6 11.0133L495.4 11.1133C500.4 11.4133 504.8 11.7133 508.6 12.0133 513 12.3133 517.4 12.5133 521.2 12.6133 526.2 12.7133 530.6 12.8133 534.6 12.8133 538.6 12.8133 542.8 12.7133 548 12.6133 551.8 12.5133 556.2 12.3133 560.6 12.0133 564.6 11.8133 568.8 11.5133 573.8 11.1133L574.6 11.0133C588.2 10.0133 599.8 8.6133 611.4 7.1133 621 5.9133 630.8 4.6133 642 3.6133 644.4 3.4133 646.6 3.2133 648.8 3.0133 656.6 2.3133 662.4 1.7133 671.6 1.4133 685.6.8133 693.4.9133 707.4 1.4133 718 1.8133 724 2.2133 734.6 3.0133 742.2 3.6133 748.2 4.3133 754 5.1133L754 30.0133H2L2 5.2133C7.8 4.4133 14.2 3.7133 21.8 3.1133 32.4 2.2133 38.4 1.8133 49 1.5133 63 1.0133 71 .9133 84.8 1.5133 94 1.9133 99.8 2.4133 107.6 3.1133L107.6 3.1133C109.6 3.3133 111.8 3.5133 114.4 3.7133 125.6 4.7133 135.4 6.0133 145 7.2133 156.6 8.7133 168 10.2133 181.8 11.1133L182.6 11.2133C187.6 11.5133 192 11.8133 195.8 12.1133 200.2 12.4133 204.6 12.6133 208.4 12.7133 213.4 12.8133 217.8 12.9133 221.8 12.9133 225.8 12.9133 230 12.8133 235.2 12.7133 239 12.6133 243.4 12.4133 247.8 12.1133 251.8 11.9133 256 11.6133 261 11.2133L261.8 11.1133C275.4 10.1133 287 8.7133 298.6 7.2133 304.4 6.5133 310.2 5.7133 316.2 5.0133 321.6 4.3133 327.4 3.6133 334.6 3.1133 338.8 2.8133 342.2 2.5133 345.6 2.3133 349.6 2.0133 353.6 1.7133 358.8 1.5133 366.4 1.2133 372.2 1.1133 378.2 1.1133 384.2 1.1133 390 1.2133 397.6 1.5133 402.8 1.7133 406.8 2.0133 410.8 2.3133 414.2 2.5133 417.6 2.8133 421.8 3.1133 428.8 3.7133 434.6 4.3133 440.2 4.9133Z"/>
+                <div
+                    class="color-block"
+                    t-attf-style="background-color: {{product.primary_color}}; box-shadow: 0px -2px 2px 1px {{product.primary_color}};"
+                >
+                    <svg
+                        class="wave"
+                        t-attf-style="fill: {{product.primary_color}};"
+                        viewBox="0 0 740 200"
+                        preserveAspectRatio="none"
+                    >
+                        <path
+                            d="M440.2 4.9133C446.4 5.6133 452.2 6.3133 457.8 7.1133 469.4 8.6133 480.8 10.1133 494.6 11.0133L495.4 11.1133C500.4 11.4133 504.8 11.7133 508.6 12.0133 513 12.3133 517.4 12.5133 521.2 12.6133 526.2 12.7133 530.6 12.8133 534.6 12.8133 538.6 12.8133 542.8 12.7133 548 12.6133 551.8 12.5133 556.2 12.3133 560.6 12.0133 564.6 11.8133 568.8 11.5133 573.8 11.1133L574.6 11.0133C588.2 10.0133 599.8 8.6133 611.4 7.1133 621 5.9133 630.8 4.6133 642 3.6133 644.4 3.4133 646.6 3.2133 648.8 3.0133 656.6 2.3133 662.4 1.7133 671.6 1.4133 685.6.8133 693.4.9133 707.4 1.4133 718 1.8133 724 2.2133 734.6 3.0133 742.2 3.6133 748.2 4.3133 754 5.1133L754 30.0133H2L2 5.2133C7.8 4.4133 14.2 3.7133 21.8 3.1133 32.4 2.2133 38.4 1.8133 49 1.5133 63 1.0133 71 .9133 84.8 1.5133 94 1.9133 99.8 2.4133 107.6 3.1133L107.6 3.1133C109.6 3.3133 111.8 3.5133 114.4 3.7133 125.6 4.7133 135.4 6.0133 145 7.2133 156.6 8.7133 168 10.2133 181.8 11.1133L182.6 11.2133C187.6 11.5133 192 11.8133 195.8 12.1133 200.2 12.4133 204.6 12.6133 208.4 12.7133 213.4 12.8133 217.8 12.9133 221.8 12.9133 225.8 12.9133 230 12.8133 235.2 12.7133 239 12.6133 243.4 12.4133 247.8 12.1133 251.8 11.9133 256 11.6133 261 11.2133L261.8 11.1133C275.4 10.1133 287 8.7133 298.6 7.2133 304.4 6.5133 310.2 5.7133 316.2 5.0133 321.6 4.3133 327.4 3.6133 334.6 3.1133 338.8 2.8133 342.2 2.5133 345.6 2.3133 349.6 2.0133 353.6 1.7133 358.8 1.5133 366.4 1.2133 372.2 1.1133 378.2 1.1133 384.2 1.1133 390 1.2133 397.6 1.5133 402.8 1.7133 406.8 2.0133 410.8 2.3133 414.2 2.5133 417.6 2.8133 421.8 3.1133 428.8 3.7133 434.6 4.3133 440.2 4.9133Z"
+                        />
                     </svg>
                 </div>
 
                 <!-- Product Image Container -->
-                <div class="ap_product_image position-relative h-100 flex-grow-0 overflow-hidden">
-                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" t-nocache="The csrf token must always be up to date." />
-                    <a t-att-href="product_href" class="ap_product_image_link d-block h-100 position-relative" itemprop="url" contenteditable="false">
+                <div
+                    class="ap_product_image position-relative h-100 flex-grow-0 overflow-hidden"
+                >
+                    <input
+                        type="hidden"
+                        name="csrf_token"
+                        t-att-value="request.csrf_token()"
+                        t-nocache="The csrf token must always be up to date."
+                    />
+                    <a
+                        t-att-href="product_href"
+                        class="ap_product_image_link d-block h-100 position-relative"
+                        itemprop="url"
+                        contenteditable="false"
+                    >
                         <t t-set="image_holder" t-value="product._get_image_holder()" />
-                        <span t-field="image_holder.image_1920" t-options="{'widget': 'image', 'preview_image': image_type, 'itemprop': 'image', 'class': 'h-100 w-100 position-absolute'}" class="ap_product_image_img_wrapper d-flex h-100 justify-content-center align-items-center position-absolute" />
+                        <span
+                            t-field="image_holder.image_1920"
+                            t-options="{'widget': 'image', 'preview_image': image_type, 'itemprop': 'image', 'class': 'h-100 w-100 position-absolute'}"
+                            class="ap_product_image_img_wrapper d-flex h-100 justify-content-center align-items-center position-absolute"
+                        />
                     </a>
                 </div>
 
                 <!-- Product info + buttons -->
-                <div class="ap_product_text_container position-relative justify-content-center d-flex flex-column flex-grow-1 flex-shrink-1">
+                <div
+                    class="ap_product_text_container position-relative justify-content-center d-flex flex-column flex-grow-1 flex-shrink-1"
+                >
                     <div class="o_wsale_product_information_text flex-grow-1">
                         <h6 class="o_wsale_products_item_title mb-2">
-                            <h1 class="ap_product_name" t-attf-style="color: {{product.text_color}};" itemprop="name" t-att-content="product.name" t-field="product.name" />
+                            <h1
+                                class="ap_product_name"
+                                t-attf-style="color: {{product.text_color}};"
+                                itemprop="name"
+                                t-att-content="product.name"
+                                t-field="product.name"
+                            />
                             <!--
                                 <a t-if="not product.website_published" role="button" t-att-href="product_href" class="btn btn-sm btn-danger" title="This product is unpublished.">
                                 Unpublished
@@ -40,38 +96,93 @@
                         </h6>
 
                     </div>
-                    <div class="o_wsale_product_sub justify-content-between align-items-end gap-2
-                                flex-wrap pt-1 pb-1 col-xs-6">
-                        <t t-set="template_price_vals" t-value="get_product_prices(product)" />
+                    <div
+                        class="o_wsale_product_sub justify-content-between align-items-end gap-2
+                                flex-wrap pt-1 pb-1 col-xs-6"
+                    >
+                        <t
+                            t-set="template_price_vals"
+                            t-value="get_product_prices(product)"
+                        />
                         <div class="o_wsale_product_btn" />
-                        <div class="product_price" itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" t-attf-style="color: {{product.secondary_color}};">
-                            <t t-if="'base_price' in template_price_vals and (template_price_vals['base_price'] &gt; template_price_vals['price_reduce']) and (template_price_vals['price_reduce'] or not website.prevent_zero_price_sale)">
-                                <del t-attf-class="text-muted me-1 h6 mb-0" style="white-space: nowrap;">
-                                    <em class="small" t-esc="template_price_vals['base_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
+                        <div
+                            class="product_price"
+                            itemprop="offers"
+                            itemscope="itemscope"
+                            itemtype="http://schema.org/Offer"
+                            t-attf-style="color: {{product.secondary_color}};"
+                        >
+                            <t
+                                t-if="'base_price' in template_price_vals and (template_price_vals['base_price'] &gt; template_price_vals['price_reduce']) and (template_price_vals['price_reduce'] or not website.prevent_zero_price_sale)"
+                            >
+                                <del
+                                    t-attf-class="text-muted me-1 h6 mb-0"
+                                    style="white-space: nowrap;"
+                                >
+                                    <em
+                                        class="small"
+                                        t-esc="template_price_vals['base_price']"
+                                        t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
+                                    />
                                 </del>
                             </t>
-                            <span class="h6 mb-0" t-attf-style="color: {{product.text_color}};" t-if="template_price_vals['price_reduce'] or not website.prevent_zero_price_sale" t-esc="template_price_vals['price_reduce']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
-                            <span class="h6 mb-0" t-attf-style="color: {{product.text_color}};" t-else="" t-field="website.prevent_zero_price_sale_text" />
-                            <span itemprop="price" style="display:none;" t-esc="template_price_vals['price_reduce']" />
-                            <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name" />
+                            <span
+                                class="h6 mb-0"
+                                t-attf-style="color: {{product.text_color}};"
+                                t-if="template_price_vals['price_reduce'] or not website.prevent_zero_price_sale"
+                                t-esc="template_price_vals['price_reduce']"
+                                t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
+                            />
+                            <span
+                                class="h6 mb-0"
+                                t-attf-style="color: {{product.text_color}};"
+                                t-else=""
+                                t-field="website.prevent_zero_price_sale_text"
+                            />
+                            <span
+                                itemprop="price"
+                                style="display:none;"
+                                t-esc="template_price_vals['price_reduce']"
+                            />
+                            <span
+                                itemprop="priceCurrency"
+                                style="display:none;"
+                                t-esc="website.currency_id.name"
+                            />
                         </div>
 
                     </div>
 
                 </div>
 
-                <div class="ap_buy_button" t-attf-style="background-color: {{product.secondary_color}}; color: {{product.text_color}};">
-                    <a t-attf-style="color: {{product.text_color}};" t-attf-href="{{product_href}}">
+                <div
+                    class="ap_buy_button"
+                    t-attf-style="background-color: {{product.secondary_color}}; color: {{product.text_color}};"
+                >
+                    <a
+                        t-attf-style="color: {{product.text_color}};"
+                        t-attf-href="{{product_href}}"
+                    >
                         Buy Now
                     </a>
                 </div>
 
                 <!-- Ribbons and banners -->
                 <div>
-                    <t t-set="bg_color" t-value="td_product['ribbon']['bg_color'] or ''" />
-                    <t t-set="text_color" t-value="td_product['ribbon']['text_color']" />
+                    <t
+                        t-set="bg_color"
+                        t-value="td_product['ribbon']['bg_color'] or ''"
+                    />
+                    <t
+                        t-set="text_color"
+                        t-value="td_product['ribbon']['text_color']"
+                    />
                     <t t-set="bg_class" t-value="td_product['ribbon']['html_class']" />
-                    <span t-attf-class="o_ribbon o_not_editable #{bg_class}" t-attf-style="#{text_color and ('color: %s; ' % text_color)}#{bg_color and 'background-color:' + bg_color}" t-out="td_product['ribbon']['html'] or ''" />
+                    <span
+                        t-attf-class="o_ribbon o_not_editable #{bg_class}"
+                        t-attf-style="#{text_color and ('color: %s; ' % text_color)}#{bg_color and 'background-color:' + bg_color}"
+                        t-out="td_product['ribbon']['html'] or ''"
+                    />
                 </div>
 
             </form>
@@ -79,9 +190,17 @@
 
     </template>
 
-    <template id="product_description" name="Product Description" inherit_id="website_sale.products_description">
+    <template
+        id="product_description"
+        name="Product Description"
+        inherit_id="website_sale.products_description"
+    >
         <xpath expr="//div[hasclass('oe_subdescription')]" position="replace">
-            <div class="ap_subdescription mb-2 text-muted small" contenteditable="false" t-attf-style="color: {{product.text_color}};">
+            <div
+                class="ap_subdescription mb-2 text-muted small"
+                contenteditable="false"
+                t-attf-style="color: {{product.text_color}};"
+            >
                 <div itemprop="description" t-field="product.description_sale" />
             </div>
         </xpath>

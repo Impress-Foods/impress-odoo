@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
     <template id="snippets" inherit_id="website.snippets" name="A+ - Snippets">
-        <xpath
-            expr="//div[@id='snippet_structure']/div[2]"
-            position="inside">
+        <xpath expr="//div[@id='snippet_structure']/div[2]" position="inside">
 
             <t t-snippet="theme_aplus.s_wave_transition_snippet">
                 <keywords>Transition</keywords>

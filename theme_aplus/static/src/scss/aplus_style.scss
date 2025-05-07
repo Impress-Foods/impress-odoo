@@ -4,7 +4,7 @@
 // Navigation Styles
 .o_navlink_background {
     background: transparent;
-    
+
     &:hover {
         background: transparent;
     }
@@ -21,6 +21,10 @@
 }
 
 @keyframes bob {
-    from { transform: translateY(0) rotate(0deg); }
-    to { transform: translateY(-4px) rotate(-1deg); }
+    from {
+        transform: translateY(0) rotate(0deg);
+    }
+    to {
+        transform: translateY(-4px) rotate(-1deg);
+    }
 }

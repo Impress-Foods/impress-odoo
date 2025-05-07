@@ -1,37 +1,46 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <template id="header_cart_link" inherit_id="website_sale.header_cart_link"
-        name="HeaderCart Link">
+    <template
+        id="header_cart_link"
+        inherit_id="website_sale.header_cart_link"
+        name="HeaderCart Link"
+    >
         <xpath expr="//i[1]" position="replace">
             <div class="shake-on-hover">
-                <img src="/theme_aplus/static/src/images/APLUS_Shot_Harvest.png"
-                    width="60" height="60"
-                    class="reversed" />
+                <img
+                    src="/theme_aplus/static/src/images/APLUS_Shot_Harvest.png"
+                    width="60"
+                    height="60"
+                    class="reversed"
+                />
             </div>
 
         </xpath>
     </template>
 
 
-    <template id="template_header_default"
+    <template
+        id="template_header_default"
         inherit_id="website.layout"
-        name="Template Header Default">
-        <xpath expr="//t[@t-call='portal.placeholder_user_sign_in']/t"
-            position="replace">
-            <t
-                t-set="_link_class" t-valuef="btn btn-outline-primary" />
+        name="Template Header Default"
+    >
+        <xpath
+            expr="//t[@t-call='portal.placeholder_user_sign_in']/t"
+            position="replace"
+        >
+            <t t-set="_link_class" t-valuef="btn btn-outline-primary" />
         </xpath>
-        <xpath expr="//t[@t-call='portal.user_dropdown']/t[2]"
-            position="attributes">
+        <xpath expr="//t[@t-call='portal.user_dropdown']/t[2]" position="attributes">
             <attribute name="t-valuef">dropdown-aplus</attribute>
         </xpath>
     </template>
 
-    <template id="product_card_options"
-        inherit_id="website.snippet_options" name="A+ - Product Card options">
-        <xpath expr="//div[hasclass('o_wsale_soptions_menu_sizes')]"
-            position="after">
+    <template
+        id="product_card_options"
+        inherit_id="website.snippet_options"
+        name="A+ - Product Card options"
+    >
+        <xpath expr="//div[hasclass('o_wsale_soptions_menu_sizes')]" position="after">
             <!--
              <we-colorpicker string="Main Color"
                 data-name="product_card_colorpicking"
