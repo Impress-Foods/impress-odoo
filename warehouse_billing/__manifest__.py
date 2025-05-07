@@ -23,6 +23,7 @@
     "data": [
         "data/ir_sequence.xml",
         "data/warehouse_cron.xml",
+        "security/warehouse_billing_security.xml",
         "security/ir.model.access.csv",
         "views/product_template_views.xml",
         "views/quant_history_views.xml",
