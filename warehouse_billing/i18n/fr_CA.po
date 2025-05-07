@@ -7,15 +7,16 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-31 13:56+0000\n"
-"PO-Revision-Date: 2025-03-31 10:10-0400\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-05-05 13:17+0000\n"
+"Last-Translator: Weblate Admin <admin@example.com>\n"
+"Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
+"impress-odoo/warehouse_billing/fr_CA/>\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.5\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.11\n"
 
 #. module: warehouse_billing
 #: model_terms:ir.ui.view,arch_db:warehouse_billing.view_warehouse_quant_group_form
@@ -43,7 +44,7 @@ msgstr "Actif"
 #: code:addons/warehouse_billing/models/warehouse_billing_config.py:0
 #, python-format
 msgid "All configs must have the same sale order."
-msgstr "Toutes les configurations doivent avoir le même bon de commande"
+msgstr "Toutes les configurations doivent avoir le même bon de commande."
 
 #. module: warehouse_billing
 #: model:ir.model.fields,field_description:warehouse_billing.field_warehouse_billing_config__base_qty
@@ -62,7 +63,6 @@ msgstr "Facturer la dernière journée du mois"
 
 #. module: warehouse_billing
 #: model:ir.model.fields,field_description:warehouse_billing.field_warehouse_billing_config__bill_seperately
-#, fuzzy
 msgid "Bill Seperately"
 msgstr "Facturer séparément"
 
@@ -98,14 +98,14 @@ msgstr "Jour de facturation (semaine)"
 #: code:addons/warehouse_billing/models/warehouse_billing_config.py:0
 #, python-format
 msgid "Billing day must be between 1 and 31."
-msgstr "La journée de facturation doit être entre 1 et 31"
+msgstr "La journée de facturation doit être entre 1 et 31."
 
 #. module: warehouse_billing
 #. odoo-python
 #: code:addons/warehouse_billing/models/warehouse_billing_config.py:0
 #, python-format
 msgid "Billing day must be between 1 and 7."
-msgstr "La journée de facturation doit être entre 1 et 7"
+msgstr "La journée de facturation doit être entre 1 et 7."
 
 #. module: warehouse_billing
 #: model_terms:ir.ui.view,arch_db:warehouse_billing.view_wizard_create_quant_history_form
@@ -162,7 +162,7 @@ msgstr "Mètres cube"
 #: code:addons/warehouse_billing/models/warehouse_billing_config.py:0
 #, python-format
 msgid "Currencies for all configs must match."
-msgstr "La devise de toutes les configurations doit être identique"
+msgstr "La devise de toutes les configurations doit être identique."
 
 #. module: warehouse_billing
 #: model:ir.model.fields,field_description:warehouse_billing.field_warehouse_billing_config__currency_id
@@ -232,7 +232,7 @@ msgstr "Domaine utilisé pour filtrer les historiques d'entreposage"
 #. module: warehouse_billing
 #: model:ir.model.fields,help:warehouse_billing.field_wizard_create_quant_history__tracking
 msgid "Ensure the traceability of a storable product in your warehouse."
-msgstr "Assure la traçabilité des produits dans l'entrepôt"
+msgstr "Assure la traçabilité des produits dans l'entrepôt."
 
 #. module: warehouse_billing
 #: model:ir.actions.server,name:warehouse_billing.ir_cron_generate_quant_history_ir_actions_server
@@ -278,9 +278,8 @@ msgstr "Inactif"
 
 #. module: warehouse_billing
 #: model:ir.model.fields,field_description:warehouse_billing.field_warehouse_quant_history__invoice_id
-#, fuzzy
 msgid "Invoice"
-msgstr "Facturé"
+msgstr "Facture"
 
 #. module: warehouse_billing
 #: model:ir.model.fields,field_description:warehouse_billing.field_warehouse_quant_group__invoice_ids
@@ -347,7 +346,7 @@ msgstr "Type de mesure"
 #: code:addons/warehouse_billing/wizards/wizard_create_quant_history.py:0
 #, python-format
 msgid "Missing fields!"
-msgstr ""
+msgstr "Champs manquants!"
 
 #. module: warehouse_billing
 #: model:ir.model.fields.selection,name:warehouse_billing.selection__warehouse_billing_config__billing_cycle__monthly
@@ -384,7 +383,7 @@ msgstr "Date planifiée de la prochaine facture"
 #: code:addons/warehouse_billing/wizards/wizard_generate_warehouse_sale.py:0
 #, python-format
 msgid "No billing product defined for %s."
-msgstr "Aucun produit de facture défini pour %s"
+msgstr "Aucun produit de facture défini pour %s."
 
 #. module: warehouse_billing
 #. odoo-python
@@ -400,7 +399,6 @@ msgstr "Non facturé"
 
 #. module: warehouse_billing
 #: model:ir.model.fields,field_description:warehouse_billing.field_warehouse_quant_group__sale_order_id
-#, fuzzy
 msgid "Order Reference"
 msgstr "Référence"
 
@@ -440,7 +438,6 @@ msgstr "Produit utilisé pour facturer l'espace d'entreposage"
 
 #. module: warehouse_billing
 #: model:ir.model.fields,field_description:warehouse_billing.field_warehouse_quant_history__quant_id
-#, fuzzy
 msgid "Quant"
 msgstr "ID du Quant"
 
@@ -520,7 +517,7 @@ msgstr "Mètres carrés"
 #. module: warehouse_billing
 #: model:ir.ui.menu,name:warehouse_billing.menu_warehouse_billing_data
 msgid "Stock Data"
-msgstr ""
+msgstr "Données de stock"
 
 #. module: warehouse_billing
 #: model_terms:ir.actions.act_window,help:warehouse_billing.action_quant_history
