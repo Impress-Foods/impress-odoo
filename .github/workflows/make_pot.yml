@@ -1,7 +1,7 @@
 name: make pot files
 
 on:
-  pull_request:
+  push:
     branches:
       - "17.0"
 
