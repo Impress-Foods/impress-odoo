@@ -8,7 +8,7 @@
     .wave-transition {
         position: relative;
         display: 100%;
-        height: 200px;
+        height: 29%;
         animation-name: wave-animation;
         animation-timing-function: cubic-bezier(0.18, 0.01, 0.9, 1);
         animation-iteration-count: infinite;
@@ -23,11 +23,11 @@
                 transform: translateX(-1%);
             }
         }
-        svg {
+        svg.wave-transition-svg {
             position: relative;
             display: block;
             width: 150%;
-            height: 200px;
+            height: 100%;
         }
     }
 }
