@@ -4,6 +4,7 @@
         id="products_item"
         name="Product Item"
         inherit_id="website_sale.products_item"
+        priority="99"
     >
         <xpath expr="//form[1]" position="replace">
             <form
@@ -194,6 +195,7 @@
         id="product_description"
         name="Product Description"
         inherit_id="website_sale.products_description"
+        priority="99"
     >
         <xpath expr="//div[hasclass('oe_subdescription')]" position="replace">
             <div

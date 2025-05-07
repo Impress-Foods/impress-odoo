@@ -4,6 +4,7 @@
         id="header_cart_link"
         inherit_id="website_sale.header_cart_link"
         name="HeaderCart Link"
+        priority="99"
     >
         <xpath expr="//i[1]" position="replace">
             <div class="shake-on-hover">
@@ -23,6 +24,7 @@
         id="template_header_default"
         inherit_id="website.layout"
         name="Template Header Default"
+        priority="99"
     >
         <xpath
             expr="//t[@t-call='portal.placeholder_user_sign_in']/t"
@@ -42,24 +44,9 @@
     >
         <xpath expr="//div[hasclass('o_wsale_soptions_menu_sizes')]" position="after">
             <!--
-             <we-colorpicker string="Main Color"
-                data-name="product_card_colorpicking"
-                data-select-style="true"
-                data-css-property="background-color"
-                data-apply-to=".color-block"
-            />
-            <we-colorpicker string="Wave Color"
-                data-name="product_card_colorpicking_wave_color"
-                data-select-style="true"
-                data-css-property="fill"
-                data-apply-to=".wave"
-            />
-            <we-colorpicker string="Secondary Color"
-                data-name="product_card_colorpicking_secondary"
-                data-select-style="true"
-                data-css-property="background-color"
-                data-apply-to=".ap_product_cart"
-            />
+             <we-colorpicker string="Main Color" data-name="product_card_colorpicking" data-select-style="true" data-css-property="background-color" data-apply-to=".color-block" />
+            <we-colorpicker string="Wave Color" data-name="product_card_colorpicking_wave_color" data-select-style="true" data-css-property="fill" data-apply-to=".wave" />
+            <we-colorpicker string="Secondary Color" data-name="product_card_colorpicking_secondary" data-select-style="true" data-css-property="background-color" data-apply-to=".ap_product_cart" />
         -->
 
         </xpath>
