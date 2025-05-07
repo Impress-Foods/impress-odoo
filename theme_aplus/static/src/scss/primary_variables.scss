@@ -7,20 +7,13 @@ $o-theme-font-configs: map-merge(
         "Gooper": (
             "family": (
                 "Gooper",
-                sans-serif,
+                sans-serif
             ),
         ),
     )
 );
 
-$o-website-values-palettes: (
-    (
-        "font": "Gooper",
-        "headings-font": "Gooper",
-        "navbar-font": "Gooper",
-        "buttons-font": "Gooper",
-    )
-);
+
 
 // Palette variables
 /*
@@ -166,5 +159,5 @@ $o-website-values-palettes: (
         "navbar-font": "Gooper",
         "buttons-font": "Gooper",
         "footer-template": "minimalist",
-    )
+    ),
 );
