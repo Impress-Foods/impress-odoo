@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - "17.0*"
+  push:
+    branches:
+      - "17.0"
 
 jobs:
   unreleased-deps:
