@@ -5,7 +5,7 @@
     "author": "Cédric Paradis",
     "website": "https://github.com/cparadis-impressfoods/impress-odoo",
     "category": "Theme/Website",
-    "depends": ["web", "website_sale", "web_editor"],
+    "depends": ["web", "website", "website_sale"],
     "data": [
         "views/product_card.xml",
         "views/product_template_views.xml",
