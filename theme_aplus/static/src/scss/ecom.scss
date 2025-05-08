@@ -1,10 +1,58 @@
+/* CSS Variables for consistent styling */
+:root {
+    --ap-transition-timing: 0.25s ease-in-out;
+    --ap-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --ap-shadow-md: 0 3px 6px rgba(0, 0, 0, 0.15);
+    --ap-border-radius: 18px;
+    --ap-border-radius-sm: 10px;
+}
+
 .o_wsale_product_grid_wrapper {
     height: 100%;
 }
 
+/* Animation keyframes */
+@keyframes wave-animation-bob {
+    0% {
+        transform: translateY(0px);
+    }
+    20% { /* Adjusted to create slower downward motion */
+        transform: translateY(1px);
+    }
+    40% { /* Extended downward motion time */
+        transform: translateY(3px);
+    }
+    50% {
+        transform: translateY(4px);
+    }
+    60% { /* Added intermediate step for smoother rise */
+        transform: translateY(3.5px);
+    }
+    80% { /* Extended upward motion time */
+        transform: translateY(1px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes wave-animation-slide {
+    0% {
+        transform: translateX(-20%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+/* Product cart component */
 .ap_product_cart {
+    /* Performance optimizations */
+    contain: layout paint;
+    will-change: transform;
+    
     flex-direction: var(--o-wsale-card-flex-direction, column);
-    border-radius: 18px;
+    border-radius: var(--ap-border-radius);
     padding: var(--o-wsale-card-padding, 0);
     background-color: var(--o-wsale-card-bg);
     color: var(--o-wsale-card-color);
@@ -13,37 +61,32 @@
     height: 100%;
     overflow: hidden;
     background-color: #ffcc33;
-
+    /* Improved spacing */
+    gap: 0.5rem;
+    /* Accessibility focus style */
+    &:focus-within {
+        outline: 2px solid currentColor;
+        outline-offset: 2px;
+    }
+    
+    /* Hover effects */
     &:hover {
         .color-block {
             height: 45%;
-            animation: wave-animation-bob 4s linear infinite;
-
-            @keyframes wave-animation-bob {
-                0% {
-                    transform: translateY(0px);
-                }
-                25% {
-                    transform: translateY(2px);
-                }
-                50% {
-                    transform: translateY(4px);
-                }
-                75% {
-                    transform: translateY(2px);
-                }
-                100% {
-                    transform: translateY(0px);
-                }
-            }
+            animation: wave-animation-bob 4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+            transition: height 0.25s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         .ap_product_image {
             opacity: 0%;
+            will-change: opacity;
         }
 
         .ap_product_text_container {
-            transform: translateY(-35%);
+            transform: translateY(-15%); /* Further reduced to prevent overlap */
+            will-change: transform;
+            position: relative;
+            z-index: 10; /* Ensure text always stays above the wave */
 
             .ap_subdescription {
                 opacity: 1;
@@ -53,50 +96,54 @@
         .ap_buy_button {
             opacity: 1;
             transform: translateY(-10px);
+            transition: opacity var(--ap-transition-timing), transform var(--ap-transition-timing);
+        }
+        .product_price {
+            opacity: 0%;
         }
     }
+    
+    /* Touch device active state */
+    &:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
 
+    /* Color block with wave */
     .color-block {
         background-color: orange;
         width: 100%;
-        height: 103%;
+        height: 100%;
         position: absolute;
         bottom: -1px;
         left: 0%;
-        transition-property: height;
-        transition-duration: 0.25s;
-        transition-timing-function: ease-in-out;
+        /* Asymmetric transitions - faster on hover in, slower on hover out */
+        transition: height 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        will-change: height;
     }
 
     .wave {
-        top: -20px;
+        top: -10px; /* Adjusted to raise the wave slightly */
         position: absolute;
         fill: orange;
         transform: translateX(-20%);
+        /* Adding transition properties for the wave itself */
+        transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
         animation-name: wave-animation-slide;
         animation-timing-function: linear;
         animation-iteration-count: infinite;
         animation-duration: 5s;
         animation-direction: alternate;
         width: 150%;
-
-        @keyframes wave-animation-slide {
-            0% {
-                transform: translateX(-20%);
-            }
-            100% {
-                transform: translateX(-1%);
-            }
-        }
     }
 
+    /* Product image */
     .ap_product_image {
         min-width: var(--o-wsale-card-thumb-size);
         width: var(--o-wsale-card-thumb-size);
-        transition-property: opacity;
-        transition-duration: 0.25s;
-        transition-timing-function: linear;
-        height: 80%;
+        transition: opacity var(--ap-transition-timing);
+        height: 65%; /* Reduced from 80% to take less vertical space */
+        margin: 0.5rem 0 0.25rem; /* Adjusted margin to balance spacing */
 
         .ap_product_image_link {
             padding-top: calc(100% / (var(--o-wsale-card-thumb-aspect-ratio, 1)));
@@ -113,14 +160,36 @@
         }
     }
 
+    /* Product text container */
     .ap_product_text_container {
         text-align: center;
-        justify-content: center;
-        transition-property: transform;
-        transition-duration: 0.25s;
-        transition-timing-function: ease-in-out;
-        display: block;
+        justify-content: flex-start; /* Changed from center to allow content to flow naturally */
+        transition: transform var(--ap-transition-timing);
+        display: flex;
+        flex-direction: column;
+        height: 8.5rem; /* Increased height to accommodate taller product name */
+        padding: 0.5rem 1rem 2.5rem; /* Increased bottom padding to make room for buy button */
+        margin-top: 0.25rem; /* Reduced top margin */
+        position: relative;
+        z-index: 2; /* Ensure it's above the color block in default state */
+        pointer-events: none;
 
+
+        .ap_product_short_description_wrapper {
+            min-height: calc(#{$font-size-sm * 1.4} * 2);
+            height: calc(#{$font-size-sm * 1.4} * 2); /* Fixed height for description section */
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            
+            .ap_product_short_description {
+                display: block;
+                width: 100%;
+                line-height: 1.4;
+            }
+        }
+        
         .ap_subdescription {
             height: calc(#{$font-size-sm * 1.1} * 2);
             opacity: 0;
@@ -130,35 +199,73 @@
         }
 
         .ap_product_name {
-            min-height: calc(#{$font-size-lg * 1.1} * 2);
-            height: calc(#{$font-size-lg * 1.1} * 3);
-            line-height: 1.1;
-            line-clamp: 2;
-            -webkit-line-clamp: 2;
+            min-height: 3.4rem; /* Force minimum height for consistency */
+            margin: 0.5rem 0;
+            font-weight: 600;
+            /* Use flex layout with vertical centering for single line names */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            
+            /* Style for the direct text content */
+            font-size: 1.4rem; /* Significantly increased font size */
+            line-height: 1.3; /* Adjusted line height for larger font */
+            font-weight: 700; /* Increased font weight for more prominence */
+            overflow: hidden; /* Hide any overflow */
+            text-align: center;
+            /* Force line wrapping for demonstration of 2 lines */
+            white-space: normal;
         }
 
         .product_price {
             transition-property: transform;
             transition-duration: 0.25s;
             transition-timing-function: ease-in-out;
-            transform: transposeY(1000px);
+            transform: translateY(0);
+            margin: 0.75rem 0;
         }
     }
 
-    .ap_buy_button {
-        display: block;
-        width: 100px;
-        opacity: 0;
-        transition-property: opacity transform;
-        transition-duration: 0.25s;
-        transition-timing-function: ease-in-out;
-        position: absolute;
-        bottom: 10px;
-        left: calc(50% - 50px);
-        text-align: center;
-        border-radius: 10px;
+    .o_wsale_product_sub {
+        pointer-events: none;
     }
 
+    /* Buy button */
+    .ap_buy_button {
+        display: block;
+        width: 120px;
+        opacity: 0;
+        transition: opacity var(--ap-transition-timing), transform var(--ap-transition-timing);
+        position: absolute;
+        bottom: 0.5rem; /* Positioned at bottom of card */
+        left: calc(50% - 60px);
+        text-align: center;
+        border-radius: var(--ap-border-radius-sm);
+        padding: 0.4rem 0; /* Slightly reduced padding */
+        box-shadow: var(--ap-shadow-sm);
+        will-change: opacity, transform;
+        
+        a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 0.25rem 0;
+        }
+        
+        &:hover {
+            box-shadow: var(--ap-shadow-md);
+        }
+        
+        &:focus-visible {
+            outline: 2px solid currentColor;
+            outline-offset: 2px;
+            box-shadow: var(--ap-shadow-md);
+        }
+    }
+
+    /* Ribbons */
     .o_ribbon_left {
         top: -2px;
         left: -1%;
@@ -173,6 +280,7 @@
         font-weight: 500;
         text-transform: uppercase;
         border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 
     .o_ribbon_right {
@@ -188,5 +296,38 @@
         font-size: 16px;
         font-weight: 500;
         text-transform: uppercase;
+    }
+}
+
+/* Accessibility - Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .ap_product_cart * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    .ap_product_cart {
+        .ap_product_image {
+            height: 70%;
+        }
+        
+        .ap_product_text_container {
+            padding: 0.25rem 0.5rem;
+            
+            .ap_product_name {
+                min-height: calc(#{$font-size-lg * 1.1} * 1.5);
+                height: calc(#{$font-size-lg * 1.1} * 2);
+            }
+        }
+        
+        .ap_buy_button {
+            width: 100px;
+            left: calc(50% - 50px);
+            bottom: 10px;
+        }
     }
 }
