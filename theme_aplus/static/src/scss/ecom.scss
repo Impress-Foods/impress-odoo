@@ -49,7 +49,6 @@
 .ap_product_cart {
     /* Performance optimizations */
     contain: layout paint;
-    will-change: transform;
     
     flex-direction: var(--o-wsale-card-flex-direction, column);
     border-radius: var(--ap-border-radius);
@@ -79,12 +78,10 @@
 
         .ap_product_image {
             opacity: 0%;
-            will-change: opacity;
         }
 
         .ap_product_text_container {
             transform: translateY(-15%); /* Further reduced to prevent overlap */
-            will-change: transform;
             position: relative;
             z-index: 10; /* Ensure text always stays above the wave */
 
@@ -119,7 +116,6 @@
         left: 0%;
         /* Asymmetric transitions - faster on hover in, slower on hover out */
         transition: height 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-        will-change: height;
     }
 
     .wave {
@@ -243,7 +239,6 @@
         border-radius: var(--ap-border-radius-sm);
         padding: 0.4rem 0; /* Slightly reduced padding */
         box-shadow: var(--ap-shadow-sm);
-        will-change: opacity, transform;
         
         a {
             display: block;
