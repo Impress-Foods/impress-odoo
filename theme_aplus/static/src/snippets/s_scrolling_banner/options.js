@@ -8,7 +8,7 @@ const TickerBlock = options.Class.extend({
      * @override
      */
     start() {
-        this.showTextButton = this.el.querySelector('we-button.edit-text-button');
+        this.showTextButton = this.el.querySelector("we-button.edit-text-button");
 
         this._super(...arguments);
         return this._reloadEditorUI();
@@ -22,14 +22,12 @@ const TickerBlock = options.Class.extend({
         this._reloadEditorUI();
     },
 
-
-
     /**
      * @override
      */
     cleanForSave() {
-        const $tickerText = this.$target.find('.ticker-text');
-        $tickerText.removeClass('ticker-text-editing').addClass('d-none');
+        const $tickerText = this.$target.find(".ticker-text");
+        $tickerText.removeClass("ticker-text-editing").addClass("d-none");
     },
 
     //--------------------------------------------------------------------------
@@ -59,17 +57,13 @@ const TickerBlock = options.Class.extend({
         this._triggerReload();
     },
 
-
-
-
-
     //--------------------------------------------------------------------------
     // Private
     //--------------------------------------------------------------------------
 
     /**
      * Handles click on the edit text button.
-     * 
+     *
      * @private
      */
     _onEditTextClick(ev) {

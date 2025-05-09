@@ -93,7 +93,7 @@ $o-color-palettes: map-merge(
             "o-cc2-btn-secondary": $aplus-blue,
             "o-cc2-btn-secondary-text": $aplus-blue-purple,
             "o-cc2-btn-secondary-border": $aplus-blue,
-            "o-cc2-bg":$aplus-blue,
+            "o-cc2-bg": $aplus-blue,
 
             "o-cc3-text": $aplus-white,
             "o-cc3-headings": $aplus-pale-magenta,
@@ -107,7 +107,7 @@ $o-color-palettes: map-merge(
             "o-cc3-btn-primary-text": $aplus-red,
             "o-cc3-btn-primary-border": $aplus-red,
             "o-cc3-btn-secondary": $aplus-red,
-            "o-cc3-btn-secondary-text": $aplus-red, 
+            "o-cc3-btn-secondary-text": $aplus-red,
             "o-cc3-btn-secondary-border": $aplus-red,
             "o-cc3-bg": $aplus-white,
 
@@ -157,5 +157,5 @@ $o-website-values-palettes: (
         "navbar-font": "Gooper",
         "buttons-font": "Gooper",
         "footer-template": "minimalist",
-    ),
+    )
 );

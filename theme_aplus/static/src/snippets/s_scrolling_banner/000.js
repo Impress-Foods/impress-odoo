@@ -39,10 +39,12 @@ const TickerBlock = publicWidget.Widget.extend({
             ? $sourceText.text().trim()
             : "Infinite Ticker";
         const tickerSpeed = parseInt(this.el.dataset.speed) || 50;
-        
+
         // Get the speed multiplier from CSS variables (set by the class) - higher values = faster animation
         const computedStyle = window.getComputedStyle(this.el);
-        const speedMultiplier = parseFloat(computedStyle.getPropertyValue('--ticker-speed-multiplier')) || 1.0;
+        const speedMultiplier =
+            parseFloat(computedStyle.getPropertyValue("--ticker-speed-multiplier")) ||
+            1.0;
 
         // Clear any existing content
         this._cleanupTicker();
@@ -74,35 +76,35 @@ const TickerBlock = publicWidget.Widget.extend({
         // Calculate animation duration based on speed setting
         // Lower speed value = slower animation (longer duration)
         const speedFactor = 101 - Math.min(Math.max(parseInt(tickerSpeed), 10), 100);
-        
+
         // Calculate the baseline duration
         const baselineDuration = (stripeWidth / 70) * (speedFactor / 5);
-        
+
         // Apply the speed multiplier - higher values = faster animation (shorter duration)
         // The duration is inversely proportional to the speed
         const duration = Math.max(20, baselineDuration / speedMultiplier);
-        
+
         // For ultra-smooth animation, use requestAnimationFrame instead of CSS animation
         // But first apply basic styles
         this.$tickerStripe.css({
             "will-change": "transform", // Performance optimization
             "backface-visibility": "hidden", // Prevent flickering
-            "transform": "translate3d(0,0,0)", // Initial position
+            transform: "translate3d(0,0,0)", // Initial position
             "transition-property": "none", // No transitions for smoother animation
         });
-        
+
         // Set up animation using requestAnimationFrame for smoother movement
         if (this._animationFrameId) {
             cancelAnimationFrame(this._animationFrameId);
         }
-        
+
         // Store animation properties
         this._animProps = {
             startTime: performance.now(),
             duration: duration * 1000, // Convert to milliseconds
             stripeWidth: stripeWidth,
         };
-        
+
         // Start the animation
         this._animateFrame();
 
@@ -173,46 +175,51 @@ const TickerBlock = publicWidget.Widget.extend({
     _animateFrame() {
         // Cancel if props aren't set
         if (!this._animProps) return;
-        
+
         const now = performance.now();
         const elapsed = now - this._animProps.startTime;
         const duration = this._animProps.duration;
-        
+
         // Calculate position based on elapsed time with higher precision
         let position = (elapsed % duration) / duration;
         position = position * -50; // Move from 0% to -50%
-        
+
         // Round to 5 decimal places for Firefox optimization
         // This prevents micro-jitter caused by Firefox's rendering engine
         position = Math.round(position * 100000) / 100000;
-        
+
         // Apply the transform with specific Firefox optimizations
         // Using matrix3d for Firefox which can provide smoother animation in some cases
-        const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-        
+        const isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
+
         if (isFirefox) {
             // Create a matrix3d transform that's equivalent to translateX but tends to perform better in Firefox
             // The format is: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x, 0, 0, 1)
             // Where x is the horizontal translation value
             const translateValue = (position / 100) * this._animProps.stripeWidth;
-            this.$tickerStripe.css('transform', `matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, ${translateValue}, 0, 0, 1)`);
+            this.$tickerStripe.css(
+                "transform",
+                `matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, ${translateValue}, 0, 0, 1)`
+            );
         } else {
             // For other browsers, use translate3d which works well
-            this.$tickerStripe.css('transform', `translate3d(${position}%, 0, 0)`);
+            this.$tickerStripe.css("transform", `translate3d(${position}%, 0, 0)`);
         }
-        
+
         // Continue animation loop - use setTimeout with 0 delay for Firefox
         // This helps Firefox to schedule frames more consistently
         if (isFirefox) {
             cancelAnimationFrame(this._animationFrameId);
             this._animationFrameId = setTimeout(() => {
-                this._animationFrameId = requestAnimationFrame(() => this._animateFrame());
+                this._animationFrameId = requestAnimationFrame(() =>
+                    this._animateFrame()
+                );
             }, 0);
         } else {
             this._animationFrameId = requestAnimationFrame(() => this._animateFrame());
         }
     },
-    
+
     /**
      * Handles changes to the ticker's data attributes.
      * @private

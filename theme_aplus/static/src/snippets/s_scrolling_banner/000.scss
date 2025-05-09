@@ -6,7 +6,6 @@
     width: 100%;
     padding: 1rem 0;
 
-
     &.o_full_width {
         max-width: 100% !important;
         width: 100% !important;
@@ -44,13 +43,11 @@
         align-items: center;
         flex-shrink: 0; /* Prevent items from shrinking */
 
-
         &::after {
             content: "•";
             display: inline-block;
             margin-left: 1.5rem;
             margin-right: 1.5rem; /* Add spacing after the bullet */
-
         }
 
         &:last-child::after {
@@ -86,10 +83,10 @@
     will-change: transform;
     backface-visibility: hidden;
     perspective: 1000px;
-    
+
     /* Firefox-specific optimizations */
     @-moz-document url-prefix() {
-        transform: translate3d(0,0,0); /* Force 3D rendering */
+        transform: translate3d(0, 0, 0); /* Force 3D rendering */
         image-rendering: optimizeSpeed; /* Prioritize animation smoothness */
         text-rendering: optimizeSpeed; /* Optimize text rendering for performance */
         vector-effect: non-scaling-stroke; /* Prevent pixelation during animation */
@@ -102,21 +99,21 @@
     &.ticker-speed-05 {
         --ticker-speed-multiplier: 0.5;
     }
-    
+
     &.ticker-speed-10 {
-        --ticker-speed-multiplier: 1.0;
+        --ticker-speed-multiplier: 1;
     }
-    
+
     &.ticker-speed-15 {
         --ticker-speed-multiplier: 1.5;
     }
-    
+
     &.ticker-speed-20 {
-        --ticker-speed-multiplier: 2.0;
+        --ticker-speed-multiplier: 2;
     }
-    
+
     &.ticker-speed-30 {
-        --ticker-speed-multiplier: 3.0;
+        --ticker-speed-multiplier: 3;
     }
 }
 
@@ -143,17 +140,17 @@
     border: 1px dashed #dee2e6;
     border-radius: 0.25rem;
     max-width: 90%;
-    
+
     // Hide the editor in non-edit mode - support all Odoo view modes
     body:not(.editor_enable) & {
         display: none !important;
     }
-    
+
     // Also hide in backend preview mode
     .o_wysiwyg_no_edit & {
         display: none !important;
     }
-    
+
     .ticker-source-text {
         display: inline-block;
         min-width: 200px;
@@ -165,16 +162,16 @@
         font-size: 1rem;
         line-height: 1.5;
         text-align: center;
-        
+
         &:focus {
             outline: none;
             border-color: #80bdff;
             box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
         }
     }
-    
+
     &::before {
-        content: 'Edit Ticker Text:';
+        content: "Edit Ticker Text:";
         display: block;
         margin-bottom: 0.5rem;
         font-weight: bold;

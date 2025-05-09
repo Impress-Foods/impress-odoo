@@ -16,19 +16,23 @@
     0% {
         transform: translateY(0px);
     }
-    20% { /* Adjusted to create slower downward motion */
+    20% {
+        /* Adjusted to create slower downward motion */
         transform: translateY(1px);
     }
-    40% { /* Extended downward motion time */
+    40% {
+        /* Extended downward motion time */
         transform: translateY(3px);
     }
     50% {
         transform: translateY(4px);
     }
-    60% { /* Added intermediate step for smoother rise */
+    60% {
+        /* Added intermediate step for smoother rise */
         transform: translateY(3.5px);
     }
-    80% { /* Extended upward motion time */
+    80% {
+        /* Extended upward motion time */
         transform: translateY(1px);
     }
     100% {
@@ -49,7 +53,7 @@
 .ap_product_cart {
     /* Performance optimizations */
     contain: layout paint;
-    
+
     flex-direction: var(--o-wsale-card-flex-direction, column);
     border-radius: var(--ap-border-radius);
     padding: var(--o-wsale-card-padding, 0);
@@ -67,7 +71,7 @@
         outline: 2px solid currentColor;
         outline-offset: 2px;
     }
-    
+
     /* Hover effects */
     &:hover {
         .color-block {
@@ -93,13 +97,14 @@
         .ap_buy_button {
             opacity: 1;
             transform: translateY(-10px);
-            transition: opacity var(--ap-transition-timing), transform var(--ap-transition-timing);
+            transition: opacity var(--ap-transition-timing),
+                transform var(--ap-transition-timing);
         }
         .product_price {
             opacity: 0%;
         }
     }
-    
+
     /* Touch device active state */
     &:active {
         transform: scale(0.98);
@@ -170,22 +175,23 @@
         z-index: 2; /* Ensure it's above the color block in default state */
         pointer-events: none;
 
-
         .ap_product_short_description_wrapper {
             min-height: calc(#{$font-size-sm * 1.4} * 2);
-            height: calc(#{$font-size-sm * 1.4} * 2); /* Fixed height for description section */
+            height: calc(
+                #{$font-size-sm * 1.4} * 2
+            ); /* Fixed height for description section */
             margin-bottom: 0.5rem;
             display: flex;
             align-items: flex-start;
             justify-content: center;
-            
+
             .ap_product_short_description {
                 display: block;
                 width: 100%;
                 line-height: 1.4;
             }
         }
-        
+
         .ap_subdescription {
             height: calc(#{$font-size-sm * 1.1} * 2);
             opacity: 0;
@@ -202,7 +208,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            
+
             /* Style for the direct text content */
             font-size: 1.4rem; /* Significantly increased font size */
             line-height: 1.3; /* Adjusted line height for larger font */
@@ -231,7 +237,8 @@
         display: block;
         width: 120px;
         opacity: 0;
-        transition: opacity var(--ap-transition-timing), transform var(--ap-transition-timing);
+        transition: opacity var(--ap-transition-timing),
+            transform var(--ap-transition-timing);
         position: absolute;
         bottom: 0.5rem; /* Positioned at bottom of card */
         left: calc(50% - 60px);
@@ -239,7 +246,7 @@
         border-radius: var(--ap-border-radius-sm);
         padding: 0.4rem 0; /* Slightly reduced padding */
         box-shadow: var(--ap-shadow-sm);
-        
+
         a {
             display: block;
             width: 100%;
@@ -248,11 +255,11 @@
             text-decoration: none;
             padding: 0.25rem 0;
         }
-        
+
         &:hover {
             box-shadow: var(--ap-shadow-md);
         }
-        
+
         &:focus-visible {
             outline: 2px solid currentColor;
             outline-offset: 2px;
@@ -309,16 +316,16 @@
         .ap_product_image {
             height: 70%;
         }
-        
+
         .ap_product_text_container {
             padding: 0.25rem 0.5rem;
-            
+
             .ap_product_name {
                 min-height: calc(#{$font-size-lg * 1.1} * 1.5);
                 height: calc(#{$font-size-lg * 1.1} * 2);
             }
         }
-        
+
         .ap_buy_button {
             width: 100px;
             left: calc(50% - 50px);
