@@ -149,6 +149,7 @@ $o-color-palettes: map-merge(
 $o-selected-color-palettes-names: append($o-selected-color-palettes-names, "aplus");
 $o-selected-color-palettes-names: append($o-selected-color-palettes-names, "aplus-alt");
 
+// prettier-ignore
 $o-website-values-palettes: (
     (
         "color-palettes-name": "aplus",
@@ -157,5 +158,5 @@ $o-website-values-palettes: (
         "navbar-font": "Gooper",
         "buttons-font": "Gooper",
         "footer-template": "minimalist",
-    )
+    ),
 );
