@@ -28,17 +28,38 @@
                     <field name="production_id" invisible="1" />
                     <field name="quality_check_id" invisible="1" />
                     <div class="oe_button_box" name="button_box">
-                        <button class="oe_stat_button" name="action_view_linked_production" type="object" icon="fa-wrench" groups="mrp.group_mrp_user" invisible="not production_id">
+                        <button
+                            class="oe_stat_button"
+                            name="action_view_linked_production"
+                            type="object"
+                            icon="fa-wrench"
+                            groups="mrp.group_mrp_user"
+                            invisible="not production_id"
+                        >
                             <div class="o_field_widget o_stat_info">
                                 <span class="o_stat_text">Manufacturing</span>
                             </div>
                         </button>
-                        <button class="oe_stat_button" name="action_view_hpp_lines" type="object" icon="fa-superpowers" groups="mrp.group_mrp_user" invisible="not log_line_ids">
+                        <button
+                            class="oe_stat_button"
+                            name="action_view_hpp_lines"
+                            type="object"
+                            icon="fa-superpowers"
+                            groups="mrp.group_mrp_user"
+                            invisible="not log_line_ids"
+                        >
                             <div class="o_field_widget o_stat_info">
                                 <span class="o_stat_text">HPP Lines</span>
                             </div>
                         </button>
-                        <button class="oe_stat_button" name="action_quality_worksheet" type="object" icon="fa-pencil" groups="mrp.group_mrp_user" invisible="not quality_check_id">
+                        <button
+                            class="oe_stat_button"
+                            name="action_quality_worksheet"
+                            type="object"
+                            icon="fa-pencil"
+                            groups="mrp.group_mrp_user"
+                            invisible="not quality_check_id"
+                        >
                             <div class="o_field_widget o_stat_info">
                                 <span class="o_stat_text">Worksheet</span>
                             </div>
@@ -66,11 +87,21 @@
                     <field name="log_line_ids" readonly="1" nolabel='1' />
                     <group>
                         <group>
-                            <field name="signature" widget="signature" options="{'size':[0,90]}" string="Weekly Verification" />
+                            <field
+                                name="signature"
+                                widget="signature"
+                                options="{'size':[0,90]}"
+                                string="Weekly Verification"
+                            />
                             <field name="weekly_signature_date" />
                         </group>
                         <group>
-                            <field name="monthly_signature" widget="signature" options="{'size':[0,90]}" string="Monthly Verification" />
+                            <field
+                                name="monthly_signature"
+                                widget="signature"
+                                options="{'size':[0,90]}"
+                                string="Monthly Verification"
+                            />
                             <field name="monthly_signature_date" />
                         </group>
                     </group>
@@ -88,9 +119,18 @@
                 <field name="name" string="Name" />
                 <field name="lot_id" string="Sequence" />
                 <field name="product_id" string="Product" />
-                <filter string="Orphans" name="orphans" domain="[('production_id','=',False)]" />
+                <filter
+                    string="Orphans"
+                    name="orphans"
+                    domain="[('production_id','=',False)]"
+                />
                 <group expand="1" string="Group By">
-                    <filter string="Date" name="create_date" domain="[]" context="{'group_by':'create_date'}" />
+                    <filter
+                        string="Date"
+                        name="create_date"
+                        domain="[]"
+                        context="{'group_by':'create_date'}"
+                    />
                 </group>
             </search>
         </field>
