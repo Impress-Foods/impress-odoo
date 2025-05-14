@@ -13,6 +13,19 @@ $o-theme-font-configs: map-merge(
     )
 );
 
+
+$o-bg-shapes: map-merge($o-bg-shapes,
+    (
+        'illustration': map-merge(
+            map-get($o-bg-shapes, 'illustration') or (),
+            (
+                'aplus/01': ('position': top, 'size': auto 100%, 'colors': (3),
+                ),
+            ),
+        )
+    )   
+);
+
 // Palette variables
 /*
 X [1-5]
@@ -53,31 +66,38 @@ $o-color-palettes: map-merge(
 
             // (main text)
             "footer-template": "minimalist",
-        ),
+
+            "o-cc1-text": $aplus-green,
+
+        
+        
+            ),
         "aplus-alt": (
             "o-color-1": $aplus-white,
             "o-color-2": $aplus-columbia-blue,
             "o-color-3": $aplus-red,
-            "o-color-4": $aplus-red,
-            "o-color-5": $aplus-white,
-            "o-body": $aplus-blue,
+            "o-color-4": $aplus-orange,
+            "o-color-5": $aplus-black,
+            "o-body": $aplus-black,
 
             // Presets
-            "o-cc1-text": $aplus-pale-magenta,
+
+            "o-cc1-text": $aplus-black,
             "o-cc1-headings": $aplus-pale-magenta,
             "o-cc1-h2": $aplus-pale-magenta,
             "o-cc1-h3": $aplus-pale-magenta,
             "o-cc1-h4": $aplus-pale-magenta,
             "o-cc1-h5": $aplus-pale-magenta,
             "o-cc1-h6": $aplus-pale-magenta,
-            "o-cc1-link": $aplus-orange,
+            "o-cc1-link": $aplus-red,
             "o-cc1-btn-primary": $aplus-red,
-            "o-cc1-btn-primary-text": $aplus-pale-magenta,
+            "o-cc1-btn-primary-text": $aplus-red,
             "o-cc1-btn-primary-border": $aplus-red,
-            "o-cc1-btn-secondary": $aplus-pale-magenta,
-            "o-cc1-btn-secondary-text": $aplus-pale-magenta,
+            "o-cc1-btn-secondary": $aplus-red,
+            "o-cc1-btn-secondary-text": $aplus-red,
             "o-cc1-btn-secondary-border": $aplus-red,
-            "o-cc1-bg": $aplus-red,
+            "o-cc1-bg": $aplus-white,
+            
 
             "o-cc2-text": $aplus-blue-purple,
             "o-cc2-headings": $aplus-blue-purple,
@@ -95,21 +115,7 @@ $o-color-palettes: map-merge(
             "o-cc2-btn-secondary-border": $aplus-blue,
             "o-cc2-bg": $aplus-blue,
 
-            "o-cc3-text": $aplus-white,
-            "o-cc3-headings": $aplus-pale-magenta,
-            "o-cc3-h2": $aplus-pale-magenta,
-            "o-cc3-h3": $aplus-pale-magenta,
-            "o-cc3-h4": $aplus-pale-magenta,
-            "o-cc3-h5": $aplus-pale-magenta,
-            "o-cc3-h6": $aplus-pale-magenta,
-            "o-cc3-link": $aplus-red,
-            "o-cc3-btn-primary": $aplus-red,
-            "o-cc3-btn-primary-text": $aplus-red,
-            "o-cc3-btn-primary-border": $aplus-red,
-            "o-cc3-btn-secondary": $aplus-red,
-            "o-cc3-btn-secondary-text": $aplus-red,
-            "o-cc3-btn-secondary-border": $aplus-red,
-            "o-cc3-bg": $aplus-white,
+
 
             "o-cc4-text": $aplus-peach-orange,
             "o-cc4-headings": $aplus-peach-orange,
@@ -126,6 +132,22 @@ $o-color-palettes: map-merge(
             "o-cc4-btn-secondary-text": $aplus-peach-orange,
             "o-cc4-btn-secondary-border": $aplus-orange,
             "o-cc4-bg": $aplus-orange,
+
+            "o-cc3-text": $aplus-pale-magenta,
+            "o-cc3-headings": $aplus-pale-magenta,
+            "o-cc3-h2": $aplus-pale-magenta,
+            "o-cc3-h3": $aplus-pale-magenta,
+            "o-cc3-h4": $aplus-pale-magenta,
+            "o-cc3-h5": $aplus-pale-magenta,
+            "o-cc3-h6": $aplus-pale-magenta,
+            "o-cc3-link": $aplus-orange,
+            "o-cc3-btn-primary": $aplus-red,
+            "o-cc3-btn-primary-text": $aplus-pale-magenta,
+            "o-cc3-btn-primary-border": $aplus-red,
+            "o-cc3-btn-secondary": $aplus-pale-magenta,
+            "o-cc3-btn-secondary-text": $aplus-pale-magenta,
+            "o-cc3-btn-secondary-border": $aplus-red,
+            "o-cc3-bg": $aplus-red,
 
             "o-cc5-text": $aplus-white,
             "o-cc5-headings": $aplus-white,

@@ -7,6 +7,7 @@
     "category": "Theme/Website",
     "depends": ["web", "website", "website_sale"],
     "data": [
+        "data/shapes.xml",
         "views/product_card.xml",
         "views/product_template_views.xml",
         "views/snippets/options.xml",
