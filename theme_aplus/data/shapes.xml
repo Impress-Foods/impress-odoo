@@ -6,4 +6,10 @@
         <field name="url">/web_editor/shape/illustration/aplus/01.svg</field>
         <field name="public" eval="True"/>
     </record>
+    <record id="shape_aplus_02" model="ir.attachment">
+        <field name="name">02.svg</field>
+        <field name="datas" type="base64" file="theme_aplus/static/shapes/aplus/02.svg"/>
+        <field name="url">/web_editor/shape/illustration/aplus/02.svg</field>
+        <field name="public" eval="True"/>
+    </record>
 </odoo>

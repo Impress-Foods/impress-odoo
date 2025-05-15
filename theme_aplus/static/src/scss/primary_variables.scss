@@ -19,7 +19,9 @@ $o-bg-shapes: map-merge($o-bg-shapes,
         'illustration': map-merge(
             map-get($o-bg-shapes, 'illustration') or (),
             (
-                'aplus/01': ('position': top, 'size': auto 100%, 'colors': (3),
+                'aplus/01': ('position': top, 'size': 100% auto, 'colors': (2, 3),
+                ),
+                'aplus/02': ('position': top, 'size': 100% auto, 'colors': (2, 3),
                 ),
             ),
         )
