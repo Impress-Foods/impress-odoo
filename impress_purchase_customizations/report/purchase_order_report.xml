@@ -1,21 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <?xml-model href="../../import_xml.rng" type="application/xml"?>
 <odoo>
     <record id="report_purchase_order_internal" model="ir.actions.report">
         <field name="name">Purchase Order Internal</field>
         <field name="model">purchase.order</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">impress_purchase_customizations.report_purchaseorder_internal</field>
-        <field name="report_file">impress_purchase_customizations.report_purchaseorder_internal</field>
+        <field
+            name="report_name"
+        >impress_purchase_customizations.report_purchaseorder_internal</field>
+        <field
+            name="report_file"
+        >impress_purchase_customizations.report_purchaseorder_internal</field>
         <field name="print_report_name">'%s' % object.name</field>
         <field name="binding_model_id" ref="purchase.model_purchase_order" />
         <field name="binding_type">report</field>
     </record>
 
 
-    <template id="report_purchaseorder_internal_document"
+    <template
+        id="report_purchaseorder_internal_document"
         inherit_id="purchase.report_purchaseorder_document"
-        primary="True" priority="30">
+        primary="True"
+        priority="30"
+    >
 
 
         <!-- Add needed columns for internal reports -->
@@ -49,8 +56,10 @@
     <template id="report_purchaseorder_internal">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-call="impress_purchase_customizations.report_purchaseorder_internal_document"
-                    t-lang="o.partner_id.lang" />
+                <t
+                    t-call="impress_purchase_customizations.report_purchaseorder_internal_document"
+                    t-lang="o.partner_id.lang"
+                />
             </t>
         </t>
     </template>
