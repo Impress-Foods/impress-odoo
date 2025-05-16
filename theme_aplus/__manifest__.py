@@ -29,6 +29,7 @@
             "theme_aplus/static/src/snippets/s_scrolling_banner/000.xml",
             "theme_aplus/static/src/snippets/s_scrolling_banner/000.js",
             "theme_aplus/static/src/scss/aplus_style.scss",
+            "theme_aplus/static/src/scss/_aurabora_theme.scss",
             "theme_aplus/static/src/scss/ecom.scss",
         ],
         "website.assets_wysiwyg": [

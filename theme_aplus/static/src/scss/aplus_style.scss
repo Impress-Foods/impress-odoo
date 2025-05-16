@@ -1,5 +1,6 @@
 @use "./aplus_colors.scss";
 @use "./fonts";
+@use "./aurabora_theme" as ab;
 
 // Navigation Styles
 .o_navlink_background {
@@ -11,6 +12,25 @@
 }
 
 
+.heading-outline {
+    -webkit-text-stroke-color: var(--dark);
+    -webkit-text-stroke-width: 1px;
+    
+    align-content: center;
+    height: 100%;
+    
+    text-transform: uppercase;
+    
+    h1 {
+        font-size: 5rem;
+
+    }
+    h2 {
+        font-size: 2.5rem;
+        font-style: italic;
+    }
+
+}
 
 
 // Transform Utilities
