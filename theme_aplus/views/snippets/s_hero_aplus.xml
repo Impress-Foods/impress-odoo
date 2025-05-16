@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_hero_aplus" name="A+ Juice Bar Hero">
+        <section class="s_hero_aplus position-relative overflow-hidden">
+            <div class="container py-5">
+                <div class="row align-items-center min-vh-75 py-5">
+                    <div class="col-lg-6 py-5 position-relative z-2">
+                        <span class="badge bg-aplus-orange text-white mb-3 px-3 py-2 rounded-pill">
+                            <i class="fa fa-leaf me-2"></i>100% Organic &amp; Natural
+                        </span>
+                        <h1 class="display-4 fw-bold mb-3">
+                            <span class="d-block" style="color: var(--aplus-blue);">Pure. Fresh.</span>
+                            <span class="text-aplus-orange">Naturally Sweetened.</span>
+                        </h1>
+                        <p class="lead mb-4" style="color: var(--aplus-black);">
+                            Experience the perfect balance of nature's finest organic fruits 
+                            enhanced with a touch of pure Canadian maple syrup. 
+                            Our cold-pressed juices are packed with nutrients and flavor.
+                        </p>
+                        <div class="d-flex gap-3">
+                            <a href="/shop" class="btn btn-primary btn-lg px-4" style="background-color: var(--aplus-orange); border-color: var(--aplus-orange);">
+                                <i class="fa fa-shopping-cart me-2"></i>Shop Juices
+                            </a>
+                            <a href="/about-us" class="btn btn-outline-primary btn-lg px-4" style="color: var(--aplus-blue); border-color: var(--aplus-blue);">
+                                <i class="fa fa-leaf me-2"></i>Our Story
+                            </a>
+                        </div>
+                        <div class="mt-4 d-flex flex-wrap gap-4">
+                            <div class="d-flex align-items-center">
+                                <i class="fa fa-check-circle text-aplus-green me-2"></i>
+                                <span>No Added Sugar</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="fa fa-check-circle text-aplus-green me-2"></i>
+                                <span>Cold-Pressed</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="fa fa-check-circle text-aplus-green me-2"></i>
+                                <span>Rich in Antioxidants</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Decorative fruit elements -->
+                        <img src="/theme_aplus/static/src/images/A+ SuperFruits_Stickers Illustrations_1.png" class="position-absolute fruit-1" alt="Fruit decoration" style="width: 80px; top: 20%; left: -40px; transform: rotate(-15deg); z-index: -1;"/>
+                        <img src="/theme_aplus/static/src/images/A+ SuperFruits_Stickers Illustrations_7.png" class="position-absolute fruit-2" alt="Fruit decoration" style="width: 60px; bottom: 20%; left: 20px; transform: rotate(15deg); z-index: -1;"/>
+                    </div>
+                    <div class="col-lg-6 d-none d-lg-block">
+                        <div class="position-relative">
+                            <div class="hero-shape-1"></div>
+                            <div class="hero-shape-2"></div>
+                            <div class="hero-image position-relative">
+                                <img src="/theme_aplus/static/src/images/APLUS_Shot_Harvest.png" alt="Fresh organic fruit juices with maple syrup" class="img-fluid" style="border-radius: 1rem; box-shadow: 0 1rem 3rem rgba(0,0,0,0.15); max-width: 90%; margin: 0 auto; display: block;"/>
+                            </div>
+                            <img src="/theme_aplus/static/src/images/A+ SuperFruits_Stickers Illustrations_12.png" class="position-absolute fruit-3" alt="Fruit decoration" style="width: 100px; top: -20px; right: 40px; transform: rotate(15deg); z-index: 2;"/>
+                            <img src="/theme_aplus/static/src/images/A+ SuperFruits_Stickers Illustrations_9.png" class="position-absolute fruit-4" alt="Fruit decoration" style="width: 120px; bottom: -30px; right: 0; transform: rotate(-10deg); z-index: 2;"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <style>
+            .s_hero_aplus {
+                background-color: var(--aplus-white);
+                position: relative;
+                overflow: hidden;
+                padding: 4rem 0;
+            }
+            
+            .s_hero_aplus::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, var(--aplus-white) 0%, var(--aplus-columbia-blue) 100%);
+                z-index: 0;
+                opacity: 0.9;
+            }
+            
+            .s_hero_aplus .container {
+                position: relative;
+                z-index: 1;
+            }
+            
+            .hero-shape-1 {
+                position: absolute;
+                top: 10%;
+                left: 10%;
+                width: 200px;
+                height: 200px;
+                background: var(--aplus-peach-orange);
+                opacity: 0.3;
+                border-radius: 50%;
+                filter: blur(40px);
+                z-index: 0;
+            }
+            
+            .hero-shape-2 {
+                position: absolute;
+                bottom: 10%;
+                right: 10%;
+                width: 250px;
+                height: 250px;
+                background: var(--aplus-blue-purple);
+                opacity: 0.2;
+                border-radius: 50%;
+                filter: blur(50px);
+                z-index: 0;
+            }
+            
+            .hero-image {
+                position: relative;
+                z-index: 1;
+                transition: all 0.4s ease;
+                transform-style: preserve-3d;
+                perspective: 1000px;
+            }
+            
+            .hero-image:hover {
+                transform: translateY(-10px) rotateY(5deg);
+            }
+            
+            .hero-image img {
+                transition: transform 0.4s ease;
+                transform: translateZ(0);
+                backface-visibility: hidden;
+            }
+            
+            .hero-image:hover img {
+                transform: translateZ(20px) scale(1.02);
+            }
+            
+            .fruit-1, .fruit-2, .fruit-3, .fruit-4 {
+                transition: all 0.5s ease;
+            }
+            
+            .fruit-1:hover, .fruit-2:hover, .fruit-3:hover, .fruit-4:hover {
+                transform: scale(1.1) rotate(10deg);
+                filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+            }
+            
+            @media (max-width: 991.98px) {
+                .s_hero_aplus::before {
+                    width: 100%;
+                    border-bottom-left-radius: 0;
+                    opacity: 0.5;
+                }
+                
+                .hero-shape-1,
+                .hero-shape-2 {
+                    display: none;
+                }
+                
+                .min-vh-75 {
+                    min-height: auto !important;
+                    padding: 3rem 0;
+                }
+            }
+        </style>
+    </template>
+</odoo>
