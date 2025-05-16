@@ -40,6 +40,7 @@ addon | version | maintainers | summary
 [impress_prevent_workorder_bo](impress_prevent_workorder_bo/) | 17.0.0.1.0 |  | Prevents the creation of BO on workorder validation when producing less than expected.
 [impress_production_billing](impress_production_billing/) | 17.0.0.1.2 |  | Module to allow billing of MOs directly through SOs
 [impress_project_billing_production](impress_project_billing_production/) | 17.0.0.1.0 |  | Impress Foods customization to allow billing of MOs through projects DEPRECATED
+[impress_purchase_customizations](impress_purchase_customizations/) | 17.0.1.0.0 |  | Impress Foods specific purchase customizations
 [impress_quality_customizations](impress_quality_customizations/) | 17.0.0.1.0 |  | Customizations for the quality module developped in-house by Impress Foods SEC
 [impress_quality_logs](impress_quality_logs/) | 17.0.0.1.2 |  | Implements many quality logs used by ^ Impress Foods for quality control
 [impress_quality_worksheets](impress_quality_worksheets/) | 17.0.0.1.1 |  | Worksheets to use in conjunction with Impress Quality Logs
@@ -49,7 +50,7 @@ addon | version | maintainers | summary
 [julian_sequence](julian_sequence/) | 17.0.0.1.0 |  | Adds a sequence type to follow a YYDDD format
 [maintenance_consume_stock](maintenance_consume_stock/) | 17.0.0.0.2 |  | Module to allow stock usage in maintenance requests
 [maintenance_documents](maintenance_documents/) | 17.0.1.0.0 |  | Bridge module between Maintenance and Documents
-[maintenance_product](maintenance_product/) | 17.0.1.0.0 |  | Allows to link products to maintenance equipments
+[maintenance_product_list](maintenance_product_list/) | 17.0.1.0.0 |  | Allows to link products to maintenance equipments
 [maintenance_quality](maintenance_quality/) | 17.0.0.0.1 |  | Bridge module between Maintenance and Quality Control
 [mrp_add_qc_note_shop_floor](mrp_add_qc_note_shop_floor/) | 17.0.0.1.0 |  | Mrp_add_qc_note_shop_floor Summary
 [mrp_fast_allocation](mrp_fast_allocation/) | 17.0.0.0.1 |  | Adds an action to assign all moves in the allocation report for a production order
