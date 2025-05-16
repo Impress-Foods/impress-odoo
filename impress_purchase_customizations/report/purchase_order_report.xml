@@ -21,7 +21,7 @@
         id="report_purchaseorder_internal_document"
         inherit_id="purchase.report_purchaseorder_document"
         primary="True"
-        priority="30"
+        priority="99"
     >
 
 
