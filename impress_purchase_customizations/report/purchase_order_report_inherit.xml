@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="../../import_xml.rng" type="application/xml"?>
+<odoo>
+
+    <record id="report_purchaseorder_document" model="ir.ui.view">
+        <field name="name"> report_purchaseorder_document </field>
+        <field name="inherit_id" ref="purchase.report_purchaseorder_document" />
+        <field name="priority">50</field>
+        <field name="arch" type="xml">
+            <!-- add headers to table -->
+
+            <xpath expr="//th[@name='th_quantity']" position="after">
+                <th name="th_uom" class="text-end">
+                    <strong>Unit</strong>
+                </th>
+                <th name="th_total_qty" class="text-end">
+                    <strong>Total Qty</strong>
+                </th>
+            </xpath>
+
+            <!-- add data in table columns -->
+
+            <xpath expr="//tbody/t[2]/tr/t/td[3]" position="replace">
+                <td class="text-center">
+                    <span t-out="line.date_planned.date()" />
+                </td>
+            </xpath>
+
+            <xpath expr="//tbody/t[2]/tr/t/td[4]" position="replace">
+                <td name="td_qty" class="text-end">
+                    <span t-field="line.product_qty" />
+                </td>
+            </xpath>
+            <xpath expr="//tbody/t[2]/tr/t/td[4]" position="after">
+                <td name="td_uom" class="text-end">
+                    <span t-field="line.product_uom.name" />
+                </td>
+                <td name="td_total_qty" class="text-end">
+                    <t t-if="line.product_uom.uom_type == 'smaller'">
+                        <span t-out="line.product_qty * line.product_uom.factor" />
+                    </t>
+                    <t t-if="line.product_uom.uom_type == 'bigger'">
+                        <span t-out="line.product_qty * line.product_uom.factor_inv" />
+                    </t>
+                    <t t-if="line.product_uom.uom_type == 'reference'">
+                        <span t-out="line.product_qty" />
+                    </t>
+                    <span t-out="line.product_id.uom_id.name" />
+                </td>
+            </xpath>
+        </field>
+    </record>
+</odoo>
