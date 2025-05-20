@@ -2,10 +2,16 @@
 <templates xml:space="preserve">
 
 
-    <t t-name="theme_aplus.s_dynamic_snippet.aplus_carousel">
+    <t t-name="theme_aplus.aplus_product">
+        <div t-att-id="unique_id" class="aplus_product_carousel" t-att-data-bs-interval="interval" data-bs-ride="carousel">
+            <span> TEST </span>
+            <t t-foreach="data" t-as="product" t-key="product_id">
+                <t t-out="product"/>
+            </t>
+        </div>
+        <!--
         <div t-att-id="unique_id" class="carousel slide" t-att-data-bs-interval="interval"
             data-bs-ride="carousel">
-            <!-- Content -->
             <t t-set="rowSize" t-value="chunkSize" />
             <t t-set="slideSize" t-value="rowSize * rowPerSlide" />
             <t t-set="colClass"
@@ -30,7 +36,7 @@
                                         <t t-if="itemIndex &lt; data.length">
                                             <div t-attf-class="#{colClass}">
                                                 <t t-out="data[itemIndex]" />
-                                            </div>
+                                            </div>                             
                                         </t>
                                     </t>
                                 </div>
@@ -39,7 +45,6 @@
                     </div>
                 </t>
             </div>
-            <!-- Controls -->
             <t t-if='slideIndexGenerator.length > 1'>
                 <t t-if="arrowPosition === 'bottom'">
                     <div class="s_dynamic_snippet_arrow_bottom pt-2 d-flex justify-content-center">
@@ -55,6 +60,8 @@
                 </t>
             </t>
         </div>
+-->
+    
     </t>
 
 
