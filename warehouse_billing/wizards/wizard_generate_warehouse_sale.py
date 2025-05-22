@@ -206,7 +206,7 @@ class GenerateWarehouseSaleOrder(models.TransientModel):
         config_model = self.env["warehouse.billing.config"]
 
         # Get all active billing configurations due for invoicing
-        configs = self.get_configs_to_bill(date)
+        configs = self.get_configs_to_bill(current_date)
 
         while len(configs) != 0:
             sale_orders = self.env["sale.order"]
@@ -217,7 +217,7 @@ class GenerateWarehouseSaleOrder(models.TransientModel):
                     warehouse_billing_date=date
                 ).bill_config(grouped_configs[key])
 
-            configs = self.get_configs_to_bill(date)
+            configs = self.get_configs_to_bill(current_date)
 
             if not sale_orders:
                 break

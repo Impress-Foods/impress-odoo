@@ -6,8 +6,11 @@
         <field name="name">view.metal.log.tree</field>
         <field name="model">metal.log</field>
         <field name="arch" type="xml">
-            <tree default_order='start_date desc'>
+            <tree default_order='date desc'>
                 <field name="name" />
+                <field name="product_id" />
+                <field name="lot_id" />
+                <field name="production_id" />
                 <field name="date" />
             </tree>
         </field>
