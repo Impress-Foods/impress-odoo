@@ -181,6 +181,18 @@ class MrpProduction(models.Model):
             self._recompute_billing_line_qty()
         return res
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # Fixes the import bug while still preserving the functionality.
+        # A procurement group still gets created on import.
+        for vals in vals_list:
+            # Guard to only applys the fix when creating a
+            #  MO with a billing SO reference.
+            # This only should happen on import, BOs and splits
+            if "billing_sale_order_ref" in vals:
+                vals.pop("procurement_group_id", None)
+        return super().create(vals_list)
+
     def get_portal_url(self):
         self.ensure_one()
         return f"/my/manufacturings/{self.id}"
