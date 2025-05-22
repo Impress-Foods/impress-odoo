@@ -41,19 +41,22 @@
         right: 0;
         margin: 0;
         padding: 1rem 0;
-        background-color: $accent;
 
-        &.active {
-            background-color: #FFD166;
-            transform: scale(1.5);
+        button {
+            background-color: $accent;
+            button.active {
+                transform: scale(1.2);
+            }
+                
+            button:hover:not(.active) {
+                transform: scale(1.2);
+            }
         }
-            
-        &:hover:not(.active) {
-            background-color: rgba(#FFD166, 0.5);
-            transform: scale(1.2);
-        }
+
+
     }
 
+    
     // Carousel Inner
     .carousel-inner {
         border-radius: 12px;
@@ -62,18 +65,19 @@
         width: 100%;
         max-width: 100%;
         padding-bottom: 3rem;
-
+        
         .carousel-item {
+            
             padding: 2rem 2rem 5rem; // More bottom padding for indicators
             text-align: center;
             background: linear-gradient(135deg, $light 0%, white 100%);
             position: relative;
-            display: flex !important; // Force display flex
+            //display: flex !important; // Force display flex
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 400px; // Consistent height
-            width: 100%;
+            //min-height: 400px; // Consistent height
+            //width: 100%;
             
             // Center content
             & > * {
@@ -96,15 +100,17 @@
                 margin: 0 auto;
                 border-radius: 8px;
                 @include box-shadow;
-                @include transition;
+                //@include transition;
             
                 &:hover {
                     transform: scale(1.02);
                 }
-            }        
+            } 
+                  
         }
+    
     }
-
+    
     // Carousel Controls
     .carousel-control-prev,
     .carousel-control-next {
@@ -117,7 +123,7 @@
     opacity: 0.9;
     color: transparent;
 
-    @include transition;
+    //@include transition;
     display: flex;
     align-items: center;
     justify-content: center;

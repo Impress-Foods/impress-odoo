@@ -1,9 +1,9 @@
 /** @odoo-module **/
 
 import publicWidget from "@web/legacy/js/public/public_widget";
-import DynamicSnippetProducts from "@website_sale/snippets/s_dynamic_snippet_products/000";
+import DynamicSnippet from "@website/snippets/s_dynamic_snippet/000";
 
-const aplusDynamicSnippetProducts = DynamicSnippetProducts.extend({
+const aplusDynamicSnippetProducts = DynamicSnippet.extend({
     selector: ".aplus_product_carousel",
     events: {
         "click .scroller-item": "_onScrollerItemClick",
@@ -16,17 +16,6 @@ const aplusDynamicSnippetProducts = DynamicSnippetProducts.extend({
         this._super.apply(this, arguments);
         this.template_key = "theme_aplus.aplus_product";
         this.product_data = [];
-    },
-
-    /**
-     * @override
-     */
-    _render() {
-        const self = this;
-        if (self.carousel) {
-            self.carousel.dispose();
-        }
-        return this._super.apply(this, arguments);
     },
 
     _onScrollerItemClick: function (event) {},
