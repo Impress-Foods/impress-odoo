@@ -1,60 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
-
-
     <t t-name="theme_aplus.aplus_product">
-        <div t-att-id="unique_id" class="aplus_product_carousel" t-att-data-bs-interval="interval" data-bs-ride="carousel">
-            <!-- Archway Container -->
-            <div class="window-frame">
-                <!-- Archway Top -->
-                <div class="arch-top">
-                    <div class="arch-shape"></div>
+        <div t-att-id="unique_id" >
+            <!-- Debug: Show data count -->
+            <t t-log="'Product data count: ' + Object.keys(product_data || {}).length"/>
+            <!-- Main Carousel -->
+            <div id="productCarousel" class="carousel slide aplus_carousel" data-bs-ride="carousel" t-att-data-bs-interval="interval">
+                <!-- Carousel Indicators  -->
+                <div class="carousel-indicators">
+                    <t t-foreach="product_data" t-as="product" t-key="product_index">
+                        <button type="button" 
+                                t-attf-class="#{product_index === 0 ? 'active' : ''}"
+                                t-att-data-bs-target="'#productCarousel'" 
+                                t-attf-data-bs-slide-to="#{product_index}"
+                                t-attf-aria-label="Slide #{product_index + 1}">
+                        </button>
+                    </t>
                 </div>
 
-                <t t-set="current_product_index" t-value="0"/>
-                <!-- Main Product Display -->
-                <div class="main-product-display">
-                    <div class="product-window">
-                        <div class="product-container">
-                            <t t-foreach="data" t-as="product" t-key="product_id">
-                                <t t-if="product_index === current_product_index">
-                                    <t t-out="product"/>
+                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel"
+                        data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+
+                <!-- Carousel Items -->
+                <div class="carousel-inner">
+                    <t t-foreach="product_data" t-as="product_key" t-key="product_index">
+                        <t t-set="product" t-value="product_data[product_key]"/>
+                        <t t-log="product_key"/>
+                        <div t-attf-class="carousel-item #{product_key == 0 ? 'active' : ''}">
+                            <div>
+                                <h3 t-out="product.display_name"/>
+                                <t t-if="product.image_512">
+                                    <img loading="lazy" t-att-src="product.image_512" 
+                                         t-att-alt="product.display_name"/>
                                 </t>
-                            </t>
+                                <t t-else="">
+                                    <span>No image available</span>
+                                </t>
+                            </div>
                         </div>
-                    </div>
+                    </t>
                 </div>
 
-                <!-- Product Scroller -->
-                <div class="product-scroller">
-                    <div class="scroller-track">
-                        <!-- Current product first -->
-                        <t t-foreach="data" t-as="product" t-key="product_id">
-                            <t t-if="product_index === current_product_index">
-                                <div class="scroller-item active">
-                                    <div class="scroller-name">
-                                        <t t-out="product.display_name"/>
-                                    </div>
-                                </div>
-                            </t>
-                        </t>
-                        <!-- Next products -->
-                        <t t-foreach="data" t-as="product" t-key="product_id">
-                            <t t-if="product_index &gt; current_product_index &amp;&amp; product_index &lt; current_product_index + 4">
-                                <div class="scroller-item">
-                                    <div class="scroller-name">
-                                        <t t-out="product.display_name"/>
-                                    </div>
-                                </div>
-                            </t>
-                        </t>
-                    </div>
-                </div>
+                <!-- Carousel Controls -->
 
-                <a href="/shop" class="shop_now">SHOP NOW</a>
+                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel"
+            data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
             </div>
+            
+        
         </div>
     </t>
-
-
 </templates>

@@ -6,7 +6,7 @@
     <template id="s_aplus_carousel" name="A+ Product Carousel">
         <section
             data-snippet="dynamic_snippet_aplus_carousel"
-            class="aplus_product_carousel"
+            class="aplus_product_carousel s_dynamic pt32 pb32"
             data-name="A+ Carousel"
             data-number-of-records="16"
             data-filter-id="7"
