@@ -5,9 +5,6 @@ import DynamicSnippet from "@website/snippets/s_dynamic_snippet/000";
 
 const aplusDynamicSnippetProducts = DynamicSnippet.extend({
     selector: ".aplus_product_carousel",
-    events: {
-        "click .scroller-item": "_onScrollerItemClick",
-    },
 
     /**
      * @override
@@ -17,8 +14,6 @@ const aplusDynamicSnippetProducts = DynamicSnippet.extend({
         this.template_key = "theme_aplus.aplus_product";
         this.product_data = [];
     },
-
-    _onScrollerItemClick: function (event) {},
 
     async _fetchData() {
         this._super.apply(this, arguments);

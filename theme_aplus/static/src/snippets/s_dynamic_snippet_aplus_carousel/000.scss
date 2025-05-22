@@ -2,88 +2,63 @@
 
 .aplus_product_carousel {
     min-height: 100%;
+}
 
+.carousel_container {
+    justify-content: center;
 }
 
 .aplus_carousel {
-    justify-content: center;
     position: relative;
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 380px;
+    height: 640px;
+    padding-top: 5%;
+    border-width: 1px;
+    border-color: black;
+
+    border-style: solid;
+
+    border-top-left-radius: 500px;
+    border-top-right-radius: 500px;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+
+    overflow: hidden;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    vertical-align: bottom;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    filter: drop-shadow(7px 7px 0px #000000);
+    background-color: var(--o-cc4-h6);
+
     // Color Palette
-    $primary: #FF6B6B;
-    $secondary: #4ECDC4;
-    $accent: #FFD166;
-    $dark: #2D3436;
-    $light: #F7F9FC;
-    
-    // Mixins
-    @mixin flex-center {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    @mixin box-shadow {
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.1);
-    }
-    
-    @mixin transition {
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-    
+    $primary: #ff6b6b;
+    $secondary: #4ecdc4;
+    $accent: #ffd166;
+    $dark: #2d3436;
+    $light: #f7f9fc;
 
-    .carousel-indicators {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: 0;
-        padding: 1rem 0;
-
-        button {
-            background-color: $accent;
-            button.active {
-                transform: scale(1.2);
-            }
-                
-            button:hover:not(.active) {
-                transform: scale(1.2);
-            }
-        }
-
-
-    }
-
-    
     // Carousel Inner
     .carousel-inner {
         border-radius: 12px;
-        overflow: hidden;
-        margin: 0 auto;
-        width: 100%;
-        max-width: 100%;
-        padding-bottom: 3rem;
-        
+        padding-bottom: 2rem;
+
         .carousel-item {
-            
-            padding: 2rem 2rem 5rem; // More bottom padding for indicators
             text-align: center;
-            background: linear-gradient(135deg, $light 0%, white 100%);
             position: relative;
-            //display: flex !important; // Force display flex
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            //min-height: 400px; // Consistent height
-            //width: 100%;
-            
+
             // Center content
             & > * {
                 max-width: 100%;
             }
-            
+
             h3 {
                 color: $dark;
                 font-size: 2rem;
@@ -91,7 +66,7 @@
                 margin-bottom: 1.5rem;
                 text-transform: uppercase;
                 letter-spacing: 1px;
-                text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
             }
 
             img {
@@ -99,72 +74,72 @@
                 width: auto;
                 margin: 0 auto;
                 border-radius: 8px;
-                @include box-shadow;
-                //@include transition;
-            
+
                 &:hover {
                     transform: scale(1.02);
                 }
-            } 
-                  
+            }
         }
-    
     }
-    
+
+    .carousel-indicators {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 0;
+        padding-top: 1rem;
+
+        button {
+            //background-color: $secondary;
+            button.active {
+                transform: scale(1.2);
+            }
+
+            button:hover:not(.active) {
+                transform: scale(1.2);
+            }
+        }
+    }
     // Carousel Controls
     .carousel-control-prev,
     .carousel-control-next {
-    width: 50px;
-    height: 50px;
-    background: $primary;
-    //border-radius: 0%;
-    top: calc(50% - 1rem); // Adjust for indicator height
-    transform: translateY(-50%);
-    opacity: 0.9;
-    color: transparent;
-
-    //@include transition;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    &:hover {
-        background: darken($primary, 10%);
-        transform: translateY(-50%) scale(1.1);
-    }
+        color: #ff00ff;
     }
 
-    .carousel-control-prev {
-    left: 20px;
-    }
-
-    .carousel-control-next {
-    right: 20px;
+    // Animation for the spinning border
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
     }
 }
 
 // Responsive Adjustments
 @media (max-width: 768px) {
     .aplus_carousel {
-    .carousel-inner {
-        .carousel-item {
-        padding: 1rem;
-        
-        h3 {
-            font-size: 1.5rem;
+        .carousel-inner {
+            .carousel-item {
+                padding: 1rem;
+
+                h3 {
+                    font-size: 1.5rem;
+                }
+
+                img {
+                    max-height: 200px;
+                }
+            }
         }
-        
-        img {
-            max-height: 200px;
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 40px;
+            height: 40px;
+            color: #ff6b6b;
         }
-        }
-    }
-    
-    .carousel-control-prev,
-    .carousel-control-next {
-        width: 40px;
-        height: 40px;
-        color: #FF6B6B;
-    }
     }
 }

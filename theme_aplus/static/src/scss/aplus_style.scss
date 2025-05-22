@@ -11,27 +11,23 @@
     }
 }
 
-
 .heading-outline {
-    -webkit-text-stroke-color: var(--dark);
+    -webkit-text-stroke-color: red;
     -webkit-text-stroke-width: 1px;
-    
+
     align-content: center;
     height: 100%;
-    
+
     text-transform: uppercase;
-    
+
     h1 {
         font-size: 5rem;
-
     }
     h2 {
         font-size: 2.5rem;
         font-style: italic;
     }
-
 }
-
 
 // Transform Utilities
 .reversed {
@@ -51,7 +47,6 @@
         transform: translateY(-4px) rotate(-1deg);
     }
 }
-
 
 .align-middle {
     vertical-align: baseline !important;

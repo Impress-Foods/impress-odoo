@@ -2,80 +2,81 @@
 <templates xml:space="preserve">
     <t t-name="theme_aplus.aplus_product">
 
-        <div t-att-id="unique_id" >
+        <div class="carousel_container">
             <!-- Debug: Show data count -->
-            <t t-log="'Product data count: ' + Object.keys(product_data || {}).length"/>
+            <t t-log="'Product data count: ' + Object.keys(product_data || {}).length" />
             <!-- Main Carousel -->
-            <div id="productCarousel" class="carousel slide aplus_carousel" data-bs-ride="carousel" t-att-data-bs-interval="interval">
-                <!-- Carousel Indicators  -->
 
-                
+
+            <div t-att-id="unique_id" class="carousel slide aplus_carousel" data-bs-ride="carousel"
+                t-att-data-bs-interval="interval">
+
+                <!-- Carousel Indicators  -->
                 <div class="carousel-indicators">
                     <t t-foreach="product_data" t-as="product" t-key="product_index">
-                        <button type="button" 
-                                t-attf-class="#{product_index == 0 and 'active' or ''}"
-                                t-att-data-bs-target="'#productCarousel'" 
-                                t-attf-data-bs-slide-to="#{product_index}"
-                                t-attf-aria-label="Slide #{product_index + 1}"
-                                t-att-aria-current="product_index == 0 and 'true' or 'false'">
+                        <button type="button"
+                            t-attf-class="#{product_index == 0 and 'active' or ''}"
+                            t-att-data-bs-target="'#' + unique_id"
+                            t-attf-data-bs-slide-to="#{product_index}"
+                            t-attf-aria-label="Slide #{product_index + 1}"
+                            t-att-aria-current="product_index == 0 and 'true' or 'false'">
                         </button>
                     </t>
                 </div>
 
-                <!--
-                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel"
-                data-bs-slide="prev">
+                <button class="carousel-control-prev" type="button" t-att-data-bs-target="'#' + unique_id"
+                    data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                -->
+
+                <button class="carousel-control-next" type="button" t-att-data-bs-target="'#' + unique_id"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
 
                 <!-- Carousel Items -->
                 <div class="carousel-inner">
-                    <t t-foreach="product_data" t-as="productkey" t-key="product_index">
-                        <t t-set="product" t-value="product_data[productkey]"/>
-                        <t t-if="productkey_first">
+                    <t t-foreach="product_data" t-as="product_key" t-key="product_index">
+                        <t t-set="product" t-value="product_data[product_key]" />
+                        <t t-if="product_key_first">
                             <div t-attf-class="carousel-item active">
-                                <div>
-                                <h3 t-out="product.display_name"/>
-                                <t t-if="product.image_512">
-                                        <img loading="lazy" t-att-src="product.image_512"
-                                             t-att-alt="product.display_name"/>
-                                    </t>
-                                    <t t-else="">
-                                        <span>No image available</span>
-                                    </t>
-                                </div>
+                                <t t-call="theme_aplus.aplus_carousel_slide" />
                             </div>
                         </t>
                         <t t-else="">
                             <div t-attf-class="carousel-item">
-                                <div>
-                                    <h3 t-out="product.display_name"/>
-                                    <t t-if="product.image_512">
-                                        <img loading="lazy" t-att-src="product.image_512"
-                                             t-att-alt="product.display_name"/>
-                                    </t>
-                                    <t t-else="">
-                                        <span>No image available</span>
-                                    </t>
-                                </div>
+                                <t t-call="theme_aplus.aplus_carousel_slide" />
                             </div>
                         </t>
+
                     </t>
                 </div>
-
-
-                <!--
-                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel"
-                data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-                -->
-            </div>
             
-        
+            
+            </div>
+            <a href="/shop">
+                <button class="btn btn-primary">Shop Now</button>
+            </a>
+        </div>
+    </t>
+
+    <!-- Carousel Slide -->
+    <t t-name="theme_aplus.aplus_carousel_slide">
+        <div class="carousel-content">
+            <h3 t-out="product.display_name" />
+            <div class="product-image">
+                <t t-if="product.image_512">
+                    <img loading="lazy"
+                        t-att-src="product.image_512"
+                        t-att-alt="product.display_name" />
+                </t>
+                <t t-else="">
+                    <span>No image available</span>
+                </t>
+            </div>
+            <p class="product-description" t-out="product.description or ''" />
         </div>
     </t>
 </templates>
