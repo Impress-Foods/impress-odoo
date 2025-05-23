@@ -15,9 +15,12 @@ const aplusDynamicSnippetProducts = DynamicSnippet.extend({
         this.product_data = [];
     },
 
+    /**
+     * @override
+     * @private
+     */
     async _fetchData() {
         this._super.apply(this, arguments);
-
         if (this._isConfigComplete()) {
             const nodeData = this.el.dataset;
             //console.log(nodeData);
@@ -35,11 +38,37 @@ const aplusDynamicSnippetProducts = DynamicSnippet.extend({
     },
 
     /**
+     * @private
+     * @override
+     */
+
+    _render: function () {
+        if (this.data.length >= 0 || this.editableMode) {
+            this.$el.removeClass("o_dynamic_empty");
+            this._prepareContent();
+        } else {
+            this.$el.addClass("o_dynamic_empty");
+            this.renderedContent = "";
+        }
+        this._renderContent();
+        this.trigger_up("widgets_start_request", {
+            $target: this.$el.children(),
+            options: {parent: this},
+            editableMode: this.editableMode,
+        });
+    },
+
+    willStart() {
+        return this._super.apply(this, arguments);
+    },
+
+    /**
      * @override
      */
     _getQWebRenderOptions() {
         const result = this._super(...arguments);
         result["product_data"] = this.product_data;
+        result["interval"] = parseInt(this.el.dataset.carouselInterval);
         return result;
     },
 });

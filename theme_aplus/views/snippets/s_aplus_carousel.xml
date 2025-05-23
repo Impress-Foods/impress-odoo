@@ -6,13 +6,14 @@
     <template id="s_aplus_carousel" name="A+ Product Carousel">
         <section
             data-snippet="dynamic_snippet_aplus_carousel"
-            class="aplus_product_carousel s_dynamic pt32 pb32"
+            class="s_product_product_aplus pt32 pb32"
             data-name="A+ Carousel"
             data-number-of-records="16"
             data-filter-id="7"
             data-template-key="theme_aplus.dynamic_filter_template_product_product_aplus"
             data-carousel-interval="5000"
         >
+
             <div class="container o_not_editable">
                 <div class="css_non_editable_mode_hidden">
                     <div

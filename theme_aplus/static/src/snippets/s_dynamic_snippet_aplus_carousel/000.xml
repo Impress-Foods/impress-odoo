@@ -53,12 +53,12 @@
 
                     </t>
                 </div>
-            
+                <a href="/shop" class="shop-now">
+                    <button class="btn btn-primary">Shop Now</button>
+                </a>
             
             </div>
-            <a href="/shop">
-                <button class="btn btn-primary">Shop Now</button>
-            </a>
+
         </div>
     </t>
 
