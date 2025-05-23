@@ -35,5 +35,4 @@ class ThemeAPlus(http.Controller):
             "image_512": data["image_512"],
             "product_id": data["product_id"],
         }
-        # _logger.warning(values)
         return values
