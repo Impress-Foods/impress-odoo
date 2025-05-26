@@ -13,7 +13,7 @@
           <field
                         name='scrap_ids'
                         widget='one2many_list'
-                        context="{'default_origin': name, 'default_maintenance_request_id': id,'default_scrap_location_id': %(maintenance_consume_stock.maintenance_location)d}"
+                        context="{'default_origin': name, 'default_maintenance_request_id': id,'default_scrap_location_id': %(maintenance_consume_stock.maintenance_scrap_location)d}"
                     >
             <tree>
               <field name="name" />
@@ -30,6 +30,7 @@
                   <field name="state" invisible="1" />
                   <field name="tracking" invisible='1' readonly="state in ['done']" />
                   <field name="company_id" invisible="1" readonly="state in ['done']" />
+                  <field name="location_id" required="1" readonly="state in ['done']" />
                   <field name="product_id" required="1" readonly="state in ['done']" />
                   <field name="scrap_qty" required="1" readonly="state in ['done']" />
                   <field
@@ -44,20 +45,20 @@
         </page>
       </xpath>
       <xpath expr="//div[@name='button_box']" position="inside">
-          <button
+        <button
                     class="oe_stat_button"
                     name="action_view_scrap_move"
                     type="object"
                     icon="oi-arrows-v"
                     invisible="scrap_count == 0"
                 >
-            <div class="o_field_widget o_stat_info">
-              <span class="o_stat_value">
-                <field name="scrap_count" />
-              </span>
-              <span class="o_stat_text">Scraps</span>
-            </div>
-          </button>
+          <div class="o_field_widget o_stat_info">
+            <span class="o_stat_value">
+              <field name="scrap_count" />
+            </span>
+            <span class="o_stat_text">Scraps</span>
+          </div>
+        </button>
       </xpath>
       <xpath expr="//header/button[1]" position="before">
         <field name="all_scraps_done" invisible="1" />
