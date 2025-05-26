@@ -13,7 +13,7 @@
           <field
             name='scrap_ids'
             widget='one2many_list'
-            context="{'default_origin': name, 'default_maintenance_request_id': id,'default_scrap_location_id': %(maintenance_consume_stock.maintenance_location)d}"
+            context="{'default_origin': name, 'default_maintenance_request_id': id,'default_scrap_location_id': %(maintenance_consume_stock.maintenance_scrap_location)d}"
           >
             <tree>
               <field name="name" />
