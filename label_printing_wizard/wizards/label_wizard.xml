@@ -9,6 +9,7 @@
             <form string="Label Printing Wizard">
                 <group>
                     <field name="model" />
+                    <field name="label_size"/>
                 </group>
                 <group invisible="model != 'product'">
                     <field name="product_id" />
@@ -35,13 +36,14 @@
 
     <!-- Action labelWizard -->
     <record id="action_label_wizard" model="ir.actions.act_window">
-        <field name="name">LabelWizard</field>
+        <field name="name">Label Wizard</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">label_wizard</field>
         <field name="view_mode">form</field>
         <field name="binding_model_id" ref="label_printing_wizard.model_label_wizard" />
         <field name="target">new</field>
     </record>
+
 
     <menuitem
         id="label_wizard_menu"

@@ -10,6 +10,9 @@
         "security/ir.model.access.csv",
         "wizards/label_wizard.xml",
         "report/lot_labels.xml",
+        "report/reports.xml",
+        "views/stock_lot.xml",
+        
     ],
     "application": True,
     "installable": True,
