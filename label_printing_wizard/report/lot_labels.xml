@@ -24,13 +24,13 @@
 <t t-out="'^XA^CI28'"/>
                     </t>
                     <t name="product_name">
-<t t-out="'^FO10,300 ^A0N,44,33^FB800,2,0,L^FD'"/><t t-out="lot['display_name_markup']" /><t t-out="'^FS'"/>  
+<t t-out="'^FO10,300 ^A0N,44,33^FB800,2,0,L^FD' + lot['display_name_markup'] + '^FS'"/>  
                     </t>
                     <t name="lot_name">
-<t t-out="'^FO10,50 ^A0N,88,66^FDLN/SN: '"/><t t-out="lot['name']" /><t t-out="'^FS'"/> 
+<t t-out="'^FO10,50 ^A0N,88,66^FDLN/SN: ' + lot['name'] + '^FS'"/> 
                     </t>
                     <t t-if="'product_qty' in lot" name="product_qty">
-<t t-out="'^FO10,130 ^A0N,88,66^FDQTY: '"/><t t-out="lot['product_qty']" /><t t-out="lot['lot_record'].product_id.uom_id.display_name"/><t t-out="'^FS'"/>                  
+<t t-out="'^FO10,130 ^A0N,88,66^FDQTY: ' + lot['product_qty'] + ' ' + lot['lot_record'].product_id.uom_id.display_name + '^FS'"/>                  
                     </t>
                     <t name="barcode">
                         <t t-if="env.user.has_group('stock.group_stock_lot_print_gs1')">
@@ -40,7 +40,7 @@
                         </t>
 
                         <t t-else="" name="code128_barcode">
-<t t-out="'^FO100,150^BY3 ^BCN,100,Y,N,N ^FD'"/><t t-out="lot['name']"/><t t-out="'^FS'"/> 
+<t t-out="'^FO100,150^BY3 ^BCN,100,Y,N,N ^FD' + lot['name'] + '^FS'"/> 
                         </t>
                     </t>
 
@@ -81,7 +81,7 @@
 
 
         
-<t t-out="command"/><t t-out="final_barcode" /><t t-out="'^FS'"/> 
+<t t-out="command + final_barcode +'^FS'"/> 
 
     </template>
 
