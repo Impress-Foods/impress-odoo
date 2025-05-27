@@ -20,15 +20,15 @@ class LabelWizard(models.TransientModel):
     )
 
     product_id = fields.Many2one("product.product", _("Product"))
-    uom_id = fields.Many2one('uom.uom', related="product_id.uom_id")  
+    uom_id = fields.Many2one('uom.uom', related="product_id.uom_id")
     lot_id = fields.Many2one("stock.lot", _("Lot"))
 
     product_qty = fields.Float()
 
     label_qty = fields.Integer()
-    
+
     label_report = fields.Many2one("ir.actions.report", compute="_compute_label_report")
-    
+
     label_size = fields.Selection([
         ('2x4', _("2'x4'")),
         ('4x6', _("4'x6'")),

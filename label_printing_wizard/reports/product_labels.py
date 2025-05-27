@@ -1,4 +1,5 @@
 import logging
+
 import markupsafe
 
 from odoo import models
@@ -22,8 +23,7 @@ class ReportProductProductLabel2x4(models.AbstractModel):
                     "product_quantity": self.env.context.get('label_product_qty', 0),
                 }
             )
-        
+
         return {
             "docs": product_list,
         }
-        
