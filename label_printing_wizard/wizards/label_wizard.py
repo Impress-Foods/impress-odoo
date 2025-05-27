@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 import logging
 
-from odoo import models, fields, api, _
-from odoo.exceptions import UserError, ValidationError
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -42,28 +41,34 @@ class LabelWizard(models.TransientModel):
                 case "product":
                     match record.label_size:
                         case "2x4":
-                            record.label_report = self.env["ir.actions.report"]
+                            record.label_report = self.env.ref('label_printing_wizard.report_label_product_product_zpl_2x4')  # noqa: E501
                         case "4x6":
-                            record.label_report = self.env["ir.actions.report"]
+                            record.label_report = self.env.ref('label_printing_wizard.report_label_product_product_zpl_4x6')  # noqa: E501
 
                 case "lot":
                     match record.label_size:
                         case "2x4":
-                            record.label_report = self.env.ref('stock.label_lot_template')
+                            record.label_report = self.env.ref('stock.label_lot_template')  # noqa: E501
                         case "4x6":
-                            record.label_report = self.env.ref('label_printing_wizard.label_lot_template_4x6')
+                            record.label_report = self.env.ref('label_printing_wizard.label_lot_template_4x6')  # noqa: E501
 
     def print_label(self):
         report = self.label_report
         res_id = 0
 
+        data = None
+
+        if len(report) == 0:
+            raise UserError(_("Report type not supported"))
+
         match self.model:
             case "product":
                 res_id = self.product_id.id
+
             case "lot":
                 res_id = self.lot_id.id
-        
+
         if self.product_qty != 0:
             report = report.with_context(label_product_qty=self.product_qty)
 
-        return report.report_action(res_id)
+        return report.report_action(res_id, data=data)

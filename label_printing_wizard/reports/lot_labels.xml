@@ -3,6 +3,7 @@
 
 <odoo>
 
+    <!--
     <template id="lot_label_with_quantity">
         <t t-foreach="docs" t-as="wrapper">
 
@@ -14,7 +15,7 @@
 
         </t>
     </template>
-
+-->
     <template id="label_lot_template_view" inherit_id="stock.label_lot_template_view">
         <xpath expr="/t[1]" position="replace">
             <t t-foreach="docs" t-as="lot">

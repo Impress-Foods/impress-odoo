@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="product_product_view_form_inherit" model="ir.ui.view">
+        <field name="name">product.product.view.form.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+        
+            <xpath expr="//button[@name='action_open_label_layout']" position="replace">
+                <button name="%(label_printing_wizard.action_label_wizard)d" 
+                            string="Print Labels" type="action" 
+                            context="{'default_model': 'product', 'default_product_id': id}"/> 
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="report_label_lot_template_4x6" model="ir.actions.report">
+        <field name="name">Lot/Serial Number (ZPL 4x6)</field>
+        <field name="model">stock.lot</field>
+        <field name="report_type">qweb-text</field>
+        <field name="report_name">label_printing_wizard.lot_label_template_view_landscape</field>
+        <field name="report_file">label_printing_wizard.lot_label_template_view_landscape</field>
+        <field name="binding_model_id" ref="stock.model_stock_lot"/>
+        <field name="binding_type">report</field>
+    </record>
+    
+    <record id="report_label_product_product_zpl_4x6" model="ir.actions.report">
+        <field name="name">Product Label (ZPL 4x6)</field>
+        <field name="model">product.product</field>
+        <field name="report_type">qweb-text</field>
+        <field name="report_name">label_printing_wizard.product_label_template_view_landscape</field>
+        <field name="report_file">label_printing_wizard.product_label_template_view_landscape</field>
+        <field name="binding_model_id" ref="stock.model_stock_lot"/>
+        <field name="binding_type">report</field>
+    </record>   
+
+    <record id="report_label_product_product_zpl_2x4" model="ir.actions.report">
+        <field name="name">Product Label (ZPL 2x4)</field>
+        <field name="model">product.product</field>
+        <field name="report_type">qweb-text</field>
+        <field name="report_name">label_printing_wizard.label_product_product_zpl_2x4</field>
+        <field name="report_file">label_printing_wizard.label_product_product_zpl_2x4</field>
+        <field name="binding_model_id" ref="stock.model_stock_lot"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

@@ -9,7 +9,7 @@
             <form string="Label Printing Wizard">
                 <group>
                     <field name="model" />
-                    <field name="label_size"/>
+                    <field name="label_size" widget="selection_badge"/>
                 </group>
                 <group invisible="model != 'product'">
                     <field name="product_id" />

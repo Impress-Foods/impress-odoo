@@ -1,6 +1,6 @@
 import logging
 
-from odoo import models, _
+from odoo import _, models
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -20,7 +20,7 @@ class ReportLotLabel(models.AbstractModel):
 
 class ReportLotLabelLandscape(models.AbstractModel):
     _name = "report.label_printing_wizard.lot_label_template_view_landscape"
-
+    _description = "Lot Label Report Landscape"
     _inherit = "report.stock.label_lot_template_view"
 
     def _get_report_values(self, docids, data):
@@ -31,6 +31,3 @@ class ReportLotLabelLandscape(models.AbstractModel):
             res['docs'][0]['product_qty'] = self.env.context.get('label_product_qty')
         _logger.warning(res)
         return res
-    
-
-    
