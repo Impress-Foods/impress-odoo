@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View labelWizard form -->
+    <record id="view_labelWizard_form" model="ir.ui.view">
+        <field name="name">view.labelWizard.form</field>
+        <field name="model">label_wizard</field>
+        <field name="arch" type="xml">
+            <form string="Label Printing Wizard">
+                <group>
+                    <field name="model" />
+                </group>
+                <group invisible="model != 'product'">
+                    <field name="product_id" />
+                    <field name="product_qty" />
+                </group>
+                <group invisible="model != 'lot'">
+                    <field name="product_id" domain="[('tracking', 'in', ['serial', 'lot'])]" />
+                    <field name="lot_id" domain="[('product_id', '=', product_id)]" />
+                    <label for="product_qty" string="Quantity" />
+                    <div class="o_row g-0 d-flex">
+                        <field name="product_qty" />
+                        <field name="uom_id" readonly="1" />
+                    </div>
+                </group>
+                
+                <footer>
+                    <button name="print_label" type="object" string="Print Label"
+                        class="oe_highlight" />
+                    <button special="cancel" string="Cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action labelWizard -->
+    <record id="action_label_wizard" model="ir.actions.act_window">
+        <field name="name">LabelWizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">label_wizard</field>
+        <field name="view_mode">form</field>
+        <field name="binding_model_id" ref="label_printing_wizard.model_label_wizard" />
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="label_wizard_menu"
+        name="Label Wizard"
+        sequence="10"
+        action="label_printing_wizard.action_label_wizard"
+    />
+</odoo>

@@ -48,6 +48,7 @@ addon | version | maintainers | summary
 [impress_stock_customizations](impress_stock_customizations/) | 17.0.0.1.1 |  | Customizations for the stock module developped in-house by Impress Foods SEC
 [impress_stock_worksheets](impress_stock_worksheets/) | 17.0.25.01.14 |  | Impress_stock_worksheets Summary
 [julian_sequence](julian_sequence/) | 17.0.0.1.0 |  | Adds a sequence type to follow a YYDDD format
+[label_printing_wizard](label_printing_wizard/) | 17.0.1.0.0 |  | Adds different wizards to print custom labels for products and lots
 [maintenance_consume_stock](maintenance_consume_stock/) | 17.0.0.0.2 |  | Module to allow stock usage in maintenance requests
 [maintenance_documents](maintenance_documents/) | 17.0.1.0.0 |  | Bridge module between Maintenance and Documents
 [maintenance_product_list](maintenance_product_list/) | 17.0.1.0.0 |  | Allows to link products to maintenance equipments
