@@ -11,10 +11,12 @@ class ReportLotLabel(models.AbstractModel):
 
     def _get_report_values(self, docids, data):
         res = super()._get_report_values(docids, data)
-        if 'label_product_qty' in self.env.context:
-            if len(res['docs']) != 1:
+        if "label_product_qty" in self.env.context:
+            if len(res["docs"]) != 1:
                 raise UserError(_("Only one lot can be selected"))
-            res['docs'][0]['product_qty'] = self.env.context.get('label_product_qty')
+            res["docs"][0]["product_qty"] = self.env.context.get("label_product_qty")
+        if "label_count" in self.env.context:
+            res["docs"][0]["label_count"] = self.env.context.get("label_count")
         return res
 
 
@@ -22,12 +24,3 @@ class ReportLotLabelLandscape(models.AbstractModel):
     _name = "report.label_printing_wizard.lot_label_template_view_landscape"
     _description = "Lot Label Report Landscape"
     _inherit = "report.stock.label_lot_template_view"
-
-    def _get_report_values(self, docids, data):
-        res = super()._get_report_values(docids, data)
-        if 'label_product_qty' in self.env.context:
-            if len(res['docs']) != 1:
-                raise UserError(_("Only one lot can be selected"))
-            res['docs'][0]['product_qty'] = self.env.context.get('label_product_qty')
-        _logger.warning(res)
-        return res

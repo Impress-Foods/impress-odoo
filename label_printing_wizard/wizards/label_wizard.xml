@@ -12,6 +12,7 @@
 
                         <field name="model" widget="radio"/>
                         <field name="label_size" widget="selection_badge"/>
+                        <field name="label_qty" />
                     </group>
 
                 

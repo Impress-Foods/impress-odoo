@@ -23,7 +23,8 @@ class ReportProductProductLabel2x4(models.AbstractModel):
                     "product_quantity": self.env.context.get("label_product_qty", 0),
                 }
             )
-
+        if "label_count" in self.env.context:
+            product_list[0]["label_count"] = self.env.context.get("label_count")
         return {
             "docs": product_list,
         }

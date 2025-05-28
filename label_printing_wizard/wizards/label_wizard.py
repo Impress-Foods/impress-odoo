@@ -26,7 +26,7 @@ class LabelWizard(models.TransientModel):
 
     product_qty = fields.Float()
 
-    label_qty = fields.Integer()
+    label_qty = fields.Integer(default=1)
 
     label_report = fields.Many2one("ir.actions.report", compute="_compute_label_report")
 
@@ -81,6 +81,7 @@ class LabelWizard(models.TransientModel):
             case "lot":
                 res_id = self.lot_id.id
 
+        report = report.with_context(label_count=self.label_qty)
         if self.product_qty != 0:
             report = report.with_context(label_product_qty=self.product_qty)
 
