@@ -46,6 +46,7 @@ class LabelWizard(models.TransientModel):
     )
 
     product_domain = fields.Char(compute="_compute_product_domain")
+    lot_domain = fields.Char(compute="_compute_lot_domain")
 
     @api.depends("model", "product_template_id", "picking_id")
     def _compute_product_domain(self):
@@ -60,8 +61,19 @@ class LabelWizard(models.TransientModel):
             if self.picking_id:
                 domain += [("id", "in", self.picking_id.product_id.ids)]
 
-            _logger.warning(repr(domain))
             record.product_domain = domain
+
+    @api.depends("product_id", "picking_id")
+    def _compute_lot_domain(self):
+        for record in self:
+            domain = []
+            if record.product_id:
+                domain += [("product_id", "=", record.product_id.id)]
+
+            if record.picking_id:
+                domain += [("id", "in", record.picking_id.lot_id.ids)]
+
+            record.lot_domain = domain
 
     @api.depends("model")
     def _compute_label_report(self):

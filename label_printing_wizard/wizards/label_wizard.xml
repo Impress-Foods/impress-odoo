@@ -8,10 +8,12 @@
         <field name="arch" type="xml">
             <form string="Label Printing Wizard">
                 <group>
+                    <field name="product_template_id" invisible="1"/>
+                    <field name="picking_id" invisible="1"/>
+                    <field name="product_domain" invisible="1"/>
+                    <field name="lot_domain" invisible="1"/>
+
                     <group>
-                        <field name="product_template_id" invisible="1"/>
-                        <field name="picking_id" invisible="1"/>
-                        <field name="product_domain" invisible="1"/>
                         <field name="model" widget="radio"/>
                         <field name="label_size" widget="selection_badge"/>
                         <field name="label_qty" />
@@ -29,7 +31,7 @@
 
                     <group invisible="model != 'lot'">
                         <field name="product_id" domain="product_domain"/>
-                        <field name="lot_id" domain="[('product_id', '=', product_id)]" />
+                        <field name="lot_id" domain="lot_domain" />
                         <label for="product_qty" string="Quantity" />
                         <div class="o_row g-0 d-flex">
                             <field name="product_qty" />
