@@ -21,6 +21,7 @@ class LabelWizard(models.TransientModel):
     )
 
     product_id = fields.Many2one("product.product", _("Product"))
+    product_template_id = fields.Many2one("product.template", _("Product Template"))
     uom_id = fields.Many2one("uom.uom", related="product_id.uom_id")
     lot_id = fields.Many2one("stock.lot", _("Lot"))
 
