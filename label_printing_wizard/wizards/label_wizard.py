@@ -24,9 +24,9 @@ class LabelWizard(models.TransientModel):
     uom_id = fields.Many2one("uom.uom", related="product_id.uom_id")
     lot_id = fields.Many2one("stock.lot", _("Lot"))
 
-    product_qty = fields.Float()
+    product_qty = fields.Float(string="Quantity")
 
-    label_qty = fields.Integer(default=1)
+    label_qty = fields.Integer(default=1, string="Number of Labels")
 
     label_report = fields.Many2one("ir.actions.report", compute="_compute_label_report")
 
