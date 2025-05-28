@@ -7,7 +7,7 @@
     "author": "Cédric Paradis",
     "website": "",
     "category": "Hidden",
-    "depends": ["base", "stock", "product_expiry", "stock_barcode"],
+    "depends": ["base", "product", "stock", "product_expiry", "stock_barcode"],
     "data": [
         "security/ir.model.access.csv",
         "wizards/label_wizard.xml",

@@ -2,20 +2,6 @@
 <?xml-model href="../../import_xml.rng" type="application/xml"?>
 
 <odoo>
-
-    <!--
-    <template id="lot_label_with_quantity">
-        <t t-foreach="docs" t-as="wrapper">
-
-            <t t-set="lots" t-value="wrapper['lots']" />
-
-            <t t-call="stock.label_lot_template_view">
-                <t t-set="docs" t-value="lots['docs']" />
-            </t>
-
-        </t>
-    </template>
--->
     <template id="label_lot_template_view" inherit_id="stock.label_lot_template_view">
         <xpath expr="/t[1]" position="replace">
             <t t-foreach="docs" t-as="lot">

@@ -32,8 +32,8 @@ class LabelWizard(models.TransientModel):
 
     label_size = fields.Selection(
         [
-            ("2x4", _("2'x4'")),
-            ("4x6", _("4'x6'")),
+            ("2x4", _("2x4")),
+            ("4x6", _("4x6")),
         ],
         default="2x4",
         required=True,
@@ -48,22 +48,22 @@ class LabelWizard(models.TransientModel):
                         case "2x4":
                             record.label_report = self.env.ref(
                                 "label_printing_wizard.report_label_product_product_zpl_2x4"
-                            )  # noqa: E501
+                            )
                         case "4x6":
                             record.label_report = self.env.ref(
                                 "label_printing_wizard.report_label_product_product_zpl_4x6"
-                            )  # noqa: E501
+                            )
 
                 case "lot":
                     match record.label_size:
                         case "2x4":
                             record.label_report = self.env.ref(
                                 "stock.label_lot_template"
-                            )  # noqa: E501
+                            )
                         case "4x6":
                             record.label_report = self.env.ref(
                                 "label_printing_wizard.report_label_lot_template_4x6"
-                            )  # noqa: E501
+                            )
 
     def print_label(self):
         report = self.label_report
