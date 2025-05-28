@@ -35,7 +35,6 @@ class ProductProduct(models.Model):
             ]
             products = self.env["product.product"].search(domain)
             add_results = [(x.id, x.display_name) for x in products]
-            _logger.warning(add_results)
             res += add_results
             res = list(set(res))
         return res
