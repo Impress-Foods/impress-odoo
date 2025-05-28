@@ -8,21 +8,30 @@
         <field name="arch" type="xml">
             <form string="Label Printing Wizard">
                 <group>
-                    <field name="model" />
-                    <field name="label_size" widget="selection_badge"/>
-                </group>
-                <group invisible="model != 'product'">
-                    <field name="product_id" />
-                    <field name="product_qty" />
-                </group>
-                <group invisible="model != 'lot'">
-                    <field name="product_id" domain="[('tracking', 'in', ['serial', 'lot'])]" />
-                    <field name="lot_id" domain="[('product_id', '=', product_id)]" />
-                    <label for="product_qty" string="Quantity" />
-                    <div class="o_row g-0 d-flex">
-                        <field name="product_qty" />
-                        <field name="uom_id" readonly="1" />
-                    </div>
+                    <group>
+
+                        <field name="model" widget="radio"/>
+                        <field name="label_size" widget="selection_badge"/>
+                    </group>
+
+                
+                    <group invisible="model != 'product'">
+                        <field name="product_id" />
+                        <label for="product_qty" string="Quantity" />
+                        <div class="o_row g-0 d-flex">
+                            <field name="product_qty" />
+                            <field name="uom_id" readonly="1" />
+                        </div>
+                    </group>
+                    <group invisible="model != 'lot'">
+                        <field name="product_id" domain="[('tracking', 'in', ['serial', 'lot'])]" />
+                        <field name="lot_id" domain="[('product_id', '=', product_id)]" />
+                        <label for="product_qty" string="Quantity" />
+                        <div class="o_row g-0 d-flex">
+                            <field name="product_qty" />
+                            <field name="uom_id" readonly="1" />
+                        </div>
+                    </group>
                 </group>
                 
                 <footer>
@@ -50,5 +59,6 @@
         name="Label Wizard"
         sequence="10"
         action="label_printing_wizard.action_label_wizard"
+        web_icon="label_printing_wizard,static/description/icon.png"
     />
 </odoo>
