@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
 import logging
 
-from odoo import models, fields, api, _
-from odoo.exceptions import UserError, ValidationError
+from odoo import api, models
 
 _logger = logging.getLogger(__name__)
 
@@ -11,6 +9,7 @@ class ProductProduct(models.Model):
     _inherit = "product.product"
 
     def _compute_display_name(self):
+        # pylint: disable=W8110
         super()._compute_display_name()
         if self.env.context.get("global_vendor_search", False):
             for product in self:
@@ -19,10 +18,11 @@ class ProductProduct(models.Model):
                     vendor_codes = [
                         x
                         for x in set(supplier_rules.mapped("product_code"))
-                        if type(x) is str
+                        if isinstance(x, str)
                     ]
                     if vendor_codes:
-                        product.display_name = f"[{product.default_code}-{'-'.join(vendor_codes)}] {product.name}"
+                        formatted_vendor_codes = "-".join(vendor_codes)
+                        product.display_name = f"[{product.default_code}-{formatted_vendor_codes}] {product.name}"  # noqa: E501
 
     @api.model
     def name_search(self, name="", args=None, operator="ilike", limit=100):
