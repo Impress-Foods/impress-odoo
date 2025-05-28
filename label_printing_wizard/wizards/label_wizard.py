@@ -20,10 +20,15 @@ class LabelWizard(models.TransientModel):
         required=True,
     )
 
-    product_id = fields.Many2one("product.product", _("Product"))
+    product_id = fields.Many2one(
+        "product.product",
+        _("Product"),
+    )
     product_template_id = fields.Many2one("product.template", _("Product Template"))
     uom_id = fields.Many2one("uom.uom", related="product_id.uom_id")
     lot_id = fields.Many2one("stock.lot", _("Lot"))
+
+    picking_id = fields.Many2one("stock.picking")
 
     product_qty = fields.Float(string="Quantity")
 
@@ -39,6 +44,24 @@ class LabelWizard(models.TransientModel):
         default="2x4",
         required=True,
     )
+
+    product_domain = fields.Char(compute="_compute_product_domain")
+
+    @api.depends("model", "product_template_id", "picking_id")
+    def _compute_product_domain(self):
+        for record in self:
+            domain = []
+            if self.model == "lot":
+                domain = [("tracking", "in", ["serial", "lot"])]
+
+            if self.product_template_id:
+                domain += [("product_tmpl_id", "=", self.product_template_id.id)]
+
+            if self.picking_id:
+                domain += [("id", "in", self.picking_id.product_id.ids)]
+
+            _logger.warning(repr(domain))
+            record.product_domain = domain
 
     @api.depends("model")
     def _compute_label_report(self):

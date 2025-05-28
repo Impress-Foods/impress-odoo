@@ -9,7 +9,9 @@
             <form string="Label Printing Wizard">
                 <group>
                     <group>
-
+                        <field name="product_template_id" invisible="1"/>
+                        <field name="picking_id" invisible="1"/>
+                        <field name="product_domain" invisible="1"/>
                         <field name="model" widget="radio"/>
                         <field name="label_size" widget="selection_badge"/>
                         <field name="label_qty" />
@@ -17,18 +19,16 @@
 
                 
                     <group invisible="model != 'product'">
-                        <field name="product_template_id" invisible="1"/>
-                        <field name="product_id" invisible="product_template_id"/>
-                        <field name="product_id" domain="[('product_tmpl_id', '=', product_template_id)]" invisible="not product_template_id"/>
+                        <field name="product_id" domain="product_domain"/>
                         <label for="product_qty" string="Quantity" />
                         <div class="o_row g-0 d-flex">
                             <field name="product_qty" />
                             <field name="uom_id" readonly="1" />
                         </div>
                     </group>
+
                     <group invisible="model != 'lot'">
-                        <field name="product_id" domain="[('tracking', 'in', ['serial', 'lot'])]" invisible="product_template_id" />
-                        <field name="product_id" domain="[('product_tmpl_id', '=', product_template_id)]" invisible="not product_template_id"/>
+                        <field name="product_id" domain="product_domain"/>
                         <field name="lot_id" domain="[('product_id', '=', product_id)]" />
                         <label for="product_qty" string="Quantity" />
                         <div class="o_row g-0 d-flex">

@@ -16,6 +16,7 @@
         "reports/reports.xml",
         "views/stock_lot.xml",
         "views/product_product.xml",
+        "views/stock_picking.xml",
     ],
     "application": True,
     "installable": True,
