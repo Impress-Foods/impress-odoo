@@ -71,7 +71,7 @@ class LabelWizard(models.TransientModel):
                 domain += [("product_id", "=", record.product_id.id)]
 
             if record.picking_id:
-                domain += [("id", "in", record.picking_id.lot_id.ids)]
+                domain += [("id", "in", record.picking_id.move_line_ids.lot_id.ids)]
 
             record.lot_domain = domain
 
@@ -100,6 +100,35 @@ class LabelWizard(models.TransientModel):
                             record.label_report = self.env.ref(
                                 "label_printing_wizard.report_label_lot_template_4x6"
                             )
+
+    @api.onchange("picking_id", "product_id", "lot_id")
+    def get_product_qty(self):
+        for record in self:
+            if len(record.picking_id) == 0 or len(record.product_id) == 0:
+                return
+
+            quantity = 0
+
+            if record.product_id.tracking in ["lot", "serial"] and record.lot_id:
+                stock_move_line = self.env["stock.move.line"].search(
+                    [
+                        ("picking_id", "=", record.picking_id.id),
+                        ("lot_id", "=", record.lot_id.id),
+                    ]
+                )
+
+                quantity = stock_move_line.qty_done
+
+            else:
+                stock_move = self.env["stock.move"].search(
+                    [
+                        ("picking_id", "=", record.picking_id.id),
+                        ("product_id", "=", record.product_id.id),
+                    ]
+                )
+                quantity = stock_move.quantity
+
+            record.product_qty = quantity
 
     def print_label(self):
         report = self.label_report
