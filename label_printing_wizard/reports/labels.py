@@ -25,7 +25,9 @@ class ReportLabelBase(models.AbstractModel):
         return {"docs": []}
 
     @api.model
-    def _get_gs1_barcode(self, product_id=None, lot_id=None, quantity=0, uom=None):
+    def _get_gs1_barcode(
+        self, product_id=None, lot_id=None, quantity: int | float = 0, uom=None
+    ):
         if not product_id:
             raise ValidationError(_("Cannot create a GS1 barcode without a product"))
 
@@ -37,6 +39,9 @@ class ReportLabelBase(models.AbstractModel):
         product_barcode = "01" + product_id.barcode
         lot_barcode = ""
         quantity_barcode = ""
+
+        if quantity and quantity < 0:
+            raise ValidationError(_("Quantity cannot be negative!"))
 
         if lot_id:
             if lot_id.product_id.tracking == "lot":
