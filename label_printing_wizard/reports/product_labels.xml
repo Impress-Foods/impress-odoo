@@ -1,31 +1,32 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <?xml-model href="../../import_xml.rng" type="application/xml"?>
-
 <odoo>
 
     <template id="label_product_product_zpl_4x6">
         <t t-foreach="docs" t-as="product_info">
             <t t-foreach="range(product_info['label_count'])" t-as="count">
-                <t t-set="product" t-value="product_info['product_record']"/>
-                <t t-set="product_qty" t-value="product_info['product_quantity']"/>
+                <t t-set="product" t-value="product_info['product_record']" />
+                <t t-set="product_qty" t-value="product_info['product_quantity']" />
                 <t t-translate="off">
-                    
+
                     <t name="setup">
-<t t-out="'^XA^CI28'"/>
+<t t-out="'^XA^CI28'" />
                     </t>
                     <t name="product_name">
-<t t-out="'^FO600,50 ^A0R,88,66^FB1100,2,0,L^FD' + product_info['display_name_markup'] + '^FS'"/>  
+<t
+                            t-out="'^FO600,50 ^A0R,88,66^FB1100,2,0,L^FD' + product_info['display_name_markup'] + '^FS'"
+                        />
                     </t>
                     <t t-if="product_qty != 0" name="product_qty">
-<t t-out="'^FO400,50 ^A0R,88,66^FDQTY: ' + str(product_qty) + ' ' + product.uom_id.display_name + '^FS'"/>                  
-                    </t>  
+<t
+                            t-out="'^FO400,50 ^A0R,88,66^FDQTY: ' + str(product_qty) + ' ' + product.uom_id.display_name + '^FS'"
+                        />
+                    </t>
                     <t name="barcode">
-                        <t t-call="label_printing_wizard.product_datamatrix_zpl">
-                            <t t-set="command" t-value="'^FO100,800^BY3 ^BXR,20,200 ^FD'"/>
-                        </t>
-                    </t> 
+<t t-out="'^FO100,800^BY3 ^BXR,20,200 ^FD' + product_info['gs1_barcode'] + '^FS'" />
+                    </t>
                     <t name="footer">
-<t t-out="'^XZ'"/>  
+<t t-out="'^XZ'" />
                     </t>
                 </t>
             </t>
@@ -35,41 +36,30 @@
     <template id="label_product_product_zpl_2x4">
         <t t-foreach="docs" t-as="product_info">
             <t t-foreach="range(product_info['label_count'])" t-as="count">
-                <t t-set="product" t-value="product_info['product_record']"/>
-                <t t-set="product_qty" t-value="product_info['product_quantity']"/>
-                <t t-translate="off"> 
+                <t t-set="product" t-value="product_info['product_record']" />
+                <t t-set="product_qty" t-value="product_info['product_quantity']" />
+                <t t-translate="off">
 
-<t t-out="'^XA^CI28'"/>          
+<t t-out="'^XA^CI28'" />
                 <t name="product_name">
-<t t-out="'^FO10,10 ^A0N,66,44^FB800,2,0,L^FD' + product_info['display_name_markup'] + '^FS'"/>  
+<t
+                            t-out="'^FO10,10 ^A0N,66,44^FB800,2,0,L^FD' + product_info['display_name_markup'] + '^FS'"
+                        />
                 </t>
                 <t t-if="product_qty != 0" name="product_quantity">
-<t t-out="'^FO10,250 ^A0N,66,44^FB800,2,0,L^FDQTY: ' + str(product_qty) + ' ' + product.uom_id.display_name + '^FS'"/>
+<t
+                            t-out="'^FO10,250 ^A0N,66,44^FB800,2,0,L^FDQTY: ' + str(product_qty) + ' ' + product.uom_id.display_name + '^FS'"
+                        />
                 </t>
                 <t name="barcode">
-                    <t t-call="label_printing_wizard.product_datamatrix_zpl">
-                        <t t-set="command" t-value="'^FO550,160^BY3 ^BXN,12,200 ^FD'"/>
-                    </t>
+<t t-out="'^FO550,160^BY3 ^BXN,12,200 ^FD' + product_info['gs1_barcode'] + '^FS'" />
                 </t>
-<t t-out="'^XZ'"/>
+<t t-out="'^XZ'" />
                 </t>
             </t>
         </t>
     </template>
-    
-    <template id="product_datamatrix_zpl">
-        <t t-set="final_barcode" t-value="''"/>
-        <t t-if="product.valid_ean">
-            <t t-set="final_barcode"
-                t-value="'01' + '0' * (14 - len(product.barcode)) + product.barcode" />
-        </t>
 
-        <t t-if="product_qty != 0">
-            <t t-set="final_barcode" t-value="(final_barcode or '') + '30' + '0' * (8 - len(str(int(product_qty)))) + str(int(product_qty))" />
-        </t>
-        
-<t t-out="command + final_barcode +'^FS'"/> 
 
-    </template>
 
 </odoo>

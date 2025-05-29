@@ -10,23 +10,20 @@ class LabelWizard(models.TransientModel):
     _name = "label_wizard"
     _description = _("Label Wizard")
 
-    name = fields.Char(_("Name"))
+    name = fields.Char()
     model = fields.Selection(
         [
-            ("product", _("Product")),
-            ("lot", _("Lot")),
+            ("product", "Product"),
+            ("lot", "Lot"),
         ],
         default="product",
         required=True,
     )
 
-    product_id = fields.Many2one(
-        "product.product",
-        _("Product"),
-    )
-    product_template_id = fields.Many2one("product.template", _("Product Template"))
+    product_id = fields.Many2one("product.product")
+    product_template_id = fields.Many2one("product.template")
     uom_id = fields.Many2one("uom.uom", related="product_id.uom_id")
-    lot_id = fields.Many2one("stock.lot", _("Lot"))
+    lot_id = fields.Many2one("stock.lot")
 
     picking_id = fields.Many2one("stock.picking")
 
@@ -38,8 +35,8 @@ class LabelWizard(models.TransientModel):
 
     label_size = fields.Selection(
         [
-            ("2x4", _("2x4")),
-            ("4x6", _("4x6")),
+            ("2x4", "2x4"),
+            ("4x6", "4x6"),
         ],
         default="2x4",
         required=True,
@@ -94,11 +91,11 @@ class LabelWizard(models.TransientModel):
                     match record.label_size:
                         case "2x4":
                             record.label_report = self.env.ref(
-                                "stock.label_lot_template"
+                                "label_printing_wizard.report_label_lot_zpl_2x4"
                             )
                         case "4x6":
                             record.label_report = self.env.ref(
-                                "label_printing_wizard.report_label_lot_template_4x6"
+                                "label_printing_wizard.report_label_lot_zpl_4x6"
                             )
 
     @api.onchange("picking_id", "product_id", "lot_id")
