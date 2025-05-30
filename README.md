@@ -1,8 +1,9 @@
-
 <!-- /!\ Non OCA Context : Set here the badge of your runbot / runboat instance. -->
+
 [![Pre-commit Status](https://github.com/Impress-Foods/impress-odoo/actions/workflows/pre-commit.yml/badge.svg?branch=17.0)](https://github.com/Impress-Foods/impress-odoo/actions/workflows/pre-commit.yml?query=branch%3A17.0)
 [![Build Status](https://github.com/Impress-Foods/impress-odoo/actions/workflows/test.yml/badge.svg?branch=17.0)](https://github.com/Impress-Foods/impress-odoo/actions/workflows/test.yml?query=branch%3A17.0)
 [![codecov](https://codecov.io/gh/Impress-Foods/impress-odoo/graph/badge.svg?token=INNNC7JQ2E)](https://codecov.io/gh/Impress-Foods/impress-odoo)
+
 <!-- /!\ Non OCA Context : Set here the badge of your translation instance. -->
 
 <!-- /!\ do not modify above this line -->
@@ -55,6 +56,7 @@ addon | version | maintainers | summary
 [mrp_add_qc_note_shop_floor](mrp_add_qc_note_shop_floor/) | 17.0.0.1.0 |  | Mrp_add_qc_note_shop_floor Summary
 [mrp_fast_allocation](mrp_fast_allocation/) | 17.0.0.0.1 |  | Adds an action to assign all moves in the allocation report for a production order
 [production_log_note](production_log_note/) | 17.0.0.1.2 |  | Backport of V18 feature where a note can be added to a production order
+[stock_history](stock_history/) | 17.0.1.0.0 |  | Adds a configurable timeframe report to take snapshots of stock levels
 [warehouse_billing](warehouse_billing/) | 17.0.0.0.1 |  | This module allows billing customers based on the warehouse space utilized by their products on a daily basis. Features: - Track daily warehouse space usage per client - Configure billing rates - Generate monthly invoices automatically
 
 [//]: # (end addons)
@@ -65,9 +67,10 @@ addon | version | maintainers | summary
 
 This repository is licensed under [AGPL-3.0](LICENSE).
 
-However, each module can have a totally different license, as long as they adhere to Cédric Paradis
-policy. Consult each module's `__manifest__.py` file, which contains a `license` key
-that explains its license.
+However, each module can have a totally different license, as long as they adhere to
+Impress Foods' policy. Consult each module's `__manifest__.py` file, which contains a
+`license` key that explains its license.
 
-----
+---
+
 <!-- /!\ Non OCA Context : Set here the full description of your organization. -->
