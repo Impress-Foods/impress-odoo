@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <!-- View labelWizard form -->
@@ -8,20 +8,24 @@
         <field name="arch" type="xml">
             <form string="Label Printing Wizard">
                 <group>
-                    <field name="product_template_id" invisible="1"/>
-                    <field name="picking_id" invisible="1"/>
-                    <field name="product_domain" invisible="1"/>
-                    <field name="lot_domain" invisible="1"/>
+                    <field name="product_template_id" invisible="1" />
+                    <field name="picking_id" invisible="1" />
+                    <field name="product_domain" invisible="1" />
+                    <field name="lot_domain" invisible="1" />
 
                     <group>
-                        <field name="model" widget="radio"/>
-                        <field name="label_size" widget="selection_badge"/>
+                        <field name="model" widget="radio" />
+                        <field name="label_size" widget="selection_badge" />
                         <field name="label_qty" />
                     </group>
 
-                
+
                     <group invisible="model != 'product'">
-                        <field name="product_id" domain="product_domain"/>
+                        <field
+                            name="product_id"
+                            domain="product_domain"
+                            required="model == 'product'"
+                        />
                         <label for="product_qty" string="Quantity" />
                         <div class="o_row g-0 d-flex">
                             <field name="product_qty" />
@@ -30,8 +34,16 @@
                     </group>
 
                     <group invisible="model != 'lot'">
-                        <field name="product_id" domain="product_domain"/>
-                        <field name="lot_id" domain="lot_domain" />
+                        <field
+                            name="product_id"
+                            domain="product_domain"
+                            required="model == 'lot'"
+                        />
+                        <field
+                            name="lot_id"
+                            domain="lot_domain"
+                            required="model == 'lot'"
+                        />
                         <label for="product_qty" string="Quantity" />
                         <div class="o_row g-0 d-flex">
                             <field name="product_qty" />
@@ -39,10 +51,14 @@
                         </div>
                     </group>
                 </group>
-                
+
                 <footer>
-                    <button name="print_label" type="object" string="Print Label"
-                        class="oe_highlight" />
+                    <button
+                        name="print_label"
+                        type="object"
+                        string="Print Label"
+                        class="oe_highlight"
+                    />
                     <button special="cancel" string="Cancel" />
                 </footer>
             </form>

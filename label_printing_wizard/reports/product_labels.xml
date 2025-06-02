@@ -23,10 +23,12 @@
                         />
                     </t>
                     <t name="barcode">
+                        <t t-if="product_info['gs1_barcode']">
 <t t-out="'^FO100,800^BY3 ^BXR,20,200 ^FD' + product_info['gs1_barcode'] + '^FS'" />
+                        </t>
                     </t>
                     <t name="footer">
-<t t-out="'^XZ'" />
+                        <t t-out="'^XZ'" />
                     </t>
                 </t>
             </t>
@@ -52,7 +54,9 @@
                         />
                 </t>
                 <t name="barcode">
+                    <t t-if="product_info['gs1_barcode']">
 <t t-out="'^FO550,160^BY3 ^BXN,12,200 ^FD' + product_info['gs1_barcode'] + '^FS'" />
+                    </t>
                 </t>
 <t t-out="'^XZ'" />
                 </t>

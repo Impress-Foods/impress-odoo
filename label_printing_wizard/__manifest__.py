@@ -19,6 +19,13 @@
         "wizards/label_wizard.xml",
         "security/ir.model.access.csv",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "label_printing_wizard/static/src/**/*.js",
+            "label_printing_wizard/static/src/**/*.xml",
+            "label_printing_wizard/static/src/**/*.scss",
+        ]
+    },
     "application": True,
     "installable": True,
     "auto_install": False,

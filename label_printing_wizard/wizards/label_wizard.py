@@ -114,7 +114,7 @@ class LabelWizard(models.TransientModel):
                     ]
                 )
 
-                quantity = stock_move_line.qty_done
+                quantity = sum(stock_move_line.mapped("qty_done"))
 
             else:
                 stock_move = self.env["stock.move"].search(
@@ -123,7 +123,7 @@ class LabelWizard(models.TransientModel):
                         ("product_id", "=", record.product_id.id),
                     ]
                 )
-                quantity = stock_move.quantity
+                quantity = sum(stock_move.mapped("product_uom_qty"))
 
             record.product_qty = quantity
 

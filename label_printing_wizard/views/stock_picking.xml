@@ -10,10 +10,21 @@
         <field name="arch" type="xml">
             <xpath expr="//button[@name='action_open_label_type']" position="replace">
                 <button
-                    name="%(label_printing_wizard.action_label_wizard)d"
-                    type="action"
+                    name="action_open_label_wizard"
+                    type="object"
                     string="Print Label"
                     context="{'default_picking_id': id}"
+                />
+            </xpath>
+            <xpath
+                expr="//button[@name='action_product_forecast_report'][2]"
+                position="after"
+            >
+                <button
+                    name="action_open_label_wizard"
+                    type="object"
+                    icon="fa-print"
+                    title="Print Label"
                 />
             </xpath>
         </field>

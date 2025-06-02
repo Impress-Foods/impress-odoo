@@ -106,8 +106,11 @@ class ReportProductProductLabel2x4(models.AbstractModel):
                     quantity=self.env.context.get("label_product_qty", 0),
                     uom=product.uom_id,
                 )
+            else:
+                product_list[0]["gs1_barcode"] = False
         if "label_count" in self.env.context:
             product_list[0]["label_count"] = self.env.context.get("label_count")
+        _logger.warning(product_list)
         return {
             "docs": product_list,
         }
@@ -141,7 +144,8 @@ class ReportLotLabel2x4(models.AbstractModel):
                     quantity=self.env.context.get("label_product_qty", 0),
                     uom=lot.product_id.uom_id,
                 )
-
+            else:
+                data_dict["gs1_barcode"] = False
             if "label_product_qty" in self.env.context:
                 if len(lots) != 1:
                     raise UserError(_("Only one lot can be selected"))
