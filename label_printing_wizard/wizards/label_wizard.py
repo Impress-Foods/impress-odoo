@@ -105,7 +105,6 @@ class LabelWizard(models.TransientModel):
                 return
 
             quantity = 0
-
             if record.product_id.tracking in ["lot", "serial"] and record.lot_id:
                 stock_move_line = self.env["stock.move.line"].search(
                     [

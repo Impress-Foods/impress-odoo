@@ -23,7 +23,6 @@
         "web.assets_backend": [
             "label_printing_wizard/static/src/**/*.js",
             "label_printing_wizard/static/src/**/*.xml",
-            "label_printing_wizard/static/src/**/*.scss",
         ]
     },
     "application": True,

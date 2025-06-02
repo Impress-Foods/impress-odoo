@@ -21,7 +21,6 @@ class StockMoveLine(models.Model):
                 "default_product_quantity": self.quantity_product_uom,
             },
         }
-
         if self.lot_id:
             action["context"]["default_lot_id"] = self.lot_id.id
             action["context"]["default_model"] = "lot"
