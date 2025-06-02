@@ -239,7 +239,9 @@ class StockHistoryConfig(models.Model):
 
     def _get_products(self):
         self.ensure_one()
-        return self.env["product.product"].search(ast.literal_eval(self.product_domain))
+        domain = ast.literal_eval(self.product_domain) or []
+        domain.append(("detailed_type", "=", "product"))
+        return self.env["product.product"].search(domain)
 
     def _get_quants(self):
         self.ensure_one()
