@@ -209,6 +209,11 @@ class StockHistoryConfig(models.Model):
 
                     record.next_run = next_run
 
+    @api.onchange("interval_type")
+    def _handle_day_of_year_day_of_month_change(self):
+        if self.interval_type in ["day_of_month"] and self.day_of_month > 28:
+            self.day_of_month = 28
+
     def _create_history(self):
         for record in self:
             record.last_run = datetime.today().date()
