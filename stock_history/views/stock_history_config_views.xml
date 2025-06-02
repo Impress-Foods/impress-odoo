@@ -41,6 +41,20 @@
                 </header>
 
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            class="oe_stat_button"
+                            name="action_view_groups"
+                            type="object"
+                            icon="fa-cubes"
+                        >
+                            <field
+                                string="History Groups"
+                                name="history_group_count"
+                                widget="statinfo"
+                            />
+                        </button>
+                    </div>
                     <div class="oe_title">
                         <label for="name" />
                         <h1>

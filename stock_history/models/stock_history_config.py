@@ -111,6 +111,14 @@ class StockHistoryConfig(models.Model):
         ],
     )
 
+    history_group_ids = fields.One2many("stock.history.group", "history_config_id")
+    history_group_count = fields.Integer(compute="_compute_history_group_count")
+
+    @api.depends("history_group_ids")
+    def _compute_history_group_count(self):
+        for record in self:
+            record.history_group_count = len(record.history_group_ids)
+
     @api.constrains("day_of_month")
     def _check_day_of_month(self):
         for record in self:
@@ -267,3 +275,14 @@ class StockHistoryConfig(models.Model):
     def action_toggle_lock(self):
         for record in self:
             record.locked = not record.locked
+
+    def action_view_groups(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "stock.history.group",
+            "domain": [("history_config_id", "=", self.id)],
+            "view_mode": "tree,form",
+            "name": "History Groups",
+            "target": "current",
+        }
