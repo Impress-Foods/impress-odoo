@@ -1,0 +1,4 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_history_line_manager,stock_history_line_manager,model_stock_history_line,base.group_user,1,1,1,1
+access_stock_history_config_manager,stock_history_config_manager,model_stock_history_config,,1,1,1,1
+access_stock_history_group_manager,stock_history_group_manager,model_stock_history_group,,1,1,1,1

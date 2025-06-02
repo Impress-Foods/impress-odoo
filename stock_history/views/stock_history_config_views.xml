@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- View stock.history.config View Tree -->
+    <record id="view_stock_history_config_tree" model="ir.ui.view">
+        <field name="name">view.stock.history.config.tree</field>
+        <field name="model">stock.history.config</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- View stock.history.config form -->
+    <record id="view_stock_history_config_form" model="ir.ui.view">
+        <field name="name">view.stock.history.config.form</field>
+        <field name="model">stock.history.config</field>
+        <field name="arch" type="xml">
+            <form string="Stock History Config">
+                <header>
+                    <field name="locked" invisible="1" />
+                    <button
+                        name="action_toggle_lock"
+                        type="object"
+                        string="Lock"
+                        class="oe_highlight"
+                        invisible="locked"
+                    />
+                    <button
+                        name="action_toggle_lock"
+                        type="object"
+                        string="Unlock"
+                        invisible="not locked"
+                    />
+                    <button
+                        name="action_force_run"
+                        type="object"
+                        string="Run (Force)"
+                    />
+                </header>
+
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" />
+                        <h1>
+                            <field name="name" placeholder="Name..." />
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="interval_type" readonly="locked" />
+                                <field
+                                    name="product_domain"
+                                    readonly="locked"
+                                    widget="domain"
+                                    options="{'model': 'product.product', 'in_dialog': False, 'foldable': True}"
+                                />
+                                <field name="last_run" readonly="1" />
+                                <field name="next_run" readonly="1" />
+                            </group>
+                            <group>
+                                <field
+                                    name="day_of_week"
+                                    readonly="locked"
+                                    invisible="interval_type != 'day_of_week'"
+                                />
+                                <field
+                                    name="day_of_month"
+                                    readonly="locked"
+                                    invisible="interval_type not in ['day_of_month', 'day_of_year']"
+                                />
+                                <field
+                                    name="month_of_year"
+                                    readonly="locked"
+                                    invisible="interval_type != 'day_of_year'"
+                                />
+                                <field
+                                    name="duration"
+                                    readonly="locked"
+                                    invisible="interval_type not in ['days','weeks','months','years']"
+                                />
+                            </group>
+                        </group>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View stock.history.config search -->
+    <record id="view_stock_history_config_search" model="ir.ui.view">
+        <field name="name">view.stock.history.config.search</field>
+        <field name="model">stock.history.config</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter
+                    string="Archived"
+                    name="archived"
+                    domain="[('active', '=', False)]"
+                />
+                <group expand="1" string="Group By">
+                    <filter
+                        string="Name"
+                        name="name"
+                        domain="[]"
+                        context="{'group_by':'name'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action stock.history.config -->
+    <record id="action_stock_history_config" model="ir.actions.act_window">
+        <field name="name">Stock History Rules</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.history.config</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new Stock History Config.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="history_menu"
+        name="History"
+        parent="stock.menu_stock_config_settings"
+    />
+
+    <menuitem
+        id="history_config_menu"
+        name="Configurations"
+        action="action_stock_history_config"
+        parent="stock_history.history_menu"
+    />
+
+</odoo>
