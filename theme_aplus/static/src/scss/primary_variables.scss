@@ -13,19 +13,32 @@ $o-theme-font-configs: map-merge(
     )
 );
 
-
-$o-bg-shapes: map-merge($o-bg-shapes,
+$o-bg-shapes: map-merge(
+    $o-bg-shapes,
     (
-        'illustration': map-merge(
-            map-get($o-bg-shapes, 'illustration') or (),
-            (
-                'aplus/01': ('position': top, 'size': 100% auto, 'colors': (2, 3),
-                ),
-                'aplus/02': ('position': top, 'size': 100% auto, 'colors': (2, 3),
-                ),
+        "illustration":
+            map-merge(
+                map-get($o-bg-shapes, "illustration") or (),
+                (
+                    "aplus/01": (
+                        "position": top,
+                        "size": 100% auto,
+                        "colors": (
+                            2,
+                            3,
+                        ),
+                    ),
+                    "aplus/02": (
+                        "position": top,
+                        "size": 100% auto,
+                        "colors": (
+                            2,
+                            3,
+                        ),
+                    ),
+                )
             ),
-        )
-    )   
+    )
 );
 
 // Palette variables
@@ -53,7 +66,7 @@ o-ccX-bg
 $o-color-palettes: map-merge(
     $o-color-palettes,
     (
-        "aplus": (
+        "aplus-alt": (
             "o-color-1": $aplus-red,
             // Main 1 (main button primary, link)
             "o-color-2": $aplus-orange,
@@ -70,11 +83,8 @@ $o-color-palettes: map-merge(
             "footer-template": "minimalist",
 
             "o-cc1-text": $aplus-green,
-
-        
-        
-            ),
-        "aplus-alt": (
+        ),
+        "aplus": (
             "o-color-1": $aplus-white,
             "o-color-2": $aplus-columbia-blue,
             "o-color-3": $aplus-red,
@@ -83,7 +93,6 @@ $o-color-palettes: map-merge(
             "o-body": $aplus-black,
 
             // Presets
-
             "o-cc1-text": $aplus-black,
             "o-cc1-headings": $aplus-pale-magenta,
             "o-cc1-h2": $aplus-red,
@@ -99,7 +108,6 @@ $o-color-palettes: map-merge(
             "o-cc1-btn-secondary-text": $aplus-red,
             "o-cc1-btn-secondary-border": $aplus-red,
             "o-cc1-bg": $aplus-white,
-            
 
             "o-cc2-text": $aplus-blue-purple,
             "o-cc2-headings": $aplus-blue-purple,
@@ -116,8 +124,6 @@ $o-color-palettes: map-merge(
             "o-cc2-btn-secondary-text": $aplus-blue-purple,
             "o-cc2-btn-secondary-border": $aplus-blue,
             "o-cc2-bg": $aplus-blue,
-
-
 
             "o-cc4-text": $aplus-peach-orange,
             "o-cc4-headings": $aplus-peach-orange,
