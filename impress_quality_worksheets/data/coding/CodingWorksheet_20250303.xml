@@ -156,7 +156,9 @@
         />
         <field name="related">x_coding_log_id.subunit_check</field>
         <field name="ttype">selection</field>
-        <field name="selection">[('ok', 'Ok'), ('not_ok', 'Not Ok')]</field>
+        <field
+            name="selection"
+        >[('ok', 'Ok'), ('not_ok', 'Not Ok'), ("na", "N/A")]</field>
         <field name="translate">True</field>
     </record>
 
