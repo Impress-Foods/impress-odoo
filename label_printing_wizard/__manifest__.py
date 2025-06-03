@@ -11,6 +11,7 @@
     "data": [
         "wizards/label_wizard.xml",
         "reports/datamatrix.xml",
+        "reports/common.xml",
         "reports/lot_labels.xml",
         "reports/product_labels.xml",
         "reports/reports.xml",

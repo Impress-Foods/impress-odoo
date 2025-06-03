@@ -26,7 +26,13 @@ class ReportLabelBase(models.AbstractModel):
 
     @api.model
     def _get_gs1_barcode(
-        self, product_id=None, lot_id=None, quantity: int | float = 0, uom=None
+        self,
+        product_id=None,
+        lot_id=None,
+        quantity: int | float = 0,
+        uom=None,
+        packaging_id=None,
+        packaging_qty: int | float = 0,
     ):
         if not product_id:
             raise ValidationError(_("Cannot create a GS1 barcode without a product"))
@@ -79,6 +85,11 @@ class ReportLabelBase(models.AbstractModel):
         elif quantity != 0:
             quantity_barcode = "30" + pad_to_size(str(int(quantity)), 8)
 
+        if packaging_id:
+            product_barcode = "01" + packaging_id.barcode
+            if packaging_qty != 0:
+                quantity_barcode = "30" + pad_to_size(str(int(packaging_qty)), 8)
+
         return product_barcode + quantity_barcode + lot_barcode
 
 
@@ -93,23 +104,36 @@ class ReportProductProductLabel2x4(models.AbstractModel):
 
         product_list = []
         for product in products:
-            product_list.append(
-                {
-                    "product_record": product,
-                    "display_name_markup": markupsafe.Markup(product.display_name),
-                    "product_quantity": self.env.context.get("label_product_qty", 0),
-                }
-            )
+            packaging = False
+
+            if "label_packaging_id" in self.env.context:
+                packaging = self.env["product.packaging"].browse(
+                    self.env.context.get("label_packaging_id")
+                )
+
+            data_dict = {
+                "product_record": product,
+                "display_name_markup": markupsafe.Markup(product.display_name),
+                "product_quantity": self.env.context.get("label_product_qty", 0),
+                "gs1_barcode": False,
+                "label_count": self.env.context.get("label_count", False),
+                "packaging_name": markupsafe.Markup(packaging.name)
+                if packaging
+                else False,
+                "packaging_qty": self.env.context.get("label_packaging_qty", False),
+            }
+
             if product.valid_ean:
-                product_list[0]["gs1_barcode"] = self._get_gs1_barcode(
+                data_dict["gs1_barcode"] = self._get_gs1_barcode(
                     product_id=product,
                     quantity=self.env.context.get("label_product_qty", 0),
                     uom=product.uom_id,
+                    packaging_id=packaging,
+                    packaging_qty=self.env.context.get("label_packaging_qty", 0),
                 )
-            else:
-                product_list[0]["gs1_barcode"] = False
-        if "label_count" in self.env.context:
-            product_list[0]["label_count"] = self.env.context.get("label_count")
+
+            product_list.append(data_dict)
+
         _logger.warning(product_list)
         return {
             "docs": product_list,
@@ -130,11 +154,29 @@ class ReportLotLabel2x4(models.AbstractModel):
     def _get_report_values(self, docids, data):
         lots = self.env["stock.lot"].browse(docids)
         lot_list = []
+
         for lot in lots:
+            packaging = False
+
+            if "label_packaging_id" in self.env.context:
+                packaging = self.env["product.packaging"].browse(
+                    self.env.context.get("label_packaging_id")
+                )
+
+            if "label_product_qty" in self.env.context and len(lots) != 1:
+                raise UserError(_("Only one lot can be selected"))
+
             data_dict = {
                 "display_name_markup": markupsafe.Markup(lot.product_id.display_name),
                 "name": markupsafe.Markup(lot.name),
                 "lot_record": lot,
+                "gs1_barcode": False,
+                "product_qty": self.env.context.get("label_product_qty", False),
+                "packaging_name": markupsafe.Markup(packaging.name)
+                if packaging
+                else False,
+                "packaging_qty": self.env.context.get("label_packaging_qty", False),
+                "label_count": self.env.context.get("label_count", False),
             }
 
             if lot.product_id.valid_ean:
@@ -143,18 +185,13 @@ class ReportLotLabel2x4(models.AbstractModel):
                     lot_id=lot,
                     quantity=self.env.context.get("label_product_qty", 0),
                     uom=lot.product_id.uom_id,
+                    packaging_id=packaging,
+                    packaging_qty=self.env.context.get("label_packaging_qty", 0),
                 )
-            else:
-                data_dict["gs1_barcode"] = False
-            if "label_product_qty" in self.env.context:
-                if len(lots) != 1:
-                    raise UserError(_("Only one lot can be selected"))
 
-                data_dict["product_qty"] = self.env.context.get("label_product_qty")
-            if "label_count" in self.env.context:
-                data_dict["label_count"] = self.env.context.get("label_count")
             lot_list.append(data_dict)
 
+        _logger.warning(lot_list)
         return {
             "docs": lot_list,
         }

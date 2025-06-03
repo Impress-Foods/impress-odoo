@@ -22,12 +22,16 @@ class LabelWizard(models.TransientModel):
 
     product_id = fields.Many2one("product.product")
     product_template_id = fields.Many2one("product.template")
+
+    packaging_id = fields.Many2one("product.packaging")
+
     uom_id = fields.Many2one("uom.uom", related="product_id.uom_id")
     lot_id = fields.Many2one("stock.lot")
 
     picking_id = fields.Many2one("stock.picking")
 
     product_qty = fields.Float(string="Quantity")
+    packaging_qty = fields.Float()
 
     label_qty = fields.Integer(default=1, string="Number of Labels")
 
@@ -145,5 +149,10 @@ class LabelWizard(models.TransientModel):
         report = report.with_context(label_count=self.label_qty)
         if self.product_qty != 0:
             report = report.with_context(label_product_qty=self.product_qty)
+        if self.packaging_id:
+            report = report.with_context(label_packaging_id=self.packaging_id.id)
+
+            if self.packaging_qty != 0:
+                report = report.with_context(label_packaging_qty=self.packaging_qty)
 
         return report.report_action(res_id, data=data)

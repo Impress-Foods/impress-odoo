@@ -14,13 +14,29 @@
                         <t name="lot_name">
 <t t-out="'^FO10,50 ^A0N,88,66^FDLN/SN: ' + lot['name'] + '^FS'" />
                         </t>
-                        <t t-if="'product_qty' in lot" name="product_qty">
+                        <t t-if="lot['product_qty']" name="product_qty">
 <t
                             t-out="'^FO10,130 ^A0N,88,66^FDQTY: ' + str(lot['product_qty']) + ' ' + lot['lot_record'].product_id.uom_id.display_name + '^FS'"
                         />
+                        </t>
+
+                        <t t-if="lot['packaging_name']">
+                            <t t-call="label_printing_wizard.packaging_block_2x4">
+                                <t t-set="name" t-value="lot['packaging_name']" />
+                                <t t-set="qty" t-value="lot['packaging_qty']" />
                             </t>
+                        </t>
                         <t name="barcode">
+                            <t
+                            t-if="lot['lot_record'].product_id.valid_ean and lot['gs1_barcode']"
+                        >
 <t t-out="'^FO550,50^BY3 ^BXN,11,200 ^FD' + lot['gs1_barcode'] + '^FS'" />
+                            </t>
+                            <t t-else="">
+<t
+                                t-out="'^FO550,50^BY3 ^BXN,11,200 ^FD' + lot['lot_record'].product_id.barcode + '^FS'"
+                            />
+                            </t>
                         </t>
                         <t name="footer">
 <t t-out="'^XZ'" />
@@ -46,12 +62,26 @@
                     <t name="lot_name">
 <t t-out="'^FO500,50 ^A0R,88,66^FDLN/SN: ' + lot['name'] + '^FS'" />
                     </t>
+                    <t t-if="lot['packaging_name']">
+                        <t t-call="label_printing_wizard.packaging_block_4x6">
+                            <t t-set="name" t-value="lot['packaging_name']" />
+                            <t t-set="qty" t-value="lot['packaging_qty']" />
+                        </t>
+                    </t>
                     <t name="barcode">
+                        <t
+                            t-if="lot['lot_record'].product_id.valid_ean and lot['gs1_barcode']"
+                        >
 <t t-out="'^FO100,800^BY3 ^BXR,20,200 ^FD' + lot['gs1_barcode'] + '^FS'" />
-
+                        </t>
+                        <t t-else="">
+<t
+                                t-out="'^FO100,800^BY3 ^BXR,20,200 ^FD' + lot['lot_record'].product_id.barcode + '^FS'"
+                            />
+                        </t>
                     </t>
 
-                    <t t-if="'product_qty' in lot" name="product_qty">
+                    <t t-if="lot['product_qty']" name="product_qty">
 <t
                             t-out="'^FO400,50 ^A0R,88,66^FDQTY: ' + str(lot['product_qty']) + ' ' + lot['lot_record'].product_id.uom_id.display_name + '^FS'"
                         />
