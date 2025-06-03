@@ -9,14 +9,14 @@
     "category": "Hidden",
     "depends": ["base", "product", "stock", "product_expiry", "stock_barcode"],
     "data": [
-        "views/product_product.xml",
-        "views/stock_lot.xml",
-        "views/stock_picking.xml",
+        "wizards/label_wizard.xml",
         "reports/datamatrix.xml",
         "reports/lot_labels.xml",
         "reports/product_labels.xml",
         "reports/reports.xml",
-        "wizards/label_wizard.xml",
+        "views/product_product.xml",
+        "views/stock_lot.xml",
+        "views/stock_picking.xml",
         "security/ir.model.access.csv",
     ],
     "assets": {
