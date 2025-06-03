@@ -32,9 +32,10 @@
                     <t t-if="product.valid_ean and product_info['gs1_barcode']">
 <t t-out="'^FO550,160^BY3 ^BXN,12,200 ^FD' + product_info['gs1_barcode'] + '^FS'" />
                     </t>
-                    <t t-else="">
+                    <t t-elif="product.barcode">
 <t t-out="'^FO550,160^BY3 ^BXN,12,200 ^FD' + product.barcode + '^FS'" />
                     </t>
+
                 </t>
 <t t-out="'^XZ'" />
                 </t>
@@ -72,7 +73,7 @@
                         <t t-if="product.valid_ean and product_info['gs1_barcode']">
 <t t-out="'^FO100,800^BY3 ^BXR,20,200 ^FD' + product_info['gs1_barcode'] + '^FS'" />
                         </t>
-                        <t t-else="">
+                        <t t-elif="product.barcode">
 <t t-out="'^FO100,800^BY3 ^BXR,20,200 ^FD' + product.barcode + '^FS'" />
                         </t>
                     </t>

@@ -35,7 +35,10 @@
                             invisible="model != 'lot'"
                         />
 
-                        <field name="packaging_id" />
+                        <field
+                            name="packaging_id"
+                            domain="[('product_id', '=', product_id)]"
+                        />
 
                         <label
                             for="product_qty"
