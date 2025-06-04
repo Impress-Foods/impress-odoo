@@ -25,6 +25,33 @@ class ReportLabelBase(models.AbstractModel):
         return {"docs": []}
 
     @api.model
+    def _make_variable_decimal_code(self, quantity: int | float, prefix: str) -> str:
+        _logger.warning(f"Quantity before post process: {quantity}")
+
+        if isinstance(quantity, int):
+            return prefix + pad_to_size(str(quantity), 6)
+
+        split_number = str(quantity).split(".")
+        int_part_length = len(split_number[0])
+        dec_part_length = len(split_number[1])
+        total_length = int_part_length + dec_part_length
+
+        if total_length > 6:
+            dec_part_length = 6 - int_part_length
+            split_number[1] = split_number[1][:dec_part_length]
+
+        _logger.warning(f"Number of decimals: {dec_part_length}")
+
+        quantity_barcode = f"310{dec_part_length}" + pad_to_size(
+            str("".join(split_number)), 6
+        )
+
+        _logger.warning(f"Quantity after post process: {str('.'.join(split_number))}")
+
+        _logger.warning(quantity_barcode)
+        return quantity_barcode
+
+    @api.model
     def _get_gs1_barcode(
         self,
         product_id=None,
@@ -66,19 +93,9 @@ class ReportLabelBase(models.AbstractModel):
             quantity = uom._compute_quantity(quantity, ref_unit, raise_if_failure=False)
             match uom.category_id.name:
                 case "Weight":
-                    split_quantity = split_float(quantity)
-                    n_decimals = len(split_quantity[1])
-                    quantity_barcode = f"310{n_decimals}" + pad_to_size(
-                        str("".join(split_quantity)), 6
-                    )
-
+                    quantity_barcode = self._make_variable_decimal_code(quantity, "310")
                 case "Volume":
-                    split_quantity = split_float(quantity)
-                    n_decimals = len(split_quantity[1])
-                    quantity_barcode = f"315{n_decimals}" + pad_to_size(
-                        str("".join(split_quantity)), 6
-                    )
-
+                    quantity_barcode = self._make_variable_decimal_code(quantity, "315")
                 case _:
                     quantity_barcode = "30" + pad_to_size(str(int(quantity)), 8)
 
@@ -134,7 +151,6 @@ class ReportProductProductLabel2x4(models.AbstractModel):
 
             product_list.append(data_dict)
 
-        _logger.warning(product_list)
         return {
             "docs": product_list,
         }
@@ -191,7 +207,6 @@ class ReportLotLabel2x4(models.AbstractModel):
 
             lot_list.append(data_dict)
 
-        _logger.warning(lot_list)
         return {
             "docs": lot_list,
         }
