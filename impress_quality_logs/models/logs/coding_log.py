@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 
 from odoo import api, fields, models
 
@@ -32,6 +33,8 @@ class CodingLog(models.Model):
         compute="_compute_global_success_check",
     )
 
+    verification_signature = fields.Binary()
+
     @api.depends(
         "unit_check",
         "sleeve_check",
@@ -57,3 +60,9 @@ class CodingLog(models.Model):
             and self.shelf_life_check == "ok"
             and self.keep_cold_check == "ok"
         )
+
+    @api.depends("verification_signature")
+    def _compute_weekly_signature_date(self):
+        for rec in self:
+            if rec.verification_signature:
+                rec.weekly_signature_date = datetime.now()
