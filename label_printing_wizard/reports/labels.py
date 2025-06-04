@@ -75,6 +75,18 @@ class ReportLabelBase(models.AbstractModel):
             elif lot_id.product_id.tracking == "serial":
                 lot_barcode = "21" + lot_id.name
 
+        # To work with Odoo's barcode parser, the UoM encoded in the
+        # barcode needs to be the same as the UoM used for the products
+        # in the packaging. Example:
+        # Product in kg, 10 packaging of 20 kgs
+        # code should be (3100)000010 (10 kgs), not (30)00000010 (10 units)
+        # even if semantically it should be 10 units of packaging x 20 kg/packaging
+        # and not 10 kg of packaging x 20 kg/packaging
+        if packaging_id:
+            product_barcode = "01" + packaging_id.barcode
+            if packaging_qty:
+                quantity = packaging_qty
+
         if quantity != 0:
             uom_type = uom.category_id.name if uom else "Unit"
 
@@ -97,11 +109,6 @@ class ReportLabelBase(models.AbstractModel):
                     quantity_barcode = self._make_variable_decimal_code(quantity, "315")
                 case _:
                     quantity_barcode = "30" + pad_to_size(str(int(quantity)), 8)
-
-        if packaging_id:
-            product_barcode = "01" + packaging_id.barcode
-            packaging_qty = packaging_qty or 1
-            quantity_barcode = "30" + pad_to_size(str(int(packaging_qty)), 8)
 
         return product_barcode + quantity_barcode + lot_barcode
 
