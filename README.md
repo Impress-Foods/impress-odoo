@@ -24,9 +24,10 @@ addon | version | maintainers | summary
 [audit_reports](audit_reports/) | 17.0.0.0.1 |  | Audit_reports Summary
 [delivery_status_multi_step](delivery_status_multi_step/) | 17.0.1.0.0 |  | Adds usefull delivery statuses for multi-step delivery flows
 [documents_archive](documents_archive/) | 17.0.0.1.0 |  | Module to allow a "soft" archive feature for documents.
+[gs1_sequences](gs1_sequences/) | 17.0.1.0.0 |  | Adds GS1 check digit option on sequences
 [impress_account_report](impress_account_report/) | 17.0.0.1.0 |  | Module to customize the accounting reports
 [impress_accounting](impress_accounting/) | 17.0.0.0.1 |  | Impress_accounting Summary
-[impress_barcode](impress_barcode/) | 17.0.0.1.2 |  | Customizations to barcode app
+[impress_barcode](impress_barcode/) | 17.0.1.0.0 |  | Customizations to barcode app
 [impress_billback](impress_billback/) | 17.0.0.1.0 |  | Impress_billback Summary
 [impress_check_customizations](impress_check_customizations/) | 17.0.0.1.0 |  | Small tweaks to l10n_ca_check to allow better printing on preprinted checks
 [impress_cleaning](impress_cleaning/) | 17.0.0.1.0 |  | Module to handle cleanings for Impress Foods
