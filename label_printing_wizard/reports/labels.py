@@ -52,7 +52,7 @@ class ReportLabelBase(models.AbstractModel):
         quantity: int | float = 0,
         uom=None,
         packaging_id=None,
-        packaging_qty: int | float = 0,
+        packaging_qty: int | float | None = None,
     ):
         if not product_id:
             raise ValidationError(_("Cannot create a GS1 barcode without a product"))
@@ -75,16 +75,22 @@ class ReportLabelBase(models.AbstractModel):
             elif lot_id.product_id.tracking == "serial":
                 lot_barcode = "21" + lot_id.name
 
-        if quantity != 0 and uom:
-            ref_unit = self.env["uom.uom"].search(
-                [
-                    ("category_id", "=", uom.category_id.id),
-                    ("uom_type", "=", "reference"),
-                ]
-            )
+        if quantity != 0:
+            uom_type = uom.category_id.name if uom else "Unit"
 
-            quantity = uom._compute_quantity(quantity, ref_unit, raise_if_failure=False)
-            match uom.category_id.name:
+            if uom:
+                ref_unit = self.env["uom.uom"].search(
+                    [
+                        ("category_id", "=", uom.category_id.id),
+                        ("uom_type", "=", "reference"),
+                    ]
+                )
+
+                quantity = uom._compute_quantity(
+                    quantity, ref_unit, raise_if_failure=False
+                )
+
+            match uom_type:
                 case "Weight":
                     quantity_barcode = self._make_variable_decimal_code(quantity, "310")
                 case "Volume":
@@ -92,13 +98,10 @@ class ReportLabelBase(models.AbstractModel):
                 case _:
                     quantity_barcode = "30" + pad_to_size(str(int(quantity)), 8)
 
-        elif quantity != 0:
-            quantity_barcode = "30" + pad_to_size(str(int(quantity)), 8)
-
         if packaging_id:
             product_barcode = "01" + packaging_id.barcode
-            if packaging_qty != 0:
-                quantity_barcode = "30" + pad_to_size(str(int(packaging_qty)), 8)
+            packaging_qty = packaging_qty or 1
+            quantity_barcode = "30" + pad_to_size(str(int(packaging_qty)), 8)
 
         return product_barcode + quantity_barcode + lot_barcode
 
