@@ -8,7 +8,6 @@
     >
         <xpath expr="//td/div/t/div" position="replace">
             <div class="content">
-
                 <t t-if="props.cell.auditable">
                     <a t-on-click="() => this.audit()">
                         <t
@@ -33,7 +32,6 @@
                     }"
                     />
                 </t>
-
             </div>
         </xpath>
     </t>

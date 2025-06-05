@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <!-- View loma_log_line View Tree -->
     <record id="view_loma_log_line_tree" model="ir.ui.view">
         <field name="name">view.loma_log_line.tree</field>
@@ -50,7 +49,6 @@
                 </header>
 
                 <sheet>
-
                     <field name="loma_log_id" invisible="1" />
                     <div class="oe_button_box" name="button_box">
                         <button
@@ -74,66 +72,64 @@
                                 placeholder="Name..."
                                 readonly='is_locked'
                             />
-</h1>
-<group>
-<group>
-<field name="nominal_weight" readonly='is_locked' />
-                            <field name="lower_limit" readonly='is_locked' />
-                            <field name="upper_limit" readonly='is_locked' />
-                            <field name="is_seal_ok" readonly='is_locked' />
-                            <field name="is_weight_ok" readonly='is_locked' />
-                            <field name="notes" readonly='is_locked' />
-                        </group>
+                        </h1>
                         <group>
-                            <field name="measure_1" readonly='is_locked' />
-                            <field name="measure_2" readonly='is_locked' />
-                            <field name="measure_3" readonly='is_locked' />
-                            <field name="measure_4" readonly='is_locked' />
-                            <field name="measure_5" readonly='is_locked' />
+                            <group>
+                                <field name="nominal_weight" readonly='is_locked' />
+                                <field name="lower_limit" readonly='is_locked' />
+                                <field name="upper_limit" readonly='is_locked' />
+                                <field name="is_seal_ok" readonly='is_locked' />
+                                <field name="is_weight_ok" readonly='is_locked' />
+                                <field name="notes" readonly='is_locked' />
+                            </group>
+                            <group>
+                                <field name="measure_1" readonly='is_locked' />
+                                <field name="measure_2" readonly='is_locked' />
+                                <field name="measure_3" readonly='is_locked' />
+                                <field name="measure_4" readonly='is_locked' />
+                                <field name="measure_5" readonly='is_locked' />
+                            </group>
                         </group>
-                    </group>
-                </div>
-            </sheet>
-        </form>
-    </field>
-</record>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
-<!-- View loma_log_line search -->
-<record id="view_loma_log_line_search" model="ir.ui.view">
-    <field name="name">view.loma_log_line.search</field>
-    <field name="model">loma.log.line</field>
-    <field name="arch" type="xml">
-        <search>
-            <field name="sequence" string="Sequence" />
-            <field name="product_lot_id" string="Sequence" />
-            <field name="product_id" string="Product" />
+    <!-- View loma_log_line search -->
+    <record id="view_loma_log_line_search" model="ir.ui.view">
+        <field name="name">view.loma_log_line.search</field>
+        <field name="model">loma.log.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="sequence" string="Sequence" />
+                <field name="product_lot_id" string="Sequence" />
+                <field name="product_id" string="Product" />
 
-            <group expand="1" string="Group By">
-                <filter
+                <group expand="1" string="Group By">
+                    <filter
                         string="Name"
                         name="sequence"
                         domain="[]"
                         context="{'group_by':'sequence'}"
                     />
-            </group>
-        </search>
-    </field>
-</record>
+                </group>
+            </search>
+        </field>
+    </record>
 
-<!-- Action loma_log_line -->
-<record id="action_loma_log_line" model="ir.actions.act_window">
-    <field name="name">LOMA Lines</field>
-    <field name="type">ir.actions.act_window</field>
-    <field name="res_model">loma.log.line</field>
-    <field name="view_mode">tree,form</field>
-    <field name="domain">[]</field>
-    <field name="context">{}</field>
-    <field name="help" type="html">
-        <p class="oe_view_nocontent_create">
+    <!-- Action loma_log_line -->
+    <record id="action_loma_log_line" model="ir.actions.act_window">
+        <field name="name">LOMA Lines</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">loma.log.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
                 There is no examples click here to add new Loma_log_line.
         </p>
-    </field>
-</record>
-
-
+        </field>
+    </record>
 </odoo>

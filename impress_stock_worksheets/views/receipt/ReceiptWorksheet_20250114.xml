@@ -100,7 +100,6 @@
                                     <td>-18°C</td>
                                     <td>-</td>
                                     <td>-18°C</td>
-
                                 </tr>
                             </tbody>
                         </table>
@@ -115,6 +114,4 @@
             </form>
         </field>
     </record>
-
-
 </odoo>

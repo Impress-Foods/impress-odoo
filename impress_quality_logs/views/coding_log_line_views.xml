@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <!-- View coding_log_line View Tree -->
     <record id="view_coding_log_line_tree" model="ir.ui.view">
         <field name="name">view.coding_log_line.tree</field>
@@ -98,5 +97,4 @@
             </p>
         </field>
     </record>
-
 </odoo>

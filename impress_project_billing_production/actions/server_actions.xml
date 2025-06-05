@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding="utf-8" ?>
 <odoo>
-        <record id="action_create_task" model="ir.actions.server">
-            <field name="name">Create task from production</field>
-            <field name="model_id" ref="mrp.model_mrp_production" />
-            <field name="binding_view_types">list,form</field>
-            <field name="state">code</field>
-            <field name="code">
+    <record id="action_create_task" model="ir.actions.server">
+        <field name="name">Create task from production</field>
+        <field name="model_id" ref="mrp.model_mrp_production" />
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
                 for record in records:
                     #Create the sales line on the related project's billing SO
                     sale_order = record.x_related_project.x_billing_so
@@ -53,14 +53,14 @@
 
                         record.write({'x_related_task': task.id})
             </field>
-        </record>
+    </record>
 
-        <record id="action_update_task" model="ir.actions.server">
-            <field name="name">Update task from production</field>
-            <field name="model_id" ref="mrp.model_mrp_production" />
-            <field name="binding_view_types">list,form</field>
-            <field name="state">code</field>
-            <field name="code">
+    <record id="action_update_task" model="ir.actions.server">
+        <field name="name">Update task from production</field>
+        <field name="model_id" ref="mrp.model_mrp_production" />
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
                 for record in records:
                     task = record.x_related_task
                     if len(task.timesheet_ids) == 1:
@@ -88,14 +88,14 @@
                         task.sale_line_id[0].write({'qty_delivered': record.qty_produced})
                         task.write({'state': '1_done'})
             </field>
-        </record>
+    </record>
 
-        <record id="action_create_project" model="ir.actions.server">
-            <field name="name">Create project from SO</field>
-            <field name="model_id" ref="sale.model_sale_order" />
-            <field name="binding_view_types">list,form</field>
-            <field name="state">code</field>
-            <field name="code">
+    <record id="action_create_project" model="ir.actions.server">
+        <field name="name">Create project from SO</field>
+        <field name="model_id" ref="sale.model_sale_order" />
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
                 for record in records:
 
                     # TODO: Allow dynamic analytical plans based on the customer invoiced. Adding a
@@ -156,5 +156,5 @@
                         record.write({'project_id': project.id})
 
             </field>
-        </record>
+    </record>
 </odoo>

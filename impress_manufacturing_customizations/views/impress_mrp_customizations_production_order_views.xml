@@ -25,8 +25,8 @@
                     <t t-esc="record.qty_producing.value" />
 /                    <t t-esc="record.product_qty.value" />
                     <small>
-                        <t t-esc="record.product_uom_id.value" />
-                    </small>
+                    <t t-esc="record.product_uom_id.value" />
+                </small>
                 </span>
             </xpath>
         </field>

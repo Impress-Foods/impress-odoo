@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding="utf-8" ?>
 <odoo>
-
     <record id="impress_lot_lab_lot_lab_analysis" model="ir.ui.view">
         <field name="name">impress.lab.lot.lab_analysis</field>
         <field name="model">stock.lot</field>
@@ -77,8 +76,6 @@
                                     t-if="record.x_lab_state.raw_value == 'received_problem'"
                                     class="badge rounded-pill text-bg-danger"
                                 >Results received and follow-up needed</span>
-
-
                             </div>
                         </div>
                     </t>
@@ -149,6 +146,4 @@
         parent="quality_control.menu_quality_control"
         sequence="8"
     />
-
-
 </odoo>

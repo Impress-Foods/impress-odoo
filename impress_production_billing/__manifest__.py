@@ -1,9 +1,9 @@
 {
     "name": "impress_production_billing",
-    "version": "17.0.0.1.2",
+    "version": "18.0.0.1.2",
     "summary": """ Module to allow billing of MOs directly through SOs """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/impress-foods/impress-odoo",
     "category": "Sales",
     "depends": ["mrp", "purchase", "sale_management", "portal", "product_expiry"],
     "data": [

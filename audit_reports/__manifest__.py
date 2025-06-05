@@ -1,9 +1,9 @@
 {
     "name": "Audit_reports",
-    "version": "17.0.0.0.1",
+    "version": "18.0.0.0.1",
     "summary": """ Audit_reports Summary """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/impress-foods/impress-odoo",
     "category": "Hidden",
     "depends": [
         "base",

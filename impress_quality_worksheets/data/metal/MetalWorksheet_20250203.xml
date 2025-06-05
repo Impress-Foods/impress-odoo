@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- oca-hooks:disable=xml-duplicate-record-id -->
 <odoo>
-
     <!-- Create a new Worksheet Template -->
     <record id="ws_metal_20250203" model="worksheet.template">
         <field name="name">Worksheet Metal 2025-02-03</field>
@@ -42,8 +41,7 @@
         else: \n
             rec[\'x_metal_log_id\'] = existing_log[0]
             '"
-        >
-        </field>
+        />
     </record>
 
     <!-- log: x_ws_xx_id - One2Many - x_metal_log_id -->
@@ -105,5 +103,4 @@
         <field name="ttype">one2many</field>
         <field name="on_delete">cascade</field>
     </record>
-
 </odoo>

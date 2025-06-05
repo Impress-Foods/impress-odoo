@@ -1,9 +1,9 @@
 {
     "name": "maintenance_consume_stock",
-    "version": "17.0.0.0.2",
+    "version": "18.0.0.0.2",
     "summary": """ Module to allow stock usage in maintenance requests """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/impress-foods/impress-odoo",
     "category": "Hidden",
     "depends": ["base", "maintenance", "base_maintenance", "stock"],
     "data": [

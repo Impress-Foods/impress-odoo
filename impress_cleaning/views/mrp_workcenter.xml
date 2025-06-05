@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
-        <record id="mrp_workcenter_view_form_inherit_cleaning" model="ir.ui.view">
-            <field name="name">mrp.workcenter.form.inherit.cleaning</field>
-            <field name="model">mrp.workcenter</field>
-            <field name="inherit_id" ref="mrp.mrp_workcenter_view" />
-            <field name='priority'>50</field>
-            <field name="arch" type="xml">
-                <xpath
+    <record id="mrp_workcenter_view_form_inherit_cleaning" model="ir.ui.view">
+        <field name="name">mrp.workcenter.form.inherit.cleaning</field>
+        <field name="model">mrp.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_workcenter_view" />
+        <field name='priority'>50</field>
+        <field name="arch" type="xml">
+            <xpath
                 expr="//notebook/page[@name='maintenance']//field[@name='technician_user_id']"
                 position="after"
             >
-                        <field name="cleaning_team_id" />
-                        <field name="cleaning_user_id" />
-                        <label for="cleaning_time" />
-                        <div>
-                        <field
-                        name="cleaning_time"
-                        widget="float_time"
-                        class="oe_inline"
-                    /> <span class="ml8">hours</span>
-                        </div>
-                </xpath>
-            </field>
-        </record>
+                <field name="cleaning_team_id" />
+                <field name="cleaning_user_id" />
+                <label for="cleaning_time" />
+                <div>
+                    <field name="cleaning_time" widget="float_time" class="oe_inline" />
+                    <span class="ml8">hours</span>
+                </div>
+            </xpath>
+        </field>
+    </record>
 </odoo>

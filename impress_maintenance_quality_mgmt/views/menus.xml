@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
     <!-- Menus added to main Maintenance app -->
     <menuitem
         id="maintenance_team_tag_menu"
@@ -37,7 +36,6 @@
         groups="quality.group_quality_user,quality.group_quality_manager"
         sequence="2"
     />
-
 
     <!-- Reuse of maintenance menu items -->
 

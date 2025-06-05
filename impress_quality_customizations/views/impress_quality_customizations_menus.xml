@@ -1,105 +1,105 @@
 <?xml version='1.0' encoding="utf-8" ?>
 <odoo>
-        <record
+    <record
         id="impress_quality_quality_check_tree_action"
         model="ir.actions.act_window"
     >
-            <field name="name">Registre</field>
-            <field name="res_model">quality.check</field>
-            <field name="views">tree,kanban,form</field>
-            <field name="view_mode">tree,kanban,form</field>
-            <field name="search_view_id" ref="impress_quality_quality_check_search" />
-            <field name="help" type="html">
-                <p class="o_view_nocontent_smiling_face">
+        <field name="name">Registre</field>
+        <field name="res_model">quality.check</field>
+        <field name="views">tree,kanban,form</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="impress_quality_quality_check_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
                     No quality checks found
                 </p>
-            </field>
-        </record>
+        </field>
+    </record>
 
-        <record
+    <record
         id="impress_quality_quality_check_tree_action_ph"
         model="ir.actions.act_window"
     >
-            <field name="name">Registres</field>
-            <field name="res_model">quality.check</field>
-            <field name="views">tree,kanban,form</field>
-            <field name="view_mode">tree,kanban,form</field>
-            <field name="search_view_id" ref="impress_quality_quality_check_search" />
-            <field
+        <field name="name">Registres</field>
+        <field name="res_model">quality.check</field>
+        <field name="views">tree,kanban,form</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="impress_quality_quality_check_search" />
+        <field
             name="domain"
         >['&amp;',('title','ilike','ph'), ('test_type','=','measure')]</field>
-            <field name="help" type="html">
-                <p class="o_view_nocontent_smiling_face">
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
                     No quality checks found
                 </p>
-            </field>
-        </record>
+        </field>
+    </record>
 
-        <record
+    <record
         id="impress_quality_quality_check_tree_action_brix"
         model="ir.actions.act_window"
     >
-            <field name="name">Registre Brix</field>
-            <field name="res_model">quality.check</field>
-            <field name="views">tree,kanban,form</field>
-            <field name="view_mode">tree,kanban,form</field>
-            <field name="search_view_id" ref="impress_quality_quality_check_search" />
-            <field
+        <field name="name">Registre Brix</field>
+        <field name="res_model">quality.check</field>
+        <field name="views">tree,kanban,form</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="impress_quality_quality_check_search" />
+        <field
             name="domain"
         >['&amp;',('title','ilike','brix'), ('test_type','=','measure')]</field>
-            <field name="help" type="html">
-                <p class="o_view_nocontent_smiling_face">
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
                     No quality checks found
                 </p>
-            </field>
-        </record>
+        </field>
+    </record>
 
-        <record
+    <record
         id="impress_quality_quality_check_tree_action_bostwick"
         model="ir.actions.act_window"
     >
-            <field name="name">Registre Bostwick</field>
-            <field name="res_model">quality.check</field>
-            <field name="views">tree,kanban,form</field>
-            <field name="view_mode">tree,kanban,form</field>
-            <field name="search_view_id" ref="impress_quality_quality_check_search" />
-            <field
+        <field name="name">Registre Bostwick</field>
+        <field name="res_model">quality.check</field>
+        <field name="views">tree,kanban,form</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="impress_quality_quality_check_search" />
+        <field
             name="domain"
         >['&amp;',('title','ilike','consistance'), ('test_type','=','measure')]</field>
-            <field name="help" type="html">
-                <p class="o_view_nocontent_smiling_face">
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
                     No quality checks found
                 </p>
-            </field>
-        </record>
+        </field>
+    </record>
 
-        <record
+    <record
         id="impress_quality_quality_check_tree_action_organoleptic"
         model="ir.actions.act_window"
     >
-            <field name="name">Registre Organoleptique</field>
-            <field name="res_model">quality.check</field>
-            <field name="views">tree,kanban,form</field>
-            <field name="view_mode">tree,kanban,form</field>
-            <field name="search_view_id" ref="impress_quality_quality_check_search" />
-            <field
+        <field name="name">Registre Organoleptique</field>
+        <field name="res_model">quality.check</field>
+        <field name="views">tree,kanban,form</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="impress_quality_quality_check_search" />
+        <field
             name="domain"
         >['&amp;',('title','ilike','organoleptique'), ('test_type','=','passfail')]</field>
-            <field name="help" type="html">
-                <p class="o_view_nocontent_smiling_face">
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
                     No quality checks found
                 </p>
-            </field>
-        </record>
+        </field>
+    </record>
 
-        <menuitem
+    <menuitem
         id="impress_quality_logs"
         name="Registres"
         parent="quality_control.menu_quality_root"
         sequence="2"
     />
 
-        <menuitem
+    <menuitem
         id="impress_quality_logs_ph"
         action="impress_quality_quality_check_tree_action_ph"
         name="pH"
@@ -107,7 +107,7 @@
         sequence="1"
     />
 
-        <menuitem
+    <menuitem
         id="impress_quality_logs_brix"
         action="impress_quality_quality_check_tree_action_brix"
         name="Brix"
@@ -115,7 +115,7 @@
         sequence="2"
     />
 
-        <menuitem
+    <menuitem
         id="impress_quality_logs_boswick"
         action="impress_quality_quality_check_tree_action_bostwick"
         name="Bostwick"
@@ -123,12 +123,11 @@
         sequence="3"
     />
 
-        <menuitem
+    <menuitem
         id="impress_quality_logs_organoleptic"
         action="impress_quality_quality_check_tree_action_organoleptic"
         name="Organoleptique"
         parent="impress_quality_logs"
         sequence="4"
     />
-
 </odoo>

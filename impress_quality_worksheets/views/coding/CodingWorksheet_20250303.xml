@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id='codingWorksheet_20250303_form_view' model='ir.ui.view'>
         <field name="name">coding.worksheet.20250303.form.view</field>
         <field
@@ -48,10 +47,8 @@
                                 required='1'
                                 string="Initials"
                             />
-
                         </group>
                     </group>
-
 
                     <div class="text-center">
                         <strong

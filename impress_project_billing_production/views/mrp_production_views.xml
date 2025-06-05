@@ -1,58 +1,58 @@
 <?xml version='1.0' encoding="utf-8" ?>
 <odoo>
-        <record
+    <record
         id="impress_project_billing_production_mrp_production_form"
         model="ir.ui.view"
     >
-            <field
+        <field
             name="name"
         >impress_project_billing_production.mrp.production.form</field>
-            <field name="model">mrp.production</field>
-            <field name="inherit_id" ref="mrp.mrp_production_form_view" />
-            <field name="priority">16</field>
-            <field name="arch" type="xml">
-                <xpath expr="//button[@name='button_unbuild']" position="after">
-                    <button
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+        <field name="priority">16</field>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='button_unbuild']" position="after">
+                <button
                     name="%(action_create_task)d"
                     type='action'
                     string='Bill to client'
                     invisible='x_related_task or not x_related_project'
                 />
-                    <button
+                <button
                     name="%(action_update_task)d"
                     type='action'
                     string='Confirm quantity to bill'
                     invisible='not x_related_task or not x_related_project or state != "done"'
                 />
-                </xpath>
-                <xpath expr="//div[@name='bom_div']" position="after">
-                    <field name="x_related_project" />
-                    <field name="x_related_task" invisible='not x_related_task' />
-                </xpath>
-            </field>
-        </record>
-        <record
+            </xpath>
+            <xpath expr="//div[@name='bom_div']" position="after">
+                <field name="x_related_project" />
+                <field name="x_related_task" invisible='not x_related_task' />
+            </xpath>
+        </field>
+    </record>
+    <record
         id="impress_project_billing_production_mrp_production_kanban"
         model="ir.ui.view"
     >
-            <field
+        <field
             name="name"
         >impress_project_billing_production.mrp.production.kanban</field>
-            <field name="model">mrp.production</field>
-            <field name="inherit_id" ref="mrp.mrp_production_kanban_view" />
-            <field name="priority">17</field>
-            <field name="arch" type="xml">
-                <xpath expr="//div[@class='o_kanban_record_top']" position="after">
-                    <field name="x_related_project" />
-                    <div class='o_kanban_record_bottom oe_kanban_record_bottom_left'>
-                        <span>
-                            <t
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_kanban_view" />
+        <field name="priority">17</field>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='o_kanban_record_top']" position="after">
+                <field name="x_related_project" />
+                <div class='o_kanban_record_bottom oe_kanban_record_bottom_left'>
+                    <span>
+                        <t
                             t-esc="record.x_related_project.raw_value"
                             t-if="x_related_project"
                         />
-                        </span>
-                    </div>
-                </xpath>
-            </field>
-        </record>
+                    </span>
+                </div>
+            </xpath>
+        </field>
+    </record>
 </odoo>

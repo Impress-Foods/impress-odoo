@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo noupdate="1">
-        <record id="warehouse_space_usage_sequence" model="ir.sequence">
-            <field name="name">Warehouse Space Usage</field>
-            <field name="code">warehouse.space.usage</field>
-            <field name="padding">7</field>
-            <field name="number_next">1</field>
-            <field name="number_increment">1</field>
-        </record>
-        <record id="warehouse_usage_group_sequence" model="ir.sequence">
-            <field name="name">Warehouse Usage Group</field>
-            <field name="code">warehouse.usage.group</field>
-            <field name="padding">7</field>
-            <field name="number_next">1</field>
-            <field name="number_increment">1</field>
-        </record>
+    <record id="warehouse_space_usage_sequence" model="ir.sequence">
+        <field name="name">Warehouse Space Usage</field>
+        <field name="code">warehouse.space.usage</field>
+        <field name="padding">7</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+    <record id="warehouse_usage_group_sequence" model="ir.sequence">
+        <field name="name">Warehouse Usage Group</field>
+        <field name="code">warehouse.usage.group</field>
+        <field name="padding">7</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
 </odoo>

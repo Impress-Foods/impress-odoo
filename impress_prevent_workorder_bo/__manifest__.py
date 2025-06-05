@@ -1,10 +1,10 @@
 {
     "name": "Impress_prevent_workorder_bo",
-    "version": "17.0.0.1.0",
+    "version": "18.0.0.1.0",
     "summary": """ Prevents the creation of BO on workorder validation
     when producing less than expected.""",
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/impress-foods/impress-odoo",
     "category": "Hidden",
     "depends": ["base", "mrp_workorder"],
     "data": [],

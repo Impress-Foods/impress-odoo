@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <!-- View product.product form -->
     <record id="view_product_product_form" model="ir.ui.view">
         <field name="name">view.product.product.form</field>
@@ -21,5 +20,4 @@
             </xpath>
         </field>
     </record>
-
 </odoo>

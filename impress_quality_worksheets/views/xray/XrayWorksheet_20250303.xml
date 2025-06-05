@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id='x_rayWorksheet_20250303_form_view' model='ir.ui.view'>
         <field name="name">x_ray.worksheet.20250303.form.view</field>
         <field
@@ -30,7 +29,6 @@
                             <li>Every 2 hours if no product change.</li>
                             <li>At the end of production.</li>
                         </ul>
-
                     </div>
 
                     <group>

@@ -8,10 +8,10 @@
     >
         <xpath expr="//td[@name='td_mrp_bom']" position="inside">
             <t t-if="props.type == 'subcontracting'">Subcontracting: <a
-                    href="#"
-                    t-on-click.prevent="goToSubcontractor"
-                    t-esc="subcontracting.name"
-                /></t>
+                href="#"
+                t-on-click.prevent="goToSubcontractor"
+                t-esc="subcontracting.name"
+            /></t>
         </xpath>
 
         <xpath expr="//td[@name='quantity']" position="inside">

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding="utf-8" ?>
 <odoo>
-        <!-- Change to the task list view.
+    <!-- Change to the task list view.
         <record id="impress_project_billing_portal_tasks" model="ir.ui.view">
             <field name="name">impress_project_billing_portal_tasks</field>
             <field name="model" />

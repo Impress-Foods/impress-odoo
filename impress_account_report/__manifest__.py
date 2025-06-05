@@ -1,10 +1,10 @@
 {
     "name": "impress account report customizations",
-    "version": "17.0.0.1.0",
+    "version": "18.0.0.1.0",
     "depends": ["account_accountant", "account_reports"],
     "author": "Cédric Paradis",
     "category": "Accounting",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/impress-foods/impress-odoo",
     "summary": """
     Module to customize the accounting reports
     """,

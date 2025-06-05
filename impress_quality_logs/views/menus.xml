@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <menuitem
         id="logs_menu"
         web_icon="impress_quality_logs,static/description/icon.png"
@@ -90,5 +89,4 @@
         sequence='11'
         name="X-Ray lines"
     />
-
 </odoo>

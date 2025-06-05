@@ -1,9 +1,9 @@
 {
     "name": "impress_manufacturing_customizations",
-    "version": "17.0.0.1.1",
+    "version": "18.0.0.1.1",
     "depends": ["base", "mrp"],
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/impress-foods/impress-odoo",
     "category": "Manufacturing",
     "summary": """"
     Customizations for the manufacturing module

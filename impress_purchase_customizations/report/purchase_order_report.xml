@@ -16,15 +16,12 @@
         <field name="binding_type">report</field>
     </record>
 
-
     <template
         id="report_purchaseorder_internal_document"
         inherit_id="purchase.report_purchaseorder_document"
         primary="True"
         priority="99"
     >
-
-
         <!-- Add needed columns for internal reports -->
         <xpath expr="//th[@name='th_quantity']" positon='after'>
             <th name="th_qty_received" class="text-end">
@@ -33,7 +30,6 @@
             <th name="th_qty_invoiced" class="text-end">
                 <strong>Qty Invoiced</strong>
             </th>
-
         </xpath>
         <xpath expr="//td[@name='td_total_qty']" position="before">
             <td name="td_received_qty" class='text-end'>
@@ -49,8 +45,6 @@
         <xpath expr="//th[@name='th_total_qty']" position="replace" />
         <xpath expr="//td[@name='td_uom']" position="replace" />
         <xpath expr="//td[@name='td_total_qty']" position="replace" />
-
-
     </template>
 
     <template id="report_purchaseorder_internal">
@@ -63,5 +57,4 @@
             </t>
         </t>
     </template>
-
 </odoo>

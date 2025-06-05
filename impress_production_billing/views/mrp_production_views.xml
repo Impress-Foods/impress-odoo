@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="mrp_production_form_inherit_billing" model="ir.ui.view">
         <field name="name">mrp.production.form.inherit.billing</field>
         <field name="model">mrp.production</field>
@@ -14,7 +13,6 @@
                     invisible="not product_id or (state in ['done', 'cancel'] and not billing_sale_order_ref)"
                     decoration-success="billing_sale_order_line_id"
                 />
-
             </xpath>
             <xpath expr="//page[@name='miscellaneous']" position="before">
                 <page
@@ -52,17 +50,19 @@
                 <t t-if="record.billing_sale_order_ref.value">
                     <span> - </span>
                     <t t-if="record.invoice_status.raw_value == '1'">
-                        <span class="text-success"><t
-                                t-esc="record.billing_sale_order_ref.value"
-                            /> <i class="fa fa-check" /> </span>
+                        <span class="text-success">
+                            <t t-esc="record.billing_sale_order_ref.value" />
+                            <i class="fa fa-check" />
+                        </span>
                     </t>
 
                     <t t-else="">
-                        <span><t t-esc="record.billing_sale_order_ref.value" /></span>
+                        <span>
+                            <t t-esc="record.billing_sale_order_ref.value" />
+                        </span>
                     </t>
                 </t>
             </xpath>
         </field>
     </record>
-
 </odoo>

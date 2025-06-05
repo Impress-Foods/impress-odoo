@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id='MetalWorksheet_20250203_form_view' model='ir.ui.view'>
         <field name="name">Metal.worksheet.20250203.form.view</field>
         <field
@@ -31,30 +30,26 @@
                             dernière vérification conforme. S'il y a un rejet de métal durant la
                             production, aviser le contrôle de la qualité.</p>
                         <p>Fréquence : <ul>
-                                <li
-                                    name="studio_li_620841"
-                                >Au début de l'embouteillage</li>
-                                <li
-                                    name="studio_li_bddcbf"
-                                >À chaque changement de produit
+                            <li name="studio_li_620841">Au début de l'embouteillage</li>
+                            <li name="studio_li_bddcbf">À chaque changement de produit
                             (changement de format, de recette, de lot, d'étiquette US/CAD ou lors de
                             réglage de l'appareil)</li>
-                                <li
-                                    name="studio_li_fdedf4"
-                                >Aux 2 heures si aucun changement lors
+                            <li
+                                name="studio_li_fdedf4"
+                            >Aux 2 heures si aucun changement lors
                             d'une production en continue</li>
-                                <li
-                                    name="studio_li_0e1ab8"
-                                >Une fois l'embouteillage terminé</li>
-                            </ul>
+                            <li
+                                name="studio_li_0e1ab8"
+                            >Une fois l'embouteillage terminé</li>
+                        </ul>
                         </p>
                         <p
                         > Calibration : Comparer le poids d'une bouteille avec la balance de table
                             et la Loma, si l'écart est de 2g et +, faire une calibration. <br
-                            />
+                        />
                             Remplissage : Comparer le poids moyen des bouteilles vs le poids visé.
                             Si l'écart est de + / - 3g, ajuster l'embouteilleuse. <br
-                            /> Lors de la
+                        /> Lors de la
                             dernière vérification, vérifier qu'aucune bouteille ne reste dans les
                             bacs de rejet. <br />
                         </p>

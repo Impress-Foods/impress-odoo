@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <!-- View maintenance.request form -->
     <record id="view_maintenance_request_form" model="ir.ui.view">
         <field name="name">view.maintenance.request.form</field>
@@ -40,12 +39,10 @@
 
         <field name="inherit_id" ref="maintenance.hr_equipment_view_calendar" />
         <field name="arch" type="xml">
-
             <xpath expr="//field[@name='user_id']" position="replace">
                 <field name="assigned_employee" filters="1" />
                 <field name="stage_id" filters="1" />
                 <field name="maintenance_type" filters="1" />
-
             </xpath>
         </field>
     </record>
@@ -56,7 +53,6 @@
         <field name="inherit_id" ref="maintenance.hr_equipment_view_calendar" />
         <field name="mode">primary</field>
         <field name="arch" type="xml">
-
             <xpath expr="//calendar" position="attributes">
                 <attribute name="color">employee_color</attribute>
             </xpath>
@@ -69,14 +65,11 @@
         <field name="inherit_id" ref="maintenance.hr_equipment_view_calendar" />
         <field name="mode">primary</field>
         <field name="arch" type="xml">
-
             <xpath expr="//calendar" position="attributes">
                 <attribute name="color">state_color</attribute>
             </xpath>
         </field>
     </record>
-
-
 
     <record id="view_maintenance_request_search" model="ir.ui.view">
         <field name="name">view.maintenance.request.search</field>
@@ -104,7 +97,6 @@
                 <field name="maintenance_type" filters="1" />
             </xpath>
         </field>
-
     </record>
 
     <record id="hr_equipment_request_action_cal_employee" model="ir.actions.act_window">
@@ -119,7 +111,8 @@
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Add a new maintenance request
-            </p><p>
+            </p>
+            <p>
                 Follow the process of the request and communicate with the collaborator.
             </p>
         </field>
@@ -137,10 +130,10 @@
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Add a new maintenance request
-            </p><p>
+            </p>
+            <p>
                 Follow the process of the request and communicate with the collaborator.
             </p>
         </field>
     </record>
-
 </odoo>

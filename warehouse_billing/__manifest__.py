@@ -1,6 +1,6 @@
 {
     "name": "Warehouse Space Billing",
-    "version": "17.0.0.0.1",
+    "version": "18.0.0.0.1",
     "category": "Inventory/Billing",
     "summary": """
         This module allows billing customers based on the warehouse space
@@ -11,7 +11,7 @@
         - Generate monthly invoices automatically
     """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/impress-foods/impress-odoo",
     "depends": [
         "base",
         "stock",

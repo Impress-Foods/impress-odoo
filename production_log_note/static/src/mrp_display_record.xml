@@ -7,7 +7,6 @@
         t-inherit-mode="extension"
         owl="1"
     >
-
         <xpath
             expr="//ul[@class='list-group list-group-flush']/MrpWorksheet[1]"
             position="before"

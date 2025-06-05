@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <!-- View product.product form -->
 
-  <!-- View product.product form -->
-
-  <record id="view_product_template_form_inherit_quality_logs" model="ir.ui.view">
-    <field name="name">view.product.template.form.inherit.quality.logs</field>
-    <field name="model">product.template</field>
-    <field name="inherit_id" ref="product.product_template_form_view" />
-    <field name="priority">16</field>
-    <field name="arch" type="xml">
-      <xpath
+    <record id="view_product_template_form_inherit_quality_logs" model="ir.ui.view">
+        <field name="name">view.product.template.form.inherit.quality.logs</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="priority">16</field>
+        <field name="arch" type="xml">
+            <xpath
                 expr="//page[@name='general_information']//field[@name='product_tooltip']"
                 position="after"
             >
-        <field name="qty_multiple" />
-      </xpath>
-    </field>
-  </record>
+                <field name="qty_multiple" />
+            </xpath>
+        </field>
+    </record>
 </odoo>

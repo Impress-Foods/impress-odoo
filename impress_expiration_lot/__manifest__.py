@@ -1,10 +1,10 @@
 {
     "name": "impress_expiration_lot",
-    "version": "17.0.0.1.0",
+    "version": "18.0.0.1.0",
     "depends": ["base", "stock", "product_expiry", "base_automation"],
     "author": "Cédric Paradis",
     "category": "Inventory",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/impress-foods/impress-odoo",
     "summary": """
     Module that allows to automatically calculate to correct dates for a lot's expiry,
     """,

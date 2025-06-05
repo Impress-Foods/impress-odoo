@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <!-- View x_ray.log.line View Tree -->
     <record id="view_x_ray_log_line_tree" model="ir.ui.view">
         <field name="name">view.x_ray.log.line.tree</field>
@@ -35,8 +34,11 @@
                                 name="stainless_detection_value"
                                 readonly='is_locked'
                             />
-<field name="ceramic_detection_value" readonly='is_locked' />
-<field name="glass_detection_value" readonly='is_locked' />
+                            <field
+                                name="ceramic_detection_value"
+                                readonly='is_locked'
+                            />
+                            <field name="glass_detection_value" readonly='is_locked' />
                         </group>
                         <group>
                             <field name="start_date" readonly='is_locked' />
@@ -86,5 +88,4 @@
             </p>
         </field>
     </record>
-
 </odoo>

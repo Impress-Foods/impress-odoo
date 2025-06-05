@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <!-- View x_ray.log View Tree -->
     <record id="view_x_ray_log_tree" model="ir.ui.view">
         <field name="name">view.x_ray.log.tree</field>
@@ -69,8 +68,7 @@
                             <field name="name" placeholder="Name..." />
                         </h1>
                     </div>
-                    <group>
-                    </group>
+                    <group />
                     <field name="log_line_ids" nolabel='1' readonly='1' />
                     <group>
                         <group>
@@ -90,10 +88,8 @@
                                 string="Monthly Verification"
                             />
                             <field name="monthly_signature_date" />
-
                         </group>
                     </group>
-
                 </sheet>
             </form>
         </field>
@@ -134,5 +130,4 @@
             </p>
         </field>
     </record>
-
 </odoo>

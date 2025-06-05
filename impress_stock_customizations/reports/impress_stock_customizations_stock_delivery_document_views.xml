@@ -1,171 +1,162 @@
 <?xml version='1.0' encoding="utf-8" ?>
 <odoo>
-        <record
+    <record
         id="impress_stock_report_delivery_document_add_total_quantity"
         model="ir.ui.view"
     >
-            <field
+        <field
             name="name"
         >stock.report_delivery_document.impress.add_total_quantity</field>
-            <field name="inherit_id" ref="stock.report_delivery_document" />
-            <field name="priority">50</field>
-            <field name="arch" type="xml">
-                <xpath expr="//*[@name='div_sched_date']" position="after">
-                    <div class="col-auto" name="total_qty_shipped">
-                        <strong>Total cases shipped:</strong>
-                        <t t-set="total_qty" t-value="0" />
-                        <t t-set="lines" t-value="o.move_ids" />
-                        <t t-foreach="lines" t-as="move">
-                            <t
+        <field name="inherit_id" ref="stock.report_delivery_document" />
+        <field name="priority">50</field>
+        <field name="arch" type="xml">
+            <xpath expr="//*[@name='div_sched_date']" position="after">
+                <div class="col-auto" name="total_qty_shipped">
+                    <strong>Total cases shipped:</strong>
+                    <t t-set="total_qty" t-value="0" />
+                    <t t-set="lines" t-value="o.move_ids" />
+                    <t t-foreach="lines" t-as="move">
+                        <t
                             t-set="total_qty"
                             t-value="total_qty + move.product_uom_qty"
                         />
-                        </t>
-                        <p>
-                            <t t-out="total_qty" />
-                        </p>
-                    </div>
-                </xpath>
-            </field>
-        </record>
+                    </t>
+                    <p>
+                        <t t-out="total_qty" />
+                    </p>
+                </div>
+            </xpath>
+        </field>
+    </record>
 
-        <record
+    <record
         id="impress_stock_report_delivery_document_add_minimum_shelf_life"
         model="ir.ui.view"
     >
-            <field
+        <field
             name="name"
         >stock.report_delivery_document.impress.add_minimum_shelf_life</field>
-            <field name="inherit_id" ref="stock.report_delivery_document" />
-            <field name="priority">51</field>
-            <field name="arch" type="xml">
-                <xpath expr="//*[@name='total_qty_shipped']" position="after">
-                    <div class="col-auto" name="minimimum_shelf_life">
-                        <strong>Minimum shelf life:</strong>
-                        <br />
-                        <p>
+        <field name="inherit_id" ref="stock.report_delivery_document" />
+        <field name="priority">51</field>
+        <field name="arch" type="xml">
+            <xpath expr="//*[@name='total_qty_shipped']" position="after">
+                <div class="col-auto" name="minimimum_shelf_life">
+                    <strong>Minimum shelf life:</strong>
+                    <br />
+                    <p>
                             <span t-field="o.x_minimum_shelf_life">0</span> days</p>
-                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
 
-                </xpath>
-            </field>
-        </record>
-
-        <record
+    <record
         id="impress_stock_report_delivery_document_remove_header"
         model="ir.ui.view"
     >
-            <field
-            name="name"
-        >stock.report_delivery_document.impress.remove_header</field>
-            <field name="inherit_id" ref="stock.report_delivery_document" />
-            <field name="priority">52</field>
-            <field name="arch" type="xml">
-                <xpath expr="//t[@t-call='web.external_layout']" position="attributes">
-                    <attribute name="t-call">web.internal_layout</attribute>
-                </xpath>
+        <field name="name">stock.report_delivery_document.impress.remove_header</field>
+        <field name="inherit_id" ref="stock.report_delivery_document" />
+        <field name="priority">52</field>
+        <field name="arch" type="xml">
+            <xpath expr="//t[@t-call='web.external_layout']" position="attributes">
+                <attribute name="t-call">web.internal_layout</attribute>
+            </xpath>
 
-                <xpath expr="//div[@name='main']" position="before">
-                    <t t-set="o" t-value="o.with_context(lang=o._get_report_lang())" />
-                    <t
+            <xpath expr="//div[@name='main']" position="before">
+                <t t-set="o" t-value="o.with_context(lang=o._get_report_lang())" />
+                <t
                     t-set="partner"
                     t-value="o.partner_id or (o.move_ids and o.move_ids[0].partner_id) or False"
                 />
-                    <t t-set="address">
-                        <div name="div_outgoing_address">
-                            <div
+                <t t-set="address">
+                    <div name="div_outgoing_address">
+                        <div
                             name="outgoing_delivery_address"
                             t-if="o.should_print_delivery_address()"
                         >
-                                <span>
-                                    <strong>Delivery Address:</strong>
-                                </span>
-                                <div
+                            <span>
+                                <strong>Delivery Address:</strong>
+                            </span>
+                            <div
                                 t-field="o.move_ids[0].partner_id"
                                 t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"
                             />
-                            </div>
-                            <div
+                        </div>
+                        <div
                             name="outgoing_warehouse_address"
                             t-elif="o.picking_type_id.code != 'internal' and o.picking_type_id.warehouse_id.partner_id"
                         >
-                                <span>
-                                    <strong>Warehouse Address:</strong>
-                                </span>
-                                <div
+                            <span>
+                                <strong>Warehouse Address:</strong>
+                            </span>
+                            <div
                                 t-field="o.picking_type_id.warehouse_id.partner_id"
                                 t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"
                             />
-                            </div>
                         </div>
-                    </t>
-                    <t t-set="information_block">
-                        <div class="row">
-                            <div class="col-7" name="div_incoming_address">
-                                <t t-set="show_partner" t-value="False" />
-                                <div
+                    </div>
+                </t>
+                <t t-set="information_block">
+                    <div class="row">
+                        <div class="col-7" name="div_incoming_address">
+                            <t t-set="show_partner" t-value="False" />
+                            <div
                                 name="vendor_address"
                                 t-if="o.picking_type_id.code=='incoming' and partner"
                             >
-                                    <span>
-                                        <strong>Vendor Address:</strong>
-                                    </span>
-                                    <t t-set="show_partner" t-value="True" />
-                                </div>
-                                <div
+                                <span>
+                                    <strong>Vendor Address:</strong>
+                                </span>
+                                <t t-set="show_partner" t-value="True" />
+                            </div>
+                            <div
                                 name="customer_address"
                                 t-if="o.picking_type_id.code=='outgoing' and partner and partner != partner.commercial_partner_id"
                             >
-                                    <span>
-                                        <strong>Customer Address:</strong>
-                                    </span>
-                                    <t t-set="show_partner" t-value="True" />
-                                </div>
-                                <div t-if="show_partner" name="partner_header">
-                                    <div
+                                <span>
+                                    <strong>Customer Address:</strong>
+                                </span>
+                                <t t-set="show_partner" t-value="True" />
+                            </div>
+                            <div t-if="show_partner" name="partner_header">
+                                <div
                                     t-field="partner.commercial_partner_id"
                                     t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;, &quot;vat&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"
                                 />
-                                </div>
                             </div>
                         </div>
-                    </t>
-                    <div class="row">
                     </div>
-                    <div class="pt-5">
-                        <!-- This div ensures that the address is not cropped by the header. -->
-                        <t t-call="web.address_layout" />
-                    </div>
-                    <t t-out="0" />
-                </xpath>
-            </field>
-        </record>
-        <record
-        id="impress_stock_report_delivery_document_add_barcode"
-        model="ir.ui.view"
-    >
-            <field
-            name="name"
-        >stock.report_delivery_document.impress.add_barcode</field>
-            <field name="inherit_id" ref="stock.report_delivery_document" />
-            <field name="priority">53</field>
-            <field name="arch" type="xml">
-                <xpath
+                </t>
+                <div class="row" />
+                <div class="pt-5">
+                    <!-- This div ensures that the address is not cropped by the header. -->
+                    <t t-call="web.address_layout" />
+                </div>
+                <t t-out="0" />
+            </xpath>
+        </field>
+    </record>
+    <record id="impress_stock_report_delivery_document_add_barcode" model="ir.ui.view">
+        <field name="name">stock.report_delivery_document.impress.add_barcode</field>
+        <field name="inherit_id" ref="stock.report_delivery_document" />
+        <field name="priority">53</field>
+        <field name="arch" type="xml">
+            <xpath
                 expr="//div[@name='main']/h2[1]"
                 position="after"
                 class="d-flex flex-row-reverse"
             >
-                    <div
+                <div
                     t-field="o.name"
                     t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:300px;height:50px;'}"
                 >
-                        <div
+                    <div
                         class="bg-light border-1 rounded d-flex flex-column align-items-center justify-content-center p-3 opacity-75 text-muted text-center"
                     >
                             (document barcode)
                         </div>
-                    </div>
-                </xpath>
-            </field>
-        </record>
+                </div>
+            </xpath>
+        </field>
+    </record>
 </odoo>

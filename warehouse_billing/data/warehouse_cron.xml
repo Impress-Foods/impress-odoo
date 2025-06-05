@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo noupdate="1">
-        <!-- Daily cron job to calculate warehouse space usage -->
-        <record id="ir_cron_generate_quant_history" model="ir.cron">
-            <field name="name">Generate Quant History</field>
-            <field name="model_id" ref="model_wizard_generate_quant_history" />
-            <field name="state">code</field>
-            <field name="code">model.generate_quant_history()</field>
-            <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
-            <field name="numbercall">-1</field>
-            <field name="doall" eval="False" />
-            <field name="active" eval="True" />
-        </record>
+    <!-- Daily cron job to calculate warehouse space usage -->
+    <record id="ir_cron_generate_quant_history" model="ir.cron">
+        <field name="name">Generate Quant History</field>
+        <field name="model_id" ref="model_wizard_generate_quant_history" />
+        <field name="state">code</field>
+        <field name="code">model.generate_quant_history()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False" />
+        <field name="active" eval="True" />
+    </record>
 
-        <!-- Monthly cron job to generate invoices -->
-        <record id="ir_cron_generate_warehouse_sale_orders" model="ir.cron">
-            <field name="name">Generate Warehouse Sale Orders</field>
-            <field name="model_id" ref="model_wizard_generate_warehouse_sale_order" />
-            <field name="state">code</field>
-            <field name="code">model.generate_sale_orders()</field>
-            <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
-            <field name="numbercall">-1</field>
-            <field name="doall" eval="False" />
-            <field name="active" eval="True" />
-        </record>
+    <!-- Monthly cron job to generate invoices -->
+    <record id="ir_cron_generate_warehouse_sale_orders" model="ir.cron">
+        <field name="name">Generate Warehouse Sale Orders</field>
+        <field name="model_id" ref="model_wizard_generate_warehouse_sale_order" />
+        <field name="state">code</field>
+        <field name="code">model.generate_sale_orders()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False" />
+        <field name="active" eval="True" />
+    </record>
 </odoo>

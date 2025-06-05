@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
     <record id="action_bill_config" model="ir.actions.server">
         <field name="name">Bill Config(s)</field>
         <field name="model_id" ref="warehouse_billing.model_warehouse_billing_config" />
@@ -15,5 +14,4 @@
             name="code"
         >model.with_context(warehouse_billing_date=datetime.datetime.today().date()).bill_config(records)</field>
     </record>
-
 </odoo>

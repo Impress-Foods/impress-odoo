@@ -1,10 +1,10 @@
 {
     "name": "Impress Check Customizations",
-    "version": "17.0.0.1.0",
+    "version": "18.0.0.1.0",
     "summary": """Small tweaks to l10n_ca_check to allow better
     printing on preprinted checks """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/impress-foods/impress-odoo",
     "category": "Hidden",
     "depends": ["base", "web", "l10n_ca_check_printing"],
     "data": [],

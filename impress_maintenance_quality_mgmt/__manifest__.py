@@ -1,9 +1,9 @@
 {
     "name": "Impress Maintenance Quality Management",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "summary": """ Impress Foods quality management for maintenance """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/impress-foods/impress-odoo",
     "category": "Maintenance",
     "depends": ["base", "base_maintenance", "quality", "maintenance_worksheet"],
     "data": [

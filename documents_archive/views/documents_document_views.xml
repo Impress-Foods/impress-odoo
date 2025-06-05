@@ -1,102 +1,99 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <!-- View documents.document kanban -->
+    <record id="view_documents_document_kanban_inherit_archive" model="ir.ui.view">
+        <field name="name">view.documents.document.kanban.inherit.archive</field>
+        <field name="model">documents.document</field>
+        <field name="inherit_id" ref="documents.document_view_kanban" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='thumbnail_status']">
+                <field name="archived" />
+            </xpath>
 
-  <!-- View documents.document kanban -->
-  <record id="view_documents_document_kanban_inherit_archive" model="ir.ui.view">
-    <field name="name">view.documents.document.kanban.inherit.archive</field>
-    <field name="model">documents.document</field>
-    <field name="inherit_id" ref="documents.document_view_kanban" />
-    <field name="arch" type="xml">
-      <xpath expr="//field[@name='thumbnail_status']">
-        <field name="archived" />
-      </xpath>
-
-      <xpath expr="//div[@name='document_preview']" position="before">
-        <widget
+            <xpath expr="//div[@name='document_preview']" position="before">
+                <widget
                     name="web_ribbon"
                     title="Archived"
                     bg_color="bg-danger"
                     invisible="not archived"
                 />
-      </xpath>
-    </field>
-  </record>
+            </xpath>
+        </field>
+    </record>
 
-  <record id="views_documents_document_search_inherit_archive" model="ir.ui.view">
-    <field name="name">view.documents.document.search.inherit.archive</field>
-    <field name="model">documents.document</field>
-    <field name="inherit_id" ref="documents.document_view_search" />
-    <field name="arch" type="xml">
-      <xpath expr="//filter[@name='my_documents_filter']" position="before">
-        <filter
+    <record id="views_documents_document_search_inherit_archive" model="ir.ui.view">
+        <field name="name">view.documents.document.search.inherit.archive</field>
+        <field name="model">documents.document</field>
+        <field name="inherit_id" ref="documents.document_view_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='my_documents_filter']" position="before">
+                <filter
                     string="Active"
                     name="active_filter"
                     domain="[('archived', '=', False)]"
                 />
-        <filter
+                <filter
                     string="Archived"
                     name="archived_filter"
                     domain="[('archived', '=', True)]"
                 />
-        <separator />
-      </xpath>
-    </field>
-  </record>
+                <separator />
+            </xpath>
+        </field>
+    </record>
 
-  <record id="documents.document_action" model="ir.actions.act_window">
-    <field name="name">Documents</field>
-    <field name="res_model">documents.document</field>
-    <field name="view_mode">kanban,tree,activity</field>
-    <field name="context">{'search_default_active_filter': 1}</field>
-    <field name="domain">[]</field>
-    <field
+    <record id="documents.document_action" model="ir.actions.act_window">
+        <field name="name">Documents</field>
+        <field name="res_model">documents.document</field>
+        <field name="view_mode">kanban,tree,activity</field>
+        <field name="context">{'search_default_active_filter': 1}</field>
+        <field name="domain">[]</field>
+        <field
             name="view_ids"
             eval="[(5, 0, 0),
             (0, 0, {'view_mode': 'kanban', 'view_id': ref('documents.document_view_kanban')}),
             (0, 0, {'view_mode': 'tree', 'view_id': ref('documents.documents_view_list')}),
             (0, 0, {'view_mode': 'activity', 'view_id': ref('documents.documents_view_activity')})]"
         />
-    <field name="help" type="html">
-      <p class="o_view_nocontent_smiling_face">Upload <span
-                    class="fw-normal"
-                >a file or</span> drag <span class="fw-normal">it here.</span></p>
-    </field>
-  </record>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Upload <span
+                class="fw-normal"
+            >a file or</span> drag <span class="fw-normal">it here.</span></p>
+        </field>
+    </record>
 
-
-  <record id="see_partner_documents" model="ir.actions.act_window">
-    <field name="res_model">documents.document</field>
-    <field name="view_mode">kanban</field>
-    <field name="domain">[('partner_id', '=', active_id)]</field>
-    <field
+    <record id="see_partner_documents" model="ir.actions.act_window">
+        <field name="res_model">documents.document</field>
+        <field name="view_mode">kanban</field>
+        <field name="domain">[('partner_id', '=', active_id)]</field>
+        <field
             name="context"
         >{'search_default_active_filter': 1, 'default_partner_id': active_id,
       'searchpanel_default_folder_id': False }</field>
-  </record>
+    </record>
 
-  <record id="documents_document_res_partner_view_inherit_archive" model="ir.ui.view">
-    <field name="name">documents.document.res.partner.view.inherit.archive</field>
-    <field name="model">res.partner</field>
-    <field name="priority">100</field>
-    <field name="inherit_id" ref="documents.documents_document_res_partner_view" />
-    <field name="arch" type="xml">
-      <xpath expr="//button[@name='action_see_documents']" position="replace">
-        <button
+    <record id="documents_document_res_partner_view_inherit_archive" model="ir.ui.view">
+        <field name="name">documents.document.res.partner.view.inherit.archive</field>
+        <field name="model">res.partner</field>
+        <field name="priority">100</field>
+        <field name="inherit_id" ref="documents.documents_document_res_partner_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_see_documents']" position="replace">
+                <button
                     groups="documents.group_documents_user"
                     name="%(see_partner_documents)d"
                     type="action"
                     class="oe_stat_button"
                     icon="fa-file-text-o"
                 >
-          <div class="o_field_widget o_stat_info">
-            <span class="o_stat_value">
-              <field name="document_count" />
-            </span>
-            <span class="o_stat_text">Documents</span>
-          </div>
-        </button>
-      </xpath>
-    </field>
-  </record>
-
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="document_count" />
+                        </span>
+                        <span class="o_stat_text">Documents</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
 </odoo>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- oca-hooks:disable=xml-duplicate-record-id -->
 <odoo>
-
     <!-- Create a new Worksheet Template -->
     <record id="ws_loma_20250203" model="worksheet.template">
         <field name="name">Worksheet Loma 2025-02-03</field>
@@ -24,7 +23,6 @@
         <field name="ttype">many2one</field>
     </record>
 
-
     <record id='x_worksheet_20250203_loma_log_id' model='ir.model.fields'>
         <field name="depends">x_quality_check_id</field>
         <field
@@ -43,8 +41,7 @@
         else: \n
             rec[\'x_loma_log_id\'] = existing_log[0]
             '"
-        >
-        </field>
+        />
     </record>
 
     <!-- log: x_ws_xx_id - One2Many - x_loma_log_id -->
@@ -142,5 +139,4 @@
         <field name="related">x_loma_log_id.lower_limit</field>
         <field name="ttype">float</field>
     </record>
-
 </odoo>

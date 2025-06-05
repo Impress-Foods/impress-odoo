@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
-
     <!-- Server Action stock_lot -->
     <record id="action_audit_report" model="ir.actions.server">
         <field name="name">Print Audit Report</field>
@@ -33,6 +31,4 @@
             </xpath>
         </field>
     </record>
-
-
 </odoo>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <!-- View hpp_log_line View Tree -->
     <record id="view_hpp_log_line_tree" model="ir.ui.view">
         <field name="name">view.hpp_log_line.tree</field>
@@ -66,11 +65,11 @@
                                 placeholder="000000"
                                 readonly='is_locked'
                             />
-</h1>
-</div>
-<group>
-<group>
-<field name="barrel_1_qty" readonly='is_locked' />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="barrel_1_qty" readonly='is_locked' />
                             <field name="barrel_2_qty" readonly='is_locked' />
                             <field name="barrel_3_qty" readonly='is_locked' />
                             <field name="barrel_4_qty" readonly='is_locked' />
@@ -82,7 +81,7 @@
                                 readonly='is_locked'
                                 widget='radio'
                             />
-<field name="is_cleaning_cycle" readonly='is_locked' />
+                            <field name="is_cleaning_cycle" readonly='is_locked' />
                             <field name="start_date" readonly='is_locked' />
                             <field
                                 name="signature"
@@ -90,70 +89,62 @@
                                 options="{'size':[0,90]}"
                                 readonly='is_locked'
                             />
-</group>
-</group>
-</sheet>
-</form>
-</field>
-</record>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
-<!-- View hpp_log_line search -->
-<record id="view_hpp_log_line_search" model="ir.ui.view">
-                                <field name="name">view.hpp_log_line.search</field>
-                                <field name="model">hpp.log.line</field>
-                                <field name="arch" type="xml">
-                                    <search>
-                                        <field name="cycle_number" string="Sequence" />
-                                        <field
-                    name="product_lot_id"
-                    string="Sequence"
-                />
-                                        <field name="product_id" string="Product" />
-                                        <filter
+    <!-- View hpp_log_line search -->
+    <record id="view_hpp_log_line_search" model="ir.ui.view">
+        <field name="name">view.hpp_log_line.search</field>
+        <field name="model">hpp.log.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="cycle_number" string="Sequence" />
+                <field name="product_lot_id" string="Sequence" />
+                <field name="product_id" string="Product" />
+                <filter
                     string="Orphans"
                     name="orphans"
                     domain="[('hpp_log_id','=',False)]"
                 />
-                                        <filter
+                <filter
                     string="Cleaning"
                     name='cleaning'
                     domain="[('is_cleaning_cycle','=',True)]"
                 />
-                                        <group expand="1" string="Group By">
-                                            <filter
+                <group expand="1" string="Group By">
+                    <filter
                         string="Production"
                         name="production"
                         domain="[]"
                         context="{'group_by':'production_id'}"
                     />
-                                            <filter
+                    <filter
                         string="Date"
                         name="production_date"
                         domain="[]"
                         context="{'group_by':'start_date'}"
                     />
-                                        </group>
-                                    </search>
-                                </field>
-                            </record>
+                </group>
+            </search>
+        </field>
+    </record>
 
-                            <!-- Action hpp_log_line -->
-                            <record
-        id="action_hpp_log_line"
-        model="ir.actions.act_window"
-    >
-                                <field name="name">HPP Log Lines</field>
-                                <field name="type">ir.actions.act_window</field>
-                                <field name="res_model">hpp.log.line</field>
-                                <field name="view_mode">tree,form</field>
-                                <field name="domain">[]</field>
-                                <field name="context">{}</field>
-                                <field name="help" type="html">
-                                    <p class="oe_view_nocontent_create">
+    <!-- Action hpp_log_line -->
+    <record id="action_hpp_log_line" model="ir.actions.act_window">
+        <field name="name">HPP Log Lines</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hpp.log.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
                 There is no examples click here to add new Hpp_log_line.
                                     </p>
-                                </field>
-                            </record>
-
-
-                        </odoo>
+        </field>
+    </record>
+</odoo>

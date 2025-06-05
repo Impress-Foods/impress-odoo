@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <!-- View metal.log View Tree -->
     <record id="view_metal_log_tree" model="ir.ui.view">
         <field name="name">view.metal.log.tree</field>
@@ -131,5 +130,4 @@
             </p>
         </field>
     </record>
-
 </odoo>

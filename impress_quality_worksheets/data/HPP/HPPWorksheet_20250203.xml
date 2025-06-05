@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- oca-hooks:disable=xml-duplicate-record-id -->
 <odoo>
-
     <!-- Create a new Worksheet Template -->
     <record id="ws_hpp_20250203" model="worksheet.template">
         <field name="name">Worksheet HPP 2025-02-03</field>
@@ -42,8 +41,7 @@
         else: \n
             rec[\'x_hpp_log_id\'] = existing_log[0]
             '"
-        >
-        </field>
+        />
     </record>
 
     <!-- log: x_ws_xx_id - One2Many - x_hpp_log_id -->
@@ -141,6 +139,4 @@
         <field name="related">x_hpp_log_id.qty_redone</field>
         <field name="ttype">integer</field>
     </record>
-
-
 </odoo>

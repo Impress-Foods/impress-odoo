@@ -20,7 +20,6 @@
                 </li>
             </t>
         </xpath>
-
     </template>
 
     <template
@@ -63,7 +62,6 @@
                 t-else=""
                 t-call="impress_production_billing.portal_manufacturings_list"
             />
-
         </t>
     </template>
 
@@ -105,7 +103,6 @@
                             t-attf-colspan="{{grouped_manufacturings_colspan}}"
                         >
                             <span t-field="mos[0].state" />
-
                         </th>
                         <th
                             t-if="groupby == 'product'"
@@ -130,7 +127,6 @@
                             }}"><span t-field="mo.name"/></a></td>-->
                             <td>
                                 <span t-field="mo.name" />
-
                             </td>
                             <td t-if="groupby != 'purchase_order'" class="text-end">
                                 <span t-field="mo.billing_sale_order_ref" />
@@ -169,7 +165,6 @@
         </t>
     </template>
 
-
     <template id="manufacturing_portal" name="Manufacturing View in Portal">
         <t t-call="portal.frontend_layout">
             <div class="o_portal container mt-3">
@@ -194,7 +189,6 @@
                 </div>
             </div>
         </t>
-
     </template>
 
     <template id="manufacturing" name="Manufacturing Portal View">
@@ -210,8 +204,8 @@
         <t t-call="web.layout">
             <t t-set="head_manufacturing_portal">
                 <script type="text/javascript"> odoo.__session_info__ = <t
-                        t-out="json.dumps(session_info)"
-                    />; </script>
+                    t-out="json.dumps(session_info)"
+                />; </script>
                 <base target="_parent" />
                 <t t-call-assets="impress_production_billing.webclient" />
                 <t t-call="web.conditional_assets_tests" />

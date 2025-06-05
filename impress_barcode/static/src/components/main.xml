@@ -7,7 +7,6 @@
         t-inherit-mode="extension"
         owl="1"
     >
-
         <xpath expr="//div/div[2]/t[@t-foreach='packageLines']" position="after">
             <t t-if="unreservedMoves.length != 0">
                 <div class="o_barcode_line list-group-item d-flex flex-row flex-nowrap">

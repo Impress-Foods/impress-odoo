@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <!-- View quant.history View Tree -->
     <record id="view_quant_history_tree" model="ir.ui.view">
         <field name="name">view.quant.history.tree</field>
@@ -48,8 +47,7 @@
         <field name="model">warehouse.quant.history</field>
         <field name="arch" type="xml">
             <search>
-                <group expand="1" string="Group By">
-                </group>
+                <group expand="1" string="Group By" />
             </search>
         </field>
     </record>
@@ -68,5 +66,4 @@
             </p>
         </field>
     </record>
-
 </odoo>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <!-- View sale.order form -->
     <record id="view_sale_order_form" model="ir.ui.view">
         <field name="name">view.sale.order.form</field>
@@ -13,7 +12,6 @@
             </xpath>
         </field>
     </record>
-
 
     <!-- View sale.order tree -->
     <record id="view_sale_order_tree" model="ir.ui.view">
@@ -35,7 +33,6 @@
         </field>
     </record>
 
-
     <!-- View sale.order search -->
     <record id="view_sale_order_search" model="ir.ui.view">
         <field name="name">view.sale.order.search</field>
@@ -43,10 +40,7 @@
         <field name="inherit_id" ref="sale.sale_order_view_search_inherit_sale" />
         <field name="priority">90</field>
         <field name="arch" type="xml">
-            <xpath expr="//filter[@name='order_date']" position="after">
-
-            </xpath>
+            <xpath expr="//filter[@name='order_date']" position="after" />
         </field>
     </record>
-
 </odoo>

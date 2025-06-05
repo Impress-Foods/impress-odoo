@@ -110,16 +110,16 @@ class LotAuditReport(models.TransientModel):
             if line.lot_id not in deliveries[line.move_id.picking_id.partner_id]:
                 deliveries[line.move_id.picking_id.partner_id][line.lot_id] = 0
 
-            deliveries[line.move_id.picking_id.partner_id][
-                line.lot_id
-            ] -= self.get_sml_qty(line)  # We substract since we want the qy shipped
+            deliveries[line.move_id.picking_id.partner_id][line.lot_id] -= (
+                self.get_sml_qty(line)
+            )  # We substract since we want the qy shipped
 
         for line in return_lines:
             if line.move_id.picking_id.partner_id in deliveries:
                 if line.lot_id in deliveries[line.move_id.picking_id.partner_id]:
-                    deliveries[line.move_id.picking_id.partner_id][
-                        line.lot_id
-                    ] -= self.get_sml_qty(line)
+                    deliveries[line.move_id.picking_id.partner_id][line.lot_id] -= (
+                        self.get_sml_qty(line)
+                    )
 
         return deliveries
 

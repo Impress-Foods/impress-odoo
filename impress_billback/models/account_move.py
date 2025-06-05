@@ -23,7 +23,7 @@ class AccountMove(models.Model):
                 _("You can not create billback for a draft or cancelled invoice.")
             )
         elif self.move_type not in ["in_invoice", "entry"]:
-            raise UserError(_("Cannot billback move of type %s" % self.move_type))
+            raise UserError(_(f"Cannot billback move of type {self.move_type}"))
         else:
             self.billback_invoice_id = (
                 self.env["account.move"]

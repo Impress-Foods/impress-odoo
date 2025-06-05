@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <template
         id="sale_order_portal_content_inherit"
         name="Sales Order Portal Content Inherit"
@@ -65,5 +64,4 @@
             </td>
         </xpath>
     </template>
-
 </odoo>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <!-- View maintenance.team.tag View Tree -->
     <record id="view_maintenance_team_tag_tree" model="ir.ui.view">
         <field name="name">view.maintenance.team.tag.tree</field>
@@ -44,5 +43,4 @@
             </p>
         </field>
     </record>
-
 </odoo>

@@ -1,9 +1,9 @@
 {
     "name": "Add QC Note to shop floor",
-    "version": "17.0.0.1.0",
+    "version": "18.0.0.1.0",
     "summary": """ Mrp_add_qc_note_shop_floor Summary """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/impress-foods/impress-odoo",
     "category": "Hidden",
     "depends": ["base", "web", "mrp_workorder"],
     "data": [],
