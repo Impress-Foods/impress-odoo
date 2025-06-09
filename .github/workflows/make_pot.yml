@@ -8,7 +8,7 @@ on:
 jobs:
   update-pot-files:
     runs-on: ubuntu-22.04
-    container: ghcr.io/impress-foods/odoo-ci/py3.10-odoo17.0:latest
+    container: ghcr.io/impress-foods/odoo-ci/py3.10-odoo18.0:latest
     name: make_pot
     strategy:
       fail-fast: false
