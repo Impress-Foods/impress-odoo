@@ -87,3 +87,8 @@ docs/_build/
 
 # OCA rules
 !static/lib/
+
+/.devcontainer
+/.config
+docker-compose.yml
+**/*.Identifier
