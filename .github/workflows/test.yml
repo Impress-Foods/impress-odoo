@@ -55,7 +55,6 @@ jobs:
           persist-credentials: false
       - name: Install addons and dependencies
         run: oca_install_addons
-      - name: Check licenses
       - name: Initialize test db
         run: oca_init_test_database
       - name: Run tests
