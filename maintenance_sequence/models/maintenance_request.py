@@ -8,7 +8,7 @@ _logger = logging.getLogger(__name__)
 class MaintenanceRequest(models.Model):
     _inherit = "maintenance.request"
 
-    sequence = fields.Char(string="Sequence")
+    sequence = fields.Char()
 
     def _compute_display_name(self):
         for record in self:
@@ -16,7 +16,6 @@ class MaintenanceRequest(models.Model):
                 record.display_name = f"{record.sequence} - {record.name}"
             else:
                 record.display_name = record.name
-
 
     @api.model_create_multi
     def create(self, vals_list):

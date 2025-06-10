@@ -6,10 +6,7 @@
     "website": "https://github.com/cparadis-impressfoods/impress-odoo",
     "category": "Hidden",
     "depends": ["base", "maintenance"],
-    "data": [
-        "data/ir_sequence.xml",
-        "views/maintenance_request_views.xml"
-    ],
+    "data": ["data/ir_sequence.xml", "views/maintenance_request_views.xml"],
     "installable": True,
     "license": "GPL-2",
 }
