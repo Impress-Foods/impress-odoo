@@ -1,2 +1,0 @@
-odoo-addon-base_maintenance>=17.0dev,<17.1dev
-odoo>=17.0a,<17.1dev
