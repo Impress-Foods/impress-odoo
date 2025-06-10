@@ -10,6 +10,14 @@ class MaintenanceRequest(models.Model):
 
     sequence = fields.Char(string="Sequence")
 
+    def _compute_display_name(self):
+        for record in self:
+            if record.sequence != _("New"):
+                record.display_name = f"{record.sequence} - {record.name}"
+            else:
+                record.display_name = record.name
+
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
