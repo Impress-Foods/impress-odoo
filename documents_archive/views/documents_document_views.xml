@@ -45,14 +45,14 @@
     <record id="documents.document_action" model="ir.actions.act_window">
         <field name="name">Documents</field>
         <field name="res_model">documents.document</field>
-        <field name="view_mode">kanban,tree,activity</field>
+        <field name="view_mode">kanban,list,activity</field>
         <field name="context">{'search_default_active_filter': 1}</field>
         <field name="domain">[]</field>
         <field
             name="view_ids"
             eval="[(5, 0, 0),
             (0, 0, {'view_mode': 'kanban', 'view_id': ref('documents.document_view_kanban')}),
-            (0, 0, {'view_mode': 'tree', 'view_id': ref('documents.documents_view_list')}),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('documents.documents_view_list')}),
             (0, 0, {'view_mode': 'activity', 'view_id': ref('documents.documents_view_activity')})]"
         />
         <field name="help" type="html">
@@ -66,10 +66,9 @@
         <field name="res_model">documents.document</field>
         <field name="view_mode">kanban</field>
         <field name="domain">[('partner_id', '=', active_id)]</field>
-        <field
-            name="context"
-        >{'search_default_active_filter': 1, 'default_partner_id': active_id,
-      'searchpanel_default_folder_id': False }</field>
+        <field name="context">{'search_default_active_filter': 1,
+            'default_partner_id': active_id,
+            'searchpanel_default_folder_id': False }</field>
     </record>
 
     <record id="documents_document_res_partner_view_inherit_archive" model="ir.ui.view">
