@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="documents.SoftArchive"
+        t-inherit="documents.ControlPanel"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath
+            expr="//div[hasclass('o_control_panel_actions')]/SearchBar[1]"
+            position="before"
+        >
+            <t
+                t-set="someSoftArchived"
+                t-value="targetRecords.some((r)=> r.data.archived)"
+            />
+        </xpath>
+        <xpath
+            expr="//div[hasclass('o_control_panel_actions')]//div[hasclass('btn-group')]/div/div/ul/button[7]"
+            position="after"
+        >
+            <button
+                class="dropdown-item w-100"
+                t-on-click="() => this.onSoftArchive()"
+                t-if="userIsInternal and editMode and !someSoftArchived"
+            >
+                <i class="fa fa-fw fa-archive me-1" />
+                <span class="d-inline-block">Archive</span>
+            </button>
+            <button
+                class="dropdown-item w-100"
+                t-on-click="() => this.onSoftUnarchive()"
+                t-if="userIsInternal and editMode and someSoftArchived"
+            >
+                <i class="fa fa-fw fa-recycle me-1" />
+                <span class="d-inline-block">Unarchive</span>
+            </button>
+        </xpath>
+    </t>
+
+</templates>
