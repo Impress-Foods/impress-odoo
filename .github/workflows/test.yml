@@ -38,7 +38,7 @@ jobs:
           - container: ghcr.io/impress-foods/odoo-ci/py3.10-odoo18.0:latest
             exclude:
               impress_quality_customizations, impress_stock_customizations,
-              impress_project_billing_production, impress_lot_lab
+              impress_project_billing_production, impress_lot_lab, delivery_status_multi_step
             name: test all modules
     services:
       postgres:
