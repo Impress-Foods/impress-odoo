@@ -13,7 +13,9 @@
           <field
                         name='scrap_ids'
                         widget='one2many_list'
-                        context="{'default_origin': name, 'default_maintenance_request_id': id,'default_scrap_location_id': %(maintenance_consume_stock.maintenance_scrap_location)d}"
+                        context="{'default_origin': name,
+                      'default_maintenance_request_id': id,
+                      'default_scrap_location_id': %(maintenance_consume_stock.maintenance_scrap_location)d}"
                     >
             <tree>
               <field name="name" />
@@ -31,7 +33,12 @@
                   <field name="tracking" invisible='1' readonly="state in ['done']" />
                   <field name="company_id" invisible="1" readonly="state in ['done']" />
                   <field name="location_id" required="1" readonly="state in ['done']" />
-                  <field name="product_id" required="1" readonly="state in ['done']" />
+                  <field
+                                        name="product_id"
+                                        required="1"
+                                        readonly="state in ['done']"
+                                        context="{'global_vendor_search': True}"
+                                    />
                   <field name="scrap_qty" required="1" readonly="state in ['done']" />
                   <field
                                         name="lot_id"
