@@ -60,7 +60,8 @@ class LabelWizard(models.TransientModel):
                 domain += [("product_tmpl_id", "=", self.product_template_id.id)]
 
             if self.picking_id:
-                domain += [("id", "in", self.picking_id.product_id.ids)]
+                product_ids = [move.product_id.id for move in self.picking_id.move_ids]
+                domain += [("id", "in", product_ids)]
 
             record.product_domain = domain
 
