@@ -12,11 +12,13 @@
                     <field
                         name='scrap_ids'
                         widget='one2many_list'
-                        context="{'default_origin': name,
-                      'default_maintenance_request_id': id,
-                      'default_scrap_location_id': %(maintenance_consume_stock.maintenance_scrap_location)d}"
+                        context="{
+                            'default_origin': name,
+                            'default_maintenance_request_id': id,
+                            'default_scrap_location_id': %(maintenance_consume_stock.maintenance_scrap_location)d
+                        }"
                     >
-                        <tree>
+                        <list>
                             <field name="name" />
                             <field name='product_id' />
                             <field name='scrap_qty' />
@@ -24,10 +26,12 @@
                             <field name='state' />
                             <field name="lot_id" />
                             <field name="state" />
-                        </tree>
+                        </list>
                         <form>
                             <group>
                                 <group>
+                                    <field name="origin" invisible="1" />
+                                    <field name="scrap_location_id" invisible="1" />
                                     <field name="state" invisible="1" />
                                     <field
                                         name="tracking"
