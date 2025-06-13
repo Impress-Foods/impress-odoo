@@ -24,7 +24,7 @@ class TestMrpProduction(TransactionCase):
         self.product = self.product_model.create(
             {
                 "name": "Test Product",
-                "type": "product",
+                "type": "consu",
             }
         )
 
@@ -201,7 +201,7 @@ class TestMrpProduction(TransactionCase):
         unbuild = self.env["mrp.unbuild"].create(
             {"product_id": self.product.id, "product_qty": 1, "mo_id": mo.id}
         )
-        unbuild.action_validate()
+        unbuild.action_unbuild()
         self.assertEqual(so_line.qty_delivered, 0)
 
     def test_mo_produced_delivered_qty_unbuild_multiple(self):
@@ -239,13 +239,13 @@ class TestMrpProduction(TransactionCase):
         unbuild_1 = self.env["mrp.unbuild"].create(
             {"product_id": self.product.id, "product_qty": 1, "mo_id": mo_1.id}
         )
-        unbuild_1.action_validate()
+        unbuild_1.action_unbuild()
         self.assertEqual(so_line.qty_delivered, 1)
 
         unbuild_2 = self.env["mrp.unbuild"].create(
             {"product_id": self.product.id, "product_qty": 1, "mo_id": mo_2.id}
         )
-        unbuild_2.action_validate()
+        unbuild_2.action_unbuild()
         self.assertEqual(so_line.qty_delivered, 0)
 
     def test_mo_cancel(self):

@@ -43,10 +43,7 @@
                 <field name="billing_sale_order_ref" />
                 <field name="invoice_status" />
             </xpath>
-            <xpath
-                expr="//div[hasclass('oe_kanban_bottom_left')]/span/t"
-                position="after"
-            >
+            <xpath expr="//field[@name='name']" position="after">
                 <t t-if="record.billing_sale_order_ref.value">
                     <span> - </span>
                     <t t-if="record.invoice_status.raw_value == '1'">
