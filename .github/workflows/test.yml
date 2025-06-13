@@ -50,7 +50,6 @@ jobs:
     env:
       INCLUDE: "${{ matrix.include }}"
       EXCLUDE: "${{ matrix.exclude }}"
-      OCA_ENABLE_CHECKLOG_ODOO: "0"
     steps:
       - uses: actions/checkout@v4
         with:
