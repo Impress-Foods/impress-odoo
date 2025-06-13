@@ -19,13 +19,14 @@ class TestMaintenanceRequest(TransactionCase):
             }
         )
 
+        self.equipment = self.env["maintenance.equipment"].create(
+            {"name": "Test equipment"}
+        )
         self.scrap = self.env["stock.scrap"]
 
     def test_create_scrap(self):
         request = self.request_model.create(
-            {
-                "name": "Test Request",
-            }
+            {"name": "Test Request", "equipment_id": self.equipment.id}
         )
 
         scrap_id = self.scrap.create(
@@ -43,6 +44,7 @@ class TestMaintenanceRequest(TransactionCase):
         request = self.request_model.create(
             {
                 "name": "Test Request",
+                "equipment_id": self.equipment.id,
             }
         )
         scrap_move = self.scrap.create(
@@ -57,9 +59,7 @@ class TestMaintenanceRequest(TransactionCase):
 
     def test_delete_done_scrap(self):
         request = self.request_model.create(
-            {
-                "name": "Test Request",
-            }
+            {"name": "Test Request", "equipment_id": self.equipment.id}
         )
         scrap_move = self.scrap.create(
             {
@@ -73,9 +73,7 @@ class TestMaintenanceRequest(TransactionCase):
 
     def test_delete_request_with_draft_scrap(self):
         request = self.request_model.create(
-            {
-                "name": "Test Request",
-            }
+            {"name": "Test Request", "equipment_id": self.equipment.id}
         )
         self.scrap.create(
             {
@@ -98,9 +96,7 @@ class TestMaintenanceRequest(TransactionCase):
 
     def test_delete_request_with_done_scrap(self):
         request = self.request_model.create(
-            {
-                "name": "Test Request",
-            }
+            {"name": "Test Request", "equipment_id": self.equipment.id}
         )
         scrap_move = self.scrap.create(
             {

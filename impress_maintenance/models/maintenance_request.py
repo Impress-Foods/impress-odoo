@@ -11,7 +11,9 @@ class MaintenanceRequest(models.Model):
 
     notes = fields.Text()
     state_color = fields.Integer(related="stage_id.color")
-    employee_color = fields.Integer(related="assigned_employee.color")
+    employee_color = fields.Integer(
+        related="assigned_employee.color", string="Employee's Color"
+    )
     assigned_employee = fields.Many2one(
         comodel_name="hr.employee",
     )
