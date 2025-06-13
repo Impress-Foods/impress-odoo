@@ -49,7 +49,7 @@ class MaintenanceEquipment(models.Model):
             action = {
                 "name": _("Quality Points"),
                 "type": "ir.actions.act_window",
-                "view_mode": "tree,form",
+                "view_mode": "list,form",
                 "res_model": "quality.point",
                 "domain": [("id", "in", [qcp.id for qcp in qcps])],
             }
