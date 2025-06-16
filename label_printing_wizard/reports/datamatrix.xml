@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="lot_datamatrix_zpl">
+        <t t-set="valid_ean" t-value="lot['lot_record'].product_id.valid_ean" />
+        <t t-set="has_qty" t-value="'product_qty' in lot" />
+        <t t-if="has_qty" t-set="quantity" t-value="str(int(lot['product_qty']))" />
+
+        <t t-if="valid_ean">
+            <t
+                t-set="final_barcode"
+                t-value="'01' + '0' * (14 - len(lot['lot_record'].product_id.barcode)) + lot['lot_record'].product_id.barcode"
+            />
+        </t>
+
+        <t t-if="has_qty">
+            <t
+                t-set="final_barcode"
+                t-value="(final_barcode or '') + '30' + '0' * (8 - len(quantity)) + quantity"
+            />
+        </t>
+        <t t-if="lot['lot_record'].product_id.tracking == 'lot'">
+            <t
+                t-set="final_barcode"
+                t-value="(final_barcode or '') + '10' + lot['name']"
+            />
+        </t>
+
+        <t t-elif="lot['lot_record'].product_id.tracking == 'serial'">
+            <t
+                t-set="final_barcode"
+                t-value="(final_barcode or '') + '21' + lot['name']"
+            />
+        </t>
+
+        <t t-out="command + final_barcode +'^FS'" />
+    </template>
+
+    <template id="product_datamatrix_zpl">
+        <t t-set="final_barcode" t-value="''" />
+        <t t-if="valid_ean">
+            <t
+                t-set="final_barcode"
+                t-value="'01' + '0' * (14 - len(product.barcode)) + product.barcode"
+            />
+        </t>
+
+        <t t-if="product_qty != 0">
+            <t
+                t-set="final_barcode"
+                t-value="(final_barcode or '') + '30' + '0' * (8 - len(str(int(product_qty)))) + str(int(product_qty))"
+            />
+        </t>
+
+        <t t-out="command + final_barcode +'^FS'" />
+    </template>
+</odoo>
