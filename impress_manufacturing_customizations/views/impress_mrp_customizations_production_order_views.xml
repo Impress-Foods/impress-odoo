@@ -1,54 +1,6 @@
 <?xml version='1.0' encoding="utf-8" ?>
 <odoo>
-    <record id="production_add_qty_producing" model="ir.ui.view">
-        <field name="name">production.add_qty_producing</field>
-        <field name="model">mrp.production</field>
-        <field name="inherit_id" ref="mrp.mrp_production_kanban_view" />
-        <field name="priority">100</field>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='activity_state']" position="after">
-                <field name='qty_producing' />
-            </xpath>
-
-            <xpath
-                expr="//t[@t-name='kanban-box']/div[1]/div[1]/span[1]"
-                position="replace"
-            >
-                <span t-if="record.state.raw_value !='done'" class="float-end text-end">
-                    <t t-esc="record.product_qty.value" />
-                    <small>
-                        <span />
-                        <t t-esc="record.product_uom_id.value" />
-                    </small>
-                </span>
-                <span t-if="record.state.raw_value=='done'" class="float-end text-end">
-                    <t t-esc="record.qty_producing.value" />
-/                    <t t-esc="record.product_qty.value" />
-                    <small>
-                    <t t-esc="record.product_uom_id.value" />
-                </small>
-                </span>
-            </xpath>
-        </field>
-    </record>
-    <record id="production_add_handle" model="ir.ui.view">
-        <field name="name">production.add_handle</field>
-        <field name="model">mrp.production</field>
-        <field name="inherit_id" ref="mrp.mrp_production_kanban_view" />
-        <field name="priority">101</field>
-        <field name="arch" type="xml">
-            <xpath
-                expr="//t[@t-name='kanban-box']/div[1]/div[1]/span[2]"
-                position="after"
-            >
-                <div class="float-end text-end">
-                    <field name='sequence' widget="handle" />
-                </div>
-            </xpath>
-        </field>
-    </record>
-
-    <record id="mrp_production_view_search_inherit" model="ir.ui.view">
+    <!-- <record id="mrp_production_view_search_inherit" model="ir.ui.view">
         <field name="name">mrp.production.view.search.inherit</field>
         <field name="model">mrp.production</field>
         <field name="inherit_id" ref="mrp.view_mrp_production_filter" />
@@ -58,6 +10,50 @@
                     <field name="state" />
                     <field name="product_category_id" />
                 </searchpanel>
+            </xpath>
+        </field>
+    </record> -->
+
+    <record id="production_add_handle" model="ir.ui.view">
+        <field name="name">production.add_handle</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_kanban_view" />
+        <field name="priority">101</field>
+        <field name="arch" type="xml">
+            <xpath expr="//t[@t-name='card']/div[1]" position="inside">
+                <div class="float-end text-end ps-2">
+                    <field name='sequence' widget="handle" />
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="production_add_qty_producing" model="ir.ui.view">
+        <field name="name">production.add_qty_producing</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_kanban_view" />
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name='qty_producing' />
+            </xpath>
+            <xpath expr="//field[@name='product_uom_id']" position="replace" />
+
+            <xpath expr="//field[@name='product_qty']" position="replace">
+                <span t-if="record.state.raw_value !='done'" class="ms-auto">
+                    <field name="product_qty" />
+                    <small>
+                        <span><![CDATA[&nbsp;]]></span>
+                        <field name="product_uom_id" />
+                    </small>
+                </span>
+                <span t-if="record.state.raw_value=='done'" class="ms-auto">
+                    <field name="qty_producing" /> / <field name="product_qty" />
+                    <small>
+                    <span><![CDATA[&nbsp;]]></span>
+                    <field name="product_uom_id" />
+                </small>
+                </span>
             </xpath>
         </field>
     </record>
