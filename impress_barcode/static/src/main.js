@@ -1,16 +1,13 @@
 /** @odoo-module **/
-import {EventBus} from "@odoo/owl";
-import {useBus} from "@web/core/utils/hooks";
 import MainComponent from "@stock_barcode/components/main";
 import {patch} from "@web/core/utils/patch";
-import MoveComponent from "./move";
-import {Chatter} from "@mail/core/web/chatter";
+import {Chatter} from "@mail/chatter/web_portal/chatter";
+import MoveComponent from "./components/move";
 import {View} from "@web/views/view";
 import GroupedLineComponent from "@stock_barcode/components/grouped_line";
 import LineComponent from "@stock_barcode/components/line";
 import PackageLineComponent from "@stock_barcode/components/package_line";
-
-const bus = new EventBus();
+import {rpc} from "@web/core/network/rpc";
 
 patch(MainComponent.prototype, {
     get unreservedMoves() {
@@ -25,7 +22,7 @@ patch(MainComponent.prototype, {
         await this.env.model.save();
         await this.orm.call(this.resModel, "action_assign", [[this.resId]]);
         const {route, params} = this.env.model.getActionRefresh(this.resId);
-        const result = await this.rpc(route, params);
+        const result = await rpc(route, params);
         await this.env.model.refreshCache(result.data.records);
         this.env.model._createState();
         this.render();

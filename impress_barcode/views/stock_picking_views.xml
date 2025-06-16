@@ -23,7 +23,7 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.stock_picking_kanban" />
         <field name="arch" type="xml">
-            <xpath expr="//div[hasclass('o_kanban_record_headings')]" position="after">
+            <xpath expr="//field[@name='state']" position="before">
                 <button
                     class="btn btn-link fa fa-check"
                     name="action_assign"

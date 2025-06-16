@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t
+        t-name="label_printing_wizard.LineUpperButtons"
+        t-inherit="stock_barcode.LineUpperButtons"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//div/button[1]" position="after">
+            <button
+                t-on-click="labelWizard"
+                class="o_line_button o_picture p-0 btn"
+                t-attf-class="btn-{{isSelected || isComplete ? 'light' : 'secondary'}}"
+            >
+                <i class="fa fa-2x fa-print" />
+            </button>
+        </xpath>
+    </t>
+    <t
+        t-name="label_printing_wizard.LineLot"
+        t-inherit="stock_barcode.LineLot"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//div/button[1]" position="after">
+            <button
+                t-on-click="labelWizard"
+                class="o_line_button o_picture p-0 btn"
+                t-attf-class="btn-{{isSelected || isComplete ? 'light' : 'secondary'}}"
+            >
+                <i class="fa fa-2x fa-print" />
+            </button>
+        </xpath>
+    </t>
+</templates>
