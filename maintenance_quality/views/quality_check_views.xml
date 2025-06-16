@@ -26,6 +26,7 @@
                 <field name="equipment_id" invisible="not maintenance_request_id" />
                 <field name="workcenter_id" invisible="not maintenance_request_id" />
             </xpath>
+
             <xpath expr="//field[@name='product_id']" position="attributes">
                 <attribute
                     name="invisible"
@@ -52,7 +53,7 @@
         <field name="model">quality.check</field>
 
         <field name="arch" type="xml">
-            <tree
+            <list
                 default_order="id desc"
                 sample="1"
                 decoration-info="quality_state == 'none'"
@@ -79,7 +80,7 @@
                     decoration-info="quality_state == 'none'"
                     decoration-danger="quality_state == 'fail'"
                 />
-            </tree>
+            </list>
         </field>
     </record>
 </odoo>

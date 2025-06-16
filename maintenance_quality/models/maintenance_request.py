@@ -144,9 +144,9 @@ class MaintenanceRequest(models.Model):
             action = {
                 "name": _("Quality Checks"),
                 "type": "ir.actions.act_window",
-                "view_mode": "tree,form",
+                "view_mode": "list,form",
                 "views": [
-                    (tree_view, "tree"),
+                    (tree_view, "list"),
                     (False, "form"),
                 ],
                 "res_model": "quality.check",
@@ -172,7 +172,7 @@ class MaintenanceRequest(models.Model):
             return {
                 "name": _("Quality Checks"),
                 "type": "ir.actions.act_window",
-                "view_mode": "tree,form",
+                "view_mode": "list,form",
                 "res_model": "quality.check",
                 "domain": [
                     ("maintenance_request_id", "=", self.id),
@@ -198,7 +198,7 @@ class MaintenanceRequest(models.Model):
             return {
                 "name": _("Quality Checks"),
                 "type": "ir.actions.act_window",
-                "view_mode": "tree,form",
+                "view_mode": "list,form",
                 "res_model": "quality.check",
                 "domain": [
                     ("maintenance_request_id", "=", self.id),
@@ -221,7 +221,7 @@ class MaintenanceRequest(models.Model):
             return {
                 "name": _("Quality Alerts"),
                 "type": "ir.actions.act_window",
-                "view_mode": "tree,form",
+                "view_mode": "list,form",
                 "res_model": "quality.alert",
                 "domain": [
                     ("maintenance_request_id", "=", self.id),

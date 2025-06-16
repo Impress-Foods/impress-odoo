@@ -19,16 +19,17 @@ class TestMaintenanceRequest(TransactionCase):
             }
         )
 
+        self.equipment = self.env["maintenance.equipment"].create(
+            {"name": "Test equipment"}
+        )
         self.scrap = self.env["stock.scrap"]
 
     def test_create_scrap(self):
         request = self.request_model.create(
-            {
-                "name": "Test Request",
-            }
+            {"name": "Test Request", "equipment_id": self.equipment.id}
         )
 
-        self.scrap.create(
+        scrap_id = self.scrap.create(
             {
                 "maintenance_request_id": request.id,
                 "product_id": self.product.id,
@@ -37,11 +38,13 @@ class TestMaintenanceRequest(TransactionCase):
         )
 
         self.assertEqual(len(request.scrap_ids), 1)
+        self.assertEqual(scrap_id.maintenance_request_id.id, request.id)
 
     def test_delete_draft_scrap(self):
         request = self.request_model.create(
             {
                 "name": "Test Request",
+                "equipment_id": self.equipment.id,
             }
         )
         scrap_move = self.scrap.create(
@@ -56,9 +59,7 @@ class TestMaintenanceRequest(TransactionCase):
 
     def test_delete_done_scrap(self):
         request = self.request_model.create(
-            {
-                "name": "Test Request",
-            }
+            {"name": "Test Request", "equipment_id": self.equipment.id}
         )
         scrap_move = self.scrap.create(
             {
@@ -72,9 +73,7 @@ class TestMaintenanceRequest(TransactionCase):
 
     def test_delete_request_with_draft_scrap(self):
         request = self.request_model.create(
-            {
-                "name": "Test Request",
-            }
+            {"name": "Test Request", "equipment_id": self.equipment.id}
         )
         self.scrap.create(
             {
@@ -97,9 +96,7 @@ class TestMaintenanceRequest(TransactionCase):
 
     def test_delete_request_with_done_scrap(self):
         request = self.request_model.create(
-            {
-                "name": "Test Request",
-            }
+            {"name": "Test Request", "equipment_id": self.equipment.id}
         )
         scrap_move = self.scrap.create(
             {

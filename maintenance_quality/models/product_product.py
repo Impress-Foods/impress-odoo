@@ -1,6 +1,7 @@
 import logging
 
 from odoo import models
+from odoo.tools import SQL
 
 _logger = logging.getLogger(__name__)
 
@@ -38,40 +39,43 @@ class ProductProduct(models.Model):
             [("company_id", "=", self.env.company.id)]
         )
         self.env["quality.point"]._apply_ir_rules(query, "read")
-        _, where_clause, where_clause_args = query.get_sql()
+
         additional_where_clause = self._additional_quality_point_where_clause()
-        where_clause += additional_where_clause
+        if additional_where_clause:
+            query.add_where(additional_where_clause)
+
         parent_category_ids = (
             [int(parent_id) for parent_id in self.categ_id.parent_path.split("/")[:-1]]  # type: ignore
             if self.categ_id
             else []
         )
 
-        where_clause = (
-            '("quality_point"."control_point_type" = \'stock\') AND ' + where_clause
-        )
-
-        self.env.cr.execute(
-            """
-            SELECT COUNT(*)
-                FROM quality_point
-                WHERE %s
-                AND (
+        query.add_where(
+            SQL(
+                """
                     (
                         -- QP has at least one linked product and one is right
-                        EXISTS (SELECT 1 FROM product_product_quality_point_rel rel WHERE rel.quality_point_id = quality_point.id AND rel.product_product_id = ANY(%%s) AND control_point_type='stock')
+                        EXISTS (SELECT 1 FROM product_product_quality_point_rel rel WHERE rel.quality_point_id = quality_point.id AND rel.product_product_id = ANY(%s))
                         -- Or QP has at least one linked product category and one is right
-                        OR EXISTS (SELECT 1 FROM product_category_quality_point_rel rel WHERE rel.quality_point_id = quality_point.id AND rel.product_category_id = ANY(%%s) AND control_point_type='stock')
+                        OR EXISTS (SELECT 1 FROM product_category_quality_point_rel rel WHERE rel.quality_point_id = quality_point.id AND rel.product_category_id = ANY(%s))
                     )
                     OR (
                         -- QP has no linked products
-                        NOT EXISTS (SELECT 1 FROM product_product_quality_point_rel rel WHERE rel.quality_point_id = quality_point.id AND control_point_type='stock')
+                        NOT EXISTS (SELECT 1 FROM product_product_quality_point_rel rel WHERE rel.quality_point_id = quality_point.id)
                         -- And QP has no linked product categories
-                        AND NOT EXISTS (SELECT 1 FROM product_category_quality_point_rel rel WHERE rel.quality_point_id = quality_point.id AND control_point_type='stock')
+                        AND NOT EXISTS (SELECT 1 FROM product_category_quality_point_rel rel WHERE rel.quality_point_id = quality_point.id )
                     )
-                )
-            """  # noqa: E501,UP031
-            % (where_clause,),
-            where_clause_args + [self.ids, parent_category_ids],
+            """,  # noqa
+                self.ids,
+                parent_category_ids,
+            )
         )
-        return self.env.cr.fetchone()[0]
+
+        rows = self.env.execute_query(query.select("id"))
+        ids = [int(element[0]) for element in rows]
+        qc_points = (
+            self.env["quality.point"]
+            .browse(ids)
+            .filtered_domain([("control_point_type", "=", "stock")])
+        )
+        return len(qc_points)

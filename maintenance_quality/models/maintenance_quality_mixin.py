@@ -34,7 +34,7 @@ class MaintenanceQualityMixin(models.AbstractModel):
             return {
                 "name": _("Quality Points"),
                 "type": "ir.actions.act_window",
-                "view_mode": "tree,form",
+                "view_mode": "list,form",
                 "res_model": "quality.point",
                 "domain": [("id", "in", self.quality_point_ids.ids)],
             }
