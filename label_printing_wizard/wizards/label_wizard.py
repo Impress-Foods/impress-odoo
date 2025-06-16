@@ -7,7 +7,7 @@ _logger = logging.getLogger(__name__)
 
 
 class LabelWizard(models.TransientModel):
-    _name = "label_wizard"
+    _name = "label.wizard"
     _description = _("Label Wizard")
 
     name = fields.Char()

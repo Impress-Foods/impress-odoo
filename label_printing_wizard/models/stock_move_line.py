@@ -11,7 +11,7 @@ class StockMoveLine(models.Model):
     def action_open_label_wizard(self) -> dict:
         action = {
             "type": "ir.actions.act_window",
-            "res_model": "label_wizard",
+            "res_model": "label.wizard",
             "view_mode": "form",
             "target": "new",
             "views": [(False, "form")],

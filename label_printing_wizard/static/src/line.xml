@@ -6,13 +6,13 @@
         t-inherit-mode="extension"
         owl="1"
     >
-        <xpath
+        <!-- <xpath
             expr="//div[hasclass('o_line_buttons')]/span[1]/button[1]"
             position="before"
         >
             <button t-on-click="labelWizard" class="o_line_button o_edit btn">
                 <i class="fa fa-2x fa-print" />
             </button>
-        </xpath>
+        </xpath> -->
     </t>
 </templates>

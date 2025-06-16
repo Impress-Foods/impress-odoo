@@ -22,7 +22,7 @@ class TestReportLabelBase(common.TransactionCase):
             {
                 "name": "Product No Tracking",
                 "barcode": "12345678901286",
-                "type": "product",
+                "type": "consu",
                 "tracking": "none",
                 "uom_id": self.unit_uom.id,
             }
@@ -36,7 +36,8 @@ class TestReportLabelBase(common.TransactionCase):
             {
                 "name": "Product Lot Tracking",
                 "barcode": "21098765432108",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "tracking": "lot",
                 "uom_id": self.weight_uom_kg.id,
                 "uom_po_id": self.weight_uom_kg.id,
@@ -51,7 +52,8 @@ class TestReportLabelBase(common.TransactionCase):
             {
                 "name": "Product Serial Tracking",
                 "barcode": "34567890123402",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "tracking": "serial",
                 "uom_id": self.volume_uom_liter.id,
                 "uom_po_id": self.volume_uom_liter.id,
@@ -64,7 +66,8 @@ class TestReportLabelBase(common.TransactionCase):
         self.product_template_no_barcode = self.env["product.template"].create(
             {
                 "name": "Product No Barcode",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "tracking": "none",
                 "uom_id": self.unit_uom.id,
             }
@@ -134,7 +137,7 @@ class TestReportLabelBase(common.TransactionCase):
             uom=self.volume_uom_liter,
         )
         self.assertEqual(
-            barcode, f"01{self.product_tracking_serial.barcode}31510000102187453"
+            barcode, f"01{self.product_tracking_serial.barcode}31010000102187453"
         )
 
     def test_barcode_with_weight_kg(self):
@@ -162,7 +165,7 @@ class TestReportLabelBase(common.TransactionCase):
             quantity=1.5,
             uom=self.volume_uom_liter,
         )
-        self.assertEqual(barcode, f"01{self.product_tracking_serial.barcode}3151000015")
+        self.assertEqual(barcode, f"01{self.product_tracking_serial.barcode}3101000015")
 
     def test_barcode_with_high_precision(self):
         """Test barcode with high precision quantity"""

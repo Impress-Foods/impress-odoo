@@ -3,7 +3,7 @@
     <!-- View labelWizard form -->
     <record id="view_labelWizard_form" model="ir.ui.view">
         <field name="name">view.labelWizard.form</field>
-        <field name="model">label_wizard</field>
+        <field name="model">label.wizard</field>
         <field name="arch" type="xml">
             <form string="Label Printing Wizard">
                 <group>
@@ -85,7 +85,7 @@
     <record id="action_label_wizard" model="ir.actions.act_window">
         <field name="name">Label Wizard</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">label_wizard</field>
+        <field name="res_model">label.wizard</field>
         <field name="view_mode">form</field>
         <field name="binding_model_id" ref="label_printing_wizard.model_label_wizard" />
         <field name="target">new</field>

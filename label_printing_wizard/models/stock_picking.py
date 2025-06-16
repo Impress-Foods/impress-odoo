@@ -15,7 +15,7 @@ class StockPicking(models.Model):
 
         return {
             "type": "ir.actions.act_window",
-            "res_model": "label_wizard",
+            "res_model": "label.wizard",
             "view_mode": "form",
             "views": [(False, "form")],
             "target": "new",
