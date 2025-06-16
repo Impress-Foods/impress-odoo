@@ -5,7 +5,7 @@
         <field name="name">Maintenance Equipment</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">maintenance.equipment</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,list,form</field>
         <field
             name="domain"
             eval="[('maintenance_team_id.team_tag_ids', 'in', [ref('impress_maintenance_quality_mgmt.team_tag_quality')])]"

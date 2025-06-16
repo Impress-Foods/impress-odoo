@@ -102,12 +102,12 @@
     <record id="hr_equipment_request_action_cal_employee" model="ir.actions.act_window">
         <field name="name">Maintenance Requests</field>
         <field name="res_model">maintenance.request</field>
-        <field name="view_mode">calendar,kanban,tree,form,pivot,graph,activity</field>
+        <field name="view_mode">calendar,kanban,list,form,pivot,graph,activity</field>
         <field name="view_id" ref="view_maintenance_request_calendar_by_employee" />
         <field name="context">{
             'search_default_active': True,
             'search_default_todo': True,
-        }</field>
+            }</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Add a new maintenance request
@@ -121,12 +121,12 @@
     <record id="hr_equipment_request_action_cal_state" model="ir.actions.act_window">
         <field name="name">Maintenance Requests</field>
         <field name="res_model">maintenance.request</field>
-        <field name="view_mode">calendar,kanban,tree,form,pivot,graph,activity</field>
+        <field name="view_mode">calendar,kanban,list,form,pivot,graph,activity</field>
         <field name="view_id" ref="view_maintenance_request_calendar_by_state" />
         <field name="context">{
             'search_default_active': True,
             'search_default_todo': True,
-        }</field>
+            }</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Add a new maintenance request

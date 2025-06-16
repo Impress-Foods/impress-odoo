@@ -29,7 +29,7 @@ class TestProductProduct(TransactionCase):
 
         self.quality_point_product = quality_point_model.create(
             {
-                "name": "Test Quality Point",
+                "name": "Test Quality Point Product",
                 "control_point_type": "stock",
                 "product_ids": [(4, self.product.id)],
             }
@@ -37,7 +37,7 @@ class TestProductProduct(TransactionCase):
 
         self.quality_point_categ = quality_point_model.create(
             {
-                "name": "Test Quality Point",
+                "name": "Test Quality Point Category",
                 "control_point_type": "stock",
                 "product_category_ids": [(4, self.category.id)],
             }
@@ -45,7 +45,7 @@ class TestProductProduct(TransactionCase):
 
         self.quality_point_maintenance = quality_point_model.create(
             {
-                "name": "Test Quality Point",
+                "name": "Test Quality Point Maintenance",
                 "control_point_type": "maintenance",
             }
         )
