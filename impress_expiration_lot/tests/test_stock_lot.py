@@ -10,7 +10,8 @@ class TestStockLot(TransactionCase):
         self.product = self.env["product.product"].create(
             {
                 "name": "Test Product",
-                "detailed_type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "tracking": "lot",
                 "use_expiration_date": True,
                 "expiration_time": 20,
