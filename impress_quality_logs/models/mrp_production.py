@@ -47,7 +47,7 @@ class MrpProduction(models.Model):
                 {
                     "name": _(f"HPP Logs for {self.name}"),
                     "domain": [("id", "in", self.hpp_log_ids.ids)],
-                    "view_mode": "tree,form",
+                    "view_mode": "list,form",
                 }  # type: ignore
             )
 
@@ -70,7 +70,7 @@ class MrpProduction(models.Model):
                 {
                     "name": _(f"Metal Logs for {self.name}"),
                     "domain": [("id", "in", self.metal_log_ids.ids)],
-                    "view_mode": "tree,form",
+                    "view_mode": "list,form",
                 }  # type: ignore
             )
 
@@ -93,7 +93,7 @@ class MrpProduction(models.Model):
                 {
                     "name": _(f"LOMA Logs for {self.name}"),
                     "domain": [("id", "in", self.loma_log_ids.ids)],
-                    "view_mode": "tree,form",
+                    "view_mode": "list,form",
                 }  # type: ignore
             )
 
@@ -116,7 +116,7 @@ class MrpProduction(models.Model):
                 {
                     "name": _(f"Coding Logs for {self.name}"),
                     "domain": [("id", "in", self.coding_log_ids.ids)],
-                    "view_mode": "tree,form",
+                    "view_mode": "list,form",
                 }  # type: ignore
             )
 
@@ -139,7 +139,7 @@ class MrpProduction(models.Model):
                 {
                     "name": _(f"X-Ray Logs for {self.name}"),
                     "domain": [("id", "in", self.x_ray_log_ids.ids)],
-                    "view_mode": "tree,form",
+                    "view_mode": "list,form",
                 }  # type: ignore
             )
 
