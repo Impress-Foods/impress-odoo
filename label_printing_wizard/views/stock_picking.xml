@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-model href="../../import_xml.rng" type="application/xml"?>
+<odoo>
+    <record id="view_stock_picking_form_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="priority">99</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='do_print_picking']" position="after">
+                <button
+                    name="action_open_label_wizard"
+                    type="object"
+                    string="Print Label"
+                    context="{'default_picking_id': id}"
+                />
+            </xpath>
+            <xpath
+                expr="//button[@name='action_product_forecast_report'][2]"
+                position="after"
+            >
+                <button
+                    name="action_open_label_wizard"
+                    type="object"
+                    icon="fa-print"
+                    title="Print Label"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
