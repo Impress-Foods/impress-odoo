@@ -4,7 +4,6 @@
     <!-- Create a new Worksheet Template -->
     <record id="ws_delivery_20250114" model="worksheet.template">
         <field name="name">Worksheet delivery 2025-01-14</field>
-        <field name="color">3</field>
         <field name="res_model">quality.check</field>
     </record>
 
@@ -58,7 +57,8 @@
     <record id='delivery_20250114_x_driver_id' model='ir.model.fields'>
         <field name="name">x_driver_id</field>
         <field name="field_description">Driver ID'd</field>
-        <field name="model_id" model="ir.model" eval="obj().env.ref('impress_stock_worksheets.ws_delivery_20250114').model_id" />
+        <field name="model_id" model="ir.model" eval="obj().env.ref('impress_stock_worksheets.ws_delivery_20250114').model_id"
+    />
         <field name="ttype">selection</field>
         <field name="selection">[('true', 'Conforme'), ('false', 'Non Conforme'), ('n/a', 'Non applicable')]</field>
     </record>
@@ -78,7 +78,8 @@
     <record id='delivery_20250114_x_truck_picture' model='ir.model.fields'>
         <field name="name">x_truck_picture</field>
         <field name="field_description">Truck Picture</field>
-        <field name="model_id" model="ir.model" eval="obj().env.ref('impress_stock_worksheets.ws_delivery_20250114').model_id"/>
+        <field name="model_id" model="ir.model"
+    eval="obj().env.ref('impress_stock_worksheets.ws_delivery_20250114').model_id"/>
         <field name="ttype">binary</field>
     </record>
     -->

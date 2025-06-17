@@ -1,8 +1,8 @@
 {
-    "name": "impress_stock_worksheets",
+    "name": "Impress Stock Worksheets",
     # Non semantic version to allow to tag the most recent document date
     "version": "18.0.25.01.14",
-    "summary": """ Impress_stock_worksheets Summary """,
+    "summary": """ Quality Worksheets for inventory operations """,
     "author": "Cédric Paradis",
     "website": "https://github.com/impress-foods/impress-odoo",
     "category": "Hidden",
