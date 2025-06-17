@@ -5,7 +5,7 @@
         <field name="name">view.loma_log_line.tree</field>
         <field name="model">loma.log.line</field>
         <field name="arch" type="xml">
-            <tree default_order='id desc'>
+            <list default_order='id desc'>
                 <field name="sequence" />
                 <field name="start_date" />
                 <field name="measure_1" />
@@ -18,7 +18,7 @@
                 <field name="upper_limit" />
                 <field name="is_seal_ok" />
                 <field name="is_weight_ok" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -123,13 +123,13 @@
         <field name="name">LOMA Lines</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">loma.log.line</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 There is no examples click here to add new Loma_log_line.
-        </p>
+            </p>
         </field>
     </record>
 </odoo>

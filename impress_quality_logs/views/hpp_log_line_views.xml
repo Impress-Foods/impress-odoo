@@ -5,14 +5,14 @@
         <field name="name">view.hpp_log_line.tree</field>
         <field name="model">hpp.log.line</field>
         <field name="arch" type="xml">
-            <tree default_order='id desc'>
+            <list default_order='id desc'>
                 <field name="cycle_number" />
                 <field name="total_qty" />
                 <field name="start_date" />
                 <field name="production_id" />
                 <field name="product_id" />
                 <field name="product_lot_id" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -138,13 +138,13 @@
         <field name="name">HPP Log Lines</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hpp.log.line</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 There is no examples click here to add new Hpp_log_line.
-                                    </p>
+            </p>
         </field>
     </record>
 </odoo>

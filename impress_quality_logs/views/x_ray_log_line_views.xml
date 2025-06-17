@@ -5,10 +5,10 @@
         <field name="name">view.x_ray.log.line.tree</field>
         <field name="model">x_ray.log.line</field>
         <field name="arch" type="xml">
-            <tree default_order='id desc'>
+            <list default_order='id desc'>
                 <field name="sequence" />
                 <field name="start_date" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -79,7 +79,7 @@
         <field name="name">X-ray Log Line</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">x_ray.log.line</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
         <field name="help" type="html">

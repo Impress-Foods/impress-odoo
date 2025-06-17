@@ -4,7 +4,6 @@
     <!-- Create a new Worksheet Template -->
     <record id="ws_loma_20250203" model="worksheet.template">
         <field name="name">Worksheet Loma 2025-02-03</field>
-        <field name="color">4</field>
         <field name="res_model">quality.check</field>
     </record>
 
