@@ -5,14 +5,14 @@
         <field name="name">view.hpp_log.tree</field>
         <field name="model">hpp.log</field>
         <field name="arch" type="xml">
-            <tree default_order='date desc'>
+            <list default_order='date desc'>
                 <field name="date" />
                 <field name="production_id" />
                 <field name="product_id" />
                 <field name="lot_id" />
                 <field name="qty_total" />
                 <field name="qty_produced" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -138,7 +138,7 @@
         <field name="name">HPP Logs</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hpp.log</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
         <field name="help" type="html">

@@ -5,7 +5,7 @@
         <field name="name">view.coding_log_line.tree</field>
         <field name="model">coding.log.line</field>
         <field name="arch" type="xml">
-            <tree default_order='create_date desc'>
+            <list default_order='create_date desc'>
                 <field name="sequence" />
                 <field name="start_date" />
                 <field name="case_code" />
@@ -16,7 +16,7 @@
                     decoration-success="global_success_check == 'ok'"
                     decoration-danger="global_success_check == 'not_ok'"
                 />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -88,7 +88,7 @@
         <field name="name">Coding Log Lines</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">coding.log.line</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
         <field name="help" type="html">

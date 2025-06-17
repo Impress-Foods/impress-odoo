@@ -4,7 +4,6 @@
     <!-- Create a new Worksheet Template -->
     <record id="ws_coding_20250303" model="worksheet.template">
         <field name="name">Worksheet coding 2025-03-03</field>
-        <field name="color">3</field>
         <field name="res_model">quality.check</field>
     </record>
 

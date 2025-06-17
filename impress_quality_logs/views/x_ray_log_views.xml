@@ -5,13 +5,13 @@
         <field name="name">view.x_ray.log.tree</field>
         <field name="model">x_ray.log</field>
         <field name="arch" type="xml">
-            <tree default_order='date desc'>
+            <list default_order='date desc'>
                 <field name="name" />
                 <field name="product_id" />
                 <field name="lot_id" />
                 <field name="production_id" />
                 <field name="date" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -121,7 +121,7 @@
         <field name="name">X-ray Log</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">x_ray.log</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
         <field name="help" type="html">

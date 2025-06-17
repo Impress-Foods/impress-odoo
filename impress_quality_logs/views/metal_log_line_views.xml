@@ -5,7 +5,7 @@
         <field name="name">view.metal.log.line.tree</field>
         <field name="model">metal.log.line</field>
         <field name="arch" type="xml">
-            <tree
+            <list
                 decoration-success="global_success"
                 decoration-danger="not global_success"
                 default_order='id desc'
@@ -17,7 +17,7 @@
                 <field name="production_id" />
                 <field name="reject_value" />
                 <field name="global_success" optional="hide" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -124,13 +124,13 @@
         <field name="name">Metal Detector Lines</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">metal.log.line</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 There is no examples click here to add new metal.log.line.
-    </p>
+            </p>
         </field>
     </record>
 </odoo>
