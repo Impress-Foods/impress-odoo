@@ -16,7 +16,7 @@ class TestProductProduct(TransactionCase):
         self.product = self.product_model.create(
             {
                 "name": "Billing Product",
-                "type": "product",
+                "type": "consu",
                 "default_code": "EPP1",
             }
         )
