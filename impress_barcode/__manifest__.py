@@ -4,7 +4,7 @@
         Customizations to barcode app
     """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
     "version": "17.0.0.1.2",
     "license": "GPL-2",
