@@ -2,6 +2,8 @@ import logging
 
 from odoo import fields, models
 
+from .clickship_request import ClickshipProvider
+
 _logger = logging.getLogger(__name__)
 
 
@@ -20,13 +22,8 @@ class ClickShipCarrier(models.Model):
     clickship_api_key = fields.Char(string="Click Ship Key", groups="base.group_system")
 
     def clickship_rate_shipment(self, order) -> dict:
-        # response:
-        # {
-        # 'success': Bool,
-        # 'price' : float,
-        # 'error_message': string | False,
-        # 'warning_message': string | False
-        # }
+        sr = ClickshipProvider(self.log_xml)
+        res = sr.get_rate(order)  # noqa
 
         return {}
 
