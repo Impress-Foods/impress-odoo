@@ -38,7 +38,7 @@ class ReportLabelBase(models.AbstractModel):
             dec_part_length = 6 - int_part_length
             split_number[1] = split_number[1][:dec_part_length]
 
-        quantity_barcode = f"310{dec_part_length}" + pad_to_size(
+        quantity_barcode = f"{prefix}{dec_part_length}" + pad_to_size(
             str("".join(split_number)), 6
         )
 
