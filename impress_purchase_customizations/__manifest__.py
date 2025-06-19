@@ -3,7 +3,7 @@
     "version": "17.0.1.0.0",
     "summary": """ Impress Foods specific purchase customizations """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
     "depends": ["base", "purchase"],
     "data": [

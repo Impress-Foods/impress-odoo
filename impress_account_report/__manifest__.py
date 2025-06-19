@@ -4,7 +4,7 @@
     "depends": ["account_accountant", "account_reports"],
     "author": "Cédric Paradis",
     "category": "Accounting",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "summary": """
     Module to customize the accounting reports
     """,

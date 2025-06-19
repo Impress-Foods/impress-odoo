@@ -3,7 +3,7 @@
     "version": "17.0.0.0.1",
     "summary": """ Bridge module between Maintenance and Quality Control """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
     "depends": [
         "quality_control",

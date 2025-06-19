@@ -4,7 +4,7 @@
     "summary": """ Backport of V18 feature where a note can be
     added to a production order""",
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
     "depends": ["base", "web", "mrp_workorder"],
     "data": ["views/mrp_production_views.xml"],

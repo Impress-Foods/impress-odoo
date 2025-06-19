@@ -176,8 +176,6 @@ patch(DateTimePicker.prototype, {
             );
         }
         const currentTime = DateTime.local();
-        console.log(currentTime);
-        console.log(this.values);
         const timeValues = this.values.map((val) => [
             (val || currentTime).hour,
             (val || currentTime).minute || 0,

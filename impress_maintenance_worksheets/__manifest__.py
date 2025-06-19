@@ -3,7 +3,7 @@
     "version": "17.0.0.0.1",
     "summary": """ Impress_maintenance_worksheets Summary """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
     "depends": ["base", "maintenance_worksheet"],
     "data": [

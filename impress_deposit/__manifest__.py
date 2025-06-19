@@ -3,7 +3,7 @@
     "version": "17.0.0.1.1",
     "summary": """ Module to allow the management of deposits for containers """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Stock",
     "depends": ["base", "web", "sale_management", "stock"],
     "data": [
