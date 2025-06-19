@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <template id="report_ASN_label">
         <t t-foreach="docs" t-as="transfer">
@@ -16,7 +15,10 @@
             <t t-set="PO" t-value="transfer.sale_id.client_order_ref" />
             <t t-translations="off">
                 <t t-foreach="transfer.move_ids" t-as="move">
-                    <t t-foreach="move.move_line_ids" t-as="line"> ^XACI28 ^FX Border Definitions
+                    <t
+                        t-foreach="move.move_line_ids"
+                        t-as="line"
+                    > ^XACI28 ^FX Border Definitions
                         ^FX From field ^FO2,4 ^GB254,203,2 ^FS ^FX To field ^FO254,4 ^GB558,203,2
                         ^FS ^FX Postal Code field ^FO2,203 ^GB508,206,2 ^FS ^FX Carrier info field
                         ^FO508,203 ^GB304,206,2 ^FS ^FX Product info field ^FO2,409 ^GB812,406,2 ^FS
@@ -24,28 +26,33 @@
                         From field ^FO10,16 ^A0N,26,26^FB200,1^FDFrom/DE: ^FS ^FO20,50
                         ^A0N,26,26^FB225,5^FDImpress Foods Inc. 1910 rue du Sanctuaire, Quebec, QC
                         G1E 3L2 ^FS ^FX To field ^FO264,16 ^A0N,26,26^FB200,1^FDTo/A: ^FS ^FO284,50
-                        ^A0N,26,26^FB300,5^FD<t
-                            t-out="contact_name"
-                        /> . <t t-out="contact_street" /> , <t
-                            t-out="contact_city" /> , <t t-out="contact_state" />
-                    <t
-                            t-out="contact_zip" /> ^FS ^FX Postal code field ^FO10,213
+                        ^A0N,26,26^FB300,5^FD<t t-out="contact_name" /> . <t
+                            t-out="contact_street"
+                        /> , <t t-out="contact_city" /> , <t t-out="contact_state" />
+                    <t t-out="contact_zip" /> ^FS ^FX Postal code field ^FO10,213
                         ^A0N,26,26^FB500,1^FDShip to Postal Code: ^FS ^FO15,243
-                        ^A0N,26,26^FB500,1^FD(420)<t t-out="contact_zip" /> ^FS ^FO90,288
-                        ^BCN,100,N,N,Y^FD420<t t-out="contact_zip" /> ^FS ^FX Carrier Field
+                        ^A0N,26,26^FB500,1^FD(420)<t
+                            t-out="contact_zip"
+                        /> ^FS ^FO90,288
+                        ^BCN,100,N,N,Y^FD420<t
+                            t-out="contact_zip"
+                        /> ^FS ^FX Carrier Field
                         ^FO518,213 ^A0N,26,26^FB500,1^FDCarrier: ^FS ^FO518,243
                         ^A0N,26,26^FB500,1^FD<t t-out="carrier" /> ^FS ^FO518,273
                         ^A0N,26,26^FB500,1^FDPro: 12345 ^FS ^FO518,303 ^A0N,26,26^FB500,1^FDB/L:
                         123456789 ^FS ^FX Product Field ^FO20,439 ^A0N,40,40^FB500,1^FDPO: <t
                             t-out="PO"
                         /> ^FS ^FO20,489 ^A0N,40,40^FB500,1^FDGTIN: <t
-                            t-out="line.product_barcode" /> ^FS ^FO500,489 ^A0N,40,40^FB500,1^FDLOT: <t
+                            t-out="line.product_barcode"
+                        /> ^FS ^FO500,489 ^A0N,40,40^FB500,1^FDLOT: <t
                             t-out="line.lot_id.display_name"
                         /> ^FS ^FO20,539 ^A0N,40,40^FB800,2^FDItem
                         Description: <t
                             t-raw="line.product_id.display_name"
                         /> ^FS ^FO130,639
-                        ^A0N,40,40^FB800,1^FDCase QTY: <t t-out="line.quantity" /> ^FS ^FO130,689
+                        ^A0N,40,40^FB800,1^FDCase QTY: <t
+                            t-out="line.quantity"
+                        /> ^FS ^FO130,689
                         ^A0N,40,40^FB800,1^FDProduct Net Weight (KG): ^FS ^FO130,739
                         ^A0N,40,40^FB800,1^FDCode Date: <t
                             t-esc="line.lot_id.use_date.strftime('%Y-%m-%d')"
@@ -65,10 +72,13 @@
             <xpath expr="/t" position="replace">
                 <t t-name="stock.label_lot_template_view">
                     <t t-foreach="docs" t-as="lot">
-                        <t t-translation="off"> ^XA^CI28 ^FO50,50 ^FB700,3,0,C,0 ^A0N,44,33^FD <t
+                        <t
+                            t-translation="off"
+                        > ^XA^CI28 ^FO50,50 ^FB700,3,0,C,0 ^A0N,44,33^FD <t
                                 t-out="lot['display_name_markup']"
                             /> ^FS <t
-                                t-if="env.user.has_group('stock.group_stock_lot_print_gs1')">
+                                t-if="env.user.has_group('stock.group_stock_lot_print_gs1')"
+                            >
                                 <t
                                     t-if="lot['lot_record'].product_id.valid_ean"
                                     t-set="final_barcode"
@@ -91,11 +101,12 @@
                             ^FO425,150^BY3 ^BXN,8,200 ^FD<t
                                     t-out="final_barcode"
                                 /> ^FS </t>
-        <t t-else=""
-                                name="code128_barcode"> ^FO100,150^BY3 ^BCN,100,Y,N,N ^FD<t
-                                    t-out="lot['name']" /> ^FS </t> 
+        <t t-else="" name="code128_barcode"> ^FO100,150^BY3 ^BCN,100,Y,N,N ^FD<t
+                                    t-out="lot['name']"
+                                /> ^FS </t>
                                 ^FO275,300 ^A0N,44,33^FDLN/SN: <t
-                                t-out="lot['name']" /> ^FS ^XZ </t>
+                                t-out="lot['name']"
+                            /> ^FS ^XZ </t>
                     </t>
                 </t>
             </xpath>

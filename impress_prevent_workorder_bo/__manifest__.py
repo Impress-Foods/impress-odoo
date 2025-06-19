@@ -4,7 +4,7 @@
     "summary": """ Prevents the creation of BO on workorder validation
     when producing less than expected.""",
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
     "depends": ["base", "mrp_workorder"],
     "data": [],

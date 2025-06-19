@@ -3,7 +3,7 @@
     "version": "17.0.1.0.0",
     "summary": """ Allows to link products to maintenance equipments """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hideen",
     "depends": ["base", "stock", "maintenance"],
     "data": [

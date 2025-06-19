@@ -2,7 +2,7 @@
     "name": "Julian Sequence for MRP",
     "summary": """ Adds a sequence type to follow a YYDDD format""",
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "license": "GPL-2",
     "category": "Hidden",
     "version": "17.0.0.1.0",
