@@ -1,0 +1,242 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* label_printing_wizard
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-19 13:55+0000\n"
+"PO-Revision-Date: 2025-06-19 13:55+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: label_printing_wizard
+#: model:ir.model.fields.selection,name:label_printing_wizard.selection__label_wizard__label_size__2x4
+msgid "2x4"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields.selection,name:label_printing_wizard.selection__label_wizard__label_size__4x6
+msgid "4x6"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_labelWizard_form
+msgid "Cancel"
+msgstr ""
+
+#. module: label_printing_wizard
+#. odoo-python
+#: code:addons/label_printing_wizard/reports/labels.py:0
+#, python-format
+msgid "Cannot create a GS1 barcode without a product"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,help:label_printing_wizard.field_label_wizard__uom_id
+msgid "Default unit of measure used for all stock operations."
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__id
+msgid "ID"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model,name:label_printing_wizard.model_report_label_printing_wizard_label_base
+msgid "Label Base Report"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_labelWizard_form
+msgid "Label Printing Wizard"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__label_report
+msgid "Label Report"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__label_size
+msgid "Label Size"
+msgstr ""
+
+#. module: label_printing_wizard
+#. odoo-python
+#: code:addons/label_printing_wizard/wizards/label_wizard.py:0
+#: model:ir.actions.act_window,name:label_printing_wizard.action_label_wizard
+#: model:ir.model,name:label_printing_wizard.model_label_wizard
+#: model:ir.ui.menu,name:label_printing_wizard.label_wizard_menu
+#, python-format
+msgid "Label Wizard"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__lot_id
+#: model:ir.model.fields.selection,name:label_printing_wizard.selection__label_wizard__model__lot
+msgid "Lot"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__lot_domain
+msgid "Lot Domain"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model,name:label_printing_wizard.model_report_label_printing_wizard_label_lot_zpl_2x4
+msgid "Lot Label Report 2x4"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model,name:label_printing_wizard.model_report_label_printing_wizard_label_lot_zpl_4x6
+msgid "Lot Label Report 4x6"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.actions.report,name:label_printing_wizard.report_label_lot_zpl_2x4
+msgid "Lot/Serial Number (ZPL 2x4)"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.actions.report,name:label_printing_wizard.report_label_lot_zpl_4x6
+msgid "Lot/Serial Number (ZPL 4x6)"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__model
+msgid "Model"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__name
+msgid "Name"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__label_qty
+msgid "Number of Labels"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__packaging_id
+msgid "Packaging"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__packaging_qty
+msgid "Packaging Qty"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__picking_id
+msgid "Picking"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_labelWizard_form
+#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_stock_picking_form_inherit
+msgid "Print Label"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model_terms:ir.ui.view,arch_db:label_printing_wizard.product_product_view_form_inherit
+#: model_terms:ir.ui.view,arch_db:label_printing_wizard.product_template_only_form_view
+#: model_terms:ir.ui.view,arch_db:label_printing_wizard.stock_lot_form_view_inherit
+msgid "Print Labels"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__product_id
+#: model:ir.model.fields.selection,name:label_printing_wizard.selection__label_wizard__model__product
+msgid "Product"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__product_domain
+msgid "Product Domain"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.actions.report,name:label_printing_wizard.report_label_product_product_zpl_2x4
+msgid "Product Label (ZPL 2x4)"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.actions.report,name:label_printing_wizard.report_label_product_product_zpl_4x6
+msgid "Product Label (ZPL 4x6)"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model,name:label_printing_wizard.model_report_label_printing_wizard_label_product_product_zpl_2x4
+#: model:ir.model,name:label_printing_wizard.model_report_label_printing_wizard_label_product_product_zpl_4x6
+msgid "Product Label Report"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model,name:label_printing_wizard.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__product_template_id
+msgid "Product Template"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__product_qty
+#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_labelWizard_form
+msgid "Quantity"
+msgstr ""
+
+#. module: label_printing_wizard
+#. odoo-python
+#: code:addons/label_printing_wizard/wizards/label_wizard.py:0
+#, python-format
+msgid "Report type not supported"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model,name:label_printing_wizard.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model,name:label_printing_wizard.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__uom_id
+msgid "Unit of Measure"
+msgstr ""
