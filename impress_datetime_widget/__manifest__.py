@@ -9,6 +9,7 @@
     where the default time selected
     when a widget is opened is the current time without any rounding.
     """,
+    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
     "license": "GPL-2",
     # data files always loaded at installation
     "assets": {

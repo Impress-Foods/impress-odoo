@@ -48,12 +48,12 @@ repos:
       # update the NOT INSTALLABLE ADDONS section above
       - id: oca-update-pre-commit-excluded-addons
       - id: oca-fix-manifest-website
-        args: ["https://github.com/cparadis-impressfoods/impress-odoo"]
+        args: ["https://github.com/Impress-Foods/impress-odoo"]
       - id: oca-gen-addon-readme
         args:
           - --addons-dir=.
           - --branch=17.0
-          - --org-name=cparadis-impressfoods
+          - --org-name=Impress-Foods
           - --repo-name=impress-odoo
           - --if-source-changed
           - --keep-source-digest
