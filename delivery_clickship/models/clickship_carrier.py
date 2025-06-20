@@ -37,12 +37,15 @@ class ClickShipCarrier(models.Model):
     def clickship_send_shipping(self, pickings) -> list:
         contact = self.clickship_contact
         sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
-        res = sr.book_shipment(pickings, contact)
-
-        return [res]
+        res = []
+        for picking in pickings:
+            booking = sr.book_shipment(picking, contact)
+            res.append(booking)
+            picking.clickship_tracking_url = booking["tracking_url"]
+        return res
 
     def clickship_get_tracking_link(self, picking) -> str:
-        return f"https://app.clickship.com/clickship/shipment-tracking?id={picking.carrier_tracking_ref}&shipmentType=Store"
+        return picking.clickship_tracking_url
 
     def clickship_cancel_shipment(self, picking) -> None:
         return

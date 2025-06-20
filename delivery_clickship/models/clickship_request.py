@@ -1,8 +1,8 @@
 import json
 import logging
 import time
-import urllib.request
 from datetime import datetime
+from urllib.request import urlopen
 from zoneinfo import ZoneInfo
 
 import requests
@@ -35,46 +35,6 @@ from .schema import (
 )
 
 _logger = logging.getLogger(__name__)
-
-test_rate = {
-    "status": {
-        "done": "true",
-        "total": 1,
-        "complete": 1,
-    },
-    "rates": [
-        {
-            "carrier_name": "Test Carrier",
-            "service_name": "Delivery",
-            "service_id": "0x000",
-            "valid_until": {
-                "year": 2025,
-                "month": 6,
-                "day": 30,
-            },
-            "total": {
-                "currency": "CAD",
-                "value": "1000",
-            },
-            "base": {
-                "currency": "CAD",
-                "value": "900",
-            },
-            "surcharges": [],
-            "taxes": [
-                {
-                    "type": "GST",
-                    "amount": {
-                        "currency": "CAD",
-                        "value": "100",
-                    },
-                }
-            ],
-            "transit_time_days": 1,
-            "transit_time_not_available": "false",
-        }
-    ],
-}
 
 
 class ClickshipProvider:
@@ -159,16 +119,27 @@ class ClickshipProvider:
         price = int(shipment.rate.total.value) / 100
         labels = shipment.labels
 
-        label_data = self._fetch_label_data(labels[0]["url"])  # noqa: F841
+        zpl_labels = [
+            x
+            for x in filter(
+                lambda x: x["format"] == "zpl" and x["size"] == "a6", labels
+            )
+        ]
 
-        return {
+        label_data = self._fetch_label_data(zpl_labels[0]["url"])  # noqa: F841
+
+        res = {
             "exact_price": price,
             "tracking_number": shipment.primary_tracking_number,
+            "label_data": label_data,
+            "tracking_url": shipment.tracking_url,
         }
+        _logger.warning(shipment)
+        return res
 
-    def _fetch_label_data(self, url: str):
-        data = urllib.request.urlretrieve(url)
-        _logger.warning(data)
+    def _fetch_label_data(self, url: str) -> str:
+        data = urlopen(url, timeout=30)
+        return data.read().decode("UTF-8")
 
     def _choose_carrier(self, rates: list[Rate]) -> Rate:
         return rates[0]
