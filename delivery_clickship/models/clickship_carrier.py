@@ -20,21 +20,37 @@ class ClickShipCarrier(models.Model):
     )
 
     clickship_api_key = fields.Char(string="Click Ship Key", groups="base.group_system")
+    clickship_contact = fields.Many2one("hr.employee")
 
     def clickship_rate_shipment(self, order) -> dict:
-        sr = ClickshipProvider(self.log_xml)
-        res = sr.get_rate(order)  # noqa
+        sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
+        res = sr.get_rate(order, self.clickship_contact)
+        price = int(res.total.value) / 100.0
 
-        return {}
+        return {
+            "success": True,
+            "price": price,
+            "error_message": False,
+            "warning_message": False,
+        }
 
     def clickship_send_shipping(self, pickings) -> list:
-        return []
+        contact = self.clickship_contact
+        sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
+        res = sr.book_shipment(pickings, contact)
+
+        return [res]
 
     def clickship_get_tracking_link(self, picking) -> str:
-        return ""
+        return f"https://app.clickship.com/clickship/shipment-tracking?id={picking.carrier_tracking_ref}&shipmentType=Store"
 
     def clickship_cancel_shipment(self, picking) -> None:
         return
 
     def _clickship_get_default_custom_package_code(self) -> str:
         return ""
+
+    def clickship_get_payment_methods(self) -> str:
+        sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
+        payment_methods = sr._get_payment_methods()
+        return payment_methods[0]

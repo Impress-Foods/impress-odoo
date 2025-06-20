@@ -1,6 +1,6 @@
 from enum import Enum
 
-from pydantic import BaseModel
+from pydantic import AliasChoices, BaseModel, Field
 
 
 class TimeOfDay(BaseModel):
@@ -27,6 +27,16 @@ class PackageTypeEnum(str, Enum):
     envelope = "envelope"
 
 
+class ShipmentStateEnum(str, Enum):
+    draft = "draft"
+    waiting = "waiting-for-transit"
+    transit = "in-transit"
+    delivered = "delivered"
+    exception = "exception"
+    missing = "missing"
+    cancelled = "cancelled"
+
+
 class WeightUnitEnum(str, Enum):
     kg = "kg"
     lb = "lb"
@@ -48,8 +58,12 @@ class Money(BaseModel):
 
 
 class Address(BaseModel):
-    address_line_1: str
-    address_line_2: str | None = None
+    address_line_1: str = Field(
+        validation_alias=AliasChoices("address_line_1", "address_line1")
+    )
+    address_line_2: str | None = Field(
+        default=None, validation_alias=AliasChoices("address_line_2", "address_line2")
+    )
     unit_number: str | None = None
     city: str
     region: str
@@ -59,7 +73,7 @@ class Address(BaseModel):
 
 class PhoneNumber(BaseModel):
     number: str
-    extension: str | None = None
+    extension: str = ""
 
 
 class Origin(BaseModel):
@@ -67,7 +81,7 @@ class Origin(BaseModel):
     address: Address
     residential: bool = False
     instructions: str | None = None
-    contact_name: str | None = None
+    contact_name: str
     phone_number: PhoneNumber = PhoneNumber(number="")
     email_addresses: list[str] | None = None
 
@@ -81,26 +95,24 @@ class Destination(BaseModel):
     phone_number: PhoneNumber = PhoneNumber(number="")
     email_addresses: list[str] | None = None
     ready_at: TimeOfDay = TimeOfDay(hour=8, minute=0)
-    ready_until: TimeOfDay = TimeOfDay(hour=8, minute=0)
-    signature_requirement: SignatureRequirementEnum = (
-        SignatureRequirementEnum.not_required
-    )
+    ready_until: TimeOfDay = TimeOfDay(hour=16, minute=30)
+    signature_requirement: str = SignatureRequirementEnum.not_required.value
 
 
-class Weigth(BaseModel):
-    unit: WeightUnitEnum
+class Weight(BaseModel):
+    unit: str
     value: float
 
 
 class Cuboid(BaseModel):
-    unit: LengthUnitEnum
+    unit: str
     l: float  # noqa
     w: float  # noqa
     h: float  # noqa
 
 
 class Box(BaseModel):
-    weigth: Weigth
+    weight: Weight
     cuboid: Cuboid
 
 
@@ -117,7 +129,7 @@ class PackagePackagingProperties(BaseModel):
 
 
 class Fee(BaseModel):
-    fee_type: str
+    fee_type: str = Field(validation_alias=AliasChoices("fee_type", "type"))
     amount: Money
 
 
@@ -126,18 +138,18 @@ class PalletPackagingProperties(BaseModel):
     pass
 
 
-class ShipmentDetails(BaseModel):
+class ShippingDetails(BaseModel):
     origin: Origin
     destination: Destination
     expected_ship_date: Date
-    packaging_type: PackageTypeEnum = PackageTypeEnum.package
+    packaging_type: str = PackageTypeEnum.package.value
     packaging_properties: PackagePackagingProperties | PalletPackagingProperties
 
 
 class RateRequestData(BaseModel):
     services: list[str] | None = None
     excluded_services: list[str] | None = None
-    details: ShipmentDetails
+    details: ShippingDetails
 
 
 class Rate(BaseModel):
@@ -150,13 +162,17 @@ class Rate(BaseModel):
     surcharges: list[Fee]
     taxes: list[Fee]
     transit_time_days: int
-    tansit_time_not_available: bool
+    transit_time_not_available: bool
 
 
 class RateStatus(BaseModel):
     done: bool
-    total: int
-    complete: int
+    total: int = 0
+    complete: int = 0
+
+
+class RateResponse(BaseModel):
+    status: RateStatus
     rates: list[Rate]
 
 
@@ -165,14 +181,35 @@ class PickupDetails(BaseModel):
     date: Date
     ready_at: TimeOfDay
     ready_until: TimeOfDay
-    pickup_locations: str
+    pickup_location: str
     contact_name: str
-    contact_phone_number: str
+    contact_phone_number: PhoneNumber
 
 
-class Shipment(BaseModel):
+class ShipmentRequest(BaseModel):
     unique_id: str
     payment_method_id: str
     service_id: str
-    details: ShipmentDetails
+    details: ShippingDetails
     pickup_details: PickupDetails
+    dispatch_details: None = None
+    customs_invoice: None = None
+
+
+class Shipment(BaseModel):
+    id: str
+    unique_id: str
+    state: str
+    transaction_number: str
+    primary_tracking_number: str
+    tracking_numbers: list[str]
+    tracking_url: str
+    return_tracking_number: str | None
+    bol_number: str = ""
+    picking_confirmation_number: str = ""
+    details: ShippingDetails
+    transport_data: dict | None = None
+    labels: list[dict] | None = None
+    customs_invoice_url: str | None = None
+    rate: Rate
+    order_source: str

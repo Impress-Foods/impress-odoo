@@ -1,49 +1,110 @@
 import json
 import logging
+import time
+import urllib.request
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
 import requests
+from pydantic import BaseModel
 from werkzeug.urls import url_join
 
 from .schema import (
     Address,
+    Box,
+    Cuboid,
     Date,
     Destination,
+    LengthUnitEnum,
     Origin,
+    Package,
+    PackagePackagingProperties,
+    PackageTypeEnum,
     PhoneNumber,
+    PickupDetails,
+    Rate,
     RateRequestData,
+    RateResponse,
     RateStatus,
     Shipment,
-    ShipmentDetails,
+    ShipmentRequest,
+    ShippingDetails,
+    TimeOfDay,
+    Weight,
+    WeightUnitEnum,
 )
 
 _logger = logging.getLogger(__name__)
 
+test_rate = {
+    "status": {
+        "done": "true",
+        "total": 1,
+        "complete": 1,
+    },
+    "rates": [
+        {
+            "carrier_name": "Test Carrier",
+            "service_name": "Delivery",
+            "service_id": "0x000",
+            "valid_until": {
+                "year": 2025,
+                "month": 6,
+                "day": 30,
+            },
+            "total": {
+                "currency": "CAD",
+                "value": "1000",
+            },
+            "base": {
+                "currency": "CAD",
+                "value": "900",
+            },
+            "surcharges": [],
+            "taxes": [
+                {
+                    "type": "GST",
+                    "amount": {
+                        "currency": "CAD",
+                        "value": "100",
+                    },
+                }
+            ],
+            "transit_time_days": 1,
+            "transit_time_not_available": "false",
+        }
+    ],
+}
+
 
 class ClickshipProvider:
-    def __init__(self, debug_logger, prod_environment: bool = False):
+    def __init__(self, debug_logger, prod_environment: bool = False, token=None):
         self.debug_logger = debug_logger
         self.session = requests.Session()
+        self.token = token
 
         if not prod_environment:
-            self.url = "TEST URL"
+            self.url = "https://customer-external-api.ssd-test.freightcom.com"
         else:
             self.url = "https://external-api.freightcom.com/"
 
-    def _make_api_request(self, endpoint, method="GET", payload=None, token=None):
-        headers = {"Content-Type": "application/json", "Authorization": token}
-
+    def _make_api_request(self, endpoint, method="GET", payload=None):
+        if payload is None:
+            payload = {}
+        headers = {"Content-Type": "application/json", "Authorization": f"{self.token}"}
         access_url = url_join(self.url, endpoint)
+
+        if isinstance(payload, BaseModel):
+            payload = payload.model_dump_json(exclude_none=True)
 
         try:
             self.debug_logger(
-                "%s\n%s" % (access_url, method, payload),  # noqa
-                f"clickship_request_%s" & endpoint,  # noqa
-            )  # noqa
+                f"{access_url} {method} \n {payload}",
+                f"clickship_request_{endpoint}",
+            )
 
             response = self.session.request(
-                method, access_url, json=payload, headers=headers, timeout=30
+                method, access_url, data=payload, headers=headers, timeout=30
             )
             response_json = response.json()
 
@@ -66,38 +127,62 @@ class ClickshipProvider:
             _logger.warning(f"JSONDecodeError: {error}")
             return {"errors": {"JSONDecodeError": str(error)}}
 
+    def get_rate(self, order, contact) -> Rate:
+        details = self._make_shipping_details(order, contact)
+        data = RateRequestData(details=details)
+        rate_id = self._post_request_rate(data)
+
+        rate_response = RateResponse(status=RateStatus(done=False), rates=[])
+        while not rate_response.status.done:
+            time.sleep(1)
+            rate_response = self._get_requested_rate(rate_id)
+
+        rate = self._choose_carrier(rate_response.rates)
+        return rate
+
     def _post_request_rate(self, data: RateRequestData) -> str:
-        # Requests a rate, getting a rate ID in return to poll back
-        return ""
+        response = self._make_api_request("rate", "POST", payload=data)
 
-    def get_rate(self, order) -> dict:
-        origin = self._get_origin(order)  # noqa
-        destination = self._get_destination(order)  # noqa
+        return response["request_id"]
 
-        current_date = datetime.now(ZoneInfo("America/Montreal"))
-        ship_date = Date(  # noqa
-            year=current_date.year, month=current_date.month, day=current_date.day
-        )
+    def _get_requested_rate(self, rate_id: str) -> RateResponse:
+        response = self._make_api_request(f"rate/{rate_id}", "GET")
+        response = RateResponse.model_validate(response)
+        return response
 
-        details = ShipmentDetails()  # noqa
+    def book_shipment(self, picking, contact) -> None:
+        rate = self.get_rate(picking, contact)
+        data = self._make_shipment_request(picking, contact, rate.service_id)
+        shipment_id = self._post_book_shipment(data)
 
-        data = RateRequestData()
+        shipment: Shipment = self._get_shipment_status(shipment_id)
+        price = int(shipment.rate.total.value) / 100
+        labels = shipment.labels
 
-        rate_id = self._post_request_rate(data)  # noqa
+        label_data = self._fetch_label_data(labels[0]["url"])  # noqa: F841
 
-        return {}
+        return {
+            "exact_price": price,
+            "tracking_number": shipment.primary_tracking_number,
+        }
 
-    def _get_requested_rate(self, rate_id: str) -> RateStatus:
-        # Fetches a known rate_id to get the rate data
-        return {}
+    def _fetch_label_data(self, url: str):
+        data = urllib.request.urlretrieve(url)
+        _logger.warning(data)
 
-    def _post_book_shipment(self, shipment_data: Shipment) -> str:
+    def _choose_carrier(self, rates: list[Rate]) -> Rate:
+        return rates[0]
+
+    def _post_book_shipment(self, shipment_data: ShipmentRequest) -> str:
         # Books a shipment for shipment_data, getting a shipment_id back
-        return ""
+        response = self._make_api_request("shipment", "POST", payload=shipment_data)
+        return response["id"]
 
     def _get_shipment_status(self, shipment_id: str) -> dict:
         # Fetches the shipment status for a known shipment ID
-        return {}
+        response = self._make_api_request(f"shipment/{shipment_id}", "GET")
+        response = Shipment.model_validate(response["shipment"])
+        return response
 
     def _post_schedule_pickup(self, shipment_id: str, payload: dict) -> bool:
         # Requests a pickup for a known shipment_id. No return from API
@@ -112,39 +197,101 @@ class ClickshipProvider:
         # No return from API
         return True
 
-    def _get_origin(self, order) -> Origin:
+    def _get_origin(self, order, contact) -> Origin:
         company = order.company_id
-
-        address = self._get_address(company)
         origin = Origin(
             name=company.name,
-            address=address,
+            address=self._make_address(company),
             phone_number=PhoneNumber(number=company.phone),
             email_addresses=[company.email],
+            contact_name=contact.name,
         )
         return origin
 
-    def _get_destination(self, order) -> Destination:
+    def _make_current_date(self) -> Date:
+        current_date = datetime.now(ZoneInfo("America/Montreal"))
+        return Date(
+            year=current_date.year, month=current_date.month, day=current_date.day
+        )
+
+    def _make_destination(self, order) -> Destination:
         client = order.partner_id
         destination = Destination(
             name=client.name,
-            address=self._get_address(client),
+            address=self._make_address(client),
             residential=True,
             phone_number=None if not client.phone else PhoneNumber(number=client.phone),
             email_addresses=None if not client.email else [client.email],
+            contact_name=client.name,
         )
         return destination
 
-    def _get_address(self, partner) -> Address:
-        address = (
-            Address(
-                address_line_1=partner.street,
-                address_line_2=partner.street2 or None,
-                city=partner.city,
-                region=partner.state_id.name,
-                country=partner.country_id.code,
-                postal_code=partner.zip,
+    def _make_address(self, partner) -> Address:
+        address = Address(
+            address_line_1=partner.street,
+            address_line_2=partner.street2 or None,
+            city=partner.city,
+            region=partner.state_id.code,
+            country=partner.country_id.code,
+            postal_code=partner.zip,
+        )
+        return address
+
+    def _make_shipping_details(self, order, contact) -> ShippingDetails:
+        origin = self._get_origin(order, contact)
+        destination = self._make_destination(order)
+
+        current_date = self._make_current_date()
+
+        details = ShippingDetails(
+            origin=origin,
+            destination=destination,
+            expected_ship_date=current_date,
+            packaging_type=PackageTypeEnum.package.value,
+            packaging_properties=PackagePackagingProperties(
+                packages=[
+                    Package(
+                        description="Cube carboard box",
+                        measurements=Box(
+                            weight=Weight(unit=WeightUnitEnum.lb.value, value=10),
+                            cuboid=Cuboid(
+                                unit=LengthUnitEnum.inch.value, l=10, w=10, h=10
+                            ),
+                        ),
+                    )
+                ]
             ),
         )
+        return details
 
-        return address
+    def _make_pickup_details(self, contact) -> PickupDetails:
+        details = PickupDetails(
+            date=self._make_current_date(),
+            ready_at=TimeOfDay(hour=8, minute=0),
+            ready_until=TimeOfDay(hour=16, minute=0),
+            pickup_location="Docks",
+            contact_name=contact.name,
+            contact_phone_number=PhoneNumber(number=contact.work_phone),
+        )
+
+        return details
+
+    def _make_shipment_request(self, order, contact, service_id) -> ShipmentRequest:
+        unique_id = getattr(order, "origin", False) or order.name
+        payment_method = (
+            "zgvd7e7laioTa43K7xs6zHblpwKukQCy"  # TODO: Inject semi-dynamic method
+        )
+        shipping_details = self._make_shipping_details(order, contact)
+        pickup_details = self._make_pickup_details(contact)
+
+        request = ShipmentRequest(
+            unique_id=unique_id,
+            payment_method_id=payment_method,
+            service_id=service_id,
+            details=shipping_details,
+            pickup_details=pickup_details,
+        )
+        return request
+
+    def _get_payment_methods(self) -> list:
+        return self._make_api_request("finance/payment-methods", "GET")[0]

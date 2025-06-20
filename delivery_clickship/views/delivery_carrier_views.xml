@@ -16,6 +16,7 @@
           <group>
             <group>
               <field name="clickship_api_key" required="delivery_type == 'clickship'" />
+              <field name="clickship_contact" />
             </group>
           </group>
         </page>
