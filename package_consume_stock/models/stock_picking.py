@@ -10,7 +10,6 @@ class StockPicking(models.Model):
 
     def write(self, vals):
         res = super().write(vals)
-        _logger.warning(self.package_ids)
         self._handle_new_package()
         return res
 
