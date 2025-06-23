@@ -9,3 +9,4 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     clickship_tracking_url = fields.Char()
+    clickship_shipment_id = fields.Char()

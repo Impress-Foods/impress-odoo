@@ -9,6 +9,8 @@ import requests
 from pydantic import BaseModel
 from werkzeug.urls import url_join
 
+from odoo.exceptions import ValidationError
+
 from .schema import (
     Address,
     Box,
@@ -48,6 +50,53 @@ class ClickshipProvider:
         else:
             self.url = "https://external-api.freightcom.com/"
 
+    def get_rate(self, order, contact) -> Rate:
+        details = self._make_shipping_details(order, contact)
+        data = RateRequestData(details=details)
+        rate_id = self._post_request_rate(data)
+
+        rate_response = RateResponse(status=RateStatus(done=False), rates=[])
+        while not rate_response.status.done:
+            time.sleep(1)
+            rate_response = self._get_requested_rate(rate_id)
+
+        rate = self._choose_carrier(rate_response.rates)
+        return rate
+
+    def book_shipment(self, picking, contact) -> None:
+        rate = self.get_rate(picking, contact)
+        data = self._make_shipment_request(picking, contact, rate.service_id)
+        shipment_id = self._post_book_shipment(data)
+
+        pickup_details = self._make_pickup_details(contact)
+        self._post_schedule_pickup(shipment_id, pickup_details)
+        shipment: Shipment = self._get_shipment_status(shipment_id)
+
+        price = int(shipment.rate.total.value) / 100
+        labels = shipment.labels
+
+        zpl_labels = [
+            x
+            for x in filter(
+                lambda x: x["format"] == "zpl" and x["size"] == "a6", labels
+            )
+        ]
+
+        label_data = self._fetch_label_data(zpl_labels[0]["url"])
+
+        res = {
+            "exact_price": price,
+            "tracking_number": shipment.primary_tracking_number,
+            "label_data": label_data,
+            "tracking_url": shipment.tracking_url,
+            "shipment_id": shipment_id,
+        }
+        return res
+
+    def cancel_shipment(self, shipment_id: str) -> bool:
+        self._del_cancel_shipment(shipment_id)
+        return True
+
     def _make_api_request(self, endpoint, method="GET", payload=None):
         if payload is None:
             payload = {}
@@ -66,6 +115,8 @@ class ClickshipProvider:
             response = self.session.request(
                 method, access_url, data=payload, headers=headers, timeout=30
             )
+
+            _logger.warning(f"{method} {endpoint}: {response}")
             response_json = response.json()
 
             self.debug_logger(
@@ -87,19 +138,6 @@ class ClickshipProvider:
             _logger.warning(f"JSONDecodeError: {error}")
             return {"errors": {"JSONDecodeError": str(error)}}
 
-    def get_rate(self, order, contact) -> Rate:
-        details = self._make_shipping_details(order, contact)
-        data = RateRequestData(details=details)
-        rate_id = self._post_request_rate(data)
-
-        rate_response = RateResponse(status=RateStatus(done=False), rates=[])
-        while not rate_response.status.done:
-            time.sleep(1)
-            rate_response = self._get_requested_rate(rate_id)
-
-        rate = self._choose_carrier(rate_response.rates)
-        return rate
-
     def _post_request_rate(self, data: RateRequestData) -> str:
         response = self._make_api_request("rate", "POST", payload=data)
 
@@ -110,57 +148,33 @@ class ClickshipProvider:
         response = RateResponse.model_validate(response)
         return response
 
-    def book_shipment(self, picking, contact) -> None:
-        rate = self.get_rate(picking, contact)
-        data = self._make_shipment_request(picking, contact, rate.service_id)
-        shipment_id = self._post_book_shipment(data)
-
-        shipment: Shipment = self._get_shipment_status(shipment_id)
-        price = int(shipment.rate.total.value) / 100
-        labels = shipment.labels
-
-        zpl_labels = [
-            x
-            for x in filter(
-                lambda x: x["format"] == "zpl" and x["size"] == "a6", labels
-            )
-        ]
-
-        label_data = self._fetch_label_data(zpl_labels[0]["url"])  # noqa: F841
-
-        res = {
-            "exact_price": price,
-            "tracking_number": shipment.primary_tracking_number,
-            "label_data": label_data,
-            "tracking_url": shipment.tracking_url,
-        }
-        _logger.warning(shipment)
-        return res
-
-    def _fetch_label_data(self, url: str) -> str:
-        data = urlopen(url, timeout=30)
-        return data.read().decode("UTF-8")
-
-    def _choose_carrier(self, rates: list[Rate]) -> Rate:
-        return rates[0]
-
     def _post_book_shipment(self, shipment_data: ShipmentRequest) -> str:
         # Books a shipment for shipment_data, getting a shipment_id back
         response = self._make_api_request("shipment", "POST", payload=shipment_data)
         return response["id"]
 
-    def _get_shipment_status(self, shipment_id: str) -> dict:
+    def _get_shipment_status(self, shipment_id: str) -> Shipment:
         # Fetches the shipment status for a known shipment ID
         response = self._make_api_request(f"shipment/{shipment_id}", "GET")
         response = Shipment.model_validate(response["shipment"])
         return response
 
-    def _post_schedule_pickup(self, shipment_id: str, payload: dict) -> bool:
-        # Requests a pickup for a known shipment_id. No return from API
+    def _post_schedule_pickup(self, shipment_id: str, payload: PickupDetails) -> bool:
+        self._make_api_request(
+            f"shipment/{shipment_id}/schedule", "POST", payload=payload
+        )
+
         return True
 
     def _del_cancel_shipment(self, shipment_id: str) -> bool:
         # Deletes a known shipment_id. No return from API
+        self._make_api_request(f"shipment/{shipment_id}", "DEL", None)
+
+        # Make sure the shipment is deleted
+        status = self._get_shipment_status(shipment_id)
+        if status.state != "cancelled":
+            return ValidationError("Could not cancel the shipment")
+
         return True
 
     def _del_cancel_scheduling(self, shipment_id: str) -> bool:
@@ -168,7 +182,10 @@ class ClickshipProvider:
         # No return from API
         return True
 
-    def _get_origin(self, order, contact) -> Origin:
+    def _get_payment_methods(self) -> list:
+        return self._make_api_request("finance/payment-methods", "GET")[0]
+
+    def _make_origin(self, order, contact) -> Origin:
         company = order.company_id
         origin = Origin(
             name=company.name,
@@ -209,7 +226,7 @@ class ClickshipProvider:
         return address
 
     def _make_shipping_details(self, order, contact) -> ShippingDetails:
-        origin = self._get_origin(order, contact)
+        origin = self._make_origin(order, contact)
         destination = self._make_destination(order)
 
         current_date = self._make_current_date()
@@ -264,5 +281,9 @@ class ClickshipProvider:
         )
         return request
 
-    def _get_payment_methods(self) -> list:
-        return self._make_api_request("finance/payment-methods", "GET")[0]
+    def _choose_carrier(self, rates: list[Rate]) -> Rate:
+        return rates[0]
+
+    def _fetch_label_data(self, url: str) -> str:
+        data = urlopen(url, timeout=30)
+        return data.read().decode("UTF-8")

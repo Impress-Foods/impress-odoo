@@ -1,6 +1,8 @@
+import base64
 import logging
 
-from odoo import fields, models
+from odoo import _, fields, models
+from odoo.exceptions import ValidationError
 
 from .clickship_request import ClickshipProvider
 
@@ -42,13 +44,42 @@ class ClickShipCarrier(models.Model):
             booking = sr.book_shipment(picking, contact)
             res.append(booking)
             picking.clickship_tracking_url = booking["tracking_url"]
+            picking.clickship_shipment_id = booking["shipment_id"]
+
+            att_id = self.env["ir.attachment"].create(  # noqa
+                {
+                    "name": f"{picking.name} Shipping Label",
+                    "type": "binary",
+                    "datas": base64.b64encode(booking["label_data"].encode()),
+                    "store_fname": f"{picking.name}-ShippingLabel.txt",
+                    "res_model": "stock.picking",
+                    "res_id": picking.id,
+                    "mimetype": "text/plain",
+                }
+            )
         return res
 
     def clickship_get_tracking_link(self, picking) -> str:
         return picking.clickship_tracking_url
 
     def clickship_cancel_shipment(self, picking) -> None:
-        return
+        sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
+        res = sr.cancel_shipment(picking.clickship_shipment_id)
+
+        if res:
+            picking.clickship_shipment_id = None
+            picking.clickship_tracking_url = None
+            self.env["ir.attachment"].search(  # noqa
+                [
+                    ("res_id", "=", picking.id),
+                    ("res_model", "=", "stock.picking"),
+                    ("name", "ilike", "Label"),
+                ]
+            ).unlink()
+
+            return
+        else:
+            raise ValidationError(_("Failed to cancel shipment!"))
 
     def _clickship_get_default_custom_package_code(self) -> str:
         return ""
