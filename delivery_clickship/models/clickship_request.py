@@ -231,26 +231,49 @@ class ClickshipProvider:
 
         current_date = self._make_current_date()
 
+        packages = [self._make_package(package) for package in order.package_ids]
+
+        if not packages:
+            packages = [self._make_package(None)]
+
         details = ShippingDetails(
             origin=origin,
             destination=destination,
             expected_ship_date=current_date,
             packaging_type=PackageTypeEnum.package.value,
-            packaging_properties=PackagePackagingProperties(
-                packages=[
-                    Package(
-                        description="Cube carboard box",
-                        measurements=Box(
-                            weight=Weight(unit=WeightUnitEnum.lb.value, value=10),
-                            cuboid=Cuboid(
-                                unit=LengthUnitEnum.inch.value, l=10, w=10, h=10
-                            ),
-                        ),
-                    )
-                ]
-            ),
+            packaging_properties=PackagePackagingProperties(packages=packages),
         )
         return details
+
+    def _make_package(self, package) -> Package:
+        w_uom = WeightUnitEnum.kg.value
+        match package.weight_uom_name:
+            case "lb":
+                w_uom = WeightUnitEnum.lb.value
+            case "g":
+                w_uom = WeightUnitEnum.g.value
+            case "oz":
+                w_uom = WeightUnitEnum.oz.value
+            case _:
+                pass
+
+        l_uom = package.package_type_id.length_uom_name or "mm"
+
+        l = package.package_type_id.packaging_length or 254  # noqa
+        w = package.package_type_id.width or 254
+        h = package.package_type_id.height or 254
+
+        weight = package.shipping_weight or 4.55
+
+        package_data = Package(
+            measurements=Box(
+                weight=Weight(unit=w_uom, value=weight),
+                cuboid=Cuboid(unit=LengthUnitEnum[l_uom].value, l=l, w=w, h=h),
+            ),
+            description=package.package_type_id.name or "Box",
+        )
+
+        return package_data
 
     def _make_pickup_details(self, contact) -> PickupDetails:
         details = PickupDetails(
