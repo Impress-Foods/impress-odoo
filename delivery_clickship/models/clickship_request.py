@@ -321,9 +321,6 @@ class ClickshipProvider:
         )
         return request
 
-    def _choose_carrier(self, rates: list[Rate]) -> Rate:
-        return rates[0]
-
     def _fetch_label_data(self, url: str) -> str:
         data = urlopen(url, timeout=30)
         return data.read().decode("UTF-8")
