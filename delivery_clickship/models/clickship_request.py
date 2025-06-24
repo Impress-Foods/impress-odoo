@@ -51,6 +51,11 @@ class ClickshipProvider:
             self.url = "https://external-api.freightcom.com/"
 
     def get_rate(self, order, contact) -> Rate:
+        rate_response = self.get_raw_rates(order, contact)
+        rate = self._choose_carrier(rate_response.rates)
+        return rate
+
+    def get_raw_rates(self, order, contact) -> Rate:
         details = self._make_shipping_details(order, contact)
         data = RateRequestData(details=details)
         rate_id = self._post_request_rate(data)
@@ -59,13 +64,10 @@ class ClickshipProvider:
         while not rate_response.status.done:
             time.sleep(1)
             rate_response = self._get_requested_rate(rate_id)
-
-        rate = self._choose_carrier(rate_response.rates)
-        return rate
+        return rate_response
 
     def book_shipment(self, picking, contact) -> None:
-        rate = self.get_rate(picking, contact)
-        data = self._make_shipment_request(picking, contact, rate.service_id)
+        data = self._make_shipment_request(picking, contact)
         shipment_id = self._post_book_shipment(data)
 
         pickup_details = self._make_pickup_details(contact)
@@ -155,7 +157,13 @@ class ClickshipProvider:
 
     def _get_shipment_status(self, shipment_id: str) -> Shipment:
         # Fetches the shipment status for a known shipment ID
+        got_response = False
         response = self._make_api_request(f"shipment/{shipment_id}", "GET")
+        while not got_response:
+            response = self._make_api_request(f"shipment/{shipment_id}", "GET")
+            got_response = not response.get("errors", False)
+            time.sleep(1)
+
         response = Shipment.model_validate(response["shipment"])
         return response
 
@@ -246,6 +254,15 @@ class ClickshipProvider:
         return details
 
     def _make_package(self, package) -> Package:
+        if not package:
+            return Package(
+                measurements=Box(
+                    weight=Weight(unit=WeightUnitEnum.kg.value, value=4.55),
+                    cuboid=Cuboid(unit="mm", l=254, w=254, h=254),
+                ),
+                description="Box",
+            )
+
         w_uom = WeightUnitEnum.kg.value
         match package.weight_uom_name:
             case "lb":
@@ -287,7 +304,7 @@ class ClickshipProvider:
 
         return details
 
-    def _make_shipment_request(self, order, contact, service_id) -> ShipmentRequest:
+    def _make_shipment_request(self, order, contact) -> ShipmentRequest:
         unique_id = getattr(order, "origin", False) or order.name
         payment_method = (
             "zgvd7e7laioTa43K7xs6zHblpwKukQCy"  # TODO: Inject semi-dynamic method
@@ -298,7 +315,7 @@ class ClickshipProvider:
         request = ShipmentRequest(
             unique_id=unique_id,
             payment_method_id=payment_method,
-            service_id=service_id,
+            service_id=order.clickship_service_id,
             details=shipping_details,
             pickup_details=pickup_details,
         )

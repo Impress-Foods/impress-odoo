@@ -36,6 +36,12 @@ class ClickShipCarrier(models.Model):
             "warning_message": False,
         }
 
+    def clickship_get_raw_rates(self, order):
+        contact = self.clickship_contact
+        sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
+        res = sr.get_raw_rates(order, contact)
+        return res
+
     def clickship_send_shipping(self, pickings) -> list:
         contact = self.clickship_contact
         sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
