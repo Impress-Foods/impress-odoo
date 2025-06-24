@@ -11,9 +11,9 @@ _logger = logging.getLogger(__name__)
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    clickship_tracking_url = fields.Char()
-    clickship_shipment_id = fields.Char()
-    clickship_service_id = fields.Char()
+    clickship_tracking_url = fields.Char(copy=False)
+    clickship_shipment_id = fields.Char(copy=False)
+    clickship_service_id = fields.Char(copy=False)
     clickship_rate_needed = fields.Boolean(compute="_compute_clickship_rate_needed")
 
     @api.depends(
@@ -42,6 +42,7 @@ class StockPicking(models.Model):
             "target": "new",
             "view_type": "form",
             "view_mode": "form",
+            "views": [(False, "form")],
             "context": {
                 "default_picking_id": self.id,
                 "default_rate_ids": [rate.id for rate in rates],
@@ -76,3 +77,8 @@ class StockPicking(models.Model):
             rate_data.append(data)
 
         return self.env["clickship.rate"].create(rate_data)
+
+    def _get_fields_stock_barcode(self):
+        res = super()._get_fields_stock_barcode()
+        res.append("clickship_rate_needed")
+        return res

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates xml:space="preserve">
+    <t
+        t-name="clickship.MainComponent"
+        t-inherit="stock_barcode.MainComponent"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//button[hasclass('o_validate_page')]" position="before">
+            <button
+                t-if="env.model.clickshipRateNeeded()"
+                t-on-click="openClickshipRateWizard"
+                class="btn btn-secondary"
+            >
+                <i class="fa fa-truck me-1" /> Get Rates
+            </button>
+        </xpath>
+    </t>
+</templates>
