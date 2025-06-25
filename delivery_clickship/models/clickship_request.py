@@ -61,12 +61,22 @@ class ClickshipProvider:
 
     def get_rate(self, order: Picking | SaleOrder, contact: HrEmployeeBase) -> Rate:
         rate_response = self.get_raw_rates(order, contact)
-        rate = self._choose_carrier(rate_response.rates)
+
+        if getattr(order, "service_id", False):
+            rate = [
+                x
+                for x in filter(
+                    lambda x: x.service_id == order.service_id, rate_response.rates
+                )
+            ].pop()
+        else:
+            rate = rate_response.rates.pop()
+
         return rate
 
     def get_raw_rates(
         self, order: Picking | SaleOrder, contact: HrEmployeeBase
-    ) -> Rate:
+    ) -> RateResponse:
         details = self._make_shipping_details(order, contact)
         data = RateRequestData(details=details)
         rate_id = self._post_request_rate(data)
@@ -89,15 +99,16 @@ class ClickshipProvider:
 
         price = int(shipment.rate.total.value) / 100
         labels = shipment.labels
+        label_data = None
+        if labels:
+            zpl_labels = [
+                x
+                for x in filter(
+                    lambda x: x["format"] == "zpl" and x["size"] == "a6", labels
+                )
+            ]
 
-        zpl_labels = [
-            x
-            for x in filter(
-                lambda x: x["format"] == "zpl" and x["size"] == "a6", labels
-            )
-        ]
-
-        label_data = self._fetch_label_data(zpl_labels[0]["url"])
+            label_data = self._fetch_label_data(zpl_labels[0]["url"])
 
         res = {
             "exact_price": price,
@@ -116,7 +127,7 @@ class ClickshipProvider:
         self,
         endpoint: str,
         method: str = "GET",
-        payload: None | dict | BaseModel = None,
+        payload: None | dict | BaseModel | str = None,
     ):
         if payload is None:
             payload = {}
@@ -329,7 +340,7 @@ class ClickshipProvider:
     def _make_shipment_request(
         self, order: Picking | SaleOrder, contact: Partner
     ) -> ShipmentRequest:
-        unique_id = getattr(order, "origin", False) or order.name
+        unique_id: str = str(getattr(order, "origin", False) or order.name)
         payment_method = (
             "zgvd7e7laioTa43K7xs6zHblpwKukQCy"  # TODO: Inject semi-dynamic method
         )

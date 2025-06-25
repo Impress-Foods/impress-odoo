@@ -3,6 +3,8 @@ import logging
 
 from odoo import models
 
+from odoo.addons.stock.models.stock_picking import Picking
+
 _logger = logging.getLogger(__name__)
 
 
@@ -11,7 +13,7 @@ class ReportShippingLabel(models.AbstractModel):
     _description = "Shipping labels (ZPL)"
 
     def _get_report_values(self, docids: list[int], data: dict) -> dict:
-        pickings = self.env["stock.picking"].browse(docids)
+        pickings: Picking = self.env["stock.picking"].browse(docids)
         labels = []
 
         for picking in pickings:

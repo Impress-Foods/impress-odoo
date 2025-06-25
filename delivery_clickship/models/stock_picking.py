@@ -3,7 +3,7 @@ import logging
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from .schema import Rate, RateStatus
+from .schema import Rate, RateResponse
 
 _logger = logging.getLogger(__name__)
 
@@ -30,7 +30,7 @@ class StockPicking(models.Model):
                 picking.clickship_rate_needed = False
 
     def action_get_clickship_rates(self) -> dict:
-        response: RateStatus = self.carrier_id.clickship_get_raw_rates(self)
+        response: RateResponse = self.carrier_id.clickship_get_raw_rates(self)
         raw_rates = response.rates
         rates = self._clickship_parse_rates(raw_rates)
 

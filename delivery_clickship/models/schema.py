@@ -92,7 +92,7 @@ class Destination(BaseModel):
     residential: bool = True
     instructions: str | None = None
     contact_name: str | None = None
-    phone_number: PhoneNumber = PhoneNumber(number="")
+    phone_number: PhoneNumber | None = PhoneNumber(number="")
     email_addresses: list[str] | None = None
     ready_at: TimeOfDay = TimeOfDay(hour=8, minute=0)
     ready_until: TimeOfDay = TimeOfDay(hour=16, minute=30)
