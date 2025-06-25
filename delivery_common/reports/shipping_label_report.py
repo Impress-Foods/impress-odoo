@@ -10,7 +10,7 @@ class ReportShippingLabel(models.AbstractModel):
     _name = "report.delivery_common.report_shipping_label_view"
     _description = "Shipping labels (ZPL)"
 
-    def _get_report_values(self, docids, data):
+    def _get_report_values(self, docids: list[int], data: dict) -> dict:
         pickings = self.env["stock.picking"].browse(docids)
         labels = []
 

@@ -10,6 +10,13 @@ from pydantic import BaseModel
 from werkzeug.urls import url_join
 
 from odoo.exceptions import ValidationError
+from odoo.tools.image import DotDict
+
+from odoo.addons.base.models.res_partner import Partner
+from odoo.addons.hr.models.hr_employee_base import HrEmployeeBase
+from odoo.addons.sale.models.sale_order import SaleOrder
+from odoo.addons.stock.models.stock_picking import Picking
+from odoo.addons.stock.models.stock_quant import QuantPackage
 
 from .schema import (
     Address,
@@ -40,7 +47,9 @@ _logger = logging.getLogger(__name__)
 
 
 class ClickshipProvider:
-    def __init__(self, debug_logger, prod_environment: bool = False, token=None):
+    def __init__(
+        self, debug_logger, prod_environment: bool = False, token: str | None = None
+    ):
         self.debug_logger = debug_logger
         self.session = requests.Session()
         self.token = token
@@ -50,12 +59,14 @@ class ClickshipProvider:
         else:
             self.url = "https://external-api.freightcom.com/"
 
-    def get_rate(self, order, contact) -> Rate:
+    def get_rate(self, order: Picking | SaleOrder, contact: HrEmployeeBase) -> Rate:
         rate_response = self.get_raw_rates(order, contact)
         rate = self._choose_carrier(rate_response.rates)
         return rate
 
-    def get_raw_rates(self, order, contact) -> Rate:
+    def get_raw_rates(
+        self, order: Picking | SaleOrder, contact: HrEmployeeBase
+    ) -> Rate:
         details = self._make_shipping_details(order, contact)
         data = RateRequestData(details=details)
         rate_id = self._post_request_rate(data)
@@ -66,7 +77,9 @@ class ClickshipProvider:
             rate_response = self._get_requested_rate(rate_id)
         return rate_response
 
-    def book_shipment(self, picking, contact) -> None:
+    def book_shipment(
+        self, picking: Picking | SaleOrder, contact: HrEmployeeBase
+    ) -> DotDict:
         data = self._make_shipment_request(picking, contact)
         shipment_id = self._post_book_shipment(data)
 
@@ -99,7 +112,12 @@ class ClickshipProvider:
         self._del_cancel_shipment(shipment_id)
         return True
 
-    def _make_api_request(self, endpoint, method="GET", payload=None):
+    def _make_api_request(
+        self,
+        endpoint: str,
+        method: str = "GET",
+        payload: None | dict | BaseModel = None,
+    ):
         if payload is None:
             payload = {}
         headers = {"Content-Type": "application/json", "Authorization": f"{self.token}"}
@@ -193,7 +211,9 @@ class ClickshipProvider:
     def _get_payment_methods(self) -> list:
         return self._make_api_request("finance/payment-methods", "GET")[0]
 
-    def _make_origin(self, order, contact) -> Origin:
+    def _make_origin(
+        self, order: Picking | SaleOrder, contact: HrEmployeeBase
+    ) -> Origin:
         company = order.company_id
         origin = Origin(
             name=company.name,
@@ -210,7 +230,7 @@ class ClickshipProvider:
             year=current_date.year, month=current_date.month, day=current_date.day
         )
 
-    def _make_destination(self, order) -> Destination:
+    def _make_destination(self, order: Picking | SaleOrder) -> Destination:
         client = order.partner_id
         destination = Destination(
             name=client.name,
@@ -222,7 +242,7 @@ class ClickshipProvider:
         )
         return destination
 
-    def _make_address(self, partner) -> Address:
+    def _make_address(self, partner: Partner | HrEmployeeBase) -> Address:
         address = Address(
             address_line_1=partner.street,
             address_line_2=partner.street2 or None,
@@ -233,7 +253,9 @@ class ClickshipProvider:
         )
         return address
 
-    def _make_shipping_details(self, order, contact) -> ShippingDetails:
+    def _make_shipping_details(
+        self, order: Picking | SaleOrder, contact: HrEmployeeBase
+    ) -> ShippingDetails:
         origin = self._make_origin(order, contact)
         destination = self._make_destination(order)
 
@@ -253,7 +275,7 @@ class ClickshipProvider:
         )
         return details
 
-    def _make_package(self, package) -> Package:
+    def _make_package(self, package: QuantPackage) -> Package:
         if not package:
             return Package(
                 measurements=Box(
@@ -292,7 +314,7 @@ class ClickshipProvider:
 
         return package_data
 
-    def _make_pickup_details(self, contact) -> PickupDetails:
+    def _make_pickup_details(self, contact: HrEmployeeBase) -> PickupDetails:
         details = PickupDetails(
             date=self._make_current_date(),
             ready_at=TimeOfDay(hour=8, minute=0),
@@ -304,7 +326,9 @@ class ClickshipProvider:
 
         return details
 
-    def _make_shipment_request(self, order, contact) -> ShipmentRequest:
+    def _make_shipment_request(
+        self, order: Picking | SaleOrder, contact: Partner
+    ) -> ShipmentRequest:
         unique_id = getattr(order, "origin", False) or order.name
         payment_method = (
             "zgvd7e7laioTa43K7xs6zHblpwKukQCy"  # TODO: Inject semi-dynamic method

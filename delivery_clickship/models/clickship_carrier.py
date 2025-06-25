@@ -4,6 +4,9 @@ import logging
 from odoo import _, fields, models
 from odoo.exceptions import ValidationError
 
+from odoo.addons.sale.models.sale_order import SaleOrder
+from odoo.addons.stock.models.stock_picking import Picking
+
 from .clickship_request import ClickshipProvider
 
 _logger = logging.getLogger(__name__)
@@ -24,7 +27,7 @@ class ClickShipCarrier(models.Model):
     clickship_api_key = fields.Char(string="Click Ship Key", groups="base.group_system")
     clickship_contact = fields.Many2one("hr.employee")
 
-    def clickship_rate_shipment(self, order) -> dict:
+    def clickship_rate_shipment(self, order: Picking | SaleOrder) -> dict:
         sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
         res = sr.get_rate(order, self.clickship_contact)
         price = int(res.total.value) / 100.0
@@ -36,13 +39,13 @@ class ClickShipCarrier(models.Model):
             "warning_message": False,
         }
 
-    def clickship_get_raw_rates(self, order):
+    def clickship_get_raw_rates(self, order: Picking | SaleOrder):
         contact = self.clickship_contact
         sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
         res = sr.get_raw_rates(order, contact)
         return res
 
-    def clickship_send_shipping(self, pickings) -> list:
+    def clickship_send_shipping(self, pickings: Picking) -> list:
         contact = self.clickship_contact
         sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
         res = []
@@ -66,10 +69,10 @@ class ClickShipCarrier(models.Model):
             picking.shipping_label_attachment_id = att_id.id
         return res
 
-    def clickship_get_tracking_link(self, picking) -> str:
+    def clickship_get_tracking_link(self, picking: Picking) -> str:
         return picking.clickship_tracking_url
 
-    def clickship_cancel_shipment(self, picking) -> None:
+    def clickship_cancel_shipment(self, picking: Picking) -> None:
         sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
         res = sr.cancel_shipment(picking.clickship_shipment_id)
 
