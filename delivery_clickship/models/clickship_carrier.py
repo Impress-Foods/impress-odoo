@@ -63,6 +63,7 @@ class ClickShipCarrier(models.Model):
                     "mimetype": "text/plain",
                 }
             )
+            picking.shipping_label_attachment_id = att_id.id
         return res
 
     def clickship_get_tracking_link(self, picking) -> str:
@@ -75,13 +76,7 @@ class ClickShipCarrier(models.Model):
         if res:
             picking.clickship_shipment_id = None
             picking.clickship_tracking_url = None
-            self.env["ir.attachment"].search(  # noqa
-                [
-                    ("res_id", "=", picking.id),
-                    ("res_model", "=", "stock.picking"),
-                    ("name", "ilike", "Label"),
-                ]
-            ).unlink()
+            picking.shipping_label_attachment_id.unlink()
 
             return
         else:
