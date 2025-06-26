@@ -43,7 +43,7 @@
                     <strong>Minimum shelf life:</strong>
                     <br />
                     <p>
-                        <span t-field="o.x_minimum_shelf_life">0</span> days </p>
+                        <!-- <span t-field="o.x_minimum_shelf_life">0</span> --> days </p>
                 </div>
 
             </xpath>
