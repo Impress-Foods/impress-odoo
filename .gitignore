@@ -92,3 +92,4 @@ docs/_build/
 /.config
 docker-compose.yml
 **/*.Identifier
+mypy.ini
