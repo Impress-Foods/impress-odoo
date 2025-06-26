@@ -33,9 +33,8 @@
         id="impress_stock_report_delivery_document_add_minimum_shelf_life"
         model="ir.ui.view"
     >
-        <field
-            name="name"
-        >stock.report_delivery_document.impress.add_minimum_shelf_life</field>
+        <field name="name">
+            stock.report_delivery_document.impress.add_minimum_shelf_life</field>
         <field name="inherit_id" ref="stock.report_delivery_document" />
         <field name="priority">51</field>
         <field name="arch" type="xml">
@@ -44,20 +43,9 @@
                     <strong>Minimum shelf life:</strong>
                     <br />
                     <p>
-                        <span t-field="o.x_minimum_shelf_life">0</span> days</p>
+                        <span t-field="o.x_minimum_shelf_life">0</span> days </p>
                 </div>
 
-            </xpath>
-        </field>
-    </record>
-
-    <record id="impress_stock_report_delivery_document_add_main" model="ir.ui.view">
-        <field name="name">stock.report_delivery_document.impress.add_main</field>
-        <field name="inherit_id" ref="stock.report_delivery_document" />
-        <field name="priority">10</field>
-        <field name="arch" type="xml">
-            <xpath expr="//div[hasclass('page')][1]" position="attributes">
-                <attribute name="name">main</attribute>
             </xpath>
         </field>
     </record>
@@ -74,7 +62,7 @@
                 <attribute name="t-call">web.internal_layout</attribute>
             </xpath>
 
-            <xpath expr="//div[@name='main']" position="before">
+            <xpath expr="//div[hasclass('page')][1]" position="before">
                 <t t-set="o" t-value="o.with_context(lang=o._get_report_lang())" />
                 <t
                     t-set="partner"
@@ -142,7 +130,8 @@
                 <div class="row">
                 </div>
                 <div class="pt-5">
-                    <!-- This div ensures that the address is not cropped by the header. -->
+                    <!-- This div ensures that the address is not cropped by the
+                    header. -->
                     <t t-call="web.address_layout" />
                 </div>
                 <t t-out="0" />
@@ -155,7 +144,7 @@
         <field name="priority">53</field>
         <field name="arch" type="xml">
             <xpath
-                expr="//div[@name='main']/h2[1]"
+                expr="//div[hasclass('page')][1]/h2[1]"
                 position="after"
                 class="d-flex flex-row-reverse"
             >
