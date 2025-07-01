@@ -3,6 +3,7 @@ import logging
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
+from .rate import Rate as RateModel
 from .schema import Rate, RateResponse
 
 _logger = logging.getLogger(__name__)
@@ -50,7 +51,7 @@ class StockPicking(models.Model):
         }
         return action
 
-    def _clickship_parse_rates(self, rates: list[Rate]):
+    def _clickship_parse_rates(self, rates: list[Rate]) -> RateModel:
         rate_data = []
         for rate in rates:
             currency = self.env["res.currency"].search(
