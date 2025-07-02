@@ -135,19 +135,28 @@ class ClickshipProvider:
         access_url = url_join(self.url, endpoint)
 
         if isinstance(payload, BaseModel):
-            payload = payload.model_dump_json(exclude_none=True)
+            payload = payload.model_dump(exclude_none=True)
 
         try:
             self.debug_logger(
                 f"{access_url} {method} \n {payload}",
                 f"clickship_request_{endpoint}",
             )
+            match method:
+                case "GET":
+                    response = self.session.get(access_url, headers=headers, timeout=30)
+                case "POST":
+                    response = self.session.post(
+                        access_url, json=payload, headers=headers, timeout=30
+                    )
+                case "DEL":
+                    response = self.session.delete(
+                        access_url, data=payload, headers=headers, timeout=30
+                    )
+                case _:
+                    _logger.warning(f"Unsupported method: {method}")
+                    return {"errors": {"method": f"Unsupported method: {method}"}}
 
-            response = self.session.request(
-                method, access_url, data=payload, headers=headers, timeout=30
-            )
-
-            _logger.warning(f"{method} {endpoint}: {response}")
             response_json = response.json()
 
             self.debug_logger(
@@ -171,7 +180,6 @@ class ClickshipProvider:
 
     def _post_request_rate(self, data: RateRequestData) -> str:
         response = self._make_api_request("rate", "POST", payload=data)
-
         return response["request_id"]
 
     def _get_requested_rate(self, rate_id: str) -> RateResponse:
@@ -196,10 +204,8 @@ class ClickshipProvider:
         response = Shipment.model_validate(response["shipment"])
         return response
 
-    def _post_schedule_pickup(self, shipment_id: str, payload: PickupDetails) -> bool:
-        self._make_api_request(
-            f"shipment/{shipment_id}/schedule", "POST", payload=payload
-        )
+    def _post_schedule_pickup(self, shipment_id: str, data: PickupDetails) -> bool:
+        self._make_api_request(f"shipment/{shipment_id}/schedule", "POST", payload=data)
 
         return True
 
