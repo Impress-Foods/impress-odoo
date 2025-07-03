@@ -186,6 +186,10 @@ class PickupDetails(BaseModel):
     contact_phone_number: PhoneNumber
 
 
+class PickupRequest(BaseModel):
+    pickup_details: PickupDetails
+
+
 class ShipmentRequest(BaseModel):
     unique_id: str
     payment_method_id: str

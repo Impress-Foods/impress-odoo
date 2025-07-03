@@ -29,7 +29,8 @@ class ClickShipCarrier(models.Model):
 
     def clickship_rate_shipment(self, order: Picking | SaleOrder) -> dict:
         sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
-        res = sr.get_rate(order, self.clickship_contact)
+        contact = self.clickship_contact
+        res = sr.get_rate(order, contact)
         price = int(res.total.value) / 100.0
 
         return {
@@ -42,6 +43,7 @@ class ClickShipCarrier(models.Model):
     def clickship_get_raw_rates(self, order: Picking | SaleOrder):
         contact = self.clickship_contact
         sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
+
         res = sr.get_raw_rates(order, contact)
         return res
 

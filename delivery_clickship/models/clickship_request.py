@@ -2,6 +2,7 @@ import json
 import logging
 import time
 from datetime import datetime
+from typing import Any
 from urllib.request import urlopen
 from zoneinfo import ZoneInfo
 
@@ -9,9 +10,10 @@ import requests
 from pydantic import BaseModel
 from werkzeug.urls import url_join
 
+from odoo import _
 from odoo.exceptions import ValidationError
-from odoo.tools.image import DotDict
 
+from odoo.addons.base.models.res_company import Company
 from odoo.addons.base.models.res_partner import Partner
 from odoo.addons.hr.models.hr_employee_base import HrEmployeeBase
 from odoo.addons.sale.models.sale_order import SaleOrder
@@ -31,6 +33,7 @@ from .schema import (
     PackageTypeEnum,
     PhoneNumber,
     PickupDetails,
+    PickupRequest,
     Rate,
     RateRequestData,
     RateResponse,
@@ -62,11 +65,12 @@ class ClickshipProvider:
     def get_rate(self, order: Picking | SaleOrder, contact: HrEmployeeBase) -> Rate:
         rate_response = self.get_raw_rates(order, contact)
 
-        if getattr(order, "service_id", False):
+        if isinstance(order, Picking) and order.clickship_service_id:
             rate = [
                 x
                 for x in filter(
-                    lambda x: x.service_id == order.service_id, rate_response.rates
+                    lambda x: x.service_id == order.clickship_service_id,
+                    rate_response.rates,
                 )
             ].pop()
         else:
@@ -88,8 +92,8 @@ class ClickshipProvider:
         return rate_response
 
     def book_shipment(
-        self, picking: Picking | SaleOrder, contact: HrEmployeeBase
-    ) -> DotDict:
+        self, picking: Picking, contact: HrEmployeeBase
+    ) -> dict[str, Any]:
         data = self._make_shipment_request(picking, contact)
         shipment_id = self._post_book_shipment(data)
 
@@ -180,7 +184,7 @@ class ClickshipProvider:
 
     def _post_request_rate(self, data: RateRequestData) -> str:
         response = self._make_api_request("rate", "POST", payload=data)
-        return response["request_id"]
+        return response["request_id"]  # type: ignore
 
     def _get_requested_rate(self, rate_id: str) -> RateResponse:
         response = self._make_api_request(f"rate/{rate_id}", "GET")
@@ -190,7 +194,7 @@ class ClickshipProvider:
     def _post_book_shipment(self, shipment_data: ShipmentRequest) -> str:
         # Books a shipment for shipment_data, getting a shipment_id back
         response = self._make_api_request("shipment", "POST", payload=shipment_data)
-        return response["id"]
+        return response["id"]  # type: ignore
 
     def _get_shipment_status(self, shipment_id: str) -> Shipment:
         # Fetches the shipment status for a known shipment ID
@@ -205,13 +209,17 @@ class ClickshipProvider:
         return response
 
     def _post_schedule_pickup(self, shipment_id: str, data: PickupDetails) -> bool:
-        self._make_api_request(f"shipment/{shipment_id}/schedule", "POST", payload=data)
-
+        request_data = PickupRequest(pickup_details=data)
+        _logger.warning(request_data.model_dump_json(exclude_none=True))
+        response = self._make_api_request(
+            f"shipment/{shipment_id}/schedule", "POST", payload=request_data
+        )
+        _logger.warning(response)
         return True
 
     def _del_cancel_shipment(self, shipment_id: str) -> bool:
         # Deletes a known shipment_id. No return from API
-        self._make_api_request(f"shipment/{shipment_id}", "DEL", None)
+        self._make_api_request(f"shipment/{shipment_id}", "DELETE", None)
 
         # Make sure the shipment is deleted
         status = self._get_shipment_status(shipment_id)
@@ -221,15 +229,14 @@ class ClickshipProvider:
         return True
 
     def _del_cancel_scheduling(self, shipment_id: str) -> bool:
-        # Deletes a pickup/dispatch for a known shipment_id.
-        # No return from API
+        self._make_api_request(f"shipment/{shipment_id}/schedule", "DELETE", None)
         return True
 
     def _get_payment_methods(self) -> list:
-        return self._make_api_request("finance/payment-methods", "GET")[0]
+        return self._make_api_request("finance/payment-methods", "GET")[0]  # type: ignore
 
     def _make_origin(
-        self, order: Picking | SaleOrder, contact: HrEmployeeBase
+        self, order: Picking | SaleOrder, contact: HrEmployeeBase | Partner
     ) -> Origin:
         company = order.company_id
         origin = Origin(
@@ -259,26 +266,41 @@ class ClickshipProvider:
         )
         return destination
 
-    def _make_address(self, partner: Partner | HrEmployeeBase) -> Address:
-        address = Address(
-            address_line_1=partner.street,
-            address_line_2=partner.street2 or None,
-            city=partner.city,
-            region=partner.state_id.code,
-            country=partner.country_id.code,
-            postal_code=partner.zip,
+    def _make_address(self, partner: Partner | HrEmployeeBase | Company) -> Address:
+        record: Partner | Company | None = None
+
+        if isinstance(partner, Partner) or isinstance(partner, Company):
+            record = partner
+
+        elif isinstance(partner, HrEmployeeBase):
+            record = partner.company_id
+
+        if not record:
+            raise ValidationError(_(f"Could not make address for {partner}"))
+
+        return Address(
+            address_line_1=record.street,
+            address_line_2=record.street2 or None,
+            city=record.city,
+            region=record.state_id.code,
+            country=record.country_id.code,
+            postal_code=record.zip,
         )
-        return address
 
     def _make_shipping_details(
-        self, order: Picking | SaleOrder, contact: HrEmployeeBase
+        self, order: Picking | SaleOrder, contact: HrEmployeeBase | Partner
     ) -> ShippingDetails:
         origin = self._make_origin(order, contact)
         destination = self._make_destination(order)
 
         current_date = self._make_current_date()
-
-        packages = [self._make_package(package) for package in order.package_ids]
+        packages: list[Package] | None = None
+        if isinstance(order, Picking):
+            packages = [
+                self._make_package(package)
+                for package in order.package_ids
+                if isinstance(order, Picking)
+            ]
 
         if not packages:
             packages = [self._make_package(None)]
@@ -292,7 +314,7 @@ class ClickshipProvider:
         )
         return details
 
-    def _make_package(self, package: QuantPackage) -> Package:
+    def _make_package(self, package: QuantPackage | None) -> Package:
         if not package:
             return Package(
                 measurements=Box(
@@ -331,20 +353,27 @@ class ClickshipProvider:
 
         return package_data
 
-    def _make_pickup_details(self, contact: HrEmployeeBase) -> PickupDetails:
+    def _make_pickup_details(self, contact: HrEmployeeBase | Partner) -> PickupDetails:
         details = PickupDetails(
             date=self._make_current_date(),
             ready_at=TimeOfDay(hour=8, minute=0),
             ready_until=TimeOfDay(hour=16, minute=0),
             pickup_location="Docks",
             contact_name=contact.name,
-            contact_phone_number=PhoneNumber(number=contact.work_phone),
+            contact_phone_number=PhoneNumber(number=self._get_phone_number(contact)),
         )
-
         return details
 
+    def _get_phone_number(self, contact: Partner | HrEmployeeBase) -> str:
+        if isinstance(contact, Partner):
+            return contact.phone
+        elif isinstance(contact, HrEmployeeBase):
+            return contact.work_phone
+
+        return ""
+
     def _make_shipment_request(
-        self, order: Picking | SaleOrder, contact: Partner
+        self, order: Picking, contact: Partner | HrEmployeeBase
     ) -> ShipmentRequest:
         unique_id: str = str(getattr(order, "origin", False) or order.name)
         payment_method = (

@@ -2,7 +2,7 @@ import logging
 
 from odoo import _, fields, models
 
-from ..models.schema import Rate
+from ..models.rate import Rate
 
 _logger = logging.getLogger(__name__)
 
