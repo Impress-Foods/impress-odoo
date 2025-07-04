@@ -60,7 +60,7 @@ class ClickshipProvider:
         if not prod_environment:
             self.url = "https://customer-external-api.ssd-test.freightcom.com"
         else:
-            self.url = "https://external-api.freightcom.com/"
+            self.url = "https://external-api.freightcom.com"
 
     def get_rate(self, order: Picking | SaleOrder, contact: HrEmployeeBase) -> Rate:
         rate_response = self.get_raw_rates(order, contact)
@@ -232,8 +232,8 @@ class ClickshipProvider:
         self._make_api_request(f"shipment/{shipment_id}/schedule", "DELETE", None)
         return True
 
-    def _get_payment_methods(self) -> list:
-        return self._make_api_request("finance/payment-methods", "GET")[0]  # type: ignore
+    def _get_payment_methods(self) -> list[dict[str, str]]:
+        return self._make_api_request("finance/payment-methods", "GET")  # type: ignore
 
     def _make_origin(
         self, order: Picking | SaleOrder, contact: HrEmployeeBase | Partner
@@ -376,9 +376,7 @@ class ClickshipProvider:
         self, order: Picking, contact: Partner | HrEmployeeBase
     ) -> ShipmentRequest:
         unique_id: str = str(getattr(order, "origin", False) or order.name)
-        payment_method = (
-            "zgvd7e7laioTa43K7xs6zHblpwKukQCy"  # TODO: Inject semi-dynamic method
-        )
+        payment_method = order.carrier_id.clickship_payment_method.code
         shipping_details = self._make_shipping_details(order, contact)
         pickup_details = self._make_pickup_details(contact)
 

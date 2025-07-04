@@ -3,7 +3,7 @@
     "version": "17.0.1.0.0",
     "summary": """ Base module for Impress Delivery Connectors """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
     "depends": ["stock_delivery", "mail"],
     "data": [

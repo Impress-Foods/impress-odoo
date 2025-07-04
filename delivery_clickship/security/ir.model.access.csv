@@ -1,3 +1,4 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
 access_wizard_clickship_rates_manager,wizard_clickship_rates_manager,delivery_clickship.model_wizard_clickship_rates,base.group_user,1,1,1,1
 access_rate_manager,rate_manager,delivery_clickship.model_clickship_rate,base.group_user,1,1,1,1
+access_clickship_payment_method_manager,clickship_payment_method_manager,model_clickship_payment_method,base.group_user,1,1,1,1

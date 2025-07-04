@@ -26,6 +26,13 @@ class ClickShipCarrier(models.Model):
 
     clickship_api_key = fields.Char(string="Click Ship Key", groups="base.group_system")
     clickship_contact = fields.Many2one("hr.employee")
+    clickship_payment_methods = fields.One2many(
+        "clickship.payment_method",
+        "delivery_carrier_id",
+    )
+    clickship_payment_method = fields.Many2one(
+        "clickship.payment_method", domain="[('delivery_carrier_id', '=', id)]"
+    )
 
     def clickship_rate_shipment(self, order: Picking | SaleOrder) -> dict:
         sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
@@ -90,7 +97,27 @@ class ClickShipCarrier(models.Model):
     def _clickship_get_default_custom_package_code(self) -> str:
         return ""
 
-    def clickship_get_payment_methods(self) -> str:
+    def button_get_payment_methods(self):
+        """Fetch payment methods from Clickship and update the model."""
+        if not self.clickship_api_key:
+            raise ValidationError(_("Clickship API key is not set."))
+
+        self.env["clickship.payment_method"].search(
+            [("delivery_carrier_id", "=", self.id)]
+        ).unlink()
+
         sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
         payment_methods = sr._get_payment_methods()
-        return payment_methods[0]
+
+        if isinstance(payment_methods, dict):
+            return
+
+        method_vals = [
+            {
+                "name": method["label"],
+                "code": method["id"],
+                "delivery_carrier_id": self.id,
+            }
+            for method in payment_methods
+        ]
+        self.env["clickship.payment_method"].create(method_vals)

@@ -7,6 +7,16 @@
     <field name="model">delivery.carrier</field>
     <field name="inherit_id" ref="delivery.view_delivery_carrier_form" />
     <field name="arch" type="xml">
+      <xpath expr="//form/sheet" position="before">
+        <header>
+          <button
+                        string="Fetch Payment Methods"
+                        name="button_get_payment_methods"
+                        type="object"
+                        class="oe_highlight"
+                    />
+        </header>
+      </xpath>
       <xpath expr="//page[@name='destination']" position="before">
         <page
                     string="Clickship Configuration"
@@ -17,6 +27,7 @@
             <group>
               <field name="clickship_api_key" required="delivery_type == 'clickship'" />
               <field name="clickship_contact" />
+              <field name="clickship_payment_method" />
             </group>
           </group>
         </page>
