@@ -16,6 +16,7 @@
         "views/delivery/DeliveryWorksheet_20250114.xml",
     ],
     "installable": True,
+    "application": False,
     "auto_install": False,
     "license": "GPL-2",
 }
