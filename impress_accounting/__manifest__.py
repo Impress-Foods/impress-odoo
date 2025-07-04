@@ -7,7 +7,7 @@
     "category": "Hidden",
     "depends": ["base", "account"],
     "data": ["views/res_partner_views.xml"],
-    "application": True,
+    "application": False,
     "installable": True,
     "auto_install": False,
     "license": "LGPL-3",
