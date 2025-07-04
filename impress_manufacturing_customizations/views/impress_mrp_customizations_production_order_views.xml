@@ -22,8 +22,9 @@
                     </small>
                 </span>
                 <span t-if="record.state.raw_value=='done'" class="float-end text-end">
-                    <t t-esc="record.qty_producing.value" />
-/                    <t t-esc="record.product_qty.value" />
+                    <t t-esc="record.qty_producing.value" /> / <t
+                        t-esc="record.product_qty.value"
+                    />
                     <small>
                         <t t-esc="record.product_uom_id.value" />
                     </small>
@@ -31,7 +32,7 @@
             </xpath>
         </field>
     </record>
-    <record id="production_add_handle" model="ir.ui.view">
+    <!-- <record id="production_add_handle" model="ir.ui.view">
         <field name="name">production.add_handle</field>
         <field name="model">mrp.production</field>
         <field name="inherit_id" ref="mrp.mrp_production_kanban_view" />
@@ -46,9 +47,9 @@
                 </div>
             </xpath>
         </field>
-    </record>
+    </record> -->
 
-    <record id="mrp_production_view_search_inherit" model="ir.ui.view">
+    <!-- <record id="mrp_production_view_search_inherit" model="ir.ui.view">
         <field name="name">mrp.production.view.search.inherit</field>
         <field name="model">mrp.production</field>
         <field name="inherit_id" ref="mrp.view_mrp_production_filter" />
@@ -60,5 +61,5 @@
                 </searchpanel>
             </xpath>
         </field>
-    </record>
+    </record> -->
 </odoo>
