@@ -12,7 +12,7 @@ class MaintenanceRequest(models.Model):
 
     def _compute_display_name(self):
         for record in self:
-            if record.sequence != _("New"):
+            if record.sequence != _("New") and record.sequence:
                 record.display_name = f"{record.sequence} - {record.name}"
             else:
                 record.display_name = record.name
