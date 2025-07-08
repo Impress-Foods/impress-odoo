@@ -1,6 +1,13 @@
+import base64
 import logging
+from typing import Any
 
 from odoo import fields, models
+
+from odoo.addons.sale.models.sale_order import SaleOrder
+from odoo.addons.stock.models.stock_picking import Picking
+
+from .obibox_request import ObiboxProvider
 
 _logger = logging.getLogger(__name__)
 
@@ -18,26 +25,62 @@ class ObiboxCarrier(models.Model):
     )
 
     obibox_api_key = fields.Char(string="Obibox Key", groups="base.group_system")
+    obibox_username = fields.Char()
+    obibox_label_format = fields.Selection(
+        selection=[
+            ("pdf", "PDF"),
+            ("zpl", "ZPL"),
+        ],
+        string="Label Format",
+        default="zpl",
+        help="Format of the label to be printed.",
+    )
 
-    def obibox_rate_shipment(self, order) -> dict:
-        # response:
-        # {
-        # 'success': Bool,
-        # 'price' : float,
-        # 'error_message': string | False,
-        # 'warning_message': string | False
-        # }
-
-        return {}
+    def obibox_rate_shipment(self, order: Picking | SaleOrder) -> dict:
+        sr = ObiboxProvider(
+            self.log_xml, username=self.obibox_username, token=self.obibox_api_key
+        )
+        res = sr.get_rate(order)
+        return res
 
     def obibox_send_shipping(self, pickings) -> list:
-        return []
+        sr = ObiboxProvider(
+            self.log_xml, username=self.obibox_username, token=self.obibox_api_key
+        )
+        res: list[dict[str, Any]] = []
+
+        for picking in pickings:
+            booking = sr.book_shipment(picking)
+
+            res.append(booking)
+            tracking_numbers = ",".join(
+                [x.tracking_number for x in booking["trackings"]]
+            )
+            picking.obibox_tracking_numbers = tracking_numbers
+            att_id = self.env["ir.attachment"].create(  # noqa
+                {
+                    "name": f"{picking.name} Shipping Label",
+                    "type": "binary",
+                    "datas": base64.b64encode(booking["label_data"].encode()),
+                    "store_fname": f"{picking.name}-ShippingLabel.txt",
+                    "res_model": "stock.picking",
+                    "res_id": picking.id,
+                    "mimetype": "text/plain",
+                }
+            )
+            picking.shipping_label_attachment_id = att_id.id
+        return res
 
     def obibox_get_tracking_link(self, picking) -> str:
         return ""
 
-    def obibox_cancel_shipment(self, picking) -> None:
-        return
+    def obibox_cancel_shipment(self, pickings) -> None:
+        sr = ObiboxProvider(
+            self.log_xml, username=self.obibox_username, token=self.obibox_api_key
+        )
+        for picking in pickings:
+            sr.cancel_shipment(picking)
+            picking.shipping_label_attachment_id.unlink()
 
     def _obibox_get_default_custom_package_code(self) -> str:
         return ""

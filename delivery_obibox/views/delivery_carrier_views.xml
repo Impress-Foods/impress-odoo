@@ -16,9 +16,14 @@
                     <group>
                         <group>
                             <field
+                                name="obibox_username"
+                                required="delivery_type=='obibox'"
+                            />
+                            <field
                                 name="obibox_api_key"
                                 required="delivery_type == 'obibox'"
                             />
+                            <field name="obibox_label_format" />
                         </group>
                     </group>
                 </page>

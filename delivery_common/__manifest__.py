@@ -8,9 +8,10 @@
     "depends": ["stock_delivery", "mail"],
     "data": [
         "security/ir.model.access.csv",
-        "reports/shipping_label_report.xml",
+        "views/choose_delivery_package_views.xml",
         "views/stock_picking_type_views.xml",
         "views/stock_picking_views.xml",
+        "reports/shipping_label_report.xml",
     ],
     "application": False,
     "installable": True,
