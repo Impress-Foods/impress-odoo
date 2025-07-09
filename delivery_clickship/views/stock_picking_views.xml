@@ -12,12 +12,12 @@
             </xpath>
             <xpath expr="//button[@name='button_validate'][1]" position="attributes">
                 <attribute name="invisible">
-                    state in ('draft', 'confirmed', 'done', 'cancel') or clickship_rate_needed
+                    state in ('draft', 'confirmed', 'done', 'cancel') and not clickship_rate_needed
                 </attribute>
             </xpath>
             <xpath expr="//button[@name='button_validate'][2]" position="attributes">
                 <attribute name="invisible">
-                    state in ('waiting', 'assigned', 'done', 'cancel') or clickship_rate_needed
+                    state in ('waiting', 'assigned', 'done', 'cancel') and not clickship_rate_needed
                 </attribute>
             </xpath>
             <xpath expr="//button[@name='button_validate'][1]" position="before">
@@ -25,7 +25,7 @@
                     name="action_get_clickship_rates"
                     type="object"
                     string="Get Rates"
-                    invisible="not clickship_rate_needed"
+                    invisible="not clickship_rate_needed or carrier_id.delivery_type != 'clickship'"
                     class="oe_highlight"
                 />
             </xpath>
@@ -34,7 +34,7 @@
                     name="action_get_clickship_rates"
                     type="object"
                     string="Get Rates"
-                    invisible="clickship_rate_needed and carrier_id.delivery_type=='clickship'"
+                    invisible="clickship_rate_needed or carrier_id.delivery_type !='clickship'"
                 />
             </xpath>
         </field>

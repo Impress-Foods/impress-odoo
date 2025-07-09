@@ -36,6 +36,17 @@ class ObiboxCarrier(models.Model):
         help="Format of the label to be printed.",
     )
 
+    obibox_delivery_day = fields.Selection(
+        selection=[
+            ("mon", "Monday"),
+            ("tue", "Tuesday"),
+            ("wed", "Wednesday"),
+            ("thu", "Thursday"),
+            ("fri", "Friday"),
+        ],
+        default="mon",
+    )
+
     def obibox_rate_shipment(self, order: Picking | SaleOrder) -> dict:
         sr = ObiboxProvider(
             self.log_xml, username=self.obibox_username, token=self.obibox_api_key

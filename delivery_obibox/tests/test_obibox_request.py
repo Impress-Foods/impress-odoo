@@ -43,6 +43,7 @@ class TestObiboxRequest(common.TransactionCase):
                 "obibox_api_key": "test_api_key",
                 "obibox_username": "test_username",
                 "obibox_label_format": "zpl",
+                "obibox_delivery_day": "wed",
             }
         )
 
@@ -394,7 +395,7 @@ class TestObiboxRequest(common.TransactionCase):
             instructions="",
             b2b="0",
             nb_items=2,
-            delivery_date_time=datetime(year=2025, month=7, day=16),
+            delivery_date_time=datetime(year=2025, month=7, day=17),
             service="NEXTDAY",
             weight=total_weight,
             boxes=boxes,
@@ -603,3 +604,24 @@ class TestObiboxRequest(common.TransactionCase):
         picking.cancel_shipment()
         self.assertFalse(picking.carrier_tracking_ref)
         self.assertFalse(picking.shipping_label_attachment_id)  # type: ignore
+
+    def test_get_pickup_date_earlier(self):
+        picking_date = datetime(year=2025, month=7, day=15)
+        delivery_day = "wed"
+        expected_date = datetime(year=2025, month=7, day=16)
+        date = self.sr._get_pickup_date(picking_date, delivery_day)
+        self.assertEqual(expected_date, date)
+
+    def test_get_pickup_date_day_of(self):
+        picking_date = datetime(year=2025, month=7, day=16)
+        delivery_day = "wed"
+        expected_date = datetime(year=2025, month=7, day=16)
+        date = self.sr._get_pickup_date(picking_date, delivery_day)
+        self.assertEqual(expected_date, date)
+
+    def test_get_pickup_date_later(self):
+        picking_date = datetime(year=2025, month=7, day=17)
+        delivery_day = "wed"
+        expected_date = datetime(year=2025, month=7, day=23)
+        date = self.sr._get_pickup_date(picking_date, delivery_day)
+        self.assertEqual(expected_date, date)

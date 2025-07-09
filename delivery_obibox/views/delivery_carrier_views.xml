@@ -24,6 +24,7 @@
                                 required="delivery_type == 'obibox'"
                             />
                             <field name="obibox_label_format" />
+                            <field name="obibox_delivery_day" />
                         </group>
                     </group>
                 </page>

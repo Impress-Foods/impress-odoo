@@ -1,9 +1,10 @@
 import json
 import logging
-from datetime import timedelta
+from datetime import datetime, timedelta
 from typing import Any
 
 import requests
+from dateutil.relativedelta import relativedelta
 from pydantic import BaseModel
 from requests.auth import HTTPBasicAuth
 from werkzeug.urls import url_join
@@ -11,12 +12,12 @@ from werkzeug.urls import url_join
 from odoo import _
 from odoo.exceptions import ValidationError
 
-from odoo.addons.base.models.res_company import Company
-from odoo.addons.base.models.res_partner import Partner
-from odoo.addons.sale.models.sale_order import SaleOrder
-from odoo.addons.stock.models.stock_picking import Picking
-from odoo.addons.stock.models.stock_quant import QuantPackage
-from odoo.addons.uom.models.uom_uom import UoM
+from odoo.addons.base.models.res_company import Company  # noqa
+from odoo.addons.base.models.res_partner import Partner  # noqa
+from odoo.addons.sale.models.sale_order import SaleOrder  # noqa
+from odoo.addons.stock.models.stock_picking import Picking  # noqa
+from odoo.addons.stock.models.stock_quant import QuantPackage  # noqa
+from odoo.addons.uom.models.uom_uom import UoM  # noqa
 
 from .schema import (
     Box,
@@ -28,6 +29,8 @@ from .schema import (
 )
 
 _logger = logging.getLogger(__name__)
+
+days = {"mon": 0, "tue": 1, "wed": 2, "thu": 3, "fri": 4}
 
 
 class ObiboxProvider:
@@ -65,7 +68,17 @@ class ObiboxProvider:
         price = rate.price_in_cad if rate else 0
         data = self._make_shipment_request(picking)
 
-        params = {"withWaybill": True, "pdf": False, "zpl": True}
+        label_format = picking.carrier_id.obibox_label_format
+
+        params = {"withWaybill": True}
+
+        if label_format == "zpl":
+            params["pdf"] = False
+            params["zpl"] = True
+        else:
+            params["pdf"] = True
+            params["zpl"] = False
+
         response = self._make_api_request(
             "Order/PostOrderMulti", method="POST", payload=data, params=params
         )
@@ -240,6 +253,10 @@ class ObiboxProvider:
 
         total_weight = sum(map(lambda x: x.weight, dims))
 
+        pickup_date = self._get_pickup_date(
+            picking.date_done, picking.carrier_id.obibox_delivery_day
+        )
+
         data = ShippingRequestMulti(
             order_ref_number=self._get_order_ref(picking),
             from_address1=from_address["address1"],
@@ -259,7 +276,7 @@ class ObiboxProvider:
             instructions=picking.note or "",
             b2b="1" if picking.partner_id.is_company else "0",
             nb_items=len(boxes),
-            delivery_date_time=picking.date_done + timedelta(days=1),
+            delivery_date_time=pickup_date + timedelta(days=1),
             service="NEXTDAY",
             weight=total_weight,
             boxes=boxes,
@@ -308,3 +325,7 @@ class ObiboxProvider:
             boxes_dimensions=boxes_dimensions,
         )
         return data
+
+    def _get_pickup_date(self, picking_date: datetime, delivery_day: str) -> datetime:
+        next_delivery_day = picking_date + relativedelta(weekday=days[delivery_day])
+        return next_delivery_day
