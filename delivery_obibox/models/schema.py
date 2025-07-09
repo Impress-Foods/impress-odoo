@@ -23,7 +23,9 @@ class RateRequest(BaseObiboxModel):
     from_postal_code: str = Field(serialization_alias="FromPostalCode")
     to_postal_code: str = Field(serialization_alias="ToPostalCode")
     boxes: list[Box] = Field(serialization_alias="Boxes")
-    boxes_dimensions: BoxesDimensions = Field(serialization_alias="BoxesDimensions")
+    boxes_dimensions: list[BoxesDimensions] = Field(
+        serialization_alias="BoxesDimensions"
+    )
     hand_to_hand: bool = Field(serialization_alias="HandToHand", default=False)
     hth_age_verified: bool = Field(serialization_alias="HTHAgeVerified", default=False)
 

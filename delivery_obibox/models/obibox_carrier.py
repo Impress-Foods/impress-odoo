@@ -72,7 +72,8 @@ class ObiboxCarrier(models.Model):
         return res
 
     def obibox_get_tracking_link(self, picking) -> str:
-        return ""
+        self.ensure_one()
+        return f"https://tracking.obibox.io/{picking.carrier_tracking_ref}"
 
     def obibox_cancel_shipment(self, pickings) -> None:
         sr = ObiboxProvider(

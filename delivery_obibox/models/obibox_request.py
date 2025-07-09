@@ -1,6 +1,6 @@
 import json
 import logging
-from datetime import datetime
+from datetime import timedelta
 from typing import Any
 
 import requests
@@ -64,7 +64,6 @@ class ObiboxProvider:
         rate = self._get_rate(rate_request)
         price = rate.price_in_cad if rate else 0
         data = self._make_shipment_request(picking)
-        # _logger.warning(data.model_dump_json(exclude_none=True, by_alias=True))
 
         params = {"withWaybill": True, "pdf": False, "zpl": True}
         response = self._make_api_request(
@@ -170,6 +169,12 @@ class ObiboxProvider:
         res = Rate.model_validate(response[0])  # type: ignore
         return res
 
+    def _cancel_shipment(self, tracking: str) -> bool | str:
+        res = self._make_api_request(f"Order/{tracking}", "DELETE")
+        if isinstance(res, dict) and res.get("errors"):
+            return res["errors"]
+        return True
+
     def _get_postal_code(self, order: SaleOrder | Picking) -> str:
         if isinstance(order, SaleOrder):
             return order.partner_shipping_id.zip or ""
@@ -254,7 +259,7 @@ class ObiboxProvider:
             instructions=picking.note or "",
             b2b="1" if picking.partner_id.is_company else "0",
             nb_items=len(boxes),
-            delivery_date_time=datetime(year=2025, month=7, day=9),
+            delivery_date_time=picking.date_done + timedelta(days=1),
             service="NEXTDAY",
             weight=total_weight,
             boxes=boxes,
@@ -263,37 +268,38 @@ class ObiboxProvider:
         return data
 
     def _get_order_ref(self, operation: SaleOrder | Picking) -> str:
+        ref = ""
         if isinstance(operation, SaleOrder):
-            return operation.name
+            ref = operation.name
         elif isinstance(operation, Picking):
             if operation.origin:
-                return operation.origin
+                ref = operation.origin
             else:
-                return operation.name
+                ref = operation.name
         else:
             _logger.error("Unsupported operation type for order reference extraction.")
             return ""
 
+        return ref.replace("/", "")
+
     def _make_rate_request(self, order: SaleOrder | Picking) -> RateRequest:
         if isinstance(order, Picking):
             boxes = []
-            boxes_dimensions = BoxesDimensions(
-                weight=1,
-                volume=1,
-                long_side=1,
-            )
+            boxes_dimensions = []
             for package in order.package_ids:
                 box, dim = self._make_package(package)
                 boxes.append(box)
-                boxes_dimensions = dim
+                boxes_dimensions.append(dim)
 
         else:
             boxes = [Box()]
-            boxes_dimensions = BoxesDimensions(
-                weight=1,
-                volume=1,
-                long_side=1,
-            )
+            boxes_dimensions = [
+                BoxesDimensions(
+                    weight=5,
+                    volume=0.578704,
+                    long_side=10,
+                )
+            ]
 
         data = RateRequest(
             from_postal_code=order.company_id.zip,
@@ -302,9 +308,3 @@ class ObiboxProvider:
             boxes_dimensions=boxes_dimensions,
         )
         return data
-
-    def _cancel_shipment(self, tracking: str) -> bool | str:
-        res = self._make_api_request(f"Order/{tracking}", "DELETE")
-        if isinstance(res, dict) and res.get("errors"):
-            return res["errors"]
-        return True
