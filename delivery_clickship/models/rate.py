@@ -10,6 +10,8 @@ class Rate(models.TransientModel):
     _description = "Rate"
     _rec_name = "carrier_name"
 
+    _order = "total asc"
+
     wizard_id = fields.Many2one("wizard.clickship_rates")
 
     carrier_name = fields.Char()

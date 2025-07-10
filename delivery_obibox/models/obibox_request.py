@@ -51,6 +51,18 @@ class ObiboxProvider:
         else:
             self.url = "https://api.obibox.com"
 
+    def check_coverage(self, partner: Partner) -> bool:
+        zip_code = partner.zip
+        if not zip_code:
+            raise ValidationError(f"Could not find zip code for partner {partner.name}")
+
+        response = self._make_api_request(f"Order/GetServices/{zip_code}", "GET")
+        if isinstance(response, dict) and response.get("errors", False):
+            return False
+        if not response:
+            return False
+        return True
+
     def get_rate(self, order: SaleOrder | Picking) -> dict:
         data = self._make_rate_request(order)
         res = self._get_rate(data)

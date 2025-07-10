@@ -97,8 +97,8 @@ class ClickshipProvider:
         data = self._make_shipment_request(picking, contact)
         shipment_id = self._post_book_shipment(data)
 
-        pickup_details = self._make_pickup_details(contact)
-        self._post_schedule_pickup(shipment_id, pickup_details)
+        # pickup_details = self._make_pickup_details(contact)
+        # self._post_schedule_pickup(shipment_id, pickup_details)
         shipment: Shipment = self._get_shipment_status(shipment_id)
 
         price = int(shipment.rate.total.value) / 100
@@ -153,7 +153,7 @@ class ClickshipProvider:
                     response = self.session.post(
                         access_url, json=payload, headers=headers, timeout=30
                     )
-                case "DEL":
+                case "DELETE":
                     response = self.session.delete(
                         access_url, data=payload, headers=headers, timeout=30
                     )
@@ -214,7 +214,9 @@ class ClickshipProvider:
         response = self._make_api_request(
             f"shipment/{shipment_id}/schedule", "POST", payload=request_data
         )
-        _logger.warning(response)
+        # _logger.warning(response)
+        if response:
+            return True
         return True
 
     def _del_cancel_shipment(self, shipment_id: str) -> bool:
@@ -229,7 +231,7 @@ class ClickshipProvider:
         return True
 
     def _del_cancel_scheduling(self, shipment_id: str) -> bool:
-        self._make_api_request(f"shipment/{shipment_id}/schedule", "DELETE", None)
+        self._make_api_request(f"shipment/{shipment_id}", "DELETE", None)
         return True
 
     def _get_payment_methods(self) -> list[dict[str, str]]:
@@ -387,6 +389,7 @@ class ClickshipProvider:
             details=shipping_details,
             pickup_details=pickup_details,
         )
+        _logger.warning(request.model_dump_json(by_alias=True, exclude_none=True))
         return request
 
     def _fetch_label_data(self, url: str) -> str:
