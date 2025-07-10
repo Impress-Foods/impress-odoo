@@ -210,7 +210,6 @@ class ClickshipProvider:
 
     def _post_schedule_pickup(self, shipment_id: str, data: PickupDetails) -> bool:
         request_data = PickupRequest(pickup_details=data)
-        _logger.warning(request_data.model_dump_json(exclude_none=True))
         response = self._make_api_request(
             f"shipment/{shipment_id}/schedule", "POST", payload=request_data
         )

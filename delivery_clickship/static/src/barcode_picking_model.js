@@ -19,8 +19,8 @@ patch(BarcodePickingModel.prototype, {
     },
 
     clickshipRateNeeded() {
-        const value = this.record.clickshipRateNeeded;
-        if (value === "true") {
+        const value = this.record.clickship_rate_needed;
+        if (value === true) {
             return true;
         } else {
             return false;
