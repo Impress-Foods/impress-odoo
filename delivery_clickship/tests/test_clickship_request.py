@@ -4,6 +4,7 @@ from datetime import datetime
 from unittest.mock import MagicMock, patch
 from zoneinfo import ZoneInfo
 
+import requests
 from freezegun import freeze_time
 
 from odoo.exceptions import ValidationError
@@ -342,7 +343,7 @@ class TestClickshipRequest(TestDeliveryCommon):
     )
     def test_make_api_request_connection_error(self, mock_get):
         """Test API request with connection error"""
-        mock_get.side_effect = ConnectionError("Connection failed")
+        mock_get.side_effect = requests.exceptions.ConnectionError("Connection failed")
 
         result = self.sr._make_api_request("test-endpoint", "GET")
 

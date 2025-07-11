@@ -90,6 +90,7 @@ class ClickshipProvider:
 
         rate_response = RateResponse(status=RateStatus(done=False), rates=[])
         loops = 0
+
         while not rate_response.status.done and loops < 30:
             time.sleep(1)
             rate_response = self._get_requested_rate(rate_id)
@@ -307,7 +308,6 @@ class ClickshipProvider:
     ) -> ShippingDetails:
         origin = self._make_origin(order, contact)
         destination = self._make_destination(order)
-
         current_date = self._make_current_date()
         packages: list[Package] | None = None
         if isinstance(order, Picking):

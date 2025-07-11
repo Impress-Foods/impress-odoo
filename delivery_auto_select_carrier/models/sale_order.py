@@ -30,6 +30,9 @@ class SaleOrder(models.Model):
 
         wizard.unlink()  # delete the wizard as soon as possible
 
+        # We get the highest priority carrier. Arbitrary selection
+        # when multiple carriers with the same priority are available
+
         available_carriers = available_carriers.filtered("can_be_auto_selected").sorted(
             key="priority", reverse=True
         )
