@@ -159,8 +159,8 @@ class Rate(BaseModel):
     valid_until: Date
     total: Money
     base: Money
-    surcharges: list[Fee]
-    taxes: list[Fee]
+    surcharges: list[Fee] = []
+    taxes: list[Fee] = []
     transit_time_days: int
     transit_time_not_available: bool
 

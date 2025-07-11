@@ -33,9 +33,8 @@ class StockPicking(models.Model):
     def action_get_clickship_rates(self) -> dict:
         response: RateResponse = self.carrier_id.clickship_get_raw_rates(self)
         raw_rates = response.rates
+        raw_rates = [r for r in raw_rates if not r.transit_time_not_available]
         rates = self._clickship_parse_rates(raw_rates)
-
-        _logger.warning(rates)
 
         action = {
             "res_model": "wizard.clickship_rates",

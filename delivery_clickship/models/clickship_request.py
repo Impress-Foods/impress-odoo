@@ -64,17 +64,20 @@ class ClickshipProvider:
 
     def get_rate(self, order: Picking | SaleOrder, contact: HrEmployeeBase) -> Rate:
         rate_response = self.get_raw_rates(order, contact)
+        rates = rate_response.rates
+        if len(rates) == 0:
+            raise ValidationError(_("Could not fetch any rates!"))
 
         if isinstance(order, Picking) and order.clickship_service_id:
             rate = [
                 x
                 for x in filter(
                     lambda x: x.service_id == order.clickship_service_id,
-                    rate_response.rates,
+                    rates,
                 )
             ].pop()
         else:
-            rate = rate_response.rates.pop()
+            rate = rates.pop()
 
         return rate
 
@@ -86,9 +89,15 @@ class ClickshipProvider:
         rate_id = self._post_request_rate(data)
 
         rate_response = RateResponse(status=RateStatus(done=False), rates=[])
-        while not rate_response.status.done:
+        loops = 0
+        while not rate_response.status.done and loops < 30:
             time.sleep(1)
             rate_response = self._get_requested_rate(rate_id)
+            loops += 1
+
+        if not rate_response.status.done:
+            raise ValidationError(_("Timed Out!"))
+
         return rate_response
 
     def book_shipment(
@@ -200,10 +209,15 @@ class ClickshipProvider:
         # Fetches the shipment status for a known shipment ID
         got_response = False
         response = self._make_api_request(f"shipment/{shipment_id}", "GET")
-        while not got_response:
+        loops = 0
+        while not got_response and loops < 30:
             response = self._make_api_request(f"shipment/{shipment_id}", "GET")
             got_response = not response.get("errors", False)
             time.sleep(1)
+            loops += 1
+
+        if not got_response:
+            raise ValidationError(_("Timed out!"))
 
         response = Shipment.model_validate(response["shipment"])
         return response
@@ -225,7 +239,7 @@ class ClickshipProvider:
         # Make sure the shipment is deleted
         status = self._get_shipment_status(shipment_id)
         if status.state != "cancelled":
-            return ValidationError("Could not cancel the shipment")
+            raise ValidationError(_("Could not cancel the shipment"))
 
         return True
 
@@ -388,7 +402,6 @@ class ClickshipProvider:
             details=shipping_details,
             pickup_details=pickup_details,
         )
-        _logger.warning(request.model_dump_json(by_alias=True, exclude_none=True))
         return request
 
     def _fetch_label_data(self, url: str) -> str:
