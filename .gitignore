@@ -94,7 +94,6 @@ docker-compose.yml
 mypy.ini
 /.extra_modules
 mypy.ini
-mypy.ini
 .claude
 CLAUDE.md
 .extra_modules/
