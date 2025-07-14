@@ -1,12 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <?xml-model href="../../../import_xml.rng" type="application/xml"?>
-
 <odoo>
+
 
     <template id="s_aplus_carousel" name="A+ Product Carousel">
         <section
             data-snippet="dynamic_snippet_aplus_carousel"
-            class="s_product_product_aplus pt32 pb32"
+            class="aplus_product_carousel s_product_product_aplus pt32 pb32"
             data-name="A+ Carousel"
             data-number-of-records="16"
             data-filter-id="7"
@@ -17,9 +17,10 @@
             <div class="container o_not_editable">
                 <div class="css_non_editable_mode_hidden">
                     <div
-                        class="missing_option_warning alert alert-info rounded-0 fade show d-none d-print-none">
-                        Your Dynamic Snippet will be displayed here... This message is displayed
-                        because you did not provided both a filter and a template to use.<br />
+                        class="missing_option_warning alert alert-info rounded-0 fade show d-none d-print-none"
+                    > Your
+                        Dynamic Snippet will be displayed here... This message is displayed because you did not provided
+                        both a filter and a template to use.<br />
                     </div>
                 </div>
                 <div class="dynamic_snippet_template" />
@@ -36,33 +37,50 @@
             </t>
         </xpath>
         <xpath expr="//t[@t-set='so_content_addition_selector']" position="after">
-            <t t-set="so_content_addition_selector"
-                t-value="so_content_addition_selector + ', .aplus_product_carousel'" />
+            <t
+                t-set="so_content_addition_selector"
+                t-value="so_content_addition_selector + ', .aplus_product_carousel'"
+            />
         </xpath>
     </template>
 
-    <template id="s_dynamic_snippet_products_template_options"
-        inherit_id="website.s_dynamic_snippet_options_template">
+    <template
+        id="s_dynamic_snippet_products_template_options"
+        inherit_id="website.s_dynamic_snippet_options_template"
+    >
         <xpath expr="//we-select[@data-name='filter_opt']" position="after">
             <t t-if="snippet_name == 'aplus_product_carousel'">
-                <we-select string="Category" data-name="product_category_opt"
-                    data-attribute-name="productCategoryId" data-no-preview="true">
+                <we-select
+                    string="Category"
+                    data-name="product_category_opt"
+                    data-attribute-name="productCategoryId"
+                    data-no-preview="true"
+                >
                     <we-button data-select-data-attribute="all">All Products</we-button>
-                    <we-button data-select-data-attribute="current">Current Category or All</we-button>
+                    <we-button
+                        data-select-data-attribute="current"
+                    >Current Category or All</we-button>
                 </we-select>
-                <we-many2many string="Tags"
+                <we-many2many
+                    string="Tags"
                     data-name="product_tag_opt"
                     data-attribute-name="productTagIds"
                     data-no-preview="true"
                     data-model="product.tag"
                     data-allow-delete="true"
                     data-fakem2m="true"
-                    data-select-data-attribute="" />
-                <we-input string="Product names" class="o_we_large" data-name="product_names_opt"
-                    data-attribute-name="productNames" data-no-preview="true"
+                    data-select-data-attribute=""
+                />
+                <we-input
+                    string="Product names"
+                    class="o_we_large"
+                    data-name="product_names_opt"
+                    data-attribute-name="productNames"
+                    data-no-preview="true"
                     data-select-data-attribute=""
                     placeholder="e.g. lamp,bin"
-                    title="Comma-separated list of parts of product names, barcodes or internal reference" />
+                    title="Comma-separated list of parts of product names, barcodes or internal reference"
+                />
             </t>
         </xpath>
 
@@ -77,8 +95,11 @@
                 <div class="product-image">
                     <a class="stretched-link" t-att-href="record.website_url">
                         <div class="overflow-hidden">
-                            <img loading="lazy" t-att-src="data['image_512']"
-                                t-att-alt="record.display_name" />
+                            <img
+                                loading="lazy"
+                                t-att-src="data['image_512']"
+                                t-att-alt="record.display_name"
+                            />
                         </div>
                     </a>
                 </div>
@@ -86,7 +107,9 @@
                     <span class="product-title" t-field="record.display_name" />
                     <br />
                     <span class="product-price">
-                        <t t-call="website_sale.price_dynamic_filter_template_product_product" />
+                        <t
+                            t-call="website_sale.price_dynamic_filter_template_product_product"
+                        />
                     </span>
                 </div>
             </div>
