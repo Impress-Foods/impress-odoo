@@ -1,6 +1,7 @@
 import logging
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
@@ -12,6 +13,9 @@ class IrSequence(models.Model):
 
     @api.model
     def _gs1_check_digit(self, code):
+        if not code.isnumeric() or len(code) == 0:
+            raise ValidationError(_("Code must be numeric"))
+
         code = [int(x) for x in code]
 
         odds = code[0::2]
@@ -28,7 +32,7 @@ class IrSequence(models.Model):
 
     def get_next_char(self, number_text):
         res = super().get_next_char(number_text)
-        if self.check_digit and res.isnumeric():
+        if self.check_digit:
             check_digit = self._gs1_check_digit(res)
             res += check_digit
         return res
