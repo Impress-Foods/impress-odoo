@@ -17,8 +17,13 @@ class IrSequence(models.Model):
         odds = code[0::2]
         evens = code[1::2]
 
-        check_digit = 10 - (3 * sum(odds) + sum(evens)) % 10
-
+        sum_of_digits = 3 * sum(odds) + sum(evens)
+        nearest_ten = (
+            ((sum_of_digits // 10) + 1) * 10
+            if sum_of_digits % 10 != 0
+            else sum_of_digits
+        )
+        check_digit = nearest_ten - sum_of_digits
         return str(check_digit)
 
     def get_next_char(self, number_text):
