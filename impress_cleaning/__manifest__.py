@@ -3,7 +3,7 @@
     "version": "17.0.0.1.0",
     "summary": "Module to handle cleanings for Impress Foods",
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "license": "GPL-2",
     "category": "maintenance",
     "depends": [

@@ -50,13 +50,6 @@
                                 <span class="o_stat_text">Worksheet</span>
                             </div>
                         </button>
-                        <!--
-                        <button class="oe_stat_button" name="action_view_coding_lines" type="object" icon="fa-calendar-check-o" groups="mrp.group_mrp_user" invisible="not log_line_ids">
-                            <div class="o_field_widget o_stat_info">
-                                <span class="o_stat_text">Coding Lines</span>
-                            </div>
-                        </button>
-                        -->
                     </div>
                     <div class="oe_title">
                         <label for="name" />
@@ -64,7 +57,6 @@
                             <field name="name" placeholder="Name..." />
                         </h1>
                     </div>
-                    <!-- <field name="log_line_ids" nolabel='1' readonly='1'/> -->
                     <group>
                         <group>
                             <field name="case_code" />
@@ -78,12 +70,18 @@
                             <field name="shelf_life_check" />
                             <field name="keep_cold_check" />
                             <field name="start_date" />
+
+                            <field
+                                name="signature"
+                                widget="signature"
+                                options="{'size':[0,90]}"
+                            />
                         </group>
                     </group>
                     <group>
                         <group>
                             <field
-                                name="signature"
+                                name="verification_signature"
                                 widget="signature"
                                 options="{'size':[0,90]}"
                             />

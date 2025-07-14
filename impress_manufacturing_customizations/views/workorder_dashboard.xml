@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="workorder_view_dashboard" model="ir.ui.view">
+        <field name="name">workorder.view.kanban</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.workcenter_line_kanban" />
+        <field name="priority">99</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="default_order">state</attribute>
+            </xpath>
+            <xpath expr="//field[@name='operation_id']" position="after">
+                <field name="production_date" />
+            </xpath>
+            <xpath expr="//div[hasclass('o_kanban_workorder_date')]" position="inside">
+            </xpath>
+        </field>
+    </record>
+
+    <record id="workorder_dashboard_view_search" model="ir.ui.view">
+        <field name="name">workorder_dashboard.view.search</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.view_mrp_production_work_order_search" />
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='late']" position="after">
+                <filter
+                    string="Today"
+                    name="today"
+                    domain="[
+                    ('production_date', '&gt;=', (context_today()).strftime('%Y-%m-%d')),
+                    ('production_date', '&lt;=',  (context_today()).strftime('%Y-%m-%d'))
+                    ]"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_workorder_dashboard" model="ir.actions.act_window">
+        <field name="name">Workorders</field>
+        <field name="res_model">mrp.workorder</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="context">{"search_default_workcenter": 1,
+            "search_default_today": 1}</field>
+        <field
+            name="view_id"
+            ref="impress_manufacturing_customizations.workorder_view_dashboard"
+        />
+    </record>
+
+
+    <menuitem
+        id="workorder_dashboard_menu"
+        name="Workorder Dashboard"
+        action="impress_manufacturing_customizations.action_workorder_dashboard"
+        parent="mrp.menu_mrp_manufacturing"
+        sequence="10"
+    />
+</odoo>

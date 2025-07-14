@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 
 from odoo import api, fields, models
 
@@ -20,7 +21,9 @@ class CodingLog(models.Model):
     unit_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
     sleeve_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
     case_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
-    subunit_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
+    subunit_check = fields.Selection(
+        [("ok", "Ok"), ("not_ok", "Not Ok"), ("na", "N/A")]
+    )
     shelf_life_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
     keep_cold_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
 
@@ -29,6 +32,8 @@ class CodingLog(models.Model):
         store=True,
         compute="_compute_global_success_check",
     )
+
+    verification_signature = fields.Binary()
 
     @api.depends(
         "unit_check",
@@ -55,3 +60,9 @@ class CodingLog(models.Model):
             and self.shelf_life_check == "ok"
             and self.keep_cold_check == "ok"
         )
+
+    @api.depends("verification_signature")
+    def _compute_weekly_signature_date(self):
+        for rec in self:
+            if rec.verification_signature:
+                rec.weekly_signature_date = datetime.now()
