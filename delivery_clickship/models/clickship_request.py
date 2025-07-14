@@ -15,10 +15,10 @@ from odoo.exceptions import ValidationError
 
 from odoo.addons.base.models.res_company import Company
 from odoo.addons.base.models.res_partner import Partner
-from odoo.addons.hr.models.hr_employee_base import HrEmployeeBase
-from odoo.addons.sale.models.sale_order import SaleOrder
-from odoo.addons.stock.models.stock_picking import Picking
-from odoo.addons.stock.models.stock_quant import QuantPackage
+from odoo.addons.hr.models.hr_employee_base import HrEmployeeBase  # noqa
+from odoo.addons.sale.models.sale_order import SaleOrder  # noqa
+from odoo.addons.stock.models.stock_picking import Picking  # noqa
+from odoo.addons.stock.models.stock_quant import QuantPackage  # noqa
 
 from .schema import (
     Address,

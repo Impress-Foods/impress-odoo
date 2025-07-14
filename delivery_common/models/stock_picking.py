@@ -2,7 +2,7 @@ import logging
 
 from odoo import fields, models
 
-from odoo.addons.web.controllers.utils import clean_action
+from odoo.addons.web.controllers.utils import clean_action  # noqa
 
 _logger = logging.getLogger(__name__)
 
