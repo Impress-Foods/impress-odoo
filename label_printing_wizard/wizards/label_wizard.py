@@ -20,7 +20,12 @@ class LabelWizard(models.TransientModel):
         required=True,
     )
 
-    product_id = fields.Many2one("product.product")
+    product_id = fields.Many2one(
+        "product.product",
+        store=True,
+        compute="_compute_product_id",
+        inverse="_inverse_product_id",
+    )
     product_template_id = fields.Many2one("product.template")
 
     packaging_id = fields.Many2one("product.packaging")
@@ -48,6 +53,17 @@ class LabelWizard(models.TransientModel):
 
     product_domain = fields.Char(compute="_compute_product_domain")
     lot_domain = fields.Char(compute="_compute_lot_domain")
+
+    def _inverse_product_id(self):
+        pass
+
+    @api.depends("product_template_id")
+    def _compute_product_id(self):
+        for record in self:
+            if not record.product_template_id:
+                record.product_id = False
+            else:
+                record.product_id = record.product_template_id.product_variant_id
 
     @api.depends("model", "product_template_id", "picking_id")
     def _compute_product_domain(self):
@@ -130,6 +146,10 @@ class LabelWizard(models.TransientModel):
                 quantity = sum(stock_move.mapped("product_uom_qty"))
 
             record.product_qty = quantity
+
+    def create(self, vals_list):
+        _logger.warning(self.env.context)
+        return super().create(vals_list)
 
     def print_label(self):
         report = self.label_report
