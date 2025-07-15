@@ -20,7 +20,8 @@
                     </t>
                     <t t-if="lot['product_qty']" name="product_qty">
                         <t
-                            t-out="'^FO10,130 ^A0N,88,66^FDQTY: ' + str(lot['product_qty']) + ' ' + lot['lot_record'].product_id.uom_id.display_name + '^FS'"
+                            t-out="'^FO10,130 ^A0N,88,66^FDQTY: ' + str(lot['product_qty']) + ' ' +
+            lot['lot_record'].product_id.uom_id.display_name + '^FS'"
                         />
                     </t>
 
@@ -38,7 +39,7 @@
                                 t-out="'^FO550,50^BY3 ^BXN,11,200 ^FD' + lot['gs1_barcode'] + '^FS'"
                             />
                         </t>
-                        <t t-elif="lot.product_id.barcode">
+                        <t t-elif="lot['lot_record'].product_id.barcode">
                             <t
                                 t-out="'^FO550,50^BY3 ^BXN,11,200 ^FD' + lot['lot_record'].product_id.barcode + '^FS'"
                             />
@@ -54,11 +55,9 @@
 
     <template id="label_lot_zpl_4x6">
         <t t-foreach="docs" t-as="lot">
-            <t t-set="lot" t-value="lot['product_record']" />
-
             <t t-foreach="range(lot['label_count'])" t-as="count">
 
-                <t t-translate="off">
+                <t t-translation="off">
                     <t name="setup">
                         <t t-out="'^XA^CI28'" />
                     </t>
@@ -80,21 +79,23 @@
                         </t>
                     </t>
                     <t name="barcode">
-                        <t t-if="lot.product_id.valid_ean and lot['gs1_barcode']">
+                        <t
+                            t-if="lot['lot_record'].product_id.valid_ean and lot['gs1_barcode']"
+                        >
                             <t
                                 t-out="'^FO100,800^BY3 ^BXR,20,200 ^FD' + lot['gs1_barcode'] + '^FS'"
                             />
                         </t>
-                        <t t-elif="lot.product_id.barcode">
+                        <t t-elif="lot['lot_record'].product_id.barcode">
                             <t
-                                t-out="'^FO100,800^BY3 ^BXR,20,200 ^FD' + lot.product_id.barcode + '^FS'"
+                                t-out="'^FO100,800^BY3 ^BXR,20,200 ^FD' + lot['lot_record'].product_id.barcode + '^FS'"
                             />
                         </t>
                     </t>
 
                     <t t-if="lot['product_qty']" name="product_qty">
                         <t
-                            t-out="'^FO400,50 ^A0R,88,66^FDQTY: ' + str(lot['product_qty']) + ' ' + lot.product_id.uom_id.display_name + '^FS'"
+                            t-out="'^FO400,50 ^A0R,88,66^FDQTY: ' + str(lot['product_qty']) + ' ' + lot['lot_record'].product_id.uom_id.display_name + '^FS'"
                         />
                     </t>
                     <t name="footer">

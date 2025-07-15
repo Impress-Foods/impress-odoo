@@ -1,6 +1,6 @@
 {
     "name": "Label Printing Wizard",
-    "version": "17.0.1.0.0",
+    "version": "17.0.1.0.1",
     "summary": """
     Adds different wizards to print custom labels for products and lots
     """,
