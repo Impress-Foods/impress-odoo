@@ -6,7 +6,8 @@
     <template id="s_aplus_carousel" name="A+ Product Carousel">
         <section
             data-snippet="dynamic_snippet_aplus_carousel"
-            class="aplus_product_carousel s_product_product_aplus pt32 pb32"
+            t-attf-class="aplus_product_carousel #{snippet_classes} s_product_product_aplus pt32 pb32"
+            style="width:380px;"
             data-name="A+ Carousel"
             data-number-of-records="16"
             data-filter-id="7"
@@ -14,7 +15,10 @@
             data-carousel-interval="5000"
         >
 
-            <div class="container o_not_editable">
+            <div
+                class="container o_not_editable"
+                style="margin-left:0px;margin-right:0px;"
+            >
                 <div class="css_non_editable_mode_hidden">
                     <div
                         class="missing_option_warning alert alert-info rounded-0 fade show d-none d-print-none"
@@ -115,6 +119,16 @@
             </div>
         </t>
     </template>
+
+    <record id="dynamic_filter_aplus_filter" model="website.snippet.filter">
+        <field
+            name="filter_id"
+            ref="website_sale.dynamic_snippet_newest_products_filter"
+        />
+        <field name="field_names">display_name,id,image_512</field>
+        <field name="limit" eval="16" />
+        <field name="name">Aplus dynamic filter</field>
+    </record>
 
 
 </odoo>

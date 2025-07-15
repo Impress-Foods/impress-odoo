@@ -3,7 +3,7 @@
     "version": "17.0.1.0.0",
     "summary": """ A+ Theme """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Theme/Website",
     "depends": ["web", "website", "website_sale"],
     "data": [
@@ -15,6 +15,7 @@
         "views/snippets/s_wave_transition.xml",
         "views/snippets/s_aplus_carousel.xml",
         "views/snippets/templates.xml",
+        "data/pages/landing_page.xml",
     ],
     "assets": {
         "web._assets_primary_variables": [
