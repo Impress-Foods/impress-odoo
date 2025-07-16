@@ -11,7 +11,7 @@
             data-name="A+ Carousel"
             data-number-of-records="16"
             data-filter-id="7"
-            data-template-key="theme_aplus.dynamic_filter_template_product_product_aplus"
+            data-template-key="theme_aplus.dynamic_filter_template_product_product_aplus_carousel"
             data-carousel-interval="5000"
         >
 
@@ -33,7 +33,10 @@
 
     </template>
 
-    <template id="s_dynamic_snippet_aplus_options" inherit_id="website.snippet_options">
+    <template
+        id="s_dynamic_snippet_aplus_carousel_options"
+        inherit_id="website.snippet_options"
+    >
         <xpath expr="." position="inside">
             <t t-call="website.dynamic_snippet_carousel_options_template">
                 <t t-set="snippet_name" t-value="'aplus_product_carousel'" />
@@ -91,7 +94,10 @@
     </template>
 
 
-    <template id="dynamic_filter_template_product_product_aplus" name="A+ Product">
+    <template
+        id="dynamic_filter_template_product_product_aplus_carousel"
+        name="A+ Product Carousel"
+    >
 
         <t t-foreach="records" t-as="data">
             <t t-set="record" t-value="data['_record']" />
@@ -120,7 +126,7 @@
         </t>
     </template>
 
-    <record id="dynamic_filter_aplus_filter" model="website.snippet.filter">
+    <record id="dynamic_filter_aplus_carousel_filter" model="website.snippet.filter">
         <field
             name="filter_id"
             ref="website_sale.dynamic_snippet_newest_products_filter"

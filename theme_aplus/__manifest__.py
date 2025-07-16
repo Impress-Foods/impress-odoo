@@ -14,6 +14,7 @@
         "views/snippets/s_scrolling_banner.xml",
         "views/snippets/s_wave_transition.xml",
         "views/snippets/s_aplus_carousel.xml",
+        "views/snippets/s_dynamic_content.xml",
         "views/snippets/templates.xml",
         "data/pages/landing_page.xml",
     ],

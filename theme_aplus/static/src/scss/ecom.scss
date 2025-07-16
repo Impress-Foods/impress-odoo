@@ -143,15 +143,15 @@
         min-width: var(--o-wsale-card-thumb-size);
         width: var(--o-wsale-card-thumb-size);
         transition: opacity var(--ap-transition-timing);
-        height: 65%; /* Reduced from 80% to take less vertical space */
-        margin: 0.5rem 0 0.25rem; /* Adjusted margin to balance spacing */
+        //height: 65%; /* Reduced from 80% to take less vertical space */
+        //margin: 0.5rem 0 0.25rem; /* Adjusted margin to balance spacing */
 
         .ap_product_image_link {
-            padding-top: calc(100% / (var(--o-wsale-card-thumb-aspect-ratio, 1)));
+            //padding-top: calc(100% / (var(--o-wsale-card-thumb-aspect-ratio, 1)));
             transform: scale(0.8);
 
             .ap_product_image_img_wrapper {
-                @include o-position-absolute(0, 0, 0, 0);
+                //@include o-position-absolute(0, 0, 0, 0);
                 img {
                     box-shadow: var(--o-wsale-card-thumb-shadow);
                     border-radius: 30px;

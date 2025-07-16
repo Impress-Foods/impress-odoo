@@ -20,12 +20,6 @@ class ThemeAPlus(http.Controller):
             .sudo()
             .search([("id", "=", filter_id)] + request.website.website_domain())
         )
-        ids = request.env["website.snippet.filter"].sudo().search([])
-        _logger.warning(request.env["website.snippet.filter"].sudo().browse([ids]))
-        test = request.env["website.snippet.filter"].sudo().browse([filter_id])
-        _logger.warning(request.website.website_domain())
-        _logger.warning(test.website_id)
-        _logger.warning(dynamic_filter)
         raw_values_list = dynamic_filter._prepare_values()
 
         values_list = {

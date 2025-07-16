@@ -1,8 +1,73 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
+    <!-- Filters for Dynamic Filter -->
+    <record id="dynamic_snippet_newest_product_templates_filter" model="ir.filters">
+        <field name="name">Product Templates</field>
+        <field name="model_id">product.product</field>
+        <field name="user_id" eval="False" />
+        <field name="domain">[('website_published', '=', True)]</field>
+        <field
+            name="context"
+        >{'display_default_code': False, 'add2cart_rerender': False}</field>
+        <field name="sort">["create_date desc"]</field>
+        <field name="action_id" ref="website.action_website" />
+    </record>
 
-    <template id="wavy_product_card" name="Wave Product Card">
+    <record id="dynamic_filter_wavy_card_filter" model="website.snippet.filter">
+        <field
+            name="filter_id"
+            ref="theme_aplus.dynamic_snippet_newest_product_templates_filter"
+        />
+        <field name="field_names">display_name,id,image_512</field>
+        <field name="limit" eval="16" />
+        <field name="name">Wavy Card Filter</field>
+    </record>
+
+
+    <template id="dynamic_filter_template_product_product_wavy_card" name="Wavy Card">
+
+        <t t-foreach="records" t-as="data">
+            <t t-set="record" t-value="data['_record']" />
+            <div class="product-card">
+                <t t-set="product" t-value="record.product_tmpl_id" />
+                <div class="product-info ap_product_cart">
+                    <!-- Product Links and Settings -->
+                    <t t-set="product_href" t-value="product.website_url" />
+                    <t t-set="image_type" t-value="image_512" />
+
+                    <!-- <t
+                        t-set="template_price_vals"
+                        t-value="get_product_prices(product)"
+                    /> -->
+
+                    <t t-set="image_holder" t-value="product" />
+
+
+                    <t t-call="theme_aplus.wavy_product_card_carousel">
+                        <t t-set="product_name" t-value="product.name" />
+                        <t t-set="product_record" t-value="product" />
+                        <t
+                            t-set="product_description"
+                            t-value="product.description_sale"
+                        />
+                        <t t-set="product_href" t-value="product_href" />
+                        <t t-set="product_image" t-value="image_holder" />
+                        <t
+                            t-set="background_image"
+                            t-value="product.background_image"
+                        />
+                        <t t-set="primary_color" t-value="product.primary_color" />
+                        <t t-set="secondary_color" t-value="product.secondary_color" />
+                        <t t-set="text_color" t-value="product.text_color" />
+                    </t>
+                    <!-- <t t-set="product_price" t-value="template_price_vals['base_price']" /> -->
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="wavy_product_card_carousel" name="Wave Product Card">
         <!--
             interface
             === === === === === === === === === === === ===
@@ -17,10 +82,10 @@
             secondary_color -> secondary color for the component
             text_color -> Text color for the component
         -->
+
         <!-- Background Image -->
         <span
             t-field="product_record.background_image"
-            t-if="product_record.background_image"
             t-options="{'widget': 'image', 'class': 'h-50 w-100 position-absolute'}"
             class="d-flex"
         />
@@ -52,7 +117,7 @@
             />
             <a
                 t-att-href="product_href"
-                class="ap_product_image_link d-block position-relative"
+                class="ap_product_image_link d-block h-100 position-relative"
                 itemprop="url"
                 contenteditable="false"
                 aria-label="View product details"
@@ -61,7 +126,6 @@
                     loading="lazy"
                     t-attf-src="/web/image/{{product._name}}/{{product_record.id}}/image_512"
                     class="h-100 w-100"
-                    t-attf-alt="product_name"
                 />
 
                 <!-- <span
@@ -176,96 +240,5 @@
                 Buy Now
             </a>
         </div>
-    </template>
-
-    <template
-        id="products_item"
-        name="Product Item"
-        inherit_id="website_sale.products_item"
-        priority="99"
-    >
-        <xpath expr="//form[1]" position="replace">
-            <form
-                action="/shop/cart/update"
-                method="post"
-                class="ap_product_cart h-100 d-flex"
-                t-att-data-publish="product.website_published and 'on' or 'off'"
-                itemscope="itemscope"
-                itemtype="http://schema.org/Product"
-                t-attf-style="background-color: {{product.secondary_color}};"
-                aria-label="Product card for {{product.name}}"
-                tabindex="0"
-            >
-
-                <!-- Product Links and Settings -->
-                <t
-                    t-set="product_href"
-                    t-value="keep(product.website_url, page=(pager['page']['num'] if pager['page']['num']>1 else None))"
-                />
-                <t
-                    t-set="image_type"
-                    t-value="product._get_suitable_image_size(ppr, td_product['x'], td_product['y'])"
-                />
-
-                <t t-set="template_price_vals" t-value="get_product_prices(product)" />
-
-                <t
-                    t-set="image_holder"
-                    t-value="product._get_image_holder() if product._name == 'product.template' else product.product_tmpl_id._get_image_holder()"
-                />
-
-                <t t-call="theme_aplus.wavy_product_card">
-                    <t t-set="product_name" t-value="product.name" />
-                    <!-- <t t-set="product_price" t-value="template_price_vals['base_price']" /> -->
-                    <t t-set="product_record" t-value="product" />
-                    <t t-set="product_description" t-value="product.description_sale" />
-                    <t t-set="product_href" t-value="product_href" />
-                    <t t-set="product_image" t-value="image_holder" />
-                    <t t-set="background_image" t-value="product.background_image" />
-                    <t t-set="primary_color" t-value="product.primary_color" />
-                    <t t-set="secondary_color" t-value="product.secondary_color" />
-                    <t t-set="text_color" t-value="product.text_color" />
-
-                </t>
-
-
-                <!-- Ribbons and banners -->
-                <div>
-                    <t
-                        t-set="bg_color"
-                        t-value="td_product['ribbon']['bg_color'] or ''"
-                    />
-                    <t
-                        t-set="text_color"
-                        t-value="td_product['ribbon']['text_color']"
-                    />
-                    <t t-set="bg_class" t-value="td_product['ribbon']['html_class']" />
-                    <span
-                        t-attf-class="o_ribbon o_not_editable #{bg_class}"
-                        t-attf-style="#{text_color and ('color: %s; ' % text_color)}#{bg_color and 'background-color:' + bg_color}"
-                        t-out="td_product['ribbon']['html'] or ''"
-                    />
-                </div>
-
-            </form>
-        </xpath>
-
-    </template>
-
-    <template
-        id="product_description"
-        name="Product Description"
-        inherit_id="website_sale.products_description"
-        priority="99"
-    >
-        <xpath expr="//div[hasclass('oe_subdescription')]" position="replace">
-            <div
-                class="ap_subdescription mb-2 text-muted small"
-                contenteditable="false"
-                t-attf-style="color: {{product.text_color}};"
-            >
-                <div itemprop="description" t-field="product.description_sale" />
-            </div>
-        </xpath>
     </template>
 </odoo>
