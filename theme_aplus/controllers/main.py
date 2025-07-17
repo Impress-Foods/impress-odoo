@@ -29,9 +29,10 @@ class ThemeAPlus(http.Controller):
         return values_list
 
     def _process_values(self, data):
+        _logger.warning(data)
         values = {
             "display_name": data["display_name"],
             "image_512": data["image_512"],
-            "product_id": data["product_id"],
+            "product_id": data["id"],
         }
         return values

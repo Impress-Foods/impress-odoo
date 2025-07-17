@@ -11,7 +11,7 @@
             data-name="A+ Carousel"
             data-number-of-records="16"
             data-filter-id="7"
-            data-template-key="theme_aplus.dynamic_filter_template_product_product_aplus_carousel"
+            data-template-key="theme_aplus.dynamic_filter_template_product_template_aplus_carousel"
             data-carousel-interval="5000"
         >
 
@@ -95,7 +95,7 @@
 
 
     <template
-        id="dynamic_filter_template_product_product_aplus_carousel"
+        id="dynamic_filter_template_product_template_aplus_carousel"
         name="A+ Product Carousel"
     >
 
@@ -129,7 +129,7 @@
     <record id="dynamic_filter_aplus_carousel_filter" model="website.snippet.filter">
         <field
             name="filter_id"
-            ref="website_sale.dynamic_snippet_newest_products_filter"
+            ref="theme_aplus.dynamic_snippet_newest_product_templates_filter"
         />
         <field name="field_names">display_name,id,image_512</field>
         <field name="limit" eval="16" />
