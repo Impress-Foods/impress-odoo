@@ -23,16 +23,7 @@ class ThemeAPlus(http.Controller):
         raw_values_list = dynamic_filter._prepare_values()
 
         values_list = {
-            i: self._process_values(values)
+            i: values
             for i, values in enumerate(raw_values_list)  # type: ignore
         }
         return values_list
-
-    def _process_values(self, data):
-        _logger.warning(data)
-        values = {
-            "display_name": data["display_name"],
-            "image_512": data["image_512"],
-            "product_id": data["id"],
-        }
-        return values

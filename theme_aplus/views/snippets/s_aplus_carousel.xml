@@ -131,7 +131,9 @@
             name="filter_id"
             ref="theme_aplus.dynamic_snippet_newest_product_templates_filter"
         />
-        <field name="field_names">display_name,id,image_512</field>
+        <field
+            name="field_names"
+        >display_name,id,image_512,primary_color,secondary_color,text_color</field>
         <field name="limit" eval="16" />
         <field name="name">Aplus dynamic filter</field>
     </record>

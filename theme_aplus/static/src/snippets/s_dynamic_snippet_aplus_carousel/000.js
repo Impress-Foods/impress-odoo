@@ -56,10 +56,22 @@ const aplusDynamicSnippetProducts = DynamicSnippet.extend({
             options: {parent: this},
             editableMode: this.editableMode,
         });
+        this.carousel_element = document.getElementsByClassName("aplus_carousel")[0];
+        this.carousel_element.addEventListener(
+            "slide.bs.carousel",
+            this._onSlide.bind(this)
+        );
+        this.shop_button = document.getElementsByClassName("shop-now-button")[0];
+        this.changeColors(this.product_data[0]);
     },
 
-    willStart() {
-        return this._super.apply(this, arguments);
+    _onSlide(event) {
+        this.changeColors(this.product_data[event.to]);
+    },
+
+    changeColors(product) {
+        this.shop_button.style.setProperty("background-color", product.primary_color);
+        this.shop_button.style.setProperty("color", product.text_color);
     },
 
     /**
