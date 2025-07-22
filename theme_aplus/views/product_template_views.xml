@@ -12,7 +12,8 @@
                 <field name="primary_color" widget="color" />
                 <field name="secondary_color" widget="color" />
                 <field name="text_color" widget="color" />
-                <field name="background_image" widget="image" />
+                <field name="background_image" />
+                <field name="hero_image" />
             </xpath>
         </field>
     </record>

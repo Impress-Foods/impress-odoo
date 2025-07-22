@@ -13,3 +13,4 @@ class ProductTemplate(models.Model):
     text_color = fields.Char()
 
     background_image = fields.Binary()
+    hero_image = fields.Binary()

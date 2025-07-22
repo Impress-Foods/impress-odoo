@@ -4,12 +4,12 @@
 
         <div class="carousel_container">
             <!-- Debug: Show data count -->
-            <t
+            <!-- <t
                 t-log="'Product data count: ' + Object.keys(product_data || {}).length"
-            />
+            /> -->
             <!-- Main Carousel -->
 
-            <!-- <span><t t-out="product_data"></t></span> -->
+            <t t-log="product_data" />
 
             <div
                 t-att-id="unique_id"

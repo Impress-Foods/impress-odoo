@@ -1,15 +1,17 @@
 // A+ Dynamic Product Carousel - Basic Styles
-
-.aplus_product_carousel {
-    //min-height: 100%;
-}
-
 .carousel_container {
     justify-content: center;
     max-width: 380px;
 }
 
 .aplus_carousel {
+    // Color Palette
+    $primary: #ff6b6b;
+    $secondary: #4ecdc4;
+    $accent: #ffd166;
+    $dark: #2d3436;
+    $light: #f7f9fc;
+
     position: relative;
     width: 100%;
     width: 380px;
@@ -37,14 +39,7 @@
 
     filter: drop-shadow(7px 7px 0px #000000);
 
-    background-color: var(--o-cc4-h6);
-
-    // Color Palette
-    $primary: #ff6b6b;
-    $secondary: #4ecdc4;
-    $accent: #ffd166;
-    $dark: #2d3436;
-    $light: #f7f9fc;
+    background-color: #f7f9fc;
 
     // Carousel Inner
     .carousel-inner {
@@ -75,6 +70,7 @@
                         font-weight: 800;
                         text-transform: uppercase;
                         letter-spacing: 1px;
+                        text-shadow: 2px 2px 0px #000000;
                     }
                 }
 
@@ -113,41 +109,6 @@
             }
         }
     }
-
-    .carousel-indicators {
-        //position: absolute;
-        //bottom: 0;
-        //left: 0;
-        //right: 0;
-        //margin: 0;
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-        button {
-            //background-color: $secondary;
-            button.active {
-                transform: scale(1.2);
-            }
-
-            button:hover:not(.active) {
-                transform: scale(1.2);
-            }
-        }
-    }
-    // Carousel Controls
-    .carousel-control-prev,
-    .carousel-control-next {
-        color: #ff00ff;
-    }
-
-    // Animation for the spinning border
-    // @keyframes spin {
-    //     0% {
-    //         transform: rotate(0deg);
-    //     }
-    //     100% {
-    //         transform: rotate(360deg);
-    //     }
-    // }
 
     .shop-now {
         margin-left: auto;

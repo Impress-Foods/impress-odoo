@@ -1,0 +1,44 @@
+.s_window_carousel {
+    overflow: hidden;
+    height: 100vh;
+
+    .dynamic_snippet_template {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .hero-background {
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        -webkit-transition: opacity 0.5s ease-in-out;
+        transition: opacity 0.5s ease-in-out;
+        background-color: bisque;
+    }
+
+    .active {
+        opacity: 100%;
+    }
+    .inactive {
+        opacity: 0%;
+    }
+
+    .hero-text {
+        color: #ff00ff;
+        font-size: 10rem;
+        font-weight: bold;
+        text-align: center;
+        text-shadow: 6px 6px 0px black;
+        text-wrap: wrap;
+        line-height: normal;
+        -webkit-transition: color 0.2s ease-in-out;
+        transition: color 0.2s ease-in-out;
+        -webkit-text-stroke: 1px black;
+    }
+
+    .container-fluid {
+        padding: 0px !important;
+    }
+}

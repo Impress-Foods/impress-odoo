@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="s_window_carousel" name="Window Carousel">
+        <section
+            data-snippet="s_window_carousel"
+            class="s_window_carousel pb0 pt0 o_dynamic_empty"
+            data-name="Window Carousel"
+            data-number-of-records="16"
+            data-template-key="theme_aplus.dynamic_filter_template_product_template_aplus_carousel"
+            data-carousel-interval="5000"
+        >
+            <img class="hero-background active" />
+            <img class="hero-background inactive" />
+            <div class="row o_grid_mode" data-row-count="13">
+
+                <div
+                    class="o_grid_item g-height-* g-col-lg-*"
+                    style="grid-area: 5 / -2 / 16 / -5;"
+                >
+                    <div class="carousel_container">
+                        <div
+                            t-att-id="unique_id"
+                            class="carousel slide aplus_carousel"
+                            data-bs-ride="ride"
+                            t-att-data-bs-interval="interval"
+                        >
+                            <div class="dynamic_snippet_template" />
+                            <a href="/shop" class="shop-now">
+                                <button
+                                    class="btn btn-primary shop-now-button"
+                                >Shop Now</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="o_grid_item g-height-* g-col-lg-*"
+                    style="grid-area: 6 / 3 / 13 / 8;"
+                >
+                    <h1 class="hero-text"> PLACE HOLDER </h1>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_window_carousel_options" inherit_id="website.snippet_options">
+        <xpath expr="." position="inside">
+            <div
+                data-js="s_window_carousel"
+                data-selector=".s_window_carousel"
+                data-no-preview="true"
+            >
+                <we-select
+                    string="Filter"
+                    data-name="filter_opt"
+                    data-attribute-name="filterId"
+                    data-no-preview="true"
+                >
+                </we-select>
+                <we-select
+                    string="Template"
+                    data-name="template_opt"
+                    data-attribute-name="templateKey"
+                    data-no-preview="true"
+                >
+                </we-select>
+                <we-select
+                    string="Fetched elements"
+                    data-name="number_of_records_opt"
+                    data-attribute-name="numberOfRecords"
+                    data-no-preview="true"
+                >
+                    <we-button
+                        t-foreach="range(1, 17)"
+                        t-as="value"
+                        t-att-data-select-data-attribute="value"
+                        t-esc="value"
+                    />
+                </we-select>
+                <we-select
+                    string="Category"
+                    data-name="product_category_opt"
+                    data-attribute-name="productCategoryId"
+                    data-no-preview="true"
+                >
+                    <we-button data-select-data-attribute="all">All Products</we-button>
+                    <we-button
+                        data-select-data-attribute="current"
+                    >Current Category or All</we-button>
+                </we-select>
+                <we-many2many
+                    string="Tags"
+                    data-name="product_tag_opt"
+                    data-attribute-name="productTagIds"
+                    data-no-preview="true"
+                    data-model="product.tag"
+                    data-allow-delete="true"
+                    data-fakem2m="true"
+                    data-select-data-attribute=""
+                />
+                <we-input
+                    string="Product names"
+                    class="o_we_large"
+                    data-name="product_names_opt"
+                    data-attribute-name="productNames"
+                    data-no-preview="true"
+                    data-select-data-attribute=""
+                    placeholder="e.g. lamp,bin"
+                    title="Comma-separated list of parts of product names, barcodes or internal reference"
+                />
+                <t t-out="0" />
+            </div>
+        </xpath>
+    </template>
+
+
+    <record id="dynamic_filter_window_carousel_filter" model="website.snippet.filter">
+        <field
+            name="filter_id"
+            ref="theme_aplus.dynamic_snippet_newest_product_templates_filter"
+        />
+        <field
+            name="field_names"
+        >display_name,id,image_512,primary_color,secondary_color,text_color</field>
+        <field name="limit" eval="16" />
+        <field name="name">Product Templates</field>
+    </record>
+    <record id="s_window_carousel_000_js" model="ir.asset">
+        <field name="name"> Window Carousel 000 js</field>
+        <field name="bundle">web.assets_frontend</field>
+        <field
+            name="path"
+        >theme_aplus/static/src/snippets/s_window_carousel/000.js</field>
+    </record>
+    <record id="s_window_carousel_000_xml" model="ir.asset">
+        <field name="name"> Window Carousel 000 xml</field>
+        <field name="bundle">web.assets_frontend</field>
+        <field
+            name="path"
+        >theme_aplus/static/src/snippets/s_window_carousel/000.xml</field>
+    </record>
+</odoo>

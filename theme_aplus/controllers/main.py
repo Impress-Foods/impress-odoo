@@ -7,11 +7,12 @@ _logger = logging.getLogger(__name__)
 
 
 class ThemeAPlus(http.Controller):
-    @http.route(
-        "/theme_aplus/aplus_product_carousel", type="http", auth="public", website=True
-    )
-    def aplus_product_carousel(self):
-        return http.request.render("theme_aplus.aplus_product_carousel")
+    # @http.route(
+    #     "/theme_aplus/aplus_product_carousel", type="http",
+    #      auth="public", website=True
+    # )
+    # def aplus_product_carousel(self):
+    #   return http.request.render("theme_aplus.aplus_product_carousel")
 
     @http.route("/theme_aplus/get_products", type="json", auth="public", website=True)
     def get_products(self, filter_id):
@@ -21,7 +22,6 @@ class ThemeAPlus(http.Controller):
             .search([("id", "=", filter_id)] + request.website.website_domain())
         )
         raw_values_list = dynamic_filter._prepare_values()
-
         values_list = {
             i: values
             for i, values in enumerate(raw_values_list)  # type: ignore
