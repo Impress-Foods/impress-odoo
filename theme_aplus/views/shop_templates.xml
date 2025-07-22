@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template
+        id="products"
+        name="Products"
+        inherit_id="website_sale.products"
+        priority="99"
+    >
+
+        <xpath expr="//div[@id='wrap']" position="before">
+            <t id="group_by_category_switch" t-set="groupByCategory" t-value="False" />
+        </xpath>
+
+        <xpath expr="//table" position="replace">
+            <table
+                class="table table-borderless h-100 m-0"
+                t-att-data-ppg="ppg"
+                t-att-data-ppr="ppr"
+                t-att-data-default-sort="website.shop_default_sort"
+                t-att-data-name="grid_block_name"
+            >
+                <colgroup t-ignore="true">
+                    <!-- Force the number of columns (useful when only one row of (x < ppr) products) -->
+                    <col t-foreach="ppr" t-as="p" />
+                </colgroup>
+                <tbody>
+                    <tr t-foreach="bins" t-as="tr_product">
+                        <t t-foreach="tr_product" t-as="td_product">
+                            <t t-if="td_product">
+                                <!-- We use t-attf-class here to allow easier customization -->
+                                <td
+                                    t-att-colspan="td_product['x'] != 1 and td_product['x']"
+                                    t-att-rowspan="td_product['y'] != 1 and td_product['y']"
+                                    t-attf-class="oe_product"
+                                    t-att-data-ribbon-id="td_product['ribbon'].id"
+                                    t-att-data-name="product_block_name"
+                                >
+                                    <div
+                                        t-attf-class="o_wsale_product_grid_wrapper position-relative h-100 o_wsale_product_grid_wrapper_#{td_product['x']}_#{td_product['y']}"
+                                    >
+                                        <t t-call="website_sale.products_item">
+                                            <t
+                                                t-set="product"
+                                                t-value="td_product['product']"
+                                            />
+                                        </t>
+                                    </div>
+                                </td>
+                            </t>
+                            <td t-else="" />
+                        </t>
+                    </tr>
+                </tbody>
+            </table>
+        </xpath>
+
+    </template>
+
+    <template
+        id="snippet_options_ecom"
+        inherit_id="website.snippet_options"
+        name="e-commerce snippet options"
+        priority="99"
+    >
+        <xpath
+            expr="//we-row[@id='o_wsale_grid_left_panel']"
+            position="after"
+            data-variable="group_by"
+        >
+            <we-row
+                id="group_by_categories"
+                string="Group by"
+                data-variable="group_by_categories"
+            >
+                <we-button
+                    string="Group by Category"
+                    data-customize-website-views="theme_aplus.group_by_categories"
+                    data-name="group_by_categories_opt"
+                    data-no-preview="true"
+                    data-reload="/"
+                />
+            </we-row>
+        </xpath>
+        <xpath
+            expr="//we-button[@data-select-class='o_wsale_design_grid']"
+            position="after"
+        >
+            <we-button
+                data-customize-website-views="theme_aplus.products_design_wavy_cards"
+            >
+                Wavy Cards
+            </we-button>
+        </xpath>
+    </template>
+
+    <template
+        id="group_by_categories"
+        active="False"
+        name="Group By Categories"
+        priority="99"
+    >
+        <xpath expr="//t[@id='group_by_category_switch']" position='replace'>
+            <t id="group_by_category_switch" t-set="groupByCategory" t-value="True" />
+        </xpath>
+    </template>
+    <template
+        id="products_design_wavy_cards"
+        active="False"
+        inherit_id="website_sale.products"
+        priority="99"
+    >
+        <xpath expr="//tbody/tr/t/t/td/div/t" position="replace">
+
+            <t t-call="theme_aplus.products_item">
+                <t t-set="product" t-value="td_product['product']" />
+            </t>
+        </xpath>
+    </template>
+</odoo>

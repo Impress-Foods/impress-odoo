@@ -69,8 +69,10 @@
                         font-size: 1.8rem;
                         font-weight: 800;
                         text-transform: uppercase;
-                        letter-spacing: 1px;
-                        text-shadow: 2px 2px 0px #000000;
+                        letter-spacing: 3px;
+                        //text-shadow: 2px 2px 0px #000000;
+                        -webkit-text-stroke-color: black;
+                        -webkit-text-stroke-width: 2px;
                     }
                 }
 

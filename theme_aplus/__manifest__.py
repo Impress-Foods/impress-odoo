@@ -10,6 +10,7 @@
         "data/shapes.xml",
         "views/product_card.xml",
         "views/product_template_views.xml",
+        "views/shop_templates.xml",
         "views/snippets/s_dynamic_snippet_product_templates.xml",
         "views/snippets/s_window_carousel.xml",
         "views/snippets/options.xml",

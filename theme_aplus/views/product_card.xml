@@ -3,6 +3,7 @@
 
 
     <template id="wavy_product_card" name="Wave Product Card">
+
         <!--
             interface
             === === === === === === === === === === === ===
@@ -18,13 +19,17 @@
             text_color -> Text color for the component
         -->
         <!-- Background Image -->
+        <t
+            t-set="description_activated"
+            t-value="is_view_active('website_sale.products_description')"
+        />
+
         <span
             t-field="product_record.background_image"
             t-if="product_record.background_image"
             t-options="{'widget': 'image', 'class': 'h-50 w-100 position-absolute'}"
             class="d-flex"
         />
-
         <!-- Color Block with Wave -->
         <div
             class="color-block"
@@ -97,7 +102,10 @@
                 </h6>
 
                 <!-- Product Description with Fixed Height -->
-                <div class="ap_product_short_description_wrapper">
+                <div
+                    t-if="description_activated"
+                    class="ap_product_short_description_wrapper"
+                >
                     <p
                         class="ap_product_short_description small mb-1"
                         t-attf-style="color: {{text_color}};"
@@ -178,94 +186,59 @@
         </div>
     </template>
 
-    <template
-        id="products_item"
-        name="Product Item"
-        inherit_id="website_sale.products_item"
-        priority="99"
-    >
-        <xpath expr="//form[1]" position="replace">
-            <form
-                action="/shop/cart/update"
-                method="post"
-                class="ap_product_cart h-100 d-flex"
-                t-att-data-publish="product.website_published and 'on' or 'off'"
-                itemscope="itemscope"
-                itemtype="http://schema.org/Product"
-                t-attf-style="background-color: {{product.secondary_color}};"
-                aria-label="Product card for {{product.name}}"
-                tabindex="0"
-            >
+    <template id="products_item" name="Product Item">
+        <form
+            action="/shop/cart/update"
+            method="post"
+            class="ap_product_cart h-100 d-flex"
+            t-att-data-publish="product.website_published and 'on' or 'off'"
+            itemscope="itemscope"
+            itemtype="http://schema.org/Product"
+            t-attf-style="background-color: {{product.secondary_color}};"
+            aria-label="Product card for {{product.name}}"
+            tabindex="0"
+        >
+            <t
+                t-set="product_href"
+                t-value="keep(product.website_url, page=(pager['page']['num'] if pager['page']['num']>1 else None))"
+            />
+            <t
+                t-set="image_type"
+                t-value="product._get_suitable_image_size(ppr, td_product['x'], td_product['y'])"
+            />
 
-                <!-- Product Links and Settings -->
-                <t
-                    t-set="product_href"
-                    t-value="keep(product.website_url, page=(pager['page']['num'] if pager['page']['num']>1 else None))"
+            <t t-set="template_price_vals" t-value="get_product_prices(product)" />
+
+            <t
+                t-set="image_holder"
+                t-value="product._get_image_holder() if product._name == 'product.template' else
+    product.product_tmpl_id._get_image_holder()"
+            />
+
+            <t t-call="theme_aplus.wavy_product_card">
+                <t t-set="product_name" t-value="product.name" />
+                <t t-set="product_record" t-value="product" />
+                <t t-set="product_description" t-value="product.description_sale" />
+                <t t-set="product_href" t-value="product_href" />
+                <t t-set="product_image" t-value="image_holder" />
+                <t t-set="background_image" t-value="product.background_image" />
+                <t t-set="primary_color" t-value="product.primary_color" />
+                <t t-set="secondary_color" t-value="product.secondary_color" />
+                <t t-set="text_color" t-value="product.text_color" />
+
+            </t>
+            <div>
+                <t t-set="bg_color" t-value="td_product['ribbon']['bg_color'] or ''" />
+                <t t-set="text_color" t-value="td_product['ribbon']['text_color']" />
+                <t t-set="bg_class" t-value="td_product['ribbon']['html_class']" />
+                <span
+                    t-attf-class="o_ribbon o_not_editable #{bg_class}"
+                    t-attf-style="#{text_color and ('color: %s; ' % text_color)}#{bg_color and 'background-color:' + bg_color}"
+                    t-out="td_product['ribbon']['html'] or ''"
                 />
-                <t
-                    t-set="image_type"
-                    t-value="product._get_suitable_image_size(ppr, td_product['x'], td_product['y'])"
-                />
-
-                <t t-set="template_price_vals" t-value="get_product_prices(product)" />
-
-                <t
-                    t-set="image_holder"
-                    t-value="product._get_image_holder() if product._name == 'product.template' else product.product_tmpl_id._get_image_holder()"
-                />
-
-                <t t-call="theme_aplus.wavy_product_card">
-                    <t t-set="product_name" t-value="product.name" />
-                    <!-- <t t-set="product_price" t-value="template_price_vals['base_price']" /> -->
-                    <t t-set="product_record" t-value="product" />
-                    <t t-set="product_description" t-value="product.description_sale" />
-                    <t t-set="product_href" t-value="product_href" />
-                    <t t-set="product_image" t-value="image_holder" />
-                    <t t-set="background_image" t-value="product.background_image" />
-                    <t t-set="primary_color" t-value="product.primary_color" />
-                    <t t-set="secondary_color" t-value="product.secondary_color" />
-                    <t t-set="text_color" t-value="product.text_color" />
-
-                </t>
-
-
-                <!-- Ribbons and banners -->
-                <div>
-                    <t
-                        t-set="bg_color"
-                        t-value="td_product['ribbon']['bg_color'] or ''"
-                    />
-                    <t
-                        t-set="text_color"
-                        t-value="td_product['ribbon']['text_color']"
-                    />
-                    <t t-set="bg_class" t-value="td_product['ribbon']['html_class']" />
-                    <span
-                        t-attf-class="o_ribbon o_not_editable #{bg_class}"
-                        t-attf-style="#{text_color and ('color: %s; ' % text_color)}#{bg_color and 'background-color:' + bg_color}"
-                        t-out="td_product['ribbon']['html'] or ''"
-                    />
-                </div>
-
-            </form>
-        </xpath>
-
-    </template>
-
-    <template
-        id="product_description"
-        name="Product Description"
-        inherit_id="website_sale.products_description"
-        priority="99"
-    >
-        <xpath expr="//div[hasclass('oe_subdescription')]" position="replace">
-            <div
-                class="ap_subdescription mb-2 text-muted small"
-                contenteditable="false"
-                t-attf-style="color: {{product.text_color}};"
-            >
-                <div itemprop="description" t-field="product.description_sale" />
             </div>
-        </xpath>
+
+        </form>
+
     </template>
 </odoo>

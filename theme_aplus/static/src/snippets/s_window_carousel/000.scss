@@ -31,11 +31,13 @@
         font-weight: bold;
         text-align: center;
         text-shadow: 6px 6px 0px black;
+        //text-shadow: 6px 6px 0px #f7eae4;
         text-wrap: wrap;
         line-height: normal;
         -webkit-transition: color 0.2s ease-in-out;
         transition: color 0.2s ease-in-out;
         -webkit-text-stroke: 1px black;
+        //-webkit-text-stroke: 1px #f7eae4;
     }
 
     .container-fluid {
