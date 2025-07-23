@@ -18,12 +18,12 @@
             secondary_color -> secondary color for the component
             text_color -> Text color for the component
         -->
-        <!-- Background Image -->
         <t
             t-set="description_activated"
             t-value="is_view_active('website_sale.products_description')"
         />
 
+        <!-- Background Image -->
         <span
             t-field="product_record.background_image"
             t-if="product_record.background_image"
@@ -65,7 +65,6 @@
                 <img
                     loading="lazy"
                     t-attf-src="/web/image/{{product._name}}/{{product_record.id}}/image_512"
-                    class="h-100 w-100"
                     t-attf-alt="product_name"
                 />
 
@@ -90,15 +89,19 @@
                         itemprop="name"
                         t-att-content="product_name"
                     >
-                        <!-- Removed t-field and use t-esc to ensure proper text rendering -->
-                        <t t-esc="product_name" />
+                        <t t-out="product_name" />
                     </div>
-                    <!--
-                                <a t-if="not product.website_published" role="button" t-att-href="product_href" class="btn btn-sm btn-danger"
-                        title="This product is unpublished.">
-                                Unpublished
-                            </a>
-                            -->
+
+                    <a
+                        t-if="not product.website_published"
+                        role="button"
+                        t-att-href="product_href"
+                        class="btn btn-sm btn-danger"
+                        title="This product is unpublished."
+                    >
+                        Unpublished
+                    </a>
+
                 </h6>
 
                 <!-- Product Description with Fixed Height -->
@@ -180,9 +183,9 @@
             aria-label="Buy Now"
             tabindex="0"
         >
-            <a t-attf-style="color: {{text_color}};" t-attf-href="{{product_href}}">
+            <span t-attf-style="color: {{text_color}};">
                 Buy Now
-            </a>
+            </span>
         </div>
     </template>
 

@@ -28,9 +28,18 @@ const WindowCarousel = DynamicSnippetProductTemplates.extend({
                 "/theme_aplus/get_products",
                 Object.assign({
                     filter_id: filter_id,
+                    search_domain: this._getSearchDomain(),
                 }),
                 this._getRpcParameters()
             );
+            // const response = await this.rpc(
+            //     "/website/snippet/filters",
+            //     Object.assign({
+            //         filter_id: filter_id,
+            //         search_domain: this._getSearchDomain(),
+            //     }),
+            //     this._getRpcParameters()
+            // );
             this.data = response;
         } else {
             this.data = [];

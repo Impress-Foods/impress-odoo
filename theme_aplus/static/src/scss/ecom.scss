@@ -22,14 +22,14 @@
     }
     40% {
         /* Extended downward motion time */
-        transform: translateY(3px);
+        transform: translateY(4px);
     }
     50% {
-        transform: translateY(4px);
+        transform: translateY(6px);
     }
     60% {
         /* Added intermediate step for smoother rise */
-        transform: translateY(3.5px);
+        transform: translateY(5px);
     }
     80% {
         /* Extended upward motion time */
@@ -42,7 +42,7 @@
 
 @keyframes wave-animation-slide {
     0% {
-        transform: translateX(-20%);
+        transform: translateX(-30%);
     }
     100% {
         transform: translateX(0%);
@@ -85,12 +85,12 @@
         }
 
         .ap_product_text_container {
-            transform: translateY(-15%); /* Further reduced to prevent overlap */
+            transform: translateY(-80%);
             position: relative;
-            z-index: 10; /* Ensure text always stays above the wave */
+            z-index: 10;
 
-            .ap_subdescription {
-                opacity: 1;
+            .ap_product_short_description_wrapper {
+                opacity: 100%;
             }
         }
 
@@ -140,23 +140,19 @@
 
     /* Product image */
     .ap_product_image {
-        min-width: var(--o-wsale-card-thumb-size);
-        width: var(--o-wsale-card-thumb-size);
         transition: opacity var(--ap-transition-timing);
-        //height: 65%; /* Reduced from 80% to take less vertical space */
-        //margin: 0.5rem 0 0.25rem; /* Adjusted margin to balance spacing */
+
+        justify-content: center;
 
         .ap_product_image_link {
-            //padding-top: calc(100% / (var(--o-wsale-card-thumb-aspect-ratio, 1)));
-            transform: scale(0.8);
+            justify-content: center;
 
-            .ap_product_image_img_wrapper {
-                //@include o-position-absolute(0, 0, 0, 0);
-                img {
-                    box-shadow: var(--o-wsale-card-thumb-shadow);
-                    border-radius: 30px;
-                    object-fit: var(--o-wsale-card-thumb-fill-mode, contain);
-                }
+            img {
+                object-fit: scale-down;
+                width: 90%;
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
             }
         }
     }
@@ -169,7 +165,7 @@
         display: flex;
         flex-direction: column;
         height: 5rem; /* Increased height to accommodate taller product name */
-        padding: 0.5rem 1rem 2.5rem; /* Increased bottom padding to make room for buy button */
+        //padding: 0.5rem 1rem 2.5rem; /* Increased bottom padding to make room for buy button */
         margin-top: 0.25rem; /* Reduced top margin */
         position: relative;
         z-index: 2; /* Ensure it's above the color block in default state */
@@ -181,9 +177,13 @@
                 #{$font-size-sm * 1.4} * 2
             ); /* Fixed height for description section */
             margin-bottom: 0.5rem;
+            padding-left: 5%;
+            padding-right: 5%;
             display: flex;
             align-items: flex-start;
             justify-content: center;
+            opacity: 0;
+            transition: opacity var(--ap-transition-timing);
 
             .ap_product_short_description {
                 display: block;
@@ -244,7 +244,7 @@
         left: calc(50% - 60px);
         text-align: center;
         border-radius: var(--ap-border-radius-sm);
-        padding: 0.4rem 0; /* Slightly reduced padding */
+        //padding: 0.4rem 0; /* Slightly reduced padding */
         box-shadow: var(--ap-shadow-sm);
 
         a {
@@ -301,6 +301,22 @@
     }
 }
 
+.o_ws_category_separator {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+    width: 100%;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--o-color-3);
+}
+
+.o_ws_category_separator::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    background-color: var(--o-color-3);
+}
 /* Accessibility - Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
     .ap_product_cart * {
