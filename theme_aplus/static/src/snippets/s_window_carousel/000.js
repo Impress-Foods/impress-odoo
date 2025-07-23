@@ -16,6 +16,24 @@ const WindowCarousel = DynamicSnippetProductTemplates.extend({
     },
 
     /**
+     * Gets the tag search domain
+     * @override
+     * @private
+     */
+    _getTagSearchDomain() {
+        const searchDomain = [];
+        let productTagIds = this.$el.get(0).dataset.productTagIds;
+        productTagIds = productTagIds ? JSON.parse(productTagIds) : [];
+        if (productTagIds.length) {
+            searchDomain.push([
+                "product_tag_ids",
+                "in",
+                productTagIds.map((productTag) => productTag.id),
+            ]);
+        }
+        return searchDomain;
+    },
+    /**
      * @override
      * @private
      */
@@ -23,7 +41,7 @@ const WindowCarousel = DynamicSnippetProductTemplates.extend({
         if (this._isConfigComplete()) {
             const nodeData = this.el.dataset;
             const filter_id = parseInt(nodeData.filterId);
-            //console.log(nodeData);
+            console.log(nodeData);
             const response = await this.rpc(
                 "/theme_aplus/get_products",
                 Object.assign({
@@ -32,14 +50,7 @@ const WindowCarousel = DynamicSnippetProductTemplates.extend({
                 }),
                 this._getRpcParameters()
             );
-            // const response = await this.rpc(
-            //     "/website/snippet/filters",
-            //     Object.assign({
-            //         filter_id: filter_id,
-            //         search_domain: this._getSearchDomain(),
-            //     }),
-            //     this._getRpcParameters()
-            // );
+
             this.data = response;
         } else {
             this.data = [];
