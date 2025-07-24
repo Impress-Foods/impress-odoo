@@ -43,6 +43,8 @@
             "theme_aplus/static/src/scss/aplus_style.scss",
             "theme_aplus/static/src/scss/_aurabora_theme.scss",
             "theme_aplus/static/src/scss/ecom.scss",
+            "theme_aplus/static/src/js/website_sale.js",
+            "theme_aplus/static/src/scss/product_page.scss",
         ],
         "website.assets_wysiwyg": [
             "theme_aplus/static/src/scss/aplus_style.scss",

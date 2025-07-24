@@ -1,0 +1,75 @@
+.oe_website_sale {
+    h1[itemprop="name"] {
+        word-break: break-word;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        color: var(--product-page-highlight-sec-color);
+    }
+
+    .a-submit {
+        background-color: var(--product-page-highlight-color);
+        border-color: var(--product-page-highlight-color);
+        &:hover {
+            background-color: var(--product-page-highlight-sec-color);
+            border-color: var(--product-page-highlight-sec-color);
+        }
+    }
+
+    .form-check-input {
+        &:checked {
+            background-color: var(--product-page-highlight-color);
+            border-color: var(--product-page-highlight-color);
+        }
+        &:hover {
+            border-color: var(--product-page-highlight-color);
+        }
+        &focus {
+            border-color: var(--product-page-highlight-color);
+        }
+    }
+
+    .breadcrumb-item {
+        a {
+            color: var(--product-page-highlight-color, var(--light));
+        }
+        a:hover {
+            color: var(--product-page-highlight-sec-color, var(--light));
+        }
+    }
+    .oe_price {
+        color: var(--product-page-highlight-color);
+    }
+
+    .fa-minus {
+        color: var(--product-page-highlight-color);
+        &:hover {
+            color: var(--product-page-highlight-sec-color);
+        }
+    }
+
+    .fa-plus {
+        color: var(--product-page-highlight-color);
+        &:hover {
+            color: var(--product-page-highlight-sec-color);
+        }
+    }
+}
+.navbar-light {
+    .btn-outline-secondary {
+        color: var(--product-page-highlight-sec-color, var(--light));
+        border-color: var(--product-page-highlight-sec-color, var(--light));
+
+        &:hover {
+            background-color: var(--product-page-highlight-sec-color, var(--light));
+        }
+    }
+    .btn-outline-primary {
+        color: var(--product-page-highlight-sec-color, var(--light));
+        border-color: var(--product-page-highlight-sec-color, var(--light));
+
+        &:hover {
+            background-color: var(--product-page-highlight-sec-color, var(--light));
+            border-color: var(--product-page-highlight-sec-color, var(--light));
+        }
+    }
+}

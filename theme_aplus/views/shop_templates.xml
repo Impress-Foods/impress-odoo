@@ -192,4 +192,14 @@
         active="False"
         name="Wavy Cards Product Design"
     />
+    <template id="product" inherit_id="website_sale.product">
+        <xpath expr="//section" position="attributes">
+            <attribute
+                name="t-att-data-highlight-color"
+            >product.primary_color</attribute>
+            <attribute
+                name="t-att-data-highlight-sec-color"
+            >product.secondary_color</attribute>
+        </xpath>
+    </template>
 </odoo>
