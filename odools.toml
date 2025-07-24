@@ -1,5 +1,5 @@
 [[config]]
 name = "odoo"
 odoo_path = "/opt/odoo/odoo"
-addons_path = ["${workspaceFolder}", "/opt/odoo/addons", "/opt/oca/maintenance", "/opt/oca/product_varians"]
+addons_path = ["${workspaceFolder}", "/opt/odoo/addons", "/opt/oca/maintenance", "/opt/oca/product_variants","opt/partner", "/opt/geo","/opt/oca/ecom", "/opt/oca/website"]
 python_path = "/opt/odoo-venv/bin/python3"
