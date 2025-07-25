@@ -20,10 +20,6 @@
             >
                 <keywords>Dynamic</keywords>
             </t>
-
-            <t t-snippet="theme_aplus.s_aplus_carousel">
-                <keywords>Dynamic</keywords>
-            </t>
             <t t-snippet="theme_aplus.s_window_carousel" string="Window Carousel">
                 <keywords>Dynamic</keywords>
             </t>

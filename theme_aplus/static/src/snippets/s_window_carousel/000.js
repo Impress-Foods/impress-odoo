@@ -41,7 +41,6 @@ const WindowCarousel = DynamicSnippetProductTemplates.extend({
         if (this._isConfigComplete()) {
             const nodeData = this.el.dataset;
             const filter_id = parseInt(nodeData.filterId);
-            console.log(nodeData);
             const response = await this.rpc(
                 "/theme_aplus/get_products",
                 Object.assign({
@@ -65,6 +64,7 @@ const WindowCarousel = DynamicSnippetProductTemplates.extend({
     changeColors(product, firstRun) {
         this.shop_button.style.setProperty("background-color", product.primary_color);
         this.shop_button.style.setProperty("color", product.text_color);
+
         const hero_texts = this.$el.find(".hero-text");
         for (const el of hero_texts) {
             el.style.setProperty("color", product.primary_color);

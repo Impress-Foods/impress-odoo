@@ -7,7 +7,7 @@
             class="s_window_carousel pb0 pt0 o_dynamic_empty"
             data-name="Window Carousel"
             data-number-of-records="16"
-            data-template-key="theme_aplus.dynamic_filter_template_product_template_aplus_carousel"
+            data-template-key="theme_aplus.dynamic_filter_template_product_template_wavy_card"
             data-carousel-interval="5000"
         >
             <img class="hero-background active" />
@@ -124,7 +124,7 @@
             name="field_names"
         >display_name,id,image_512,primary_color,secondary_color,text_color</field>
         <field name="limit" eval="16" />
-        <field name="name">Product Templates</field>
+        <field name="name">Product Templates - Window</field>
     </record>
     <record id="s_window_carousel_000_js" model="ir.asset">
         <field name="name"> Window Carousel 000 js</field>
