@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <template id="s_wave_transition_snippet" name="wave_transition">
+    <template id="s_wave_transition_snippet" name="Wave Transition">
         <section
             class="wave-transition-container"
             data-name="Wave Transition"

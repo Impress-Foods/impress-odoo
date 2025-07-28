@@ -1,5 +1,16 @@
 [[config]]
-name = "odoo"
+name = "odoo-impress"
 odoo_path = "/opt/odoo/odoo"
-addons_path = ["${workspaceFolder}", "/opt/odoo/addons", "/opt/oca/maintenance", "/opt/oca/product_variants","opt/partner", "/opt/geo","/opt/oca/ecom", "/opt/oca/website"]
+addons_path = [
+    "${workspaceFolder}",
+    "/opt/odoo/addons",
+    "/opt/oca/maintenance",
+    "/opt/oca/product_variants",
+    "opt/partner",
+    "/opt/geo",
+    "/opt/oca/ecom",
+    "/opt/oca/website",
+    "/opt/product-variant"
+]
 python_path = "/opt/odoo-venv/bin/python3"
+add_workspace_addon_path = true
