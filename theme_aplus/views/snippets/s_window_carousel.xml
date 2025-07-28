@@ -15,24 +15,24 @@
             <div class="row o_grid_mode" data-row-count="13">
 
                 <div
-                    class="o_grid_item g-height-* g-col-lg-*"
+                    class="carousel_container o_grid_item g-height-* g-col-lg-*"
                     style="grid-area: 5 / -2 / 16 / -5;"
                 >
-                    <div class="carousel_container">
-                        <div
-                            t-att-id="unique_id"
-                            class="carousel slide aplus_carousel"
-                            data-bs-ride="ride"
-                            t-att-data-bs-interval="interval"
-                        >
-                            <div class="dynamic_snippet_template" />
-                            <a href="/shop" class="shop-now">
-                                <button
-                                    class="btn btn-primary shop-now-button"
-                                >Shop Now</button>
-                            </a>
-                        </div>
+                    <!-- <div class="carousel_container"> -->
+                    <div
+                        t-att-id="unique_id"
+                        class="carousel slide aplus_carousel"
+                        data-bs-ride="ride"
+                        t-att-data-bs-interval="interval"
+                    >
+                        <div class="dynamic_snippet_template" />
+                        <a href="/shop" class="shop-now">
+                            <button
+                                class="btn btn-primary shop-now-button"
+                            >Shop Now</button>
+                        </a>
                     </div>
+                    <!-- </div> -->
                 </div>
                 <div
                     class="o_grid_item g-height-* g-col-lg-*"

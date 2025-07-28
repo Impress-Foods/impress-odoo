@@ -28,17 +28,17 @@
     <!-- Carousel Slide -->
     <t t-name="theme_aplus.window_carousel_slide">
         <div class="carousel-content">
-            <svg width="300" height="200" viewbox="0 0 300 200" class="arc-text">
-
+            <svg viewbox="0 0 300 200" class="arc-text">
+                <!-- d="M10 200C70 30 220 30 290 200" orignal -->
+                <!-- d="M10 200C70 15 220 15 290 200" closer -->
                 <path
                     id="curve"
-                    d="M10 200C70 30 220 30 290 200"
+                    d="M10,200 A 130 150 180 0 1 290 200"
                     fill="transparent"
                     stroke="transparent"
                 />
                 <text class="title-text" t-att-fill="product.primary_color">
-                    <!--                     t-attf-style="text-shadow: 2px 2px 0px black"
- -->
+
                     <textPath href="#curve" text-anchor="middle" startOffset="50%">
                         <t t-out="product.display_name" />
                     </textPath>

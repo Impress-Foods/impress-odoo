@@ -308,14 +308,14 @@
     width: 100%;
     font-size: 2rem;
     font-weight: 600;
-    color: var(--o-color-3);
+    color: var(--o-color-1);
 }
 
 .o_ws_category_separator::after {
     content: "";
     flex: 1;
     height: 2px;
-    background-color: var(--o-color-3);
+    background-color: var(--o-color-1);
 }
 /* Accessibility - Reduced Motion */
 @media (prefers-reduced-motion: reduce) {

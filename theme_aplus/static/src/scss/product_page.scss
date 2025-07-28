@@ -30,10 +30,10 @@
 
     .breadcrumb-item {
         a {
-            color: var(--product-page-highlight-color, var(--light));
+            color: var(--product-page-highlight-color, var(--o-cc1-link));
         }
         a:hover {
-            color: var(--product-page-highlight-sec-color, var(--light));
+            color: var(--product-page-highlight-sec-color, var(--o-cc1-link));
         }
     }
     .oe_price {
