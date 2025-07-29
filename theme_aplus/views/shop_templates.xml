@@ -203,7 +203,7 @@
             >product.secondary_color</attribute>
         </xpath>
         <xpath expr="//div[@id='product_documents']" position="before">
-            <div class="icon-block highlight-color">
+            <div class="icon-block">
                 <t t-call="theme_aplus.fruit_vector" />
                 <t t-call="theme_aplus.plus_vector" />
                 <t t-call="theme_aplus.water_vector" />
@@ -223,8 +223,7 @@
 
     <template id="fruit_vector">
         <svg
-            width="100px"
-            height="100px"
+            class="recipe-icons"
             viewBox="0 0 143 196"
             version="1.1"
             style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"
@@ -262,8 +261,7 @@
 
     <template id="water_vector">
         <svg
-            width="100px"
-            height="100px"
+            class="recipe-icons"
             viewBox="0 0 92 200"
             version="1.1"
             style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"
@@ -299,8 +297,7 @@
 
     <template id="maple_vector">
         <svg
-            width="100px"
-            height="100px"
+            class="recipe-icons"
             viewBox="0 0 95 216"
             version="1.1"
             style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"
@@ -326,8 +323,7 @@
 
     <template id="plus_vector">
         <svg
-            width="20px"
-            height="20px"
+            class="recipe-icons-plus"
             viewBox="0 0 22 20"
             version="1.1"
             style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"

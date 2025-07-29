@@ -5,12 +5,29 @@
         overflow-wrap: break-word;
         color: var(--product-page-highlight-sec-color);
     }
+    .recipe-icons {
+        width: 100px;
+        height: 100px;
+    }
+    .recipe-icons-plus {
+        width: 20px;
+        height: 20px;
+    }
 
-    .highlight-color {
-        path {
-            fill: var(--product-page-highlight-color);
-            fill-rule: nonzero;
+    @media (max-width: 767.98px) {
+        .recipe-icons {
+            width: 50px;
+            height: 50px;
         }
+        .recipe-icons-plus {
+            width: 5px;
+            height: 5px;
+        }
+    }
+
+    path {
+        fill: var(--product-page-highlight-color);
+        fill-rule: nonzero;
     }
 
     .a-submit {
