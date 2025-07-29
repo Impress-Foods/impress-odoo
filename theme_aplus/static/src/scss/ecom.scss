@@ -317,6 +317,10 @@
     height: 2px;
     background-color: var(--o-color-1);
 }
+
+.bg-light {
+    background-color: var(--light);
+}
 /* Accessibility - Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
     .ap_product_cart * {

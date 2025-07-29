@@ -6,6 +6,13 @@
         color: var(--product-page-highlight-sec-color);
     }
 
+    .highlight-color {
+        path {
+            fill: var(--product-page-highlight-color);
+            fill-rule: nonzero;
+        }
+    }
+
     .a-submit {
         background-color: var(--product-page-highlight-color);
         border-color: var(--product-page-highlight-color);

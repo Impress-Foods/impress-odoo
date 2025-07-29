@@ -1,6 +1,7 @@
 .o_grid_mode {
     justify-content: center;
 }
+
 .s_window_carousel {
     overflow: hidden;
     height: 100vh;
@@ -13,7 +14,9 @@
     // A+ Dynamic Product Carousel - Basic Styles
     .carousel_container {
         justify-content: center;
+        //max-width: 380px;
         width: 380px;
+        height: 450px;
         min-height: 450px;
         max-height: 510px;
         display: flex;
