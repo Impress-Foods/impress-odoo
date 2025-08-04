@@ -339,5 +339,6 @@ class ObiboxProvider:
         return data
 
     def _get_pickup_date(self, picking_date: datetime, delivery_day: str) -> datetime:
+        # TODO: Cutoff time: 15H00 on pickup date.
         next_delivery_day = picking_date + relativedelta(weekday=days[delivery_day])
         return next_delivery_day
