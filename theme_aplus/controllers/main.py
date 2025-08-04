@@ -7,13 +7,6 @@ _logger = logging.getLogger(__name__)
 
 
 class ThemeAPlus(http.Controller):
-    # @http.route(
-    #     "/theme_aplus/aplus_product_carousel", type="http",
-    #      auth="public", website=True
-    # )
-    # def aplus_product_carousel(self):
-    #   return http.request.render("theme_aplus.aplus_product_carousel")
-
     @http.route("/theme_aplus/get_products", type="json", auth="public", website=True)
     def get_products(self, filter_id, search_domain=None):
         dynamic_filter = (

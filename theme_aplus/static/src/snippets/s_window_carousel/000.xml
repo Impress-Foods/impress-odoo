@@ -29,8 +29,6 @@
     <t t-name="theme_aplus.window_carousel_slide">
         <div class="carousel-content">
             <svg viewbox="0 0 300 200" class="arc-text">
-                <!-- d="M10 200C70 30 220 30 290 200" orignal -->
-                <!-- d="M10 200C70 15 220 15 290 200" closer -->
                 <path
                     id="curve"
                     d="M10,200 A 130 150 180 0 1 290 200"
@@ -44,9 +42,6 @@
                     </textPath>
                 </text>
             </svg>
-
-
-            <!-- <h3 t-out="product.display_name" /> -->
             <div class="product-image">
                 <t t-if="product.image_512">
                     <img
@@ -59,7 +54,6 @@
                     <span>No image available</span>
                 </t>
             </div>
-            <!-- <p class="product-description" t-out="product.description or ''" /> -->
         </div>
     </t>
 </templates>

@@ -36,10 +36,6 @@
                     <t t-set="product_href" t-value="product.website_url" />
                     <t t-set="image_type" t-value="image_512" />
 
-                    <!-- <t
-                        t-set="template_price_vals"
-                        t-value="get_product_prices(product)"
-                    /> -->
 
                     <t t-set="image_holder" t-value="product" />
 
@@ -61,7 +57,6 @@
                         <t t-set="secondary_color" t-value="product.secondary_color" />
                         <t t-set="text_color" t-value="product.text_color" />
                     </t>
-                    <!-- <t t-set="product_price" t-value="template_price_vals['base_price']" /> -->
                 </div>
             </div>
         </t>
@@ -77,16 +72,8 @@
                 <!-- Product Links and Settings -->
                 <t t-set="product_href" t-value="product.website_url" />
                 <t t-set="image_type" t-value="image_512" />
-
-                <!-- <t
-                        t-set="template_price_vals"
-                        t-value="get_product_prices(product)"
-                    /> -->
-
-
                 <t t-call="theme_aplus.wavy_product_card_carousel">
                     <t t-set="image_holder" t-value="product" />
-
                     <t t-set="product_name" t-value="product.name" />
                     <t t-set="product_record" t-value="product" />
                     <t t-set="product_description" t-value="product.description_sale" />
@@ -96,27 +83,12 @@
                     <t t-set="primary_color" t-value="product.primary_color" />
                     <t t-set="secondary_color" t-value="product.secondary_color" />
                     <t t-set="text_color" t-value="product.text_color" />
-                    <!-- <t t-set="product_price" t-value="template_price_vals['base_price']" /> -->
                 </t>
             </div>
         </t>
     </template>
 
     <template id="wavy_product_card_carousel" name="Wave Product Card">
-        <!--
-            interface
-            === === === === === === === === === === === ===
-            product_name -> Display name for the product
-            product_price -> Price
-            product_description -> Description to appear on the card
-            product_href -> link to the product page
-
-            background_image -> href to background image
-            product_image -> hhref to product_image
-            primary_color -> primary color for the component
-            secondary_color -> secondary color for the component
-            text_color -> Text color for the component
-        -->
         <div
             class="product-info ap_product_cart"
             t-attf-id="#{ product.name }"
@@ -166,13 +138,6 @@
                         t-attf-src="/web/image/{{product._name}}/{{product_record.id}}/image_512"
                         class="h-100 w-100"
                     />
-
-                    <!-- <span
-                    t-field="product_image.image_1920"
-                    t-options="{'widget': 'image', 'preview_image': image_type, 'itemprop': 'image', 'class': 'h-100 w-100
-                position-absolute', 'loading': 'lazy'}"
-                    class="ap_product_image_img_wrapper d-flex h-100 justify-content-center align-items-center position-absolute"
-                /> -->
                 </a>
             </div>
 
@@ -188,15 +153,9 @@
                             itemprop="name"
                             t-att-content="product_name"
                         >
-                            <!-- Removed t-field and use t-esc to ensure proper text rendering -->
                             <t t-esc="product_name" />
                         </div>
-                        <!--
-                                <a t-if="not product.website_published" role="button" t-att-href="product_href" class="btn btn-sm btn-danger"
-                        title="This product is unpublished.">
-                                Unpublished
-                            </a>
-                            -->
+
                     </h6>
 
                     <!-- Product Description with Fixed Height -->
@@ -216,54 +175,6 @@
                 >
 
                     <div class="o_wsale_product_btn" />
-                    <!-- <div
-                    class="product_price"
-                    itemprop="offers"
-                    itemscope="itemscope"
-                    itemtype="http://schema.org/Offer"
-                    t-attf-style="color: {{secondary_color}};"
-                >
-                    <t
-                        t-if="'base_price' in template_price_vals and (template_price_vals['base_price'] &gt;
-                template_price_vals['price_reduce']) and (template_price_vals['price_reduce'] or not
-                website.prevent_zero_price_sale)"
-                    >
-                        <del
-                            t-attf-class="text-muted me-1 h6 mb-0"
-                            style="white-space: nowrap;"
-                        >
-                            <em
-                                class="small"
-                                t-esc="template_price_vals['base_price']"
-                                t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
-                            />
-                        </del>
-                    </t>
-                    <span
-                        class="h6 mb-0"
-                        t-attf-style="color: {{product.text_color}};"
-                        t-if="template_price_vals['price_reduce'] or not website.prevent_zero_price_sale"
-                        t-esc="template_price_vals['price_reduce']"
-                        t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
-                    />
-                    <span
-                        class="h6 mb-0"
-                        t-attf-style="color: {{product.text_color}};"
-                        t-else=""
-                        t-field="website.prevent_zero_price_sale_text"
-                    />
-                    <span
-                        itemprop="price"
-                        style="display:none;"
-                        t-esc="template_price_vals['price_reduce']"
-                    />
-                    <span
-                        itemprop="priceCurrency"
-                        style="display:none;"
-                        t-esc="website.currency_id.name"
-                    />
-                </div> -->
-
                 </div>
 
             </div>

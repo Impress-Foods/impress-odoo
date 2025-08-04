@@ -68,12 +68,6 @@
                     t-attf-alt="product_name"
                 />
 
-                <!-- <span
-                    t-field="product_image.image_1920"
-                    t-options="{'widget': 'image', 'preview_image': image_type, 'itemprop': 'image', 'class': 'h-100 w-100
-                position-absolute', 'loading': 'lazy'}"
-                    class="ap_product_image_img_wrapper d-flex h-100 justify-content-center align-items-center position-absolute"
-                /> -->
             </a>
         </div>
 
@@ -124,53 +118,6 @@
             >
 
                 <div class="o_wsale_product_btn" />
-                <!-- <div
-                    class="product_price"
-                    itemprop="offers"
-                    itemscope="itemscope"
-                    itemtype="http://schema.org/Offer"
-                    t-attf-style="color: {{secondary_color}};"
-                >
-                    <t
-                        t-if="'base_price' in template_price_vals and (template_price_vals['base_price'] &gt;
-                template_price_vals['price_reduce']) and (template_price_vals['price_reduce'] or not
-                website.prevent_zero_price_sale)"
-                    >
-                        <del
-                            t-attf-class="text-muted me-1 h6 mb-0"
-                            style="white-space: nowrap;"
-                        >
-                            <em
-                                class="small"
-                                t-esc="template_price_vals['base_price']"
-                                t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
-                            />
-                        </del>
-                    </t>
-                    <span
-                        class="h6 mb-0"
-                        t-attf-style="color: {{product.text_color}};"
-                        t-if="template_price_vals['price_reduce'] or not website.prevent_zero_price_sale"
-                        t-esc="template_price_vals['price_reduce']"
-                        t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
-                    />
-                    <span
-                        class="h6 mb-0"
-                        t-attf-style="color: {{product.text_color}};"
-                        t-else=""
-                        t-field="website.prevent_zero_price_sale_text"
-                    />
-                    <span
-                        itemprop="price"
-                        style="display:none;"
-                        t-esc="template_price_vals['price_reduce']"
-                    />
-                    <span
-                        itemprop="priceCurrency"
-                        style="display:none;"
-                        t-esc="website.currency_id.name"
-                    />
-                </div> -->
 
             </div>
 
