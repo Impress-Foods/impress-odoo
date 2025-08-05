@@ -106,7 +106,7 @@ class ObiboxProvider:
         return res
 
     def cancel_shipment(self, picking: Picking) -> bool:
-        trackings = picking.obibox_tracking_numbers.split(",")
+        trackings = picking.obibox_tracking_numbers.split(",")  # type: ignore
         for tracking in trackings:
             res = self._cancel_shipment(tracking)
             if isinstance(res, str):
@@ -191,7 +191,11 @@ class ObiboxProvider:
         endpoint = "Order/GetRatesPerServices"
 
         response = self._make_api_request(endpoint, method="POST", payload=data)
-        res = Rate.model_validate(response[0])  # type: ignore
+        try:
+            res = Rate.model_validate(response[0])  # type: ignore
+        except KeyError as e:
+            _logger.error(response)
+            raise ValidationError(_(f"Rate not found: {e}")) from e
         return res
 
     def _cancel_shipment(self, tracking: str) -> bool | str:
@@ -341,4 +345,8 @@ class ObiboxProvider:
     def _get_pickup_date(self, picking_date: datetime, delivery_day: str) -> datetime:
         # TODO: Cutoff time: 15H00 on pickup date.
         next_delivery_day = picking_date + relativedelta(weekday=days[delivery_day])
+        today = datetime.today()
+        if next_delivery_day.date() == today.date():
+            if today.hour >= (15 + 4):  # Add UTC <-> EST offset
+                next_delivery_day = next_delivery_day + timedelta(weeks=1)
         return next_delivery_day

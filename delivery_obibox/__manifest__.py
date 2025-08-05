@@ -5,7 +5,7 @@
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Inventory/Delivery",
-    "depends": ["stock_delivery", "mail"],
+    "depends": ["stock_delivery", "mail", "delivery_common"],
     "data": ["views/delivery_carrier_views.xml"],
     "application": True,
     "installable": True,
