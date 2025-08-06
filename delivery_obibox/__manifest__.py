@@ -6,6 +6,11 @@
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Inventory/Delivery",
     "depends": ["stock_delivery", "mail", "delivery_common"],
+    "external_dependencies": {
+        "python": [
+            "pydantic>=2.0.0",
+        ]
+    },
     "data": ["views/delivery_carrier_views.xml"],
     "application": True,
     "installable": True,
