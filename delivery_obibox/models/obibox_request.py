@@ -80,8 +80,7 @@ class ObiboxProvider:
         price = rate.price_in_cad if rate else 0
         data = self._make_shipment_request(picking)
 
-        label_format = picking.carrier_id.obibox_label_format
-
+        label_format = picking.carrier_id.obibox_label_format  # type: ignore
         params = {"withWaybill": True}
 
         if label_format == "zpl":

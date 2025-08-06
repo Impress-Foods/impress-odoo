@@ -68,11 +68,11 @@ class ClickshipProvider:
         if len(rates) == 0:
             raise ValidationError(_("Could not fetch any rates!"))
 
-        if isinstance(order, Picking) and order.clickship_service_id:
+        if isinstance(order, Picking) and order.clickship_service_id:  # type: ignore
             rate = [
                 x
                 for x in filter(
-                    lambda x: x.service_id == order.clickship_service_id,
+                    lambda x: x.service_id == order.clickship_service_id,  # type: ignore
                     rates,
                 )
             ].pop()
@@ -203,8 +203,16 @@ class ClickshipProvider:
 
     def _post_book_shipment(self, shipment_data: ShipmentRequest) -> str:
         # Books a shipment for shipment_data, getting a shipment_id back
-        response = self._make_api_request("shipment", "POST", payload=shipment_data)
-        return response["id"]  # type: ignore
+        try:
+            response = self._make_api_request("shipment", "POST", payload=shipment_data)
+            return response["id"]  # type: ignore
+        except KeyError:
+            _logger.error(
+                f"""Could not book shipment:\n {
+                    shipment_data.model_dump_json(exclude_none=True)
+                }"""
+            )
+            raise ValidationError(_("Could not book shipment")) from KeyError
 
     def _get_shipment_status(self, shipment_id: str) -> Shipment:
         # Fetches the shipment status for a known shipment ID
@@ -254,7 +262,7 @@ class ClickshipProvider:
     def _make_origin(
         self, order: Picking | SaleOrder, contact: HrEmployeeBase | Partner
     ) -> Origin:
-        company = order.company_id
+        company = order.company_id  # type: ignore
         origin = Origin(
             name=company.name,
             address=self._make_address(company),
@@ -271,7 +279,7 @@ class ClickshipProvider:
         )
 
     def _make_destination(self, order: Picking | SaleOrder) -> Destination:
-        client = order.partner_id
+        client = order.partner_id  # type: ignore
         destination = Destination(
             name=client.name,
             address=self._make_address(client),
@@ -313,7 +321,7 @@ class ClickshipProvider:
         if isinstance(order, Picking):
             packages = [
                 self._make_package(package)
-                for package in order.package_ids
+                for package in order.package_ids  # type: ignore
                 if isinstance(order, Picking)
             ]
 
@@ -340,7 +348,7 @@ class ClickshipProvider:
             )
 
         w_uom = WeightUnitEnum.kg.value
-        match package.weight_uom_name:
+        match package.weight_uom_name:  # type: ignore
             case "lb":
                 w_uom = WeightUnitEnum.lb.value
             case "g":
@@ -356,7 +364,7 @@ class ClickshipProvider:
         w = package.package_type_id.width or 254
         h = package.package_type_id.height or 254
 
-        weight = package.shipping_weight or 4.55
+        weight = package.shipping_weight or 4.55  # type: ignore
 
         package_data = Package(
             measurements=Box(
@@ -391,14 +399,14 @@ class ClickshipProvider:
         self, order: Picking, contact: Partner | HrEmployeeBase
     ) -> ShipmentRequest:
         unique_id: str = str(getattr(order, "origin", False) or order.name)
-        payment_method = order.carrier_id.clickship_payment_method.code
+        payment_method = order.carrier_id.clickship_payment_method.code  # type: ignore
         shipping_details = self._make_shipping_details(order, contact)
         pickup_details = self._make_pickup_details(contact)
 
         request = ShipmentRequest(
             unique_id=unique_id,
             payment_method_id=payment_method,
-            service_id=order.clickship_service_id,
+            service_id=order.clickship_service_id,  # type: ignore
             details=shipping_details,
             pickup_details=pickup_details,
         )

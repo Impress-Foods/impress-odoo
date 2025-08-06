@@ -16,9 +16,16 @@ class SaleOrder(models.Model):
     @api.depends("partner_id")
     def _compute_auto_selected_carrier_id(self):
         # get available carriers
-        carrier_id = self.env["delivery.carrier"].browse([1])[
-            0
-        ]  # required to create the wizard
+
+        # carrier_id = self.env["delivery.carrier"].browse([1])
+        carrier_id = self.env["delivery.carrier"].search([])
+        # required to create the wizard
+        if len(carrier_id) == 0:
+            self.auto_selected_carrier_id = False
+            return
+        else:
+            carrier_id = carrier_id[0]
+
         wizard = self.env["choose.delivery.carrier"].create(
             {
                 "partner_id": self.partner_shipping_id.id,
