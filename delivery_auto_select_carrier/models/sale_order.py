@@ -64,8 +64,12 @@ class SaleOrder(models.Model):
             .get_param("delivery_auto_select_carrier.domain")
         )
 
+        if not domain:
+            return False
+
         if isinstance(domain, str):
             domain = literal_eval(domain)
+
         res = self.id in self.env["sale.order"].search(domain).mapped("id")
         return res
 
