@@ -15,16 +15,19 @@ class SaleOrder(models.Model):
 
     @api.depends("partner_id")
     def _compute_auto_selected_carrier_id(self):
-        # get available carriers
-
-        # carrier_id = self.env["delivery.carrier"].browse([1])
-        carrier_id = self.env["delivery.carrier"].search([])
-        # required to create the wizard
-        if len(carrier_id) == 0:
+        if not self._compute_propagate_auto_carrier_id():
             self.auto_selected_carrier_id = False
             return
-        else:
+
+        # get available carriers
+        carrier_id = self.env["delivery.carrier"].search([])
+        # Arbitrary default carrier required by the wizard
+        if carrier_id:
             carrier_id = carrier_id[0]
+
+        else:
+            self.auto_selected_carrier_id = False
+            return
 
         wizard = self.env["choose.delivery.carrier"].create(
             {
@@ -33,20 +36,22 @@ class SaleOrder(models.Model):
                 "carrier_id": carrier_id.id,
             }
         )
-        available_carriers = wizard.available_carrier_ids
+        available_carriers = self._get_auto_select_carriers(wizard)
 
         wizard.unlink()  # delete the wizard as soon as possible
 
+        if available_carriers:
+            self.auto_selected_carrier_id = available_carriers[0]
+        else:
+            self.auto_selected_carrier_id = False
+
+    @api.model
+    def _get_auto_select_carriers(self, wizard):
         # We get the highest priority carrier. Arbitrary selection
         # when multiple carriers with the same priority are available
-
-        available_carriers = available_carriers.filtered("can_be_auto_selected").sorted(
+        return wizard.available_carrier_ids.filtered("can_be_auto_selected").sorted(
             key="priority", reverse=True
         )
-
-        if len(available_carriers) == 0:
-            self.auto_selected_carrier_id = False
-        self.auto_selected_carrier_id = available_carriers[0]
 
     def _compute_propagate_auto_carrier_id(self):
         # Computes if we should auto select a carrier for the
