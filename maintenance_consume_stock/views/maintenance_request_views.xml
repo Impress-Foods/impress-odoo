@@ -18,7 +18,7 @@
                             'default_scrap_location_id': %(maintenance_consume_stock.maintenance_scrap_location)d
                         }"
                     >
-            <list>
+            <tree>
               <field name="name" />
               <field name='product_id' />
               <field name='scrap_qty' />
@@ -26,7 +26,7 @@
               <field name='state' />
               <field name="lot_id" />
               <field name="state" />
-            </list>
+            </tree>
             <form>
               <group>
                 <group>

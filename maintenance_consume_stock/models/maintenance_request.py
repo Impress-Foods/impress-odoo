@@ -62,7 +62,7 @@ class MaintenanceRequest(models.Model):
             action = {
                 "name": _("Scrap Moves"),
                 "type": "ir.actions.act_window",
-                "view_mode": "list,form",
+                "view_mode": "tree,form",
                 "res_model": "stock.scrap",
                 "domain": [("id", "in", [scrap.id for scrap in self.scrap_ids])],
             }
