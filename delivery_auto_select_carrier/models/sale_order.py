@@ -15,35 +15,36 @@ class SaleOrder(models.Model):
 
     @api.depends("partner_id")
     def _compute_auto_selected_carrier_id(self):
-        if not self._compute_propagate_auto_carrier_id():
-            self.auto_selected_carrier_id = False
-            return
+        for rec in self:
+            if not rec._compute_propagate_auto_carrier_id():
+                rec.auto_selected_carrier_id = False
+                continue
 
-        # get available carriers
-        carrier_id = self.env["delivery.carrier"].search([])
-        # Arbitrary default carrier required by the wizard
-        if carrier_id:
-            carrier_id = carrier_id[0]
+            # get available carriers
+            carrier_id = self.env["delivery.carrier"].search([])
+            # Arbitrary default carrier required by the wizard
+            if carrier_id:
+                carrier_id = carrier_id[0]
 
-        else:
-            self.auto_selected_carrier_id = False
-            return
+            else:
+                rec.auto_selected_carrier_id = False
+                continue
 
-        wizard = self.env["choose.delivery.carrier"].create(
-            {
-                "partner_id": self.partner_shipping_id.id,
-                "order_id": self.id,
-                "carrier_id": carrier_id.id,
-            }
-        )
-        available_carriers = self._get_auto_select_carriers(wizard)
+            wizard = self.env["choose.delivery.carrier"].create(
+                {
+                    "partner_id": rec.partner_shipping_id.id,
+                    "order_id": rec.id,
+                    "carrier_id": carrier_id.id,
+                }
+            )
+            available_carriers = self._get_auto_select_carriers(wizard)
 
-        wizard.unlink()  # delete the wizard as soon as possible
+            wizard.unlink()  # delete the wizard as soon as possible
 
-        if available_carriers:
-            self.auto_selected_carrier_id = available_carriers[0]
-        else:
-            self.auto_selected_carrier_id = False
+            if available_carriers:
+                rec.auto_selected_carrier_id = available_carriers[0]
+            else:
+                rec.auto_selected_carrier_id = False
 
     @api.model
     def _get_auto_select_carriers(self, wizard):
