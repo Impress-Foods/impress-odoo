@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <record id="workorder_view_dashboard" model="ir.ui.view">
+    <!-- <record id="workorder_view_dashboard" model="ir.ui.view">
         <field name="name">workorder.view.kanban</field>
         <field name="model">mrp.workorder</field>
         <field name="inherit_id" ref="mrp.workcenter_line_kanban" />
@@ -16,6 +16,121 @@
             </xpath>
             <xpath expr="//div[hasclass('o_kanban_workorder_date')]" position="inside">
             </xpath>
+        </field>
+    </record> -->
+    <record id="workorder_view_dashboard" model="ir.ui.view">
+        <field name="name">workorder.view.kanban</field>
+        <field name="model">mrp.workorder</field>
+        <field name="arch" type="xml">
+            <kanban
+                class="o_kanban_dashboard o_mrp_workorder_kanban"
+                create="0"
+                sample="1"
+                default_order="state"
+            >
+
+                <field name="name" field_id="name_0" />
+                <field name="production_id" on_change="1" field_id="production_id_0" />
+                <field name="state" readonly="1" on_change="1" field_id="state_0" />
+                <field name="is_user_working" field_id="is_user_working_0" />
+                <field name="working_user_ids" field_id="working_user_ids_0" />
+                <field name="last_working_user_id" field_id="last_working_user_id_0" />
+                <field name="working_state" field_id="working_state_0" />
+                <field name="workcenter_id" on_change="1" field_id="workcenter_id_0" />
+                <field name="product_id" field_id="product_id_0" />
+                <field name="qty_remaining" field_id="qty_remaining_0" />
+                <field
+                    name="qty_production"
+                    on_change="1"
+                    field_id="qty_production_0"
+                />
+                <field name="date_start" on_change="1" field_id="date_start_0" />
+                <field name="production_date" field_id="production_date_0" />
+                <field
+                    name="product_uom_id"
+                    force_save="1"
+                    field_id="product_uom_id_0"
+                />
+                <field
+                    name="finished_lot_id"
+                    on_change="1"
+                    field_id="finished_lot_id_0"
+                />
+                <field name="operation_id" on_change="1" field_id="operation_id_0" />
+                <field name="production_date" field_id="production_date_1" />
+                <progressbar
+                    field="state"
+                    colors='{
+                    "pending": "info",
+                    "waiting": "info",
+                    "ready": "primary",
+                    "progress": "warning",
+                    "done": "success",
+                    "cancel": "danger"
+                    }'
+                />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_card_header o_kanban_record_top">
+                                <div class="o_kanban_workorder_title">
+                                    <h4 class="o_primary">
+                                        <span>
+                                            <t t-out="record.production_id.value" />
+                                        </span>
+                                        - <span>
+                                            <t t-out="record.name.value" />
+                                        </span>
+                                    </h4>
+                                </div>
+                                <div class="o_kanban_workorder_date">
+                                    <h5>
+                                        <span
+                                            class="d-flex"
+                                            t-esc="record.date_start.value or record.production_date.value"
+                                        />
+                                    </h5>
+                                </div>
+                                <div>
+                                    <h2 class="ml8">
+                                        <span
+                                            t-attf-class="badge #{['progress'].indexOf(record.state.raw_value) &gt; -1 ? 'text-bg-warning' : ['ready', 'waiting', 'pending'].indexOf(record.state.raw_value) &gt; -1 ? 'text-bg-primary' : ['done'].indexOf(record.state.raw_value) &gt; -1 ? 'text-bg-success' : 'text-bg-danger'}"
+                                        >
+                                            <t t-out="record.state.value" />
+                                        </span>
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="o_kanban_record_bottom flex-column">
+                                <div class="row">
+                                    <h5 class="oe_kanban_bottom_left">
+                                        <span>
+                                            <t t-out="record.product_id.value" />
+                                        </span>
+                                    </h5>
+                                </div>
+                                <div class="row justify-content-between">
+                                    <h5 class="col-4">
+                                        <span>
+                                            <t
+                                                t-out="record.qty_production.value"
+                                            /> &#160; <t
+                                                t-out="record.product_uom_id.value"
+                                            />
+                                        </span>
+                                    </h5>
+                                    <h5 class="col-4">
+                                        <span
+                                            t-if="record.finished_lot_id.value"
+                                            t-out="record.finished_lot_id.value"
+                                        />
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
 
