@@ -227,9 +227,13 @@ class ClickshipProvider:
 
         if not got_response:
             raise ValidationError(_("Timed out!"))
-
-        response = Shipment.model_validate(response["shipment"])
-        return response
+        try:
+            response = Shipment.model_validate(response["shipment"])
+            return response
+        except KeyError:
+            raise ValidationError(
+                _(f"Could not get shipment status for {shipment_id}: {response}")
+            ) from KeyError
 
     def _post_schedule_pickup(self, shipment_id: str, data: PickupDetails) -> bool:
         request_data = PickupRequest(pickup_details=data)
