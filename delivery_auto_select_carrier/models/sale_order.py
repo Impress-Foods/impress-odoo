@@ -15,6 +15,7 @@ class SaleOrder(models.Model):
 
     @api.depends("partner_id")
     def _compute_auto_selected_carrier_id(self):
+        _logger.warning("Trying to fetch auto selected carrier")
         for rec in self:
             if not rec._compute_propagate_auto_carrier_id():
                 rec.auto_selected_carrier_id = False
@@ -65,11 +66,10 @@ class SaleOrder(models.Model):
         )
 
         if not domain:
-            return False
+            domain = []
 
         if isinstance(domain, str):
             domain = literal_eval(domain)
-
         res = self.id in self.env["sale.order"].search(domain).mapped("id")
         return res
 

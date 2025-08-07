@@ -7,7 +7,30 @@
         <field name="model">wizard.clickship_rates</field>
         <field name="arch" type="xml">
             <form string="Wizard Clickship_rates">
-                <field name="rate_ids" />
+                <field name="rate_ids">
+                    <tree
+                        default_order="carrier_name desc"
+                        delete="0"
+                        create="0"
+                        edit="0"
+                    >
+                        <field name="carrier_name" />
+                        <field name="service_name" />
+                        <field name="currency_id" column_invisible="True" />
+                        <field name="transit_time" />
+                        <field
+                            name="total"
+                            widget="monetary"
+                            options="{'currency_field':'currency_id'}"
+                        />
+                        <button
+                            type="object"
+                            name="button_choose"
+                            icon="fa-check"
+                            title="Select"
+                        />
+                    </tree>
+                </field>
                 <footer>
                     <button special="cancel" string="Cancel" />
                 </footer>
@@ -21,7 +44,6 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">wizard.clickship_rates</field>
         <field name="view_mode">form</field>
-        <!-- <field name="binding_model_id" ref="addon.model_model_name"/> -->
         <field name="target">new</field>
     </record>
 

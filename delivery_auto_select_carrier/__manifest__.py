@@ -6,7 +6,11 @@
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
     "depends": ["sale_management", "stock_delivery"],
-    "data": ["views/delivery_carrier_views.xml", "views/res_config_settings_views.xml"],
+    "data": [
+        "views/delivery_carrier_views.xml",
+        "views/res_config_settings_views.xml",
+        "views/sale_order_views.xml",
+    ],
     "application": True,
     "installable": True,
     "auto_install": False,

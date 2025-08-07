@@ -75,7 +75,7 @@ class StockPicking(models.Model):
                 "transit_time_valid": not rate.transit_time_not_available,
             }
             rate_data.append(data)
-
+        rate_data.sort(key=lambda x: x["total"])
         return self.env["clickship.rate"].create(rate_data)
 
     def _get_fields_stock_barcode(self):

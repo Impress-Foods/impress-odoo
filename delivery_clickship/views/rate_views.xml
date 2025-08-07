@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <tree create="false" edit="false" delete="false">
                 <field name="carrier_name" />
-                <field name="service_name" />
+                <!-- <field name="service_name" />
                 <field name="currency_id" column_invisible="True" />
                 <field name="transit_time" />
                 <field
@@ -21,7 +21,7 @@
                     name="button_choose"
                     icon="fa-check"
                     title="Select"
-                />
+                /> -->
             </tree>
         </field>
     </record>
@@ -36,7 +36,11 @@
                     <div class="oe_title">
                         <label for="service_name" />
                         <h1>
-                            <field name="service_name" placeholder="Name..." />
+                            <field
+                                name="service_name"
+                                placeholder="Name..."
+                                readonly="1"
+                            />
                         </h1>
                     </div>
                 </sheet>
