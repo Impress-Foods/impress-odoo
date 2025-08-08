@@ -7,13 +7,15 @@
         owl="1"
     >
         <xpath expr="//button[hasclass('o_validate_page')]" position="before">
-            <button
-                t-if="env.model.clickshipRateNeeded()"
-                t-on-click="openClickshipRateWizard"
-                class="btn btn-secondary"
-            >
-                <i class="fa fa-truck me-1" /> Get Rates
-            </button>
+            <t t-if="env.model.resMOdel === 'stock.picking'">
+                <button
+                    t-if="env.model.clickshipRateNeeded()"
+                    t-on-click="openClickshipRateWizard"
+                    class="btn btn-secondary"
+                >
+                    <i class="fa fa-truck me-1" /> Get Rates
+                </button>
+            </t>
         </xpath>
     </t>
 </templates>

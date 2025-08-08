@@ -4,7 +4,7 @@ from odoo import api, fields, models
 
 from odoo.addons.web.controllers.utils import clean_action  # noqa
 
-from .tools.tools import text_from_html  # type: ignore
+from ..tools.tools import text_from_html
 
 _logger = logging.getLogger(__name__)
 

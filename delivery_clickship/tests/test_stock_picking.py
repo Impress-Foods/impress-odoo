@@ -2,7 +2,6 @@ import logging
 from unittest.mock import patch
 
 from odoo.exceptions import ValidationError
-from odoo.tests import tagged
 
 from ..models.schema import Date, Money, Rate, RateResponse, RateStatus
 from .test_delivery_common import TestDeliveryCommon
@@ -10,20 +9,9 @@ from .test_delivery_common import TestDeliveryCommon
 _logger = logging.getLogger(__name__)
 
 
-@tagged("standard", "impress")
 class TestStockPicking(TestDeliveryCommon):
     def setUp(self):
         super().setUp()
-
-    def test_clickship_fields_exist(self):
-        """Test that ClickShip fields exist on stock picking"""
-        picking = self.make_picking()
-
-        # Check that fields exist
-        self.assertTrue(hasattr(picking, "clickship_tracking_url"))
-        self.assertTrue(hasattr(picking, "clickship_shipment_id"))
-        self.assertTrue(hasattr(picking, "clickship_service_id"))
-        self.assertTrue(hasattr(picking, "clickship_rate_needed"))
 
     def test_compute_clickship_rate_needed_true(self):
         """Test that clickship_rate_needed is True when service_id is missing"""

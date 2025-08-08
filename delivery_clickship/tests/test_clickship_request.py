@@ -8,7 +8,6 @@ import requests
 from freezegun import freeze_time
 
 from odoo.exceptions import ValidationError
-from odoo.tests import tagged
 
 from ..models.schema import (
     Address,
@@ -31,7 +30,6 @@ from .test_delivery_common import TestDeliveryCommon
 _logger = logging.getLogger(__name__)
 
 
-@tagged("standard", "impress")
 class TestClickshipRequest(TestDeliveryCommon):
     def setUp(self):
         super().setUp()

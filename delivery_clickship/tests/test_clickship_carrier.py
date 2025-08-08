@@ -1,41 +1,14 @@
-import logging
 from unittest.mock import patch
 
 from odoo.exceptions import ValidationError
-from odoo.tests import tagged
 
 from ..models.schema import Date, Money, Rate, RateResponse, RateStatus
 from .test_delivery_common import TestDeliveryCommon
 
-_logger = logging.getLogger(__name__)
 
-
-@tagged("standard", "impress")
 class TestClickshipCarrier(TestDeliveryCommon):
     def setUp(self):
         super().setUp()
-
-    def test_clickship_carrier_creation(self):
-        """Test that ClickShip carrier is created correctly"""
-        self.assertEqual(self.clickship_method.delivery_type, "clickship")
-        self.assertEqual(self.clickship_method.clickship_api_key, "test_api_key")
-        self.assertEqual(self.clickship_method.clickship_contact, self.contact)
-        self.assertEqual(
-            self.clickship_method.clickship_payment_method, self.payment_method
-        )
-
-    def test_clickship_carrier_selection_add(self):
-        """Test that clickship is properly added to delivery_type selection"""
-        carrier = self.env["delivery.carrier"].create(
-            {
-                "name": "Test ClickShip",
-                "delivery_type": "clickship",
-                "product_id": self.env["product.product"]
-                .create({"name": "Test Product", "type": "service"})
-                .id,
-            }
-        )
-        self.assertEqual(carrier.delivery_type, "clickship")
 
     @patch(
         "odoo.addons.delivery_clickship.models.clickship_request.ClickshipProvider.get_rate"

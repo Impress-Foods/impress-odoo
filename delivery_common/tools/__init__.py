@@ -1,1 +1,1 @@
-from . import tools
+from .tools import text_from_html

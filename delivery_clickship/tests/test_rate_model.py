@@ -1,13 +1,10 @@
 import logging
 
-from odoo.tests import tagged
-
 from .test_delivery_common import TestDeliveryCommon
 
 _logger = logging.getLogger(__name__)
 
 
-@tagged("standard", "impress")
 class TestRateModel(TestDeliveryCommon):
     def setUp(self):
         super().setUp()
