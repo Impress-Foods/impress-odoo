@@ -15,6 +15,7 @@ from odoo.exceptions import ValidationError
 
 from odoo.addons.base.models.res_company import Company
 from odoo.addons.base.models.res_partner import Partner
+from odoo.addons.delivery_common.tools.tools import text_from_html  # type: ignore
 from odoo.addons.hr.models.hr_employee_base import HrEmployeeBase  # noqa
 from odoo.addons.sale.models.sale_order import SaleOrder  # noqa
 from odoo.addons.stock.models.stock_picking import Picking  # noqa
@@ -284,6 +285,13 @@ class ClickshipProvider:
 
     def _make_destination(self, order: Picking | SaleOrder) -> Destination:
         client = order.partner_id  # type: ignore
+        note = None
+
+        if isinstance(order, SaleOrder):
+            note = text_from_html(order.note)
+        elif isinstance(order, Picking):
+            note = order.delivery_instructions  # type: ignore
+
         destination = Destination(
             name=client.name,
             address=self._make_address(client),
@@ -291,6 +299,7 @@ class ClickshipProvider:
             phone_number=None if not client.phone else PhoneNumber(number=client.phone),
             email_addresses=None if not client.email else [client.email],
             contact_name=client.name,
+            instructions=note,
         )
         return destination
 

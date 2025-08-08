@@ -288,7 +288,7 @@ class ObiboxProvider:
             name=picking.partner_id.name or "",
             phone=picking.partner_id.phone or "",
             email=picking.partner_id.email or "",
-            instructions=picking.note or "",
+            instructions=picking.delivery_instructions or "",
             b2b="1" if picking.partner_id.is_company else "0",
             nb_items=len(boxes),
             delivery_date_time=pickup_date + timedelta(days=1),
