@@ -22,6 +22,6 @@ class StockMoveLine(models.Model):
             },
         }
         if self.lot_id:
-            action["context"]["default_lot_id"] = self.lot_id.id
-            action["context"]["default_model"] = "lot"
+            action["context"]["default_lot_id"] = self.lot_id.id  # type: ignore
+            action["context"]["default_model"] = "lot"  # type: ignore
         return action
