@@ -12,7 +12,7 @@ class SaleOrder(models.Model):
         string="Deposit", compute="_compute_deposit_value", store=True
     )
 
-    @api.depends("order_line.qty_delivered")
+    @api.depends("order_line.qty_delivered", "order_line.product_uom_qty")
     def _compute_deposit_value(self):
         for record in self:
             if record._deposit_needed():
@@ -21,13 +21,20 @@ class SaleOrder(models.Model):
                 record.deposit_value = 0.0
 
     def _deposit_needed(self):
+        # TODO: Figure out better way to differentiate between
+        # eCom orders (both from Odoo and WooCommcerce)
+        # and B2B orders.
+
         self.ensure_one()
         products_need_deposit = any(
             self.order_line.mapped(lambda x: x.product_id.requires_deposit)
         )
         partner_need_deposit = self.partner_id.requires_deposit
         order_stage = self.state not in ["cancel", "draft", "sent"]
-        return all([products_need_deposit, partner_need_deposit, order_stage])
+
+        b2b = all([products_need_deposit, partner_need_deposit, order_stage])
+        ecom = all([self.website_id])
+        return any([b2b, ecom])
 
     def _handle_deposit(self):
         self.ensure_one()
@@ -51,6 +58,7 @@ class SaleOrder(models.Model):
                         "product_uom": deposit_product.uom_id.id,
                         "qty_delivered": self._compute_container_count(),
                         "product_uom_qty": self._compute_container_count(),
+                        "is_deposit_line": True,
                     }
                 ]
             )
@@ -59,7 +67,9 @@ class SaleOrder(models.Model):
             deposit_line = deposit_line[0]
             deposit_line.write(
                 {
-                    "qty_delivered": self._compute_container_count(),
+                    "qty_delivered": 0
+                    if self.website_id
+                    else self._compute_container_count(),
                     "product_uom_qty": self._compute_container_count(),
                 }
             )
@@ -69,5 +79,8 @@ class SaleOrder(models.Model):
         total = 0
         for line in self.order_line:
             if line.product_id.requires_deposit:
-                total += line.qty_delivered * line.product_id.qty_multiple  # type: ignore
+                if self.website_id:
+                    total += line.product_uom_qty * line.product_id.qty_multiple
+                else:
+                    total += line.qty_delivered * line.product_id.qty_multiple
         return total
