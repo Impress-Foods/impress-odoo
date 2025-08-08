@@ -1,65 +1,46 @@
 <?xml version='1.0' encoding="utf-8" ?>
 <odoo>
-    <record id="production_add_qty_producing" model="ir.ui.view">
-        <field name="name">production.add_qty_producing</field>
-        <field name="model">mrp.production</field>
-        <field name="inherit_id" ref="mrp.mrp_production_kanban_view" />
-        <field name="priority">100</field>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='activity_state']" position="after">
-                <field name='qty_producing' />
-            </xpath>
-
-            <xpath
-                expr="//t[@t-name='kanban-box']/div[1]/div[1]/span[1]"
-                position="replace"
-            >
-                <span t-if="record.state.raw_value !='done'" class="float-end text-end">
-                    <t t-esc="record.product_qty.value" />
-                    <small>
-                        <span />
-                        <t t-esc="record.product_uom_id.value" />
-                    </small>
-                </span>
-                <span t-if="record.state.raw_value=='done'" class="float-end text-end">
-                    <t t-esc="record.qty_producing.value" /> / <t
-                        t-esc="record.product_qty.value"
-                    />
-                    <small>
-                        <t t-esc="record.product_uom_id.value" />
-                    </small>
-                </span>
-            </xpath>
-        </field>
-    </record>
-    <!-- <record id="production_add_handle" model="ir.ui.view">
-        <field name="name">production.add_handle</field>
+    <record id="mrp_production_kanban_view" model="ir.ui.view">
+        <field name="name">mrp.production.kanban.view</field>
         <field name="model">mrp.production</field>
         <field name="inherit_id" ref="mrp.mrp_production_kanban_view" />
         <field name="priority">101</field>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='activity_state']" position="after">
+                <field name='qty_producing' />
+            </xpath>
+            <xpath expr="//div[hasclass('o_kanban_record_top')]" position="after">
+                <div class="o_kanban_record_body d-flex justify-content-between">
+                    <h5 t-esc="record.name.value" />
+
+                    <span t-if="record.state.raw_value !='done'">
+                        <t t-esc="record.product_qty.value" /> &#160; <small
+                            t-esc="record.product_uom_id.value"
+                        />
+
+                    </span>
+                    <span t-if="record.state.raw_value=='done'">
+                        <t t-esc="record.qty_producing.value" /> &#160; / &#160; <t
+                            t-esc="record.product_qty.value"
+                        /> &#160;<small t-esc="record.product_uom_id.value" />
+                    </span>
+                </div>
+            </xpath>
             <xpath
-                expr="//t[@t-name='kanban-box']/div[1]/div[1]/span[2]"
-                position="after"
+                expr="//div[hasclass('o_kanban_record_top')]/span[1]"
+                position="replace"
             >
                 <div class="float-end text-end">
                     <field name='sequence' widget="handle" />
                 </div>
             </xpath>
-        </field>
-    </record> -->
-
-    <!-- <record id="mrp_production_view_search_inherit" model="ir.ui.view">
-        <field name="name">mrp.production.view.search.inherit</field>
-        <field name="model">mrp.production</field>
-        <field name="inherit_id" ref="mrp.view_mrp_production_filter" />
-        <field name="arch" type="xml">
-            <xpath expr="//search" position="inside">
-                <searchpanel>
-                    <field name="state" />
-                    <field name="product_category_id" />
-                </searchpanel>
+            <xpath expr="//div[hasclass('oe_kanban_bottom_left')]" position="replace">
+                <div class="oe_kanban_bottom_left text-muted">
+                    <span>
+                        <t t-esc="record.date_start.value" />
+                    </span>
+                </div>
             </xpath>
         </field>
-    </record> -->
+    </record>
 </odoo>

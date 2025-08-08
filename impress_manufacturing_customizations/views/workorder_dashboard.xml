@@ -1,23 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
-    <!-- <record id="workorder_view_dashboard" model="ir.ui.view">
-        <field name="name">workorder.view.kanban</field>
-        <field name="model">mrp.workorder</field>
-        <field name="inherit_id" ref="mrp.workcenter_line_kanban" />
-        <field name="priority">99</field>
-        <field name="mode">primary</field>
-        <field name="arch" type="xml">
-            <xpath expr="//kanban" position="attributes">
-                <attribute name="default_order">state</attribute>
-            </xpath>
-            <xpath expr="//field[@name='operation_id']" position="after">
-                <field name="production_date" />
-            </xpath>
-            <xpath expr="//div[hasclass('o_kanban_workorder_date')]" position="inside">
-            </xpath>
-        </field>
-    </record> -->
     <record id="workorder_view_dashboard" model="ir.ui.view">
         <field name="name">workorder.view.kanban</field>
         <field name="model">mrp.workorder</field>
