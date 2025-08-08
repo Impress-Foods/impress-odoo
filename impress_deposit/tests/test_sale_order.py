@@ -21,6 +21,7 @@ class TestSaleOrder(test_common.TestCommon):  # type: ignore
             {
                 "order_id": so.id,
                 "product_id": self.product_w_deposit.id,
+                "product_uom": self.product_w_deposit.uom_id.id,
                 "product_uom_qty": 1.0,
             }
         )

@@ -16,16 +16,9 @@ class SaleOrder(models.Model):
         store=True,
         depends=["order_line.qty_delivered", "order_line.product_uom_qty", "state"],
     )
-    test = fields.Boolean(compute="_compute_test", store=True)
-
-    @api.depends("state", "order_line")
-    def _compute_test(self) -> None:
-        _logger.warning("Test Compute Method")
-        self.test = True
 
     @api.depends("order_line.qty_delivered", "order_line.product_uom_qty", "state")
     def _compute_deposit_value(self) -> None:
-        _logger.warning("Computing deposit value")
         for record in self:
             if record._deposit_needed():
                 deposit_line = record._get_deposit_line()
@@ -46,11 +39,6 @@ class SaleOrder(models.Model):
         )
         partner_need_deposit = self.partner_id.requires_deposit
         order_stage = self.state not in ["cancel", "draft", "sent"]
-        # _logger.warning(
-        #     f"""product: {products_need_deposit} \n
-        #         partner: {partner_need_deposit} \n
-        #         stage: {order_stage}"""
-        # )
         return all([products_need_deposit, partner_need_deposit, order_stage])
 
     def _get_deposit_line(self) -> SaleOrderLine:
@@ -71,7 +59,6 @@ class SaleOrder(models.Model):
                             "order_id": self.id,
                             "name": _("Deposit"),
                             "product_id": deposit_product.id,
-                            "product_uom": deposit_product.uom_id.id,
                             "qty_delivered": 0,
                             "product_uom_qty": 0,
                             "is_deposit_line": True,

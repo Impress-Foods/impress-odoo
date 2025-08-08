@@ -10,12 +10,21 @@ class TestCommon(TransactionCase):
         self.product_model = self.env["product.product"]
         self.partner_model = self.env["res.partner"]
 
+        unit_uom = self.env["uom.uom"].search([("name", "=", "Units")])
+
         self.deposit_product = self.product_model.create(
-            {"name": "Deposit Product", "type": "service", "invoice_policy": "delivery"}
+            {
+                "name": "Deposit Product",
+                "type": "service",
+                "invoice_policy": "delivery",
+                "uom_id": unit_uom.id,
+            }
         )
 
-        self.config = self.env["res.config.settings"].create(
-            {"deposit_product": self.deposit_product.id}
+        self.config = (
+            self.env["res.config.settings"]
+            .create({"deposit_product": self.deposit_product.id})
+            .execute()
         )
 
         self.product_w_deposit = self.product_model.create(
