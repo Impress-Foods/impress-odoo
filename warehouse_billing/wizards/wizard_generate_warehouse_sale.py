@@ -27,7 +27,7 @@ class GenerateWarehouseSaleOrder(models.TransientModel):
 
     @api.model
     def group_by_partner(self, configs) -> dict:
-        grouped_configs = {}
+        grouped_configs = {}  # type: ignore
         for config in configs:
             if config.partner_id not in grouped_configs:
                 grouped_configs[config.partner_id] = []
@@ -190,12 +190,12 @@ class GenerateWarehouseSaleOrder(models.TransientModel):
                 elif config.billing_day_week != 0:
                     key.append(config.billing_day_week)
 
-                key = tuple(key)
+                key = tuple(key)  # type: ignore
                 if key not in grouped_configs:
-                    grouped_configs[key] = config
+                    grouped_configs[key] = config  # type: ignore
                 else:
-                    grouped_configs[key] += config
-        return grouped_configs
+                    grouped_configs[key] += config  # type: ignore
+        return grouped_configs  # type: ignore
 
     @api.model
     def generate_sale_orders(self, current_date: date | None = None):
