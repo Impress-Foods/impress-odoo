@@ -19,7 +19,7 @@ class StockPicking(models.Model):
     )
 
     @api.depends("sale_id", "sale_id.note", "sale_id.delivery_message")
-    def _compute_delivery_instructions(self):
+    def _compute_delivery_instructions(self) -> None:
         for picking in self:
             if picking.sale_id:
                 if picking.sale_id.note:

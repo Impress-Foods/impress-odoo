@@ -4,6 +4,7 @@ from typing import Any
 
 from odoo import fields, models
 
+from odoo.addons.base.models.res_partner import Partner
 from odoo.addons.sale.models.sale_order import SaleOrder
 from odoo.addons.stock.models.stock_picking import Picking
 
@@ -54,7 +55,7 @@ class ObiboxCarrier(models.Model):
         res = sr.get_rate(order)
         return res
 
-    def obibox_send_shipping(self, pickings) -> list:
+    def obibox_send_shipping(self, pickings: Picking) -> list:
         sr = ObiboxProvider(
             self.log_xml, username=self.obibox_username, token=self.obibox_api_key
         )
@@ -67,7 +68,7 @@ class ObiboxCarrier(models.Model):
             tracking_numbers = ",".join(
                 [x.tracking_number for x in booking["trackings"]]
             )
-            picking.obibox_tracking_numbers = tracking_numbers
+            picking.obibox_tracking_numbers = tracking_numbers  # type: ignore
             att_id = self.env["ir.attachment"].create(  # noqa
                 {
                     "name": f"{picking.name} Shipping Label",
@@ -79,25 +80,25 @@ class ObiboxCarrier(models.Model):
                     "mimetype": "text/plain",
                 }
             )
-            picking.shipping_label_attachment_id = att_id.id
+            picking.shipping_label_attachment_id = att_id.id  # type: ignore
         return res
 
-    def obibox_get_tracking_link(self, picking) -> str:
+    def obibox_get_tracking_link(self, picking: Picking) -> str:
         self.ensure_one()
         return f"https://tracking.obibox.io/{picking.carrier_tracking_ref}"
 
-    def obibox_cancel_shipment(self, pickings) -> None:
+    def obibox_cancel_shipment(self, pickings: Picking) -> None:
         sr = ObiboxProvider(
             self.log_xml, username=self.obibox_username, token=self.obibox_api_key
         )
         for picking in pickings:
             sr.cancel_shipment(picking)
-            picking.shipping_label_attachment_id.unlink()
+            picking.shipping_label_attachment_id.unlink()  # type: ignore
 
     def _obibox_get_default_custom_package_code(self) -> str:
         return ""
 
-    def _match_address(self, partner):
+    def _match_address(self, partner: Partner):
         res = super()._match_address(partner)
 
         if self.delivery_type == "obibox":
