@@ -14,6 +14,9 @@
                 <field name="text_color" widget="color" />
                 <field name="background_image" />
                 <field name="hero_image" />
+                <field name="hero_background" />
+                <field name="card_image" />
+                <field name="carousel_order" />
             </xpath>
         </field>
     </record>

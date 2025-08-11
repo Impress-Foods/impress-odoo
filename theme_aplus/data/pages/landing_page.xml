@@ -30,7 +30,7 @@
                             <img
                                 class="hero-background active"
                                 loading="lazy"
-                                src="/web/image/product.template/11/hero_image"
+                                src="/web/image/product.template/11/hero_background"
                                 data-mimetype="image/png"
                                 data-original-id="12"
                                 data-original-src="/web/static/img/placeholder.png"
@@ -40,7 +40,7 @@
                             <img
                                 class="hero-background inactive"
                                 loading="lazy"
-                                src="/web/image/product.template/2/hero_image"
+                                src="/web/image/product.template/2/hero_background"
                                 data-mimetype="image/png"
                                 data-original-id="12"
                                 data-original-src="/web/static/img/placeholder.png"

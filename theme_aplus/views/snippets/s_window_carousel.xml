@@ -116,13 +116,11 @@
 
 
     <record id="dynamic_filter_window_carousel_filter" model="website.snippet.filter">
-        <field
-            name="filter_id"
-            ref="theme_aplus.dynamic_snippet_newest_product_templates_filter"
-        />
+        <field name="filter_id" ref="dynamic_snippet_newest_product_templates_filter" />
         <field
             name="field_names"
-        >display_name,id,image_512,primary_color,secondary_color,text_color</field>
+            eval="'display_name,id,image_512,primary_color,secondary_color,text_color,hero_background,hero_image,carousel_order,card_image'"
+        />
         <field name="limit" eval="16" />
         <field name="name">Product Templates - Window</field>
     </record>

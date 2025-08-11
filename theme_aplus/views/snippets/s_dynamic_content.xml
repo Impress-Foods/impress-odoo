@@ -135,7 +135,7 @@
                 >
                     <img
                         loading="lazy"
-                        t-attf-src="/web/image/{{product._name}}/{{product_record.id}}/image_512"
+                        t-attf-src="/web/image/{{product._name}}/{{product_record.id}}/card_image"
                         class="h-100 w-100"
                     />
                 </a>

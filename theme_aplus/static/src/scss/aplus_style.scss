@@ -63,3 +63,13 @@
         border-color: var(--product-page-highlight-color, var(--light)) !important;
     }
 }
+
+@media (max-width: 991px) {
+    header {
+        .navbar {
+            .navbar-brand {
+                padding-left: 1rem;
+            }
+        }
+    }
+}

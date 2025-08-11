@@ -15,8 +15,10 @@ class ThemeAPlus(http.Controller):
             .search([("id", "=", filter_id)] + request.website.website_domain())
         )
         raw_values_list = dynamic_filter._prepare_values(search_domain=search_domain)
+        raw_values_list.sort(key=lambda x: x["carousel_order"])
         values_list = {
             i: values
             for i, values in enumerate(raw_values_list)  # type: ignore
         }
+
         return values_list

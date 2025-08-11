@@ -16,7 +16,7 @@
         justify-content: center;
         //max-width: 380px;
         width: 380px;
-        height: 450px;
+        //height: 450px;
         min-height: 450px;
         max-height: 510px;
         display: flex;
@@ -87,6 +87,7 @@
                         }
 
                         .product-image {
+                            margin-bottom: -2.5rem;
                             &:hover {
                                 transform: scale(1.02);
                             }

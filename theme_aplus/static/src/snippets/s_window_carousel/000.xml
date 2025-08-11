@@ -43,10 +43,10 @@
                 </text>
             </svg>
             <div class="product-image">
-                <t t-if="product.image_512">
+                <t t-if="product.hero_image">
                     <img
                         loading="lazy"
-                        t-att-src="product.image_512"
+                        t-att-src="product.hero_image"
                         t-att-alt="product.display_name"
                     />
                 </t>

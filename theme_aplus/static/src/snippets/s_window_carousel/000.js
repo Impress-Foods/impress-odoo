@@ -81,13 +81,13 @@ const WindowCarousel = DynamicSnippetProductTemplates.extend({
         if (firstRun) {
             hero_bg_active.src = `/web/image/product.template/${
                 this.data[this.current_index].id
-            }/hero_image`;
+            }/hero_background`;
 
-            hero_bg_inactive.src = `/web/image/product.template/${this.data[next_index].id}/hero_image`;
+            hero_bg_inactive.src = `/web/image/product.template/${this.data[next_index].id}/hero_background`;
         } else {
             hero_bg_inactive.classList.replace("inactive", "active");
             hero_bg_active.classList.replace("active", "inactive");
-            hero_bg_active.src = `/web/image/product.template/${this.data[next_index].id}/hero_image`;
+            hero_bg_active.src = `/web/image/product.template/${this.data[next_index].id}/hero_background`;
         }
     },
 

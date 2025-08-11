@@ -13,4 +13,7 @@ class ProductTemplate(models.Model):
     text_color = fields.Char()
 
     background_image = fields.Binary()
+    hero_background = fields.Binary()
     hero_image = fields.Binary()
+    card_image = fields.Binary()
+    carousel_order = fields.Integer()
