@@ -98,8 +98,8 @@ class ObiboxCarrier(models.Model):
     def _obibox_get_default_custom_package_code(self) -> str:
         return ""
 
-    def _match_address(self, partner: Partner):
-        res = super()._match_address(partner)
+    def _match_address(self, partner: Partner) -> bool:
+        res: bool = super()._match_address(partner)
 
         if self.delivery_type == "obibox":
             sr = ObiboxProvider(

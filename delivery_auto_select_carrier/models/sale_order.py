@@ -3,6 +3,9 @@ from ast import literal_eval
 
 from odoo import api, fields, models
 
+from odoo.addons.delivery.models.delivery_carrier import DeliveryCarrier
+from odoo.addons.delivery.wizard.choose_delivery_carrier import ChooseDeliveryCarrier
+
 _logger = logging.getLogger(__name__)
 
 
@@ -48,14 +51,16 @@ class SaleOrder(models.Model):
                 rec.auto_selected_carrier_id = False
 
     @api.model
-    def _get_auto_select_carriers(self, wizard):
+    def _get_auto_select_carriers(
+        self, wizard: ChooseDeliveryCarrier
+    ) -> DeliveryCarrier:
         # We get the highest priority carrier. Arbitrary selection
         # when multiple carriers with the same priority are available
         return wizard.available_carrier_ids.filtered("can_be_auto_selected").sorted(
             key="priority", reverse=True
         )
 
-    def _compute_propagate_auto_carrier_id(self):
+    def _compute_propagate_auto_carrier_id(self) -> bool:
         # Computes if we should auto select a carrier for the
         # Sale Order based on the domain in the settings
 
@@ -73,7 +78,7 @@ class SaleOrder(models.Model):
         res = self.id in self.env["sale.order"].search(domain).mapped("id")
         return res
 
-    def _action_confirm(self):
+    def _action_confirm(self) -> None:
         res = super()._action_confirm()
         for order in self:
             if order._compute_propagate_auto_carrier_id():

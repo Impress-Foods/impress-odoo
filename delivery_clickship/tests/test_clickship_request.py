@@ -255,7 +255,7 @@ class TestClickshipRequest(TestDeliveryCommon):
         self.assertEqual(len(details.packaging_properties.packages), 1)  # type: ignore
         self.assertEqual(
             details.packaging_properties.packages[0],  # type: ignore
-            self.sr._make_package(None),  # type: ignore
+            self.sr._make_package(None),
         )
 
     def test_make_shipment_request(self):

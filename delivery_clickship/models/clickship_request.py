@@ -15,7 +15,6 @@ from odoo.exceptions import ValidationError
 
 from odoo.addons.base.models.res_company import Company
 from odoo.addons.base.models.res_partner import Partner
-from odoo.addons.delivery_common.tools.tools import text_from_html
 from odoo.addons.hr.models.hr_employee_base import HrEmployeeBase
 from odoo.addons.sale.models.sale_order import SaleOrder
 from odoo.addons.stock.models.stock_picking import Picking
@@ -269,7 +268,7 @@ class ClickshipProvider:
     def _make_origin(
         self, order: Picking | SaleOrder, contact: HrEmployeeBase | Partner
     ) -> Origin:
-        company = order.company_id  # type: ignore
+        company = order.company_id
         origin = Origin(
             name=company.name,
             address=self._make_address(company),
@@ -285,14 +284,19 @@ class ClickshipProvider:
             year=current_date.year, month=current_date.month, day=current_date.day
         )
 
-    def _make_destination(self, order: Picking | SaleOrder) -> Destination:
-        client = order.partner_id  # type: ignore
-        note = None
+    def _get_delivery_note(self, record: Picking | SaleOrder) -> str | None:
+        if isinstance(record, Picking):
+            note = record.delivery_instructions
+        elif isinstance(record, SaleOrder):
+            note = record.note
+        if not note or note == "":
+            note = None
+        return note
 
-        if isinstance(order, SaleOrder):
-            note = text_from_html(order.note)
-        elif isinstance(order, Picking):
-            note = order.delivery_instructions  # type: ignore
+    def _make_destination(self, order: Picking | SaleOrder) -> Destination:
+        client = order.partner_id
+
+        note = self._get_delivery_note(order)
 
         destination = Destination(
             name=client.name,
