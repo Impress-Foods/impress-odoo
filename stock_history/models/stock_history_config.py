@@ -181,7 +181,7 @@ class StockHistoryConfig(models.Model):
                     record.next_run = ref_date + relativedelta(years=record.duration)
                 case "day_of_week":
                     next_run = ref_date + relativedelta(
-                        weekday=weekdays[record.day_of_week]  # type: ignore
+                        weekday=weekdays[record.day_of_week]
                     )
                     if next_run <= ref_date:
                         next_run = ref_date + relativedelta(
