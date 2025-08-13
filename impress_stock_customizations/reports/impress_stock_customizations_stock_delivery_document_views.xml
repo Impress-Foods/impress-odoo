@@ -11,9 +11,6 @@
         <field name="priority">50</field>
         <field name="arch" type="xml">
             <xpath expr="//table[@name='stock_move_table']/tbody" position="after">
-                <tfoot>
-
-                </tfoot>
             </xpath>
         </field>
     </record>
