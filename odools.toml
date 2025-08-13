@@ -1,6 +1,4 @@
 [[config]]
-name = "odoo"
-extends = "default"
-odoo_path = "/opt/odoo"
-python_path = "/opt/odoo-venv/bin/python3"
-add_workspace_addon_path = false
+name = "impress"
+extends = "base"
+addons_paths = ["./"]
