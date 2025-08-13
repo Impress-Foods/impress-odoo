@@ -8,8 +8,6 @@ const TickerBlock = options.Class.extend({
      * @override
      */
     start() {
-        this.showTextButton = this.el.querySelector("we-button.edit-text-button");
-
         this._super(...arguments);
         return this._reloadEditorUI();
     },
@@ -22,28 +20,9 @@ const TickerBlock = options.Class.extend({
         this._reloadEditorUI();
     },
 
-    /**
-     * @override
-     */
-    cleanForSave() {
-        const $tickerText = this.$target.find(".ticker-text");
-        $tickerText.removeClass("ticker-text-editing").addClass("d-none");
-    },
-
     //--------------------------------------------------------------------------
     // Options
     //--------------------------------------------------------------------------
-
-    /**
-     * Toggles the text editor for the ticker.
-     *
-     * @param {boolean} previewMode
-     * @param {string} widgetValue
-     *param {Object} params
-     */
-    toggleText(previewMode, widgetValue, params) {
-        this._makeTickerTextEditable();
-    },
 
     /**
      * Changes the speed of the ticker.
@@ -57,37 +36,10 @@ const TickerBlock = options.Class.extend({
         this._triggerReload();
     },
 
+    destroy() {},
     //--------------------------------------------------------------------------
     // Private
     //--------------------------------------------------------------------------
-
-    /**
-     * Handles click on the edit text button.
-     *
-     * @private
-     */
-    _onEditTextClick(ev) {
-        ev.preventDefault();
-        this._makeTickerTextEditable();
-    },
-
-    /**
-     * Makes the ticker text element directly editable.
-     * @private
-     */
-    _makeTickerTextEditable() {
-        const $textElement = this.$target.find(".ticker-text");
-        $textElement.removeClass("d-none").addClass("ticker-text-editing");
-
-        // Focus the element for immediate editing
-        $textElement.focus();
-
-        // When editing is done, hide the element again and refresh the ticker
-        $textElement.one("blur", () => {
-            $textElement.removeClass("ticker-text-editing").addClass("d-none");
-            this._triggerReload();
-        });
-    },
 
     /**
      * Triggers a reload of the editor UI and the ticker.

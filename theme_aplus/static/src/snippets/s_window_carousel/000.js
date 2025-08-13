@@ -13,6 +13,18 @@ const WindowCarousel = DynamicSnippetProductTemplates.extend({
         this._super.apply(this, arguments);
         this.template_key = "theme_aplus.window_carousel";
         this.current_index = 0;
+        this.next_index = 1;
+        this.bgs = document.getElementsByClassName("hero-background");
+
+        for (const bg of this.bgs) {
+            bg.addEventListener("transitionend", (event) => {
+                if (event.target.classList.contains("inactive")) {
+                    event.target.src = `/web/image/product.template/${
+                        this.data[this.next_index].id
+                    }/hero_background`;
+                }
+            });
+        }
     },
 
     /**
@@ -58,37 +70,35 @@ const WindowCarousel = DynamicSnippetProductTemplates.extend({
 
     _onSlide(event) {
         this.current_index = event.to;
-        this.changeColors(this.data[this.current_index], false);
+        this.changeColors(this.data[this.current_index]);
+        this.changeBackgrounds();
     },
 
-    changeColors(product, firstRun) {
+    changeColors(product) {
         this.shop_button.style.setProperty("background-color", product.primary_color);
         this.shop_button.style.setProperty("color", product.text_color);
 
-        const hero_texts = this.$el.find(".hero-text");
-        for (const el of hero_texts) {
-            el.style.setProperty("color", product.primary_color);
+        Array.from(this.hero_texts).forEach((element) => {
+            element.style.setProperty("color", product.primary_color);
+        });
+    },
+    changeBackgrounds() {
+        if (this.next_index !== this.current_index) {
+            for (const bg of this.bgs) {
+                if (bg.classList.contains("inactive")) {
+                    bg.src = `/web/image/product.template/${
+                        this.data[this.current_index].id
+                    }/hero_background`;
+                }
+            }
         }
 
-        const hero_bg_active = document.getElementsByClassName(
-            "hero-background active"
-        )[0];
-        const hero_bg_inactive = document.getElementsByClassName(
-            "hero-background inactive"
-        )[0];
-
-        const next_index = (this.current_index + 1) % Object.keys(this.data).length;
-        if (firstRun) {
-            hero_bg_active.src = `/web/image/product.template/${
-                this.data[this.current_index].id
-            }/hero_background`;
-
-            hero_bg_inactive.src = `/web/image/product.template/${this.data[next_index].id}/hero_background`;
-        } else {
-            hero_bg_inactive.classList.replace("inactive", "active");
-            hero_bg_active.classList.replace("active", "inactive");
-            hero_bg_active.src = `/web/image/product.template/${this.data[next_index].id}/hero_background`;
-        }
+        Array.from(this.bgs).forEach((element) => {
+            element.classList.toggle("active");
+            element.classList.toggle("inactive");
+        });
+        this.next_index = (this.current_index + 1) % Object.keys(this.data).length;
+        console.log(this.next_index);
     },
 
     /**
@@ -110,8 +120,18 @@ const WindowCarousel = DynamicSnippetProductTemplates.extend({
             "slide.bs.carousel",
             this._onSlide.bind(this)
         );
+        this.hero_texts = this.$el.find(".hero-text");
         this.shop_button = document.getElementsByClassName("shop-now-button")[0];
-        this.changeColors(this.data[this.current_index], true);
+
+        for (const bg of this.bgs) {
+            console.log(bg);
+            if (bg.classList.contains("active")) {
+                bg.src = `/web/image/product.template/${this.data[0].id}/hero_background`;
+            } else {
+                bg.src = `/web/image/product.template/${this.data[1].id}/hero_background`;
+            }
+        }
+        this.changeColors(this.data[0]);
     },
 });
 

@@ -33,8 +33,10 @@ const TickerBlock = publicWidget.Widget.extend({
      * @private
      */
     _setupTicker() {
+        // Clear any existing content
+        this._cleanupTicker();
         // Get the text from the editable element
-        const $sourceText = this.$el.find(".ticker-source-text");
+        const $sourceText = this.$el.find(".ticker-text");
         const tickerText = $sourceText.length
             ? $sourceText.text().trim()
             : "Infinite Ticker";
@@ -46,16 +48,8 @@ const TickerBlock = publicWidget.Widget.extend({
             parseFloat(computedStyle.getPropertyValue("--ticker-speed-multiplier")) ||
             1.0;
 
-        // Clear any existing content
-        this._cleanupTicker();
-
-        // Create a single ticker wrapper with spaced-out items
-        const $container = this.$el.find(".ticker-container");
-        $container.html(""); // Clear container
-
-        // Create a ticker stripe that will contain all items
-        this.$tickerStripe = $('<div class="ticker-stripe"></div>');
-        $container.append(this.$tickerStripe);
+        // Find the ticker stripe that will contain all items
+        this.$tickerStripe = this.$el.find(".ticker-stripe");
 
         // Calculate how many items we need to fill at least one screen width
         const viewportWidth = window.innerWidth;
@@ -157,7 +151,7 @@ const TickerBlock = publicWidget.Widget.extend({
         this._animProps = null;
 
         // Clear the ticker container
-        this.$el.find(".ticker-container").empty();
+        this.$el.find(".ticker-stripe").empty();
     },
 
     /**

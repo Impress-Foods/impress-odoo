@@ -136,8 +136,7 @@
     margin: 0.5rem auto;
     text-align: center;
     padding: 0.5rem;
-    background-color: #f8f9fa;
-    border: 1px dashed #dee2e6;
+
     border-radius: 0.25rem;
     max-width: 90%;
 
@@ -149,32 +148,5 @@
     // Also hide in backend preview mode
     .o_wysiwyg_no_edit & {
         display: none !important;
-    }
-
-    .ticker-source-text {
-        display: inline-block;
-        min-width: 200px;
-        padding: 0.5rem 1rem;
-        background-color: #fff;
-        border: 1px solid #ced4da;
-        border-radius: 0.25rem;
-        color: #333;
-        font-size: 1rem;
-        line-height: 1.5;
-        text-align: center;
-
-        &:focus {
-            outline: none;
-            border-color: #80bdff;
-            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-        }
-    }
-
-    &::before {
-        content: "Edit Ticker Text:";
-        display: block;
-        margin-bottom: 0.5rem;
-        font-weight: bold;
-        color: #495057;
     }
 }

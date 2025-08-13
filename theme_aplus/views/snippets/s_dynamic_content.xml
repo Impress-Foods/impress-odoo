@@ -11,7 +11,7 @@
         <field
             name="context"
         >{'display_default_code': False, 'add2cart_rerender': False}</field>
-        <field name="sort">["create_date desc"]</field>
+        <field name="sort">["carousel_order asc"]</field>
         <field name="action_id" ref="website.action_website" />
     </record>
 
