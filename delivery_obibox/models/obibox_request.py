@@ -12,12 +12,12 @@ from werkzeug.urls import url_join
 from odoo import _
 from odoo.exceptions import ValidationError
 
-from odoo.addons.base.models.res_company import Company  # noqa
-from odoo.addons.base.models.res_partner import Partner  # noqa
-from odoo.addons.sale.models.sale_order import SaleOrder  # noqa
-from odoo.addons.stock.models.stock_picking import Picking  # noqa
-from odoo.addons.stock.models.stock_quant import QuantPackage  # noqa
-from odoo.addons.uom.models.uom_uom import UoM  # noqa
+from odoo.addons.base.models.res_company import Company
+from odoo.addons.base.models.res_partner import Partner
+from odoo.addons.sale.models.sale_order import SaleOrder
+from odoo.addons.stock.models.stock_picking import Picking
+from odoo.addons.stock.models.stock_quant import QuantPackage
+from odoo.addons.uom.models.uom_uom import UoM
 
 from .schema import (
     Box,
@@ -80,7 +80,7 @@ class ObiboxProvider:
         price = rate.price_in_cad if rate else 0
         data = self._make_shipment_request(picking)
 
-        label_format = picking.carrier_id.obibox_label_format  # type: ignore
+        label_format = picking.carrier_id.obibox_label_format
         params = {"withWaybill": True}
 
         if label_format == "zpl":
@@ -105,7 +105,7 @@ class ObiboxProvider:
         return res
 
     def cancel_shipment(self, picking: Picking) -> bool:
-        trackings = picking.obibox_tracking_numbers.split(",")  # type: ignore
+        trackings = picking.obibox_tracking_numbers.split(",")
         for tracking in trackings:
             res = self._cancel_shipment(tracking)
             if isinstance(res, str):
@@ -118,7 +118,7 @@ class ObiboxProvider:
         method: str = "GET",
         payload: None | dict | BaseModel | str = None,
         params: None | dict = None,
-    ):
+    ) -> dict[str, Any] | list[dict[str, Any]]:
         if not payload:
             payload = {}
 
@@ -191,7 +191,10 @@ class ObiboxProvider:
 
         response = self._make_api_request(endpoint, method="POST", payload=data)
         try:
-            res = Rate.model_validate(response[0])  # type: ignore
+            if isinstance(response, list):
+                res = Rate.model_validate(response[0])
+            else:
+                raise KeyError
         except KeyError as e:
             _logger.error(response)
             raise ValidationError(_(f"Rate not found: {e}")) from e

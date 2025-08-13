@@ -15,11 +15,11 @@ from odoo.exceptions import ValidationError
 
 from odoo.addons.base.models.res_company import Company
 from odoo.addons.base.models.res_partner import Partner
-from odoo.addons.delivery_common.tools.tools import text_from_html  # type: ignore
-from odoo.addons.hr.models.hr_employee_base import HrEmployeeBase  # noqa
-from odoo.addons.sale.models.sale_order import SaleOrder  # noqa
-from odoo.addons.stock.models.stock_picking import Picking  # noqa
-from odoo.addons.stock.models.stock_quant import QuantPackage  # noqa
+from odoo.addons.delivery_common.tools.tools import text_from_html
+from odoo.addons.hr.models.hr_employee_base import HrEmployeeBase
+from odoo.addons.sale.models.sale_order import SaleOrder
+from odoo.addons.stock.models.stock_picking import Picking
+from odoo.addons.stock.models.stock_quant import QuantPackage
 
 from .schema import (
     Address,
@@ -69,11 +69,11 @@ class ClickshipProvider:
         if len(rates) == 0:
             raise ValidationError(_("Could not fetch any rates!"))
 
-        if isinstance(order, Picking) and order.clickship_service_id:  # type: ignore
+        if isinstance(order, Picking) and order.clickship_service_id:
             rate = [
                 x
                 for x in filter(
-                    lambda x: x.service_id == order.clickship_service_id,  # type: ignore
+                    lambda x: x.service_id == order.clickship_service_id,
                     rates,
                 )
             ].pop()
@@ -143,7 +143,7 @@ class ClickshipProvider:
         endpoint: str,
         method: str = "GET",
         payload: None | dict | BaseModel | str = None,
-    ):
+    ) -> dict[str, Any]:
         if payload is None:
             payload = {}
         headers = {"Content-Type": "application/json", "Authorization": f"{self.token}"}
@@ -199,14 +199,17 @@ class ClickshipProvider:
 
     def _get_requested_rate(self, rate_id: str) -> RateResponse:
         response = self._make_api_request(f"rate/{rate_id}", "GET")
-        response = RateResponse.model_validate(response)
-        return response
+        model = RateResponse.model_validate(response)
+        return model
 
     def _post_book_shipment(self, shipment_data: ShipmentRequest) -> str:
         # Books a shipment for shipment_data, getting a shipment_id back
         try:
             response = self._make_api_request("shipment", "POST", payload=shipment_data)
-            return response["id"]  # type: ignore
+            if isinstance(response["id"], str):
+                return response["id"]
+            else:
+                raise ValidationError(_("shipment_id not a string"))
         except KeyError:
             _logger.error(
                 f"""Could not book shipment:\n {
@@ -229,8 +232,7 @@ class ClickshipProvider:
         if not got_response:
             raise ValidationError(_("Timed out!"))
         try:
-            response = Shipment.model_validate(response["shipment"])
-            return response
+            return Shipment.model_validate(response["shipment"])
         except KeyError:
             raise ValidationError(
                 _(f"Could not get shipment status for {shipment_id}: {response}")

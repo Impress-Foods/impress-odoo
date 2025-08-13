@@ -68,8 +68,8 @@ class ObiboxCarrier(models.Model):
             tracking_numbers = ",".join(
                 [x.tracking_number for x in booking["trackings"]]
             )
-            picking.obibox_tracking_numbers = tracking_numbers  # type: ignore
-            att_id = self.env["ir.attachment"].create(  # noqa
+            picking.obibox_tracking_numbers = tracking_numbers
+            att_id = self.env["ir.attachment"].create(
                 {
                     "name": f"{picking.name} Shipping Label",
                     "type": "binary",
@@ -80,7 +80,7 @@ class ObiboxCarrier(models.Model):
                     "mimetype": "text/plain",
                 }
             )
-            picking.shipping_label_attachment_id = att_id.id  # type: ignore
+            picking.shipping_label_attachment_id = att_id.id
         return res
 
     def obibox_get_tracking_link(self, picking: Picking) -> str:
@@ -93,7 +93,7 @@ class ObiboxCarrier(models.Model):
         )
         for picking in pickings:
             sr.cancel_shipment(picking)
-            picking.shipping_label_attachment_id.unlink()  # type: ignore
+            picking.shipping_label_attachment_id.unlink()
 
     def _obibox_get_default_custom_package_code(self) -> str:
         return ""
