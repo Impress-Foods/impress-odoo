@@ -35,7 +35,7 @@
         "data/billing_config_actions.xml",
     ],
     "installable": True,
-    "application": True,
+    "application": False,
     "auto_install": False,
     "license": "GPL-2",
 }

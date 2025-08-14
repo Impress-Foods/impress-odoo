@@ -12,6 +12,7 @@
     # data files always loaded at installation
     "data": [
         "views/impress_mrp_customizations_production_order_views.xml",
+        "views/workorder_dashboard.xml",
     ],
     # data files containing optionally loaded demonstration data
     "demo": [],

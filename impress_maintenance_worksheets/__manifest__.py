@@ -10,7 +10,7 @@
         "data/ph_meter_calibration/worksheet_ph_meter_calibration_20250320.xml",
         "views/ph_meter_calibration/worksheet_ph_meter_calibration_20250320.xml",
     ],
-    "application": True,
+    "application": False,
     "installable": True,
     "auto_install": False,
     "license": "LGPL-3",

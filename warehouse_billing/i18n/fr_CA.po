@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-31 13:56+0000\n"
-"PO-Revision-Date: 2025-05-05 13:17+0000\n"
-"Last-Translator: Weblate Admin <admin@example.com>\n"
-"Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
+"PO-Revision-Date: 2025-06-19 14:27+0000\n"
+"Last-Translator: Weblate Admin <cparadis@impressfoods.com>\n"
+"Language-Team: French (Canada) <http://weblate.example.com/projects/"
 "impress-odoo/warehouse_billing/fr_CA/>\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.11\n"
+"X-Generator: Weblate 5.11.4\n"
 
 #. module: warehouse_billing
 #: model_terms:ir.ui.view,arch_db:warehouse_billing.view_warehouse_quant_group_form
@@ -150,7 +150,7 @@ msgstr "Créé par"
 #: model:ir.model.fields,field_description:warehouse_billing.field_wizard_generate_quant_history__create_date
 #: model:ir.model.fields,field_description:warehouse_billing.field_wizard_generate_warehouse_sale_order__create_date
 msgid "Created on"
-msgstr "Créé le"
+msgstr "Date de création"
 
 #. module: warehouse_billing
 #: model:ir.model.fields.selection,name:warehouse_billing.selection__warehouse_billing_config__measurement_type__cubic
@@ -259,7 +259,7 @@ msgstr "Délai de grâce"
 #: model_terms:ir.ui.view,arch_db:warehouse_billing.view_warehouse_billing_config_search
 #: model_terms:ir.ui.view,arch_db:warehouse_billing.view_warehouse_quant_group_search
 msgid "Group By"
-msgstr "Regrouper par"
+msgstr "Grouper par"
 
 #. module: warehouse_billing
 #: model:ir.model.fields,field_description:warehouse_billing.field_warehouse_billing_config__id
@@ -311,7 +311,7 @@ msgstr "Dernière date de facturation"
 #: model:ir.model.fields,field_description:warehouse_billing.field_wizard_generate_quant_history__write_uid
 #: model:ir.model.fields,field_description:warehouse_billing.field_wizard_generate_warehouse_sale_order__write_uid
 msgid "Last Updated by"
-msgstr "Dernière mise à jour par"
+msgstr "Mis à jour par"
 
 #. module: warehouse_billing
 #: model:ir.model.fields,field_description:warehouse_billing.field_warehouse_billing_config__write_date
@@ -321,7 +321,7 @@ msgstr "Dernière mise à jour par"
 #: model:ir.model.fields,field_description:warehouse_billing.field_wizard_generate_quant_history__write_date
 #: model:ir.model.fields,field_description:warehouse_billing.field_wizard_generate_warehouse_sale_order__write_date
 msgid "Last Updated on"
-msgstr "Dernière mise à jour le"
+msgstr "Mis à jour le"
 
 #. module: warehouse_billing
 #: model:ir.model.fields,field_description:warehouse_billing.field_warehouse_quant_history__location_id

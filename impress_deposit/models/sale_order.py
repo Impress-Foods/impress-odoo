@@ -39,7 +39,10 @@ class SaleOrder(models.Model):
         )
         partner_need_deposit = self.partner_id.requires_deposit
         order_stage = self.state not in ["cancel", "draft", "sent"]
-        return all([products_need_deposit, partner_need_deposit, order_stage])
+
+        b2b = all([products_need_deposit, partner_need_deposit, order_stage])
+        ecom = all([self.website_id])
+        return any([b2b, ecom])
 
     def _get_deposit_line(self) -> SaleOrderLine:
         self.ensure_one()
