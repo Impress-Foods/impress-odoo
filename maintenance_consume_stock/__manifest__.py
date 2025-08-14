@@ -9,6 +9,7 @@
     "data": [
         "data/locations.xml",
         "views/maintenance_request_views.xml",
+        "views/product_product_views.xml",
         "views/stock_scrap_views.xml",
     ],
     "installable": True,
