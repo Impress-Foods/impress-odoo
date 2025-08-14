@@ -1,4 +1,5 @@
 import logging
+from typing import Any
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
@@ -20,7 +21,7 @@ class StockPicking(models.Model):
     @api.depends(
         "clickship_service_id",
     )
-    def _compute_clickship_rate_needed(self):
+    def _compute_clickship_rate_needed(self) -> None:
         for picking in self:
             if (
                 picking.carrier_id.delivery_type == "clickship"
@@ -30,7 +31,7 @@ class StockPicking(models.Model):
             else:
                 picking.clickship_rate_needed = False
 
-    def action_get_clickship_rates(self) -> dict:
+    def action_get_clickship_rates(self) -> dict[str, Any]:
         response: RateResponse = self.carrier_id.clickship_get_raw_rates(self)
         raw_rates = response.rates
         raw_rates = [r for r in raw_rates if not r.transit_time_not_available]
@@ -78,7 +79,7 @@ class StockPicking(models.Model):
         rate_data.sort(key=lambda x: x["total"])
         return self.env["clickship.rate"].create(rate_data)
 
-    def _get_fields_stock_barcode(self):
+    def _get_fields_stock_barcode(self) -> list[str]:
         res = super()._get_fields_stock_barcode()
         res.append("clickship_rate_needed")
         return res

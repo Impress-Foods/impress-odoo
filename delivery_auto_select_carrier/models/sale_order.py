@@ -17,8 +17,7 @@ class SaleOrder(models.Model):
     )
 
     @api.depends("partner_id")
-    def _compute_auto_selected_carrier_id(self):
-        _logger.warning("Trying to fetch auto selected carrier")
+    def _compute_auto_selected_carrier_id(self) -> None:
         for rec in self:
             if not rec._compute_propagate_auto_carrier_id():
                 rec.auto_selected_carrier_id = False

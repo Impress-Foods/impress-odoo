@@ -49,7 +49,7 @@ class ObiboxProvider:
         if not prod_environment:
             self.url = "https://integrationapi.sandbox.agmtsolution.com/api/"
         else:
-            self.url = "https://api.obibox.com"
+            self.url = "https://integrationapi.expedigo.com/api/"
 
     def check_coverage(self, partner: Partner) -> bool:
         zip_code = partner.zip

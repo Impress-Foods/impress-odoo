@@ -19,18 +19,12 @@ patch(BarcodePickingModel.prototype, {
     },
 
     clickshipRateNeeded() {
-        const value = this.record.clickship_rate_needed;
-        if (value === true) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.record.clickship_rate_needed;
     },
 
     get displayValidateButton() {
         const res = super.displayValidateButton;
         const ratesNeeded = this.clickshipRateNeeded();
-        console.log(ratesNeeded);
         return res && !ratesNeeded;
     },
 });

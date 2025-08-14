@@ -1,5 +1,6 @@
 import base64
 import logging
+from typing import Any
 
 from odoo import _, fields, models
 from odoo.exceptions import ValidationError
@@ -8,6 +9,7 @@ from odoo.addons.sale.models.sale_order import SaleOrder
 from odoo.addons.stock.models.stock_picking import Picking
 
 from .clickship_request import ClickshipProvider
+from .schema import RateResponse
 
 _logger = logging.getLogger(__name__)
 
@@ -34,7 +36,9 @@ class ClickShipCarrier(models.Model):
         "clickship.payment_method", domain="[('delivery_carrier_id', '=', id)]"
     )
 
-    def clickship_rate_shipment(self, order: Picking | SaleOrder) -> dict:
+    def clickship_rate_shipment(
+        self, order: Picking | SaleOrder
+    ) -> dict[str, bool | float]:
         sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
         contact = self.clickship_contact
         res = sr.get_rate(order, contact)
@@ -47,17 +51,17 @@ class ClickShipCarrier(models.Model):
             "warning_message": False,
         }
 
-    def clickship_get_raw_rates(self, order: Picking | SaleOrder):
+    def clickship_get_raw_rates(self, order: Picking | SaleOrder) -> RateResponse:
         contact = self.clickship_contact
         sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
 
         res = sr.get_raw_rates(order, contact)
         return res
 
-    def clickship_send_shipping(self, pickings: Picking) -> list:
+    def clickship_send_shipping(self, pickings: Picking) -> list[dict[str, Any]]:
         contact = self.clickship_contact
         sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
-        res = []
+        res: list[dict[str, Any]] = []
         for picking in pickings:
             booking = sr.book_shipment(picking, contact)
             res.append(booking)
@@ -88,15 +92,13 @@ class ClickShipCarrier(models.Model):
             picking.clickship_shipment_id = None
             picking.clickship_tracking_url = None
             picking.shipping_label_attachment_id.unlink()
-
-            return
         else:
             raise ValidationError(_("Failed to cancel shipment!"))
 
     def _clickship_get_default_custom_package_code(self) -> str:
         return ""
 
-    def button_get_payment_methods(self):
+    def button_get_payment_methods(self) -> None:
         """Fetch payment methods from Clickship and update the model."""
         if not self.clickship_api_key:
             raise ValidationError(_("Clickship API key is not set."))

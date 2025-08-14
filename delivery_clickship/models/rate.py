@@ -24,5 +24,5 @@ class Rate(models.TransientModel):
     total = fields.Monetary()
     currency_id = fields.Many2one("res.currency")
 
-    def button_choose(self):
+    def button_choose(self) -> None:
         self.wizard_id.choose_rate(self)
