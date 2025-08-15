@@ -31,24 +31,27 @@
     }
 
     .a-submit {
-        background-color: var(--product-page-highlight-color);
-        border-color: var(--product-page-highlight-color);
+        background-color: var(--product-page-highlight-color, var(--o-cc1-link));
+        border-color: var(--product-page-highlight-color, var(--o-cc1-link));
         &:hover {
-            background-color: var(--product-page-highlight-sec-color);
-            border-color: var(--product-page-highlight-sec-color);
+            background-color: var(
+                --product-page-highlight-sec-color,
+                var(--o-cc1-link)
+            );
+            border-color: var(--product-page-highlight-sec-color, var(--o-cc1-link));
         }
     }
 
     .form-check-input {
         &:checked {
-            background-color: var(--product-page-highlight-color);
-            border-color: var(--product-page-highlight-color);
+            background-color: var(--product-page-highlight-color, var(--o-cc1-link));
+            border-color: var(--product-page-highlight-color, var(--o-cc1-link));
         }
         &:hover {
-            border-color: var(--product-page-highlight-color);
+            border-color: var(--product-page-highlight-color, var(--o-cc1-link));
         }
         &focus {
-            border-color: var(--product-page-highlight-color);
+            border-color: var(--product-page-highlight-color, var(--o-cc1-link));
         }
     }
 
