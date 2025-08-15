@@ -7,7 +7,6 @@
         <field name="model">clickship.payment_method</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="name" />
             </tree>
         </field>
     </record>
@@ -19,12 +18,6 @@
         <field name="arch" type="xml">
             <form string="Clickship Payment_method">
                 <sheet>
-                    <div class="oe_title">
-                        <label for="name" />
-                        <h1>
-                            <field name="name" placeholder="Name..." />
-                        </h1>
-                    </div>
                 </sheet>
             </form>
         </field>

@@ -67,7 +67,7 @@ class ClickShipCarrier(models.Model):
             res.append(booking)
             picking.clickship_tracking_url = booking["tracking_url"]
             picking.clickship_shipment_id = booking["shipment_id"]
-            att_id = self.env["ir.attachment"].create(  # noqa
+            att_id = self.env["ir.attachment"].create(
                 {
                     "name": f"{picking.name} Shipping Label",
                     "type": "binary",

@@ -142,7 +142,7 @@ class ClickshipProvider:
         endpoint: str,
         method: str = "GET",
         payload: None | dict | BaseModel | str = None,
-    ) -> dict[str, Any]:
+    ) -> dict[str, Any] | list[dict[str, Any]]:
         if payload is None:
             payload = {}
         headers = {"Content-Type": "application/json", "Authorization": f"{self.token}"}
@@ -205,10 +205,13 @@ class ClickshipProvider:
         # Books a shipment for shipment_data, getting a shipment_id back
         try:
             response = self._make_api_request("shipment", "POST", payload=shipment_data)
-            if isinstance(response["id"], str):
-                return response["id"]
-            else:
+            if not isinstance(response, dict):
+                raise ValidationError(_("response not a dict"))
+            elif not isinstance(response["id"], str):
                 raise ValidationError(_("shipment_id not a string"))
+            else:
+                return response["id"]
+
         except KeyError:
             _logger.error(
                 f"""Could not book shipment:\n {
@@ -224,14 +227,22 @@ class ClickshipProvider:
         loops = 0
         while not got_response and loops < 30:
             response = self._make_api_request(f"shipment/{shipment_id}", "GET")
-            got_response = not response.get("errors", False)
-            time.sleep(1)
-            loops += 1
+            if isinstance(response, dict):
+                got_response = not response.get("errors", False)
+                time.sleep(1)
+                loops += 1
+            else:
+                raise ValidationError(
+                    _("Could not get shipment status for {shipment_id}: {response}")
+                )
 
         if not got_response:
             raise ValidationError(_("Timed out!"))
         try:
+            if not isinstance(response, dict):
+                raise ValidationError(_("shipment not a dict"))
             return Shipment.model_validate(response["shipment"])
+
         except KeyError:
             raise ValidationError(
                 _(f"Could not get shipment status for {shipment_id}: {response}")
@@ -263,7 +274,11 @@ class ClickshipProvider:
         return True
 
     def _get_payment_methods(self) -> list[dict[str, str]]:
-        return self._make_api_request("finance/payment-methods", "GET")  # type: ignore
+        res = self._make_api_request("finance/payment-methods", "GET")
+        if isinstance(res, list):
+            return res
+        else:
+            return []
 
     def _make_origin(
         self, order: Picking | SaleOrder, contact: HrEmployeeBase | Partner

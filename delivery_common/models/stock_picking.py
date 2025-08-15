@@ -21,15 +21,13 @@ class StockPicking(models.Model):
     @api.depends("sale_id", "sale_id.note", "sale_id.delivery_message")
     def _compute_delivery_instructions(self) -> None:
         for picking in self:
+            note = ""
             if picking.sale_id:
                 if picking.sale_id.note:
-                    picking.delivery_instructions = text_from_html(picking.sale_id.note)
+                    note = text_from_html(picking.sale_id.note)
                 elif picking.sale_id.delivery_message:
-                    picking.delivery_instructions = picking.sale_id.delivery_message
-                else:
-                    picking.delivery_instructions = ""
-            else:
-                picking.delivery_instructions = ""
+                    note = picking.sale_id.delivery_message
+            picking.delivery_instructions = note
 
     def _get_autoprint_report_actions(self) -> list[dict]:
         report_actions: list[dict] = super()._get_autoprint_report_actions()

@@ -17,6 +17,6 @@ class WizardClickship_rates(models.TransientModel):
 
     rate_ids = fields.One2many("clickship.rate", "wizard_id")
 
-    def choose_rate(self, rate: Rate) -> dict:
+    def choose_rate(self, rate: Rate) -> dict[str, str]:
         self.picking_id.clickship_service_id = rate.service_id
         return {"type": "ir.actions.act_window_close"}
