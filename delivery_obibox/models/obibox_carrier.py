@@ -46,6 +46,7 @@ class ObiboxCarrier(models.Model):
             ("fri", "Friday"),
         ],
         default="mon",
+        help="Select the day when the package will be picked up.",
     )
 
     def obibox_rate_shipment(self, order: Picking | SaleOrder) -> dict:

@@ -1,4 +1,0 @@
-[[config]]
-name = "impress"
-extends = "base"
-addons_paths = ["./"]
