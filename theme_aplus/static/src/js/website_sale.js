@@ -5,6 +5,7 @@ import {patch} from "@web/core/utils/patch";
 patch(WebsiteSale.prototype, {
     willStart() {
         const res = super.willStart(...arguments);
+        console.log(this);
         if (this.el.dataset) {
             if (this.el.dataset.highlightColor) {
                 document

@@ -17,3 +17,10 @@ class ProductTemplate(models.Model):
     hero_image = fields.Binary()
     card_image = fields.Binary()
     carousel_order = fields.Integer()
+    ingredients = fields.Html(translate=True)
+
+
+class ProductVariant(models.Model):
+    _inherit = "product.product"
+    nutrition_entry_ids = fields.One2many("nutrition.fact.entry", "product_id")
+    nutrition_facts_size = fields.Char()

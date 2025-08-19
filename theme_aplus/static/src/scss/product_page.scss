@@ -1,10 +1,4 @@
 .oe_website_sale {
-    h1[itemprop="name"] {
-        word-break: break-word;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        color: var(--product-page-highlight-sec-color);
-    }
     .recipe-icons {
         width: 100px;
         height: 100px;
@@ -12,6 +6,16 @@
     .recipe-icons-plus {
         width: 20px;
         height: 20px;
+    }
+
+    .ingredients-block {
+        padding-left: 0.3rem;
+        .ingredient-list {
+            margin-bottom: 0px !important;
+            p {
+                margin-bottom: 0px !important;
+            }
+        }
     }
 
     @media (max-width: 767.98px) {
@@ -24,79 +28,42 @@
             height: 5px;
         }
     }
-
     path {
-        fill: var(--product-page-highlight-color);
         fill-rule: nonzero;
-    }
-
-    .a-submit {
-        background-color: var(--product-page-highlight-color, var(--o-cc1-link));
-        border-color: var(--product-page-highlight-color, var(--o-cc1-link));
-        &:hover {
-            background-color: var(
-                --product-page-highlight-sec-color,
-                var(--o-cc1-link)
-            );
-            border-color: var(--product-page-highlight-sec-color, var(--o-cc1-link));
-        }
-    }
-
-    .form-check-input {
-        &:checked {
-            background-color: var(--product-page-highlight-color, var(--o-cc1-link));
-            border-color: var(--product-page-highlight-color, var(--o-cc1-link));
-        }
-        &:hover {
-            border-color: var(--product-page-highlight-color, var(--o-cc1-link));
-        }
-        &focus {
-            border-color: var(--product-page-highlight-color, var(--o-cc1-link));
-        }
     }
 
     .breadcrumb-item {
         a {
-            color: var(--product-page-highlight-color, var(--o-cc1-link));
-        }
-        a:hover {
-            color: var(--product-page-highlight-sec-color, var(--o-cc1-link));
-        }
-    }
-    .oe_price {
-        color: var(--product-page-highlight-color);
-    }
-
-    .fa-minus {
-        color: var(--product-page-highlight-color);
-        &:hover {
-            color: var(--product-page-highlight-sec-color);
+            color: inherit;
         }
     }
 
-    .fa-plus {
-        color: var(--product-page-highlight-color);
-        &:hover {
-            color: var(--product-page-highlight-sec-color);
-        }
+    .related-product-header {
+        display: flex;
+        align-items: center;
+        font-size: 1.2rem;
+        padding-bottom: 0.5rem;
+        font-weight: bolder;
+    }
+
+    .related-product-header::after {
+        content: " ";
+        flex: 1;
+        height: 2px;
+        margin-left: 1.4rem;
+        border-bottom: 1px solid var(--o-border-color);
     }
 }
-.navbar-light {
-    .btn-outline-secondary {
-        color: var(--product-page-highlight-sec-color, var(--light));
-        border-color: var(--product-page-highlight-sec-color, var(--light));
 
-        &:hover {
-            background-color: var(--product-page-highlight-sec-color, var(--light));
-        }
-    }
-    .btn-outline-primary {
-        color: var(--product-page-highlight-sec-color, var(--light));
-        border-color: var(--product-page-highlight-sec-color, var(--light));
-
-        &:hover {
-            background-color: var(--product-page-highlight-sec-color, var(--light));
-            border-color: var(--product-page-highlight-sec-color, var(--light));
-        }
-    }
-}
+// .form-check-input {
+//     &:checked {
+//         background-color: var(--product-page-highlight-color, var(--o-cc1-link));
+//         border-color: var(--product-page-highlight-color, var(--o-cc1-link));
+//     }
+//     &:hover {
+//         border-color: var(--product-page-highlight-color, var(--o-cc1-link));
+//     }
+//     &focus {
+//         border-color: var(--product-page-highlight-color, var(--o-cc1-link));
+//     }
+// }

@@ -7,6 +7,8 @@
     "category": "Theme/Website",
     "depends": ["web", "website", "website_sale"],
     "data": [
+        "views/vectors.xml",
+        "security/ir.model.access.csv",
         "views/snippets/s_dynamic_content.xml",
         "data/shapes.xml",
         "views/product_card.xml",

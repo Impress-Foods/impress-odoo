@@ -52,15 +52,10 @@
     vertical-align: baseline !important;
 }
 .input-group {
-    border: solid 1px var(--product-page-highlight-color, --light);
+    border: solid 1px var(--light);
     border-radius: 8px;
-
     .search-query.oe_search_box {
         background-color: var(--o-cc1-bg) !important;
-    }
-    .oe_search_button {
-        background-color: var(--product-page-highlight-color, var(--light)) !important;
-        border-color: var(--product-page-highlight-color, var(--light)) !important;
     }
 }
 
