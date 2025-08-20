@@ -27,3 +27,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:impress_manufacturing_customizations.field_mrp_production__sequence
 msgid "Sequence"
 msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.workorder_dashboard_view_search
+msgid "Today"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model:ir.ui.menu,name:impress_manufacturing_customizations.workorder_dashboard_menu
+msgid "Workorder Dashboard"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model:ir.actions.act_window,name:impress_manufacturing_customizations.action_workorder_dashboard
+msgid "Workorders"
+msgstr ""

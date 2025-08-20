@@ -53,6 +53,11 @@ msgid "Current Preventive"
 msgstr ""
 
 #. module: impress_maintenance
+#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__description
+msgid "Description"
+msgstr ""
+
+#. module: impress_maintenance
 #: model:ir.model,name:impress_maintenance.model_hr_employee
 msgid "Employee"
 msgstr ""
