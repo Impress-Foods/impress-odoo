@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- View rate View Tree -->
+    <record id="view_rate_tree" model="ir.ui.view">
+        <field name="name">view.rate.tree</field>
+        <field name="model">clickship.rate</field>
+        <field name="arch" type="xml">
+            <tree create="false" edit="false" delete="false">
+                <field name="carrier_name" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- View rate form -->
+    <record id="view_rate_form" model="ir.ui.view">
+        <field name="name">view.rate.form</field>
+        <field name="model">clickship.rate</field>
+        <field name="arch" type="xml">
+            <form string="Rate">
+                <sheet>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View rate search -->
+    <record id="view_rate_search" model="ir.ui.view">
+        <field name="name">view.rate.search</field>
+        <field name="model">clickship.rate</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By">
+                    <filter
+                        string="service_name"
+                        name="name"
+                        domain="[]"
+                        context="{'group_by':'service_name'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action rate -->
+    <record id="action_rate" model="ir.actions.act_window">
+        <field name="name">Rate</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">clickship.rate</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new Rate.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -92,6 +92,6 @@ docs/_build/
 /.devcontainer
 docker-compose.yml
 mypy.ini
+/.extra_modules
 .claude
 CLAUDE.md
-.extra_modules/

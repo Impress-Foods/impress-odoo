@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- View stock.picking form -->
+    <record id="view_stock_picking_form" model="ir.ui.view">
+        <field name="name">view.stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_open_label_type']" position="after">
+                <field name="shipping_label_attachment_id" invisible="1" />
+                <button
+                    name="%(delivery_common.report_shipping_label)d"
+                    type="action"
+                    string="Print Shipping Label"
+                    invisible="not shipping_label_attachment_id"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock_picking_kanban" model="ir.ui.view">
+        <field name="name">stock.picking.view.kanban</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.stock_picking_kanban" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='picking_properties']" position="after">
+                <field name="carrier_id" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
