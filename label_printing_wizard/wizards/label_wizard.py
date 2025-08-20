@@ -94,7 +94,7 @@ class LabelWizard(models.TransientModel):
             record.lot_domain = domain
 
     @api.depends("model")
-    def _compute_label_report(self):
+    def _compute_label_report(self) -> None:
         for record in self:
             match record.model:
                 case "product":
@@ -120,7 +120,7 @@ class LabelWizard(models.TransientModel):
                             )
 
     @api.onchange("picking_id", "product_id", "lot_id")
-    def get_product_qty(self):
+    def get_product_qty(self) -> None:
         for record in self:
             if len(record.picking_id) == 0 or len(record.product_id) == 0:
                 return
