@@ -32,9 +32,7 @@
                         </t>
                     </t>
                     <t name="barcode">
-                        <t
-                            t-if="lot['lot_record'].product_id.valid_ean and lot['gs1_barcode']"
-                        >
+                        <t t-if="lot['gs1_barcode']">
                             <t
                                 t-out="'^FO550,50^BY3 ^BXN,11,200 ^FD' + lot['gs1_barcode'] + '^FS'"
                             />
@@ -79,9 +77,7 @@
                         </t>
                     </t>
                     <t name="barcode">
-                        <t
-                            t-if="lot['lot_record'].product_id.valid_ean and lot['gs1_barcode']"
-                        >
+                        <t t-if="lot['gs1_barcode']">
                             <t
                                 t-out="'^FO100,800^BY3 ^BXR,20,200 ^FD' + lot['gs1_barcode'] + '^FS'"
                             />
