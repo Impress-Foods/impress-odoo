@@ -39,6 +39,7 @@ jobs:
               impress_quality_customizations, impress_project_billing_production,
               impress_lot_lab
             name: test all modules
+            makepot: "true"
     services:
       postgres:
         image: postgres:12.0
@@ -65,3 +66,8 @@ jobs:
       - uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Update .pot files
+        run:
+          oca_export_and_push_pot https://x-access-token:${{
+          secrets.GIT_PUSH_TOKEN}}@github.com/${{ github.repository }}
+        if: ${{ matrix.makepot == 'true' && github.event_name == 'push' }}

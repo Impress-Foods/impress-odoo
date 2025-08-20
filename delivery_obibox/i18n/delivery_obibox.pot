@@ -1,0 +1,115 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* delivery_obibox
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_stock_package_type__package_carrier_type
+msgid "Carrier"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields,help:delivery_obibox.field_delivery_carrier__obibox_label_format
+msgid "Format of the label to be printed."
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__obibox_delivery_day__fri
+msgid "Friday"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__obibox_label_format
+msgid "Label Format"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__obibox_delivery_day__mon
+msgid "Monday"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__delivery_type__obibox
+#: model:ir.model.fields.selection,name:delivery_obibox.selection__stock_package_type__package_carrier_type__obibox
+msgid "Obibox"
+msgstr ""
+
+#. module: delivery_obibox
+#: model_terms:ir.ui.view,arch_db:delivery_obibox.view_delivery_carrier_form
+msgid "Obibox Configuration"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__obibox_delivery_day
+msgid "Obibox Delivery Day"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__obibox_api_key
+msgid "Obibox Key"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_stock_picking__obibox_tracking_numbers
+msgid "Obibox Tracking Numbers"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__obibox_username
+msgid "Obibox Username"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__obibox_label_format__pdf
+msgid "PDF"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__delivery_type
+msgid "Provider"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model,name:delivery_obibox.model_delivery_carrier
+msgid "Shipping Methods"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model,name:delivery_obibox.model_stock_package_type
+msgid "Stock package type"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__obibox_delivery_day__thu
+msgid "Thursday"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model,name:delivery_obibox.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__obibox_delivery_day__tue
+msgid "Tuesday"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__obibox_delivery_day__wed
+msgid "Wednesday"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__obibox_label_format__zpl
+msgid "ZPL"
+msgstr ""

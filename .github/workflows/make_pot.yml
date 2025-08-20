@@ -3,8 +3,7 @@ name: make pot files
 on:
   push:
     branches:
-      - "17.0"
-
+      - "NONE"
 jobs:
   update-pot-files:
     runs-on: ubuntu-22.04
