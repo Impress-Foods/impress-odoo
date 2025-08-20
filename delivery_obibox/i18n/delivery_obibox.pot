@@ -80,6 +80,11 @@ msgid "Provider"
 msgstr ""
 
 #. module: delivery_obibox
+#: model:ir.model.fields,help:delivery_obibox.field_delivery_carrier__obibox_delivery_day
+msgid "Select the day when the package will be picked up."
+msgstr ""
+
+#. module: delivery_obibox
 #: model:ir.model,name:delivery_obibox.model_delivery_carrier
 msgid "Shipping Methods"
 msgstr ""
