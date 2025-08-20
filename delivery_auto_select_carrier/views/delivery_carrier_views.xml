@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- View delivery.carrier form -->
+    <record id="view_delivery_carrier_form" model="ir.ui.view">
+        <field name="name">view.delivery.carrier.form</field>
+        <field name="model">delivery.carrier</field>
+        <field name="inherit_id" ref="delivery.view_delivery_carrier_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='integration_level']" position="after">
+                <field name="can_be_auto_selected" />
+                <field
+                    name="priority"
+                    required="can_be_auto_selected"
+                    invisible="not can_be_auto_selected"
+                />
+            </xpath>
+        </field>
+    </record>
+
+
+    <!-- View delivery.carrier tree -->
+    <record id="view_delivery_carrier_tree" model="ir.ui.view">
+        <field name="name">view.delivery.carrier.tree</field>
+        <field name="model">delivery.carrier</field>
+        <field name="inherit_id" ref="delivery.view_delivery_carrier_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='delivery_type']" position="after">
+                <field name="priority" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
