@@ -140,6 +140,100 @@
             </t>
         </xpath>
     </template>
+    <template id="product" inherit_id="website_sale.product">
+        <!-- <xpath expr="//section" position="attributes">
+            <attribute
+                name="t-att-data-highlight-color"
+            >product.primary_color</attribute>
+            <attribute
+                name="t-att-data-highlight-sec-color"
+            >product.secondary_color</attribute>
+        </xpath> -->
+
+        <!-- Set color for elements using t-attf-style -->
+        <xpath expr="//ol[hasclass('breadcrumb')][1]" position="attributes">
+            <attribute name="t-attf-style">color:{{product.primary_color}};</attribute>
+        </xpath>
+        <xpath expr="//div[@id='add_to_cart_wrap']/a" position="attributes">
+            <attribute name="t-attf-style">
+                background-color:{{product.primary_color}};border-color:{{product.primary_color}};</attribute>
+        </xpath>
+        <xpath expr="//i[hasclass('fa-minus')][1]" position="attributes">
+            <attribute name="t-attf-style">
+                color:{{product.primary_color}};</attribute>
+        </xpath>
+        <xpath expr="//i[hasclass('fa-plus')][1]" position="attributes">
+            <attribute name="t-attf-style">
+                color:{{product.primary_color}};</attribute>
+        </xpath>
+        <xpath expr="//div[@id='o_wsale_cta_wrapper']/div[1]" position="attributes">
+            <attribute name="t-attf-style">
+                border-color:{{product.primary_color}};</attribute>
+        </xpath>
+        <xpath expr="//h1[@itemprop='name']" position="attributes">
+            <attribute name="t-attf-style">color:{{product.primary_color}};</attribute>
+        </xpath>
+
+        <!-- Dynamic-ish links to other products in the same category -->
+        <xpath expr="//input[@id='wsale_user_email']" position="after">
+            <div
+                class="related-flavors-block"
+                t-if="len(product_variant.public_categ_ids.product_tmpl_ids) > 1"
+            >
+                <div>
+                    <span class="subsection-header">Flavors</span>
+                </div>
+                <div class="related-flavors">
+                    <t
+                        t-foreach="product_variant.public_categ_ids.product_tmpl_ids"
+                        t-as="rel_product"
+                    >
+                        <div
+                            class="d-flex flex-column align-items-center related-flavor"
+                            t-if="rel_product.name != product.name"
+                        >
+                            <a
+                                class="related-product"
+                                t-attf-href="{{rel_product.website_url}}"
+                            >
+                                <!-- <image class="related-flavor-image"
+                                    t-attf-src="/web/image/product.template/{{rel_product.id}}/suggestion_image"
+                                /> -->
+                                <image
+                                    class="related-flavor-image"
+                                    t-attf-src="/web/image/product.template/{{rel_product.id}}/image_512"
+                                />
+                            </a>
+                            <span t-out="rel_product.name" />
+                        </div>
+
+                    </t>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[@id='product_details']" position="inside">
+
+            <div
+                id="vector_images"
+                class="icon-block"
+                t-attf-style="fill:{{product.primary_color}};"
+            >
+                <t t-call="theme_aplus.fruit_vector" />
+                <t t-call="theme_aplus.plus_vector" />
+                <t t-call="theme_aplus.water_vector" />
+                <t t-call="theme_aplus.plus_vector" />
+                <t t-call="theme_aplus.maple_vector" />
+            </div>
+            <div class="icon-block">
+                <img
+                    src="/theme_aplus/static/src/images/AlimentsDuQuebec_Logo_Renv.svg"
+                    width="100px"
+                    height="100px"
+                />
+            </div>
+
+        </xpath>
+    </template>
 
     <template
         id="snippet_options_ecom"
@@ -208,14 +302,18 @@
         active="False"
         inherit_id="website_sale.product"
     >
-        <xpath expr="//div[@id='product_attributes_simple']" position="before">
-            <!-- <div class="ingredients-block d-flex flex-column pb-5">
-                <h6>Ingredients</h6>
-                <span class="text-muted ingredient-list" t-field="product.ingredients" />
-            </div> -->
+        <xpath expr="//div[@id='vector_images']" position="before">
+            <div class="ingredients-block d-flex flex-column pb-5">
+                <span class="subsection-header">Ingredients</span>
+                <span
+                    class="text-muted ingredient-list"
+                    t-field="product.ingredients"
+                />
+            </div>
         </xpath>
 
     </template>
+
     <template id="group_by_categories" name="Group By Categories" active="False" />
 
     <template
@@ -224,98 +322,24 @@
         name="Wavy Cards Product Design"
     />
 
-
-    <template id="product" inherit_id="website_sale.product">
-        <xpath expr="//section" position="attributes">
-            <attribute
-                name="t-att-data-highlight-color"
-            >product.primary_color</attribute>
-            <attribute
-                name="t-att-data-highlight-sec-color"
-            >product.secondary_color</attribute>
-        </xpath>
-
-        <!-- Set color for elements using t-attf-style -->
-        <xpath expr="//ol[hasclass('breadcrumb')][1]" position="attributes">
-            <attribute name="t-attf-style">color:{{product.primary_color}};</attribute>
-        </xpath>
-        <xpath expr="//div[@id='add_to_cart_wrap']/a" position="attributes">
-            <attribute name="t-attf-style">
-                background-color:{{product.primary_color}};border-color:{{product.primary_color}};</attribute>
-        </xpath>
-        <xpath expr="//i[hasclass('fa-minus')][1]" position="attributes">
-            <attribute name="t-attf-style">
-                color:{{product.primary_color}};</attribute>
-        </xpath>
-        <xpath expr="//i[hasclass('fa-plus')][1]" position="attributes">
-            <attribute name="t-attf-style">
-                color:{{product.primary_color}};</attribute>
-        </xpath>
-        <xpath expr="//div[@id='o_wsale_cta_wrapper']/div[1]" position="attributes">
-            <attribute name="t-attf-style">
-                border-color:{{product.primary_color}};</attribute>
-        </xpath>
-        <xpath expr="//h1[@itemprop='name']" position="attributes">
-            <attribute name="t-attf-style">color:{{product.primary_color}};</attribute>
-        </xpath>
-
-        <!-- Dynamic-ish links to other products in the same category -->
-        <xpath expr="//input[@id='wsale_user_email']" position="after">
-            <div
-                class="d-flex flex-column pb-2"
-                t-if="len(product_variant.public_categ_ids.product_tmpl_ids) > 1"
-            >
-                <div>
-                    <span class="related-product-header">Flavors</span>
-                </div>
-                <div>
-                    <t
-                        t-foreach="product_variant.public_categ_ids.product_tmpl_ids"
-                        t-as="rel_product"
-                    >
-                        <div
-                            class="d-flex flex-column"
-                            t-if="rel_product.name != product.name"
-                        >
-                            <a
-                                class="related-product"
-                                t-attf-href="{{rel_product.website_url}}"
-                            >
-                                <image
-                                    t-attf-src="/web/image/product.template/{{rel_product.id}}/image_512"
-                                    height="50"
-                                />
-                            </a>
-                            <!-- <span t-out="rel_product.name" /> -->
-                        </div>
-
-                    </t>
-                </div>
-            </div>
-        </xpath>
-    </template>
-
-    <template id="variants" inherit_id="website_sale.variants">
-        <xpath expr="//ul" position="inside">
-
-        </xpath>
-    </template>
-
     <template id="search" inherit_id="website.website_search_box">
         <xpath expr="//div" position="attributes">
             <attribute
                 name="t-attf-style"
-            >border-color:{{product.primary_color}};</attribute>
+            >border-color:{{product.primary_color if product else ''}};</attribute>
         </xpath>
         <xpath expr="//div/button" position="attributes">
             <attribute name="t-attf-style">
-                background-color:{{product.primary_color}};border-color:{{product.primary_color}};</attribute>
+                background-color:{{product.primary_color if product else ''}};
+                border-color:{{product.primary_color if product else ''}};</attribute>
         </xpath>
     </template>
 
     <template id="product_price" inherit_id="website_sale.product_price">
         <xpath expr="//span[hasclass('oe_price')]" position="attributes">
-            <attribute name="t-attf-style">color:{{product.primary_color}};</attribute>
+            <attribute
+                name="t-attf-style"
+            >color:{{product.primary_color if product else ''}};</attribute>
         </xpath>
     </template>
 
@@ -324,13 +348,17 @@
         active="False"
         inherit_id="website_sale.product"
     >
-        <xpath expr="//div[@id='product_detail_main']" position="after">
-            <div class="row flex flex-row w-100">
-                <div class="nutrition-table w-50 justify-center" id="nutrition_table">
+
+        <xpath expr="//div[@id='product_detail_main']/div[1]" position="after">
+            <div class="d-flex col-lg-6 mt-lg-4 flex-column align-items-center">
+                <div
+                    class="nutrition-table justify-center pt-4 w-100"
+                    id="nutrition_table"
+                >
                     <table class="table caption-top">
                         <caption
                             t-if="product_variant.nutrition_facts_size"
-                            t-out="'Nutritional Value (for '+product_variant.nutrition_facts_size+')'"
+                            t-out="'Nutritional Values (for '+product_variant.nutrition_facts_size+')'"
                         />
                         <thead>
                             <tr>
@@ -344,12 +372,18 @@
                                 t-as="entry"
                             >
                                 <tr
-                                    t-attf-style="background:{{product.primary_color if entry_parity =='even' else ''}};"
+                                    t-attf-style="background:{{product.secondary_color if entry_parity =='even' else ''}};"
                                 >
-                                    <th class="text-center">
+                                    <th
+                                        class="text-center"
+                                        t-attf-style="color:{{product.text_color if entry_parity =='even' else ''}};"
+                                    >
                                         <t t-out="entry.name" />
                                     </th>
-                                    <td class="text-center">
+                                    <td
+                                        class="text-center"
+                                        t-attf-style="color:{{product.text_color if entry_parity =='even' else ''}};"
+                                    >
                                         <t t-out="entry.value" />
                                     </td>
                                 </tr>
@@ -357,34 +391,15 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="w-50" style=" align-items">
-                    <div class="ingredients-block d-flex flex-column pb-5">
-                        <h6>Ingredients</h6>
-                        <span
-                            class="text-muted ingredient-list"
-                            t-field="product.ingredients"
-                        />
-                    </div>
-                    <div
-                        class="icon-block"
-                        t-attf-style="fill:{{product.primary_color}};"
-                    >
-                        <t t-call="theme_aplus.fruit_vector" />
-                        <t t-call="theme_aplus.plus_vector" />
-                        <t t-call="theme_aplus.water_vector" />
-                        <t t-call="theme_aplus.plus_vector" />
-                        <t t-call="theme_aplus.maple_vector" />
-                    </div>
-                    <div class="icon-block">
-                        <img
-                            src="/theme_aplus/static/src/images/AlimentsDuQuebec_Logo_Renv.svg"
-                            width="100px"
-                            height="100px"
-                        />
-                    </div>
-                </div>
             </div>
+
         </xpath>
+        <!-- Move the image carousel into the new div to fix the sticky image bug -->
+        <xpath expr="//div[@id='product_detail_main']/div[2]/div" position="before">
+            <xpath expr="//div[@id='product_detail_main']/div[1]" position="move" />
+        </xpath>
+
+
     </template>
 
 

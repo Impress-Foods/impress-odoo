@@ -1,10 +1,12 @@
 .carousel {
     .finger-pointer-right {
-        scale: 0.06 !important;
+        scale: 0.03 !important;
         rotate: 90deg;
+        padding-left: 50px;
     }
     .finger-pointer-left {
-        scale: -0.06 0.06 !important;
+        scale: -0.03 0.03 !important;
         rotate: -90deg;
+        padding-right: 50px;
     }
 }

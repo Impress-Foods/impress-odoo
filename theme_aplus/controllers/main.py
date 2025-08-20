@@ -3,8 +3,6 @@ import logging
 from odoo import http
 from odoo.http import request
 
-from odoo.addons.website_sale.controllers.main import WebsiteSale
-
 _logger = logging.getLogger(__name__)
 
 
@@ -23,15 +21,3 @@ class ThemeAPlus(http.Controller):
 
             return values_list
         raise ValueError("Invalid filter")
-
-
-class WebsiteSaleController(WebsiteSale):
-    def _get_additional_extra_shop_values(self, values, **post):
-        res = super()._get_additional_extra_shop_values(values, **post)
-        _logger.warning(res)
-        return res
-
-    def _prepare_product_values(self, product, category, search, **kwargs):
-        res = super()._prepare_product_values(product, category, search, **kwargs)
-        _logger.warning(res)
-        return res

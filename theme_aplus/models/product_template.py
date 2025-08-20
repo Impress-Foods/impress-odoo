@@ -16,6 +16,8 @@ class ProductTemplate(models.Model):
     hero_background = fields.Binary()
     hero_image = fields.Binary()
     card_image = fields.Binary()
+    suggestion_image = fields.Binary()
+
     carousel_order = fields.Integer()
     ingredients = fields.Html(translate=True)
 
