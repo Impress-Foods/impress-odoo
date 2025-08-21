@@ -6,27 +6,30 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-08-21 19:59+0000\n"
+"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
+"impress-odoo/gs1_sequences/fr_CA/>\n"
+"Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: gs1_sequences
 #: model:ir.model.fields,field_description:gs1_sequences.field_ir_sequence__check_digit
 msgid "Check Digit"
-msgstr ""
+msgstr "Chiffre de vérification"
 
 #. module: gs1_sequences
 #. odoo-python
 #: code:addons/gs1_sequences/models/ir_sequence.py:0
 #, python-format
 msgid "Code must be numeric"
-msgstr ""
+msgstr "Code doit être numérique"
 
 #. module: gs1_sequences
 #: model:ir.model,name:gs1_sequences.model_ir_sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Séquence"
