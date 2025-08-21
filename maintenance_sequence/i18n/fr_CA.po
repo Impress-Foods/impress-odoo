@@ -1,0 +1,37 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* maintenance_sequence
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr_CA\n"
+
+#. module: maintenance_sequence
+#: model:ir.model,name:maintenance_sequence.model_maintenance_request
+msgid "Maintenance Request"
+msgstr ""
+
+#. module: maintenance_sequence
+#. odoo-python
+#: code:addons/maintenance_sequence/models/maintenance_request.py:0
+#, python-format
+msgid "New"
+msgstr ""
+
+#. module: maintenance_sequence
+#: model_terms:ir.ui.view,arch_db:maintenance_sequence.view_maintenance_request_tree
+msgid "Request"
+msgstr ""
+
+#. module: maintenance_sequence
+#: model:ir.model.fields,field_description:maintenance_sequence.field_maintenance_request__sequence
+msgid "Sequence"
+msgstr ""

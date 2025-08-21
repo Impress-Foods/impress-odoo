@@ -1,0 +1,45 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* impress_sales_customizations
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr_CA\n"
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
+msgid "<strong>Customer — </strong>"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
+msgid "Invoiced"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
+msgid "Nothing to invoice"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
+msgid "Sale"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
+msgid "Sales Orders"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
+msgid "To invoice"
+msgstr ""
