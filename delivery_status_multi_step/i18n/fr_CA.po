@@ -6,35 +6,38 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-08-21 19:59+0000\n"
+"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
+"impress-odoo/delivery_status_multi_step/fr_CA/>\n"
+"Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: delivery_status_multi_step
 #: model:ir.model.fields,field_description:delivery_status_multi_step.field_sale_order__delivery_status
 msgid "Delivery Status"
-msgstr ""
+msgstr "Statut de livraison"
 
 #. module: delivery_status_multi_step
 #: model:ir.model.fields.selection,name:delivery_status_multi_step.selection__sale_order__delivery_status__in_prep
 msgid "In Preparation"
-msgstr ""
+msgstr "En préparation"
 
 #. module: delivery_status_multi_step
 #: model:ir.model.fields.selection,name:delivery_status_multi_step.selection__sale_order__delivery_status__prep_ready
 msgid "Ready to Prepare"
-msgstr ""
+msgstr "Prêt à être préparé"
 
 #. module: delivery_status_multi_step
 #: model:ir.model.fields.selection,name:delivery_status_multi_step.selection__sale_order__delivery_status__ready
 msgid "Ready to ship"
-msgstr ""
+msgstr "Prêt à l'expédition"
 
 #. module: delivery_status_multi_step
 #: model:ir.model,name:delivery_status_multi_step.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Bon de vente"
