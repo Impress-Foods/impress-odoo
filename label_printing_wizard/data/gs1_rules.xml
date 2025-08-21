@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <record id="barcode_rule_gs1_gtin13" model="barcode.rule">
+        <field name="name">Global Trade Item Number (GTIN13)</field>
+        <field
+            name="barcode_nomenclature_id"
+            ref="barcodes_gs1_nomenclature.default_gs1_nomenclature"
+        />
+        <field name="sequence">101</field>
+        <field name="encoding">gs1-128</field>
+        <field name="pattern">(01)(\d{13})</field>
+        <field name="type">product</field>
+        <field name="gs1_content_type">identifier</field>
+    </record>
+</odoo>

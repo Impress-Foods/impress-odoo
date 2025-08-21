@@ -69,6 +69,11 @@ msgid "Parts"
 msgstr ""
 
 #. module: maintenance_consume_stock
+#: model:ir.model,name:maintenance_consume_stock.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: maintenance_consume_stock
 #: model:ir.model,name:maintenance_consume_stock.model_stock_scrap
 msgid "Scrap"
 msgstr ""

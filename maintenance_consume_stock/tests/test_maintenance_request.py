@@ -28,7 +28,7 @@ class TestMaintenanceRequest(TransactionCase):
             }
         )
 
-        self.scrap.create(
+        scrap_id = self.scrap.create(
             {
                 "maintenance_request_id": request.id,
                 "product_id": self.product.id,
@@ -37,6 +37,7 @@ class TestMaintenanceRequest(TransactionCase):
         )
 
         self.assertEqual(len(request.scrap_ids), 1)
+        self.assertEqual(scrap_id.maintenance_request_id.id, request.id)
 
     def test_delete_draft_scrap(self):
         request = self.request_model.create(

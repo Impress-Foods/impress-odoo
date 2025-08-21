@@ -10,25 +10,84 @@
         <field name="inherit_id" ref="stock.report_delivery_document" />
         <field name="priority">50</field>
         <field name="arch" type="xml">
-            <xpath expr="//*[@name='div_sched_date']" position="after">
-                <div class="col-auto" name="total_qty_shipped">
-                    <strong>Total cases shipped:</strong>
-                    <t t-set="total_qty" t-value="0" />
-                    <t t-set="lines" t-value="o.move_ids" />
-                    <t t-foreach="lines" t-as="move">
-                        <t
-                            t-set="total_qty"
-                            t-value="total_qty + move.product_uom_qty"
-                        />
-                    </t>
-                    <p>
-                        <t t-out="total_qty" />
-                    </p>
-                </div>
+            <xpath expr="//table[@name='stock_move_table']/tbody" position="after">
             </xpath>
         </field>
     </record>
 
+    <record
+        id="impress_stock_report_delivery_document_add_column_sums"
+        model="ir.ui.view"
+    >
+        <field name="name">
+            stock.report_delivery_document.impress.add_column_sums</field>
+        <field name="inherit_id" ref="stock.report_delivery_document" />
+        <field name="priority">51</field>
+        <field name="arch" type="xml">
+            <!-- Sums for transfer in process -->
+            <xpath expr="//table[1]/tbody/tr" position="before">
+                <t t-set="total_ordered" t-value="0" />
+                <t t-set="total_delivered" t-value="0" />
+            </xpath>
+            <xpath expr="//table[1]/tbody/tr/td[1]" position="before">
+                <t
+                    t-set="total_ordered"
+                    t-value="total_ordered + move.product_uom_qty"
+                />
+                <t t-set="total_delivered" t-value="total_delivered + move.quantity" />
+            </xpath>
+            <xpath expr="//table[1]/tbody" position="after">
+                <tfoot>
+                    <td />
+                    <td>
+                        <t t-out="total_ordered" />
+                    </td>
+                    <td>
+                        <t t-out="total_delivered" />
+                    </td>
+                </tfoot>
+            </xpath>
+
+            <!-- sums for completed transfers -->
+
+            <xpath
+                expr="//table[@name='stock_move_line_table']/tbody"
+                position="before"
+            >
+                <t t-set="total_ordered" t-value="0" />
+                <t t-set="total_delivered" t-value="0" />
+            </xpath>
+            <xpath
+                expr="//table[@name='stock_move_line_table']/tbody/t"
+                position="before"
+            >
+                <t t-foreach="o.move_ids" t-as="move">
+                    <t
+                        t-set="total_ordered"
+                        t-value="total_ordered + move.product_uom_qty"
+                    />
+                    <t
+                        t-set="total_delivered"
+                        t-value="total_delivered + move.quantity"
+                    />
+                </t>
+            </xpath>
+
+            <!-- Footer -->
+            <xpath expr="//table[@name='stock_move_line_table']/tbody" position="after">
+                <tfoot>
+                    <td />
+                    <td class="text-center">
+                        <t t-if="not has_serial_number" t-out="total_ordered" />
+                    </td>
+                    <td class="text-center">
+                        <t t-out="total_delivered" />
+                    </td>
+                </tfoot>
+            </xpath>
+
+        </field>
+    </record>
     <record
         id="impress_stock_report_delivery_document_add_minimum_shelf_life"
         model="ir.ui.view"
@@ -38,7 +97,7 @@
         <field name="inherit_id" ref="stock.report_delivery_document" />
         <field name="priority">51</field>
         <field name="arch" type="xml">
-            <xpath expr="//*[@name='total_qty_shipped']" position="after">
+            <xpath expr="//*[@name='div_sched_date']" position="after">
                 <div class="col-auto" name="minimimum_shelf_life">
                     <strong>Minimum shelf life:</strong>
                     <br />

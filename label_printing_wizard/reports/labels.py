@@ -62,7 +62,15 @@ class ReportLabelBase(models.AbstractModel):
                 _(f"Product {product_id.name} does not have a valid EAN")
             )
 
-        product_barcode = "01" + product_id.barcode
+        barcode: str = product_id.barcode
+        if not barcode.isnumeric():
+            raise ValidationError(_(f"Barcode must be numeric: {barcode}"))
+        if len(barcode) not in [13, 14]:
+            raise ValidationError(
+                _(f"Invalid barcode length (must be 13 or 14): {len(barcode)}")
+            )
+
+        product_barcode = "01" + barcode
         lot_barcode = ""
         quantity_barcode = ""
 

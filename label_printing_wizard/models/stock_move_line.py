@@ -1,6 +1,8 @@
 import logging
+from typing import Any
 
-from odoo import models
+from odoo import _, models
+from odoo.tools import ValidationError
 
 _logger = logging.getLogger(__name__)
 
@@ -9,7 +11,7 @@ class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
 
     def action_open_label_wizard(self) -> dict:
-        action = {
+        action: dict[str, str | list[Any] | dict[str, Any]] = {
             "type": "ir.actions.act_window",
             "res_model": "label_wizard",
             "view_mode": "form",
@@ -22,6 +24,10 @@ class StockMoveLine(models.Model):
             },
         }
         if self.lot_id:
-            action["context"]["default_lot_id"] = self.lot_id.id  # type: ignore
-            action["context"]["default_model"] = "lot"  # type: ignore
+            if isinstance(action["context"], dict):
+                context: dict[str, Any] = action["context"]
+                context["default_lot_id"] = self.lot_id.id
+                context["default_model"] = "lot"
+            else:
+                raise ValidationError(_(f"Context is not a dict: {action['context']}"))
         return action

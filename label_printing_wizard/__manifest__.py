@@ -19,6 +19,7 @@
         "views/stock_lot.xml",
         "views/stock_picking.xml",
         "security/ir.model.access.csv",
+        "data/gs1_rules.xml",
     ],
     "assets": {
         "web.assets_backend": [

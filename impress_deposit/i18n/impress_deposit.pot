@@ -53,6 +53,11 @@ msgid "Deposit Settings"
 msgstr ""
 
 #. module: impress_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_sale_order_line__is_deposit_line
+msgid "Is Deposit Line"
+msgstr ""
+
+#. module: impress_deposit
 #: model:ir.model.fields,field_description:impress_deposit.field_stock_picking__container_qty
 msgid "Number of containers shipped"
 msgstr ""
@@ -95,6 +100,11 @@ msgstr ""
 #. module: impress_deposit
 #: model:ir.model,name:impress_deposit.model_sale_order
 msgid "Sales Order"
+msgstr ""
+
+#. module: impress_deposit
+#: model:ir.model,name:impress_deposit.model_sale_order_line
+msgid "Sales Order Line"
 msgstr ""
 
 #. module: impress_deposit
