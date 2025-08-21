@@ -6,120 +6,123 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-08-21 19:59+0000\n"
+"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
+"impress-odoo/delivery_clickship/fr_CA/>\n"
+"Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: delivery_clickship
 #: model_terms:ir.ui.view,arch_db:delivery_clickship.view_wizard_clickship_rates_form
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_stock_package_type__package_carrier_type
 msgid "Carrier"
-msgstr ""
+msgstr "Transporteur"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_rate__carrier_name
 msgid "Carrier Name"
-msgstr ""
+msgstr "Nom du transporteur"
 
 #. module: delivery_clickship
 #: model:ir.model.fields.selection,name:delivery_clickship.selection__delivery_carrier__delivery_type__clickship
 msgid "Click Ship"
-msgstr ""
+msgstr "Click Ship"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_delivery_carrier__clickship_api_key
 msgid "Click Ship Key"
-msgstr ""
+msgstr "Clé Click Ship"
 
 #. module: delivery_clickship
 #: model:ir.model.fields.selection,name:delivery_clickship.selection__stock_package_type__package_carrier_type__clickship
 msgid "ClickShip"
-msgstr ""
+msgstr "ClickShip"
 
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_carrier.py:0
 #, python-format
 msgid "Clickship API key is not set."
-msgstr ""
+msgstr "Clé API Clickship absente."
 
 #. module: delivery_clickship
 #: model_terms:ir.ui.view,arch_db:delivery_clickship.view_delivery_carrier_form
 msgid "Clickship Configuration"
-msgstr ""
+msgstr "Configuration Clickship"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_delivery_carrier__clickship_contact
 msgid "Clickship Contact"
-msgstr ""
+msgstr "Contact Clickship"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_delivery_carrier__clickship_payment_method
 msgid "Clickship Payment Method"
-msgstr ""
+msgstr "Méthode de paiement Clickship"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_delivery_carrier__clickship_payment_methods
 msgid "Clickship Payment Methods"
-msgstr ""
+msgstr "Méthodes de paiement Clickship"
 
 #. module: delivery_clickship
 #: model:ir.actions.act_window,name:delivery_clickship.action_clickship_payment_method
 #: model_terms:ir.ui.view,arch_db:delivery_clickship.view_clickship_payment_method_form
 msgid "Clickship Payment_method"
-msgstr ""
+msgstr "Méthode de paiement Clickship"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_stock_picking__clickship_rate_needed
 msgid "Clickship Rate Needed"
-msgstr ""
+msgstr "Taux Clickship requis"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_stock_picking__clickship_service_id
 msgid "Clickship Service"
-msgstr ""
+msgstr "Service Clickship"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_stock_picking__clickship_shipment_id
 msgid "Clickship Shipment"
-msgstr ""
+msgstr "Expédition Clickship"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_stock_picking__clickship_tracking_url
 msgid "Clickship Tracking Url"
-msgstr ""
+msgstr "Lien de suivi Clickship"
 
 #. module: delivery_clickship
 #: model:ir.model,name:delivery_clickship.model_clickship_payment_method
 msgid "ClickshipPayment_method"
-msgstr ""
+msgstr "ClickshipPayment_method"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_payment_method__code
 msgid "Code"
-msgstr ""
+msgstr "Code"
 
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
 #, python-format
 msgid "Could not book shipment"
-msgstr ""
+msgstr "L'expédition n'a pas pu être planifiée"
 
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
 #, python-format
 msgid "Could not fetch any rates!"
-msgstr ""
+msgstr "Les taux n'ont pas pu êtres récupérés!"
 
 #. module: delivery_clickship
 #. odoo-python
@@ -127,49 +130,50 @@ msgstr ""
 #, python-format
 msgid "Could not get shipment status for {shipment_id}: {response}"
 msgstr ""
+"Impossible de récupérer le status de l'expédition {shipment_id}: {response}"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_payment_method__create_uid
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_rate__create_uid
 #: model:ir.model.fields,field_description:delivery_clickship.field_wizard_clickship_rates__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Créé par"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_payment_method__create_date
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_rate__create_date
 #: model:ir.model.fields,field_description:delivery_clickship.field_wizard_clickship_rates__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Créé le"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_rate__currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Devise"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_payment_method__delivery_carrier_id
 msgid "Delivery Carrier"
-msgstr ""
+msgstr "Transporteur"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_payment_method__display_name
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_rate__display_name
 #: model:ir.model.fields,field_description:delivery_clickship.field_wizard_clickship_rates__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom d'affichage"
 
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_carrier.py:0
 #, python-format
 msgid "Failed to cancel shipment!"
-msgstr ""
+msgstr "L'expédition n'a pas pu être annulée!"
 
 #. module: delivery_clickship
 #: model_terms:ir.ui.view,arch_db:delivery_clickship.view_delivery_carrier_form
 msgid "Fetch Payment Methods"
-msgstr ""
+msgstr "Récupérer les méthodes de paiement"
 
 #. module: delivery_clickship
 #. odoo-javascript
@@ -177,51 +181,51 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:delivery_clickship.view_stock_picking_form
 #, python-format
 msgid "Get Rates"
-msgstr ""
+msgstr "Récupérer les taux"
 
 #. module: delivery_clickship
 #: model_terms:ir.ui.view,arch_db:delivery_clickship.view_clickship_payment_method_search
 #: model_terms:ir.ui.view,arch_db:delivery_clickship.view_rate_search
 msgid "Group By"
-msgstr ""
+msgstr "Grouper par"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_payment_method__id
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_rate__id
 #: model:ir.model.fields,field_description:delivery_clickship.field_wizard_clickship_rates__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_payment_method__write_uid
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_rate__write_uid
 #: model:ir.model.fields,field_description:delivery_clickship.field_wizard_clickship_rates__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Mis à jour par"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_payment_method__write_date
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_rate__write_date
 #: model:ir.model.fields,field_description:delivery_clickship.field_wizard_clickship_rates__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Mis à jour le"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_payment_method__name
 #: model:ir.model.fields,field_description:delivery_clickship.field_wizard_clickship_rates__name
 #: model_terms:ir.ui.view,arch_db:delivery_clickship.view_clickship_payment_method_search
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_wizard_clickship_rates__picking_id
 msgid "Picking"
-msgstr ""
+msgstr "Transfert"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_delivery_carrier__delivery_type
 msgid "Provider"
-msgstr ""
+msgstr "Transporteur"
 
 #. module: delivery_clickship
 #: model:ir.actions.act_window,name:delivery_clickship.action_rate
@@ -229,87 +233,87 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_clickship.field_wizard_clickship_rates__rate_ids
 #: model_terms:ir.ui.view,arch_db:delivery_clickship.view_rate_form
 msgid "Rate"
-msgstr ""
+msgstr "Taux"
 
 #. module: delivery_clickship
 #: model_terms:ir.ui.view,arch_db:delivery_clickship.view_wizard_clickship_rates_form
 msgid "Select"
-msgstr ""
+msgstr "Sélectionner"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_rate__service_id
 msgid "Service"
-msgstr ""
+msgstr "Service"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_rate__service_name
 msgid "Service Name"
-msgstr ""
+msgstr "Nom du service"
 
 #. module: delivery_clickship
 #: model:ir.model,name:delivery_clickship.model_delivery_carrier
 msgid "Shipping Methods"
-msgstr ""
+msgstr "Méthodes d'expédition"
 
 #. module: delivery_clickship
 #: model:ir.model,name:delivery_clickship.model_stock_package_type
 msgid "Stock package type"
-msgstr ""
+msgstr "Type de paquet"
 
 #. module: delivery_clickship
 #: model_terms:ir.actions.act_window,help:delivery_clickship.action_clickship_payment_method
 msgid "There is no examples click here to add new Clickship Payment_method."
-msgstr ""
+msgstr "Il n'y a pas d'exemples. Cliquez ici pour en ajouter."
 
 #. module: delivery_clickship
 #: model_terms:ir.actions.act_window,help:delivery_clickship.action_rate
 msgid "There is no examples click here to add new Rate."
-msgstr ""
+msgstr "Il n'y a pas d'exemples. Cliquez ici pour en ajouter."
 
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
 #, python-format
 msgid "Timed Out!"
-msgstr ""
+msgstr "Délai d'attente dépassé!"
 
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
 #, python-format
 msgid "Timed out!"
-msgstr ""
+msgstr "Délai d'attente dépassé!"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_rate__total
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #. module: delivery_clickship
 #: model:ir.model,name:delivery_clickship.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Transfert"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_rate__transit_time
 msgid "Transit Time"
-msgstr ""
+msgstr "Temps de transit"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_rate__transit_time_valid
 msgid "Transit Time Valid"
-msgstr ""
+msgstr "Temps de transit valide"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_rate__wizard_id
 msgid "Wizard"
-msgstr ""
+msgstr "Assistant"
 
 #. module: delivery_clickship
 #: model:ir.actions.act_window,name:delivery_clickship.action_wizard_clickship_rates
 #: model_terms:ir.ui.view,arch_db:delivery_clickship.view_wizard_clickship_rates_form
 msgid "Wizard Clickship_rates"
-msgstr ""
+msgstr "Assistant Clickship_rates"
 
 #. module: delivery_clickship
 #. odoo-python
@@ -317,30 +321,30 @@ msgstr ""
 #: model:ir.model,name:delivery_clickship.model_wizard_clickship_rates
 #, python-format
 msgid "WizardClickship_rates"
-msgstr ""
+msgstr "Assistant Clickship_rates"
 
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
 #, python-format
 msgid "response not a dict"
-msgstr ""
+msgstr "La réponse n'est pas un dictionnaire"
 
 #. module: delivery_clickship
 #: model_terms:ir.ui.view,arch_db:delivery_clickship.view_rate_search
 msgid "service_name"
-msgstr ""
+msgstr "nom_du_service"
 
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
 #, python-format
 msgid "shipment not a dict"
-msgstr ""
+msgstr "Expédition n'est pas un dictionnaire"
 
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
 #, python-format
 msgid "shipment_id not a string"
-msgstr ""
+msgstr "shipment_id n'est pas un string"
