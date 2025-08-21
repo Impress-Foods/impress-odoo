@@ -6,25 +6,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-08-21 19:59+0000\n"
+"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
+"impress-odoo/impress_expiration_lot/fr_CA/>\n"
+"Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: impress_expiration_lot
 #: model:ir.actions.server,name:impress_expiration_lot.impress_expiration_parse_lot_number_action
 msgid "Execute Code"
-msgstr ""
+msgstr "Exécuter le code"
 
 #. module: impress_expiration_lot
 #: model:ir.model,name:impress_expiration_lot.model_stock_lot
 msgid "Lot/Serial"
-msgstr ""
+msgstr "Lot/Numéro de série"
 
 #. module: impress_expiration_lot
 #: model:base.automation,name:impress_expiration_lot.impress_expiration_parse_lot_number_rule
 msgid "Parse lot number and set correct dates on lot creation"
-msgstr ""
+msgstr "Analyse le numéro de lot et détermine la date de création du lot"
