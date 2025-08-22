@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-04 17:01+0000\n"
-"PO-Revision-Date: 2025-06-19 14:27+0000\n"
-"Last-Translator: Weblate Admin <cparadis@impressfoods.com>\n"
-"Language-Team: French (Canada) <http://weblate.example.com/projects/"
+"PO-Revision-Date: 2025-08-21 19:58+0000\n"
+"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
 "impress-odoo/impress_quality_logs/fr_CA/>\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.11.4\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_line_form
@@ -239,7 +239,7 @@ msgstr "Créé par"
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__create_date
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__create_date
 msgid "Created on"
-msgstr "Date de création"
+msgstr "Créé le"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__cycle_number

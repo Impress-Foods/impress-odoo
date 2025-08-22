@@ -6,13 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-08-21 19:59+0000\n"
+"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
+"impress-odoo/maintenance_quality/fr_CA/>\n"
+"Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: maintenance_quality
 #: model_terms:ir.ui.view,arch_db:maintenance_quality.view_quality_check_form
@@ -47,7 +50,7 @@ msgstr ""
 #. module: maintenance_quality
 #: model:ir.model.fields,field_description:maintenance_quality.field_quality_check__equipment_id
 msgid "Equipment"
-msgstr ""
+msgstr "Équipement"
 
 #. module: maintenance_quality
 #: model:ir.model.fields.selection,name:maintenance_quality.selection__quality_point__control_point_type__maintenance
@@ -57,7 +60,7 @@ msgstr ""
 #. module: maintenance_quality
 #: model:ir.model,name:maintenance_quality.model_maintenance_equipment
 msgid "Maintenance Equipment"
-msgstr ""
+msgstr "Équipement de maintenance"
 
 #. module: maintenance_quality
 #: model:ir.model.fields,field_description:maintenance_quality.field_quality_point__equipment_category_ids
@@ -67,7 +70,7 @@ msgstr ""
 #. module: maintenance_quality
 #: model:ir.model,name:maintenance_quality.model_maintenance_equipment_category
 msgid "Maintenance Equipment Category"
-msgstr ""
+msgstr "Catégorie d'équipement de maintenance"
 
 #. module: maintenance_quality
 #: model:ir.model.fields,field_description:maintenance_quality.field_quality_point__equipment_ids
@@ -84,7 +87,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:maintenance_quality.field_quality_alert__maintenance_request_id
 #: model:ir.model.fields,field_description:maintenance_quality.field_quality_check__maintenance_request_id
 msgid "Maintenance Request"
-msgstr ""
+msgstr "Requête de maintenance"
 
 #. module: maintenance_quality
 #: model:ir.model.fields,field_description:maintenance_quality.field_quality_point__picking_type_ids
@@ -94,12 +97,12 @@ msgstr ""
 #. module: maintenance_quality
 #: model:ir.model,name:maintenance_quality.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Produit"
 
 #. module: maintenance_quality
 #: model:ir.model,name:maintenance_quality.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Variante de produit"
 
 #. module: maintenance_quality
 #: model:ir.model,name:maintenance_quality.model_quality_alert

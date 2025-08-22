@@ -6,13 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-08-21 19:59+0000\n"
+"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
+"impress-odoo/production_log_note/fr_CA/>\n"
+"Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: production_log_note
 #: model_terms:ir.ui.view,arch_db:production_log_note.view_mrp_production_form
@@ -20,44 +23,46 @@ msgid ""
 "Additional instructions that can be created and visualised from both here "
 "and the shop floor interface."
 msgstr ""
+"Instructions additionnelles qui peuvent être créées et lues à la fois ici et "
+"dans l'interface Atelier."
 
 #. module: production_log_note
 #. odoo-javascript
 #: code:addons/production_log_note/static/src/dialog/mrp_log_note_dialog.xml:0
 #, python-format
 msgid "Close"
-msgstr ""
+msgstr "Fermer"
 
 #. module: production_log_note
 #. odoo-javascript
 #: code:addons/production_log_note/static/src/mrp_display_record.xml:0
 #, python-format
 msgid "Display Log Note"
-msgstr ""
+msgstr "Afficher la note"
 
 #. module: production_log_note
 #: model:ir.model.fields,field_description:production_log_note.field_mrp_production__log_note
 msgid "Log Note"
-msgstr ""
+msgstr "Note"
 
 #. module: production_log_note
 #: model_terms:ir.ui.view,arch_db:production_log_note.view_mrp_production_form
 msgid "Notes"
-msgstr ""
+msgstr "Notes"
 
 #. module: production_log_note
 #: model_terms:ir.ui.view,arch_db:production_log_note.view_mrp_production_form
 msgid "Notes for the production order"
-msgstr ""
+msgstr "Notes pour l'ordre de production"
 
 #. module: production_log_note
 #. odoo-javascript
 #: code:addons/production_log_note/static/src/mrp_display_record.js:0
 #, python-format
 msgid "Production Note"
-msgstr ""
+msgstr "Note de production"
 
 #. module: production_log_note
 #: model:ir.model,name:production_log_note.model_mrp_production
 msgid "Production Order"
-msgstr ""
+msgstr "Ordre de production"
