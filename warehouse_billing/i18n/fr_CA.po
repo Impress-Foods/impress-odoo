@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-31 13:56+0000\n"
-"PO-Revision-Date: 2025-08-21 19:58+0000\n"
+"PO-Revision-Date: 2025-08-22 16:33+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
 "impress-odoo/warehouse_billing/fr_CA/>\n"
@@ -400,7 +400,7 @@ msgstr "Non facturé"
 #. module: warehouse_billing
 #: model:ir.model.fields,field_description:warehouse_billing.field_warehouse_quant_group__sale_order_id
 msgid "Order Reference"
-msgstr "Référence"
+msgstr "Référence de commande"
 
 #. module: warehouse_billing
 #: model:ir.model.fields.selection,name:warehouse_billing.selection__warehouse_billing_config__measurement_type__pallet

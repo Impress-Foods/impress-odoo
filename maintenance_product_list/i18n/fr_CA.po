@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-21 19:58+0000\n"
+"PO-Revision-Date: 2025-08-22 16:33+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
 "impress-odoo/maintenance_product_list/fr_CA/>\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:maintenance_product_list.view_product_product_form
 #: model_terms:ir.ui.view,arch_db:maintenance_product_list.view_product_template_form
 msgid "Maintenance"
-msgstr ""
+msgstr "Maintenance"
 
 #. module: maintenance_product_list
 #: model:ir.model,name:maintenance_product_list.model_maintenance_equipment
@@ -32,14 +32,14 @@ msgstr "Équipement de maintenance"
 #: model:ir.model.fields,field_description:maintenance_product_list.field_product_product__maintenance_equipment_ids
 #: model:ir.model.fields,field_description:maintenance_product_list.field_product_template__maintenance_equipment_ids
 msgid "Maintenance Equipments"
-msgstr ""
+msgstr "Équipements de maintenance"
 
 #. module: maintenance_product_list
 #. odoo-python
 #: code:addons/maintenance_product_list/models/maintenance_equipment.py:0
 #, python-format
 msgid "Maintenance Parts"
-msgstr ""
+msgstr "Pièces de maintenance"
 
 #. module: maintenance_product_list
 #: model_terms:ir.ui.view,arch_db:maintenance_product_list.view_maintenance_equipment_form
@@ -54,7 +54,7 @@ msgstr "Produit"
 #. module: maintenance_product_list
 #: model:ir.model.fields,field_description:maintenance_product_list.field_maintenance_equipment__product_count
 msgid "Product Count"
-msgstr ""
+msgstr "Nombre de produits"
 
 #. module: maintenance_product_list
 #: model:ir.model,name:maintenance_product_list.model_product_product
@@ -64,4 +64,4 @@ msgstr "Variante de produit"
 #. module: maintenance_product_list
 #: model:ir.model.fields,field_description:maintenance_product_list.field_maintenance_equipment__product_ids
 msgid "Products"
-msgstr ""
+msgstr "Produits"

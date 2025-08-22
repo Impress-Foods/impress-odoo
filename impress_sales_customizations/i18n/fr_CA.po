@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-21 19:59+0000\n"
+"PO-Revision-Date: 2025-08-22 16:33+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
 "impress-odoo/impress_sales_customizations/fr_CA/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
 msgid "<strong>Customer — </strong>"
-msgstr ""
+msgstr "<strong>Client — </strong>"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
@@ -30,19 +30,19 @@ msgstr "Facturé"
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
 msgid "Nothing to invoice"
-msgstr ""
+msgstr "Rien à facturer"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
 msgid "Sale"
-msgstr ""
+msgstr "Vente"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
 msgid "Sales Orders"
-msgstr ""
+msgstr "Bons de vente"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
 msgid "To invoice"
-msgstr ""
+msgstr "À facturer"

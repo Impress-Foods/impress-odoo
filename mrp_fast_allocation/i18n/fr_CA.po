@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-21 19:58+0000\n"
+"PO-Revision-Date: 2025-08-22 16:33+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
 "impress-odoo/mrp_fast_allocation/fr_CA/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 #. module: mrp_fast_allocation
 #: model:ir.actions.server,name:mrp_fast_allocation.model_mrp_production_action
 msgid "Action Assign All"
-msgstr ""
+msgstr "Action assigner tout"
 
 #. module: mrp_fast_allocation
 #: model:ir.model,name:mrp_fast_allocation.model_mrp_production
