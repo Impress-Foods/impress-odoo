@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-22 18:38+0000\n"
+"PO-Revision-Date: 2025-08-22 18:56+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
 "impress-odoo/audit_reports/fr_CA/>\n"
@@ -25,7 +25,6 @@ msgstr "'%s' % object.lot_id.name"
 #. module: audit_reports
 #: model_terms:ir.ui.view,arch_db:audit_reports.client_recall_table
 #: model_terms:ir.ui.view,arch_db:audit_reports.product_recall_table
-#, fuzzy
 msgid "<span class=\"text-bold\">Grand Total</span>"
 msgstr "<span class=\"text-bold\">Grand Total</span>"
 
@@ -37,7 +36,7 @@ msgstr "<span> Rapport de traçabilité </span>"
 #. module: audit_reports
 #: model_terms:ir.ui.view,arch_db:audit_reports.lot_summary
 msgid "<span>Bilan</span>"
-msgstr ""
+msgstr "<span>Bilan</span>"
 
 #. module: audit_reports
 #: model_terms:ir.ui.view,arch_db:audit_reports.report_summary
