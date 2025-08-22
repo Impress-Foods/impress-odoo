@@ -2,11 +2,16 @@
     .finger-pointer-right {
         scale: 0.03 !important;
         rotate: 90deg;
-        padding-left: 50px;
     }
     .finger-pointer-left {
         scale: -0.03 0.03 !important;
         rotate: -90deg;
-        padding-right: 50px;
+    }
+
+    a.carousel-control-prev {
+        left: -4rem;
+    }
+    a.carousel-control-next {
+        right: -4rem;
     }
 }
