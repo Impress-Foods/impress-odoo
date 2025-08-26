@@ -9,7 +9,7 @@ _logger = logging.getLogger(__name__)
 class MaintenanceRequest(models.Model):
     _inherit = "maintenance.request"
 
-    description = fields.Text(copy=False)
+    description = fields.Html(copy=False)
     notes = fields.Text(copy=False)
     state_color = fields.Integer(related="stage_id.color")
     employee_color = fields.Integer(related="assigned_employee.color")
