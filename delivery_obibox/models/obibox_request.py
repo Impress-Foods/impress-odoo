@@ -132,7 +132,7 @@ class ObiboxProvider:
         try:
             self.debug_logger(
                 f"{access_url} {method} \n {payload}",
-                f"clickship_request_{endpoint}",
+                f"obibox_request_{endpoint}",
             )
             match method:
                 case "GET":
@@ -169,7 +169,7 @@ class ObiboxProvider:
 
             self.debug_logger(
                 f"{response.status_code}\n{response.text}",
-                f"clickship_response_{endpoint}",
+                f"obibox_response_{endpoint}",
             )
             return response_json
 
