@@ -51,14 +51,20 @@ class ObiboxCarrier(models.Model):
 
     def obibox_rate_shipment(self, order: Picking | SaleOrder) -> dict:
         sr = ObiboxProvider(
-            self.log_xml, username=self.obibox_username, token=self.obibox_api_key
+            self.log_xml,
+            prod_environment=self.prod_environment,
+            username=self.obibox_username,
+            token=self.obibox_api_key,
         )
         res = sr.get_rate(order)
         return res
 
     def obibox_send_shipping(self, pickings: Picking) -> list:
         sr = ObiboxProvider(
-            self.log_xml, username=self.obibox_username, token=self.obibox_api_key
+            self.log_xml,
+            prod_environment=self.prod_environment,
+            username=self.obibox_username,
+            token=self.obibox_api_key,
         )
         res: list[dict[str, Any]] = []
 
@@ -90,7 +96,10 @@ class ObiboxCarrier(models.Model):
 
     def obibox_cancel_shipment(self, pickings: Picking) -> None:
         sr = ObiboxProvider(
-            self.log_xml, username=self.obibox_username, token=self.obibox_api_key
+            self.log_xml,
+            prod_environment=self.prod_environment,
+            username=self.obibox_username,
+            token=self.obibox_api_key,
         )
         for picking in pickings:
             sr.cancel_shipment(picking)
@@ -104,7 +113,10 @@ class ObiboxCarrier(models.Model):
 
         if self.delivery_type == "obibox":
             sr = ObiboxProvider(
-                self.log_xml, username=self.obibox_username, token=self.obibox_api_key
+                self.log_xml,
+                prod_environment=self.prod_environment,
+                username=self.obibox_username,
+                token=self.obibox_api_key,
             )
             res = sr.check_coverage(partner)
         return res
