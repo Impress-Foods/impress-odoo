@@ -25,7 +25,7 @@ class ObiboxCarrier(models.Model):
         },
     )
 
-    obibox_api_key = fields.Char(string="Obibox Key", groups="base.group_system")
+    obibox_api_key = fields.Char(string="Obibox Key")
     obibox_username = fields.Char()
     obibox_label_format = fields.Selection(
         selection=[
