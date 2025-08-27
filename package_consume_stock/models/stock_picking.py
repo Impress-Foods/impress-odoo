@@ -34,6 +34,13 @@ class StockPicking(models.Model):
                     product = package_type.packaging_material_id or None
 
                     if product:
+                        existing_line = picking.move_ids.filtered_domain(
+                            [("product_id", "=", product.id)]
+                        )
+                        lot_id = False
+                        if existing_line and product.tracking in ["serial", "lot"]:
+                            lot_id = existing_line[0].move_line_ids[0].lot_id.id
+
                         self.env["stock.move.line"].create(
                             {
                                 "picking_id": picking.id,
@@ -45,6 +52,7 @@ class StockPicking(models.Model):
                                 "product_id": product.id,
                                 "quantity": 1,
                                 "qty_done": 1,
+                                "lot_id": lot_id,
                             }
                         )
                         picking.move_ids.filtered_domain(
