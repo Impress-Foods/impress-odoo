@@ -23,14 +23,21 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [audit_reports](audit_reports/) | 17.0.0.0.1 |  | Audit_reports Summary
+[delivery_auto_select_carrier](delivery_auto_select_carrier/) | 17.0.1.0.0 |  | Delivery_auto_select_carrier Summary
+[delivery_clickship](delivery_clickship/) | 17.0.1.0.0 |  | Clickship delivery provider
+[delivery_common](delivery_common/) | 17.0.1.0.0 |  | Base module for Impress Delivery Connectors
+[delivery_obibox](delivery_obibox/) | 17.0.1.0.0 |  | Obibox Delivery Connector
 [delivery_status_multi_step](delivery_status_multi_step/) | 17.0.1.0.0 |  | Adds usefull delivery statuses for multi-step delivery flows
+[deposit_website](deposit_website/) | 17.0.1.0.0 |  | Deposit_website Summary
 [documents_archive](documents_archive/) | 17.0.0.1.0 |  | Module to allow a "soft" archive feature for documents.
+[gs1_sequences](gs1_sequences/) | 17.0.1.0.0 |  | Adds GS1 check digit option on sequences
 [impress_account_report](impress_account_report/) | 17.0.0.1.0 |  | Module to customize the accounting reports
 [impress_accounting](impress_accounting/) | 17.0.0.0.1 |  | Impress_accounting Summary
-[impress_barcode](impress_barcode/) | 17.0.0.1.2 |  | Customizations to barcode app
+[impress_barcode](impress_barcode/) | 17.0.1.0.0 |  | Customizations to barcode app
 [impress_billback](impress_billback/) | 17.0.0.1.0 |  | Impress_billback Summary
 [impress_check_customizations](impress_check_customizations/) | 17.0.0.1.0 |  | Small tweaks to l10n_ca_check to allow better printing on preprinted checks
 [impress_cleaning](impress_cleaning/) | 17.0.0.1.0 |  | Module to handle cleanings for Impress Foods
+[impress_datetime_widget](impress_datetime_widget/) | 17.0.0.1.0 |  | Module to restore the default DateTime picker widget behavior from Odoo V15 where the default time selected when a widget is opened is the current time without any rounding.
 [impress_deposit](impress_deposit/) | 17.0.0.1.1 |  | Module to allow the management of deposits for containers
 [impress_expiration_lot](impress_expiration_lot/) | 17.0.0.1.0 |  | Module that allows to automatically calculate to correct dates for a lot's expiry,
 [impress_lot_lab](impress_lot_lab/) | 17.0.0.1.2 |  | Impress_lot_lab Summary
@@ -49,12 +56,15 @@ addon | version | maintainers | summary
 [impress_stock_customizations](impress_stock_customizations/) | 17.0.0.1.1 |  | Customizations for the stock module developped in-house by Impress Foods SEC
 [impress_stock_worksheets](impress_stock_worksheets/) | 17.0.25.01.14 |  | Impress_stock_worksheets Summary
 [julian_sequence](julian_sequence/) | 17.0.0.1.0 |  | Adds a sequence type to follow a YYDDD format
+[label_printing_wizard](label_printing_wizard/) | 17.0.1.0.1 |  | Adds different wizards to print custom labels for products and lots
 [maintenance_consume_stock](maintenance_consume_stock/) | 17.0.0.0.2 |  | Module to allow stock usage in maintenance requests
 [maintenance_documents](maintenance_documents/) | 17.0.1.0.0 |  | Bridge module between Maintenance and Documents
 [maintenance_product_list](maintenance_product_list/) | 17.0.1.0.0 |  | Allows to link products to maintenance equipments
 [maintenance_quality](maintenance_quality/) | 17.0.0.0.1 |  | Bridge module between Maintenance and Quality Control
+[maintenance_sequence](maintenance_sequence/) | 17.0.1.0.0 |  | Maintenance_sequence Summary
 [mrp_add_qc_note_shop_floor](mrp_add_qc_note_shop_floor/) | 17.0.0.1.0 |  | Mrp_add_qc_note_shop_floor Summary
 [mrp_fast_allocation](mrp_fast_allocation/) | 17.0.0.0.1 |  | Adds an action to assign all moves in the allocation report for a production order
+[package_consume_stock](package_consume_stock/) | 17.0.1.0.0 |  | Automatically consume packaging material when putting in package
 [production_log_note](production_log_note/) | 17.0.0.1.2 |  | Backport of V18 feature where a note can be added to a production order
 [stock_history](stock_history/) | 17.0.1.0.0 |  | Adds a configurable timeframe report to take snapshots of stock levels
 [warehouse_billing](warehouse_billing/) | 17.0.0.0.1 |  | This module allows billing customers based on the warehouse space utilized by their products on a daily basis. Features: - Track daily warehouse space usage per client - Configure billing rates - Generate monthly invoices automatically
@@ -68,7 +78,7 @@ addon | version | maintainers | summary
 This repository is licensed under [AGPL-3.0](LICENSE).
 
 However, each module can have a totally different license, as long as they adhere to
-Impress Foods' policy. Consult each module's `__manifest__.py` file, which contains a
+Impress Foods policy. Consult each module's `__manifest__.py` file, which contains a
 `license` key that explains its license.
 
 ---

@@ -6,7 +6,7 @@
     """,
     "category": "Services",
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "license": "LGPL-3",
     # Dependencies
     "depends": [

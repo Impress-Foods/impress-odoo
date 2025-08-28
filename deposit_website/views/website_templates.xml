@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-model href="../../import_xml.rng" type="application/xml"?>
+<odoo>
+
+    <template id="total" inherit_id="website_sale.total">
+
+        <xpath expr="//tr[@id='order_total_taxes']" position="before">
+            <tr id="order_total_deposit">
+                <td
+                    colspan="2"
+                    class="border-0 pb-2 ps-0 pt-0 text-start text-muted"
+                >Deposit</td>
+                <td class="text-end border-0 pb-2 pe-0 pt-0">
+                    <span
+                        t-field="website_sale_order.deposit_value"
+                        class="monetary_field"
+                        style="white-space: nowrap;"
+                        t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"
+                    />
+                </td>
+            </tr>
+        </xpath>
+    </template>
+
+</odoo>

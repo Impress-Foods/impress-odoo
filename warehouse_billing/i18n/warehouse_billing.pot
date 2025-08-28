@@ -515,6 +515,11 @@ msgid "Stock Data"
 msgstr ""
 
 #. module: warehouse_billing
+#: model:res.groups,comment:warehouse_billing.warehouse_billing_manager
+msgid "The user will be able to manage warehouse billing."
+msgstr ""
+
+#. module: warehouse_billing
 #: model_terms:ir.actions.act_window,help:warehouse_billing.action_quant_history
 msgid "There is no examples click here to add new Quant History."
 msgstr ""
@@ -551,6 +556,11 @@ msgstr ""
 #: model:ir.model,name:warehouse_billing.model_warehouse_billing_config
 #: model_terms:ir.ui.view,arch_db:warehouse_billing.view_warehouse_billing_config_form
 msgid "Warehouse Billing Configuration"
+msgstr ""
+
+#. module: warehouse_billing
+#: model:res.groups,name:warehouse_billing.warehouse_billing_manager
+msgid "Warehouse Billing Manager"
 msgstr ""
 
 #. module: warehouse_billing

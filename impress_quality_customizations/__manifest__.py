@@ -3,7 +3,7 @@
     "version": "17.0.0.1.0",
     "depends": ["base", "quality_control", "quality_mrp"],
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Quality",
     "summary": """
     Customizations for the quality module developped in-house by Impress Foods SEC

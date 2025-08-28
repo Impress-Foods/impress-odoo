@@ -4,7 +4,7 @@
     "version": "17.0.25.01.14",
     "summary": """ Impress_stock_worksheets Summary """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
     "depends": ["base", "quality_control_worksheet"],
     "data": [
@@ -16,6 +16,7 @@
         "views/delivery/DeliveryWorksheet_20250114.xml",
     ],
     "installable": True,
+    "application": False,
     "auto_install": False,
     "license": "GPL-2",
 }

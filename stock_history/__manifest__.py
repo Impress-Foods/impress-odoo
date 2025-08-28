@@ -5,7 +5,7 @@
     Adds a configurable timeframe report to take snapshots of stock levels
     """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/cparadis-impressfoods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
     "depends": ["base", "stock"],
     "data": [

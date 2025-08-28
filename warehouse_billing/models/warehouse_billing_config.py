@@ -329,7 +329,7 @@ class WarehouseBillingConfig(models.Model):
             configs[0].last_invoice_date, time(hour=23, minute=0)
         )
         if len(sale_order_lines_vals) > 0 and not sale_order_id:
-            sale_order_id: SaleOrder = self.env["sale.order"].create(
+            sale_order_id: SaleOrder = self.env["sale.order"].create(  # type: ignore
                 {
                     "partner_id": partner_id.id,
                     "currency_id": currency_id,

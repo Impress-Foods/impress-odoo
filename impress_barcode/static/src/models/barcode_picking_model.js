@@ -35,4 +35,20 @@ patch(BarcodePickingModel.prototype, {
         const moves = move_ids.map((x) => this._getMoveData(x));
         return moves;
     },
+
+    totalSupply(product_id) {
+        // We need to check every stock move line
+        // to grab the ones with this product
+        const move_lines = this.cache.dbIdCache["stock.move.line"];
+        let total = 0;
+
+        for (const key in move_lines) {
+            const line = move_lines[key];
+            if (line.product_id == product_id) {
+                total += line.qty_done;
+            }
+        }
+
+        return total;
+    },
 });

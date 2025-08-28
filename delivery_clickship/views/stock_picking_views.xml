@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- View stock.picking form -->
+    <record id="view_stock_picking_form" model="ir.ui.view">
+        <field name="name">view.stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="clickship_rate_needed" invisible="1" />
+            </xpath>
+            <xpath expr="//div[@name='tracking']" position="after">
+                <field name="clickship_service_id" readonly="1" />
+            </xpath>
+            <xpath expr="//button[@name='button_validate'][1]" position="attributes">
+                <attribute name="invisible">
+                    state in ('draft', 'confirmed', 'done', 'cancel') or clickship_rate_needed
+                </attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_validate'][2]" position="attributes">
+                <attribute name="invisible">
+                    state in ('waiting', 'assigned', 'done', 'cancel') or not clickship_rate_needed
+                </attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_validate'][1]" position="before">
+                <button
+                    name="action_get_clickship_rates"
+                    type="object"
+                    string="Get Rates"
+                    invisible="not clickship_rate_needed"
+                    class="oe_highlight"
+                />
+            </xpath>
+            <xpath expr="//button[@name='action_cancel'][1]" position="before">
+                <button
+                    name="action_get_clickship_rates"
+                    type="object"
+                    string="Get Rates"
+                    invisible="not clickship_service_id"
+                />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

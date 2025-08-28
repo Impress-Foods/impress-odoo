@@ -88,7 +88,11 @@ docs/_build/
 # OCA rules
 !static/lib/
 
+/.config
+/.devcontainer
 docker-compose.yml
-.config/
-.devcontainer/
+mypy.ini
+/.extra_modules
+.claude
+CLAUDE.md
 *.Identifier

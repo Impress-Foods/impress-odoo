@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-model href="../../import_xml.rng" type="application/xml"?>
+<odoo>
+    <template id="label_lot_zpl_2x4">
+        <t t-foreach="docs" t-as="lot">
+            <t t-foreach="range(lot['label_count'])" t-as="count">
+                <t t-translation="off">
+                    <t name="setup">
+                        <t t-out="'^XA^CI28'" />
+                    </t>
+                    <t name="product_name">
+                        <t
+                            t-out="'^FO10,300 ^A0N,44,33^FB800,2,0,L^FD' + lot['display_name_markup'] + '^FS'"
+                        />
+                    </t>
+                    <t name="lot_name">
+                        <t
+                            t-out="'^FO10,50 ^A0N,88,66^FDLN/SN: ' + lot['name'] + '^FS'"
+                        />
+                    </t>
+                    <t t-if="lot['product_qty']" name="product_qty">
+                        <t
+                            t-out="'^FO10,130 ^A0N,88,66^FDQTY: ' + str(lot['product_qty']) + ' ' +
+            lot['lot_record'].product_id.uom_id.display_name + '^FS'"
+                        />
+                    </t>
+
+                    <t t-if="lot['packaging_name']">
+                        <t t-call="label_printing_wizard.packaging_block_2x4">
+                            <t t-set="name" t-value="lot['packaging_name']" />
+                            <t t-set="qty" t-value="lot['packaging_qty']" />
+                        </t>
+                    </t>
+                    <t name="barcode">
+                        <t t-if="lot['gs1_barcode']">
+                            <t
+                                t-out="'^FO550,50^BY3 ^BXN,11,200 ^FD' + lot['gs1_barcode'] + '^FS'"
+                            />
+                        </t>
+                        <t t-elif="lot['lot_record'].product_id.barcode">
+                            <t
+                                t-out="'^FO550,50^BY3 ^BXN,11,200 ^FD' + lot['lot_record'].product_id.barcode + '^FS'"
+                            />
+                        </t>
+                    </t>
+                    <t name="footer">
+                        <t t-out="'^XZ'" />
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="label_lot_zpl_4x6">
+        <t t-foreach="docs" t-as="lot">
+            <t t-foreach="range(lot['label_count'])" t-as="count">
+
+                <t t-translation="off">
+                    <t name="setup">
+                        <t t-out="'^XA^CI28'" />
+                    </t>
+
+                    <t name="product_name">
+                        <t
+                            t-out="'^FO650,50 ^A0R,66,44^FB1100,2,0,L^FD' + lot['display_name_markup'] + '^FS'"
+                        />
+                    </t>
+                    <t name="lot_name">
+                        <t
+                            t-out="'^FO500,50 ^A0R,88,66^FDLN/SN: ' + lot['name'] + '^FS'"
+                        />
+                    </t>
+                    <t t-if="lot['packaging_name']">
+                        <t t-call="label_printing_wizard.packaging_block_4x6">
+                            <t t-set="name" t-value="lot['packaging_name']" />
+                            <t t-set="qty" t-value="lot['packaging_qty']" />
+                        </t>
+                    </t>
+                    <t name="barcode">
+                        <t t-if="lot['gs1_barcode']">
+                            <t
+                                t-out="'^FO100,800^BY3 ^BXR,20,200 ^FD' + lot['gs1_barcode'] + '^FS'"
+                            />
+                        </t>
+                        <t t-elif="lot['lot_record'].product_id.barcode">
+                            <t
+                                t-out="'^FO100,800^BY3 ^BXR,20,200 ^FD' + lot['lot_record'].product_id.barcode + '^FS'"
+                            />
+                        </t>
+                    </t>
+
+                    <t t-if="lot['product_qty']" name="product_qty">
+                        <t
+                            t-out="'^FO400,50 ^A0R,88,66^FDQTY: ' + str(lot['product_qty']) + ' ' + lot['lot_record'].product_id.uom_id.display_name + '^FS'"
+                        />
+                    </t>
+                    <t name="footer">
+                        <t t-out="'^XZ'" />
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
