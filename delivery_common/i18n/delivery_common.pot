@@ -19,6 +19,11 @@ msgid "'%s' % object.name"
 msgstr ""
 
 #. module: delivery_common
+#: model_terms:ir.ui.view,arch_db:delivery_common.stock_picking_kanban
+msgid "<span> &amp;nbsp;-&amp;nbsp;</span>"
+msgstr ""
+
+#. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking_type__auto_print_delivery_label
 msgid "Auto Print Delivery Label"
 msgstr ""
