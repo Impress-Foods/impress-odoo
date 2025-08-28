@@ -5,7 +5,7 @@ from odoo import _, api, fields, models
 _logger = logging.getLogger(__name__)
 
 
-class Stock_history_line(models.Model):
+class StockHistoryLine(models.Model):
     _name = "stock.history.line"
     _description = "Stock History Line"
     _rec_name = "sequence"

@@ -33,10 +33,16 @@ def is_end_of_month(dt: date) -> bool:
 
 
 def get_end_of_month(month: int) -> date:
-    return (
-        datetime(day=1, month=month + 1, year=datetime.now().year)
-        + relativedelta(days=-1)
-    ).date()
+    if month == 12:
+        return (
+            datetime(day=1, month=1, year=datetime.now().year + 1)
+            + relativedelta(days=-1)
+        ).date()
+    else:
+        return (
+            datetime(day=1, month=month + 1, year=datetime.now().year)
+            + relativedelta(days=-1)
+        ).date()
 
 
 class StockHistoryConfig(models.Model):
@@ -136,7 +142,7 @@ class StockHistoryConfig(models.Model):
                         nb_of_days = (
                             datetime(
                                 day=1,
-                                month=months[record.month_of_year] + 1,
+                                month=(months[record.month_of_year] + 1) % 12,
                                 year=2025,  # We use 2025 as a standard non-leap year
                             )
                             + relativedelta(days=-1)

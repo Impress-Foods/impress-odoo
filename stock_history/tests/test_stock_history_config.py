@@ -71,35 +71,49 @@ class TestStockHistoryConfig(TransactionCase):
             config = self.create_config(interval_type="years", duration=1)
             self.assertEqual(config.next_run, date(2025, 2, 28))  # Not a leap year
 
-    @freeze_time("2025-06-15")  # Sunday
+    # Sunday
     def test_next_run_day_of_week(self):
-        # Test next Monday
-        config = self.create_config(interval_type="day_of_week", day_of_week="mon")
-        self.assertEqual(config.next_run, date(2025, 6, 16))
+        with freeze_time("2025-06-15"):
+            # Test next Monday
+            config = self.create_config(interval_type="day_of_week", day_of_week="mon")
+            self.assertEqual(config.next_run, date(2025, 6, 16))
 
-        # Test next Wednesday
-        config = self.create_config(interval_type="day_of_week", day_of_week="wed")
-        self.assertEqual(config.next_run, date(2025, 6, 18))
+            # Test next Wednesday
+            config = self.create_config(interval_type="day_of_week", day_of_week="wed")
+            self.assertEqual(config.next_run, date(2025, 6, 18))
 
-        # Test next Sunday (should be next week)
-        config = self.create_config(interval_type="day_of_week", day_of_week="sun")
-        self.assertEqual(config.next_run, date(2025, 6, 22))
+            # Test next Sunday (should be next week)
+            config = self.create_config(interval_type="day_of_week", day_of_week="sun")
+            self.assertEqual(config.next_run, date(2025, 6, 22))
 
-    @freeze_time("2025-06-15")
+        with freeze_time("2025-12-28"):
+            # Test next Sunday (should be next week)
+            config = self.create_config(interval_type="day_of_week", day_of_week="thu")
+            self.assertEqual(config.next_run, date(2026, 1, 1))
+
     def test_next_run_day_of_month(self):
-        # Test day later in current month
-        config = self.create_config(interval_type="day_of_month", day_of_month=20)
-        self.assertEqual(config.next_run, date(2025, 6, 20))
+        with freeze_time("2025-06-15"):
+            # Test day later in current month
+            config = self.create_config(interval_type="day_of_month", day_of_month=20)
+            self.assertEqual(config.next_run, date(2025, 6, 20))
 
-        # Test day in next month (15th is past the 10th)
-        config = self.create_config(interval_type="day_of_month", day_of_month=10)
-        self.assertEqual(config.next_run, date(2025, 7, 10))
+            # Test day in next month (15th is past the 10th)
+            config = self.create_config(interval_type="day_of_month", day_of_month=10)
+            self.assertEqual(config.next_run, date(2025, 7, 10))
 
-        # Test with last_run set
-        config = self.create_config(
-            interval_type="day_of_month", day_of_month=10, last_run=date(2025, 5, 1)
-        )
-        self.assertEqual(config.next_run, date(2025, 5, 10))
+            # Test with last_run set
+            config = self.create_config(
+                interval_type="day_of_month", day_of_month=10, last_run=date(2025, 5, 1)
+            )
+            self.assertEqual(config.next_run, date(2025, 5, 10))
+
+        with freeze_time("2025-12-20"):
+            config = self.create_config(
+                interval_type="day_of_month",
+                day_of_month=15,
+                last_run=date(2025, 12, 15),
+            )
+            self.assertEqual(config.next_run, date(2026, 1, 15))
 
     @freeze_time("2025-06-15")  # June 15, 2025
     def test_next_run_day_of_year(self):
@@ -154,6 +168,10 @@ class TestStockHistoryConfig(TransactionCase):
             self.create_config(
                 interval_type="day_of_year", month_of_year="apr", day_of_month=31
             )
+        with self.assertRaises(ValidationError):
+            self.create_config(
+                interval_type="day_of_year", month_of_year="dec", day_of_month=32
+            )
 
     def test_next_run_end_of_month(self):
         # Test end of current month
@@ -171,6 +189,10 @@ class TestStockHistoryConfig(TransactionCase):
             config = self.create_config(interval_type="end_of_month")
             self.assertEqual(config.next_run, date(2025, 2, 28))
 
+        with freeze_time("2024-12-15"):
+            config = self.create_config(interval_type="end_of_month")
+            self.assertEqual(config.next_run, date(2024, 12, 31))
+
         # Test February in leap year
         with freeze_time("2028-02-15"):
             config = self.create_config(interval_type="end_of_month")
@@ -183,6 +205,10 @@ class TestStockHistoryConfig(TransactionCase):
         # Test invalid day of month
         with self.assertRaises(ValidationError):
             self.create_config(interval_type="day_of_month", day_of_month=29)
+        with self.assertRaises(ValidationError):
+            self.create_config(interval_type="day_of_month", day_of_month=30)
+        with self.assertRaises(ValidationError):
+            self.create_config(interval_type="day_of_month", day_of_month=31)
 
     def test_product_filtering_and_history_creation(self):
         """Test product filtering and history creation"""
