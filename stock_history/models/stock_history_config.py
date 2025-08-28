@@ -129,7 +129,7 @@ class StockHistoryConfig(models.Model):
     def _check_day_of_month(self):
         for record in self:
             if record.interval_type == "day_of_month":
-                if record.day_of_month < 0 or record.day_of_month > 28:
+                if record.day_of_month < 1 or record.day_of_month > 28:
                     raise ValidationError(
                         _(
                             "Day of month must be between 1 and 28."
@@ -137,12 +137,17 @@ class StockHistoryConfig(models.Model):
                         )
                     )
             elif record.interval_type == "day_of_year":
-                if record.day_of_month < 0 or record.day_of_month > 28:
+                if record.day_of_month < 1 or record.day_of_month > 28:
+                    if record.month_of_year == "dec":
+                        next_month = 1
+                    else:
+                        next_month = months[record.month_of_year] + 1
+
                     if record.month_of_year:
                         nb_of_days = (
                             datetime(
                                 day=1,
-                                month=(months[record.month_of_year] + 1) % 12,
+                                month=next_month,
                                 year=2025,  # We use 2025 as a standard non-leap year
                             )
                             + relativedelta(days=-1)

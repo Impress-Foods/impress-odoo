@@ -204,6 +204,10 @@ class TestStockHistoryConfig(TransactionCase):
 
         # Test invalid day of month
         with self.assertRaises(ValidationError):
+            self.create_config(interval_type="day_of_month", day_of_month=-1)
+        with self.assertRaises(ValidationError):
+            self.create_config(interval_type="day_of_month", day_of_month=0)
+        with self.assertRaises(ValidationError):
             self.create_config(interval_type="day_of_month", day_of_month=29)
         with self.assertRaises(ValidationError):
             self.create_config(interval_type="day_of_month", day_of_month=30)
