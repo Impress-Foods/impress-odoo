@@ -26,7 +26,7 @@ class ClickShipCarrier(models.Model):
         },
     )
 
-    clickship_api_key = fields.Char(string="Click Ship Key", groups="base.group_system")
+    clickship_api_key = fields.Char(string="Click Ship Key")
     clickship_contact = fields.Many2one("hr.employee")
     clickship_payment_methods = fields.One2many(
         "clickship.payment_method",

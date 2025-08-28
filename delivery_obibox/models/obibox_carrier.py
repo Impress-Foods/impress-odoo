@@ -25,7 +25,7 @@ class ObiboxCarrier(models.Model):
         },
     )
 
-    obibox_api_key = fields.Char(string="Obibox Key", groups="base.group_system")
+    obibox_api_key = fields.Char(string="Obibox Key")
     obibox_username = fields.Char()
     obibox_label_format = fields.Selection(
         selection=[
@@ -104,6 +104,7 @@ class ObiboxCarrier(models.Model):
         for picking in pickings:
             sr.cancel_shipment(picking)
             picking.shipping_label_attachment_id.unlink()
+            picking.obibox_tracking_numbers = ""
 
     def _obibox_get_default_custom_package_code(self) -> str:
         return ""
