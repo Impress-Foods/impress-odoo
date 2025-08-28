@@ -27,6 +27,7 @@ class Stock_history_line(models.Model):
     location = fields.Many2one("stock.location")
 
     history_group_id = fields.Many2one("stock.history.group")
+    lot_id = fields.Many2one("stock.lot")
 
     @api.model_create_multi
     def create(self, vals_list):

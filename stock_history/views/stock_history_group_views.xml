@@ -26,8 +26,8 @@
                         </h1>
                     </div>
                     <group>
-                        <field name="history_config_id" />
-                        <field name="date" />
+                        <field name="history_config_id" readonly="1" />
+                        <field name="date" readonly="1" />
                         <field name="history_line_ids" readonly="1" />
                     </group>
                 </sheet>

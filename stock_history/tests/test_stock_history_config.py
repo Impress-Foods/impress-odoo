@@ -3,10 +3,9 @@ from datetime import date
 from freezegun import freeze_time
 
 from odoo.exceptions import ValidationError
-from odoo.tests import TransactionCase, tagged
+from odoo.tests import TransactionCase
 
 
-@tagged("standard", "impress")
 class TestStockHistoryConfig(TransactionCase):
     @classmethod
     def setUpClass(cls):
@@ -265,6 +264,103 @@ class TestStockHistoryConfig(TransactionCase):
             self.assertEqual(len(history_lines), 1)
             self.assertEqual(history_lines.product_id, product1)
             self.assertEqual(history_lines.quantity, 10)
+            self.assertEqual(
+                history_lines.location,
+                self.env.ref("stock.stock_location_stock"),  # type: ignore
+            )
+            self.assertEqual(history_lines.uom, uom_unit)
+
+            # Verify sequence was generated
+            self.assertNotEqual(history_lines.sequence, "New")
+
+    def test_product_filtering_and_history_creation_with_lot(self):
+        """Test product filtering and history creation"""
+        # Create test products
+        uom_unit = self.env.ref("uom.product_uom_unit")
+        category = self.env["product.category"].create({"name": "Test Category"})
+
+        # Create products with different categories and types
+        product1 = self.env["product.product"].create(
+            {
+                "name": "Test Product 1",
+                "type": "product",
+                "categ_id": category.id,
+                "uom_id": uom_unit.id,
+                "uom_po_id": uom_unit.id,
+                "tracking": "lot",
+            }
+        )
+
+        self.env["product.product"].create(
+            {
+                "name": "Test Product 2",
+                "type": "product",
+                "categ_id": category.id,
+                "uom_id": uom_unit.id,
+                "uom_po_id": uom_unit.id,
+                "tracking": "lot",
+            }
+        )
+
+        # Create a service product that should be filtered out
+        self.env["product.product"].create(
+            {
+                "name": "Service Product",
+                "type": "service",
+                "categ_id": category.id,
+            }
+        )
+
+        lot_1 = self.env["stock.lot"].create(
+            {"name": "test_lot_1", "product_id": product1.id}
+        )
+
+        # Create stock for the products
+        self.env["stock.quant"].create(
+            {
+                "product_id": product1.id,
+                "location_id": self.env.ref("stock.stock_location_stock").id,  # type: ignore
+                "quantity": 10,
+                "lot_id": lot_1.id,
+            }
+        )
+
+        # Create a config with a domain to filter only product1
+        domain = f"[('id', '=', {product1.id})]"
+        with freeze_time("2025-06-15"):
+            config = self.create_config(
+                interval_type="days", duration=1, product_domain=domain
+            )
+
+            # Test _get_products
+            products = config._get_products()
+            self.assertEqual(len(products), 1)
+            self.assertEqual(products, product1)
+
+            # Test _get_quants
+            quants = config._get_quants()
+            self.assertEqual(len(quants), 1)
+            self.assertEqual(quants.product_id, product1)
+            self.assertEqual(quants.quantity, 10)
+
+            # Test _create_history
+            config._create_history()
+
+            # Verify history group was created
+            history_group = self.env["stock.history.group"].search(
+                [], order="id desc", limit=1
+            )
+            self.assertTrue(history_group)
+            self.assertEqual(history_group.history_config_id, config)
+            self.assertEqual(history_group.date, date(2025, 6, 15))
+            self.assertIn(config.name, history_group.name)
+
+            # Verify history lines were created
+            history_lines = history_group.history_line_ids
+            self.assertEqual(len(history_lines), 1)
+            self.assertEqual(history_lines.product_id, product1)
+            self.assertEqual(history_lines.quantity, 10)
+            self.assertEqual(history_lines.lot_id.id, lot_1.id)
             self.assertEqual(
                 history_lines.location,
                 self.env.ref("stock.stock_location_stock"),  # type: ignore

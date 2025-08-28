@@ -240,6 +240,8 @@ class StockHistoryConfig(models.Model):
                     "uom": quant.product_uom_id.id,
                     "location": quant.location_id.id,
                     "history_group_id": history_group.id,
+                    "date": record.last_run,
+                    "lot_id": quant.lot_id.id,
                 }
                 for quant in quants
             ]

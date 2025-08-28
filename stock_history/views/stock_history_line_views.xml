@@ -7,11 +7,13 @@
         <field name="model">stock.history.line</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="sequence" />
-                <field name="product_id" />
-                <field name="quantity" />
-                <field name="uom" />
-                <field name="location" />
+                <field name="sequence" readonly="1" />
+                <field name="date" readonly="1" />
+                <field name="product_id" readonly="1" />
+                <field name="lot_id" readonly="1" />
+                <field name="quantity" readonly="1" />
+                <field name="uom" readonly="1" />
+                <field name="location" readonly="1" />
             </tree>
         </field>
     </record>
@@ -38,11 +40,12 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="sequence" />
-                            <field name="date" />
-                            <field name="product_id" />
-                            <field name="location" />
-                            <field name="quantity" />
+                            <field name="sequence" readonly="1" />
+                            <field name="date" readonly="1" />
+                            <field name="product_id" readonly="1" />
+                            <field name="lot_id" readonly="1" />
+                            <field name="location" readonly="1" />
+                            <field name="quantity" readonly="1" />
                         </group>
                     </group>
                 </sheet>
