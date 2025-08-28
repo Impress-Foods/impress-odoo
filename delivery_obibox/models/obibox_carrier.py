@@ -104,6 +104,7 @@ class ObiboxCarrier(models.Model):
         for picking in pickings:
             sr.cancel_shipment(picking)
             picking.shipping_label_attachment_id.unlink()
+            picking.obibox_tracking_numbers = ""
 
     def _obibox_get_default_custom_package_code(self) -> str:
         return ""

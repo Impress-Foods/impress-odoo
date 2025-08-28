@@ -219,9 +219,9 @@ class ObiboxProvider:
         box = Box()
         package_type = package.package_type_id
 
-        feet: UoM = package.env["uom.uom"].search([("name", "=", "ft")])[0]
-        inches: UoM = package.env["uom.uom"].search([("name", "=", "in")])[0]
-        pounds: UoM = package.env["uom.uom"].search([("name", "=", "lb")])[0]
+        feet: UoM = package.env.ref("uom.product_uom_foot")
+        inches: UoM = package.env.ref("uom.product_uom_inch")
+        pounds: UoM = package.env.ref("uom.product_uom_lb")
 
         length_uom: UoM = package.env["uom.uom"].search(
             [("name", "=", package_type.length_uom_name)]
