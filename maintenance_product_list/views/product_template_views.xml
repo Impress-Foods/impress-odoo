@@ -11,7 +11,7 @@
                 <page
                     string="Maintenance"
                     name="maintenance"
-                    invisible="product_variant_count != 1"
+                    invisible="product_variant_count > 1"
                 >
                     <group>
                         <group>
