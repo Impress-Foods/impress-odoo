@@ -4,7 +4,7 @@
     "summary": """ Impress_maintenance Summary """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
-    "category": "Hidden",
+    "category": "Manufacturing/Maintenance",
     "depends": ["base", "hr_maintenance", "base_maintenance"],
     "data": [
         "security/maintenance.xml",

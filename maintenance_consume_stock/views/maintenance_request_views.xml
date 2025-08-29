@@ -8,7 +8,7 @@
     <field name="priority">1000</field>
     <field name="arch" type="xml">
       <xpath expr="//notebook/page[1]" position="after">
-        <page string="Parts">
+        <page string="Parts" groups="maintenance.group_equipment_manager">
           <field
                         name='scrap_ids'
                         widget='one2many_list'
@@ -78,6 +78,7 @@
                     type="object"
                     class="oe_highlight"
                     invisible="scrap_count == 0 or all_scraps_done"
+                    groups="maintenance.group_equipment_manager"
                 />
       </xpath>
     </field>
