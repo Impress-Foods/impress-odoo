@@ -1,6 +1,6 @@
 import logging
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -12,8 +12,9 @@ class ProductProduct(models.Model):
         comodel_name="maintenance.equipment",
         string="Maintenance Equipments",
     )
-    vendor_code = fields.Char(compute="_compute_vendor_code")
+    vendor_code = fields.Char(compute="_compute_vendor_code", store=True)
 
+    @api.depends("seller_ids", "seller_ids.product_code")
     def _compute_vendor_code(self):
         for product in self:
             if len(product.seller_ids) > 0:
@@ -32,7 +33,7 @@ class ProductTemplate(models.Model):
         compute="_compute_maintenance_equipment_ids",
         inverse="_inverse_maintenance_equipment_ids",
     )
-    vendor_code = fields.Char(compute="_compute_vendor_code")
+    vendor_code = fields.Char(compute="_compute_vendor_code", store=True)
 
     def _compute_maintenance_equipment_ids(self):
         self._compute_template_field_from_variant_field("maintenance_equipment_ids")
@@ -40,6 +41,7 @@ class ProductTemplate(models.Model):
     def _inverse_maintenance_equipment_ids(self):
         self._set_product_variant_field("maintenance_equipment_ids")
 
+    @api.depends("product_variant_ids", "product_variant_ids.vendor_code")
     def _compute_vendor_code(self):
         for template in self:
             if len(template.product_variant_ids) == 1:
