@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-model href="../../import_xml.rng" type="application/xml"?>
+<odoo>
+    <record id="email_template_delivery_impress" model="mail.template">
+        <field name="name">Impress: Delivery confirmation</field>
+        <field name="model_id" ref="stock.model_stock_picking" />
+        <field name="subject">Your order from {{ object.company_id.name
+            }}</field>
+        <field
+            name="partner_to"
+        >{{ object.partner_id.email and object.partner_id.id or object.partner_id.parent_id.id
+            }}</field>
+        <field name="body_html" type="html">
+            <table
+                role="presentation"
+                width="100%"
+                cellspacing="0"
+                cellpadding="0"
+                border="0"
+            >
+                <tbody>
+                    <tr>
+                        <td
+                            align="center"
+                            style="
+          padding: 20px 0;
+          font-family: 'Proxima Nova', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+          background-color: #f0f4f8;
+          color: #2d3748;
+          line-height: 1.6;
+        "
+                        >
+                            <div
+                                style="
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+          "
+                            >
+                                <div
+                                    style="
+              background: linear-gradient(135deg, #2b0f55 0%, #2b0f55 100%);
+              color: white;
+              padding: 20px;
+              text-align: center;
+            "
+                                >
+                                    <h1
+                                        style="margin: 0; color: white"
+                                    >Thank You for Your Order!</h1>
+                                </div>
+
+                                <div style="padding: 30px">
+                                    <h2 style="color: #2d3748">Hi <t
+                                            t-esc="object.partner_id.name"
+                                        >,</t></h2>
+
+                                    <div
+                                        style="
+                background-color: #f9fafb;
+                border-radius: 8px;
+                padding: 20px;
+                margin-bottom: 20px;
+              "
+                                    >
+                                        <h3
+                                            style="color: #2b0f55; margin-bottom: 15px"
+                                        >Order Details</h3>
+
+                                        <div>
+                                            Thank you for your purchase order. We have received your order and will
+                                            process.
+                                        </div>
+                                        <div
+                                            style="
+                  background-color: #f1f8e9;
+                  border-left: 4px solid #2b0f55;
+                  padding: 15px;
+                  margin-top: 20px;
+                "
+                                        >
+                                            <h3
+                                                style="color: #2b0f55; margin-bottom: 10px"
+                                            >
+                                                Shipping Information
+                                            </h3>
+                                            <p>
+                                                <strong>Shipping Address:</strong>
+                                                <br />
+
+                                            </p>
+                                            <p>
+                                                <strong
+                                                >Estimated Shipping Date:</strong>
+                                                <!-- <t t-esc="object.expected_date" t-options='{"widget": "date"}'></t> -->
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div style="text-align: center">
+                                        <a
+                                            t-att-href="'/web/login?redirect='"
+                                            style="
+                  display: inline-block;
+                  background-color: #2b0f55;
+                  color: white !important;
+                  text-decoration: none;
+                  padding: 12px 24px;
+                  border-radius: 6px;
+                  margin-top: 20px;
+                  transition: background-color 0.3s ease;
+                "
+                                        >
+                                            View Order Details
+                                        </a>
+                                    </div>
+
+                                    <p
+                                        style="
+                text-align: center;
+                margin-top: 20px;
+                color: #6c757d;
+                font-size: 0.9em;
+              "
+                                    >
+                                        If you need to reference this purchase order in any correspondence, please quote
+                                        this Sales Order [<t
+                                            t-out="object.name"
+                                        />] number for clarity.<br /> If you
+                                        have any questions or require further assistance, feel free to reach out. </p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True" />
+    </record>
+</odoo>
