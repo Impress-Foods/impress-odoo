@@ -18,7 +18,6 @@
             <t t-call="audit_reports.audit_layout">
                 <t t-foreach="docs" t-as="o">
                     <div class="page">
-                        <!--<div class="oe_structure"/>-->
                         <!-- Set up general stuff -->
                         <t t-call="audit_reports.stylesheet" />
 
@@ -260,83 +259,63 @@
             <thead>
                 <tr>
                     <th scope="col" colspan="2" class="text-center">
-                        <span>Bilan</span>
+                        <span>Balance</span>
                     </th>
                 </tr>
             </thead>
             <tbody>
                 <t t-set="value" t-value="o.get_total_bought()" />
-                <tr t-if="value != 0">
-                    <th scope="row" class="text-center">
-                        <span>Purchased</span>
-                    </th>
-                    <td class="text-end">
-                        <span class="text-success" t-out="'%.2f'%value" />
-                        <span t-out="' ' + o.lot_id.product_id.uom_id.display_name" />
-                    </td>
-                    <t t-set="total" t-value="total + value" />
-                </tr>
+                <t t-set="total" t-value="total + value" />
+                <t t-call="audit_reports.summary_row">
+                    <t t-set="label" t-value="'Purchased'" />
+                </t>
 
                 <t t-set="value" t-value="o.get_total_produced()" />
-                <tr t-if="value != 0">
-                    <th scope="row" class="text-center">
-                        <span>Produced</span>
-                    </th>
-                    <td class="text-end">
-                        <span class="text-success" t-out="'%.2f'%value" />
-                        <span t-out="' ' + o.lot_id.product_id.uom_id.display_name" />
-                    </td>
-                    <t t-set="total" t-value="total + value" />
-                </tr>
+                <t t-set="total" t-value="total + value" />
+                <t t-call="audit_reports.summary_row">
+                    <t t-set="label" t-value="'Produced'" />
+                </t>
 
                 <t t-set="value" t-value="o.get_total_used()" />
-                <tr t-if="value != 0">
-                    <th scope="row" class="text-center">
-                        <span>Used</span>
-                    </th>
-                    <td class="text-end">
-                        <span class="text-danger" t-out="'%.2f'%value" />
-                        <span t-out="' ' + o.lot_id.product_id.uom_id.display_name" />
-                    </td>
-                    <t t-set="total" t-value="total + value" />
-                </tr>
+                <t t-set="total" t-value="total + value" />
+                <t t-call="audit_reports.summary_row">
+                    <t t-set="label" t-value="'Used'" />
+                </t>
 
                 <t t-set="value" t-value="o.get_total_delivered()" />
-                <tr t-if="value != 0">
-                    <th scope="row" class="text-center">
-                        <span>Delivered</span>
-                    </th>
-                    <td class="text-end">
-                        <span class="text-danger" t-out="'%.2f'%value" />
-                        <span t-out="' ' + o.lot_id.product_id.uom_id.display_name" />
-                    </td>
-                    <t t-set="total" t-value="total + value" />
-                </tr>
+                <t t-set="total" t-value="total + value" />
+                <t t-call="audit_reports.summary_row">
+                    <t t-set="label" t-value="'Delivered'" />
+                </t>
+
+
                 <t t-set="value" t-value="o.get_total_unbuild_out()" />
-                <tr t-if="value != 0">
-                    <th scope="row" class="text-center">
-                        <span>Unbuilt</span>
-                    </th>
-                    <td class="text-end">
-                        <span class="text-danger" t-out="'%.2f'%value" />
-                        <span t-out="' ' + o.lot_id.product_id.uom_id.display_name" />
-                    </td>
-                    <t t-set="total" t-value="total + value" />
-                </tr>
+                <t t-set="total" t-value="total + value" />
+                <t t-call="audit_reports.summary_row">
+                    <t t-set="label" t-value="'Unbuilt'" />
+                </t>
+
                 <t t-set="value" t-value="o.get_total_returned()" />
-                <tr t-if="value != 0">
-                    <th scope="row" class="text-center">
-                        <span>Returned</span>
-                    </th>
-                    <td class="text-end">
-                        <span class="text-danger" t-out="'%.2f'%value" />
-                        <span t-out="' ' + o.lot_id.product_id.uom_id.display_name" />
-                    </td>
-                    <t t-set="total" t-value="total + value" />
-                </tr>
+                <t t-set="total" t-value="total + value" />
+                <t t-call="audit_reports.summary_row">
+                    <t t-set="label" t-value="'Returned'" />
+                </t>
+
+                <t t-set="value" t-value="o.get_total_scrapped()" />
+                <t t-set="total" t-value="total + value" />
+                <t t-call="audit_reports.summary_row">
+                    <t t-set="label" t-value="'Scrapped'" />
+                </t>
+
+                <t t-set="value" t-value="o.get_total_inventory_adjustments()" />
+                <t t-set="total" t-value="total + value" />
+                <t t-call="audit_reports.summary_row">
+                    <t t-set="label" t-value="'Adjustments'" />
+                </t>
+
             </tbody>
             <tfoot>
-                <tr>
+                <tr t-if="total != 0">
                     <th scope="row" class="text-center">
                         <span>Total</span>
                     </th>
@@ -347,6 +326,21 @@
                 </tr>
             </tfoot>
         </table>
+    </template>
+
+    <template id="summary_row">
+        <tr t-if="value!=0">
+            <th scope="row" class="text-center">
+                <span t-out="label" />
+            </th>
+            <td class="text-end">
+                <span
+                    t-attf-class="{{'text-danger' if value &lt; 0 else 'text-success'}}"
+                    t-out="'%.2f'%value"
+                />
+                <span t-out="' ' + o.lot_id.product_id.uom_id.display_name" />
+            </td>
+        </tr>
     </template>
 
     <template id="traceability_table">
@@ -368,16 +362,22 @@
                             <!-- Go over the content of each key in lots[lot][move_type] = []-->
                             <t t-set="moves" t-value="value[move_type]" />
                             <t t-foreach="moves" t-as="move">
-                                <t t-call="audit_reports.move_row">
-                                    <t t-set="current_move" t-value="move" />
-                                    <t t-set="move_type" t-value="move_type" />
+                                <t t-if="move_type != 'internal'">
+                                    <t t-set="quantity" t-value="o.get_sml_qty(move)" />
+                                    <t t-set="total" t-value="total + quantity" />
+                                    <t t-call="audit_reports.move_row">
+                                        <t t-set="current_move" t-value="move" />
+                                        <t
+                                            t-set="current_quantity"
+                                            t-value="quantity"
+                                        />
+                                        <t t-set="move_type" t-value="move_type" />
+                                        <t t-set="current_total" t-value="total" />
+                                    </t>
                                 </t>
-                                <t
-                                    t-set="total"
-                                    t-value="total + o.get_sml_qty(move)"
-                                />
                             </t>
                         </t>
+
                         <tr>
                             <td colspan='4' class="text-end">
                                 <span>Total</span>
@@ -396,7 +396,7 @@
 
     <template id="move_row">
         <tr>
-            <t t-set="quantity" t-value="o.get_sml_qty(current_move)" />
+            <t t-set="quantity" t-value="current_quantity" />
             <td>
                 <span t-out="o.get_sml_type_display_name(move_type)" />
             </td>
@@ -410,30 +410,25 @@
                 <span t-out="current_move.date.date()" />
             </td>
 
-            <td t-if="quantity &gt;= 0" class="text-end">
-                <span class="text-success" t-out="'%.2f'%quantity" />
-                <span />
-                <span t-out="current_move.product_id.uom_id.display_name" />
-            </td>
-            <td t-if="quantity &lt; 0" class="text-end">
-                <span class="text-danger" t-out="'%.2f'%quantity" />
-                <span />
-                <span t-out="current_move.product_id.uom_id.display_name" />
+            <td t-if="quantity" class="text-end">
+                <span
+                    t-attf-class="{{'text-danger' if quantity &lt; 0 else 'text-success'}}"
+                >
+                    <t t-out="'%.2f'%quantity" /> &amp;nbsp; <t
+                        t-out="current_move.product_id.uom_id.display_name"
+                    />
+                </span>
             </td>
         </tr>
-        <t t-set="total" t-value="total + quantity" />
     </template>
 
     <template id="render_lot_traceability">
         <t t-foreach="lots_data.get('child_lots', {}).items()" t-as="lot_info">
             <div class="o_traceability_lot_container">
-                <!--<div class="o_lot_header">-->
                 <div>
                     <h3> Lot: <t t-esc="lot_info[0]" />
                     </h3>
                 </div>
-
-                <!--<div class="o_lot_movements">-->
                 <div>
                     <table class="o_table o_table_bordered">
                         <thead>
@@ -473,7 +468,6 @@
 
                 <!-- Recursively render child lots -->
                 <t t-if="lot_info[1].get('child_lots')">
-                    <!--<div class="o_lot_children">-->
                     <div>
                         <t t-call="audit_reports.render_lot_traceability">
                             <t t-set="lots_data" t-value="lot_info[1]" />
@@ -493,16 +487,14 @@
                     <li t-if="len(key_value) != 0 and key != 'Lot'">
 
                         <span class="key">
-                            <t t-esc="o.get_name(key)" />
-:</span>
+                            <t t-esc="o.get_name(key)" /> :</span>
                         <t t-set="value" t-value="dict_data[key]" />
 
                         <t t-if="o.is_mapping(value)">
                             <t t-foreach="value" t-as="key">
                                 <ul>
                                     <span t-if="depth &lt;= 1" class="key">
-                                        <t t-esc="o.get_name(key)" />
-:</span>
+                                        <t t-esc="o.get_name(key)" /> :</span>
                                     <t t-set="depth" t-value="depth + 1" />
                                     <t t-call="audit_reports.render_nested_dict">
                                         <t t-set="dict_data" t-value="value[key]" />
@@ -619,12 +611,3 @@
         </style>
     </template>
 </odoo>
-<!--
-    <t t-set="audit" t-value="o.get_audit_tree(o.lot_id)"/>
-    <div class="nested-tree">
-        <t t-call="audit_reports.render_nested_dict">
-            <t t-set="depth" t-value="1"/>
-            <t t-set="dict_data" t-value="audit"/>
-        </t>
-    </div>
-    -->

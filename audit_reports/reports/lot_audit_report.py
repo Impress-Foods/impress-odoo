@@ -21,7 +21,7 @@ class LotAuditReport(models.TransientModel):
     show_client_list = fields.Boolean(default=False)
     show_product_list = fields.Boolean(default=False)
 
-    def get_total_produced(self):
+    def get_total_produced(self) -> float:
         lines: StockMoveLine = self._get_lines(self.lot_id)
         production_lines: StockMoveLine = lines.filtered(
             lambda line: self._get_sml_type(line) == "mo_in"
@@ -29,7 +29,7 @@ class LotAuditReport(models.TransientModel):
 
         return self.get_sml_qty(production_lines)
 
-    def get_total_bought(self):
+    def get_total_bought(self) -> float:
         lines: StockMoveLine = self._get_lines(self.lot_id)
         purchase_lines: StockMoveLine = lines.filtered(
             lambda line: self._get_sml_type(line) == "purchase"
@@ -38,7 +38,7 @@ class LotAuditReport(models.TransientModel):
 
         return quantity
 
-    def get_total_returned(self):
+    def get_total_returned(self) -> float:
         lines: StockMoveLine = self._get_lines(self.lot_id)
         returned_lines: StockMoveLine = lines.filtered(
             lambda line: self._get_sml_type(line) == "receipt_return"
@@ -46,7 +46,7 @@ class LotAuditReport(models.TransientModel):
 
         return self.get_sml_qty(returned_lines)
 
-    def get_total_delivered(self):
+    def get_total_delivered(self) -> float:
         lines: StockMoveLine = self._get_lines(self.lot_id)
         delivery_lines: StockMoveLine = lines.filtered(
             lambda line: self._get_sml_type(line) in ["sale", "delivery"]
@@ -57,7 +57,7 @@ class LotAuditReport(models.TransientModel):
 
         return self.get_sml_qty(delivery_lines) + self.get_sml_qty(returned_lines)
 
-    def get_total_used(self):
+    def get_total_used(self) -> float:
         lines: StockMoveLine = self._get_lines(self.lot_id)
         used_lines: StockMoveLine = lines.filtered(
             lambda line: self._get_sml_type(line) == "mo_out"
@@ -73,12 +73,26 @@ class LotAuditReport(models.TransientModel):
 
         return -1 * total
 
-    def get_total_unbuild_out(self):
+    def get_total_unbuild_out(self) -> float:
         lines: StockMoveLine = self._get_lines(self.lot_id)
         unbuild_lines: StockMoveLine = lines.filtered(
             lambda line: self._get_sml_type(line) == "unbuild_out"
         )
         return self.get_sml_qty(unbuild_lines)
+
+    def get_total_scrapped(self) -> float:
+        lines: StockMoveLine = self._get_lines(self.lot_id)
+        scrap_lines: StockMoveLine = lines.filtered(
+            lambda line: self._get_sml_type(line) == "scrap"
+        )
+        return self.get_sml_qty(scrap_lines)
+
+    def get_total_inventory_adjustments(self) -> float:
+        lines: StockMoveLine = self._get_lines(self.lot_id)
+        adj_lines: StockMoveLine = lines.filtered(
+            lambda line: self._get_sml_type(line) in ["adjustment_in", "adjustment_out"]
+        )
+        return self.get_sml_qty(adj_lines)
 
     def get_all_deliveries(self) -> StockMoveLine:
         audit = self.get_all_downstream_moves(self.lot_id)
@@ -185,6 +199,8 @@ class LotAuditReport(models.TransientModel):
                         return "delivery_return"
                     else:
                         return "purchase"
+                case "internal":
+                    return "internal"
                 case _:
                     _logger.warning("Unknown picking type: %s", sm.picking_code)
                     return ""
@@ -204,7 +220,12 @@ class LotAuditReport(models.TransientModel):
             else:
                 return "unbuild_out"
         else:
-            return "internal"
+            if value.location_dest_usage == "internal":
+                return "adjustment_in"
+            elif value.location_dest_usage != "internal":
+                return "adjustment_out"
+            else:
+                return "internal"
 
     @api.model
     def get_sml_type_display_name(self, value: str) -> str:
@@ -219,6 +240,8 @@ class LotAuditReport(models.TransientModel):
                 return "Return from Unbuild"
             case "delivery_return" | "receipt_return":
                 return "Return"
+            case "adjustment_out" | "adjustment_in":
+                return "Inventory Adjustment"
             case _:
                 return value.capitalize()
 
@@ -231,15 +254,15 @@ class LotAuditReport(models.TransientModel):
             "receipt_return",
             "scrap",
             "unbuild_out",
+            "adjustment_out",
         ]
         total = 0
         for record in value:
             sml_type = self._get_sml_type(record)
-
             if sml_type in out_types:
-                total -= record.quantity  # type: ignore
+                total -= record.quantity
             else:
-                total += record.quantity  # type: ignore
+                total += record.quantity
         return total
 
     @api.model
@@ -326,121 +349,4 @@ class LotAuditReport(models.TransientModel):
                         line.move_id.raw_material_production_id.lot_producing_id
                     )
             current_depth += 1
-        return audit
-
-    @api.model
-    def get_audit_tree(self, lot_id: StockLot):
-        if not lot_id or len(lot_id) == 0:
-            return {}
-
-        sml = self.env["stock.move.line"]
-
-        audit = {
-            "Lot": lot_id,
-            "Receptions": sml,
-            "Inventory Adjustments In": sml,
-            "Unbuild In": sml,
-            "MO Where Produced": sml,
-            "Returns In": sml,
-            "inventory_adjustments_out": sml,
-            "Unbuild Out": sml,
-            "Deliveries": sml,
-            "Scrap": sml,
-            "Used In": {},
-        }
-
-        lines = sml.search([("lot_id", "=", lot_id.id)])
-
-        # Qty In
-
-        # Receptions
-        reception_lines = lines.filtered_domain(
-            [("move_id.purchase_line_id", "!=", False)]
-        )
-        audit["Receptions"] += reception_lines
-
-        # Inventory adjustments in
-        inventory_adjustment_lines_in = lines.filtered_domain(
-            [
-                ("move_id.production_id", "=", False),  # No sml related to productions
-                (
-                    "move_id.raw_material_production_id",
-                    "=",
-                    False,
-                ),  # No sml related to productions
-                ("move_id.picking_id", "=", False),  # No sml related to pickings
-                ("move_id.purchase_line_id", "=", False),  # No sml related to purchases
-                ("move_id.sale_line_id", "=", False),  # No sml related to sales
-                ("move_id.scrap_id", "=", False),  # No sml related to scrap
-                ("move_id.unbuild_id", "=", False),  # No sml related to unbuilds
-                ("location_dest_usage", "=", "internal"),
-            ]
-        )
-
-        audit["Inventory Adjustments In"] += inventory_adjustment_lines_in
-
-        # Unbuild in TODO: Figure out how to distinguish between unbuild in and out
-        unbuild_in_lines = lines.filtered_domain([("move_id.unbuild_id", "!=", False)])
-        audit["Unbuild In"] += unbuild_in_lines
-
-        # MO in
-        production_in_lines = lines.filtered_domain(
-            [("move_id.production_id", "!=", False)]
-        )
-        audit["MO Where Produced"] += production_in_lines
-
-        # Returns in
-        returns_in = lines.filtered_domain(
-            [
-                ("location_usage", "=", "customer"),
-                ("location_dest_usage", "=", "internal"),
-            ]
-        )
-        audit["Returns In"] += returns_in
-
-        # Qty Out
-
-        # MO out
-        production_out_lines = lines.filtered_domain(
-            [("move_id.raw_material_production_id", "!=", False)]
-        )
-        audit["Used In"] = {
-            mo: self.get_audit_tree(mo.mapped("lot_producing_id"))
-            for mo in production_out_lines.mapped("move_id.raw_material_production_id")
-        }
-
-        # Inventory adjustments out
-        inventory_adjustment_lines_out = lines.filtered_domain(
-            [
-                ("move_id.production_id", "=", False),  # No sml related to productions
-                (
-                    "move_id.raw_material_production_id",
-                    "=",
-                    False,
-                ),  # No sml related to productions
-                ("move_id.picking_id", "=", False),  # No sml related to pickings
-                ("move_id.purchase_line_id", "=", False),  # No sml related to purchases
-                ("move_id.sale_line_id", "=", False),  # No sml related to sales
-                ("move_id.scrap_id", "=", False),  # No sml related to scrap
-                ("move_id.unbuild_id", "=", False),  # No sml related to unbuilds
-                ("location_dest_usage", "!=", "internal"),
-            ]
-        )
-
-        audit["inventory_adjustments_out"] += inventory_adjustment_lines_out
-
-        # Unbuild out TODO: Figure out how to distinguish between unbuild in and out
-        unbuild_out_lines = lines.filtered_domain([("move_id.unbuild_id", "!=", False)])
-        audit["Unbuild Out"] += unbuild_out_lines
-
-        # Scrap
-        scrap_lines = lines.filtered_domain([("move_id.scrap_id", "!=", False)])
-        audit["Scrap"] += scrap_lines
-
-        # Deliveries
-        delivery_lines = lines.filtered_domain(
-            [("location_dest_usage", "=", "customer")]
-        )
-        audit["Deliveries"] += delivery_lines
-
         return audit
