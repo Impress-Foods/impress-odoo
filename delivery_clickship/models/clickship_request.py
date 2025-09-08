@@ -264,6 +264,7 @@ class ClickshipProvider:
 
         # Make sure the shipment is deleted
         status = self._get_shipment_status(shipment_id)
+        _logger.warning(status)
         if status.state != "cancelled":
             raise ValidationError(_("Could not cancel the shipment"))
 
@@ -313,12 +314,27 @@ class ClickshipProvider:
 
         note = self._get_delivery_note(order)
 
+        parent_contact = client.parent_id
+        if client.phone:
+            phone = client.phone
+        elif parent_contact.phone:
+            phone = parent_contact.phone
+        else:
+            raise ValidationError(_(f"Could not find phone number for {client.name}"))
+
+        if client.email:
+            email = client.email
+        elif parent_contact.email:
+            email = parent_contact.email
+        else:
+            raise ValidationError(_(f"Could not find email number for {client.name}"))
+
         destination = Destination(
             name=client.name,
             address=self._make_address(client),
             residential=True,
-            phone_number=None if not client.phone else PhoneNumber(number=client.phone),
-            email_addresses=None if not client.email else [client.email],
+            phone_number=PhoneNumber(number=phone),
+            email_addresses=[email],
             contact_name=client.name,
             instructions=note,
         )
