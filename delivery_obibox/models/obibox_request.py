@@ -274,7 +274,6 @@ class ObiboxProvider:
         pickup_date = self._get_pickup_date(
             picking.date_done, picking.carrier_id.obibox_delivery_day
         )
-
         data = ShippingRequestMulti(
             order_ref_number=self._get_order_ref(picking),
             from_address1=from_address["address1"],

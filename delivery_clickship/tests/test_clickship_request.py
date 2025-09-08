@@ -172,6 +172,92 @@ class TestClickshipRequest(TestDeliveryCommon):
         destination = self.sr._make_destination(picking)
         self.assertEqual(destination, expected_destination)
 
+    def test_make_destination_fallback_email_phone(self):
+        delivery_partner = self.env["res.partner"].create(
+            {
+                "parent_id": self.partner.id,
+                "name": "Delivery Address",
+                "street": "1212 Boul Test",
+                "city": "Testopolis",
+                "state_id": self.partner.state_id.id,
+                "country_id": self.partner.country_id.id,
+                "zip": "H1H1H1",
+            }
+        )
+
+        picking = self.make_picking(contact=delivery_partner)
+        expected_destination = Destination(
+            name=delivery_partner.name,
+            address=self.sr._make_address(delivery_partner),
+            residential=True,
+            phone_number=PhoneNumber(number=self.partner.phone),
+            email_addresses=[self.partner.email],
+            contact_name=delivery_partner.name,
+        )
+
+        destination = self.sr._make_destination(picking)
+        self.assertEqual(destination, expected_destination)
+
+    def test_make_destination_fallback_email_fail(self):
+        parent_partner = self.env["res.partner"].create(
+            {
+                "name": self.partner.name,
+                "street": self.partner.street,
+                "city": self.partner.city,
+                "state_id": self.partner.state_id.id,
+                "country_id": self.partner.country_id.id,
+                "zip": self.partner.zip,
+                "phone": "4189458745",
+            }
+        )
+        delivery_partner = self.env["res.partner"].create(
+            {
+                "parent_id": parent_partner.id,
+                "name": "Delivery Address",
+                "street": "1212 Boul Test",
+                "city": "Testopolis",
+                "state_id": parent_partner.state_id.id,
+                "country_id": parent_partner.country_id.id,
+                "zip": "H1H1H1",
+            }
+        )
+
+        picking = self.make_picking(contact=delivery_partner)
+
+        with self.assertRaises(ValidationError) as context:  # type: ignore
+            self.sr._make_destination(picking)
+        self.assertIn("Could not find email", str(context.exception))
+
+    def test_make_destination_fallback_phone_fail(self):
+        parent_partner = self.env["res.partner"].create(
+            {
+                "name": self.partner.name,
+                "street": self.partner.street,
+                "city": self.partner.city,
+                "state_id": self.partner.state_id.id,
+                "country_id": self.partner.country_id.id,
+                "zip": self.partner.zip,
+                "email": self.partner.email,
+            }
+        )
+        delivery_partner = self.env["res.partner"].create(
+            {
+                "parent_id": parent_partner.id,
+                "name": "Delivery Address",
+                "street": "1212 Boul Test",
+                "city": "Testopolis",
+                "state_id": parent_partner.state_id.id,
+                "country_id": parent_partner.country_id.id,
+                "zip": "H1H1H1",
+            }
+        )
+
+        picking = self.make_picking(contact=delivery_partner)
+
+        with self.assertRaises(ValidationError) as context:  # type: ignore
+            self.sr._make_destination(picking)
+        self.assertIn("Could not find phone number", str(context.exception))
+
     def test_make_package_with_package(self):
         """Test creating package from stock.quant.package"""
         picking = self.make_picking()
