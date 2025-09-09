@@ -8,25 +8,6 @@
         <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form" />
         <field name="priority">100</field>
         <field name="arch" type="xml">
-            <xpath expr="//notebook/page[1]" position="replace">
-                <page string="Notes" name="description_page">
-                    <group>
-                        <field
-                            name="description"
-                            placeholder="Maintenance Description"
-                            groups="maintenance.group_equipment_manager"
-                        />
-                        <field
-                            name="description"
-                            placeholder="Maintenance Description"
-                            readonly="1"
-                            groups="!maintenance.group_equipment_manager"
-                        />
-
-                        <field name="notes" placeholder="Maintenance Notes" />
-                    </group>
-                </page>
-            </xpath>
             <xpath expr="//field[@name='employee_id']" position="after">
                 <field name="assigned_employee" widget="many2one_avatar_user" />
             </xpath>
@@ -37,6 +18,19 @@
                 <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//field[@name='maintenance_team_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='description']" position="after">
+                <group>
+                    <field name="notes" />
+                    <field
+                        name="signature"
+                        widget="signature"
+                        options="{'size':[0,90]}"
+                    />
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='description']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
         </field>
