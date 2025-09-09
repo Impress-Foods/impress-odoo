@@ -2,19 +2,19 @@
 <odoo>
     <template id="packaging_block_2x4">
 
-<t t-out="'^FO10,140 ^A0N,66,44^FB500,2,0,L^FDPackaging: ' + name + '^FS'" />
+        <t t-out="'^FO10,140 ^A0N,66,44^FB500,2,0,L^FD' + name + '^FS'" />
 
-    <t t-if="qty">
-<t t-out="'^FO10,210 ^A0N,88,66^FDQTY: ' + str(int(qty)) + '^FS'" />
-    </t>
+        <t t-if="qty">
+            <t t-out="'^FO10,210 ^A0N,88,66^FDQTY: ' + str(int(qty)) + '^FS'" />
+        </t>
 
     </template>
 
     <template id="packaging_block_4x6">
-<t t-out="'^FO300,50 ^A0R,88,66^FB750,2,0,L^FDPackaging: ' + name + '^FS'" />
+        <t t-out="'^FO300,50 ^A0R,88,66^FB750,2,0,L^FD' + name + '^FS'" />
 
         <t t-if="qty">
-<t t-out="'^FO200,50 ^A0R,88,66^FDQTY: ' + str(int(qty)) + '^FS'" />
+            <t t-out="'^FO200,50 ^A0R,88,66^FDQTY: ' + str(int(qty)) + '^FS'" />
         </t>
 
 
