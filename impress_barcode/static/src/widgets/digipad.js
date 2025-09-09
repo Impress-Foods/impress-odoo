@@ -18,7 +18,7 @@ patch(Digipad.prototype, {
 
         this.value = (numberValue + interval).toFixed(fraction);
 
-        if (this.value < 0 && previousValue > 0) {
+        if (this.value < 0 && previousValue >= 0) {
             this.value = (0).toFixed(0);
         }
         await this.props.record.update(this.changes);
