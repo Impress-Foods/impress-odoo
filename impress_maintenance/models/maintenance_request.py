@@ -9,13 +9,15 @@ _logger = logging.getLogger(__name__)
 class MaintenanceRequest(models.Model):
     _inherit = "maintenance.request"
 
-    description = fields.Html(copy=False)
-    notes = fields.Text(copy=False)
-    state_color = fields.Integer(related="stage_id.color")
-    employee_color = fields.Integer(related="assigned_employee.color")
+    notes = fields.Html(copy=False)
+    state_color = fields.Integer(related="stage_id.color", string="State Color")
+    employee_color = fields.Integer(
+        related="assigned_employee.color", string="Employee Color"
+    )
     assigned_employee = fields.Many2one(
         comodel_name="hr.employee",
     )
+    signature = fields.Binary(copy=False)
 
     def create(self, vals_list):
         # self._move_weekend(vals_list)

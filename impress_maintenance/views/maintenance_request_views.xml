@@ -8,31 +8,47 @@
         <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form" />
         <field name="priority">100</field>
         <field name="arch" type="xml">
-            <xpath expr="//notebook/page[1]" position="replace">
-                <page string="Notes" name="description_page">
-                    <group>
-                        <field
-                            name="description"
-                            placeholder="Maintenance Description"
-                            groups="impress_maintenance.group_maintenance_administrator"
-                        />
-                        <field
-                            name="description"
-                            placeholder="Maintenance Description"
-                            readonly="1"
-                            groups="!impress_maintenance.group_maintenance_administrator"
-                        />
-
-                        <field name="notes" placeholder="Maintenance Notes" />
-                    </group>
-                </page>
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="assigned_employee" widget="many2one_avatar_user" />
             </xpath>
-            <xpath expr="//field[@name='maintenance_team_id']" position="after">
-                <field name="assigned_employee" />
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="widget">many2one_avatar_user</attribute>
+            </xpath>
+            <xpath expr="//field[@name='employee_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='maintenance_team_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='description']" position="after">
+                <group>
+                    <field name="notes" />
+                    <field
+                        name="signature"
+                        widget="signature"
+                        options="{'size':[0,90]}"
+                    />
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='description']" position="attributes">
+                <attribute name="invisible">1</attribute>
             </xpath>
         </field>
     </record>
 
+    <record id="hr_equipment_request_view_kanban" model="ir.ui.view">
+        <field name="name">equipment.request.kanban</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_kanban" />
+        <field name="arch" type="xml">
+            <xpath expr="//templates//field[@name='user_id']" position="after">
+                <field name="assigned_employee" widget="many2one_avatar_user" />
+            </xpath>
+            <xpath expr="//templates//field[@name='user_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
     <record id="view_maintenance_request_calendar" model="ir.ui.view">
         <field name="name">view.maintenance.request.calendar</field>
         <field name="model">maintenance.request</field>
@@ -77,7 +93,6 @@
     </record>
 
 
-
     <record id="view_maintenance_request_search" model="ir.ui.view">
         <field name="name">view.maintenance.request.search</field>
         <field name="model">maintenance.request</field>
@@ -115,11 +130,12 @@
         <field name="context">{
             'search_default_active': True,
             'search_default_todo': True,
-        }</field>
+            }</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Add a new maintenance request
-            </p><p>
+            </p>
+            <p>
                 Follow the process of the request and communicate with the collaborator.
             </p>
         </field>
@@ -133,11 +149,12 @@
         <field name="context">{
             'search_default_active': True,
             'search_default_todo': True,
-        }</field>
+            }</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Add a new maintenance request
-            </p><p>
+            </p>
+            <p>
                 Follow the process of the request and communicate with the collaborator.
             </p>
         </field>
