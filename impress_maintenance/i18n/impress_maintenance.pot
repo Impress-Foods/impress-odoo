@@ -25,14 +25,12 @@ msgid "Assigned Employee"
 msgstr ""
 
 #. module: impress_maintenance
-#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__state_color
 #: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_stage__color
 msgid "Color"
 msgstr ""
 
 #. module: impress_maintenance
 #: model:ir.model.fields,field_description:impress_maintenance.field_hr_employee__color
-#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__employee_color
 msgid "Color Index"
 msgstr ""
 
@@ -53,13 +51,18 @@ msgid "Current Preventive"
 msgstr ""
 
 #. module: impress_maintenance
-#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__description
-msgid "Description"
+#: model:res.groups,comment:impress_maintenance.group_maintenance_administrator
+msgid "Deprecated, use maintenance.group_equipment_manager"
 msgstr ""
 
 #. module: impress_maintenance
 #: model:ir.model,name:impress_maintenance.model_hr_employee
 msgid "Employee"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__employee_color
+msgid "Employee Color"
 msgstr ""
 
 #. module: impress_maintenance
@@ -76,7 +79,12 @@ msgstr ""
 
 #. module: impress_maintenance
 #: model:res.groups,name:impress_maintenance.group_maintenance_administrator
-msgid "Maintenance / Administrator"
+msgid "Maintenance / Administrator (Deprecated)"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:res.groups,name:impress_maintenance.group_maintenance_technician
+msgid "Maintenance / User "
 msgstr ""
 
 #. module: impress_maintenance
@@ -90,18 +98,8 @@ msgid "Maintenance Calendar - State"
 msgstr ""
 
 #. module: impress_maintenance
-#: model_terms:ir.ui.view,arch_db:impress_maintenance.view_maintenance_request_form
-msgid "Maintenance Description"
-msgstr ""
-
-#. module: impress_maintenance
 #: model:ir.model,name:impress_maintenance.model_maintenance_equipment
 msgid "Maintenance Equipment"
-msgstr ""
-
-#. module: impress_maintenance
-#: model_terms:ir.ui.view,arch_db:impress_maintenance.view_maintenance_request_form
-msgid "Maintenance Notes"
 msgstr ""
 
 #. module: impress_maintenance
@@ -122,7 +120,6 @@ msgstr ""
 
 #. module: impress_maintenance
 #: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__notes
-#: model_terms:ir.ui.view,arch_db:impress_maintenance.view_maintenance_request_form
 msgid "Notes"
 msgstr ""
 
@@ -138,6 +135,16 @@ msgid "Responsible"
 msgstr ""
 
 #. module: impress_maintenance
-#: model:res.groups,comment:impress_maintenance.group_maintenance_administrator
+#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__signature
+msgid "Signature"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__state_color
+msgid "State Color"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:res.groups,comment:impress_maintenance.group_maintenance_technician
 msgid "The user will be able to manage equipment."
 msgstr ""
