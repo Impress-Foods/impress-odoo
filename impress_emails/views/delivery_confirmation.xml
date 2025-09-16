@@ -4,6 +4,8 @@
   <record id="email_template_delivery_impress" model="mail.template">
     <field name="name">Impress: Delivery confirmation</field>
     <field name="model_id" ref="stock.model_stock_picking" />
+    <field name="lang">{{ object.partner_id.lang }}</field>
+    <field name="auto_delete" eval="True" />
     <field name="subject">Your order from {{ object.company_id.name
       }}</field>
     <field
@@ -11,365 +13,298 @@
         >{{ object.partner_id.email and object.partner_id.id or object.partner_id.parent_id.id
       }}</field>
     <field name="body_html" type="html">
-      <tr>
-        <td
-                    style="margin:0;padding:0;width:100%;height:100%"
-                    align="center"
-                    valign="top"
+      <t t-set="textColor" t-value="'#26837b'" />
+      <t t-set="headingColor" t-value="'#ffffff'" />
+      <t t-set="buttonColor" t-value="'#ffffff'" />
+      <t t-set="bgColor" t-value="'#96d9ca'" />
+      <div
+                t-attf-style="font-family: Arial, sans-serif; font-size: 14px; color: #333; background-color: #f9f9f9; padding: 20px;"
+            >
+        <table
+                    width="100%"
+                    cellpadding="0"
+                    cellspacing="0"
+                    border="0"
+                    style="max-width: 600px; margin: 0 auto; background-color: #96d9ca; border-radius: 8px; border: 1px solid #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
                 >
-          <table width="600" border="0" cellspacing="0" cellpadding="0">
-            <tbody>
-              <tr>
-                <td
-                                    style="width:600px;min-width:600px;font-size:0;line-height:0;padding:0;margin:0;font-weight:normal"
-                                >
-                  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tbody>
+          <tr>
+            <td align="center" style="padding: 20px 0;">
+              <img
+                                src="/impress_emails/static/img/impress_logo_gradient.png"
+                                style="width:150px;"
+                                alt="${object.company_id.name} Logo"
+                            />
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 20px 30px;">
+              <h1
+                                t-attf-style="color: {{headingColor}}; font-size: 24px; margin: 0 0 10px;"
+                            >Your order is on its way!</h1>
+              <p t-attf-style="color: {{textColor}};"> Great news! Your order <strong>
+                  <t t-out="object.sale_id.name or 'N/A'" />
+                </strong> has been shipped and is now
+                heading your way. You can track its progress using the button below. </p>
+              <t t-if="object.carrier_tracking_url">
+                <div style="text-align: center; margin: 30px 0;">
+                  <a
+                                        t-att-href="object.carrier_tracking_url"
+                                        target="_blank"
+                                        t-attf-style="background-color: {{headingColor}}; color: {{textColor}}; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px;"
+                                    >
+                    Track Your Order
+                  </a>
+                </div>
+              </t>
+              <p t-attf-style="color: {{textColor}};"> Your order was sent via <strong>
+                  <t t-out="object.carrier_id.name or 'your trusted carrier'" />
+                </strong>. <t
+                                    t-if="object.carrier_tracking_ref"
+                                > The tracking number is: <strong>
+                    <t t-out="object.carrier_tracking_ref" />
+                  </strong>. </t>
+              </p>
+
+              <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 30px 0;" />
+
+              <h1
+                                t-attf-style="color: {{headingColor}}; font-size: 24px; margin: 0 0 10px;"
+                            >Votre commande est en
+                route!</h1>
+              <p
+                                t-attf-style="color: {{textColor}};"
+                            > Excellente nouvelle! Votre commande <strong>
+                  <t t-out="object.sale_id.name or 'N/A'" />
+                </strong> a été expédiée et est en route.
+                Vous pouvez suivre sa progression en utilisant le bouton ci-dessous. </p>
+              <t t-if="object.carrier_tracking_url">
+                <div style="text-align: center; margin: 30px 0;">
+                  <a
+                                        t-att-href="object.carrier_tracking_url"
+                                        target="_blank"
+                                        t-attf-style="background-color: {{buttonColor}}; color: {{textColor}}; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px;"
+                                    >
+                    Suivre votre commande
+                  </a>
+                </div>
+              </t>
+              <p
+                                t-attf-style="color: {{textColor}};"
+                            > Votre commande a été expédiée via <strong>
+                  <t
+                                        t-out="object.carrier_id.name or 'votre transporteur de confiance'"
+                                    />
+                </strong>. <t
+                                    t-if="object.carrier_tracking_ref"
+                                > Le numéro de suivi est: <strong>
+                    <t t-out="object.carrier_tracking_ref" />
+                  </strong>. </t>
+              </p>
+
+              <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 30px 0;" />
+
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td valign="top" style="padding-right: 10px;">
+                    <h2
+                                            t-attf-style="font-size: 18px; color: {{headingColor}}; margin: 0 0 10px;"
+                                        >Shipping To /
+                      Expédié à:</h2>
+                    <div
+                                            t-field="object.sale_id.partner_shipping_id"
+                                            t-attf-style="color:{{textColor}};"
+                                            t-options='{"widget": "contact", "fields": ["name", "address", "phone"], "no_marker": True}'
+                                        />
+                  </td>
+                  <td
+                                        valign="top"
+                                        t-attf-style="padding-left: 10px; text-align: right;color: {{textColor}};"
+                                    >
+                    <h2
+                                            t-attf-style="font-size: 18px; color: {{headingColor}}; margin: 0 0 10px;"
+                                        >Order Summary /
+                      Résumé de la commande</h2>
+                    <strong>Sale Order / Commande:</strong>
+                    <t t-out="object.sale_id.name or 'N/A'" />
+                    <br />
+                    <strong>Order Date / Date de commande:</strong>
+                    <t
+                                            t-out="object.sale_id.date_order"
+                                            t-options='{"widget": "date"}'
+                                        />
+                  </td>
+                </tr>
+              </table>
+
+              <hr
+                                t-attf-style="border: 0; border-top: 1px solid {{headingColor}}; margin: 30px 0;"
+                            />
+
+              <h2
+                                t-attf-style="font-size: 18px; color: {{headingColor}}; margin: 0 0 15px;"
+                            >Items in this Shipment /
+                Articles dans cet
+                envoi:</h2>
+              <table
+                                width="100%"
+                                cellpadding="10"
+                                cellspacing="0"
+                                style="border-collapse: collapse;"
+                            >
+                <thead t-attf-style="background-color: {{bgColor}}; text-align: left;">
+                  <tr>
+                    <th
+                                            t-attf-style="border-bottom: 2px solid {{headingColor}}; padding: 10px; color:{{textColor}}"
+                                        >Product
+                      / Produit</th>
+                    <th
+                                            t-attf-style="border-bottom: 2px solid {{headingColor}}; padding: 10px; text-align: center; color:{{textColor}}"
+                                        >Quantity
+                      / Quantité</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <t t-foreach="object.sale_id.order_line" t-as="line">
+                    <t t-if="line.display_type == False">
                       <tr>
-                        <td bgcolor="#fff">
-                          <table
-                                                        width="100%"
-                                                        border="0"
-                                                        cellspacing="0"
-                                                        cellpadding="0"
-                                                    >
-                            <tbody>
-                              <tr>
-                                <td
-                                                                    background="https://ci3.googleusercontent.com/meips/ADKq_NYpJoEdhA6xDm5W8hJ_OrOTrvB4LJbrp9lgMba_zCFzFTkmLlx0ZUI_VkafYkkx6AQN0oGOjxTmxadBc3rPoarxrs6lwSPe6uQJIpOGS4T4DKd-bk_sm7-Lldc678g1SOP7R1oUqGBlV8pKbMTaTBpXiR64QxNNEQ3tC8cw_lY=s0-d-e1-ft#https://littlespoon-api.s3.amazonaws.com/emails/images/all-new/order-confirmation-all-weekend-billing.jpg"
-                                                                    bgcolor="#bff391"
-                                                                    valign="top"
-                                                                    height="585"
-                                                                    style="background-size:cover;background-position:left center;background-repeat:no-repeat"
-                                                                >
-                                  <div>
-                                    <table
-                                                                            width="100%"
-                                                                            border="0"
-                                                                            cellspacing="0"
-                                                                            cellpadding="0"
-                                                                        >
-                                      <tbody>
-                                        <tr>
-                                          <td
-                                                                                        width="50"
-                                                                                        style="font-size:0;line-height:0;text-align:left"
-                                                                                    />
-                                          <td
-                                                                                        valign="top"
-                                                                                        height="485"
-                                                                                        style="padding-bottom:100px"
-                                                                                    >
-                                            <table
-                                                                                            width="100%"
-                                                                                            border="0"
-                                                                                            cellspacing="0"
-                                                                                            cellpadding="0"
-                                                                                        >
-                                              <tbody>
-                                                <tr>
-                                                  <td
-                                                                                                        style="font-size:0;line-height:0;text-align:left;padding-top:40px;padding-bottom:40px"
-                                                                                                    >
-                                                    <a
-                                                                                                            href="https://impressfoods.com"
-                                                                                                            target="_blank"
-                                                                                                        >
-                                                      <img
-                                                                                                                src="/impress_emails/static/description/icon.png"
-                                                                                                                width="75"
-                                                                                                                height="75"
-                                                                                                                border="0"
-                                                                                                            />
-                                                    </a>
-                                                  </td>
-                                                </tr>
-                                                <tr>
-                                                  <td
-                                                                                                        style="color:#141414;text-align:left;font-size:40px;line-height:48px;font-family:Mulish,Arial,sans-serif;padding-bottom:15px"
-                                                                                                    >
-                                                    <strong
-                                                                                                            style="font-weight:900"
-                                                                                                        > Be ready <br
-                                                                                                            /> to be IMpressed. </strong>
-                                                  </td>
-                                                </tr>
-                                                <tr>
-                                                  <td
-                                                                                                        style="font-size:24px;line-height:30px;color:#141414;font-family:Lato,Arial,sans-serif;text-align:left"
-                                                                                                    >
-                                                    <strong>TEXT</strong>
-                                                  </td>
-                                                </tr>
-                                              </tbody>
-                                            </table>
-                                          </td>
-                                          <td
-                                                                                        width="300"
-                                                                                        style="font-size:0;line-height:0;text-align:left"
-                                                                                    />
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                  </div>
-
-                                </td>
-                              </tr>
-                              <tr>
-                                <td
-                                                                    style="padding-left:50px;padding-right:50px;padding-bottom:50px;"
-                                                                >
-                                  <div
-                                                                        style="border:1px solid #000000;padding:50px;border-radius:10px;"
-                                                                    >
-                                    <table>
-                                      <tbody>
-
-                                        <tr>
-                                          <td>
-                                            <table
-                                                                                            width="100%"
-                                                                                            border="0"
-                                                                                            cellspacing="0"
-                                                                                            cellpadding="0"
-                                                                                        >
-                                              <tbody>
-                                                <tr>
-                                                  <td
-                                                                                                        style="font-size:24px;line-height:30px;color:#141414;font-family:Lato,Arial,sans-serif;text-align:left;letter-spacing:1px;text-transform:uppercase;padding-bottom:5px"
-                                                                                                    >
-                                                    <strong style="font-weight:900">
-                                                      <t
-                                                                                                                t-out="object.partner_id.name or ''"
-                                                                                                            />'s DELIVERY </strong>
-                                                  </td>
-                                                </tr>
-                                                <tr>
-                                                  <td>
-
-                                                  </td>
-                                                </tr>
-                                                <tr>
-                                                  <td align="center">
-                                                    <table
-                                                                                                            border="0"
-                                                                                                            cellspacing="0"
-                                                                                                            cellpadding="0"
-                                                                                                        >
-                                                      <tbody>
-                                                        <tr>
-                                                          <td
-                                                                                                                        bgcolor="#000001"
-                                                                                                                        style="font-family:Lato,Arial,sans-serif;text-align:center;font-size:20px;line-height:24px;color:#fff;letter-spacing:2px;border-radius:5px"
-                                                                                                                    >
-                                                            <a
-                                                                                                                            t-att-href="object.carrier_tracking_url"
-                                                                                                                            style="display:block;padding:15px 30px;text-decoration:none;color:#fff"
-                                                                                                                            target="_blank"
-                                                                                                                        >
-                                                              <span
-                                                                                                                                style="text-decoration:none;color:#fff"
-                                                                                                                            >
-                                                                <strong>
-                                                                  TRACK
-                                                                  MY
-                                                                  ORDER</strong>
-                                                              </span>
-                                                            </a>
-                                                          </td>
-                                                        </tr>
-                                                      </tbody>
-                                                    </table>
-                                                  </td>
-                                                </tr>
-                                              </tbody>
-                                            </table>
-                                          </td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                  </div>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
+                        <td
+                                                    t-attf-style="border-bottom: 1px solid {{headingColor}}; padding: 10px;"
+                                                >
+                          <span t-attf-style="color:{{textColor}}" t-out="line.name" />
                         </td>
-                      </tr>
-                      <tr>
-                        <td bgcolor="#c9f099" style="padding:50px">
-                          <table
-                                                        width="100%"
-                                                        border="0"
-                                                        cellspacing="0"
-                                                        cellpadding="0"
-                                                    >
-                            <tbody>
-                              <tr>
-                                <td align="center" style="padding-bottom:15px">
-                                  <table border="0" cellspacing="0" cellpadding="0">
-                                    <tbody>
-                                      <tr>
-                                        <td
-                                                                                    bgcolor="#3ad7ca"
-                                                                                    style="font-size:30px;line-height:36px;color:#fff;text-align:center;font-family:'Palanquin Dark',Arial,sans-serif;padding:5px"
-                                                                                >
-                                          <strong style="font-weight:500">
-                                            We’re really social
-                                          </strong>
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td align="center">
-                                  <table border="0" cellspacing="0" cellpadding="0">
-                                    <tbody>
-                                      <tr>
-                                        <td
-                                                                                    width="40"
-                                                                                    style="font-size:0;line-height:0;text-align:left"
-                                                                                >
-                                          <a
-                                                                                        href="https://clicks.littlespoon.com/f/a/1YWVEXbLKHBZSUy3sqzM_A~~/AAQRxRA~/ZYUjnbkiRVcoLRzWLspxvFn0wohpnVJbwiq7VGEOmT8WkmCw7jiEZMK8SbYNKJP5f96c8H6dC5rEtZPQ50t3WsvXGcu0ETmTWLhAy_HQRhLrnJQ3kDcbILXfFuJiRqE3"
-                                                                                        target="_blank"
-                                                                                    >
-                                            <img
-                                                                                            src="https://ci3.googleusercontent.com/meips/ADKq_NYoA3JtHgozHtHzGC59g1J_UWh59aCjYD2AKKq3XwoUpLzNpOKPRrxjuKxdVByovkj4K3HzsRP6ozk3I9_hbW9aCp5TRPLL1k6TFGEi0m8UARwh4MGngU1MQ4ji7FdnJBvMseE=s0-d-e1-ft#https://s3.amazonaws.com/littlespoon-api/emails/images/rebrand/ico_twitter.png"
-                                                                                            width="40"
-                                                                                            height="40"
-                                                                                            border="0"
-                                                                                            alt="Twitter"
-                                                                                            class="CToWUd"
-                                                                                            data-bit="iit"
-                                                                                        />
-                                          </a>
-                                        </td>
-                                        <td
-                                                                                    width="40"
-                                                                                    style="font-size:0;line-height:0;text-align:left"
-                                                                                />
-                                        <td
-                                                                                    width="40"
-                                                                                    style="font-size:0;line-height:0;text-align:left"
-                                                                                >
-                                          <a
-                                                                                        href="https://clicks.littlespoon.com/f/a/bGqWKjq0kRkqDSn8PM8HVw~~/AAQRxRA~/7RxZlw9KHPe8aiyPVK2TZHTkfToLhEafS4krV3BDvYCVa4W8qHAPXVtTdVB9jaPWIWfbPxgx1MOkcHHnf1QZdQYtdPgH_xx5nL3VAt7iYCSZBcryyWlM4hriNxzXg2NxI4doDZgekcfk4JpUezL5Yg~~"
-                                                                                        target="_blank"
-                                                                                    >
-                                            <img
-                                                                                            src="https://ci3.googleusercontent.com/meips/ADKq_NbguJN61tDAbEGJie3ANHCQO-4U5axx0laBHYv8j46Sdjix_qZxXsQaGGUb1p69IrRC3XJK85PsUvWg2KOciTXrr0or5MemV3yjAqEbFuKzKtfGEVUZbv1S3CEtCMMfH6LTIOix=s0-d-e1-ft#https://s3.amazonaws.com/littlespoon-api/emails/images/rebrand/ico_facebook.png"
-                                                                                            width="40"
-                                                                                            height="40"
-                                                                                            border="0"
-                                                                                            alt="Facebook"
-                                                                                            class="CToWUd"
-                                                                                            data-bit="iit"
-                                                                                        />
-                                          </a>
-                                        </td>
-                                        <td
-                                                                                    width="40"
-                                                                                    style="font-size:0;line-height:0;text-align:left"
-                                                                                />
-                                        <td
-                                                                                    width="40"
-                                                                                    style="font-size:0;line-height:0;text-align:left"
-                                                                                >
-                                          <a
-                                                                                        href="https://clicks.littlespoon.com/f/a/q8amHNIWDpnB_-5PGVvqVQ~~/AAQRxRA~/cfRCc4BiZceTBoGQoiTeu7T2z7J_jyAcZSQv4VpzhkVtjyouesnFtQhwLZemtIIbc87mOE5auTDmUMfEJwuziHbZ0J0qfFpOuFwzhzeNzMetJSwUqgs74JU8IgfrFGMx"
-                                                                                        target="_blank"
-                                                                                    >
-                                            <img
-                                                                                            src="https://ci3.googleusercontent.com/meips/ADKq_NZ1lxywCfhIqX1Ns7jm3gwbQrU7e_MLlxqXnIej1qoF3mthasELtS9i_55H_QRnZat7vFooTjza6cN2ZS3usTFOB1mWOCyJpaoYuO26cWFPDj9tIOtsZStLuBXUFGw900pNlWZikw=s0-d-e1-ft#https://s3.amazonaws.com/littlespoon-api/emails/images/rebrand/ico_instagram.png"
-                                                                                            width="40"
-                                                                                            height="40"
-                                                                                            border="0"
-                                                                                            alt="Instagram"
-                                                                                            class="CToWUd"
-                                                                                            data-bit="iit"
-                                                                                        />
-                                          </a>
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
+                        <td
+                                                    t-attf-style="border-bottom: 1px solid {{headingColor}}; padding: 10px; text-align: center;"
+                                                >
+                          <span
+                                                        t-attf-style="color:{{textColor}}"
+                                                        t-out="int(line.product_uom_qty)"
+                                                    />
                         </td>
-                      </tr>
-                      <tr>
-                        <td bgcolor="#f6f8fd" style="padding:50px">
-                          <table
-                                                        width="100%"
-                                                        border="0"
-                                                        cellspacing="0"
-                                                        cellpadding="0"
-                                                    >
-                            <tbody>
-                              <tr>
-                                <td
-                                                                    style="font-size:0;line-height:0;text-align:center;padding-bottom:15px"
-                                                                >
-                                  <a
-                                                                        href="https://clicks.littlespoon.com/f/a/aambH7--pRO7iLLsDI_QMg~~/AAQRxRA~/Cu7TAUbUcq0Sbd1TR-lx1iIhVcYzPbmAwZICv0_E9lAgcNPYHomkJoNBPL_8yWmcfY6qeF6voNSSXxIKPQM1gfMxprikQQxNwAAQUrFvRMTIS3-rvNIQHD5EMmqQ9mH8"
-                                                                        target="_blank"
-                                                                    >
-                                    <img
-                                                                            src="https://ci3.googleusercontent.com/meips/ADKq_NaruHaxYuWSQJEE5NR5rx9jW3yDBe-mjVYtsG-GnO24DJpxw4L8FcTC5_FzJs_TV06Boi_VDJdRmnbypV-gp5lATNZtjpXvJxBHxz_eCTVu2XCAljpt4mhD-wOQtascpaA94pWx=s0-d-e1-ft#https://s3.amazonaws.com/littlespoon-api/emails/images/rebrand/logo_ls_grey.png"
-                                                                            width="200"
-                                                                            height="55"
-                                                                            border="0"
-                                                                        />
-                                  </a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td
-                                                                    style="font-size:22px;line-height:28px;text-align:center;color:#4d5464;font-family:'Palanquin Dark',Arial,sans-serif;padding-bottom:20px"
-                                                                >
-                                  <strong
-                                                                        style="font-weight:500"
-                                                                    > Questions? Or just need someone to talk to? <br
-                                                                        />
-                                    We’re here for you. </strong>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td
-                                                                    style="font-size:18px;font-family:Lato,Arial,sans-serif;line-height:28px;color:#4d5464;text-align:center;padding-bottom:50px"
-                                                                >
-                                  Email us at <a
-                                                                        href="mailto:info@impressfoods.com"
-                                                                        style="text-decoration:underline;color:#4d5464"
-                                                                        target="_blank"
-                                                                    >
-                                    <span
-                                                                            style="text-decoration:underline;color:#4d5464"
-                                                                        >
-                                      info@impressfoods.com
-                                    </span>
-                                  </a>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </td>
-      </tr>
 
+                      </tr>
+                    </t>
+                  </t>
+                </tbody>
+              </table>
+
+              <p
+                                t-attf-style="margin-top: 30px;color:{{textColor}};"
+                            > Thank you for your order! We hope you enjoy your
+                products. <br
+                                /> Nous vous remercions pour votre commande! Nous espérons que vous apprécierez vos
+                produits. </p>
+              <p t-attf-style="color:{{textColor}};"> Sincerely, / Sincèrement,<br
+                                /> The <t
+                                    t-out="object.company_id.name or 'Company'"
+                                /> Team / L'équipe <t
+                                    t-out="object.company_id.name or 'Company'"
+                                />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <p
+                                t-attf-style="color:{{textColor}};"
+                            > Follow us on social media / Suivez nous sur les
+                médias sociaux</p>
+            </td>
+          </tr>
+          <tr>
+            <td align="center">
+              <div
+                                style="display:flex;justify-content:space-between;width:80%;"
+                                align="center"
+                            >
+                <div style="display:flex;flex-direction:column;">
+                  <t t-call="impress_emails.instagram">
+                    <t
+                                            t-set="link"
+                                            t-value="'https://www.instagram.com/impressfoods/'"
+                                        />
+                  </t>
+                  <span t-attf-style="color:{{textColor}};">Impress Foods</span>
+                </div>
+                <div style="display:flex;flex-direction:column;">
+                  <t t-call="impress_emails.facebook">
+                    <t t-set="link" t-value="'https://www.facebook.com/impressfoods'" />
+                  </t>
+                  <span t-attf-style="color:{{textColor}};">Impress Foods</span>
+                </div>
+                <div
+                                    t-attf-style="border-left: 1px solid {{textColor}};height:71px;margin:0 0;"
+                                />
+                <div style="display:flex;flex-direction:column;">
+                  <t t-call="impress_emails.instagram">
+                    <t
+                                            t-set="link"
+                                            t-value="'https://www.instagram.com/impressbabyfood/'"
+                                        />
+                  </t>
+                  <span t-attf-style="color:{{textColor}};">Impress<br
+                                        /> Baby Foods</span>
+                </div>
+                <div style="display:flex;flex-direction:column;">
+                  <t t-call="impress_emails.facebook">
+                    <t
+                                            t-set="link"
+                                            t-value="'https://www.facebook.com/impressbabyfood'"
+                                        />
+                  </t>
+                  <span t-attf-style="color:{{textColor}};">Impress<br
+                                        /> Baby Foods</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td
+                            align="center"
+                            t-attf-style="padding: 20px; font-size: 12px; color:{{textColor}};"
+                        > © <t t-out="datetime.datetime.now().year" /> <t
+                                t-out="object.company_id.name"
+                            />. All rights reserved. </td>
+          </tr>
+        </table>
+      </div>
     </field>
-    <field name="lang">{{ object.partner_id.lang }}</field>
-    <field name="auto_delete" eval="True" />
+
   </record>
+
+  <template id="impress_emails.instagram" name="instagram_svg">
+    <a t-attf-href="{{link}}">
+      <svg
+                role="img"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                height="50px"
+            >
+        <path
+                    d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"
+                />
+      </svg>
+    </a>
+  </template>
+
+  <template id="impress_emails.facebook" name="facebook_svg">
+    <a t-attf-href="{{link}}">
+
+      <svg
+                role="img"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                t-attf-fill="{{textColor}}"
+                height="50px"
+            >
+        <path
+                    d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0
+        1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686
+        1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238
+        24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"
+                />
+      </svg>
+    </a>
+  </template>
+
 </odoo>
