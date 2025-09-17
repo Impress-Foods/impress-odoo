@@ -1,9 +1,6 @@
 import base64
-import logging
 
 from odoo import fields, models
-
-_logger = logging.getLogger(__name__)
 
 
 class PickupCarrier(models.Model):
@@ -37,7 +34,6 @@ class PickupCarrier(models.Model):
             report_data, data_format = self.env["ir.actions.report"]._render(
                 "delivery_pickup.pickup_delivery_label", [picking.id]
             )
-            _logger.warning(report_data)
             att_id = self.env["ir.attachment"].create(
                 {
                     "name": f"{picking.name} Shipping Label",
