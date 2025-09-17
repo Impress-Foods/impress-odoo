@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="report_pickup_delivery_label" model="ir.actions.report">
+        <field name="name">Pickup Label</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-text</field>
+        <field name="report_name">delivery_pickup.pickup_delivery_label</field>
+        <field name="report_file">delivery_pickup.pickup_delivery_label</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="pickup_delivery_label">
+        <t t-set="contact" t-value="docs.partner_id" />
+        <t t-set="packages" t-value="docs.package_ids" />
+
+
+        <t t-foreach="packages" t-as="package">
+            <t t-call="delivery_pickup.pickup_delivery_label_sub">
+                <t t-set="total_packages" t-value="package_size" />
+                <t t-set="package_number" t-value="package_index + 1" />
+            </t>
+        </t>
+    </template>
+
+    <template id="pickup_delivery_label_sub">
+        <t t-out="'^XA'" />
+        <t t-out="'^CI28'" />
+        <t t-out="'^CF0,60'" />
+        <t t-out="'^FO50,50^FDImpress Foods^FS'" />
+        <t t-out="'^CF0,30'" />
+        <t t-out="'^FO50,115^FD1910 avenue du Sanctuaire^FS'" />
+        <t t-out="'^FO50,155^FDQuébec, QC, G1E 3L2^FS'" />
+        <t t-out="'^FO50,195^FDCanada^FS'" />
+        <t t-out="'^FO50,250^GB700,3,3^FS'" />
+
+        <t t-out="'^CFA,30'" />
+        <t t-out="'^FO50,300^FD'+ contact.name + '^FS'" />
+
+        <t t-out="'^FO50,350^GB700,3,3^FS'" />
+        <t t-out="'^FO50,400^FDReference:^FS'" />
+        <t t-out="'^CFA,100'" />
+        <t
+            t-set="ref"
+            t-value="docs.sale_id.name if docs.sale_id.name else docs.name"
+        />
+        <t t-out="'^FO50,500^FD' + ref + '^FS'" />
+        <t t-out="'^FO50,650^FDPick Up^FS'" />
+
+        <t
+            t-out="'^FO50,800^FD' + str(package_number) + '/' + str(total_packages) +'^FS'"
+        />
+
+        <t t-out="'^XZ'" />
+    </template>
+</odoo>
