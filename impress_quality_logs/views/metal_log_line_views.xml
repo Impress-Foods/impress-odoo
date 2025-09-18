@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- View metal.log.line View Tree -->
+    <record id="view_metal_log_line_tree" model="ir.ui.view">
+        <field name="name">view.metal.log.line.tree</field>
+        <field name="model">metal.log.line</field>
+        <field name="arch" type="xml">
+            <list
+                decoration-success="global_success"
+                decoration-danger="not global_success"
+                default_order='id desc'
+            >
+                <field name="sequence" />
+                <field name="start_date" />
+                <field name="product_id" />
+                <field name="product_lot_id" />
+                <field name="production_id" />
+                <field name="reject_value" />
+                <field name="global_success" optional="hide" />
+            </list>
+        </field>
+    </record>
+
+    <!-- View metal.log.line form -->
+    <record id="view_metal_log_line_form" model="ir.ui.view">
+        <field name="name">view.metal.log.line.form</field>
+        <field name="model">metal.log.line</field>
+        <field name="arch" type="xml">
+            <form string="metal.log.line">
+                <header>
+                    <field name="is_locked" invisible="1" />
+                    <field name="create_date" invisible="1" />
+                    <!-- <button
+                        name="action_lock"
+                        type="object"
+                        string="Lock"
+                        class="btn-primary"
+                        invisible="is_locked or not create_date"
+                    />
+                    <button
+                        name="action_unlock"
+                        type="object"
+                        string="Unlock"
+                        class="btn-secondary"
+                        invisible="not is_locked or not create_date"
+                        groups="quality.group_quality_manager"
+                    /> -->
+                </header>
+                <sheet>
+                    <field name="metal_log_id" invisible="1" />
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            class="oe_stat_button"
+                            name="action_view_log"
+                            type="object"
+                            icon="fa-magnet"
+                            groups="mrp.group_mrp_user"
+                            invisible="not metal_log_id"
+                        >
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Metal Log</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="sequence" />
+                        <h1>
+                            <field
+                                name="sequence"
+                                placeholder="0000"
+                                readonly='is_locked'
+                            />
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="calibration" readonly='is_locked' />
+                                <field name="ejection" readonly='is_locked' />
+                                <field name="reject_value" readonly='is_locked' />
+                                <field name='mean_weight' readonly='is_locked' />
+                                <field name="notes" readonly='is_locked' />
+                            </group>
+                            <group>
+                                <field name="ferrous" readonly='is_locked' />
+                                <field name="non_ferrous" readonly='is_locked' />
+                                <field name='stainless' readonly='is_locked' />
+                                <field name="torque" readonly='is_locked' />
+                                <field name="start_date" readonly='is_locked' />
+                                <field
+                                    name="signature"
+                                    widget="signature"
+                                    options="{'size':[0,90]}"
+                                />
+                            </group>
+                        </group>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View metal.log.line search -->
+    <record id="view_metal_log_line_search" model="ir.ui.view">
+        <field name="name">view.metal.log.line.search</field>
+        <field name="model">metal.log.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="sequence" string="Sequence" />
+                <field name="product_lot_id" string="Sequence" />
+                <field name="product_id" string="Product" />
+                <group>
+                    <filter
+                        string="Name"
+                        name="sequence"
+                        domain="[]"
+                        context="{'group_by':'sequence'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action metal.log.line -->
+    <record id="action_metal_log_line" model="ir.actions.act_window">
+        <field name="name">Metal Detector Lines</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">metal.log.line</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new metal.log.line.
+            </p>
+        </field>
+    </record>
+</odoo>

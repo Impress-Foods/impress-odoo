@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- View x_ray.log.line View Tree -->
+    <record id="view_x_ray_log_line_tree" model="ir.ui.view">
+        <field name="name">view.x_ray.log.line.tree</field>
+        <field name="model">x_ray.log.line</field>
+        <field name="arch" type="xml">
+            <list default_order='id desc'>
+                <field name="sequence" />
+                <field name="start_date" />
+            </list>
+        </field>
+    </record>
+
+    <!-- View x_ray.log.line form -->
+    <record id="view_x_ray_log_line_form" model="ir.ui.view">
+        <field name="name">view.x_ray.log.line.form</field>
+        <field name="model">x_ray.log.line</field>
+        <field name="arch" type="xml">
+            <form string="X_ray Log Line">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="sequence" />
+                        <h1>
+                            <field name="sequence" placeholder="Name..." />
+                        </h1>
+                    </div>
+                    <field name="is_locked" invisible='1' />
+
+                    <group>
+                        <group>
+                            <field name="reject_value" readonly='is_locked' />
+                            <field
+                                name="stainless_detection_value"
+                                readonly='is_locked'
+                            />
+                            <field
+                                name="ceramic_detection_value"
+                                readonly='is_locked'
+                            />
+                            <field name="glass_detection_value" readonly='is_locked' />
+                        </group>
+                        <group>
+                            <field name="start_date" readonly='is_locked' />
+                            <field name="last_check_for_product" readonly='is_locked' />
+                            <field name="total_qty" readonly='is_locked' />
+                            <field name="reject_qty" readonly='is_locked' />
+                            <field name="average" readonly='is_locked' />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View x_ray.log.line search -->
+    <record id="view_x_ray_log_line_search" model="ir.ui.view">
+        <field name="name">view.x_ray.log.line.search</field>
+        <field name="model">x_ray.log.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="sequence" string="Sequence" />
+                <field name="product_lot_id" string="Sequence" />
+                <field name="product_id" string="Product" />
+                <group>
+                    <filter
+                        string="Sequence"
+                        name="sequence"
+                        domain="[]"
+                        context="{'group_by':'sequence'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action x_ray.log.line -->
+    <record id="action_x_ray_log_line" model="ir.actions.act_window">
+        <field name="name">X-ray Log Line</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">x_ray.log.line</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new X_ray Log Line.
+            </p>
+        </field>
+    </record>
+</odoo>

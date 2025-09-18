@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="/opt/odoo/odoo/import_xml.rng" type="application/xml"?>
+<odoo>
+    <!-- View hpp_log View Tree -->
+    <record id="view_hpp_log_tree" model="ir.ui.view">
+        <field name="name">view.hpp_log.tree</field>
+        <field name="model">hpp.log</field>
+        <field name="arch" type="xml">
+            <list default_order='date desc'>
+                <field name="date" />
+                <field name="production_id" />
+                <field name="product_id" />
+                <field name="lot_id" />
+                <field name="qty_total" />
+                <field name="qty_produced" />
+            </list>
+        </field>
+    </record>
+
+    <!-- View hpp_log form -->
+    <record id="view_hpp_log_form" model="ir.ui.view">
+        <field name="name">view.hpp_log.form</field>
+        <field name="model">hpp.log</field>
+        <field name="arch" type="xml">
+            <form string="Hpp_log">
+                <sheet>
+                    <field name="production_id" invisible="1" />
+                    <field name="quality_check_id" invisible="1" />
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            class="oe_stat_button"
+                            name="action_view_linked_production"
+                            type="object"
+                            icon="fa-wrench"
+                            groups="mrp.group_mrp_user"
+                            invisible="not production_id"
+                        >
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Manufacturing</span>
+                            </div>
+                        </button>
+                        <button
+                            class="oe_stat_button"
+                            name="action_view_hpp_lines"
+                            type="object"
+                            icon="fa-superpowers"
+                            groups="mrp.group_mrp_user"
+                            invisible="not log_line_ids"
+                        >
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">HPP Lines</span>
+                            </div>
+                        </button>
+                        <button
+                            class="oe_stat_button"
+                            name="action_quality_worksheet"
+                            type="object"
+                            icon="fa-pencil"
+                            groups="mrp.group_mrp_user"
+                            invisible="not quality_check_id"
+                        >
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Worksheet</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Name..." />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="qty_produced" />
+                            <field name="qty_cases" />
+                            <field name="qty_total" />
+                        </group>
+                        <group>
+                            <field name="qty_quality" readonly="1" />
+                            <field name="qty_redone" readonly="1" />
+                            <field name="qty_scrapped" readonly="1" />
+                            <field name="hpp_report" />
+                        </group>
+                    </group>
+                    <field name="log_line_ids" readonly="1" nolabel='1' />
+                    <group>
+                        <group>
+                            <field
+                                name="signature"
+                                widget="signature"
+                                options="{'size':[0,90]}"
+                                string="Weekly Verification"
+                            />
+                            <field name="weekly_signature_date" />
+                        </group>
+                        <group>
+                            <field
+                                name="monthly_signature"
+                                widget="signature"
+                                options="{'size':[0,90]}"
+                                string="Monthly Verification"
+                            />
+                            <field name="monthly_signature_date" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View hpp_log search -->
+    <record id="view_hpp_log_search" model="ir.ui.view">
+        <field name="name">view.hpp_log.search</field>
+        <field name="model">hpp.log</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Name" />
+                <field name="lot_id" string="Sequence" />
+                <field name="product_id" string="Product" />
+                <filter
+                    string="Orphans"
+                    name="orphans"
+                    domain="[('production_id','=',False)]"
+                />
+                <group>
+                    <filter
+                        string="Date"
+                        name="create_date"
+                        domain="[]"
+                        context="{'group_by':'create_date'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action hpp_log -->
+    <record id="action_hpp_log" model="ir.actions.act_window">
+        <field name="name">HPP Logs</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hpp.log</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new Hpp_log.
+            </p>
+        </field>
+    </record>
+</odoo>
