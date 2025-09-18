@@ -122,7 +122,7 @@ enable=anomalous-backslash-in-string,
     translation-too-many-args,
     translation-unsupported-format,
     no-write-in-compute,
-    #messages that do not cause the lint step to fail
+    # messages that do not cause the lint step to fail
     consider-merging-classes-inherited,
     create-user-wo-reset-password,
     dangerous-filter-wo-user,
