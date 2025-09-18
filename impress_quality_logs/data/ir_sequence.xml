@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="loma_sequence" model="ir.sequence">
+        <field name="name">Loma Line</field>
+        <field name="code">loma_log_line</field>
+        <field name="padding">7</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <record id="metal_sequence" model="ir.sequence">
+        <field name="name">Metal Detector Line</field>
+        <field name="code">metal_log_line</field>
+        <field name="padding">7</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <record id="coding_sequence" model="ir.sequence">
+        <field name="name">Coding Line</field>
+        <field name="code">coding_log_line</field>
+        <field name="padding">7</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <record id="x_ray_sequence" model="ir.sequence">
+        <field name="name">X-Ray Line</field>
+        <field name="code">x_ray_log_line</field>
+        <field name="padding">7</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+</odoo>

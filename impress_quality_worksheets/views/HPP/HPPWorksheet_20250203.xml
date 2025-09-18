@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id='HPPWorksheet_20250203_form_view' model='ir.ui.view'>
+        <field name="name">HPP.worksheet.20250203.form.view</field>
+        <field
+            name="model"
+            model="ir.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_hpp_20250203').model_id.model"
+        />
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <form create="false" js_class="worksheet_validation">
+                <sheet>
+                    <group
+                        invisible="context.get('studio') or context.get('default_x_quality_check_id')"
+                    >
+                        <group>
+                            <field name="x_quality_check_id" />
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="x_qty_quality" />
+                            <field name="x_qty_scrapped" />
+                            <field name="x_qty_redone" />
+                        </group>
+                    </group>
+                    <!--<field
+                    name="x_hpp_log_id" invisible="1"/>-->
+                    <field name="x_hpp_log_line_ids" nolabel="1">
+                        <form>
+                            <group>
+                                <group>
+                                    <field name="cycle_number" required="1" />
+                                    <field
+                                        name="barrel_1_qty"
+                                        required='not is_cleaning_cycle'
+                                    />
+                                    <field
+                                        name="barrel_2_qty"
+                                        required='not is_cleaning_cycle'
+                                    />
+                                    <field
+                                        name="barrel_3_qty"
+                                        required='not is_cleaning_cycle'
+                                    />
+                                    <field
+                                        name="barrel_4_qty"
+                                        required='not is_cleaning_cycle'
+                                    />
+                                    <field name="notes" />
+                                </group>
+                                <group>
+                                    <field
+                                        name="cycle_time"
+                                        required='1'
+                                        widget="selection_badge"
+                                    />
+                                    <field name="is_cleaning_cycle" />
+                                    <field name="start_date" required='1' />
+                                    <field
+                                        name="signature"
+                                        widget="signature"
+                                        options="{'size':[0,90]}"
+                                        required='1'
+                                    />
+                                </group>
+                            </group>
+                        </form>
+                    </field>
+
+                    <div class="text-center">
+                        <strong
+                        >Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03
+                            Février 2025. Feuille de contrôle HPP </strong>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

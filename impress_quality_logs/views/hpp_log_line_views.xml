@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-model href="/opt/odoo/odoo/import_xml.rng" type="application/xml"?>
+<odoo>
+    <!-- View hpp_log_line View Tree -->
+    <record id="view_hpp_log_line_tree" model="ir.ui.view">
+        <field name="name">view.hpp_log_line.tree</field>
+        <field name="model">hpp.log.line</field>
+        <field name="arch" type="xml">
+            <list default_order='id desc'>
+                <field name="cycle_number" />
+                <field name="total_qty" />
+                <field name="start_date" />
+                <field name="production_id" />
+                <field name="product_id" />
+                <field name="product_lot_id" />
+            </list>
+        </field>
+    </record>
+
+    <!-- View hpp_log_line form -->
+    <record id="view_hpp_log_line_form" model="ir.ui.view">
+        <field name="name">view.hpp_log_line.form</field>
+        <field name="model">hpp.log.line</field>
+        <field name="arch" type="xml">
+            <form string="Hpp_log_line">
+                <header>
+                    <field name="is_locked" invisible="1" />
+                    <field name="create_date" invisible="1" />
+                    <button
+                        name="action_lock"
+                        type="object"
+                        string="Lock"
+                        class="btn-primary"
+                        invisible="is_locked or not create_date"
+                    />
+                    <button
+                        name="action_unlock"
+                        type="object"
+                        string="Unlock"
+                        class="btn-secondary"
+                        invisible="not is_locked or not create_date"
+                        groups="quality.group_quality_manager"
+                    />
+                </header>
+                <sheet>
+                    <field name="hpp_log_id" invisible="1" />
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            class="oe_stat_button"
+                            name="action_view_log"
+                            type="object"
+                            icon="fa-superpowers"
+                            groups="mrp.group_mrp_user"
+                            invisible="not hpp_log_id"
+                        >
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">HPP Log</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="cycle_number" />
+                        <h1>
+                            <field
+                                name="cycle_number"
+                                placeholder="000000"
+                                readonly='is_locked'
+                            />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="barrel_1_qty" readonly='is_locked' />
+                            <field name="barrel_2_qty" readonly='is_locked' />
+                            <field name="barrel_3_qty" readonly='is_locked' />
+                            <field name="barrel_4_qty" readonly='is_locked' />
+                            <field name="notes" readonly='is_locked' />
+                        </group>
+                        <group>
+                            <field
+                                name="cycle_time"
+                                readonly='is_locked'
+                                widget='radio'
+                            />
+                            <field name="is_cleaning_cycle" readonly='is_locked' />
+                            <field name="start_date" readonly='is_locked' />
+                            <field
+                                name="signature"
+                                widget="signature"
+                                options="{'size':[0,90]}"
+                                readonly='is_locked'
+                            />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View hpp_log_line search -->
+    <record id="view_hpp_log_line_search" model="ir.ui.view">
+        <field name="name">view.hpp_log_line.search</field>
+        <field name="model">hpp.log.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="cycle_number" string="Sequence" />
+                <field name="product_lot_id" string="Sequence" />
+                <field name="product_id" string="Product" />
+                <filter
+                    string="Orphans"
+                    name="orphans"
+                    domain="[('hpp_log_id','=',False)]"
+                />
+                <filter
+                    string="Cleaning"
+                    name='cleaning'
+                    domain="[('is_cleaning_cycle','=',True)]"
+                />
+                <group>
+                    <filter
+                        string="Production"
+                        name="production"
+                        domain="[]"
+                        context="{'group_by':'production_id'}"
+                    />
+                    <filter
+                        string="Date"
+                        name="production_date"
+                        domain="[]"
+                        context="{'group_by':'start_date'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action hpp_log_line -->
+    <record id="action_hpp_log_line" model="ir.actions.act_window">
+        <field name="name">HPP Log Lines</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hpp.log.line</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new Hpp_log_line.
+            </p>
+        </field>
+    </record>
+</odoo>

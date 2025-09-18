@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- View coding.log View Tree -->
+    <record id="view_coding_log_tree" model="ir.ui.view">
+        <field name="name">view.coding.log.tree</field>
+        <field name="model">coding.log</field>
+        <field name="arch" type="xml">
+            <list default_order='date desc'>
+                <field name="name" />
+                <field name="product_id" />
+                <field name="lot_id" />
+                <field name="production_id" />
+                <field name="date" />
+            </list>
+        </field>
+    </record>
+
+    <!-- View coding.log form -->
+    <record id="view_coding_log_form" model="ir.ui.view">
+        <field name="name">view.coding.log.form</field>
+        <field name="model">coding.log</field>
+        <field name="arch" type="xml">
+            <form string="Coding Log">
+                <sheet>
+                    <field name="production_id" invisible="1" />
+                    <field name="quality_check_id" invisible="1" />
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            class="oe_stat_button"
+                            name="action_view_linked_production"
+                            type="object"
+                            icon="fa-wrench"
+                            groups="mrp.group_mrp_user"
+                            invisible="not production_id"
+                        >
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Manufacturing</span>
+                            </div>
+                        </button>
+                        <button
+                            class="oe_stat_button"
+                            name="action_quality_worksheet"
+                            type="object"
+                            icon="fa-pencil"
+                            groups="mrp.group_mrp_user"
+                            invisible="not quality_check_id"
+                        >
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Worksheet</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" />
+                        <h1>
+                            <field name="name" placeholder="Name..." />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="case_code" />
+                            <field name="unit_code" />
+                            <field name="unit_check" />
+                            <field name="subunit_check" />
+                            <field name="notes" />
+                        </group>
+                        <group>
+                            <field name="sleeve_check" />
+                            <field name="shelf_life_check" />
+                            <field name="keep_cold_check" />
+                            <field name="start_date" />
+
+                            <field
+                                name="signature"
+                                widget="signature"
+                                options="{'size':[0,90]}"
+                            />
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field
+                                name="verification_signature"
+                                widget="signature"
+                                options="{'size':[0,90]}"
+                            />
+                            <field name="weekly_signature_date" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View coding.log search -->
+    <record id="view_coding_log_search" model="ir.ui.view">
+        <field name="name">view.coding.log.search</field>
+        <field name="model">coding.log</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Name" />
+                <field name="lot_id" string="Sequence" />
+                <field name="product_id" string="Product" />
+                <group>
+                    <filter
+                        string="Name"
+                        name="name"
+                        domain="[]"
+                        context="{'group_by':'name'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action coding.log -->
+    <record id="action_coding_log" model="ir.actions.act_window">
+        <field name="name">Coding Log</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">coding.log</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There is no examples click here to add new Coding Log.
+            </p>
+        </field>
+    </record>
+</odoo>

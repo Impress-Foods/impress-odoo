@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- View mrp.production form -->
+    <record id="view_mrp_production_form" model="ir.ui.view">
+        <field name="name">view.mrp.production.form</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <field name="hpp_log_ids" invisible="1" />
+                <field name="loma_log_ids" invisible="1" />
+                <field name="metal_log_ids" invisible="1" />
+                <field name="coding_log_ids" invisible="1" />
+                <field name="x_ray_log_ids" invisible="1" />
+
+                <button
+                    class="oe_stat_button"
+                    name="action_view_hpp_log"
+                    type="object"
+                    icon="fa-superpowers"
+                    invisible="not hpp_log_ids"
+                    groups="mrp.group_mrp_user"
+                >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">HPP</span>
+                    </div>
+                </button>
+                <button
+                    class="oe_stat_button"
+                    name="action_view_loma_log"
+                    type="object"
+                    icon="fa-balance-scale"
+                    invisible="not loma_log_ids"
+                    groups="mrp.group_mrp_user"
+                >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">LOMA</span>
+                    </div>
+                </button>
+                <button
+                    class="oe_stat_button"
+                    name="action_view_metal_log"
+                    type="object"
+                    icon="fa-magnet"
+                    invisible="not metal_log_ids"
+                    groups="mrp.group_mrp_user"
+                >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Metal</span>
+                    </div>
+                </button>
+
+                <button
+                    class="oe_stat_button"
+                    name="action_view_coding_log"
+                    type="object"
+                    icon="fa-calendar-check-o"
+                    invisible="not coding_log_ids"
+                    groups="mrp.group_mrp_user"
+                >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Coding</span>
+                    </div>
+                </button>
+                <button
+                    class="oe_stat_button"
+                    name="action_view_x_ray_log"
+                    type="object"
+                    icon="fa-times"
+                    invisible="not x_ray_log_ids"
+                    groups="mrp.group_mrp_user"
+                >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">X-Ray</span>
+                    </div>
+                </button>
+            </xpath>
+
+            <xpath expr="//label[@name='bom_label']" position="before">
+                <label for="hpp_qty_cases" string="HPP" invisible="not hpp_log_ids" />
+
+                <div invisible="not hpp_log_ids" class="o_row">
+                    <field name="hpp_qty_cases" invisible='1' />
+                    <span
+                        invisible="hpp_qty_cases != qty_producing"
+                        class="text-success"
+                    >HPP ok</span>
+                    <span
+                        invisible="hpp_qty_cases == qty_producing"
+                        class="text-danger"
+                    >HPP not ok</span>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

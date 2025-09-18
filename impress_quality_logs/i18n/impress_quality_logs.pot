@@ -1,0 +1,1111 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* impress_quality_logs
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_line_form
+msgid "0000"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_form
+msgid "000000"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__hpp_log_line__cycle_time__120sec
+msgid "120 seconds"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__hpp_log_line__cycle_time__300sec
+msgid "300 seconds"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_mrp_production_form
+msgid "<span class=\"o_stat_text\">Coding</span>"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_form
+msgid "<span class=\"o_stat_text\">HPP Lines</span>"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_form
+msgid "<span class=\"o_stat_text\">HPP Log</span>"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_mrp_production_form
+msgid "<span class=\"o_stat_text\">HPP</span>"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_form
+msgid "<span class=\"o_stat_text\">LOMA Lines</span>"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_mrp_production_form
+msgid "<span class=\"o_stat_text\">LOMA</span>"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_line_form
+msgid "<span class=\"o_stat_text\">Loma Log</span>"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_coding_log_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_x_ray_log_form
+msgid "<span class=\"o_stat_text\">Manufacturing</span>"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_form
+msgid "<span class=\"o_stat_text\">Metal Lines</span>"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_line_form
+msgid "<span class=\"o_stat_text\">Metal Log</span>"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_mrp_production_form
+msgid "<span class=\"o_stat_text\">Metal</span>"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_coding_log_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_x_ray_log_form
+msgid "<span class=\"o_stat_text\">Worksheet</span>"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_x_ray_log_form
+msgid "<span class=\"o_stat_text\">X-Ray Lines</span>"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_mrp_production_form
+msgid "<span class=\"o_stat_text\">X-Ray</span>"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_mrp_production_form
+msgid ""
+"<span invisible=\"hpp_qty_cases != qty_producing\" class=\"text-success\">HPP ok</span>\n"
+"                    <span invisible=\"hpp_qty_cases == qty_producing\" class=\"text-danger\">HPP not ok</span>"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__active_worksheet_field
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_line_mixin__active_worksheet_field
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__active_worksheet_field
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__active_worksheet_field
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__active_worksheet_field
+msgid "Active Worksheet Field"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__average
+msgid "Average"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__average_threshold
+msgid "Average Threshold"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__barrel_1_qty
+msgid "Barrel 1 Quantity"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__barrel_2_qty
+msgid "Barrel 2 Quantity"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__barrel_3_qty
+msgid "Barrel 3 Quantity"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__barrel_4_qty
+msgid "Barrel 4 Quantity"
+msgstr ""
+
+#. module: impress_quality_logs
+#. odoo-python
+#: code:addons/impress_quality_logs/models/logs/hpp_log_line.py:0
+#, python-format
+msgid "Barrels must be empty during cleaning cycle"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__calibration
+msgid "Calibration"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__case_check
+msgid "Case Check"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__case_code
+msgid "Case Code"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__ceramic_detection_value
+msgid "Ceramic Detection Value"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_search
+msgid "Cleaning"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.ui.menu,name:impress_quality_logs.coding_menu
+msgid "Coding"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.actions.act_window,name:impress_quality_logs.action_coding_log
+#: model:ir.model,name:impress_quality_logs.model_coding_log
+#: model:ir.model.fields,field_description:impress_quality_logs.field_mrp_production__coding_log_ids
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_coding_log_form
+msgid "Coding Log"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__create_uid
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__create_uid
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__create_uid
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_mixin__create_uid
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__create_uid
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__create_uid
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__create_uid
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__create_uid
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__create_uid
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__create_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__create_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__create_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_mixin__create_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__create_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__create_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__create_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__create_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__create_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__cycle_number
+msgid "Cycle Number"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.constraint,message:impress_quality_logs.constraint_hpp_log_line_unique_cycle_number
+msgid "Cycle Number must be unique for a production!"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__cycle_time
+msgid "Cycle Time"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_mixin__date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__date
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_search
+msgid "Date"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__display_name
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__display_name
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__display_name
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_mixin__display_name
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__display_name
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__display_name
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__display_name
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__display_name
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__display_name
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__ejection
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__ejection
+msgid "Ejection"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__shelf_life
+msgid "Expiration Date"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__ferrous
+msgid "Ferrous"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__glass_detection_value
+msgid "Glass Detection Value"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__global_success
+msgid "Global Success"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__global_success_check
+msgid "Global Success Check"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_coding_log_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_line_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_line_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_x_ray_log_line_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_x_ray_log_search
+msgid "Group By"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.ui.menu,name:impress_quality_logs.hpp_menu
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_mrp_production_form
+msgid "HPP"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.ui.menu,name:impress_quality_logs.hpp_log_menu
+msgid "HPP Log"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.actions.act_window,name:impress_quality_logs.action_hpp_log_line
+#: model:ir.ui.menu,name:impress_quality_logs.hpp_log_line_menu
+msgid "HPP Log Lines"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.actions.act_window,name:impress_quality_logs.action_hpp_log
+#: model:ir.model.fields,field_description:impress_quality_logs.field_mrp_production__hpp_log_ids
+msgid "HPP Logs"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_mrp_production__hpp_qty_cases
+msgid "HPP Quantity"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__hpp_report
+msgid "HPP Report"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model,name:impress_quality_logs.model_hpp_log_line
+msgid "HPP_log_line"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__hpp_log_id
+msgid "Hpp Log"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model,name:impress_quality_logs.model_hpp_log
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_form
+msgid "Hpp_log"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_form
+msgid "Hpp_log_line"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_mixin__id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__id
+msgid "ID"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__is_cleaning_cycle
+msgid "Is cleaning cycle?"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__keep_cold_check
+msgid "Keep Cold Check"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.ui.menu,name:impress_quality_logs.loma_menu
+msgid "LOMA"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.actions.act_window,name:impress_quality_logs.action_loma_log_line
+msgid "LOMA Lines"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_mrp_production__loma_log_ids
+msgid "LOMA Logs"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.ui.menu,name:impress_quality_logs.loma_log_line_menu
+msgid "LOMA lines"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model,name:impress_quality_logs.model_loma_log
+msgid "LOMA log"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.ui.menu,name:impress_quality_logs.loma_log_menu
+msgid "LOMA logs"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__last_check_for_product
+msgid "Last Check For Product"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__write_uid
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__write_uid
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__write_uid
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_mixin__write_uid
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__write_uid
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__write_uid
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__write_uid
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__write_uid
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__write_uid
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__write_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__write_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__write_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_mixin__write_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__write_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__write_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__write_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__write_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__write_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_line_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_line_form
+msgid "Lock"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__is_locked
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_line_mixin__is_locked
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__is_locked
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__is_locked
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__is_locked
+msgid "Locked"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__log_line_ids
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__log_line_ids
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__log_line_ids
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__log_line_ids
+msgid "Log Line"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model,name:impress_quality_logs.model_log_line_mixin
+msgid "Log Line mixin"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.ui.menu,name:impress_quality_logs.logs_menu
+msgid "Logs"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.actions.act_window,name:impress_quality_logs.action_loma_log
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__loma_log_id
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_form
+msgid "Loma Log"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model,name:impress_quality_logs.model_loma_log_line
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_line_form
+msgid "Loma_log_line"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__lot_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__lot_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__product_lot_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_line_mixin__product_lot_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_mixin__lot_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__lot_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__product_lot_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__lot_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__product_lot_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__lot_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__product_lot_id
+msgid "Lot"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__lower_limit
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__lower_limit
+msgid "Lower Limit"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__mean_weight
+msgid "Mean Weight"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__measure_1
+msgid "Measure 1"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__measure_2
+msgid "Measure 2"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__measure_3
+msgid "Measure 3"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__measure_4
+msgid "Measure 4"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__measure_5
+msgid "Measure 5"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.ui.menu,name:impress_quality_logs.metal_menu
+msgid "Metal"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.actions.act_window,name:impress_quality_logs.action_metal_log_line
+msgid "Metal Detector Lines"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model,name:impress_quality_logs.model_metal_log
+msgid "Metal Detector Log"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.ui.menu,name:impress_quality_logs.metal_log_line_menu
+msgid "Metal Line"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.actions.act_window,name:impress_quality_logs.action_metal_log
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__metal_log_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_mrp_production__metal_log_ids
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_form
+msgid "Metal Log"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.ui.menu,name:impress_quality_logs.metal_log_menu
+msgid "Metal Logs"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model,name:impress_quality_logs.model_metal_log_line
+msgid "Metal_log_line"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__monthly_signature
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__monthly_signature
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__monthly_signature
+msgid "Monthly Signature"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__monthly_signature_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__monthly_signature_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__monthly_signature_date
+msgid "Monthly Signature Date"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_x_ray_log_form
+msgid "Monthly Verification"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__name
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__name
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_mixin__name
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__name
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__name
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__name
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_coding_log_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_line_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_line_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_x_ray_log_search
+msgid "Name"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_coding_log_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_line_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_x_ray_log_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_x_ray_log_line_form
+msgid "Name..."
+msgstr ""
+
+#. module: impress_quality_logs
+#. odoo-python
+#: code:addons/impress_quality_logs/models/logs/coding_log_line.py:0
+#: code:addons/impress_quality_logs/models/logs/coding_log_line.py:0
+#: code:addons/impress_quality_logs/models/logs/coding_log_line.py:0
+#: code:addons/impress_quality_logs/models/logs/loma_log_line.py:0
+#: code:addons/impress_quality_logs/models/logs/loma_log_line.py:0
+#: code:addons/impress_quality_logs/models/logs/loma_log_line.py:0
+#: code:addons/impress_quality_logs/models/logs/metal_log_line.py:0
+#: code:addons/impress_quality_logs/models/logs/metal_log_line.py:0
+#: code:addons/impress_quality_logs/models/logs/metal_log_line.py:0
+#: code:addons/impress_quality_logs/models/logs/xray_log_line.py:0
+#: code:addons/impress_quality_logs/models/logs/xray_log_line.py:0
+#: code:addons/impress_quality_logs/models/logs/xray_log_line.py:0
+#, python-format
+msgid "New"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__nominal_weight
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__nominal_weight
+msgid "Nominal Weight"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__non_ferrous
+msgid "Non Ferrous"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__case_check__not_ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__global_success_check__not_ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__keep_cold_check__not_ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__shelf_life_check__not_ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__sleeve_check__not_ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__subunit_check__not_ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__unit_check__not_ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__metal_log_line__calibration__not_ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__metal_log_line__ejection__not_ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__x_ray_log_line__ejection__not_ok
+msgid "Not Ok"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__notes
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__notes
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_line_mixin__notes
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__notes
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__notes
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__notes
+msgid "Notes"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,help:impress_quality_logs.field_coding_log__shelf_life
+msgid ""
+"Number of days after the receipt of the products (from the vendor or in "
+"stock after production) after which the goods may become dangerous and must "
+"not be consumed. It will be computed on the lot/serial number."
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__case_check__ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__global_success_check__ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__keep_cold_check__ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__shelf_life_check__ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__sleeve_check__ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__subunit_check__ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__unit_check__ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__metal_log_line__calibration__ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__metal_log_line__ejection__ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__x_ray_log_line__ejection__ok
+msgid "Ok"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_search
+msgid "Orphans"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__presssure_reached
+msgid "Presssure Reached"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model,name:impress_quality_logs.model_product_template
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__product_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__product_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__product_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_line_mixin__product_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_mixin__product_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__product_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__product_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__product_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__product_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__product_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__product_id
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_coding_log_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_line_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_line_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_x_ray_log_line_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_x_ray_log_search
+msgid "Product"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model,name:impress_quality_logs.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_search
+msgid "Production"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model,name:impress_quality_logs.model_mrp_production
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__production_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__production_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__production_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_line_mixin__production_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_mixin__production_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__production_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__production_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__production_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__production_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__production_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__production_id
+msgid "Production Order"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__quality_check_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__quality_check_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__quality_check_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_line_mixin__quality_check_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_mixin__quality_check_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__quality_check_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__quality_check_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__quality_check_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__quality_check_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__quality_check_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__quality_check_id
+msgid "Quality Check"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__qty_cases
+msgid "Quantity Cases"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__qty_produced
+msgid "Quantity Produced"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__qty_quality
+msgid "Quantity Quality"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__qty_redone
+msgid "Quantity Redone"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__qty_scrapped
+msgid "Quantity Scrapped"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_product_product__qty_multiple
+#: model:ir.model.fields,field_description:impress_quality_logs.field_product_template__qty_multiple
+msgid "Quantity per case"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__reject_qty
+msgid "Reject Quantity"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__reject_value
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__reject_value
+msgid "Reject Value"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__is_seal_ok
+msgid "Seal Ok"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__sequence
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__sequence
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__sequence
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_coding_log_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_line_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_line_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_x_ray_log_line_search
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_x_ray_log_search
+msgid "Sequence"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.constraint,message:impress_quality_logs.constraint_loma_log_line_unique_sequence_number
+#: model:ir.model.constraint,message:impress_quality_logs.constraint_metal_log_line_unique_sequence_number
+#: model:ir.model.constraint,message:impress_quality_logs.constraint_x_ray_log_line_unique_sequence_number
+msgid "Sequence Number must be unique!"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__shelf_life_check
+msgid "Shelf Life Check"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.actions.server,name:impress_quality_logs.action_sign_logs_coding
+#: model:ir.actions.server,name:impress_quality_logs.action_sign_logs_hpp
+#: model:ir.actions.server,name:impress_quality_logs.action_sign_logs_loma
+#: model:ir.actions.server,name:impress_quality_logs.action_sign_logs_metal
+#: model:ir.actions.server,name:impress_quality_logs.action_sign_logs_x_ray
+msgid "Sign logs"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__signature
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__signature
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__signature
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_line_mixin__signature
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_mixin__signature
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__signature
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__signature
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__signature
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__signature
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__signature
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__signature
+msgid "Signature"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__sleeve_check
+msgid "Sleeve Check"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__stainless
+msgid "Stainless"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__stainless_detection_value
+msgid "Stainless Detection Value"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__start_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__start_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_line_mixin__start_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__start_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__start_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__start_date
+msgid "Start Date"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__subunit_check
+msgid "Subunit Check"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.actions.act_window,help:impress_quality_logs.action_coding_log
+msgid "There is no examples click here to add new Coding Log."
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.actions.act_window,help:impress_quality_logs.action_hpp_log
+msgid "There is no examples click here to add new Hpp_log."
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.actions.act_window,help:impress_quality_logs.action_hpp_log_line
+msgid "There is no examples click here to add new Hpp_log_line."
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.actions.act_window,help:impress_quality_logs.action_loma_log
+msgid "There is no examples click here to add new Loma Log."
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.actions.act_window,help:impress_quality_logs.action_loma_log_line
+msgid "There is no examples click here to add new Loma_log_line."
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.actions.act_window,help:impress_quality_logs.action_metal_log
+msgid "There is no examples click here to add new Metal Log."
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.actions.act_window,help:impress_quality_logs.action_x_ray_log_line
+msgid "There is no examples click here to add new X_ray Log Line."
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.actions.act_window,help:impress_quality_logs.action_x_ray_log
+msgid "There is no examples click here to add new X_ray Log."
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.actions.act_window,help:impress_quality_logs.action_metal_log_line
+msgid "There is no examples click here to add new metal.log.line."
+msgstr ""
+
+#. module: impress_quality_logs
+#. odoo-python
+#: code:addons/impress_quality_logs/models/logs/mixin/log_line_mixin.py:0
+#, python-format
+msgid "This record is already locked."
+msgstr ""
+
+#. module: impress_quality_logs
+#. odoo-python
+#: code:addons/impress_quality_logs/models/logs/mixin/log_line_mixin.py:0
+#, python-format
+msgid "This record is locked and cannot be modified."
+msgstr ""
+
+#. module: impress_quality_logs
+#. odoo-python
+#: code:addons/impress_quality_logs/models/logs/mixin/log_line_mixin.py:0
+#, python-format
+msgid "This record is not locked."
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__torque
+msgid "Torque"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__qty_total
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__total_qty
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__total_qty
+msgid "Total Quantity"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__unit_check
+msgid "Unit Check"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__unit_code
+msgid "Unit Code"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_line_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_line_form
+msgid "Unlock"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__upper_limit
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__upper_limit
+msgid "Upper Limit"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__weekly_signature_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__weekly_signature_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_mixin__weekly_signature_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__weekly_signature_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__weekly_signature_date
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__weekly_signature_date
+msgid "Weekly Signature Date"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_x_ray_log_form
+msgid "Weekly Verification"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__is_weight_ok
+msgid "Weight Ok"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__x_ray_log_id
+msgid "X Ray Log"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.ui.menu,name:impress_quality_logs.x_ray_menu
+msgid "X-Ray"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model,name:impress_quality_logs.model_x_ray_log
+msgid "X-Ray Detector Log"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model,name:impress_quality_logs.model_x_ray_log_line
+msgid "X-Ray Detector Log Line"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_mrp_production__x_ray_log_ids
+msgid "X-Ray Logs"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.ui.menu,name:impress_quality_logs.x_ray_log_line_menu
+msgid "X-Ray lines"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.ui.menu,name:impress_quality_logs.x_ray_log_menu
+msgid "X-Ray logs"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.actions.act_window,name:impress_quality_logs.action_x_ray_log
+msgid "X-ray Log"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.actions.act_window,name:impress_quality_logs.action_x_ray_log_line
+msgid "X-ray Log Line"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_x_ray_log_form
+msgid "X_ray Log"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_x_ray_log_line_form
+msgid "X_ray Log Line"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model,name:impress_quality_logs.model_log_mixin
+msgid "log.mixin"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_line_form
+msgid "metal.log.line"
+msgstr ""
