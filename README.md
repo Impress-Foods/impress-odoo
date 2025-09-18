@@ -1,9 +1,7 @@
 <!-- /!\ Non OCA Context : Set here the badge of your runbot / runboat instance. -->
-
-[![Pre-commit Status](https://github.com/Impress-Foods/impress-odoo/actions/workflows/pre-commit.yml/badge.svg?branch=17.0)](https://github.com/Impress-Foods/impress-odoo/actions/workflows/pre-commit.yml?query=branch%3A17.0)
-[![Build Status](https://github.com/Impress-Foods/impress-odoo/actions/workflows/test.yml/badge.svg?branch=17.0)](https://github.com/Impress-Foods/impress-odoo/actions/workflows/test.yml?query=branch%3A17.0)
-[![codecov](https://codecov.io/gh/Impress-Foods/impress-odoo/graph/badge.svg?token=INNNC7JQ2E)](https://codecov.io/gh/Impress-Foods/impress-odoo)
-
+[![Pre-commit Status](https://github.com/Impress-Foods/impress-odoo/actions/workflows/pre-commit.yml/badge.svg?branch=19.0)](https://github.com/Impress-Foods/impress-odoo/actions/workflows/pre-commit.yml?query=branch%3A19.0)
+[![Build Status](https://github.com/Impress-Foods/impress-odoo/actions/workflows/test.yml/badge.svg?branch=19.0)](https://github.com/Impress-Foods/impress-odoo/actions/workflows/test.yml?query=branch%3A19.0)
+[![codecov](https://codecov.io/gh/Impress-Foods/impress-odoo/branch/19.0/graph/badge.svg)](https://codecov.io/gh/Impress-Foods/impress-odoo)
 <!-- /!\ Non OCA Context : Set here the badge of your translation instance. -->
 
 <!-- /!\ do not modify above this line -->
