@@ -1,3 +1,0 @@
-id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
-access_lot_audit_report_manager,lot_audit_report_manager,model_lot_audit_report,,1,1,1,1
-access_wizard_make_traceability_report_manager,wizard_make_traceability_report_manager,model_wizard_make_traceability_report,,1,1,1,1

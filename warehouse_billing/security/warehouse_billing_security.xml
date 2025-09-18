@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<odoo>
-    <record id="warehouse_billing_manager" model="res.groups">
-        <field name="name">Warehouse Billing Manager</field>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
-        <field name="comment">The user will be able to manage warehouse billing.</field>
-    </record>
-</odoo>

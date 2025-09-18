@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<odoo noupdate="1">
-
-        <record id="documents_maintenance_folder" model="documents.folder">
-            <field name="name">Maintenance</field>
-            <field name="sequence">13</field>
-        </record>
-</odoo>
