@@ -1,6 +1,6 @@
 import logging
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -15,7 +15,7 @@ class CodingLogLine(models.Model):
         comodel_name="coding.log", compute="_compute_coding_log_id", store=True
     )
 
-    sequence = fields.Char(default=lambda self: _("New"), copy=False)
+    sequence = fields.Char(default=lambda self: self.env._("New"), copy=False)
 
     case_code = fields.Char()
     unit_code = fields.Char()
@@ -46,10 +46,10 @@ class CodingLogLine(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if "sequence" not in vals or vals["sequence"] == _("New"):
+            if "sequence" not in vals or vals["sequence"] == self.env._("New"):
                 vals["sequence"] = self.env["ir.sequence"].next_by_code(
                     "coding_log_line"
-                ) or _("New")
+                ) or self.env._("New")
         return super().create(vals_list)
 
     @api.depends(

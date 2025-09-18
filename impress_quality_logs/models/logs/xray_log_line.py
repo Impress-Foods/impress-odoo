@@ -1,6 +1,6 @@
 import logging
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -15,7 +15,7 @@ class Xray_log_line(models.Model):
         "UNIQUE(sequence)", "Sequence Number must be unique!"
     )
 
-    sequence = fields.Char(default=lambda self: _("New"), copy=False)
+    sequence = fields.Char(default=lambda self: self.env._("New"), copy=False)
 
     x_ray_log_id = fields.Many2one(
         "x_ray.log", compute="_compute_x_ray_log_id", store=True
@@ -47,10 +47,10 @@ class Xray_log_line(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if "sequence" not in vals or vals["sequence"] == _("New"):
+            if "sequence" not in vals or vals["sequence"] == self.env._("New"):
                 vals["sequence"] = self.env["ir.sequence"].next_by_code(
                     "x_ray_log_line"
-                ) or _("New")
+                ) or self.env._("New")
         return super().create(vals_list)
 
     def action_view_log(self):

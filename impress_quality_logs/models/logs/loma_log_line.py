@@ -1,6 +1,6 @@
 import logging
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -16,7 +16,7 @@ class LOMALogLine(models.Model):
         "Sequence Number must be unique!",
     )
 
-    sequence = fields.Char(default=lambda self: _("New"), copy=False)
+    sequence = fields.Char(default=lambda self: self.env._("New"), copy=False)
     loma_log_id = fields.Many2one(
         comodel_name="loma.log", compute="_compute_loma_log_id", store=True
     )
@@ -59,10 +59,10 @@ class LOMALogLine(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if "sequence" not in vals or vals["sequence"] == _("New"):
+            if "sequence" not in vals or vals["sequence"] == self.env._("New"):
                 vals["sequence"] = self.env["ir.sequence"].next_by_code(
                     "loma_log_line"
-                ) or _("New")
+                ) or self.env._("New")
         return super().create(vals_list)
 
     def action_view_log(self):

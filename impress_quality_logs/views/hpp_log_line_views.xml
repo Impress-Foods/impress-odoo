@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <?xml-model href="/opt/odoo/odoo/import_xml.rng" type="application/xml"?>
-
 <odoo>
     <!-- View hpp_log_line View Tree -->
     <record id="view_hpp_log_line_tree" model="ir.ui.view">

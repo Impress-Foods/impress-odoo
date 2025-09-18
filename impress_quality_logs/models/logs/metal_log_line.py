@@ -1,6 +1,6 @@
 import logging
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -20,7 +20,7 @@ class MetalLogLine(models.Model):
         comodel_name="metal.log", compute="_compute_metal_log_id", store=True
     )
 
-    sequence = fields.Char(default=lambda self: _("New"), copy=False)
+    sequence = fields.Char(default=lambda self: self.env._("New"), copy=False)
 
     calibration = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
     ejection = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
@@ -67,10 +67,10 @@ class MetalLogLine(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if "sequence" not in vals or vals["sequence"] == _("New"):
+            if "sequence" not in vals or vals["sequence"] == self.env._("New"):
                 vals["sequence"] = self.env["ir.sequence"].next_by_code(
                     "metal_log_line"
-                ) or _("New")
+                ) or self.env._("New")
         return super().create(vals_list)
 
     def action_view_log(self):

@@ -1,6 +1,6 @@
 import logging
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
@@ -75,7 +75,7 @@ class HPPLogLine(models.Model):
                     or record.barrel_4_qty != 0
                 ):
                     raise ValidationError(
-                        _("Barrels must be empty during cleaning cycle")
+                        self.env._("Barrels must be empty during cleaning cycle")
                     )
 
     def action_view_log(self):

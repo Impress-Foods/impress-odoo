@@ -1,6 +1,6 @@
 import logging
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
@@ -98,14 +98,16 @@ class LogLineMixin(models.AbstractModel):
         if "is_locked" in vals and not vals["is_locked"]:
             return True
         if self.is_locked:
-            raise ValidationError(_("This record is locked and cannot be modified."))
+            raise ValidationError(
+                self.env._("This record is locked and cannot be modified.")
+            )
 
     def write(self, vals):
         return super().write(vals)
 
     def action_lock(self):
         if self.is_locked:
-            raise UserError(_("This record is already locked."))
+            raise UserError(self.env._("This record is already locked."))
         else:
             self.is_locked = True
 
@@ -113,7 +115,7 @@ class LogLineMixin(models.AbstractModel):
         if self.is_locked:
             self.is_locked = False
         else:
-            raise UserError(_("This record is not locked."))
+            raise UserError(self.env._("This record is not locked."))
 
     def sign_log_line(self):
         for rec in self:

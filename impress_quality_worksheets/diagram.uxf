@@ -1,0 +1,26 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>100</x><y>270</y><w>270</w><h>190</h></coordinates><panel_attributes>_WS-HPP_
+--
+id
+--
+x_hpp_log_id (Many2One)
+--
+x_hpp_log_line_ids (One2Many reference)
+--
+...
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>450</x><y>270</y><w>210</w><h>200</h></coordinates><panel_attributes>_WS-HPP_LOG_
+--
+id
+--
+x_ws_id (Many2One)
+--
+hpp_log_line_ids (One2Many)
+--
+...
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>770</x><y>270</y><w>210</w><h>200</h></coordinates><panel_attributes>_HPP_LOG_LINE_
+--
+id
+--
+hpp_log (Many2One)
+--
+...
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>360</x><y>310</y><w>110</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;30;90;10</additional_attributes></element><element><id>Relation</id><coordinates><x>650</x><y>310</y><w>140</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;30;120;10</additional_attributes></element><element><id>Relation</id><coordinates><x>360</x><y>290</y><w>110</w><h>50</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;30</additional_attributes></element></diagram>

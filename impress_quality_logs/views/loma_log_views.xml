@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <!-- View loma.log View Tree -->
     <record id="view_loma_log_tree" model="ir.ui.view">
