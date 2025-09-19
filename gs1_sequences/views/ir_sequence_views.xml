@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- View ir.sequence form -->
+    <record id="view_ir_sequence_form" model="ir.ui.view">
+        <field name="name">view.ir.sequence.form</field>
+        <field name="model">ir.sequence</field>
+        <field name="inherit_id" ref="base.sequence_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='implementation']" position="after">
+                <field name="check_digit" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
