@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- View mrp.bom form -->
+    <record id="view_mrp_bom_form" model="ir.ui.view">
+        <field name="name">view.mrp.bom.form</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='code']" position="after">
+                <field name="billing_product_id" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

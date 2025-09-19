@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="mrp_production_form_inherit_billing" model="ir.ui.view">
+        <field name="name">mrp.production.form.inherit.billing</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+        <field name="priority">16</field>
+        <field name="arch" type="xml">
+            <xpath expr="//label[@for='bom_id']" position="before">
+                <field
+                    name="billing_sale_order_ref"
+                    readonly="state in ['done', 'cancel']"
+                    invisible="not product_id or (state in ['done', 'cancel'] and not billing_sale_order_ref)"
+                    decoration-success="billing_sale_order_line_id"
+                />
+            </xpath>
+            <xpath expr="//page[@name='miscellaneous']" position="before">
+                <page
+                    string="Billing"
+                    name="billing"
+                    invisible="not billing_sale_order_ref"
+                >
+                    <group>
+                        <group>
+                            <field name='billing_sale_order_id' readonly="1" />
+                            <field name='billing_sale_order_line_id' readonly="1" />
+                            <field
+                                name='invoice_status'
+                                groups="impress_production_billing.production_billing_manager"
+                            />
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="mrp_production_kanban_view" model="ir.ui.view">
+        <field name="name">mrp.production.view.kanban.inherit</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_kanban_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="billing_sale_order_ref" />
+                <field name="invoice_status" />
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <t t-if="record.billing_sale_order_ref.value">
+                    <span> - </span>
+                    <t t-if="record.invoice_status.raw_value == '1'">
+                        <span class="text-success">
+                            <t t-esc="record.billing_sale_order_ref.value" />
+                            <i class="fa fa-check" />
+                        </span>
+                    </t>
+
+                    <t t-else="">
+                        <span>
+                            <t t-esc="record.billing_sale_order_ref.value" />
+                        </span>
+                    </t>
+                </t>
+            </xpath>
+        </field>
+    </record>
+</odoo>
