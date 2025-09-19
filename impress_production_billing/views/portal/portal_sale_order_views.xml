@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="sale_order_portal_content_inherit"
+        name="Sales Order Portal Content Inherit"
+        inherit_id="sale.sale_order_portal_content"
+        priority="20"
+    >
+        <div id='sale_invoices' position='after'>
+            <t
+                t-set="manufacturing_orders"
+                t-value="sale_order.portal_get_productions_grouped()"
+            />
+            <div t-if="manufacturing_orders" class="col-12 col-lg-6 mb-4">
+                <h4 class="mb-1">Manufacturing Orders</h4>
+                <hr class="mt-1 mb-2" />
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th class="text-start">Product</th>
+                                <th class="text-end">Nb MO</th>
+                                <th class="text-end" />
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="manufacturing_orders" t-as="mo">
+                                <tr>
+                                    <t
+                                        t-set="url"
+                                        t-value="'/my/manufacturings?product=%s&amp;so=%s' % (mo[0], sale_order.id)"
+                                    />
+                                    <td class="text-start">
+                                        <span t-esc="mo[1]" />
+                                    </td>
+                                    <td class="text-end">
+                                        <span t-esc="mo[2]" />
+                                    </td>
+                                    <td class="text-end">
+                                        <a
+                                            class="badge text-bg-primary orders_label_text_align ml-auto "
+                                            target="_self"
+                                            t-att-href="url"
+                                        >
+                                            See MOs
+                                        </a>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <xpath expr="//th[@id='product_qty_header']" position="after">
+            <th class="text-end">Delivered</th>
+        </xpath>
+        <xpath expr="//td[@name='td_product_quantity']" position="after">
+            <td class="text-end">
+                <div>
+                    <span t-field="line.qty_delivered" />
+                    <span t-field="line.product_uom_id.display_name" />
+                </div>
+            </td>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="impress_production_billing.PickingFormController"
+        t-inherit="web.FormView"
+        t-inherit-mode="primary"
+    >
+        <xpath
+            expr="//t[@t-set-slot='control-panel-additional-actions']"
+            position="replace"
+        />
+    </t>
+
+</templates>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_billing_portal_production,billing.portal.production,mrp.model_mrp_production,base.group_portal,1,1,0,0
+access_billing_portal_product,billing.portal.product,product.model_product_product,base.group_portal,1,0,0,0
+access_billing_portal_product_template,billing.portal.product.template,product.model_product_template,base.group_portal,1,0,0,0

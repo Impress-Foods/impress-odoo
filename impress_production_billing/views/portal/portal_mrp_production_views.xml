@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="manufacturing_portal_production_form_view" model="ir.ui.view">
+        <field name="name">manufacturing.portal.production.view.form</field>
+        <field name="model">mrp.production</field>
+        <field name="priority">999</field>
+        <field name="arch" type="xml">
+            <form
+                js_class="manufacturing_portal_picking_form_view"
+                string="Manufacturing Orders"
+            >
+                <header>
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,confirmed,done"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field
+                                name="name"
+                                placeholder="Manufacturing Reference"
+                                nolabel="1"
+                            />
+                        </h1>
+                    </div>
+                    <field name="company_id" invisible="1" />
+
+                    <group>
+                        <field
+                            name="product_id"
+                            options='{"no_open": True}'
+                            readonly='1'
+                        />
+                        <label for="product_qty" string="Quantity" />
+                        <div class="o_row g-0 d-flex">
+                            <div invisible="state == 'draft'" class="o_row flex-grow-0">
+                                <field
+                                name="qty_producing"
+                                class="text-start"
+                                readonly="state == 'cancel' or (state == 'done')"
+                            /> / </div>
+
+                            <field name="product_qty" class="oe_inline" readonly="1" />
+                            <label for="product_uom_id" string="" class="oe_inline" />
+                            <!-- <field name="product_uom_category_id" invisible="1" /> -->
+                            <field
+                                name="product_uom_id"
+                                groups="!uom.group_uom"
+                                invisible="1"
+                            />
+                            <field
+                                name="product_uom_id"
+                                options="{'no_open': True, 'no_create': True}"
+                                groups="uom.group_uom"
+                                readonly="1"
+                            />
+                        </div>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record
+        id="manufacturing_portal_view_production_action"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Manufacturing Portal</field>
+        <field name="res_model">mrp.production</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="manufacturing_portal_production_form_view" />
+    </record>
+</odoo>

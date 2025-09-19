@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="portal_my_home_menu_manufacturing"
+        name="Portal Layout: manufacturing menu entries"
+        inherit_id="portal.portal_breadcrumbs"
+    >
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <t t-if="title">
+                <li
+                    t-if="page_name == 'manufacturing' or manufacturing"
+                    t-attf-class="breadcrumb-item #{'active' if breadcrumbs_url else ''}"
+                >
+                    <a
+                        t-if="breadcrumbs_url"
+                        t-attf-href="/my/manufacturings{{ keep_query() }}"
+                    >
+                        Manufacturings</a>
+                    <t t-else="" t-esc="title" />
+                </li>
+            </t>
+        </xpath>
+    </template>
+
+    <template
+        id="portal_my_home_manufacturings"
+        name="manufacturings"
+        inherit_id="portal.portal_my_home"
+    >
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_vendor_category_enable" t-value="True" />
+        </xpath>
+        <div id="portal_vendor_category" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t
+                    t-set="icon"
+                    t-value="'/mrp_subcontracting/static/src/img/manufacturing.svg'"
+                />
+                <t t-set="title">Manufacturing Orders</t>
+                <t t-set="text">Follow manufacturing orders you have ordered</t>
+                <t t-set="url" t-value="'/my/manufacturings'" />
+                <t t-set="placeholder_count" t-value="'manufacturing_count'" />
+                <t t-set="config_card" t-value="True" />
+            </t>
+        </div>
+    </template>
+
+    <template name="My manufacturings" id="portal_my_manufacturings">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True" />
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Manufacturings</t>
+            </t>
+
+            <t t-if="not manufacturings">
+                <p class="alert alert-warning">There are currently no
+                    manufacturings for your
+                    account.</p>
+            </t>
+            <t
+                t-else=""
+                t-call="impress_production_billing.portal_manufacturings_list"
+            />
+        </t>
+    </template>
+
+    <template name="manufacturings_list" id="portal_manufacturings_list">
+        <t t-if="grouped_productions" t-call="portal.portal_table">
+            <!-- Main table headings -->
+            <thead>
+                <tr class="active">
+                    <t
+                        t-set="group_by_in_headers_list"
+                        t-value="['state','product_id', 'production_id']"
+                    />
+                    <t t-set="number_of_header" t-value="9" />
+                    <t
+                        t-set="grouped_manufacturings_colspan"
+                        t-value="number_of_header - 1 if groupby in group_by_in_headers_list else number_of_header"
+                    />
+                    <th>Order</th>
+                    <th
+                        t-if="groupby != 'purchase_order'"
+                        class="text-end"
+                    >Purchase Order</th>
+                    <th t-if="groupby != 'product'" class="text-center">Product</th>
+                    <th class="text-end">Scheduled Date</th>
+                    <th class="text-end">Produced</th>
+                    <th class="text-end">Planned</th>
+                    <th class="text-end">Lot</th>
+                    <th class="text-end">Expiration Date</th>
+                    <th t-if="groupby != 'state'" class="text-end">State</th>
+                </tr>
+            </thead>
+
+            <t t-foreach="grouped_productions(pager['offset'])" t-as="mos">
+                <tbody>
+                    <!-- Row for groups -->
+                    <tr t-if="not groupby == 'none'" class="table-light">
+                        <th
+                            t-if="groupby == 'state'"
+                            t-attf-colspan="{{grouped_manufacturings_colspan}}"
+                        >
+                            <span t-field="mos[0].state" />
+                        </th>
+                        <th
+                            t-if="groupby == 'product'"
+                            t-attf-colspan="{{grouped_manufacturings_colspan}}"
+                        >
+                            <span t-field="mos[0].product_id.display_name" />
+                        </th>
+                        <th
+                            t-if="groupby == 'purchase_order'"
+                            t-attf-colspan="{{grouped_manufacturings_colspan}}"
+                        >
+                            <span t-field="mos[0].billing_sale_order_ref" />
+                        </th>
+                    </tr>
+
+                    <!-- Row for single elements -->
+                    <t t-foreach="mos" t-as="mo">
+                        <tr>
+                            <!-- <td><a
+                            t-attf-href="/my/manufacturings/#{mo.id}?{{
+                            keep_query()
+                            }}"><span t-field="mo.name"/></a></td>-->
+                            <td>
+                                <span t-field="mo.name" />
+                            </td>
+                            <td t-if="groupby != 'purchase_order'" class="text-end">
+                                <span t-field="mo.billing_sale_order_ref" />
+                            </td>
+                            <td t-if="groupby != 'product'" class="text-center">
+                                <span t-field="mo.product_id.display_name" />
+                            </td>
+                            <td class="text-end">
+                                <span
+                                    t-field="mo.date_start"
+                                    t-options="{&quot;widget&quot;: &quot;date&quot;}"
+                                />
+                            </td>
+                            <td class="text-end">
+                                <span t-field="mo.qty_producing" />
+                            </td>
+                            <td class="text-end">
+                                <span t-field="mo.product_qty" />
+                            </td>
+                            <td class="text-end">
+                                <span t-field="mo.lot_producing_ids.display_name" />
+                            </td>
+                            <td class="text-end">
+                                <span
+                                    t-field="mo.lot_producing_ids.expiration_date"
+                                    t-options='{"widget": "date","format": "dd-MM-yyyy"}'
+                                />
+                            </td>
+                            <td t-if="groupby != 'state'" class="text-end">
+                                <span t-field="mo.state" />
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </t>
+        </t>
+    </template>
+
+    <template id="manufacturing_portal" name="Manufacturing View in Portal">
+        <t t-call="portal.frontend_layout">
+            <div class="o_portal container mt-3">
+                <div class="row align-items-center bg-white g-0 border rounded">
+                    <div class="col-10">
+                        <t
+                            t-call="impress_production_billing.portal_my_home_menu_manufacturing"
+                        >
+                            <t t-set="title" t-value="manufacturing.name" />
+                            <t t-set="breadcrumbs_url">/my/manufacturings</t>
+                        </t>
+                    </div>
+                </div>
+            </div>
+
+            <div class="o_portal container mt-3 o_manufacturing_portal">
+                <div
+                    class="row align-items-center bg-white g-0 border rounded o_manufacturing_portal"
+                >
+                    <t t-set="no_footer" t-value="true" />
+                    <t t-call="impress_production_billing.manufacturing" />
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="manufacturing" name="Manufacturing Portal View">
+        <iframe
+            width="100%"
+            height="100%"
+            frameborder="0"
+            t-attf-src="/my/manufacturings/{{ manufacturing.id }}/manufacturing_portal"
+        />
+    </template>
+
+    <template id="manufacturing_portal_embed" name="Manufacturing Portal">
+        <t t-call="web.layout">
+            <t t-set="head_manufacturing_portal">
+                <script type="text/javascript"> odoo.__session_info__ = <t
+                    t-out="json.dumps(session_info)"
+                />; </script>
+                <base target="_parent" />
+                <t t-call-assets="impress_production_billing.webclient" />
+                <t t-call="web.conditional_assets_tests" />
+            </t>
+            <t t-set="head" t-value="head_manufacturing_portal + (head or '')" />
+            <t t-set="body_classname" t-value="'o_web_client o_manufacturing_portal'" />
+        </t>
+    </template>
+</odoo>
