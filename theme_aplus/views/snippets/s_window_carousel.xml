@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
     <template id="s_window_carousel" name="Window Carousel">
@@ -8,11 +8,11 @@
             data-name="Window Carousel"
             data-number-of-records="16"
             data-template-key="theme_aplus.dynamic_filter_template_product_template_wavy_card"
-            data-carousel-interval="5000"
-        >
+            data-carousel-interval="5000">
             <img class="hero-background active" />
             <img class="hero-background inactive" />
-            <div class="row o_grid_mode" data-row-count="13">
+            <div
+                class="row o_grid_mode" data-row-count="13">
 
                 <div
                     class="carousel_container o_grid_item g-height-* g-col-lg-* w-auto"
@@ -116,7 +116,7 @@
 
 
     <record id="dynamic_filter_window_carousel_filter" model="website.snippet.filter">
-        <field name="filter_id" ref="dynamic_snippet_newest_product_templates_filter" />
+        <field name="filter_id" ref="theme_aplus.dynamic_snippet_newest_product_templates_filter" />
         <field
             name="field_names"
             eval="'display_name,id,image_512,primary_color,secondary_color,text_color,hero_background,hero_image,carousel_order,card_image'"
@@ -124,6 +124,7 @@
         <field name="limit" eval="16" />
         <field name="name">Product Templates - Window</field>
     </record>
+
     <record id="s_window_carousel_000_js" model="ir.asset">
         <field name="name"> Window Carousel 000 js</field>
         <field name="bundle">web.assets_frontend</field>

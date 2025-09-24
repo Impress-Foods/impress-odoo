@@ -16,7 +16,7 @@ class ThemeAPlus(http.Controller):
         )
         raw_values_list = dynamic_filter._prepare_values(search_domain=search_domain)
         if isinstance(raw_values_list, list):
-            raw_values_list.sort(key=lambda x: x["carousel_order"])
+            raw_values_list.sort(key=lambda x: x.get("carousel_order", 0))
             values_list = {i: values for i, values in enumerate(raw_values_list)}
 
             return values_list

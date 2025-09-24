@@ -37,6 +37,9 @@ const TickerBlock = publicWidget.Widget.extend({
         this._cleanupTicker();
         // Get the text from the editable element
         const $sourceText = this.$el.find(".ticker-text");
+        const $textElements = $sourceText.children().first();
+        const bulletStyle = $textElements.children("font").attr("style");
+
         const tickerText = $sourceText.length
             ? $sourceText.text().trim()
             : "Infinite Ticker";
@@ -59,9 +62,15 @@ const TickerBlock = publicWidget.Widget.extend({
         // We'll need at least 2x the number of items to ensure smooth scrolling
         const itemsNeeded = itemsPerScreen * 2;
 
+        const elementToAdd = $textElements
+            .clone()
+            .addClass("ticker-item")
+            .attr("style", bulletStyle);
+
         // Create ticker items with proper spacing
         for (let i = 0; i < itemsNeeded; i++) {
-            this.$tickerStripe.append(`<div class="ticker-item">${tickerText}</div>`);
+            //this.$tickerStripe.append(`<div class="ticker-item">${tickerText}</div>`);
+            this.$tickerStripe.append(elementToAdd.clone());
         }
 
         // Get the actual stripe width after items are added

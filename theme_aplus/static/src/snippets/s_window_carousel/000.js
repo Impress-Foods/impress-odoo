@@ -98,7 +98,7 @@ const WindowCarousel = DynamicSnippetProductTemplates.extend({
             element.classList.toggle("inactive");
         });
         this.next_index = (this.current_index + 1) % Object.keys(this.data).length;
-        console.log(this.next_index);
+        //console.log(this.next_index);
     },
 
     /**
@@ -124,7 +124,7 @@ const WindowCarousel = DynamicSnippetProductTemplates.extend({
         this.shop_button = document.getElementsByClassName("shop-now-button")[0];
 
         for (const bg of this.bgs) {
-            console.log(bg);
+            //console.log(bg);
             if (bg.classList.contains("active")) {
                 bg.src = `/web/image/product.template/${this.data[0].id}/hero_background`;
             } else {
