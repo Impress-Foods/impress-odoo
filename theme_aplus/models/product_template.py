@@ -8,14 +8,19 @@ _logger = logging.getLogger(__name__)
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    primary_color = fields.Char()
-    secondary_color = fields.Char()
+    product_page_text_color = fields.Char()
     text_color = fields.Char()
+    card_primary_color = fields.Char()
+    card_secondary_color = fields.Char()
+    card_text_color = fields.Char()
 
-    background_image = fields.Binary()
-    hero_background = fields.Binary()
+    hero_text_color = fields.Char()
+    hero_background_color = fields.Char()
+
     hero_image = fields.Binary()
+    hero_sticker = fields.Binary()
     card_image = fields.Binary()
+    card_background_image = fields.Binary()
     suggestion_image = fields.Binary()
 
     carousel_order = fields.Integer()

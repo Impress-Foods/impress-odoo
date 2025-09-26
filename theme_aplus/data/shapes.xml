@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <record id="shape_aplus_01" model="ir.attachment">
         <field name="name">01.svg</field>
@@ -18,6 +18,16 @@
             file="theme_aplus/static/shapes/aplus/02.svg"
         />
         <field name="url">/web_editor/shape/illustration/aplus/02.svg</field>
+        <field name="public" eval="True" />
+    </record>
+    <record id="shape_aplus_03" model="ir.attachment">
+        <field name="name">03.svg</field>
+        <field
+            name="datas"
+            type="base64"
+            file="theme_aplus/static/shapes/aplus/03.svg"
+        />
+        <field name="url">/web_editor/shape/illustration/aplus/03.svg</field>
         <field name="public" eval="True" />
     </record>
 </odoo>

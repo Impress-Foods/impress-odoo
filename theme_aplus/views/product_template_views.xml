@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
     <!-- View product.template form -->
@@ -12,15 +12,19 @@
                 <page string="Website" name="website">
                     <group>
                         <group string="Colors">
-                            <field name="primary_color" widget="color" />
-                            <field name="secondary_color" widget="color" />
+                            <field name="product_page_text_color" widget="color" />
                             <field name="text_color" widget="color" />
+                            <field name="card_primary_color" widget="color" />
+                            <field name="card_secondary_color" widget="color" />
+                            <field name="card_text_color" widget="color" />
+                            <field name="hero_text_color" widget="color" />
+                            <field name="hero_background_color" widget="color" />
+
                             <field name="carousel_order" />
                         </group>
                         <group string="images">
-                            <field name="background_image" />
                             <field name="hero_image" />
-                            <field name="hero_background" />
+                            <field name="hero_sticker" />
                             <field name="card_image" />
                             <field name="suggestion_image" />
                         </group>

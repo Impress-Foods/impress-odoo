@@ -1,10 +1,41 @@
-.o_grid_mode {
-    justify-content: center;
+.hero-background {
+    // height: 100vh;
+    // position: absolute;
+    // top: 0;
+    // left: 0;
+    -webkit-transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out;
+    -webkit-transition: background-color 0.5s ease-in-out;
+    transition: background-color 0.5s ease-in-out;
+
+    background-color: bisque;
+}
+
+.hero-sticker {
+    transition: background-color 0.5s ease-in-out;
+    transition: opacity 0.25s ease-in-out;
+    max-width: 256px;
+    max-height: 256px;
 }
 
 .s_window_carousel {
     overflow: hidden;
-    height: 100vh;
+    min-height: 50vh;
+
+    .shop-now {
+        margin-left: auto;
+        margin-right: auto;
+        // padding-top: 0rem;
+        // padding-bottom: 1rem;
+
+        padding-top: 1rem;
+        padding-bottom: 0rem;
+        -webkit-transition: color 0.5s ease-in-out;
+        transition: color 0.5s ease-in-out;
+        // .shop-now-button {
+        //      border-color: black;
+        // }
+    }
 
     .dynamic_snippet_template {
         height: 100%;
@@ -14,11 +45,17 @@
     // A+ Dynamic Product Carousel - Basic Styles
     .carousel_container {
         justify-content: center;
-        //max-width: 380px;
-        width: 380px;
-        //height: 450px;
-        min-height: 450px;
-        max-height: 510px;
+        // For window-style carousel
+        // width: 380px;
+        // min-height: 450px;
+        // max-height: 510px;
+
+        // for oval carousel
+
+        width: 280px;
+        min-height: 360px;
+        //max-height: 510px;
+
         display: flex;
 
         .aplus_carousel {
@@ -27,38 +64,45 @@
             width: 100%;
             height: 100%;
             border-width: 1px;
-            border-color: black;
 
-            border-style: solid;
+            // For window-style carousel
+            // border-color: black;
+            // border-style: solid;
+            // border-bottom-left-radius: 50px;
+            // border-bottom-right-radius: 50px;
+            // border-top-left-radius: 500px;
+            // border-top-right-radius: 500px;
+            // vertical-align: bottom;
+            // justify-content: flex-end;
+            //filter: drop-shadow(7px 7px 0px #000000);
 
+            // For oval carousel
             border-top-left-radius: 500px;
             border-top-right-radius: 500px;
-            border-bottom-left-radius: 50px;
-            border-bottom-right-radius: 50px;
+            border-bottom-left-radius: 500px;
+            border-bottom-right-radius: 500px;
 
             overflow-x: hidden;
             margin: auto;
 
-            vertical-align: bottom;
+            vertical-align: center;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
-
-            filter: drop-shadow(7px 7px 0px #000000);
+            //justify-content: flex-end;
 
             background-color: #f7f9fc;
 
             // Carousel Inner
             .carousel-inner {
-                border-radius: 12px;
-                padding-bottom: 0rem;
-                overflow: visible;
+                //border-radius: 12px;
+                //padding-bottom: 0rem;
+                //overflow: visible;
                 width: 100%;
 
                 .carousel-item {
                     text-align: center;
                     position: relative;
-                    align-items: end;
+                    //align-items: end;
                     height: 100%;
 
                     .carousel-content {
@@ -87,7 +131,7 @@
                         }
 
                         .product-image {
-                            margin-bottom: -2.5rem;
+                            //margin-bottom: -2.5rem;
                             &:hover {
                                 transform: scale(1.02);
                             }
@@ -121,17 +165,6 @@
                     }
                 }
             }
-
-            .shop-now {
-                margin-left: auto;
-                margin-right: auto;
-                padding-top: 0rem;
-                padding-bottom: 1rem;
-
-                .shop-now-button {
-                    border-color: black;
-                }
-            }
         }
 
         // Responsive Adjustments
@@ -160,16 +193,6 @@
             }
         }
     }
-    .hero-background {
-        height: 100vh;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        -webkit-transition: opacity 0.5s ease-in-out;
-        transition: opacity 0.5s ease-in-out;
-        background-color: bisque;
-    }
 
     .active {
         opacity: 100%;
@@ -183,13 +206,14 @@
         color: #ff00ff;
         font-size: 10rem;
         font-weight: bold;
-        text-align: center;
-        text-shadow: 6px 6px 0px black;
+        // text-align: center;
+        // text-shadow: 6px 6px 0px black;
+        // text-shadow: 1px 1px 1px black;
+        // -webkit-text-stroke: 1px black;
         text-wrap: wrap;
-        line-height: normal;
-        -webkit-transition: color 0.2s ease-in-out;
-        transition: color 0.2s ease-in-out;
-        -webkit-text-stroke: 1px black;
+        line-height: 0.8;
+        -webkit-transition: color 0.5s ease-in-out;
+        transition: color 0.5s ease-in-out;
     }
 
     @media (max-width: 1920px) {

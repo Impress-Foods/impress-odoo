@@ -1,31 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-
-
-    <!-- Filters for Dynamic Filter -->
-    <record id="dynamic_snippet_newest_product_templates_filter" model="ir.filters">
-        <field name="name">Product Templates</field>
-        <field name="model_id">product.template</field>
-        <field name="user_id" eval="False" />
-        <field name="domain">[('website_published', '=', True)]</field>
-        <field
-            name="context"
-        >{'display_default_code': False, 'add2cart_rerender': False}</field>
-        <field name="sort">["carousel_order asc"]</field>
-        <field name="action_id" ref="website.action_website" />
-    </record>
-
-    <record id="dynamic_filter_wavy_card_filter" model="website.snippet.filter">
-        <field
-            name="filter_id"
-            ref="theme_aplus.dynamic_snippet_newest_product_templates_filter"
-        />
-        <field name="field_names">display_name,id,image_512</field>
-        <field name="limit" eval="16" />
-        <field name="name">Wavy Card Filter</field>
-    </record>
-
-
     <template id="dynamic_filter_template_product_template_wavy_card" name="Wavy Card">
         <t t-foreach="records" t-as="data">
             <t t-set="record" t-value="data['_record']" />

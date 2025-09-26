@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
     <template id="snippets" inherit_id="website.snippets" name="A+ - Snippets">
@@ -43,6 +43,11 @@
             <we-button
                 data-shape="illustration/aplus/02"
                 data-select-label="aplus wave 2"
+                data-animated="true"
+            />
+            <we-button
+                data-shape="illustration/aplus/03"
+                data-select-label="aplus wave 3"
                 data-animated="true"
             />
         </xpath>

@@ -1,6 +1,5 @@
 @use "./aplus_colors.scss";
 @use "./fonts";
-@use "./aurabora_theme" as ab;
 
 // Navigation Styles
 .o_navlink_background {
@@ -57,6 +56,15 @@
     .search-query.oe_search_box {
         background-color: var(--o-cc1-bg) !important;
     }
+}
+
+.o_illustration_aplus_03.o_active {
+    opacity: 1;
+}
+
+.o_illustration_aplus_03 {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
 }
 
 @media (max-width: 991px) {

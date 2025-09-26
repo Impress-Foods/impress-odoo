@@ -4,46 +4,57 @@
     <template id="s_window_carousel" name="Window Carousel">
         <section
             data-snippet="s_window_carousel"
-            class="s_window_carousel pb0 pt0 o_dynamic_empty"
+            class="s_window_carousel pb0 pt0 o_dynamic_empty hero-background"
             data-name="Window Carousel"
             data-number-of-records="16"
-            data-template-key="theme_aplus.dynamic_filter_template_product_template_wavy_card"
+            data-template-key="theme_aplus.dynamic_filter_template_product_template_window"
             data-carousel-interval="5000">
-            <img class="hero-background active" />
-            <img class="hero-background inactive" />
-            <div
-                class="row o_grid_mode" data-row-count="13">
-
+            <div class="container">
                 <div
-                    class="carousel_container o_grid_item g-height-* g-col-lg-* w-auto"
-                    style="grid-area: 5 / -2 / 16 / -5; width: 100%;"
-                >
-                    <div class="carousel_container">
-                        <div
-                            t-att-id="unique_id"
-                            class="carousel slide aplus_carousel"
-                            data-bs-ride="ride"
-                            t-att-data-bs-interval="interval"
-                        >
-                            <div class="dynamic_snippet_template" />
-                            <a href="/shop" class="shop-now">
+                    class="row o_grid_mode" data-row-count="13">
+
+                    <div
+                        class="o_grid_item g-height-* g-col-lg-* w-auto carousel_container o_colored_level g-col-lg-3 g-height-8 col-lg-*"
+                        style="grid-area: 3 / 1 / 11 / 4;"
+                    >
+                        <div class="d-flex flex-column">
+                            <div class="carousel_container">
+                                <div
+                                    t-att-id="unique_id"
+                                    class="carousel slide aplus_carousel"
+                                    data-bs-ride="ride"
+                                    t-att-data-bs-interval="interval"
+                                >
+                                    <div class="dynamic_snippet_template" />
+                                </div>
+                            </div>
+                            <a href="/shop" class="shop-now align-self-center">
                                 <button
                                     class="btn btn-primary shop-now-button"
                                 >Shop Now</button>
                             </a>
                         </div>
                     </div>
-                </div>
-                <div
-                    class="o_grid_item g-height-* g-col-lg-*"
-                    style="grid-area: 6 / 3 / 13 / 8;"
-                >
-                    <h1 class="hero-text"> PLACE HOLDER </h1>
+                    <div
+                        class="o_grid_item g-height-* g-col-lg-* o_colored_level g-height-8 g-col-lg-8 col-lg-*"
+                        style="grid-area: 5 / 4 / 13 / 12;"
+                    >
+                        <h1 class="hero-text"> Drink <br /> your fruit. </h1>
+                    </div>
+                    <div
+                        class="o_grid_item g-height-* g-col-lg-* o_colored_level g-height-6 g-col-lg-3 col-lg-*"
+                        style="grid-area: 2 / 9 / 8 / 12;"
+                    >
+                        <img class="hero-sticker" src="/" />
+                    </div>
                 </div>
             </div>
         </section>
     </template>
 
+    <template id="dynamic_filter_template_product_template_window" name="Product Template - Window">
+
+    </template>
     <template id="s_window_carousel_options" inherit_id="website.snippet_options">
         <xpath expr="." position="inside">
             <div
@@ -114,16 +125,6 @@
         </xpath>
     </template>
 
-
-    <record id="dynamic_filter_window_carousel_filter" model="website.snippet.filter">
-        <field name="filter_id" ref="theme_aplus.dynamic_snippet_newest_product_templates_filter" />
-        <field
-            name="field_names"
-            eval="'display_name,id,image_512,primary_color,secondary_color,text_color,hero_background,hero_image,carousel_order,card_image'"
-        />
-        <field name="limit" eval="16" />
-        <field name="name">Product Templates - Window</field>
-    </record>
 
     <record id="s_window_carousel_000_js" model="ir.asset">
         <field name="name"> Window Carousel 000 js</field>

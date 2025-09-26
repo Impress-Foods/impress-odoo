@@ -5,14 +5,14 @@
 	<style type="text/css" id="style1">
 		@keyframes wave {
 		0%, 100% {transform: scale(1, 1);}
-		50% {transform: scale(1, 2);}
+		50% {transform: scale(1, 1.15);}
 		}
 
 
 		g {
 		transform-origin: center top;
 
-		animation: wave 4s cubic-bezier(.445, .05, .55, .95) infinite;
+		animation: wave 10s cubic-bezier(.445, .05, .55, .95) infinite;
 		}
 
 		path {
