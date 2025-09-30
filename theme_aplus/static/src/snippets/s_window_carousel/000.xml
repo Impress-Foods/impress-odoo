@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="theme_aplus.window_carousel">
-        <t t-call="theme_aplus.window_carousel_window" />
+        <div class="d-flex flex-column">
+            <div class="carousel_container">
+                <div
+                    t-att-id="unique_id"
+                    class="carousel slide aplus_carousel"
+                    data-bs-ride="ride"
+                    t-att-data-bs-interval="interval"
+                >    
+                    <t t-call="theme_aplus.window_carousel_window" />
+                </div>
+            </div>
+            <div class="shop-now">        
+                <a href="/shop" class="shop-now-button">
+                    Shop Now
+                </a>
+            </div>
+        </div>
     </t>
 
 

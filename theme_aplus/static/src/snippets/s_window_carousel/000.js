@@ -16,6 +16,7 @@ const WindowCarousel = DynamicSnippetProductTemplates.extend({
         this.next_index = 1;
         this.bg = document.getElementsByClassName("hero-background")[0];
         this.sticker = document.getElementsByClassName("hero-sticker")[0];
+        this.buttonHover = false;
     },
 
     /**
@@ -69,9 +70,11 @@ const WindowCarousel = DynamicSnippetProductTemplates.extend({
     },
 
     changeColors(product, first = false) {
-        this.shop_button.style.setProperty("background-color", product.hero_text_color);
-        this.shop_button.style.setProperty("border-color", product.hero_text_color);
-        this.shop_button.style.setProperty("color", product.hero_background_color);
+        if (this.buttonHover) {
+            this.setHoverShopButton(this.shop_button, product);
+        } else {
+            this.setNormalShopButton(this.shop_button, product);
+        }
 
         Array.from(this.hero_texts).forEach((element) => {
             element.style.setProperty("color", product.hero_text_color);
@@ -88,6 +91,29 @@ const WindowCarousel = DynamicSnippetProductTemplates.extend({
         this.sticker.style.setProperty("opacity", 1);
     },
 
+    setNormalShopButton: function (element, product) {
+        element.style.setProperty("background-color", product.hero_text_color);
+        element.style.setProperty("border-color", product.hero_text_color);
+        element.style.setProperty("color", product.hero_background_color);
+    },
+    setHoverShopButton: function (element, product) {
+        element.style.setProperty("background-color", product.hero_background_color);
+        element.style.setProperty("border-color", product.hero_text_color);
+        element.style.setProperty("color", product.hero_text_color);
+    },
+
+    shopButtonMouseOver: function (event) {
+        this.buttonHover = true;
+        const product = this.data[this.current_index];
+        const button = event.target;
+        this.setHoverShopButton(button, product);
+    },
+    shopButtonMouseOut: function (event) {
+        const product = this.data[this.current_index];
+        const button = event.target;
+        this.setNormalShopButton(button, product);
+        this.buttonHover = false;
+    },
     /**
      * @override
      * @private
@@ -109,6 +135,14 @@ const WindowCarousel = DynamicSnippetProductTemplates.extend({
         );
         this.hero_texts = this.el.querySelectorAll(".hero-text");
         this.shop_button = document.getElementsByClassName("shop-now-button")[0];
+        this.shop_button.addEventListener(
+            "mouseover",
+            this.shopButtonMouseOver.bind(this)
+        );
+        this.shop_button.addEventListener(
+            "mouseleave",
+            this.shopButtonMouseOut.bind(this)
+        );
         this.sticker.style.setProperty("background-color", "#ffffff00");
         this.sticker.src = this.data[0].hero_sticker;
         this.changeColors(this.data[0], true);

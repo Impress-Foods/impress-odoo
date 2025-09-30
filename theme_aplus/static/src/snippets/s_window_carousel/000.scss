@@ -34,9 +34,23 @@
         padding-bottom: 0rem;
         -webkit-transition: color 0.5s ease-in-out;
         transition: color 0.5s ease-in-out;
-        // .shop-now-button {
-        //      border-color: black;
-        // }
+
+        .shop-now-button {
+            padding: 10px 20px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.8em;
+            font-weight: bold;
+            border: 1px solid black;
+            border-radius: 20px; /* Rounded pill shape */
+            -webkit-transition: background-color 0.5s ease-in-out,
+                border-color 0.5s ease-in-out;
+            transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out;
+            &:hover {
+                transition: background-color 0.3s ease-in-out,
+                    border-color 0.3s ease-in-out;
+            }
+        }
     }
 
     .dynamic_snippet_template {

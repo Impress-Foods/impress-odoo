@@ -15,24 +15,10 @@
 
                     <div
                         class="o_grid_item g-height-* g-col-lg-* w-auto carousel_container o_colored_level g-col-lg-3 g-height-8 col-lg-*"
-                        style="grid-area: 3 / 1 / 11 / 4;"
+                        style="grid-area: 3 / 1 / 13 / 4;"
                     >
                         <div class="d-flex flex-column">
-                            <div class="carousel_container">
-                                <div
-                                    t-att-id="unique_id"
-                                    class="carousel slide aplus_carousel"
-                                    data-bs-ride="ride"
-                                    t-att-data-bs-interval="interval"
-                                >
-                                    <div class="dynamic_snippet_template" />
-                                </div>
-                            </div>
-                            <a href="/shop" class="shop-now align-self-center">
-                                <button
-                                    class="btn btn-primary shop-now-button"
-                                >Shop Now</button>
-                            </a>
+                            <div class="dynamic_snippet_template" />
                         </div>
                     </div>
                     <div
