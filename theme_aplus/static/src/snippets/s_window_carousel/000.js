@@ -68,7 +68,7 @@ const WindowCarousel = DynamicSnippetProductTemplates.extend({
         this.changeColors(this.data[this.current_index]);
     },
 
-    changeColors(product) {
+    changeColors(product, first = false) {
         this.shop_button.style.setProperty("background-color", product.hero_text_color);
         this.shop_button.style.setProperty("border-color", product.hero_text_color);
         this.shop_button.style.setProperty("color", product.hero_background_color);
@@ -76,14 +76,16 @@ const WindowCarousel = DynamicSnippetProductTemplates.extend({
         Array.from(this.hero_texts).forEach((element) => {
             element.style.setProperty("color", product.hero_text_color);
         });
-        console.log(this.bg);
         this.bg.style.setProperty("background-color", product.hero_background_color);
-        this.sticker.style.setProperty(
-            "background-color",
-            product.hero_background_color
-        );
+        if (!first) {
+            this.sticker.style.setProperty("opacity", 0);
+        }
+        setTimeout(this.swapImage.bind(this), 250);
+    },
 
-        this.sticker.src = `/web/image/product.template/${product.id}/hero_sticker`;
+    swapImage: function () {
+        this.sticker.src = this.data[this.current_index].hero_sticker;
+        this.sticker.style.setProperty("opacity", 1);
     },
 
     /**
@@ -107,7 +109,9 @@ const WindowCarousel = DynamicSnippetProductTemplates.extend({
         );
         this.hero_texts = this.el.querySelectorAll(".hero-text");
         this.shop_button = document.getElementsByClassName("shop-now-button")[0];
-        this.changeColors(this.data[0]);
+        this.sticker.style.setProperty("background-color", "#ffffff00");
+        this.sticker.src = this.data[0].hero_sticker;
+        this.changeColors(this.data[0], true);
     },
 });
 

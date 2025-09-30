@@ -1,0 +1,53 @@
+.s_product_template_minimalist_card {
+    .carousel-inner {
+        overflow: visible;
+    }
+}
+.ap-product-card-minimalist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    min-height: 320px;
+    gap: 0.5rem;
+
+    .image-container {
+        width: 100%;
+        height: 100%;
+        transition: transform 0.5s ease-in-out;
+
+        &:hover {
+            transform: scale(1.05);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .title {
+        font-size: 1.5em;
+        font-weight: bold;
+        margin: 10px 0 5px;
+    }
+
+    .subtitle {
+        font-size: 1.1em;
+        margin-bottom: 20px;
+        font-style: italic;
+    }
+
+    .add-to-cart {
+        padding: 10px 20px;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 0.8em;
+        font-weight: bold;
+        border-radius: 20px; /* Rounded pill shape */
+        border-width: 1px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+}

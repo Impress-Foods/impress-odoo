@@ -22,6 +22,7 @@ class ProductTemplate(models.Model):
     card_image = fields.Binary()
     card_background_image = fields.Binary()
     suggestion_image = fields.Binary()
+    minimalist_card_image = fields.Binary()
 
     carousel_order = fields.Integer()
     ingredients = fields.Html(translate=True)

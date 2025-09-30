@@ -12,10 +12,12 @@
 }
 
 .hero-sticker {
+    -webkit-transition: background-color 0.5s ease-in-out;
     transition: background-color 0.5s ease-in-out;
-    transition: opacity 0.25s ease-in-out;
+    transition: opacity 0.5s ease-in-out;
     max-width: 256px;
     max-height: 256px;
+    background-color: #ffffff00;
 }
 
 .s_window_carousel {

@@ -27,6 +27,7 @@
                             <field name="hero_sticker" />
                             <field name="card_image" />
                             <field name="suggestion_image" />
+                            <field name="minimalist_card_image" />
                         </group>
                     </group>
                     <group string="Details">

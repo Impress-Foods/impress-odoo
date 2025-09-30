@@ -44,6 +44,7 @@
             "theme_aplus/static/src/snippets/s_dynamic_snippet_product_templates/000.xml",
             "theme_aplus/static/src/scss/aplus_style.scss",
             "theme_aplus/static/src/scss/ecom.scss",
+            "theme_aplus/static/src/scss/minimalist_cards.scss",
             "theme_aplus/static/src/js/website_sale.js",
             "theme_aplus/static/src/scss/product_page.scss",
         ],
