@@ -11,6 +11,9 @@
             <t t-snippet="theme_aplus.s_scrolling_text_banner">
                 <keywords>Banner</keywords>
             </t>
+            <t t-snippet="theme_aplus.s_image_marquee">
+
+            </t>
         </xpath>
 
         <xpath expr="//div[@id='snippet_effect']/div[2]" position="inside">
