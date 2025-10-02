@@ -22,6 +22,8 @@ class StockScrap(models.Model):
         depends=["maintenance_request_id", "maintenance_request_id.equipment_id"],
     )
 
+    product_vendor_code = fields.Char(related="product_id.vendor_code")
+
     def unlink(self):
         if self.maintenance_request_id and self.state == "done":
             raise UserError(
