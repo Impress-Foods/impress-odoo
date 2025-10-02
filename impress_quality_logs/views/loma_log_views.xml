@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
     <!-- View loma.log View Tree -->
@@ -82,6 +82,9 @@
                         <group>
                             <field name="weekly_signature_date" />
                         </group>
+                    </group>
+                    <group>
+                        <field name="quality_notes" />
                     </group>
                 </sheet>
             </form>
