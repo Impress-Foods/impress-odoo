@@ -1,6 +1,6 @@
 {
     "name": "Emails Templates - Impress Foods",
-    "version": "17.0.0.0.0",
+    "version": "17.0.1.0.3",
     "summary": """ Email templates for Impress Foods """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
