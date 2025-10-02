@@ -50,7 +50,7 @@
 }
 
 /* Product cart component */
-.ap_product_cart_wavy {
+.ap_product_cart {
     /* Performance optimizations */
     contain: layout paint;
 
@@ -63,10 +63,8 @@
     justify-content: center;
     height: 100%;
     overflow: hidden;
-    //background-color: #ffcc33;
-    /* Improved spacing */
     gap: 0.5rem;
-    /* Accessibility focus style */
+
     &:focus-within {
         outline: 2px solid currentColor;
         outline-offset: 2px;

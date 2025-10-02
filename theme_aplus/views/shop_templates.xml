@@ -1,8 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<?xml-model href="../../import_xml.rng" type="application/xml"?>
 
-    <template
-        id="products"
+<odoo>
+    <!-- options -->
+    <template id="snippet_options_ecom"
+        inherit_id="website.snippet_options"
+        name="e-commerce snippet options"
+        priority="99"
+    >
+        <xpath
+            expr="//we-row[@id='o_wsale_grid_left_panel']"
+            position="before"
+            data-variable="group_by"
+        >
+            <we-row
+                id="group_by_categories"
+                string="Group by"
+                data-variable="group_by_categories"
+            >
+                <we-button
+                    string="Group by Category"
+                    data-customize-website-views="theme_aplus.group_by_categories"
+                    data-name="group_by_categories_opt"
+                    data-no-preview="true"
+                    data-reload="/"
+                />
+            </we-row>
+
+        </xpath>
+        <xpath
+            expr="//we-button[@data-select-class='o_wsale_design_grid']"
+            position="after"
+        >
+            <we-button
+                data-customize-website-views="theme_aplus.products_design_wavy_cards"
+            >
+                Wavy Cards
+            </we-button>
+        </xpath>
+        <xpath
+            expr="//we-select[hasclass('o_wsale_ppr_submenu')]/we-button[3]"
+            position="after"
+        >
+            <we-button data-set-ppr="5">5</we-button>
+        </xpath>
+        <xpath
+            expr="//we-checkbox[@data-customize-website-views='website_sale.product_tags']"
+            position="after"
+        >
+            <we-row id="show_ingredients" string="Show Ingredients" data-variable="show-ingredients">
+                <we-button
+                    string="Show Ingredients"
+                    data-customize-website-views="theme_aplus.product_show_ingredients"
+                    data-name="show_ingredient_opt"
+                    data-no-preview="true"
+                    data-reload="/"
+                />
+            </we-row>
+            <we-row id="show_learn_more" string="Show Learn More Tabs" data-variable="show_tabbed">
+                <we-button
+                    string="Show Learn More Tabs"
+                    data-customize-website-views="theme_aplus.product_tabbed_information"
+                    data-name="show_tabbed_opt"
+                    data-no-preview="true"
+                    data-reload="/"
+                />
+
+            </we-row>
+            <we-row id="show_nutrition_table" string="Show Nutrition Table"
+                data-variable="show_nutrition_table">
+                <we-button
+                    string="Show Nutrition Table"
+                    data-dependencies="show_tabbed_opt"
+                    data-customize-website-views="theme_aplus.product_nutrition_table"
+                    data-name="show_nutrition_opt"
+                    data-no-preview="true"
+                    data-reload="/"
+                />
+            </we-row>
+            <we-row id="show_vectors" string="Show Fruit/Water/Maple" data-variable="show_vectors">
+                <we-button
+                    string="Show Fruit/Water/Maple"
+                    data-customize-website-views="theme_aplus.product_show_vectors"
+                    data-name="show_vector_opt"
+                    data-no-preview="true"
+                    data-reload="/"
+                />
+            </we-row>
+            <we-row id="show_adq" string="Show Alim du QC" data-variable="show_adq">
+                <we-button
+                    string="Show Alim du QC"
+                    data-customize-website-views="theme_aplus.product_show_adq"
+                    data-name="show_adq_opt"
+                    data-no-preview="true"
+                    data-reload="/"
+                />
+            </we-row>
+            <we-row id="show_related" string="Show Related Flavors" data-variable="show_related">
+                <we-button
+                    string="Show Related Flavors"
+                    data-customize-website-views="theme_aplus.product_related_flavors"
+                    data-name="show_related_opt"
+                    data-no-preview="true"
+                    data-reload="/"
+                />
+            </we-row>
+            <we-row id="highlights" string="Color highlights" data-variable="highlights">
+                <we-button
+                    string="Color highlights"
+                    data-customize-website-views="theme_aplus.product_color_highlight"
+                    data-name="highlights_opt"
+                    data-no-preview="true"
+                    data-reload="/"
+                />
+            </we-row>
+            <!-- <we-row
+                id="bottle_qty_selector"
+                string="Bottle Quantity selector"
+                data-variable="bottle_qty_selector"
+            >
+                <we-button
+                    string="Bottle Quantity selector"
+                    data-customize-website-views="theme_aplus.bottle_quantity_selector"
+                    data-name="bottle_quantity_selector_opt"
+                    data-no-preview="true"
+                    data-reload="/"
+                />
+            </we-row> -->
+        </xpath>
+    </template>
+
+    <!-- All products page + category page-->
+    <template id="group_by_categories" name="Group By Categories" active="False" />
+
+    <template id="products"
         name="Products"
         inherit_id="website_sale.products"
         priority="99"
@@ -140,42 +271,102 @@
             </t>
         </xpath>
     </template>
-    <template id="product" inherit_id="website_sale.product">
-        <!-- <xpath expr="//section" position="attributes">
-            <attribute
-                name="t-att-data-highlight-color"
-            >product.primary_color</attribute>
-            <attribute
-                name="t-att-data-highlight-sec-color"
-            >product.secondary_color</attribute>
-        </xpath> -->
 
+    <template id="products_design_wavy_cards"
+        active="False"
+        name="Wavy Cards Product Design"
+    />
+
+    <!-- Product Page -->
+    <template id="product_color_highlight" active="False" inherit_id="website_sale.product">
         <!-- Set color for elements using t-attf-style -->
-        <xpath expr="//ol[hasclass('breadcrumb')][1]" position="attributes">
-            <attribute name="t-attf-style">color:{{product.product_page_text_color}};</attribute>
+        <xpath expr="//section[@id='product_detail']" position="attributes">
+            <attribute name="t-attf-style">--highlight-color: {{product.product_page_text_color}};</attribute>
         </xpath>
-        <xpath expr="//div[@id='add_to_cart_wrap']/a" position="attributes">
-            <attribute name="t-attf-style">
-                background-color:{{product.product_page_text_color}};border-color:{{product.product_page_text_color}};</attribute>
+    </template>
+
+    <template id="product" inherit_id="website_sale.product">
+
+        <xpath expr="//div[@id='product_detail_main']/div[1]" position="after">
+            <div id="left-column" class="d-flex col-lg-6 mt-lg-4 flex-column align-items-center" />
         </xpath>
-        <xpath expr="//i[hasclass('fa-minus')][1]" position="attributes">
-            <attribute name="t-attf-style">
-                color:{{product.product_page_text_color}};</attribute>
+        <xpath expr="//div[@id='left-column']" position="inside">
+            <xpath expr="//div[@id='product_detail_main']/div[1]" position="move" />
         </xpath>
-        <xpath expr="//i[hasclass('fa-plus')][1]" position="attributes">
-            <attribute name="t-attf-style">
-                color:{{product.product_page_text_color}};</attribute>
+        <xpath expr="//div[@id='left-column']" position="inside">
+            <div id="learn-more-block-desktop" class="d-none d-lg-block" />
         </xpath>
-        <xpath expr="//div[@id='o_wsale_cta_wrapper']/div[1]" position="attributes">
-            <attribute name="t-attf-style">
-                border-color:{{product.product_page_text_color}};</attribute>
+        <xpath expr="//div[@id='product_details']" position="inside">
+            <div id="flavors-block" />
+            <div id="ingredients-block" />
+            <div id="learn-more-block-mobile" class="d-block d-lg-none" />
+            <div class="d-flex flex-row align-items-center extra-icons">
+                <div id="vectors-block" />
+                <div id="adq-block" />
+            </div>
         </xpath>
-        <xpath expr="//h1[@itemprop='name']" position="attributes">
-            <attribute name="t-attf-style">color:{{product.product_page_text_color}};</attribute>
+    </template>
+
+    <template id="product_show_ingredients"
+        active="False"
+        inherit_id="website_sale.product"
+    >
+        <xpath expr="//div[@id='ingredients-block']" position="inside">
+            <div class="ingredients-block d-flex flex-column pb-5">
+                <span class="subsection-header">Ingredients</span>
+                <span
+                    class="text-muted ingredient-list"
+                    t-field="product.ingredients"
+                />
+            </div>
         </xpath>
 
-        <!-- Dynamic-ish links to other products in the same category -->
-        <xpath expr="//input[@id='wsale_user_email']" position="after">
+    </template>
+
+    <template id="product_show_adq" active="False" inherit_id="website_sale.product">
+        <xpath expr="//div[@id='adq-block']" position="inside">
+            <div class="icon-block">
+                <img
+                    src="/theme_aplus/static/src/images/AlimentsDuQuebec_Logo_Renv.svg"
+                    width="100px"
+                    height="100px"
+                />
+            </div>
+        </xpath>
+    </template>
+
+    <template id="product_show_vectors" active="False"
+        inherit_id="website_sale.product">
+        <xpath expr="//div[@id='vectors-block']" position="inside">
+
+            <t t-if="is_view_active('theme_aplus.product_highlight_color')" t-set="style"
+                t-value="'--highlight-color:' + product.product_page_text_color +';'" />
+            <div
+                id="vector_images"
+                class="icon-block"
+                t-att-style="style"
+            >
+                <t t-call="theme_aplus.fruit_vector" />
+                <t t-call="theme_aplus.plus_vector" />
+                <t t-call="theme_aplus.water_vector_alt" />
+                <t t-call="theme_aplus.plus_vector" />
+                <t t-call="theme_aplus.maple_vector" />
+            </div>
+        </xpath>
+    </template>
+
+    <template id="product_nutrition_table"
+        active="False"
+        inherit_id="theme_aplus.product_tabbed_information"
+        priority="99"
+    >
+    </template>
+
+    <template id="product_related_flavors"
+        active="False"
+        inherit_id="website_sale.product"
+    >
+        <xpath expr="//div[@id='flavors-block']" position="inside">
             <div
                 class="related-flavors-block"
                 t-if="len(product_variant.public_categ_ids.product_tmpl_ids) > 1"
@@ -196,9 +387,6 @@
                                 class="related-product"
                                 t-attf-href="{{rel_product.website_url}}"
                             >
-                                <!-- <image class="related-flavor-image"
-                                    t-attf-src="/web/image/product.template/{{rel_product.id}}/suggestion_image"
-                                /> -->
                                 <image
                                     class="related-flavor-image"
                                     t-attf-src="/web/image/product.template/{{rel_product.id}}/image_512"
@@ -211,104 +399,114 @@
                 </div>
             </div>
         </xpath>
-        <xpath expr="//div[@id='product_details']" position="inside">
 
-            <div
-                id="vector_images"
-                class="icon-block"
-                t-attf-style="fill:{{product.product_page_text_color}};"
-            >
-                <t t-call="theme_aplus.fruit_vector" />
-                <t t-call="theme_aplus.plus_vector" />
-                <t t-call="theme_aplus.water_vector" />
-                <t t-call="theme_aplus.plus_vector" />
-                <t t-call="theme_aplus.maple_vector" />
-            </div>
-            <div class="icon-block">
-                <img
-                    src="/theme_aplus/static/src/images/AlimentsDuQuebec_Logo_Renv.svg"
-                    width="100px"
-                    height="100px"
-                />
-            </div>
+    </template>
 
+    <template id="product_tabbed_information" active="False"
+        inherit_id="website_sale.product">
+        <xpath expr="//div[@id='learn-more-block-desktop']" position="inside">
+            <t t-call="theme_aplus.tabbed_container">
+                <t t-set="prefix" t-value="'desktop'" />
+            </t>
+        </xpath>
+        <xpath expr="//div[@id='learn-more-block-mobile']" position="inside">
+            <t t-call="theme_aplus.tabbed_container">
+                <t t-set="prefix" t-value="'mobile'" />
+            </t>
         </xpath>
     </template>
 
-    <template
-        id="snippet_options_ecom"
-        inherit_id="website.snippet_options"
-        name="e-commerce snippet options"
-        priority="99"
-    >
-        <xpath
-            expr="//we-row[@id='o_wsale_grid_left_panel']"
-            position="before"
-            data-variable="group_by"
-        >
-            <we-row
-                id="group_by_categories"
-                string="Group by"
-                data-variable="group_by_categories"
-            >
-                <we-button
-                    string="Group by Category"
-                    data-customize-website-views="theme_aplus.group_by_categories"
-                    data-name="group_by_categories_opt"
-                    data-no-preview="true"
-                    data-reload="/"
-                />
-            </we-row>
+    <template id="tabbed_container">
 
-        </xpath>
-        <xpath
-            expr="//we-button[@data-select-class='o_wsale_design_grid']"
-            position="after"
+        <t t-set="show_tvn" t-value="is_view_active('theme_aplus.product_nutrition_table')" />
+        <div class="container my-5 custom-tab-container"
         >
-            <we-button
-                data-customize-website-views="theme_aplus.products_design_wavy_cards"
+            <div class="row">
+                <ul class="nav nav-tabs justify-content-center" id="{{prefix}}-Tab" role="tablist">
+
+                    <li class="nav-item custom-tab-item" role="presentation">
+                        <button class="nav-link active" t-attf-id="{{prefix}}-tat-tab"
+                            data-bs-toggle="tab"
+                            t-att-data-bs-target="'#'+prefix+'-tat'"
+                            type="button" role="y" t-attf-aria-controls="{{prefix}}-tat" aria-selected="false">
+                            Tips and Tricks </button>
+                    </li>
+                    <li class="nav-item custom-tab-item" role="presentation">
+                        <button class="nav-link" t-attf-id="{{prefix}}-dyk-tab"
+                            data-bs-toggle="tab"
+                            t-att-data-bs-target="'#'+prefix+'-dyk'"
+                            type="button" role="tab" t-attf-aria-controls="{{prefix}}-dyk" aria-selected="false">
+                            Did you know? </button>
+                    </li>
+                    <li t-if="show_tvn" class="nav-item custom-tab-item" role="presentation">
+                        <button class="nav-link" t-attf-id="{{prefix}}-tvn-tab"
+                            data-bs-toggle="tab"
+                            t-att-data-bs-target="'#'+prefix+'-tvn'"
+                            type="button" role="tab" t-attf-aria-controls="{{prefix}}-tvn" aria-selected="false">
+                            Tableau nutritionnel</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content p-4 shadow-sm bg-light" t-attf-id="{{prefix}}-TabContent">
+                    <div class="tab-pane fade show active" t-attf-id="{{prefix}}-tat" role="tabpanel"
+                        t-attf-aria-labelledby="{{prefix}}-tat-tab">
+                        <t t-out="product.tips_and_tricks" />
+                    </div>
+                    <div class="tab-pane fade" t-attf-id="{{prefix}}-dyk" role="tabpanel"
+                        t-attf-aria-labelledby="{{prefix}}-dyk-tab">
+                        <t t-out="product.did_you_know" />
+                    </div>
+                    <div t-if="show_tvn" class="tab-pane fade" t-attf-id="{{prefix}}-tvn" role="tabpanel"
+                        t-attf-aria-labelledby="{{prefix}}-tvn-tab">
+                        <t t-call="theme_aplus.tvn" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="tvn">
+        <div class="d-flex flex-column align-items-center">
+            <div
+                class="nutrition-table justify-center w-100"
+                id="nutrition_table"
             >
-                Wavy Cards
-            </we-button>
-        </xpath>
-        <xpath
-            expr="//we-select[hasclass('o_wsale_ppr_submenu')]/we-button[3]"
-            position="after"
-        >
-            <we-button data-set-ppr="5">5</we-button>
-        </xpath>
-        <xpath
-            expr="//we-checkbox[@data-customize-website-views='website_sale.product_tags']"
-            position="after"
-        >
-            <we-checkbox
-                string="Show Ingredients"
-                data-no-preview="true"
-                data-customize-website-views="theme_aplus.product_show_ingredients"
-                data-reload="/"
-                data-name="show_ingredient_opt"
-            />
-            <we-checkbox
-                string="Show Nutrition Table"
-                data-no-preview="true"
-                data-customize-website-views="theme_aplus.product_nutrition_table"
-                data-reload="/"
-                data-name="show_nutrition_opt"
-            />
-            <we-row
-                id="bottle_qty_selector"
-                string="Bottle Quantity selector"
-                data-variable="bottle_qty_selector"
-            >
-                <we-button
-                    string="Bottle Quantity selector"
-                    data-customize-website-views="theme_aplus.bottle_quantity_selector"
-                    data-name="bottle_quantity_selector_opt"
-                    data-no-preview="true"
-                    data-reload="/"
-                />
-            </we-row>
-        </xpath>
+                <table class="table caption-top">
+                    <caption
+                        t-if="product_variant.nutrition_facts_size"
+                        t-out="'Nutritional Values (for '+product_variant.nutrition_facts_size+')'"
+                    />
+                    <thead>
+                        <tr>
+                            <th class="text-center">Content</th>
+                            <th class="text-center">% Daily Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t
+                            t-foreach="product_variant.nutrition_entry_ids.sorted('sequence')"
+                            t-as="entry"
+                        >
+                            <tr
+                                t-attf-style="background:{{product.product_page_text_color if entry_parity =='even' else ''}};"
+                            >
+                                <th
+                                    class="text-center"
+                                    t-attf-style="color:{{product.text_color if entry_parity =='even' else ''}};"
+                                >
+                                    <t t-out="entry.name" />
+                                </th>
+                                <td
+                                    class="text-center"
+                                    t-attf-style="color:{{product.text_color if entry_parity =='even' else ''}};"
+                                >
+                                    <t t-out="entry.value" />
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </template>
 
     <template id="bottle_quantity_selector" inherit_id="website_sale.product_quantity" active="False">
@@ -321,9 +519,6 @@
                     aria-label="Remove one" title="Remove one">
                     <i class="fa fa-minus"></i>
                 </a>
-                <!-- <t t-call="theme_aplus.bottle_vector">
-                        <t t-set="scale" t-value="0.6" />
-                    </t> -->
                 <input type="text" class="form-control quantity text-center" data-min="1" name="add_qty"
                     t-att-value="add_qty or 1" />
 
@@ -335,111 +530,5 @@
 
         </xpath>
     </template>
-
-    <template
-        id="product_show_ingredients"
-        active="False"
-        inherit_id="website_sale.product"
-    >
-        <xpath expr="//div[@id='vector_images']" position="before">
-            <div class="ingredients-block d-flex flex-column pb-5">
-                <span class="subsection-header">Ingredients</span>
-                <span
-                    class="text-muted ingredient-list"
-                    t-field="product.ingredients"
-                />
-            </div>
-        </xpath>
-
-    </template>
-
-    <template id="group_by_categories" name="Group By Categories" active="False" />
-
-    <template
-        id="products_design_wavy_cards"
-        active="False"
-        name="Wavy Cards Product Design"
-    />
-
-    <template id="search" inherit_id="website.website_search_box">
-        <xpath expr="//div" position="attributes">
-            <attribute
-                name="t-attf-style"
-            >border-color:{{product.product_page_text_color if product else ''}};</attribute>
-        </xpath>
-        <xpath expr="//div/button" position="attributes">
-            <attribute name="t-attf-style">
-                background-color:{{product.product_page_text_color if product else ''}};
-                border-color:{{product.product_page_text_color if product else ''}};</attribute>
-        </xpath>
-    </template>
-
-    <template id="product_price" inherit_id="website_sale.product_price">
-        <xpath expr="//span[hasclass('oe_price')]" position="attributes">
-            <attribute
-                name="t-attf-style"
-            >color:{{product.product_page_text_color if product else ''}};</attribute>
-        </xpath>
-    </template>
-
-    <template
-        id="product_nutrition_table"
-        active="False"
-        inherit_id="website_sale.product"
-    >
-
-        <xpath expr="//div[@id='product_detail_main']/div[1]" position="after">
-            <div class="d-flex col-lg-6 mt-lg-4 flex-column align-items-center">
-                <div
-                    class="nutrition-table justify-center pt-4 w-100"
-                    id="nutrition_table"
-                >
-                    <table class="table caption-top">
-                        <caption
-                            t-if="product_variant.nutrition_facts_size"
-                            t-out="'Nutritional Values (for '+product_variant.nutrition_facts_size+')'"
-                        />
-                        <thead>
-                            <tr>
-                                <th class="text-center">Content</th>
-                                <th class="text-center">% Daily Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <t
-                                t-foreach="product_variant.nutrition_entry_ids.sorted('sequence')"
-                                t-as="entry"
-                            >
-                                <tr
-                                    t-attf-style="background:{{product.product_page_text_color if entry_parity =='even' else ''}};"
-                                >
-                                    <th
-                                        class="text-center"
-                                        t-attf-style="color:{{product.text_color if entry_parity =='even' else ''}};"
-                                    >
-                                        <t t-out="entry.name" />
-                                    </th>
-                                    <td
-                                        class="text-center"
-                                        t-attf-style="color:{{product.text_color if entry_parity =='even' else ''}};"
-                                    >
-                                        <t t-out="entry.value" />
-                                    </td>
-                                </tr>
-                            </t>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </xpath>
-        <!-- Move the image carousel into the new div to fix the sticky image bug -->
-        <xpath expr="//div[@id='product_detail_main']/div[2]/div" position="before">
-            <xpath expr="//div[@id='product_detail_main']/div[1]" position="move" />
-        </xpath>
-
-
-    </template>
-
 
 </odoo>

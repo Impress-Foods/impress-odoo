@@ -27,6 +27,9 @@ class ProductTemplate(models.Model):
     carousel_order = fields.Integer()
     ingredients = fields.Html(translate=True)
 
+    did_you_know = fields.Html(translate=True)
+    tips_and_tricks = fields.Html(translate=True)
+
 
 class ProductVariant(models.Model):
     _inherit = "product.product"

@@ -1,4 +1,7 @@
 .oe_website_sale {
+    .icon-block {
+        fill: var(--highlight-color, var(--o-color-1));
+    }
     .recipe-icons {
         width: 100px;
         height: 100px;
@@ -18,24 +21,44 @@
         }
     }
 
-    @media (max-width: 767.98px) {
+    @media (max-width: 1210px) {
+        .extra-icons {
+            justify-content: start;
+        }
         .recipe-icons {
-            width: 50px;
-            height: 50px;
+            width: 75px;
+            height: 75px;
         }
         .recipe-icons-plus {
-            width: 5px;
-            height: 5px;
+            width: 15px;
+            height: 15px;
+        }
+    }
+    @media (max-width: 990px) {
+        .extra-icons {
+            justify-content: center;
+        }
+        .recipe-icons {
+            width: 100px;
+            height: 100px;
+        }
+        .recipe-icons-plus {
+            width: 20px;
+            height: 20px;
+        }
+    }
+    @media (max-width: 490px) {
+        .recipe-icons {
+            width: 75px;
+            height: 75px;
+        }
+        .recipe-icons-plus {
+            width: 15px;
+            height: 15px;
         }
     }
     path {
         fill-rule: nonzero;
-    }
-
-    .breadcrumb-item {
-        a {
-            color: inherit;
-        }
     }
 
     .subsection-header {
@@ -63,7 +86,7 @@
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
-            gap: 0rem;
+            gap: 0.5rem;
             overflow-wrap: break-word;
             line-height: 1;
 
@@ -79,6 +102,53 @@
                     }
                 }
             }
+        }
+    }
+    .o_searchbar_form {
+        .input-group {
+            border-color: var(--highlight-color, var(--o-color-1)) !important;
+            .oe_search_button {
+                border-color: var(--highlight-color, var(--o-color-1)) !important;
+                background-color: var(--highlight-color, var(--o-color-1)) !important;
+            }
+        }
+    }
+    #product_details {
+        h1 {
+            color: var(--highlight-color, var(--o-color-1)) !important;
+        }
+    }
+
+    .oe_price {
+        color: var(--highlight-color, var(--o-color-1)) !important;
+    }
+    #o_wsale_cta_wrapper {
+        .css_quantity {
+            border-color: var(--highlight-color, var(--o-color-1)) !important;
+
+            .fa-plus,
+            .fa-minus {
+                color: var(--highlight-color, var(--o-color-1)) !important;
+            }
+        }
+        #add_to_cart {
+            background-color: var(--highlight-color, var(--o-color-1)) !important;
+            border-color: var(--highlight-color, var(--o-color-1)) !important;
+        }
+    }
+    .breadcrumb-item {
+        color: var(--highlight-color, var(--o-color-1)) !important;
+        a {
+            color: inherit;
+        }
+    }
+    input.form-check-input {
+        &:checked {
+            background-color: var(--highlight-color, var(--o-color-1)) !important;
+            border-color: var(--highlight-color, var(--o-color-1)) !important;
+        }
+        &:hover {
+            border-color: var(--highlight-color, var(--o-color-1)) !important;
         }
     }
 }

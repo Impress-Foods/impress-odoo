@@ -3,41 +3,23 @@
 
 
     <template id="wavy_product_card" name="Wave Product Card">
-
-        <!--
-            interface
-            === === === === === === === === === === === ===
-            product_name -> Display name for the product
-            product_price -> Price
-            product_description -> Description to appear on the card
-            product_href -> link to the product page
-
-            background_image -> href to background image
-            product_image -> hhref to product_image
-            primary_color -> primary color for the component
-            secondary_color -> secondary color for the component
-            text_color -> Text color for the component
-        -->
         <t
             t-set="description_activated"
             t-value="is_view_active('website_sale.products_description')"
         />
 
         <!-- Background Image -->
-        <span
-            t-field="product_record.background_image"
-            t-if="product_record.background_image"
-            t-options="{'widget': 'image', 'class': 'h-50 w-100 position-absolute'}"
-            class="d-flex"
-        />
+
+        <img t-attf-src="/web/image/product.template/{{product.id}}/card_background_image"
+            class="d-flex h-100 w-100 position-absolute" />
         <!-- Color Block with Wave -->
         <div
             class="color-block"
-            t-attf-style="background-color: {{primary_color}}; box-shadow: 0px -2px 2px 1px {{primary_color}};"
+            t-attf-style="background-color: {{p_color}}; box-shadow: 0px -2px 2px 1px {{p_color}};"
         >
             <svg
                 class="wave"
-                t-attf-style="fill: {{primary_color}};"
+                t-attf-style="fill: {{p_color}};"
                 viewBox="0 0 740 200"
                 preserveAspectRatio="none"
             >
@@ -64,7 +46,7 @@
             >
                 <img
                     loading="lazy"
-                    t-attf-src="/web/image/{{product._name}}/{{product_record.id}}/card_image"
+                    t-attf-src="/web/image/product.template/{{product.id}}/card_image"
                     t-attf-alt="product_name"
                 />
 
@@ -79,17 +61,17 @@
                 <h6 class="o_wsale_products_item_title mb-2">
                     <div
                         class="ap_product_name"
-                        t-attf-style="color: {{text_color}};"
+                        t-attf-style="color: {{t_color}};"
                         itemprop="name"
                         t-att-content="product_name"
                     >
-                        <t t-out="product_name" />
+                        <t t-out="product.name" />
                     </div>
 
                     <a
                         t-if="not product.website_published"
                         role="button"
-                        t-att-href="product_href"
+                        t-att-href="product.website_url"
                         class="btn btn-sm btn-danger"
                         title="This product is unpublished."
                     >
@@ -105,7 +87,7 @@
                 >
                     <p
                         class="ap_product_short_description small mb-1"
-                        t-attf-style="color: {{text_color}};"
+                        t-attf-style="color: {{t_color}};"
                         t-field="product.description_sale"
                         t-options="{'max_length': 60}"
                     />
@@ -125,12 +107,12 @@
 
         <div
             class="ap_buy_button"
-            t-attf-style="background-color: {{secondary_color}}; color: {{text_color}};"
+            t-attf-style="background-color: {{s_color}}; color: {{t_color}};"
             role="button"
             aria-label="Buy Now"
             tabindex="0"
         >
-            <span t-attf-style="color: {{text_color}};">
+            <span t-attf-style="color: {{t_color}};">
                 Buy Now
             </span>
         </div>
@@ -166,15 +148,10 @@
             />
 
             <t t-call="theme_aplus.wavy_product_card">
-                <t t-set="product_name" t-value="product.name" />
-                <t t-set="product_record" t-value="product" />
-                <t t-set="product_description" t-value="product.description_sale" />
-                <t t-set="product_href" t-value="product_href" />
-                <t t-set="product_image" t-value="image_holder" />
-                <!-- <t t-set="background_image" t-value="product.background_image" /> -->
-                <t t-set="primary_color" t-value="product.card_primary_color" />
-                <t t-set="secondary_color" t-value="product.card_secondary_color" />
-                <t t-set="text_color" t-value="product.card_text_color" />
+                <t t-set="p_color" t-value="product.card_primary_color" />
+                <t t-set="s_color" t-value="product.card_secondary_color" />
+                <t t-set="t_color" t-value="product.card_text_color" />
+                <t t-set="product" t-value="product" />
 
             </t>
             <div>

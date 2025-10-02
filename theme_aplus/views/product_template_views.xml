@@ -26,6 +26,7 @@
                             <field name="hero_image" />
                             <field name="hero_sticker" />
                             <field name="card_image" />
+                            <field name="card_background_image" />
                             <field name="suggestion_image" />
                             <field name="minimalist_card_image" />
                         </group>
@@ -33,6 +34,8 @@
                     <group string="Details">
                         <group>
                             <field name="ingredients" />
+                            <field name="did_you_know" />
+                            <field name="tips_and_tricks" />
                         </group>
                     </group>
                 </page>

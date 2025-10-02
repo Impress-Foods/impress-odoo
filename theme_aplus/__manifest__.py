@@ -51,6 +51,7 @@
             "theme_aplus/static/src/scss/minimalist_cards.scss",
             "theme_aplus/static/src/js/website_sale.js",
             "theme_aplus/static/src/scss/product_page.scss",
+            "theme_aplus/static/src/scss/tabbed_container.scss",
         ],
         "website.assets_wysiwyg": [
             "theme_aplus/static/src/scss/aplus_style.scss",

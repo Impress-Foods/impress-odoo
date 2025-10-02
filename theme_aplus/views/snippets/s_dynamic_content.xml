@@ -83,7 +83,7 @@
             >
                 <svg
                     class="wave"
-                    t-attf-style="fill: {{card_primary_color}};"
+                    t-attf-style="fill: {{p_color}};"
                     viewBox="0 0 740 200"
                     preserveAspectRatio="none"
                 >
@@ -174,14 +174,10 @@
         <t t-foreach="records" t-as="data">
             <t t-set="record" t-value="data['_record']" />
             <div class="product-card">
-
                 <t t-set="product" t-value="record" />
                 <div class="product-info ap-product-card-minimalist" t-attf-id="{{ product.name }}">
                     <!-- Product Links and Settings -->
-                    <t t-set="product_href" t-value="product.website_url" />
                     <t t-set="image_type" t-value="image_512" />
-
-
                     <t t-set="image_holder" t-value="product" />
 
 
@@ -192,7 +188,6 @@
                             t-set="product_description"
                             t-value="product.description_sale"
                         />
-                        <t t-set="product_href" t-value="product_href" />
                         <t t-set="product_image" t-value="image_holder" />
                     </t>
                 </div>
@@ -212,7 +207,7 @@
 
         <h2 class="title" t-attf-style="color:{{p_color}};">Juice Shot</h2>
         <p class="subtitle" t-attf-style="color:{{p_color}};" t-out="product.name" />
-        <a href="#" class="add-to-cart"
+        <a t-attf-href="{{product.website_url}}" class="add-to-cart"
             t-attf-style="color:{{p_color}};border: 1px solid {{p_color}};"
             t-attf-onmouseover="this.style.backgroundColor='{{s_color}}'; this.style.borderColor='{{s_color}}';this.style.color='#FFFFFF';"
             t-attf-onmouseout="this.style.backgroundColor='#FFFFFF00'; this.style.borderColor='{{p_color}}';this.style.color='{{p_color}}';"
