@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Menus added to main Maintenance app -->
+    <menuitem
+        id="maintenance_team_tag_menu"
+        name="Maintenance Team Tag"
+        action="action_maintenance_team_tag"
+        parent="maintenance.menu_maintenance_configuration"
+        sequence="4"
+    />
+
+    <!-- Menus for the new Maintenance/Quality app -->
+    <menuitem
+        id="menu_impress_maintenance_quality_mgmt_quality_root"
+        name="Maintenance/Quality"
+        action="action_maintenance_quality_dashboard"
+        groups="quality.group_quality_user,quality.group_quality_manager"
+        sequence="10"
+        web_icon="impress_maintenance_quality_mgmt,static/description/icon.png"
+    />
+
+    <menuitem
+        id="menu_impress_maintenance_quality_mgmt_dashboard"
+        name="Dashboard"
+        action="action_maintenance_quality_dashboard"
+        groups="quality.group_quality_user,quality.group_quality_manager"
+        parent="menu_impress_maintenance_quality_mgmt_quality_root"
+        sequence="1"
+    />
+
+    <menuitem
+        id="menu_impress_maintenance_quality_mgmt_quality_calendar"
+        name="Request Calendar"
+        parent="menu_impress_maintenance_quality_mgmt_quality_root"
+        action="action_quality_maintenance_request_cal"
+        groups="quality.group_quality_user,quality.group_quality_manager"
+        sequence="2"
+    />
+
+    <!-- Reuse of maintenance menu items -->
+
+    <menuitem
+        id="menu_equipment_form"
+        name="Equipment"
+        parent="menu_impress_maintenance_quality_mgmt_quality_root"
+        action="action_maintenance_quality_equipment"
+        groups="maintenance.group_equipment_manager,base.group_user"
+        sequence="3"
+    />
+
+    <menuitem
+        id="menu_impress_maintenance_quality_mgmt_configuration"
+        name="Configuration"
+        parent="menu_impress_maintenance_quality_mgmt_quality_root"
+        groups="maintenance.group_equipment_manager"
+        sequence="100"
+    />
+
+    <menuitem
+        id="menu_impress_maintenance_quality_mgmt_teams"
+        name="Maintenance Teams"
+        parent="menu_impress_maintenance_quality_mgmt_configuration"
+        action="maintenance.maintenance_team_action_settings"
+        groups="maintenance.group_equipment_manager"
+        sequence="1"
+    />
+
+    <menuitem
+        id="menu_impress_maintenance_quality_mgmt_cat"
+        name="Equipment Categories"
+        parent="menu_impress_maintenance_quality_mgmt_configuration"
+        action="maintenance.hr_equipment_category_action"
+        sequence="2"
+    />
+
+    <menuitem
+        id="menu_impress_maintenance_quality_mgmt_stage_configuration"
+        name="Maintenance Stages"
+        parent="menu_impress_maintenance_quality_mgmt_configuration"
+        action="maintenance.hr_equipment_stage_action"
+        groups="base.group_no_one"
+        sequence="3"
+    />
+
+    <menuitem
+        id="maintenance_team_tag_menu"
+        name="Maintenance Team Tag"
+        action="action_maintenance_team_tag"
+        parent="menu_impress_maintenance_quality_mgmt_configuration"
+        sequence="4"
+    />
+
+    <menuitem
+        id="menu_maintenance_configuration_worksheet_templates"
+        name="Worksheet Templates"
+        sequence="30"
+        action="maintenance_worksheet.maintenance_worksheet_action_settings"
+        parent="menu_impress_maintenance_quality_mgmt_configuration"
+        groups="maintenance.group_equipment_manager"
+    />
+</odoo>
