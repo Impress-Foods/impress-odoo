@@ -19,7 +19,7 @@
                         }"
                     >
             <tree>
-              <field name="name" />
+              <field name="product_vendor_code" />
               <field name='product_id' />
               <field name='scrap_qty' />
               <field name='product_uom_id' />

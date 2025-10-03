@@ -93,7 +93,9 @@
 
                         </group>
                     </group>
-
+                    <group>
+                        <field name="quality_notes" />
+                    </group>
                 </sheet>
             </form>
         </field>

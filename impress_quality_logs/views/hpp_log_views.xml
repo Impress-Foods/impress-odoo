@@ -105,6 +105,9 @@
                             <field name="monthly_signature_date" />
                         </group>
                     </group>
+                    <group>
+                        <field name="quality_notes" />
+                    </group>
                 </sheet>
             </form>
         </field>

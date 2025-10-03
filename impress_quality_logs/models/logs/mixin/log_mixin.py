@@ -48,6 +48,8 @@ class LogMixin(models.Model):
         compute="_compute_weekly_signature_date", store=True
     )
 
+    quality_notes = fields.Text()
+
     @api.depends("signature")
     def _compute_weekly_signature_date(self):
         for rec in self:
