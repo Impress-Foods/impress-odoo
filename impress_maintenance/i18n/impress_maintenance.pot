@@ -1,0 +1,138 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* impress_maintenance
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: impress_maintenance
+#: model_terms:ir.actions.act_window,help:impress_maintenance.hr_equipment_request_action_cal_employee
+#: model_terms:ir.actions.act_window,help:impress_maintenance.hr_equipment_request_action_cal_state
+msgid "Add a new maintenance request"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__assigned_employee
+msgid "Assigned Employee"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__state_color
+#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_stage__color
+msgid "Color"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:ir.model.fields,field_description:impress_maintenance.field_hr_employee__color
+#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__employee_color
+msgid "Color Index"
+msgstr ""
+
+#. module: impress_maintenance
+#: model_terms:ir.ui.view,arch_db:impress_maintenance.view_maintenance_equipment_form
+#: model_terms:ir.ui.view,arch_db:impress_maintenance.view_maintenance_request_search
+msgid "Corrective"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_equipment__maintenance_open_count_corrective
+msgid "Current Corrective"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_equipment__maintenance_open_count_preventive
+msgid "Current Preventive"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:ir.model,name:impress_maintenance.model_hr_employee
+msgid "Employee"
+msgstr ""
+
+#. module: impress_maintenance
+#: model_terms:ir.actions.act_window,help:impress_maintenance.hr_equipment_request_action_cal_employee
+#: model_terms:ir.actions.act_window,help:impress_maintenance.hr_equipment_request_action_cal_state
+msgid ""
+"Follow the process of the request and communicate with the collaborator."
+msgstr ""
+
+#. module: impress_maintenance
+#: model:res.groups,name:impress_maintenance.make_invisible
+msgid "Invisible"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:res.groups,name:impress_maintenance.group_maintenance_administrator
+msgid "Maintenance / Administrator"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:ir.ui.menu,name:impress_maintenance.menu_m_request_calendar_employee
+msgid "Maintenance Calendar - Employee"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:ir.ui.menu,name:impress_maintenance.menu_m_request_calendar_state
+msgid "Maintenance Calendar - State"
+msgstr ""
+
+#. module: impress_maintenance
+#: model_terms:ir.ui.view,arch_db:impress_maintenance.view_maintenance_request_form
+msgid "Maintenance Description"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:ir.model,name:impress_maintenance.model_maintenance_equipment
+msgid "Maintenance Equipment"
+msgstr ""
+
+#. module: impress_maintenance
+#: model_terms:ir.ui.view,arch_db:impress_maintenance.view_maintenance_request_form
+msgid "Maintenance Notes"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:ir.model,name:impress_maintenance.model_maintenance_request
+msgid "Maintenance Request"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:ir.actions.act_window,name:impress_maintenance.hr_equipment_request_action_cal_employee
+#: model:ir.actions.act_window,name:impress_maintenance.hr_equipment_request_action_cal_state
+msgid "Maintenance Requests"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:ir.model,name:impress_maintenance.model_maintenance_stage
+msgid "Maintenance Stage"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__notes
+#: model_terms:ir.ui.view,arch_db:impress_maintenance.view_maintenance_request_form
+msgid "Notes"
+msgstr ""
+
+#. module: impress_maintenance
+#: model_terms:ir.ui.view,arch_db:impress_maintenance.view_maintenance_equipment_form
+#: model_terms:ir.ui.view,arch_db:impress_maintenance.view_maintenance_request_search
+msgid "Preventive"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_equipment__technician_user_id
+msgid "Responsible"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:res.groups,comment:impress_maintenance.group_maintenance_administrator
+msgid "The user will be able to manage equipment."
+msgstr ""
