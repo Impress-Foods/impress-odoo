@@ -45,7 +45,7 @@ class QualityControlPoint(models.Model):
                 record.product_category_ids = False
                 record.picking_type_ids = False
 
-            elif self.control_point_type == "stock":
+            elif record.control_point_type == "stock":
                 record.equipment_ids = False
                 record.equipment_category_ids = False
                 record.workcenter_ids = False

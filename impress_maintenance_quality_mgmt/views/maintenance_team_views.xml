@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <!-- View maintenance.team form -->
-    <record id="view_maintenance_team_form_inherit" model="ir.ui.view">
-        <field name="name">view.maintenance.team.form.inherit</field>
+    <record id="view_maintenance_team_tree_inherit" model="ir.ui.view">
+        <field name="name">view.maintenance.team.tree.inherit</field>
         <field name="model">maintenance.team</field>
         <field name="inherit_id" ref="maintenance.maintenance_team_view_tree" />
         <field name="arch" type="xml">

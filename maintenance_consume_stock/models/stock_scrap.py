@@ -14,7 +14,7 @@ class StockScrap(models.Model):
         string="Maintenance Request",
         ondelete="cascade",
     )
-
+    # TODO: write migration script to fix typo here
     maintenance_equipement_id = fields.Many2one(
         related="maintenance_request_id.equipment_id",
         string="Equipment",
