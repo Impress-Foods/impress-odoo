@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- View maintenance.equipment form -->
+    <record id="view_maintenance_equipment_form" model="ir.ui.view">
+        <field name="name">view.maintenance.equipment.form</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button
+                    name="action_view_quality_points"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-list"
+                    invisible="quality_point_count == 0"
+                >
+                    <field
+                        string="Quality Points"
+                        name="quality_point_count"
+                        widget="statinfo"
+                    />
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

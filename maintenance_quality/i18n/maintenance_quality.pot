@@ -1,0 +1,215 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* maintenance_quality
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: maintenance_quality
+#: model_terms:ir.ui.view,arch_db:maintenance_quality.view_quality_check_form
+msgid "<span class=\"o_stat_text\">Maintenance</span>"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model.fields,field_description:maintenance_quality.field_quality_point__check_corrective
+msgid "Check Corrective"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model.fields,field_description:maintenance_quality.field_quality_point__check_preventive
+msgid "Check Preventive"
+msgstr ""
+
+#. module: maintenance_quality
+#: model_terms:ir.ui.view,arch_db:maintenance_quality.view_quality_check_tree_maintenance
+msgid "Checked By"
+msgstr ""
+
+#. module: maintenance_quality
+#: model_terms:ir.ui.view,arch_db:maintenance_quality.view_quality_check_tree_maintenance
+msgid "Checked Date"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model.fields,field_description:maintenance_quality.field_quality_point__control_point_type
+msgid "Control Point Type"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model.fields,field_description:maintenance_quality.field_quality_check__equipment_id
+msgid "Equipment"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model.fields.selection,name:maintenance_quality.selection__quality_point__control_point_type__maintenance
+msgid "Maintenance"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model,name:maintenance_quality.model_maintenance_equipment
+msgid "Maintenance Equipment"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model.fields,field_description:maintenance_quality.field_quality_point__equipment_category_ids
+msgid "Maintenance Equipment Categories"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model,name:maintenance_quality.model_maintenance_equipment_category
+msgid "Maintenance Equipment Category"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model.fields,field_description:maintenance_quality.field_quality_point__equipment_ids
+msgid "Maintenance Equipments"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model,name:maintenance_quality.model_maintenance_quality_mixin
+msgid "Maintenance Quality Mixin"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model,name:maintenance_quality.model_maintenance_request
+#: model:ir.model.fields,field_description:maintenance_quality.field_quality_alert__maintenance_request_id
+#: model:ir.model.fields,field_description:maintenance_quality.field_quality_check__maintenance_request_id
+msgid "Maintenance Request"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model.fields,field_description:maintenance_quality.field_quality_point__picking_type_ids
+msgid "Operation Types"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model,name:maintenance_quality.model_product_template
+msgid "Product"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model,name:maintenance_quality.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model,name:maintenance_quality.model_quality_alert
+msgid "Quality Alert"
+msgstr ""
+
+#. module: maintenance_quality
+#. odoo-python
+#: code:addons/maintenance_quality/models/maintenance_request.py:0
+#: code:addons/maintenance_quality/models/maintenance_request.py:0
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_request__quality_alert_ids
+#: model_terms:ir.ui.view,arch_db:maintenance_quality.view_maintenance_request_form
+#, python-format
+msgid "Quality Alerts"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_request__quality_alert_count
+msgid "Quality Alerts Count"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model,name:maintenance_quality.model_quality_check
+msgid "Quality Check"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_request__quality_check_fail_count
+msgid "Quality Check Fail Count"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_request__quality_check_pass_count
+msgid "Quality Check Pass Count"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_request__quality_check_todo
+msgid "Quality Check Todo"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_request__quality_check_todo_count
+msgid "Quality Check Todo Count"
+msgstr ""
+
+#. module: maintenance_quality
+#. odoo-python
+#: code:addons/maintenance_quality/models/maintenance_request.py:0
+#: code:addons/maintenance_quality/models/maintenance_request.py:0
+#: code:addons/maintenance_quality/models/maintenance_request.py:0
+#: code:addons/maintenance_quality/models/maintenance_request.py:0
+#: code:addons/maintenance_quality/models/maintenance_request.py:0
+#: code:addons/maintenance_quality/models/maintenance_request.py:0
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_request__quality_check_ids
+#: model_terms:ir.ui.view,arch_db:maintenance_quality.view_maintenance_request_form
+#, python-format
+msgid "Quality Checks"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model,name:maintenance_quality.model_quality_point
+msgid "Quality Control Point"
+msgstr ""
+
+#. module: maintenance_quality
+#. odoo-python
+#: code:addons/maintenance_quality/models/maintenance_equipment.py:0
+#: code:addons/maintenance_quality/models/maintenance_equipment.py:0
+#: code:addons/maintenance_quality/models/maintenance_quality_mixin.py:0
+#: code:addons/maintenance_quality/models/maintenance_quality_mixin.py:0
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_equipment__quality_point_ids
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_equipment_category__quality_point_ids
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_quality_mixin__quality_point_ids
+#: model:ir.model.fields,field_description:maintenance_quality.field_mrp_workcenter__quality_point_ids
+#: model_terms:ir.ui.view,arch_db:maintenance_quality.view_maintenance_equipment_category_form
+#: model_terms:ir.ui.view,arch_db:maintenance_quality.view_maintenance_equipment_form
+#: model_terms:ir.ui.view,arch_db:maintenance_quality.view_mrp_workcenter_form
+#, python-format
+msgid "Quality Points"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_equipment__quality_point_count
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_equipment_category__quality_point_count
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_quality_mixin__quality_point_count
+#: model:ir.model.fields,field_description:maintenance_quality.field_mrp_workcenter__quality_point_count
+msgid "Quality Points Count"
+msgstr ""
+
+#. module: maintenance_quality
+#: model_terms:ir.ui.view,arch_db:maintenance_quality.view_quality_check_tree_maintenance
+msgid "Request"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model.fields.selection,name:maintenance_quality.selection__quality_point__control_point_type__stock
+msgid "Stock"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model,name:maintenance_quality.model_mrp_workcenter
+msgid "Work Center"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model.fields,field_description:maintenance_quality.field_quality_check__workcenter_id
+msgid "Workcenter"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model.fields,field_description:maintenance_quality.field_quality_point__workcenter_ids
+msgid "Workcenters"
+msgstr ""
