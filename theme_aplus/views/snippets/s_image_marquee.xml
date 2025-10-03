@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <template id="s_image_marquee" name="Image Marquee">
@@ -17,42 +17,60 @@
     </template>
 
     <template id="s_image_marquee_options" inherit_id="website.snippet_options">
-        <xpath expr="//t[@t-call='website.snippet_options_background_options']" position="before">
+        <xpath
+            expr="//t[@t-call='website.snippet_options_background_options']"
+            position="before"
+        >
             <div data-js="MarqueeImageList" data-selector=".s_image_marquee">
                 <we-row string="Images">
-                    <we-button class="o_we_bg_success" data-add-images="true" data-no-preview="true">Add</we-button>
-                    <we-button class="o_we_bg_danger" data-remove-all-images="true" data-no-preview="true">Remove all</we-button>
+                    <we-button
+                        class="o_we_bg_success"
+                        data-add-images="true"
+                        data-no-preview="true"
+                    >Add</we-button>
+                    <we-button
+                        class="o_we_bg_danger"
+                        data-remove-all-images="true"
+                        data-no-preview="true"
+                    >Remove all</we-button>
                 </we-row>
             </div>
         </xpath>
         <xpath expr="." position="inside">
             <div data-js="marquee" data-selector=".s_image_marquee">
-                <we-input string="Speed"
+                <we-input
+                    string="Speed"
                     data-select-data-attribute="0s"
                     data-attribute-name="speed"
                     data-apply-to=".marquee:first"
-                    data-unit="s" data-save-unit="ms"
-                    data-step="0.1" />
+                    data-unit="s"
+                    data-save-unit="ms"
+                    data-step="0.1"
+                />
                 <t t-call="website.snippet_options_border_widgets">
                     <t t-set="apply_to" t-valuef="img" />
                     <t t-set="so_rounded_no_dependencies" t-value="true" />
                 </t>
             </div>
-            <div data-js="marquee_img" data-selector=".s_image_marquee img"></div>
+            <div data-js="marquee_img" data-selector=".s_image_marquee img" />
         </xpath>
     </template>
 
 
-    <record id="theme_aplus.s_image_marquee_000_js" model="ir.asset">
+    <record id="s_image_marquee_000_js" model="ir.asset">
         <field name="name">Image Marquee 000 JS</field>
         <field name="bundle">web.assets_frontend</field>
-        <field name="path">theme_aplus/static/src/snippets/s_image_marquee/000.js</field>
+        <field
+            name="path"
+        >theme_aplus/static/src/snippets/s_image_marquee/000.js</field>
     </record>
 
-    <record id="theme_aplus.s_image_marquee_000_scss" model="ir.asset">
+    <record id="s_image_marquee_000_scss" model="ir.asset">
         <field name="name">Image Marquee 000 SCSS</field>
         <field name="bundle">web.assets_frontend</field>
-        <field name="path">theme_aplus/static/src/snippets/s_image_marquee/000.scss</field>
+        <field
+            name="path"
+        >theme_aplus/static/src/snippets/s_image_marquee/000.scss</field>
         <field name="active" eval="False" />
     </record>
 </odoo>

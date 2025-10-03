@@ -22,7 +22,6 @@
         "views/snippets/s_scrolling_banner.xml",
         "views/snippets/s_wave_transition.xml",
         "views/snippets/templates.xml",
-        "data/pages/landing_page.xml",
     ],
     "assets": {
         "web._assets_primary_variables": [
