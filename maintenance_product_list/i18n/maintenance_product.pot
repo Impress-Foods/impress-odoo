@@ -1,0 +1,63 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* maintenance_product
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: maintenance_product
+#: model_terms:ir.ui.view,arch_db:maintenance_product.view_product_product_form
+#: model_terms:ir.ui.view,arch_db:maintenance_product.view_product_template_form
+msgid "Maintenance"
+msgstr ""
+
+#. module: maintenance_product
+#: model:ir.model,name:maintenance_product.model_maintenance_equipment
+msgid "Maintenance Equipment"
+msgstr ""
+
+#. module: maintenance_product
+#: model:ir.model.fields,field_description:maintenance_product.field_product_product__maintenance_equipment_ids
+#: model:ir.model.fields,field_description:maintenance_product.field_product_template__maintenance_equipment_ids
+msgid "Maintenance Equipments"
+msgstr ""
+
+#. module: maintenance_product
+#. odoo-python
+#: code:addons/maintenance_product/models/maintenance_equipment.py:0
+#, python-format
+msgid "Maintenance Parts"
+msgstr ""
+
+#. module: maintenance_product
+#: model_terms:ir.ui.view,arch_db:maintenance_product.view_maintenance_equipment_form
+msgid "Parts"
+msgstr ""
+
+#. module: maintenance_product
+#: model:ir.model,name:maintenance_product.model_product_template
+msgid "Product"
+msgstr ""
+
+#. module: maintenance_product
+#: model:ir.model.fields,field_description:maintenance_product.field_maintenance_equipment__product_count
+msgid "Product Count"
+msgstr ""
+
+#. module: maintenance_product
+#: model:ir.model,name:maintenance_product.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: maintenance_product
+#: model:ir.model.fields,field_description:maintenance_product.field_maintenance_equipment__product_ids
+msgid "Products"
+msgstr ""
