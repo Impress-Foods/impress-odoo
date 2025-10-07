@@ -17,6 +17,7 @@ patch(LineComponent.prototype, {
                 (acc, currentVal) => acc + currentVal,
                 0
             );
+
             return total_quantity;
         } else {
             return this.env.model.getTotalDemand(this.line.move_id);
