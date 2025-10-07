@@ -48,7 +48,6 @@ patch(BarcodePickingModel.prototype, {
                 total += line.qty_done;
             }
         }
-
         return total;
     },
 });

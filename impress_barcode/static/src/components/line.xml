@@ -22,11 +22,7 @@
                     </t>
                     <t t-else="">
                         <i class="fa fa-fw fa-cubes text-muted" />
-                        <span
-                            style="color: red"
-                            t-if="tsupply"
-                            t-esc="' Total: ' + tdemand"
-                        />
+                        <span style="color: red" t-esc="' Total: ' + tdemand" />
                     </t>
                 </t>
             </t>
