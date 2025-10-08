@@ -149,9 +149,39 @@ options.registry.MarqueeImageList = options.registry.marquee.extend({
         });
         this._replaceContent($addImg.append($icon).append($text));
     },
+
+    _relayout: async function () {
+        const content = this._getItemsGallery();
+        this._replaceContent(content);
+        this.trigger_up("cover_update");
+        await this._refreshPublicWidgets();
+    },
+
+    /**
+     * @override
+     */
+    _reorderItems(itemsEls, newItemPosition) {
+        console.log("Reordering!");
+        itemsEls.forEach((img, index) => {
+            img.dataset.index = index;
+        });
+        this.trigger_up("snippet_edition_request", {
+            exec: async () => {
+                await this._relayout();
+
+                const imageEl = this.$target[0].querySelector(
+                    `[data-index='${newItemPosition}']`
+                );
+                this.trigger_up("activate_snippet", {
+                    $snippet: $(imageEl),
+                    ifInactiveOptions: true,
+                });
+            },
+        });
+    },
 });
 
-options.registry.MarqueeImage = options.Class.extend({
+options.registry.MarqueeImage = options.registry.GalleryElement.extend({
     /**
      * Rebuilds the whole gallery when one image is removed.
      *
@@ -159,10 +189,23 @@ options.registry.MarqueeImage = options.Class.extend({
      */
     onRemove: function () {
         this.trigger_up("option_update", {
-            optionName: "GalleryImageList",
+            optionName: "MarqueeImageList",
             name: "image_removed",
             data: {
                 $image: this.$target,
+            },
+        });
+    },
+
+    position: function (previewMode, widgetValue, params) {
+        const itemEl = this.$target[0];
+        const optionName = "MarqueeImageList";
+        this.trigger_up("option_update", {
+            optionName: optionName,
+            name: "reorder_items",
+            data: {
+                itemEl: itemEl,
+                position: widgetValue,
             },
         });
     },

@@ -1,8 +1,33 @@
+@use "../../scss/aplus_colors";
+
 .s_image_marquee {
     .marquee_header {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        align-items: center;
+        padding-left: 2rem;
+        padding-right: 2rem;
+
+        h1 {
+            color: $aplus-red;
+        }
+        a {
+            color: $aplus-red;
+            border: 2px solid $aplus-red;
+            border-radius: 12px;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out,
+                background-color 0.25s ease-in-out;
+
+            &:hover {
+                text-decoration: none;
+                color: $aplus-white;
+                background-color: $aplus-red;
+                border-color: $aplus-red;
+            }
+        }
     }
     .marquee {
         width: 100%;
