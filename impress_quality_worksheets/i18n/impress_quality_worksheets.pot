@@ -42,17 +42,17 @@ msgid ""
 msgstr ""
 
 #. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20250303_form_view
-msgid ""
-"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-"                            Mars 2025. Feuille de contrôle Codage </strong>"
-msgstr ""
-
-#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 msgid ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
 "                            Mars 2025. Feuille de contrôle Rayon-X</strong>"
+msgstr ""
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20250303_form_view
+msgid ""
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Mars"
+" 2025. Feuille de contrôle Codage </strong>"
 msgstr ""
 
 #. module: impress_quality_worksheets
@@ -191,6 +191,11 @@ msgstr ""
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_loma_log_id
 msgid "LOMA Log"
+msgstr ""
+
+#. module: impress_quality_worksheets
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_lot_id
+msgid "Lot"
 msgstr ""
 
 #. module: impress_quality_worksheets
