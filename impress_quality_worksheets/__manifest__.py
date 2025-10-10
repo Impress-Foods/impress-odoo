@@ -1,6 +1,6 @@
 {
     "name": "Impress Quality Worksheets",
-    "version": "17.0.0.1.1",
+    "version": "17.0.25.10.10",
     "summary": """ Worksheets to use in conjunction with Impress Quality Logs """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
