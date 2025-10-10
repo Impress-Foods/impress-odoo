@@ -36,4 +36,18 @@
         </xpath>
     </template>
 
+    <template
+        id="alternative_products"
+        inherit_id="website_sale.alternative_products"
+        active="True"
+    >
+        <xpath
+            expr="//div[@id='oe_structure_website_sale_recommended_products']/section[1]"
+            position="attributes"
+        >
+            <attribute
+                name="data-template-key"
+            >theme_aplus.dynamic_filter_template_product_product_alternative_templates</attribute>
+        </xpath>
+    </template>
 </odoo>

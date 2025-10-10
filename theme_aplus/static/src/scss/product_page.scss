@@ -152,3 +152,10 @@
         }
     }
 }
+#product_full_description {
+    &.oe_structure.oe_empty {
+        section {
+            border: none !important;
+        }
+    }
+}

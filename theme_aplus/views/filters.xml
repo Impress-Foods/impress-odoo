@@ -1,8 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <record id="dynamic_filter_window_carousel_filter" model="website.snippet.filter">
-        <field name="filter_id" ref="theme_aplus.dynamic_snippet_newest_product_templates_filter" />
+        <field
+            name="filter_id"
+            ref="theme_aplus.dynamic_snippet_newest_product_templates_filter"
+        />
         <field
             name="field_names"
             eval="'display_name,id,hero_image,hero_background_color,hero_text_color,hero_sticker'"
@@ -16,8 +19,10 @@
             name="filter_id"
             ref="theme_aplus.dynamic_snippet_newest_product_templates_filter"
         />
-        <field name="field_names"
-            eval="'display_name,id,image_512,card_primary_color,card_text_color,card_secondary_color,card_background_image,name'" />
+        <field
+            name="field_names"
+            eval="'display_name,id,image_512,card_primary_color,card_text_color,card_secondary_color,card_background_image,name'"
+        />
         <field name="limit" eval="16" />
         <field name="name">Wavy Card Filter</field>
     </record>
@@ -27,11 +32,14 @@
             name="filter_id"
             ref="theme_aplus.dynamic_snippet_newest_product_templates_filter"
         />
-        <field name="field_names"
-            eval="'display_name,id,image_512,name,card_image,card_primary_color,card_secondary_color'" />
+        <field
+            name="field_names"
+            eval="'display_name,id,image_512,name,card_image,card_primary_color,card_secondary_color'"
+        />
         <field name="limit" eval="16" />
         <field name="name">Minimalist Card Filter</field>
     </record>
+
 
     <record id="dynamic_snippet_newest_product_templates_filter" model="ir.filters">
         <field name="name">Product Templates</field>

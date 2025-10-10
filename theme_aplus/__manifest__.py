@@ -7,6 +7,7 @@
     "category": "Theme/Website",
     "depends": ["web", "website", "website_sale"],
     "data": [
+        "data/data.xml",
         "views/filters.xml",
         "views/vectors.xml",
         "security/ir.model.access.csv",
