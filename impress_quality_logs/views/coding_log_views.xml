@@ -59,6 +59,7 @@
                     </div>
                     <group>
                         <group>
+                            <field name="lot_id" />
                             <field name="case_code" />
                             <field name="unit_code" />
                             <field name="unit_check" />
@@ -85,7 +86,7 @@
                                 widget="signature"
                                 options="{'size':[0,90]}"
                             />
-                            <field name="weekly_signature_date" />
+                            <field name="weekly_signature_date" readonly="1" />
                         </group>
                     </group>
                     <group>
@@ -126,9 +127,9 @@
         <field name="domain">[]</field>
         <field name="context">{}</field>
         <field name="help" type="html">
-            <p class="oe_view_nocontent_create">
-                There is no examples click here to add new Coding Log.
-            </p>
+            <p
+                class="oe_view_nocontent_create"
+            > There is no examples click here to add new Coding Log. </p>
         </field>
     </record>
 

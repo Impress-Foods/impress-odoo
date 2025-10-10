@@ -42,8 +42,7 @@
         else: \n
             rec[\'x_hpp_log_id\'] = existing_log[0]
             '"
-        >
-        </field>
+        />
     </record>
 
     <!-- log: x_ws_xx_id - One2Many - x_hpp_log_id -->
