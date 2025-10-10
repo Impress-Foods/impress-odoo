@@ -5,6 +5,7 @@
         .carousel-item {
             .row {
                 justify-content: center;
+                height: 100%;
                 .d-flex {
                     justify-content: center;
                 }
@@ -16,6 +17,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     position: relative;
     height: 100%;
     width: 100%;
@@ -24,7 +26,7 @@
 
     .image-container {
         width: 100%;
-        height: 100%;
+        // height: 100%;
         transition: transform 0.5s ease-in-out;
 
         &:hover {
@@ -43,11 +45,19 @@
         font-weight: bold;
         margin: 10px 0 5px;
     }
+    .subtitle-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
 
-    .subtitle {
-        font-size: 1.1em;
-        margin-bottom: 20px;
-        font-style: italic;
+        .subtitle {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            font-style: italic;
+            margin-bottom: 0px;
+        }
     }
 
     .add-to-cart {

@@ -4,8 +4,8 @@
     <template id="s_image_marquee" name="Image Marquee">
         <section class="s_image_marquee" style="overflow: hidden;">
             <div class="marquee_header">
-                <h1> See what else we're cooking up!</h1>
-                <a href="#"> Follow us on socials</a>
+                <h1> Discover what we're up to!</h1>
+                <a href="#"> More goodness on our socials</a>
             </div>
             <div class="marquee" data-speed="10">
                 <div class="marquee-inner">

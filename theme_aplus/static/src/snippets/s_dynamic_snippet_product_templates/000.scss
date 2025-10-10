@@ -14,4 +14,12 @@
     a.carousel-control-next {
         right: -4rem;
     }
+    @media (max-width: 767.98px) {
+        a.carousel-control-prev {
+            left: 0rem;
+        }
+        a.carousel-control-next {
+            right: 0rem;
+        }
+    }
 }

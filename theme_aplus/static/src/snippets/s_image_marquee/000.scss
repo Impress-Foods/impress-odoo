@@ -10,11 +10,11 @@
         padding-right: 2rem;
 
         h1 {
-            color: $aplus-red;
+            color: var(--o-color-1);
         }
         a {
-            color: $aplus-red;
-            border: 2px solid $aplus-red;
+            color: var(--o-color-1);
+            border: 2px solid var(--o-color-1);
             border-radius: 12px;
             padding-left: 0.5rem;
             padding-right: 0.5rem;
@@ -23,9 +23,19 @@
 
             &:hover {
                 text-decoration: none;
-                color: $aplus-white;
-                background-color: $aplus-red;
-                border-color: $aplus-red;
+                color: var(--o-color-3);
+                background-color: var(--o-color-1);
+                border-color: var(--o-color-1);
+            }
+        }
+    }
+    @media (max-width: 767.98px) {
+        .marquee_header {
+            padding-bottom: 1rem;
+            flex-direction: column;
+
+            h1 {
+                text-align: center;
             }
         }
     }

@@ -170,9 +170,7 @@
                 <a
                     t-attf-style="color: {{card_text_color}};"
                     t-attf-href="{{product_href}}"
-                >
-                    Buy Now
-                </a>
+                > Buy Now </a>
             </div>
         </div>
     </template>
@@ -226,15 +224,19 @@
             t-attf-style="color:{{p_color}};"
             t-out="product.public_categ_ids[0].display_name"
         />
-        <p class="subtitle" t-attf-style="color:{{p_color}};" t-out="product.name" />
+        <div class="subtitle-container">
+            <p
+                class="subtitle"
+                t-attf-style="color:{{p_color}};"
+                t-out="product.name"
+            />
+        </div>
         <a
             t-attf-href="{{product.website_url}}"
             class="add-to-cart"
             t-attf-style="color:{{p_color}};border: 1px solid {{p_color}};"
             t-attf-onmouseover="this.style.backgroundColor='{{s_color}}'; this.style.borderColor='{{s_color}}';this.style.color='#FFFFFF';"
             t-attf-onmouseout="this.style.backgroundColor='#FFFFFF00'; this.style.borderColor='{{p_color}}';this.style.color='{{p_color}}';"
-        >AJOUTER
-            AU
-            PANIER</a>
+        >Add to cart</a>
     </template>
 </odoo>
