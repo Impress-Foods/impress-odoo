@@ -86,7 +86,7 @@
                                 widget="signature"
                                 options="{'size':[0,90]}"
                             />
-                            <field name="weekly_signature_date" />
+                            <field name="weekly_signature_date" readonly="1" />
                         </group>
                     </group>
                     <group>

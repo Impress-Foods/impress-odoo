@@ -45,7 +45,9 @@ class LogMixin(models.Model):
         depends=["quality_check_id", "quality_check_id.control_date"],
     )
     weekly_signature_date = fields.Datetime(
-        compute="_compute_weekly_signature_date", store=True
+        compute="_compute_weekly_signature_date",
+        inverse="_inverse_weekly_signature_date",
+        store=True,
     )
 
     quality_notes = fields.Text()
@@ -55,6 +57,9 @@ class LogMixin(models.Model):
         for rec in self:
             if rec.signature:
                 rec.weekly_signature_date = datetime.now()
+
+    def _inverse_weekly_signature_date(self):
+        return
 
     def action_sign_log(self):
         for rec in self:

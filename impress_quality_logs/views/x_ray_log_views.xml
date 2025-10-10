@@ -69,8 +69,7 @@
                             <field name="name" placeholder="Name..." />
                         </h1>
                     </div>
-                    <group>
-                    </group>
+                    <group> </group>
                     <field name="log_line_ids" nolabel='1' readonly='1' />
                     <group>
                         <group>
@@ -80,7 +79,7 @@
                                 options="{'size':[0,90]}"
                                 string="Weekly Verification"
                             />
-                            <field name="weekly_signature_date" />
+                            <field name="weekly_signature_date" readonly="1" />
                         </group>
                         <group>
                             <field
@@ -89,7 +88,7 @@
                                 options="{'size':[0,90]}"
                                 string="Monthly Verification"
                             />
-                            <field name="monthly_signature_date" />
+                            <field name="monthly_signature_date" readonly="1" />
 
                         </group>
                     </group>
@@ -131,9 +130,9 @@
         <field name="domain">[]</field>
         <field name="context">{}</field>
         <field name="help" type="html">
-            <p class="oe_view_nocontent_create">
-                There is no examples click here to add new X_ray Log.
-            </p>
+            <p
+                class="oe_view_nocontent_create"
+            > There is no examples click here to add new X_ray Log. </p>
         </field>
     </record>
 
