@@ -17,7 +17,7 @@ class MetalLog(models.Model):
     monthly_signature = fields.Binary()
     monthly_signature_date = fields.Datetime(
         compute="_compute_monthly_signature_date",
-        _inverse="_inverse_monthly_signature_date",
+        inverse="_inverse_monthly_signature_date",
         store=True,
     )
 
