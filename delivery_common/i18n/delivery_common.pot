@@ -1,0 +1,96 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* delivery_common
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: delivery_common
+#: model:ir.actions.report,print_report_name:delivery_common.report_shipping_label
+msgid "'%s' % object.name"
+msgstr ""
+
+#. module: delivery_common
+#: model_terms:ir.ui.view,arch_db:delivery_common.stock_picking_kanban
+msgid "<span> &amp;nbsp;-&amp;nbsp;</span>"
+msgstr ""
+
+#. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking_type__auto_print_delivery_label
+msgid "Auto Print Delivery Label"
+msgstr ""
+
+#. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_delivery_carrier__confirmation_template_id
+msgid "Confirmation Template"
+msgstr ""
+
+#. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking__delivery_instructions
+msgid "Delivery Instructions"
+msgstr ""
+
+#. module: delivery_common
+#: model_terms:ir.ui.view,arch_db:delivery_common.delivery_carrier_for_inherit_module_name
+msgid "Emails"
+msgstr ""
+
+#. module: delivery_common
+#: model:ir.model.fields,help:delivery_common.field_stock_picking_type__auto_print_delivery_label
+msgid ""
+"If checked, the delivery label will be printed\n"
+"        automatically when the picking is validated."
+msgstr ""
+
+#. module: delivery_common
+#: model:ir.model,name:delivery_common.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: delivery_common
+#: model_terms:ir.ui.view,arch_db:delivery_common.view_stock_picking_form
+msgid "Print Shipping Label"
+msgstr ""
+
+#. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_delivery_carrier__send_confirmation_email
+msgid "Send Confirmation Email"
+msgstr ""
+
+#. module: delivery_common
+#: model:ir.actions.report,name:delivery_common.report_shipping_label
+msgid "Shipping Label"
+msgstr ""
+
+#. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking__shipping_label_attachment_id
+msgid "Shipping Label Attachment"
+msgstr ""
+
+#. module: delivery_common
+#: model:ir.model,name:delivery_common.model_delivery_carrier
+msgid "Shipping Methods"
+msgstr ""
+
+#. module: delivery_common
+#: model:ir.model,name:delivery_common.model_report_delivery_common_report_shipping_label_view
+msgid "Shipping labels (ZPL)"
+msgstr ""
+
+#. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking__tracking_email_sent
+msgid "Tracking Email Sent"
+msgstr ""
+
+#. module: delivery_common
+#: model:ir.model,name:delivery_common.model_stock_picking
+msgid "Transfer"
+msgstr ""
