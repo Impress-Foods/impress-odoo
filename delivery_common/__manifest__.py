@@ -12,6 +12,7 @@
         "views/choose_delivery_package_views.xml",
         "views/stock_picking_type_views.xml",
         "views/stock_picking_views.xml",
+        "views/delivery_carrier_views.xml",
     ],
     "application": False,
     "installable": True,

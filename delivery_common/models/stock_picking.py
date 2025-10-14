@@ -12,6 +12,7 @@ _logger = logging.getLogger(__name__)
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
+    tracking_email_sent = fields.Boolean(copy=False)
     shipping_label_attachment_id = fields.Many2one("ir.attachment")
     delivery_instructions = fields.Char(
         compute="_compute_delivery_instructions",
@@ -42,3 +43,25 @@ class StockPicking(models.Model):
             report_actions.append(action)
 
         return report_actions
+
+    def _send_confirmation_email(self):
+        res = super()._send_confirmation_email()
+        for record in self:
+            if (
+                not record.tracking_email_sent
+                and record.carrier_id
+                and record.carrier_id.send_confirmation_email
+                and record.carrier_id.confirmation_template_id
+            ):
+                subtype_id = self.env["ir.model.data"]._xmlid_to_res_id(
+                    "mail.mt_comment"
+                )
+                record.tracking_email_sent = True
+                delivery_template = record.carrier_id.confirmation_template_id
+                record.with_context(force_send=True).message_post_with_source(
+                    delivery_template,
+                    email_layout_xmlid="mail.mail_notification_light",
+                    subtype_id=subtype_id,
+                )
+
+        return res
