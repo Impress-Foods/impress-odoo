@@ -29,8 +29,18 @@ msgid "Auto Print Delivery Label"
 msgstr ""
 
 #. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_delivery_carrier__confirmation_template_id
+msgid "Confirmation Template"
+msgstr ""
+
+#. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking__delivery_instructions
 msgid "Delivery Instructions"
+msgstr ""
+
+#. module: delivery_common
+#: model_terms:ir.ui.view,arch_db:delivery_common.delivery_carrier_for_inherit_module_name
+msgid "Emails"
 msgstr ""
 
 #. module: delivery_common
@@ -51,6 +61,11 @@ msgid "Print Shipping Label"
 msgstr ""
 
 #. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_delivery_carrier__send_confirmation_email
+msgid "Send Confirmation Email"
+msgstr ""
+
+#. module: delivery_common
 #: model:ir.actions.report,name:delivery_common.report_shipping_label
 msgid "Shipping Label"
 msgstr ""
@@ -61,8 +76,18 @@ msgid "Shipping Label Attachment"
 msgstr ""
 
 #. module: delivery_common
+#: model:ir.model,name:delivery_common.model_delivery_carrier
+msgid "Shipping Methods"
+msgstr ""
+
+#. module: delivery_common
 #: model:ir.model,name:delivery_common.model_report_delivery_common_report_shipping_label_view
 msgid "Shipping labels (ZPL)"
+msgstr ""
+
+#. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking__tracking_email_sent
+msgid "Tracking Email Sent"
 msgstr ""
 
 #. module: delivery_common
