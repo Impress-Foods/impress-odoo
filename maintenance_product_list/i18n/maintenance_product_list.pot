@@ -19,6 +19,11 @@ msgid "Contact"
 msgstr ""
 
 #. module: maintenance_product_list
+#: model:ir.model.fields,field_description:maintenance_product_list.field_product_product__current_vendor_code
+msgid "Current Vendor Code"
+msgstr ""
+
+#. module: maintenance_product_list
 #: model_terms:ir.ui.view,arch_db:maintenance_product_list.view_product_product_form
 #: model_terms:ir.ui.view,arch_db:maintenance_product_list.view_product_template_form
 msgid "Maintenance"
@@ -40,6 +45,11 @@ msgstr ""
 #: code:addons/maintenance_product_list/models/maintenance_equipment.py:0
 #, python-format
 msgid "Maintenance Parts"
+msgstr ""
+
+#. module: maintenance_product_list
+#: model:ir.model,name:maintenance_product_list.model_stock_warehouse_orderpoint
+msgid "Minimum Inventory Rule"
 msgstr ""
 
 #. module: maintenance_product_list
@@ -71,9 +81,21 @@ msgid "Products"
 msgstr ""
 
 #. module: maintenance_product_list
+#: model:ir.model.fields,help:maintenance_product_list.field_stock_warehouse_orderpoint__vendor_code
+msgid ""
+"This vendor's product code will be used when printing a request for "
+"quotation. Keep empty to use the internal one."
+msgstr ""
+
+#. module: maintenance_product_list
 #: model:ir.model.fields,field_description:maintenance_product_list.field_product_product__vendor_code
 #: model:ir.model.fields,field_description:maintenance_product_list.field_product_template__vendor_code
 msgid "Vendor Code"
+msgstr ""
+
+#. module: maintenance_product_list
+#: model:ir.model.fields,field_description:maintenance_product_list.field_stock_warehouse_orderpoint__vendor_code
+msgid "Vendor Product Code"
 msgstr ""
 
 #. module: maintenance_product_list
