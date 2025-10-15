@@ -34,4 +34,24 @@
         </field>
     </record>
 
+    <record id="product_view_kanban_catalog" model="ir.ui.view">
+        <field name="name">product.view.kanban.catalog.purchase_stock</field>
+        <field name="model">product.product</field>
+        <field
+            name="inherit_id"
+            ref="purchase_stock.product_view_kanban_catalog_purchase_only"
+        />
+        <field name="priority">110</field>
+        <field name="arch" type="xml">
+            <xpath
+                expr="//div[hasclass('o_kanban_record_top')]/div[2]"
+                position="after"
+            >
+                <div t-if="record.current_vendor_code.value"> [<field
+                        name="current_vendor_code"
+                    />] </div>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>
