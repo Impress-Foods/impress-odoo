@@ -66,3 +66,8 @@ class CodingLog(models.Model):
         for rec in self:
             if rec.verification_signature:
                 rec.weekly_signature_date = datetime.now()
+
+    def action_sign_log(self):
+        for rec in self:
+            if not rec.signature:
+                rec.verification_signature = rec.env.user.sign_initials
