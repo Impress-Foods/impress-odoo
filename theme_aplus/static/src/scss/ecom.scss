@@ -315,6 +315,18 @@
     height: 2px;
     background-color: var(--o-color-1);
 }
+#products_grid {
+    .o_wsale_products_grid_table_wrapper {
+        .product_row {
+            td.oe_product {
+                padding-bottom: 1rem;
+            }
+        }
+        td.category-header {
+            width: 100%;
+        }
+    }
+}
 
 .bg-light {
     background-color: var(--light);

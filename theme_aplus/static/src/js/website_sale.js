@@ -1,30 +1,25 @@
 /** @odoo-module **/
-import {WebsiteSale} from "@website_sale/js/website_sale";
+import WebsiteSale from "@website_sale/js/website_sale";
 import {patch} from "@web/core/utils/patch";
+import {SIZES, utils as uiUtils} from "@web/core/ui/ui_service";
 
-patch(WebsiteSale.prototype, {
-    willStart() {
-        const res = super.willStart(...arguments);
-        // console.log(this);
-        // if (this.el.dataset) {
-        //     if (this.el.dataset.highlightColor) {
-        //         document
-        //             .querySelector(":root")
-        //             .style.setProperty(
-        //                 "--product-page-highlight-color",
-        //                 this.el.dataset.highlightColor
-        //             );
-        //     }
-        //     if (this.el.dataset.highlightSecColor) {
-        //         document
-        //             .querySelector(":root")
-        //             .style.setProperty(
-        //                 "--product-page-highlight-sec-color",
-        //                 this.el.dataset.highlightSecColor
-        //             );
-        //     }
-        // }
+const WebsiteSaleCarouselProduct = WebsiteSale.WebsiteSaleCarouselProduct;
 
-        return res;
+patch(WebsiteSaleCarouselProduct.prototype, {
+    /**
+     * @private
+     */
+    _updateJustifyContent: function () {
+        const $indicatorsDiv = this.$el.find(".carousel-indicators");
+        $indicatorsDiv.css("justify-content", "center");
+        if (uiUtils.getSize() <= SIZES.MD) {
+            if (
+                $indicatorsDiv.children().last().position().left +
+                    this.$el.find("li").outerWidth() <
+                $indicatorsDiv.outerWidth()
+            ) {
+                $indicatorsDiv.css("justify-content", "center");
+            }
+        }
     },
 });

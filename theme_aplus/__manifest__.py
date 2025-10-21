@@ -49,9 +49,9 @@
             "theme_aplus/static/src/scss/aplus_style.scss",
             "theme_aplus/static/src/scss/ecom.scss",
             "theme_aplus/static/src/scss/minimalist_cards.scss",
-            "theme_aplus/static/src/js/website_sale.js",
             "theme_aplus/static/src/scss/product_page.scss",
             "theme_aplus/static/src/scss/tabbed_container.scss",
+            "theme_aplus/static/src/js/website_sale.js",
         ],
         "website.assets_wysiwyg": [
             "theme_aplus/static/src/scss/aplus_style.scss",

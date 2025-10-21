@@ -25,7 +25,9 @@
                         class=" hero-text-container o_grid_item g-height-* g-col-lg-* o_colored_level g-height-8 g-col-lg-8 col-lg-*"
                         style="grid-area: 4 / -1 / 10 / -9;"
                     >
-                        <h1 class="hero-text"> Drink <br /> your fruit! </h1>
+                        <h1 class="hero-text desktop">Drink</h1>
+                        <h1 class="hero-text desktop">your fruit!</h1>
+                        <h1 class="hero-text mobile">Drink your fruit!</h1>
                     </div>
                     <div
                         class=" hero-sticker-container o_grid_item g-height-* g-col-lg-* o_colored_level g-height-6 g-col-lg-3 col-lg-*"
@@ -41,9 +43,7 @@
     <template
         id="dynamic_filter_template_product_template_window"
         name="Product Template - Window"
-    >
-
-    </template>
+    > </template>
     <template id="s_window_carousel_options" inherit_id="website.snippet_options">
         <xpath expr="." position="inside">
             <div
@@ -56,15 +56,13 @@
                     data-name="filter_opt"
                     data-attribute-name="filterId"
                     data-no-preview="true"
-                >
-                </we-select>
+                > </we-select>
                 <we-select
                     string="Template"
                     data-name="template_opt"
                     data-attribute-name="templateKey"
                     data-no-preview="true"
-                >
-                </we-select>
+                > </we-select>
                 <we-select
                     string="Fetched elements"
                     data-name="number_of_records_opt"

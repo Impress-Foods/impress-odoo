@@ -36,6 +36,7 @@
         </xpath>
     </template>
 
+
     <template
         id="alternative_products"
         inherit_id="website_sale.alternative_products"

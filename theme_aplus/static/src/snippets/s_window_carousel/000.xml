@@ -49,11 +49,13 @@
     <t t-name="theme_aplus.window_carousel_image">
             <div class="product-image">
                 <t t-if="product.hero_image">
-                    <img
-                    loading="lazy"
-                    t-att-src="product.hero_image"
-                    t-att-alt="product.display_name"
-                />
+                    <a href="/shop">
+                        <img
+                        loading="lazy"
+                        t-att-src="product.hero_image"
+                        t-att-alt="product.display_name"
+                    />
+                    </a>
                 </t>
                 <t t-else="">
                     <span>No image available</span>

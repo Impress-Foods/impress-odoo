@@ -30,30 +30,15 @@ const ImageMarqueeWidget = publicWidget.Widget.extend({
     },
 
     _cloneContent: function () {
-        // 1. Clear previous clones inside the *single* animated block
         this.$inner.find(".marquee-clone").remove();
-
-        // 2. Identify the content to clone (assuming image wrappers/images are direct children)
-        // We clone the *children* of the inner block.
         const $contentToClone = this.$inner.children().not(".marquee-clone");
 
         if ($contentToClone.length === 0) {
-            // If content is missing, we can't clone.
             return;
         }
-
-        // 3. Clone the content set exactly once
         const $clonedContent = $contentToClone.clone(true);
-
-        // 4. Add the identification class to the cloned content
         $clonedContent.addClass("marquee-clone");
-
-        // 5. Append the clone *into* the original inner block
         this.$inner.append($clonedContent);
-
-        // 🛑 CRITICAL ALIGNMENT STEP: Set the initial scroll position of the marquee holder
-        // to ensure the scroll starts smoothly, although the CSS animation handles the main movement.
-        // This is optional but can sometimes help alignment on initialization.
         this.$holder.scrollLeft(0);
     },
     /**
@@ -67,7 +52,6 @@ const ImageMarqueeWidget = publicWidget.Widget.extend({
         let resizeTimer;
 
         const handleResize = () => {
-            // Re-run setup to adjust the number of clones for the new viewport size
             const editorActive = $("body").hasClass("editor_enable");
             if (!editorActive) {
                 this.setupMarquee();
@@ -75,9 +59,7 @@ const ImageMarqueeWidget = publicWidget.Widget.extend({
         };
 
         $(window).on("resize.ImageMarqueeWidget", () => {
-            // Added namespace for easier cleanup
             clearTimeout(resizeTimer);
-            // Debounce the resize event to prevent performance issues
             resizeTimer = setTimeout(handleResize, 150);
         });
     },

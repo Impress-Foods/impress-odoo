@@ -219,16 +219,12 @@
             />
         </div>
 
-        <h2
-            class="title"
-            t-attf-style="color:{{p_color}};"
-            t-out="product.public_categ_ids[0].display_name"
-        />
-        <div class="subtitle-container">
+        <h2 class="title" t-attf-style="color:{{p_color}};" t-out="product.name" />
+        <div class="subtitle-container" t-if="product.public_categ_ids">
             <p
                 class="subtitle"
                 t-attf-style="color:{{p_color}};"
-                t-out="product.name"
+                t-out="product.public_categ_ids[0].display_name"
             />
         </div>
         <a

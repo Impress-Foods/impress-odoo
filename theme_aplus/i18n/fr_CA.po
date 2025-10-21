@@ -1,0 +1,657 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* theme_aplus
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr_CA\n"
+
+#. module: theme_aplus
+#. odoo-javascript
+#: code:addons/theme_aplus/static/src/snippets/s_image_marquee/options.js:0
+#, python-format
+msgid " Add Images"
+msgstr "Ajouter des images"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.tvn
+msgid "% Daily Value"
+msgstr "% valeur recommendée"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_scrolling_text_banner_options
+msgid "0.5x"
+msgstr "0.5x"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_scrolling_text_banner_options
+msgid "1.5x"
+msgstr "1.5x"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_scrolling_text_banner_options
+msgid "1x"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_scrolling_text_banner_options
+msgid "2x"
+msgstr "2x"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_scrolling_text_banner_options
+msgid "3x"
+msgstr "3x"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.product_related_flavors
+msgid "<span class=\"subsection-header\">Flavors</span>"
+msgstr "<span class=\"subsection-header\">Saveurs</span>"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.product_show_ingredients
+msgid "<span class=\"subsection-header\">Ingredients</span>"
+msgstr "<span class=\"subsection-header\">Ingrédients</span>"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_scrolling_text_banner
+msgid ""
+"<span class=\"ticker-text ticker-text-editor\" "
+"contenteditable=\"true\">Infinite Ticker</span>"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.product_show_vectors
+msgid "<span>Fruits</span>"
+msgstr "<span>Fruits</span>"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.product_show_vectors
+msgid "<span>Maple</span>"
+msgstr "<span>Érable</span>"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.product_show_vectors
+msgid "<span>Water</span>"
+msgstr "<span>Eau</span>"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_image_marquee_options
+msgid "Add"
+msgstr "Ajouter"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.bottle_quantity_selector
+msgid "Add one"
+msgstr "Ajouter un"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.minimalist_product_card_carousel
+msgid "Add to cart"
+msgstr "Ajouter au panier"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_dynamic_snippet_product_templates_options
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_window_carousel_options
+msgid "All Products"
+msgstr "Tout les produits"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_wave_transition_snippet_options
+msgid "Background Color"
+msgstr "Couleur de fond"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.snippets
+msgid "Banner"
+msgstr "Bannière"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.wavy_product_card
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.wavy_product_card_carousel
+msgid "Buy Now"
+msgstr "Achetez maintenant"
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__card_background_image
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__card_background_image
+msgid "Card Background Image"
+msgstr "Image de fond (carte)"
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__card_image
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__card_image
+msgid "Card Image"
+msgstr "Image (carte)"
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__card_primary_color
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__card_primary_color
+msgid "Card Primary Color"
+msgstr "Couleur principale (carte)"
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__card_secondary_color
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__card_secondary_color
+msgid "Card Secondary Color"
+msgstr "Couleur secondaire (carte)"
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__card_text_color
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__card_text_color
+msgid "Card Text Color"
+msgstr "Couleur du text (carte)"
+
+#. module: theme_aplus
+#. odoo-javascript
+#: code:addons/theme_aplus/static/src/snippets/s_dynamic_snippet_product_templates/000.xml:0
+#, python-format
+msgid "Carousel"
+msgstr "Carousel"
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__carousel_order
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__carousel_order
+msgid "Carousel Order"
+msgstr "Ordre dans le carousel"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_dynamic_snippet_product_templates_options
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_window_carousel_options
+msgid "Category"
+msgstr "Catégorie"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.snippet_options_ecom
+msgid "Color highlights"
+msgstr "Couleur d'emphase"
+
+#. module: theme_aplus
+#: model_terms:ir.ui.view,arch_db:theme_aplus.view_product_template_form
+msgid "Colors"
+msgstr "Couleurs"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_dynamic_snippet_product_templates_options
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_window_carousel_options
+msgid ""
+"Comma-separated list of parts of product names, barcodes or internal "
+"reference"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.tvn
+msgid "Content"
+msgstr "Contenu"
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_nutrition_fact_entry__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_nutrition_fact_entry__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_dynamic_snippet_product_templates_options
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_window_carousel_options
+msgid "Current Category or All"
+msgstr "Catégorie actuelle ou Tout"
+
+#. module: theme_aplus
+#: model_terms:ir.ui.view,arch_db:theme_aplus.view_product_template_form
+msgid "Details"
+msgstr "Détails"
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__did_you_know
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__did_you_know
+msgid "Did You Know"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.tabbed_container
+msgid "Did you know?"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_image_marquee
+msgid "Discover what we're up to!"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_nutrition_fact_entry__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_window_carousel
+msgid "Drink"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_window_carousel
+msgid "Drink your fruit!"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.snippets
+msgid "Dynamic"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_scrolling_text_banner_options
+msgid "Fast"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_scrolling_text_banner_options
+msgid "Faster"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_window_carousel_options
+msgid "Fetched elements"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_window_carousel_options
+msgid "Filter"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.snippet_options_ecom
+msgid "Group by"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.snippet_options_ecom
+msgid "Group by Category"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__hero_background_color
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__hero_background_color
+msgid "Hero Background Color"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__hero_image
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__hero_image
+msgid "Hero Image"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__hero_sticker
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__hero_sticker
+msgid "Hero Sticker"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__hero_text_color
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__hero_text_color
+msgid "Hero Text Color"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_nutrition_fact_entry__id
+msgid "ID"
+msgstr ""
+
+#. module: theme_aplus
+#. odoo-javascript
+#: code:addons/theme_aplus/static/src/snippets/s_image_marquee/options.js:0
+#, python-format
+msgid "Image"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_image_marquee_options
+msgid "Images"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__ingredients
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__ingredients
+msgid "Ingredients"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_nutrition_fact_entry__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_nutrition_fact_entry__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: theme_aplus
+#: model:website.snippet.filter,name:theme_aplus.dynamic_filter_minimalist_card_filter
+msgid "Minimalist Card Filter"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__minimalist_card_image
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__minimalist_card_image
+msgid "Minimalist Card Image"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_image_marquee
+msgid "More goodness on our socials"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_image_marquee_options
+msgid "Move to first"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_image_marquee_options
+msgid "Move to last"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_image_marquee_options
+msgid "Move to next"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_image_marquee_options
+msgid "Move to previous"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_nutrition_fact_entry__name
+msgid "Name"
+msgstr ""
+
+#. module: theme_aplus
+#. odoo-javascript
+#: code:addons/theme_aplus/static/src/snippets/s_dynamic_snippet_product_templates/000.xml:0
+#, python-format
+msgid "Next"
+msgstr ""
+
+#. module: theme_aplus
+#. odoo-javascript
+#: code:addons/theme_aplus/static/src/snippets/s_window_carousel/000.xml:0
+#, python-format
+msgid "No image available"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_scrolling_text_banner_options
+msgid "Normal"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__nutrition_entry_ids
+msgid "Nutrition Entry"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__nutrition_facts_size
+msgid "Nutrition Facts Size"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model,name:theme_aplus.model_nutrition_fact_entry
+msgid "Nutrition fact table entry"
+msgstr ""
+
+#. module: theme_aplus
+#. odoo-javascript
+#: code:addons/theme_aplus/static/src/snippets/s_dynamic_snippet_product_templates/000.xml:0
+#, python-format
+msgid "Previous"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model,name:theme_aplus.model_product_template
+#: model:ir.model.fields,field_description:theme_aplus.field_nutrition_fact_entry__product_id
+msgid "Product"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__product_page_text_color
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__product_page_text_color
+msgid "Product Page Text Color"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.snippets
+msgid "Product Templates"
+msgstr ""
+
+#. module: theme_aplus
+#: model:website.snippet.filter,name:theme_aplus.dynamic_filter_window_carousel_filter
+msgid "Product Templates - Window"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model,name:theme_aplus.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.products_item
+msgid "Product card for {{product.name}}"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_dynamic_snippet_product_templates_options
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_window_carousel_options
+msgid "Product names"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_image_marquee_options
+msgid "Re-order"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_image_marquee_options
+msgid "Remove all"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.bottle_quantity_selector
+msgid "Remove one"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_nutrition_fact_entry__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: theme_aplus
+#. odoo-javascript
+#: code:addons/theme_aplus/static/src/snippets/s_window_carousel/000.xml:0
+#, python-format
+msgid "Shop Now"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.snippet_options_ecom
+msgid "Show Alim du QC"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.snippet_options_ecom
+msgid "Show Fruit/Water/Maple"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.snippet_options_ecom
+msgid "Show Ingredients"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.snippet_options_ecom
+msgid "Show Learn More Tabs"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.snippet_options_ecom
+msgid "Show Nutrition Table"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.snippet_options_ecom
+msgid "Show Related Flavors"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_scrolling_text_banner_options
+msgid "Slower"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_image_marquee_options
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_scrolling_text_banner_options
+msgid "Speed"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__suggestion_image
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__suggestion_image
+msgid "Suggestion Image"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.tabbed_container
+msgid "Tableau nutritionnel"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_dynamic_snippet_product_templates_options
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_window_carousel_options
+msgid "Tags"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_window_carousel_options
+msgid "Template"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__text_color
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__text_color
+msgid "Text Color"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.wavy_product_card
+msgid "This product is unpublished."
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__tips_and_tricks
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__tips_and_tricks
+msgid "Tips And Tricks"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.tabbed_container
+msgid "Tips and Tricks"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.snippets
+msgid "Transition"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.wavy_product_card
+msgid "Unpublished"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_nutrition_fact_entry__value
+msgid "Value"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_scrolling_text_banner_options
+msgid "Very Fast"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.wavy_product_card
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.wavy_product_card_carousel
+msgid "View product details"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_wave_transition_snippet_options
+msgid "Wave Color"
+msgstr ""
+
+#. module: theme_aplus
+#: model:website.snippet.filter,name:theme_aplus.dynamic_filter_wavy_card_filter
+msgid "Wavy Card Filter"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.snippet_options_ecom
+msgid "Wavy Cards"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:ir.ui.view,arch_db:theme_aplus.view_product_template_form
+msgid "Website"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model,name:theme_aplus.model_website_snippet_filter
+msgid "Website Snippet Filter"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.snippets
+msgid "Window Carousel"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_dynamic_snippet_product_templates_options
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_window_carousel_options
+msgid "e.g. lamp,bin"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:ir.ui.view,arch_db:theme_aplus.view_product_template_form
+msgid "images"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:ir.ui.view,arch_db:theme_aplus.product_product_normal_form_View
+#: model_terms:ir.ui.view,arch_db:theme_aplus.product_variant_easy_edit_view
+msgid "nutrition facts"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.wavy_product_card
+msgid "product_name"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_window_carousel
+msgid "your fruit!"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.minimalist_product_card_carousel
+msgid "{{ product.name }}"
+msgstr ""

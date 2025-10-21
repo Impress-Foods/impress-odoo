@@ -5,7 +5,10 @@
         <section class="s_image_marquee" style="overflow: hidden;">
             <div class="marquee_header">
                 <h1> Discover what we're up to!</h1>
-                <a href="#"> More goodness on our socials</a>
+                <div>
+                    <i class="fa fa-instagram" style="color: var(--primary);" />
+                    <a href="#"> More goodness on our socials</a>
+                </div>
             </div>
             <div class="marquee" data-speed="10">
                 <div class="marquee-inner">

@@ -1,62 +1,98 @@
 .oe_website_sale {
-    .icon-block {
-        fill: var(--highlight-color, var(--o-color-1));
-    }
-    .recipe-icons {
-        width: 100px;
-        height: 100px;
-    }
-    .recipe-icons-plus {
-        width: 20px;
-        height: 20px;
-    }
+    .extra-icons {
+        padding-bottom: 2rem;
+        flex-wrap: wrap;
+        .icon-block {
+            fill: var(--highlight-color, var(--o-color-1));
+            display: flex;
+            align-items: center;
+            .vector-column {
+                display: flex;
+                flex-direction: column;
 
-    .ingredients-block {
-        padding-left: 0.3rem;
-        .ingredient-list {
-            margin-bottom: 0px !important;
-            p {
+                .recipe-icons {
+                    width: 100px;
+                    height: 75px;
+                }
+                span {
+                    text-align: center;
+                    color: var(--highlight-color, var(--o-color-1));
+                }
+            }
+            .recipe-icons-plus {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        .ingredients-block {
+            padding-left: 0.3rem;
+            .ingredient-list {
                 margin-bottom: 0px !important;
+                p {
+                    margin-bottom: 0px !important;
+                }
+            }
+        }
+        @media (max-width: 1210px) {
+            .extra-icons {
+                justify-content: start;
+            }
+            .recipe-icons {
+                width: 75px;
+                height: 75px;
+            }
+            .recipe-icons-plus {
+                width: 15px;
+                height: 15px;
+            }
+        }
+        @media (max-width: 990px) {
+            .extra-icons {
+                justify-content: start;
+            }
+            .recipe-icons {
+                width: 100px;
+                height: 100px;
+            }
+            .recipe-icons-plus {
+                width: 20px;
+                height: 20px;
+            }
+        }
+        @media (max-width: 490px) {
+            .recipe-icons {
+                width: 75px;
+                height: 75px;
+            }
+            .recipe-icons-plus {
+                width: 15px;
+                height: 15px;
+            }
+        }
+        @media (max-width: 490px) {
+            .recipe-icons {
+                width: 75px;
+                height: 75px;
+            }
+            .recipe-icons-plus {
+                width: 15px;
+                height: 15px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .recipe-icons {
+                width: 60px;
+                height: 60px;
+            }
+            .recipe-icons-plus {
+                width: 10px;
+                height: 10px;
             }
         }
     }
 
-    @media (max-width: 1210px) {
-        .extra-icons {
-            justify-content: start;
-        }
-        .recipe-icons {
-            width: 75px;
-            height: 75px;
-        }
-        .recipe-icons-plus {
-            width: 15px;
-            height: 15px;
-        }
-    }
-    @media (max-width: 990px) {
-        .extra-icons {
-            justify-content: center;
-        }
-        .recipe-icons {
-            width: 100px;
-            height: 100px;
-        }
-        .recipe-icons-plus {
-            width: 20px;
-            height: 20px;
-        }
-    }
-    @media (max-width: 490px) {
-        .recipe-icons {
-            width: 75px;
-            height: 75px;
-        }
-        .recipe-icons-plus {
-            width: 15px;
-            height: 15px;
-        }
-    }
     path {
         fill-rule: nonzero;
     }
@@ -86,7 +122,7 @@
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.75rem;
             overflow-wrap: break-word;
             line-height: 1;
 
@@ -142,6 +178,7 @@
             color: inherit;
         }
     }
+
     input.form-check-input {
         &:checked {
             background-color: var(--highlight-color, var(--o-color-1)) !important;
@@ -151,7 +188,35 @@
             border-color: var(--highlight-color, var(--o-color-1)) !important;
         }
     }
+    .variant_attribute {
+        .o_variant_pills.btn {
+            background-color: var(--o-cc1-bg) !important;
+            border: 1px solid var(--highlight-color, var(--o-color-1)) !important;
+            color: var(--highlight-color, var(--o-color-1));
+            transition: scale 0.1s linear;
+            &.active {
+                background-color: var(--highlight-color, var(--o-color-1)) !important;
+                color: white;
+            }
+            &:hover {
+                scale: 0.95;
+            }
+        }
+    }
 }
+#oe_structure_website_sale_recommended_products {
+    .carousel-inner {
+        .carousel-item {
+            .row {
+                justify-content: space-evenly;
+                .d-flex {
+                    justify-content: center;
+                }
+            }
+        }
+    }
+}
+
 #product_full_description {
     &.oe_structure.oe_empty {
         section {

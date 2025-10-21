@@ -34,9 +34,7 @@
         >
             <we-button
                 data-customize-website-views="theme_aplus.products_design_wavy_cards"
-            >
-                Wavy Cards
-            </we-button>
+            > Wavy Cards </we-button>
         </xpath>
         <xpath
             expr="//we-select[hasclass('o_wsale_ppr_submenu')]/we-button[3]"
@@ -183,11 +181,15 @@
                     <!-- Force the number of columns (useful when only one row of (x < ppr) products) -->
                     <col t-foreach="ppr" t-as="p" />
                 </colgroup>
-
+                <t
+                    t-set="flat_list"
+                    t-value="[item for sublist in bins for item in sublist]"
+                />
                 <t
                     t-set="categories"
-                    t-value="list(set([i['product'].public_categ_ids for i in bins[0]]))"
+                    t-value="list(set([i['product'].public_categ_ids for i in flat_list]))"
                 />
+
                 <tbody t-if="not groupByCategory">
                     <tr t-foreach="bins" t-as="tr_product">
                         <t t-foreach="tr_product" t-as="td_product">
@@ -219,29 +221,40 @@
                 </tbody>
                 <tbody t-else="groupByCategory">
                     <t
-                        t-set="flat_list"
-                        t-value="[item for sublist in bins for item in sublist]"
+                        t-set="categories_sorted"
+                        t-value="sorted(categories, key=lambda x: x.sequence)"
                     />
-
-                    <t t-foreach="categories" t-as="category">
-                        <tr t-if="len(categories) > 1">
-                            <td t-att-colspan="p">
+                    <t t-foreach="categories_sorted" t-as="category">
+                        <t
+                            t-set="filtered_list"
+                            t-value="[i for i in flat_list if (category in i['product'].public_categ_ids)]"
+                        />
+                        <tr t-if="len(categories) > 1 and len(filtered_list) != 0">
+                            <td t-att-colspan="ppr" class="category-header">
                                 <div class="o_ws_category_separator">
                                     <t t-out="category.name" />
                                 </div>
                             </td>
                         </tr>
-                        <t t-else="" />
-                        <t
-                            t-set="filtered_list"
-                            t-value="[i for i in flat_list if (category in i['product'].public_categ_ids)]"
-                        />
-                        <t
-                            t-set="rebinned_bins"
-                            t-value="[filtered_list[i:i+p] for i in range(0, len(filtered_list), p)]"
-                        />
 
-                        <tr t-foreach="rebinned_bins" t-as="tr_product">
+                        <t t-set="filtered_list_len" t-value="len(filtered_list)" />
+                        <t t-set="rebinned_bins" t-value="[]" />
+
+                        <t t-foreach="range(0, filtered_list_len, ppr)" t-as="i">
+                            <t t-set="current_bin" t-value="filtered_list[i:i + ppr]" />
+
+                            <t
+                                t-set="rebinned_bins"
+                                t-value="rebinned_bins + [current_bin]"
+                            />
+                        </t>
+
+                        <tr
+                            t-foreach="rebinned_bins"
+                            t-as="tr_product"
+                            class="product_row"
+                        >
+
                             <t t-foreach="tr_product" t-as="td_product">
                                 <t
                                     t-set="product_categories"
@@ -255,6 +268,7 @@
                                         t-att-data-ribbon-id="td_product['ribbon'].id"
                                         t-att-data-name="product_block_name"
                                     >
+
                                         <div
                                             t-attf-class="o_wsale_product_grid_wrapper position-relative h-100
                                 o_wsale_product_grid_wrapper_#{td_product['x']}_#{td_product['y']}"
@@ -332,12 +346,23 @@
         </xpath>
         <xpath expr="//div[@id='product_details']" position="inside">
             <div id="flavors-block" />
-            <div id="ingredients-block" />
-            <div id="learn-more-block-mobile" class="d-block d-lg-none" />
             <div class="d-flex flex-row align-items-center extra-icons">
                 <div id="vectors-block" />
                 <div id="adq-block" />
             </div>
+            <div id="ingredients-block" />
+            <div id="learn-more-block-mobile" class="d-block d-lg-none" />
+
+        </xpath>
+
+    </template>
+
+    <template
+        id="carousel_product_indicators"
+        inherit_id="website_sale.carousel_product_indicators"
+    >
+        <xpath expr="//ol" position="attributes">
+            <attribute name="style">justify-content: center;</attribute>
         </xpath>
     </template>
 
@@ -347,7 +372,8 @@
         inherit_id="website_sale.product"
     >
         <xpath expr="//div[@id='ingredients-block']" position="inside">
-            <div class="ingredients-block d-flex flex-column pb-5">
+            <!-- <div class="ingredients-block d-flex flex-column pb-5"> -->
+            <div class="ingredients-block d-flex flex-column">
                 <span class="subsection-header">Ingredients</span>
                 <span
                     class="text-muted ingredient-list"
@@ -383,11 +409,20 @@
                 t-value="'--highlight-color:' + product.product_page_text_color +';'"
             />
             <div id="vector_images" class="icon-block" t-att-style="style">
-                <t t-call="theme_aplus.fruit_vector" />
+                <div class="vector-column">
+                    <t t-call="theme_aplus.fruit_vector" />
+                    <span>Fruits</span>
+                </div>
                 <t t-call="theme_aplus.plus_vector" />
-                <t t-call="theme_aplus.water_vector_alt" />
+                <div class="vector-column">
+                    <t t-call="theme_aplus.water_vector_alt" />
+                    <span>Water</span>
+                </div>
                 <t t-call="theme_aplus.plus_vector" />
-                <t t-call="theme_aplus.maple_vector" />
+                <div class="vector-column">
+                    <t t-call="theme_aplus.maple_vector" />
+                    <span>Maple</span>
+                </div>
             </div>
         </xpath>
     </template>
@@ -397,8 +432,7 @@
         active="False"
         inherit_id="theme_aplus.product_tabbed_information"
         priority="99"
-    >
-    </template>
+    > </template>
 
     <template
         id="product_related_flavors"
@@ -464,7 +498,7 @@
             t-set="show_tvn"
             t-value="is_view_active('theme_aplus.product_nutrition_table')"
         />
-        <div class="container my-5 custom-tab-container">
+        <div class="container custom-tab-container">
             <div class="row">
                 <ul
                     class="nav nav-tabs justify-content-center"
@@ -482,8 +516,7 @@
                             role="y"
                             t-attf-aria-controls="{{prefix}}-tat"
                             aria-selected="false"
-                        >
-                            Tips and Tricks </button>
+                        > Tips and Tricks </button>
                     </li>
                     <li class="nav-item custom-tab-item" role="presentation">
                         <button
@@ -495,8 +528,7 @@
                             role="tab"
                             t-attf-aria-controls="{{prefix}}-dyk"
                             aria-selected="false"
-                        >
-                            Did you know? </button>
+                        > Did you know? </button>
                     </li>
                     <li
                         t-if="show_tvn"
@@ -512,8 +544,7 @@
                             role="tab"
                             t-attf-aria-controls="{{prefix}}-tvn"
                             aria-selected="false"
-                        >
-                            Tableau nutritionnel</button>
+                        > Tableau nutritionnel</button>
                     </li>
                 </ul>
 
