@@ -9,6 +9,7 @@
     "data": [
         "report/purchase_order_report_inherit.xml",
         "report/purchase_order_report.xml",
+        "security/groups.xml",
     ],
     "application": False,
     "installable": True,
