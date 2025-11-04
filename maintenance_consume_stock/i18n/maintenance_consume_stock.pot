@@ -95,3 +95,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:maintenance_consume_stock.field_maintenance_request__scrap_ids
 msgid "Scraps"
 msgstr ""
+
+#. module: maintenance_consume_stock
+#: model:ir.model.fields,field_description:maintenance_consume_stock.field_stock_scrap__product_vendor_code
+msgid "Vendor Code"
+msgstr ""

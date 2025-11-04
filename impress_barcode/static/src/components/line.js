@@ -17,9 +17,16 @@ patch(LineComponent.prototype, {
                 (acc, currentVal) => acc + currentVal,
                 0
             );
+
             return total_quantity;
         } else {
             return this.env.model.getTotalDemand(this.line.move_id);
         }
+    },
+
+    get totalSupply() {
+        const product = this.line.product_id.id;
+        const total = this.env.model.totalSupply(product);
+        return total;
     },
 });

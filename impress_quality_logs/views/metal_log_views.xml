@@ -79,7 +79,7 @@
                                 options="{'size':[0,90]}"
                                 string="Weekly Verification"
                             />
-                            <field name="weekly_signature_date" />
+                            <field name="weekly_signature_date" readonly="1" />
                         </group>
                         <group>
                             <field
@@ -88,8 +88,11 @@
                                 options="{'size':[0,90]}"
                                 string="Monthly Verification"
                             />
-                            <field name="monthly_signature_date" />
+                            <field name="monthly_signature_date" readonly="1" />
                         </group>
+                    </group>
+                    <group>
+                        <field name="quality_notes" />
                     </group>
                 </sheet>
             </form>
@@ -126,9 +129,9 @@
         <field name="domain">[]</field>
         <field name="context">{}</field>
         <field name="help" type="html">
-            <p class="oe_view_nocontent_create">
-                There is no examples click here to add new Metal Log.
-            </p>
+            <p
+                class="oe_view_nocontent_create"
+            > There is no examples click here to add new Metal Log. </p>
         </field>
     </record>
 

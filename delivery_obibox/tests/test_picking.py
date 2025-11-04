@@ -5,15 +5,12 @@ from unittest.mock import patch
 
 from freezegun import freeze_time
 
-from odoo.tests import tagged
-
 from .test_delivery_common import TestDeliveryCommon
 
 _logger = logging.getLogger(__name__)
 
 
-@tagged("standard", "impress")
-class TestObiboxRequest(TestDeliveryCommon):
+class TestPicking(TestDeliveryCommon):
     def setUp(self):
         super().setUp()
 

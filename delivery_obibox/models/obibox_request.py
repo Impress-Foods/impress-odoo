@@ -49,7 +49,7 @@ class ObiboxProvider:
         if not prod_environment:
             self.url = "https://integrationapi.sandbox.agmtsolution.com/api/"
         else:
-            self.url = "https://integrationapi.expedigo.com/api/"
+            self.url = "https://integrationapi.xpedigo.com/api/"
 
     def check_coverage(self, partner: Partner) -> bool:
         zip_code = partner.zip
@@ -132,7 +132,7 @@ class ObiboxProvider:
         try:
             self.debug_logger(
                 f"{access_url} {method} \n {payload}",
-                f"clickship_request_{endpoint}",
+                f"obibox_request_{endpoint}",
             )
             match method:
                 case "GET":
@@ -169,7 +169,7 @@ class ObiboxProvider:
 
             self.debug_logger(
                 f"{response.status_code}\n{response.text}",
-                f"clickship_response_{endpoint}",
+                f"obibox_response_{endpoint}",
             )
             return response_json
 
@@ -219,9 +219,9 @@ class ObiboxProvider:
         box = Box()
         package_type = package.package_type_id
 
-        feet: UoM = package.env["uom.uom"].search([("name", "=", "ft")])[0]
-        inches: UoM = package.env["uom.uom"].search([("name", "=", "in")])[0]
-        pounds: UoM = package.env["uom.uom"].search([("name", "=", "lb")])[0]
+        feet: UoM = package.env.ref("uom.product_uom_foot")
+        inches: UoM = package.env.ref("uom.product_uom_inch")
+        pounds: UoM = package.env.ref("uom.product_uom_lb")
 
         length_uom: UoM = package.env["uom.uom"].search(
             [("name", "=", package_type.length_uom_name)]
@@ -274,7 +274,6 @@ class ObiboxProvider:
         pickup_date = self._get_pickup_date(
             picking.date_done, picking.carrier_id.obibox_delivery_day
         )
-
         data = ShippingRequestMulti(
             order_ref_number=self._get_order_ref(picking),
             from_address1=from_address["address1"],

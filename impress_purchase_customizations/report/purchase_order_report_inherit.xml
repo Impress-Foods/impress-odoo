@@ -37,13 +37,17 @@
                 </td>
                 <td name="td_total_qty" class="text-end">
                     <t t-if="line.product_uom.uom_type == 'smaller'">
-                        <span t-out="line.product_qty * line.product_uom.factor" />
+                        <span
+                            t-out="'%0.2f'%(line.product_qty * line.product_uom.factor)"
+                        />
                     </t>
                     <t t-if="line.product_uom.uom_type == 'bigger'">
-                        <span t-out="line.product_qty * line.product_uom.factor_inv" />
+                        <span
+                            t-out="'%0.2f'%(line.product_qty * line.product_uom.factor_inv)"
+                        />
                     </t>
                     <t t-if="line.product_uom.uom_type == 'reference'">
-                        <span t-out="line.product_qty" />
+                        <span t-out="'%0.2f'%(line.product_qty)" />
                     </t>
                     <span t-out="line.product_id.uom_id.name" />
                 </td>

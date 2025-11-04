@@ -41,8 +41,7 @@
         else: \n
             rec[\'x_coding_log_id\'] = existing_log[0]
             '"
-        >
-        </field>
+        />
     </record>
 
     <!-- log: x_ws_xx_id - One2Many - x_coding_log_id -->
@@ -102,6 +101,19 @@
         />
         <field name="related">x_coding_log_id.shelf_life</field>
         <field name="ttype">integer</field>
+    </record>
+    <record id='x_worksheet_20250303_lot_id' model='ir.model.fields'>
+        <field name="name">x_lot_id</field>
+        <field name="field_description">Lot</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_coding_20250303').model_id.id"
+        />
+        <field name="related">x_coding_log_id.lot_id</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">stock.lot</field>
+        <field name="on_delete">cascade</field>
     </record>
 
     <record id='x_worksheet_20250303_unit_check' model='ir.model.fields'>

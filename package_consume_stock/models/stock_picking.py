@@ -34,6 +34,36 @@ class StockPicking(models.Model):
                     product = package_type.packaging_material_id or None
 
                     if product:
+                        existing_line = picking.move_ids.filtered_domain(
+                            [("product_id", "=", product.id)]
+                        )
+                        lot_id = False
+                        if existing_line and product.tracking in ["serial", "lot"]:
+                            line = existing_line[0]
+                            if line.move_line_ids:
+                                lot_id = line.move_line_ids[0].lot_id.id
+
+                        # Ensure there is a corresponding move
+                        # for the packaging material
+                        packaging_move = picking.move_ids.filtered_domain(
+                            [("product_id", "=", product.id)]
+                        )[:1]
+                        if not packaging_move:
+                            packaging_move = self.env["stock.move"].create(
+                                {
+                                    "picking_id": picking.id,
+                                    "name": f"Packaging: {product.display_name}",
+                                    "product_id": product.id,
+                                    "product_uom_qty": 0,
+                                    "product_uom": product.uom_id.id,
+                                    "location_id": source_location.id,
+                                    "location_dest_id": picking.location_dest_id.id,
+                                    "company_id": picking.company_id.id,
+                                }
+                            )
+                        else:
+                            packaging_move = packaging_move[0]
+
                         self.env["stock.move.line"].create(
                             {
                                 "picking_id": picking.id,
@@ -45,10 +75,9 @@ class StockPicking(models.Model):
                                 "product_id": product.id,
                                 "quantity": 1,
                                 "qty_done": 1,
+                                "lot_id": lot_id,
+                                "move_id": packaging_move.id,
                             }
                         )
-                        picking.move_ids.filtered_domain(
-                            [("product_id", "=", product.id)]
-                        )[0].product_uom_qty += 1
-
+                        packaging_move.product_uom_qty += 1
                         package.material_added = True

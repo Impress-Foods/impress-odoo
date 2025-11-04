@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-14 15:43+0000\n"
-"PO-Revision-Date: 2025-05-05 13:17+0000\n"
-"Last-Translator: Weblate Admin <admin@example.com>\n"
-"Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
+"PO-Revision-Date: 2025-08-21 19:58+0000\n"
+"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
 "impress-odoo/impress_maintenance/fr_CA/>\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.11\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: impress_maintenance
 #: model_terms:ir.actions.act_window,help:impress_maintenance.hr_equipment_request_action_cal_employee
@@ -39,7 +39,7 @@ msgstr "Couleur"
 #: model:ir.model.fields,field_description:impress_maintenance.field_hr_employee__color
 #: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__employee_color
 msgid "Color Index"
-msgstr "Couleur"
+msgstr "Index de couleur"
 
 #. module: impress_maintenance
 #: model_terms:ir.ui.view,arch_db:impress_maintenance.view_maintenance_equipment_form

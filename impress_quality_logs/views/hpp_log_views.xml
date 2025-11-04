@@ -93,7 +93,7 @@
                                 options="{'size':[0,90]}"
                                 string="Weekly Verification"
                             />
-                            <field name="weekly_signature_date" />
+                            <field name="weekly_signature_date" readonly="1" />
                         </group>
                         <group>
                             <field
@@ -102,8 +102,11 @@
                                 options="{'size':[0,90]}"
                                 string="Monthly Verification"
                             />
-                            <field name="monthly_signature_date" />
+                            <field name="monthly_signature_date" readonly="1" />
                         </group>
+                    </group>
+                    <group>
+                        <field name="quality_notes" />
                     </group>
                 </sheet>
             </form>

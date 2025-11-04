@@ -3,15 +3,12 @@ from datetime import datetime
 
 from freezegun import freeze_time
 
-from odoo.tests import tagged
-
 from ..models import schema
 from .test_delivery_common import TestDeliveryCommon
 
 _logger = logging.getLogger(__name__)
 
 
-@tagged("standard", "impress")
 class TestObiboxRequest(TestDeliveryCommon):
     def setUp(self):
         super().setUp()

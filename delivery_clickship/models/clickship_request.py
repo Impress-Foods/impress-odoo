@@ -8,6 +8,7 @@ from zoneinfo import ZoneInfo
 
 import requests
 from pydantic import BaseModel
+from pydantic import ValidationError as PydanticValidationError
 from werkzeug.urls import url_join
 
 from odoo import _
@@ -284,13 +285,16 @@ class ClickshipProvider:
         self, order: Picking | SaleOrder, contact: HrEmployeeBase | Partner
     ) -> Origin:
         company = order.company_id
-        origin = Origin(
-            name=company.name,
-            address=self._make_address(company),
-            phone_number=PhoneNumber(number=company.phone),
-            email_addresses=[company.email],
-            contact_name=contact.name,
-        )
+        try:
+            origin = Origin(
+                name=company.name,
+                address=self._make_address(company),
+                phone_number=PhoneNumber(number=company.phone),
+                email_addresses=[company.email],
+                contact_name=contact.name,
+            )
+        except PydanticValidationError as e:
+            raise ValidationError(_(f"Could not create origin \n {e}")) from e
         return origin
 
     def _make_current_date(self) -> Date:
@@ -313,16 +317,36 @@ class ClickshipProvider:
 
         note = self._get_delivery_note(order)
 
-        destination = Destination(
-            name=client.name,
-            address=self._make_address(client),
-            residential=True,
-            phone_number=None if not client.phone else PhoneNumber(number=client.phone),
-            email_addresses=None if not client.email else [client.email],
-            contact_name=client.name,
-            instructions=note,
-        )
-        return destination
+        parent_contact = client.parent_id if client.parent_id else None
+
+        if client.phone:
+            phone = client.phone
+        elif parent_contact and parent_contact.phone:
+            phone = parent_contact.phone
+        else:
+            raise ValidationError(_(f"Could not find phone number for {client.name}"))
+
+        if client.email:
+            email = client.email
+        elif parent_contact and parent_contact.email:
+            email = parent_contact.email
+        else:
+            raise ValidationError(_(f"Could not find email for {client.name}"))
+
+        try:
+            destination = Destination(
+                name=client.name,
+                address=self._make_address(client),
+                residential=True,
+                phone_number=PhoneNumber(number=phone),
+                email_addresses=[email],
+                contact_name=client.name,
+                instructions=note,
+            )
+        except PydanticValidationError as e:
+            raise ValidationError(_(f"Could not create destination \n {e}")) from e
+        else:
+            return destination
 
     def _make_address(self, partner: Partner | HrEmployeeBase | Company) -> Address:
         record: Partner | Company | None = None
@@ -336,14 +360,19 @@ class ClickshipProvider:
         if not record:
             raise ValidationError(_(f"Could not make address for {partner}"))
 
-        return Address(
-            address_line_1=record.street,
-            address_line_2=record.street2 or None,
-            city=record.city,
-            region=record.state_id.code,
-            country=record.country_id.code,
-            postal_code=record.zip,
-        )
+        try:
+            address = Address(
+                address_line_1=record.street,
+                address_line_2=record.street2 or None,
+                city=record.city,
+                region=record.state_id.code,
+                country=record.country_id.code,
+                postal_code=record.zip,
+            )
+        except PydanticValidationError as e:
+            raise ValidationError(_(f"Could not make address. \n {e}")) from e
+        else:
+            return address
 
     def _make_shipping_details(
         self, order: Picking | SaleOrder, contact: HrEmployeeBase | Partner
@@ -361,15 +390,18 @@ class ClickshipProvider:
 
         if not packages:
             packages = [self._make_package(None)]
-
-        details = ShippingDetails(
-            origin=origin,
-            destination=destination,
-            expected_ship_date=current_date,
-            packaging_type=PackageTypeEnum.package.value,
-            packaging_properties=PackagePackagingProperties(packages=packages),
-        )
-        return details
+        try:
+            details = ShippingDetails(
+                origin=origin,
+                destination=destination,
+                expected_ship_date=current_date,
+                packaging_type=PackageTypeEnum.package.value,
+                packaging_properties=PackagePackagingProperties(packages=packages),
+            )
+        except PydanticValidationError as e:
+            raise ValidationError(_(f"Could not make shipping details. \n {e}")) from e
+        else:
+            return details
 
     def _make_package(self, package: QuantPackage | None) -> Package:
         if not package:

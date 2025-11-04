@@ -1,0 +1,95 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* impress_billback
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr_CA\n"
+
+#. module: impress_billback
+#: model_terms:ir.ui.view,arch_db:impress_billback.view_account_move_form_inherit_billback
+#: model_terms:ir.ui.view,arch_db:impress_billback.view_purchase_order_form
+msgid "Billback"
+msgstr ""
+
+#. module: impress_billback
+#. odoo-python
+#: code:addons/impress_billback/models/account_move.py:0
+#: model:ir.model.fields,field_description:impress_billback.field_account_bank_statement_line__billback_bill_id
+#: model:ir.model.fields,field_description:impress_billback.field_account_move__billback_bill_id
+#: model:ir.model.fields,field_description:impress_billback.field_account_payment__billback_bill_id
+#: model_terms:ir.ui.view,arch_db:impress_billback.view_account_move_form_inherit_billback
+#, python-format
+msgid "Billback Bill"
+msgstr ""
+
+#. module: impress_billback
+#. odoo-python
+#: code:addons/impress_billback/models/account_move.py:0
+#: model:ir.model.fields,field_description:impress_billback.field_account_bank_statement_line__billback_invoice_id
+#: model:ir.model.fields,field_description:impress_billback.field_account_move__billback_invoice_id
+#: model:ir.model.fields,field_description:impress_billback.field_account_payment__billback_invoice_id
+#: model:ir.model.fields,field_description:impress_billback.field_purchase_order__billback_invoice_ids
+#: model_terms:ir.ui.view,arch_db:impress_billback.view_account_move_form_inherit_billback
+#, python-format
+msgid "Billback Invoice"
+msgstr ""
+
+#. module: impress_billback
+#: model:ir.model.fields,field_description:impress_billback.field_purchase_order__billback_invoice_count
+msgid "Billback Invoice Count"
+msgstr ""
+
+#. module: impress_billback
+#: model:ir.model.fields,field_description:impress_billback.field_account_bank_statement_line__billback_partner_id
+#: model:ir.model.fields,field_description:impress_billback.field_account_move__billback_partner_id
+#: model:ir.model.fields,field_description:impress_billback.field_account_payment__billback_partner_id
+#: model_terms:ir.ui.view,arch_db:impress_billback.view_account_move_form_inherit_billback
+msgid "Billback Partner"
+msgstr ""
+
+#. module: impress_billback
+#. odoo-python
+#: code:addons/impress_billback/models/account_move.py:0
+#, python-format
+msgid "Billback invoice already created"
+msgstr ""
+
+#. module: impress_billback
+#. odoo-python
+#: code:addons/impress_billback/models/account_move.py:0
+#, python-format
+msgid "Cannot billback move of type %s"
+msgstr ""
+
+#. module: impress_billback
+#: model:ir.model,name:impress_billback.model_account_move
+msgid "Journal Entry"
+msgstr ""
+
+#. module: impress_billback
+#. odoo-python
+#: code:addons/impress_billback/models/account_move.py:0
+#, python-format
+msgid "Please select Billback Partner"
+msgstr ""
+
+#. module: impress_billback
+#: model:ir.model,name:impress_billback.model_purchase_order
+msgid "Purchase Order"
+msgstr ""
+
+#. module: impress_billback
+#. odoo-python
+#: code:addons/impress_billback/models/account_move.py:0
+#, python-format
+msgid "You can not create billback for a draft or cancelled invoice."
+msgstr ""

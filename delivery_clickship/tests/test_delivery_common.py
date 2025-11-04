@@ -132,14 +132,16 @@ class TestDeliveryCommon(common.TransactionCase):
             }
         )
 
-    def make_picking(self, n_packages=1):
+    def make_picking(self, n_packages=1, contact=None):
         """Create a test picking with packages"""
+        if not contact:
+            contact = self.partner
         picking = self.env["stock.picking"].create(
             {
                 "location_id": self.location.id,
                 "location_dest_id": self.partner_location.id,
                 "picking_type_id": self.out.id,
-                "partner_id": self.partner.id,
+                "partner_id": contact.id,
                 "carrier_id": self.clickship_method.id,
             }
         )
