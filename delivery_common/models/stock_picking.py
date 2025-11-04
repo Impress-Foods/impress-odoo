@@ -25,7 +25,14 @@ class StockPicking(models.Model):
             note = ""
             if picking.sale_id:
                 if picking.sale_id.note:
-                    note = text_from_html(picking.sale_id.note)
+                    text = text_from_html(picking.sale_id.note)
+                    # prevent default T&C from showing up
+                    if picking.env.company.terms_type and text.find("http"):
+                        pass
+                    elif text == picking.env.company.invoice_terms:
+                        pass
+                    else:
+                        note = text
                 elif picking.sale_id.delivery_message:
                     note = picking.sale_id.delivery_message
             picking.delivery_instructions = note

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="s_wave_transition_snippet" name="Wave Transition">
+        <section
+            class="wave-transition-container"
+            data-name="Wave Transition"
+            data-snippet="wave_transition"
+        >
+
+            <div class="wave-transition">
+                <svg
+                    class="wave-transition-svg"
+                    viewBox="0 0 740 29"
+                    preserveAspectRatio="none"
+                >
+                    <path
+                        d="M440.2 4.9133C446.4 5.6133 452.2 6.3133 457.8 7.1133 469.4 8.6133 480.8 10.1133 494.6 11.0133L495.4 11.1133C500.4 11.4133 504.8 11.7133 508.6 12.0133 513 12.3133 517.4 12.5133 521.2 12.6133 526.2 12.7133 530.6 12.8133 534.6 12.8133 538.6 12.8133 542.8 12.7133 548 12.6133 551.8 12.5133 556.2 12.3133 560.6 12.0133 564.6 11.8133 568.8 11.5133 573.8 11.1133L574.6 11.0133C588.2 10.0133 599.8 8.6133 611.4 7.1133 621 5.9133 630.8 4.6133 642 3.6133 644.4 3.4133 646.6 3.2133 648.8 3.0133 656.6 2.3133 662.4 1.7133 671.6 1.4133 685.6.8133 693.4.9133 707.4 1.4133 718 1.8133 724 2.2133 734.6 3.0133 742.2 3.6133 748.2 4.3133 754 5.1133L754 30.0133H2L2 5.2133C7.8 4.4133 14.2 3.7133 21.8 3.1133 32.4 2.2133 38.4 1.8133 49 1.5133 63 1.0133 71 .9133 84.8 1.5133 94 1.9133 99.8 2.4133 107.6 3.1133L107.6 3.1133C109.6 3.3133 111.8 3.5133 114.4 3.7133 125.6 4.7133 135.4 6.0133 145 7.2133 156.6 8.7133 168 10.2133 181.8 11.1133L182.6 11.2133C187.6 11.5133 192 11.8133 195.8 12.1133 200.2 12.4133 204.6 12.6133 208.4 12.7133 213.4 12.8133 217.8 12.9133 221.8 12.9133 225.8 12.9133 230 12.8133 235.2 12.7133 239 12.6133 243.4 12.4133 247.8 12.1133 251.8 11.9133 256 11.6133 261 11.2133L261.8 11.1133C275.4 10.1133 287 8.7133 298.6 7.2133 304.4 6.5133 310.2 5.7133 316.2 5.0133 321.6 4.3133 327.4 3.6133 334.6 3.1133 338.8 2.8133 342.2 2.5133 345.6 2.3133 349.6 2.0133 353.6 1.7133 358.8 1.5133 366.4 1.2133 372.2 1.1133 378.2 1.1133 384.2 1.1133 390 1.2133 397.6 1.5133 402.8 1.7133 406.8 2.0133 410.8 2.3133 414.2 2.5133 417.6 2.8133 421.8 3.1133 428.8 3.7133 434.6 4.3133 440.2 4.9133Z"
+                    />
+
+                </svg>
+            </div>
+
+        </section>
+    </template>
+
+    <template
+        id="s_wave_transition_snippet_options"
+        inherit_id="website.snippet_options"
+        name="A+ - Wave Transition Options"
+    >
+        <xpath expr="." position="inside">
+            <div data-selector=".wave-transition-container">
+                <we-colorpicker
+                    string="Wave Color"
+                    data-name="wave_transition_colorpicking"
+                    data-select-style="true"
+                    data-css-property="fill"
+                    data-target="svg"
+                />
+                <we-colorpicker
+                    string="Background Color"
+                    data-name="wave_transition_colorpicking_bg"
+                    data-select-style="true"
+                    data-css-property="background-color"
+                    data-target=".wave-transition"
+                />
+            </div>
+
+
+        </xpath>
+    </template>
+
+</odoo>

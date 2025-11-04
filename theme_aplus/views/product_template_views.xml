@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- View product.template form -->
+    <record id="view_product_template_form" model="ir.ui.view">
+        <field name="name">view.product.template.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="priority">24</field>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales']" position="after">
+                <page string="Website" name="website">
+                    <group>
+                        <group string="Colors">
+                            <field name="product_page_text_color" widget="color" />
+                            <field name="text_color" widget="color" />
+                            <field name="card_primary_color" widget="color" />
+                            <field name="card_secondary_color" widget="color" />
+                            <field name="card_text_color" widget="color" />
+                            <field name="hero_text_color" widget="color" />
+                            <field name="hero_background_color" widget="color" />
+
+                            <field name="carousel_order" />
+                        </group>
+                        <group string="images">
+                            <field name="hero_image" />
+                            <field name="hero_sticker" />
+                            <field name="card_image" />
+                            <field name="card_background_image" />
+                            <field name="suggestion_image" />
+                            <field name="minimalist_card_image" />
+                        </group>
+                    </group>
+                    <group string="Details">
+                        <group>
+                            <field name="ingredients" />
+                            <field name="did_you_know" />
+                            <field name="tips_and_tricks" />
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_variant_easy_edit_view" model="ir.ui.view">
+        <field name="name">product.variant.easy.edit.view</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group string="nutrition facts">
+                    <field name="nutrition_facts_size" />
+                    <field name="nutrition_entry_ids">
+                        <tree>
+                            <field name="sequence" widget="handle" />
+                            <field name="name" />
+                            <field name="value" />
+                        </tree>
+                    </field>
+                </group>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_product_normal_form_View" model="ir.ui.view">
+        <field name="name">product.product.normal.form.view</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='website']/group[2]/group" position="after">
+                <group string="nutrition facts">
+                    <field name="nutrition_facts_size" />
+                    <field name="nutrition_entry_ids">
+                        <tree>
+                            <field name="sequence" widget="handle" />
+                            <field name="name" />
+                            <field name="value" />
+                        </tree>
+                    </field>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

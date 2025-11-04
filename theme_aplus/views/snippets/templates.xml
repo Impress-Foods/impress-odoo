@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="header_cart_link"
+        inherit_id="website_sale.header_cart_link"
+        name="HeaderCart Link"
+        priority="99"
+    >
+        <xpath expr="//i[1]" position="replace">
+            <div class="shake-on-hover">
+                <img
+                    src="/theme_aplus/static/src/images/APLUS_Shot_Harvest.png"
+                    width="60"
+                    height="60"
+                    class="reversed"
+                />
+            </div>
+
+        </xpath>
+    </template>
+
+    <template
+        id="template_header_default"
+        inherit_id="website.layout"
+        name="Template Header Default"
+        priority="99"
+    >
+        <xpath
+            expr="//t[@t-call='portal.placeholder_user_sign_in']/t"
+            position="replace"
+        >
+            <t t-set="_link_class" t-value="'btn btn-outline-primary'" />
+        </xpath>
+        <xpath expr="//t[@t-call='portal.user_dropdown']/t[2]" position="attributes">
+            <attribute name="t-value">'dropdown-aplus'</attribute>
+        </xpath>
+    </template>
+
+
+    <template
+        id="alternative_products"
+        inherit_id="website_sale.alternative_products"
+        active="True"
+    >
+        <xpath
+            expr="//div[@id='oe_structure_website_sale_recommended_products']/section[1]"
+            position="attributes"
+        >
+            <attribute
+                name="data-template-key"
+            >theme_aplus.dynamic_filter_template_product_product_alternative_templates</attribute>
+        </xpath>
+    </template>
+</odoo>

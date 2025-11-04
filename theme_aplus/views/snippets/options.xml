@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="snippets" inherit_id="website.snippets" name="A+ - Snippets">
+        <xpath expr="//div[@id='snippet_structure']/div[2]" position="inside">
+
+            <t t-snippet="theme_aplus.s_wave_transition_snippet">
+                <keywords>Transition</keywords>
+            </t>
+
+            <t t-snippet="theme_aplus.s_scrolling_text_banner">
+                <keywords>Banner</keywords>
+            </t>
+            <t t-snippet="theme_aplus.s_image_marquee">
+
+            </t>
+        </xpath>
+
+        <xpath expr="//div[@id='snippet_effect']/div[2]" position="inside">
+            <t
+                t-snippet="theme_aplus.s_dynamic_snippet_product_templates"
+                string="Product Templates"
+            >
+                <keywords>Dynamic</keywords>
+            </t>
+            <t t-snippet="theme_aplus.s_window_carousel" string="Window Carousel">
+                <keywords>Dynamic</keywords>
+            </t>
+        </xpath>
+    </template>
+
+    <template
+        id="snippet_options_background_options"
+        inherit_id="website.snippet_options_background_options"
+        name="Shapes"
+    >
+        <xpath
+            expr="//*[hasclass('o_scroll_bgshapes_creative')]//we-select-page[1]"
+            position="inside"
+        >
+            <we-button
+                data-shape="illustration/aplus/01"
+                data-select-label="aplus wave 1"
+                data-animated="true"
+            />
+            <we-button
+                data-shape="illustration/aplus/02"
+                data-select-label="aplus wave 2"
+                data-animated="true"
+            />
+            <we-button
+                data-shape="illustration/aplus/03"
+                data-select-label="aplus wave 3"
+                data-animated="true"
+            />
+        </xpath>
+    </template>
+
+
+</odoo>

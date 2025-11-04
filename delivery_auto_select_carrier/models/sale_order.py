@@ -16,7 +16,7 @@ class SaleOrder(models.Model):
         "delivery.carrier", compute="_compute_auto_selected_carrier_id", store=True
     )
 
-    @api.depends("partner_id")
+    @api.depends("partner_id", "carrier_id")
     def _compute_auto_selected_carrier_id(self) -> None:
         for rec in self:
             if not rec._compute_propagate_auto_carrier_id():
@@ -63,6 +63,12 @@ class SaleOrder(models.Model):
         # Computes if we should auto select a carrier for the
         # Sale Order based on the domain in the settings
 
+        # Short circuit if the partner is public user
+        # Happens when user is in eCommerce checkout and
+        # not logged in
+        if self.partner_id.id == self.env.ref("base.public_partner").id:
+            return False
+
         domain = (
             self.env["ir.config_parameter"]
             .sudo()
@@ -81,6 +87,7 @@ class SaleOrder(models.Model):
         res = super()._action_confirm()
         for order in self:
             if order._compute_propagate_auto_carrier_id():
+                order._compute_auto_selected_carrier_id()
                 picking = self.picking_ids.filtered_domain(
                     [("picking_type_code", "=", "outgoing")]
                 )

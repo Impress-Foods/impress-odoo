@@ -96,3 +96,5 @@ mypy.ini
 /.extra_modules
 .claude
 CLAUDE.md
+.extra_modules/
+impress-odoo.code-workspace

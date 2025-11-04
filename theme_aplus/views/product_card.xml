@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+
+    <template id="wavy_product_card" name="Wave Product Card">
+        <t
+            t-set="description_activated"
+            t-value="is_view_active('website_sale.products_description')"
+        />
+
+        <!-- Background Image -->
+
+        <img
+            t-attf-src="/web/image/product.template/{{product.id}}/card_background_image"
+            class="d-flex h-100 w-100 position-absolute"
+        />
+        <!-- Color Block with Wave -->
+        <div
+            class="color-block"
+            t-attf-style="background-color: {{p_color}}; box-shadow: 0px -2px 2px 1px {{p_color}};"
+        >
+            <svg
+                class="wave"
+                t-attf-style="fill: {{p_color}};"
+                viewBox="0 0 740 200"
+                preserveAspectRatio="none"
+            >
+                <path
+                    d="M440.2 4.9133C446.4 5.6133 452.2 6.3133 457.8 7.1133 469.4 8.6133 480.8 10.1133 494.6 11.0133L495.4 11.1133C500.4 11.4133 504.8 11.7133 508.6 12.0133 513 12.3133 517.4 12.5133 521.2 12.6133 526.2 12.7133 530.6 12.8133 534.6 12.8133 538.6 12.8133 542.8 12.7133 548 12.6133 551.8 12.5133 556.2 12.3133 560.6 12.0133 564.6 11.8133 568.8 11.5133 573.8 11.1133L574.6 11.0133C588.2 10.0133 599.8 8.6133 611.4 7.1133 621 5.9133 630.8 4.6133 642 3.6133 644.4 3.4133 646.6 3.2133 648.8 3.0133 656.6 2.3133 662.4 1.7133 671.6 1.4133 685.6.8133 693.4.9133 707.4 1.4133 718 1.8133 724 2.2133 734.6 3.0133 742.2 3.6133 748.2 4.3133 754 5.1133L754 30.0133H2L2 5.2133C7.8 4.4133 14.2 3.7133 21.8 3.1133 32.4 2.2133 38.4 1.8133 49 1.5133 63 1.0133 71 .9133 84.8 1.5133 94 1.9133 99.8 2.4133 107.6 3.1133L107.6 3.1133C109.6 3.3133 111.8 3.5133 114.4 3.7133 125.6 4.7133 135.4 6.0133 145 7.2133 156.6 8.7133 168 10.2133 181.8 11.1133L182.6 11.2133C187.6 11.5133 192 11.8133 195.8 12.1133 200.2 12.4133 204.6 12.6133 208.4 12.7133 213.4 12.8133 217.8 12.9133 221.8 12.9133 225.8 12.9133 230 12.8133 235.2 12.7133 239 12.6133 243.4 12.4133 247.8 12.1133 251.8 11.9133 256 11.6133 261 11.2133L261.8 11.1133C275.4 10.1133 287 8.7133 298.6 7.2133 304.4 6.5133 310.2 5.7133 316.2 5.0133 321.6 4.3133 327.4 3.6133 334.6 3.1133 338.8 2.8133 342.2 2.5133 345.6 2.3133 349.6 2.0133 353.6 1.7133 358.8 1.5133 366.4 1.2133 372.2 1.1133 378.2 1.1133 384.2 1.1133 390 1.2133 397.6 1.5133 402.8 1.7133 406.8 2.0133 410.8 2.3133 414.2 2.5133 417.6 2.8133 421.8 3.1133 428.8 3.7133 434.6 4.3133 440.2 4.9133Z"
+                />
+            </svg>
+        </div>
+
+        <!-- Product Image Container -->
+        <div class="ap_product_image position-relative flex-grow-0 overflow-hidden">
+            <input
+                type="hidden"
+                name="csrf_token"
+                t-att-value="request.csrf_token()"
+                t-nocache="The csrf token must always be up to date."
+            />
+            <a
+                t-att-href="product_href"
+                class="ap_product_image_link d-block position-relative"
+                itemprop="url"
+                contenteditable="false"
+                aria-label="View product details"
+            >
+                <img
+                    loading="lazy"
+                    t-attf-src="/web/image/product.template/{{product.id}}/card_image"
+                    t-attf-alt="product_name"
+                />
+
+            </a>
+        </div>
+
+        <!-- Product info + buttons -->
+        <div
+            class="ap_product_text_container position-relative justify-content-center d-flex flex-column flex-grow-1 flex-shrink-1"
+        >
+            <div class="o_wsale_product_information_text flex-grow-1">
+                <h6 class="o_wsale_products_item_title mb-2">
+                    <div
+                        class="ap_product_name"
+                        t-attf-style="color: {{t_color}};"
+                        itemprop="name"
+                        t-att-content="product_name"
+                    >
+                        <t t-out="product.name" />
+                    </div>
+
+                    <a
+                        t-if="not product.website_published"
+                        role="button"
+                        t-att-href="product.website_url"
+                        class="btn btn-sm btn-danger"
+                        title="This product is unpublished."
+                    >
+                        Unpublished
+                    </a>
+
+                </h6>
+
+                <!-- Product Description with Fixed Height -->
+                <div
+                    t-if="description_activated"
+                    class="ap_product_short_description_wrapper"
+                >
+                    <p
+                        class="ap_product_short_description small mb-1"
+                        t-attf-style="color: {{t_color}};"
+                        t-field="product.description_sale"
+                        t-options="{'max_length': 60}"
+                    />
+                </div>
+
+            </div>
+            <div
+                class="o_wsale_product_sub justify-content-between align-items-end gap-2
+                                flex-wrap pt-1 pb-1 col-xs-6"
+            >
+
+                <div class="o_wsale_product_btn" />
+
+            </div>
+
+        </div>
+
+        <div
+            class="ap_buy_button"
+            t-attf-style="background-color: {{s_color}}; color: {{t_color}};"
+            role="button"
+            aria-label="Buy Now"
+            tabindex="0"
+        >
+            <span t-attf-style="color: {{t_color}};">
+                Buy Now
+            </span>
+        </div>
+    </template>
+
+    <template id="products_item" name="Product Item">
+        <form
+            action="/shop/cart/update"
+            method="post"
+            class="ap_product_cart h-100 d-flex"
+            t-att-data-publish="product.website_published and 'on' or 'off'"
+            itemscope="itemscope"
+            itemtype="http://schema.org/Product"
+            t-attf-style="background-color: {{product.card_secondary_color}};"
+            aria-label="Product card for {{product.name}}"
+            tabindex="0"
+        >
+            <t
+                t-set="product_href"
+                t-value="keep(product.website_url, page=(pager['page']['num'] if pager['page']['num']>1 else None))"
+            />
+            <t
+                t-set="image_type"
+                t-value="product._get_suitable_image_size(ppr, td_product['x'], td_product['y'])"
+            />
+
+            <t t-set="template_price_vals" t-value="get_product_prices(product)" />
+
+            <t
+                t-set="image_holder"
+                t-value="product._get_image_holder() if product._name == 'product.template' else
+    product.product_tmpl_id._get_image_holder()"
+            />
+
+            <t t-call="theme_aplus.wavy_product_card">
+                <t t-set="p_color" t-value="product.card_primary_color" />
+                <t t-set="s_color" t-value="product.card_secondary_color" />
+                <t t-set="t_color" t-value="product.card_text_color" />
+                <t t-set="product" t-value="product" />
+
+            </t>
+            <div>
+                <t t-set="bg_color" t-value="td_product['ribbon']['bg_color'] or ''" />
+                <t t-set="text_color" t-value="td_product['ribbon']['text_color']" />
+                <t t-set="bg_class" t-value="td_product['ribbon']['html_class']" />
+                <span
+                    t-attf-class="o_ribbon o_not_editable #{bg_class}"
+                    t-attf-style="#{text_color and ('color: %s; ' % text_color)}#{bg_color and 'background-color:' + bg_color}"
+                    t-out="td_product['ribbon']['html'] or ''"
+                />
+            </div>
+
+        </form>
+
+    </template>
+</odoo>

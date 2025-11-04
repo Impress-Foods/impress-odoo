@@ -1,0 +1,120 @@
+@use "./aplus_colors";
+
+/* Define key variables for easier color changes */
+$tab-inactive-bg: $aplus-white;
+$tab-active-bg: var(--highlight-color, var(--o-color-1));
+$content-bg: $aplus-white;
+$border-color: $aplus-white;
+$promo-color: #e25822;
+
+.custom-tab-container {
+    // Styles for the main container
+    background-color: $tab-inactive-bg;
+    padding: 20px;
+    border-radius: 8px;
+    .row {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .nav {
+        padding: 0px;
+    }
+
+    .nav-tabs {
+        align-items: end;
+        min-height: 3rem;
+        justify-items: center;
+        justify-content: center;
+        gap: 0.25rem;
+
+        .nav-item {
+            .nav-link {
+                // Styles for inactive tab buttons
+                background-color: $tab-inactive-bg;
+                color: #5a5a5a;
+                border: 1px solid $tab-active-bg;
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+                //margin-right: 5px;
+                //padding: 8px 15px;
+                font-size: 14px;
+                font-weight: bold;
+                text-transform: uppercase;
+                transition: all 0.2s ease-in-out;
+                height: 2.5rem;
+
+                &:not(.active):hover {
+                    // Hover effect for inactive tabs
+                    background-color: lighten($tab-inactive-bg, 2%);
+                    color: #333;
+                }
+
+                &.active {
+                    // Styles for the ACTIVE tab button
+                    background-color: $tab-active-bg;
+                    color: white;
+                    border-color: $tab-active-bg;
+                    height: 3rem;
+                }
+            }
+
+            @media (max-width: 1240px) {
+                .nav-link {
+                    font-size: 10px;
+                    padding: 0.12rem 0.5rem;
+                }
+            }
+
+            @media (max-width: 982px) {
+                .nav-link {
+                    font-size: 14px;
+                    padding: 0.5rem 1rem;
+                }
+            }
+            @media (max-width: 769px) {
+                .nav-link {
+                    font-size: 10px;
+                    padding: 0.12rem 0.5rem;
+                }
+            }
+            @media (max-width: 450px) {
+                .nav-link {
+                    font-size: 10px;
+                    padding: 0.6rem 0.25rem;
+                }
+            }
+            @media (max-width: 400px) {
+                .nav-link {
+                    font-size: 7px;
+                    padding: 0.6rem 0.25rem;
+                }
+            }
+        }
+    }
+
+    .tab-content {
+        // Styles for the content pane
+        background-color: $content-bg;
+        border: 1px solid $tab-active-bg; // Dark green border
+        border-radius: 8px;
+        margin-top: -1px; // Overlap with active tab border
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+
+            &.promo {
+                // Promo text styling
+                color: $promo-color;
+                font-weight: bold;
+                margin-bottom: 1em;
+            }
+
+            strong {
+                // Strong/bold text in content
+                color: $tab-active-bg;
+            }
+        }
+    }
+}
