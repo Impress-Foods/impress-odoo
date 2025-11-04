@@ -428,13 +428,6 @@
     </template>
 
     <template
-        id="product_nutrition_table"
-        active="False"
-        inherit_id="theme_aplus.product_tabbed_information"
-        priority="99"
-    > </template>
-
-    <template
         id="product_related_flavors"
         active="False"
         inherit_id="website_sale.product"
@@ -493,7 +486,6 @@
     </template>
 
     <template id="tabbed_container">
-
         <t
             t-set="show_tvn"
             t-value="is_view_active('theme_aplus.product_nutrition_table')"
@@ -581,6 +573,14 @@
             </div>
         </div>
     </template>
+
+    <template
+        id="product_nutrition_table"
+        active="False"
+        inherit_id="theme_aplus.product_tabbed_information"
+        priority="99"
+    > </template>
+
     <template id="tvn">
         <div class="d-flex flex-column align-items-center">
             <div class="nutrition-table justify-center w-100" id="nutrition_table">

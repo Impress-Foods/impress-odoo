@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<?xml-model href="../../import_xml.rng" type="application/xml"?>
 <odoo>
+
+    <record id="dynamic_snippet_newest_product_templates_filter" model="ir.filters">
+        <field name="name">Product Templates</field>
+        <field name="model_id">product.template</field>
+        <field name="user_id" eval="False" />
+        <field name="domain">[('website_published', '=', True)]</field>
+        <field
+            name="context"
+        >{'display_default_code': False, 'add2cart_rerender': False}</field>
+        <field name="sort">["carousel_order asc"]</field>
+        <field name="action_id" ref="website.action_website" />
+    </record>
 
     <record id="dynamic_filter_window_carousel_filter" model="website.snippet.filter">
         <field
@@ -41,17 +54,7 @@
     </record>
 
 
-    <record id="dynamic_snippet_newest_product_templates_filter" model="ir.filters">
-        <field name="name">Product Templates</field>
-        <field name="model_id">product.template</field>
-        <field name="user_id" eval="False" />
-        <field name="domain">[('website_published', '=', True)]</field>
-        <field
-            name="context"
-        >{'display_default_code': False, 'add2cart_rerender': False}</field>
-        <field name="sort">["carousel_order asc"]</field>
-        <field name="action_id" ref="website.action_website" />
-    </record>
+
 
 
 </odoo>
