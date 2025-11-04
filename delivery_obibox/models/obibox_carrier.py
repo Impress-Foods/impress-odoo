@@ -25,7 +25,7 @@ class ObiboxCarrier(models.Model):
         },
     )
 
-    obibox_api_key = fields.Char(string="Obibox Key", groups="base.group_system")
+    obibox_api_key = fields.Char(string="Obibox Key")
     obibox_username = fields.Char()
     obibox_label_format = fields.Selection(
         selection=[
@@ -51,14 +51,20 @@ class ObiboxCarrier(models.Model):
 
     def obibox_rate_shipment(self, order: Picking | SaleOrder) -> dict:
         sr = ObiboxProvider(
-            self.log_xml, username=self.obibox_username, token=self.obibox_api_key
+            self.log_xml,
+            prod_environment=self.prod_environment,
+            username=self.obibox_username,
+            token=self.obibox_api_key,
         )
         res = sr.get_rate(order)
         return res
 
     def obibox_send_shipping(self, pickings: Picking) -> list:
         sr = ObiboxProvider(
-            self.log_xml, username=self.obibox_username, token=self.obibox_api_key
+            self.log_xml,
+            prod_environment=self.prod_environment,
+            username=self.obibox_username,
+            token=self.obibox_api_key,
         )
         res: list[dict[str, Any]] = []
 
@@ -90,11 +96,15 @@ class ObiboxCarrier(models.Model):
 
     def obibox_cancel_shipment(self, pickings: Picking) -> None:
         sr = ObiboxProvider(
-            self.log_xml, username=self.obibox_username, token=self.obibox_api_key
+            self.log_xml,
+            prod_environment=self.prod_environment,
+            username=self.obibox_username,
+            token=self.obibox_api_key,
         )
         for picking in pickings:
             sr.cancel_shipment(picking)
             picking.shipping_label_attachment_id.unlink()
+            picking.obibox_tracking_numbers = ""
 
     def _obibox_get_default_custom_package_code(self) -> str:
         return ""
@@ -104,7 +114,10 @@ class ObiboxCarrier(models.Model):
 
         if self.delivery_type == "obibox":
             sr = ObiboxProvider(
-                self.log_xml, username=self.obibox_username, token=self.obibox_api_key
+                self.log_xml,
+                prod_environment=self.prod_environment,
+                username=self.obibox_username,
+                token=self.obibox_api_key,
             )
             res = sr.check_coverage(partner)
         return res

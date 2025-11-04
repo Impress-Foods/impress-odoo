@@ -799,6 +799,16 @@ msgid "Quality Check"
 msgstr ""
 
 #. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__quality_notes
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__quality_notes
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_mixin__quality_notes
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__quality_notes
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__quality_notes
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__quality_notes
+msgid "Quality Notes"
+msgstr ""
+
+#. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__qty_cases
 msgid "Quantity Cases"
 msgstr ""

@@ -1,0 +1,775 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-model href="../../import_xml.rng" type="application/xml"?>
+<odoo>
+  <record id="email_template_delivery_impress" model="mail.template">
+    <field name="name">Impress: Delivery confirmation</field>
+    <field name="model_id" ref="stock.model_stock_picking" />
+    <field name="lang">{{ object.partner_id.lang }}</field>
+    <field name="auto_delete" eval="True" />
+    <field name="subject">Your order from {{ object.company_id.name }}</field>
+    <field name="email_to">{{ object.partner_id.email }}</field>
+    <field
+            name="scheduled_date"
+        >${(datetime.datetime.now() + relativedelta(minutes=10)).strftime('%Y-%m-%d %H:%M')}</field>
+    <field name="body_html" type="html">
+      <t t-set="textColor" t-value="'#26837b'" />
+      <t t-set="headingColor" t-value="'#ffffff'" />
+      <t t-set="buttonColor" t-value="'#ffffff'" />
+      <t t-set="bgColor" t-value="'#96d9ca'" />
+      <div
+                t-attf-style="font-family: Arial, sans-serif; font-size: 14px; color: #333; background-color: #f9f9f9; padding: 20px;"
+            >
+        <table
+                    width="100%"
+                    cellpadding="0"
+                    cellspacing="0"
+                    border="0"
+                    style="max-width: 600px; margin: 0 auto; background-color: #96d9ca; border-radius: 8px; border: 1px solid #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
+                >
+          <tbody>
+            <tr>
+              <td align="center" style="padding: 20px 0;">
+                <img
+                                    src="/impress_emails/static/img/impress_logo_gradient.png"
+                                    style="width:150px;"
+                                    alt="${object.company_id.name} Logo"
+                                />
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 20px 30px;">
+                <h1
+                                    t-attf-style="color: {{headingColor}}; font-size: 24px; margin: 0 0 10px;"
+                                >Your order is on its way!</h1>
+                <p t-attf-style="color: {{textColor}};"> Great news! Your order <strong>
+                    <t t-out="object.sale_id.name or 'N/A'" />
+                  </strong> has been shipped and is now heading your way. You can track its progress using the button below. </p>
+                <t t-if="object.carrier_tracking_url">
+                  <div style="text-align: center; margin: 30px 0;">
+                    <a
+                                            t-att-href="object.carrier_tracking_url"
+                                            target="_blank"
+                                            t-attf-style="background-color: {{headingColor}}; color: {{textColor}}; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px;"
+                                        > Track
+                      Your Order </a>
+                  </div>
+                </t>
+                <p
+                                    t-attf-style="color: {{textColor}};"
+                                > Your order was shipped using<strong>
+                    <t
+                                            t-out="object.carrier_id.name or 'votre transporteur de confiance'"
+                                        />
+                  </strong>. <t
+                                        t-if="object.carrier_tracking_ref"
+                                    > The tracking number is: <strong>
+                      <t t-out="object.carrier_tracking_ref" />
+                    </strong>. </t>
+                </p>
+
+                <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 30px 0;" />
+
+                <h1
+                                    t-attf-style="color: {{headingColor}}; font-size: 24px; margin: 0 0 10px;"
+                                >Votre commande est en route!</h1>
+                <p
+                                    t-attf-style="color: {{textColor}};"
+                                > Excellente nouvelle! Votre commande <strong>
+                    <t t-out="object.sale_id.name or 'N/A'" />
+                  </strong> a été expédiée et est en route. Vous pouvez suivre sa progression en utilisant le bouton ci-dessous. </p>
+                <t t-if="object.carrier_tracking_url">
+                  <div style="text-align: center; margin: 30px 0;">
+                    <a
+                                            t-att-href="object.carrier_tracking_url"
+                                            target="_blank"
+                                            t-attf-style="background-color: {{buttonColor}}; color: {{textColor}}; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px;"
+                                        > Suivre
+                      votre commande </a>
+                  </div>
+                </t>
+                <p
+                                    t-attf-style="color: {{textColor}};"
+                                > Votre commande a été expédiée via<strong>
+                    <t
+                                            t-out="object.carrier_id.name or 'votre transporteur de confiance'"
+                                        />
+                  </strong>. <t
+                                        t-if="object.carrier_tracking_ref"
+                                    > Le numéro de suivi est: <strong>
+                      <t t-out="object.carrier_tracking_ref" />
+                    </strong>. </t>
+                </p>
+
+                <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 30px 0;" />
+
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td valign="top" style="padding-right: 10px;">
+                      <h2
+                                                t-attf-style="font-size: 18px; color: {{headingColor}}; margin: 0 0 10px;"
+                                            >Shipping To / Expédié à:</h2>
+                      <div
+                                                t-field="object.sale_id.partner_shipping_id"
+                                                t-attf-style="color:{{textColor}};"
+                                                t-options='{"widget": "contact", "fields": ["name", "address", "phone"], "no_marker": True}'
+                                            />
+                    </td>
+                    <td
+                                            valign="top"
+                                            t-attf-style="padding-left: 10px; text-align: right;color: {{textColor}};"
+                                        >
+                      <h2
+                                                t-attf-style="font-size: 18px; color: {{headingColor}}; margin: 0 0 10px;"
+                                            >Order Summary / Résumé de la commande</h2>
+                      <strong>Sale Order / Commande:</strong>
+                      <t t-out="object.sale_id.name or 'N/A'" />
+                      <br />
+                      <strong>Order Date / Date de commande:</strong>
+                      <t
+                                                t-out="object.sale_id.date_order"
+                                                t-options='{"widget": "date"}'
+                                            />
+                    </td>
+                  </tr>
+                </table>
+
+                <hr
+                                    t-attf-style="border: 0; border-top: 1px solid {{headingColor}}; margin: 30px 0;"
+                                />
+
+                <h2
+                                    t-attf-style="font-size: 18px; color: {{headingColor}}; margin: 0 0 15px;"
+                                >Items in this shipment / Articles dans cet envoi:</h2>
+                <t t-call="impress_emails.product_list" />
+
+                <p
+                                    t-attf-style="margin-top: 30px;color:{{textColor}};"
+                                > Thank you for your order! We hope you enjoy your products. <br
+                                    /> Nous vous remercions pour votre commande! Nous espérons que
+                  vous apprécierez vos produits. </p>
+                <p t-attf-style="color:{{textColor}};"> Sincerely, / Sincèrement,<br
+                                    /> The Impress Foods Team / L'équipe des Aliments Impress </p>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">
+                <p
+                                    t-attf-style="color:{{textColor}};"
+                                > Follow us on social media / Suivez nous sur les médias sociaux</p>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">
+                <table cellpadding="0" cellspacing="0" border="0" width="80%">
+                  <tr>
+                    <td align="center" style="padding-right: 20px;">
+                      <table cellpadding="5px" cellspacing="0" border="0">
+                        <tr>
+                          <td style="text-align:end;">
+                            <t t-call="impress_emails.instagram">
+                              <t
+                                                                t-set="link"
+                                                                t-value="'https://www.instagram.com/impressfoods/'"
+                                                            />
+                            </t>
+                          </td>
+                          <td style="text-align:start;">
+                            <t t-call="impress_emails.facebook">
+                              <t
+                                                                t-set="link"
+                                                                t-value="'https://www.facebook.com/impressfoods'"
+                                                            />
+                            </t>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" align="center">
+                            <span
+                                                            t-attf-style="color:{{textColor}};"
+                                                        >@impressfoods</span>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td
+                                            width="1"
+                                            t-attf-style="border-left: 1px solid {{textColor}};"
+                                        />
+                    <td align="center" style="padding-left: 20px;">
+                      <table cellpadding="5px" cellspacing="0" border="0">
+                        <tr>
+                          <td style="text-align:end;">
+                            <t t-call="impress_emails.instagram">
+                              <t
+                                                                t-set="link"
+                                                                t-value="'https://www.instagram.com/impressbabyfood/'"
+                                                            />
+                            </t>
+                          </td>
+                          <td style="text-align:start;">
+                            <t t-call="impress_emails.facebook">
+                              <t
+                                                                t-set="link"
+                                                                t-value="'https://www.facebook.com/impressbabyfood'"
+                                                            />
+                            </t>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" align="center">
+                            <span
+                                                            t-attf-style="color:{{textColor}};"
+                                                        >@impressbabyfood</span>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td
+                                align="center"
+                                t-attf-style="padding: 20px; font-size: 12px; color:{{textColor}};"
+                            > © <t t-out="datetime.datetime.now().year" /> <t
+                                    t-out="object.company_id.name"
+                                />. All rights reserved. </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </field>
+
+  </record>
+
+  <record id="email_template_delivery_obibox_impress" model="mail.template">
+    <field name="name">Impress: Delivery confirmation Obibox</field>
+    <field name="model_id" ref="stock.model_stock_picking" />
+    <field name="lang">{{ object.partner_id.lang }}</field>
+    <field name="auto_delete" eval="True" />
+    <field name="subject">Your order from {{ object.company_id.name }}</field>
+    <field name="email_to">{{ object.partner_id.email }}</field>
+    <field
+            name="scheduled_date"
+        >${(datetime.datetime.now() + relativedelta(minutes=10)).strftime('%Y-%m-%d %H:%M')}</field>
+    <field name="body_html" type="html">
+      <t t-set="textColor" t-value="'#26837b'" />
+      <t t-set="headingColor" t-value="'#ffffff'" />
+      <t t-set="buttonColor" t-value="'#ffffff'" />
+      <t t-set="bgColor" t-value="'#96d9ca'" />
+      <div
+                t-attf-style="font-family: Arial, sans-serif; font-size: 14px; color: #333; background-color: #f9f9f9; padding: 20px;"
+            >
+        <table
+                    width="100%"
+                    cellpadding="0"
+                    cellspacing="0"
+                    border="0"
+                    style="max-width: 600px; margin: 0 auto; background-color: #96d9ca; border-radius: 8px; border: 1px solid #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
+                >
+          <tbody>
+            <tr>
+              <td align="center" style="padding: 20px 0;">
+                <img
+                                    src="/impress_emails/static/img/impress_logo_gradient.png"
+                                    style="width:150px;"
+                                    alt="${object.company_id.name} Logo"
+                                />
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 20px 30px;">
+                <h1
+                                    t-attf-style="color: {{headingColor}}; font-size: 24px; margin: 0 0 10px;"
+                                >Your order is being prepared!</h1>
+                <p
+                                    t-attf-style="color: {{textColor}};"
+                                > Great news! We've received your order <strong>
+                    <t t-out="object.sale_id.name or 'N/A'" />
+                  </strong> and are currently preparing it with care. You can track its progress using the button below. </p>
+                <p
+                                    t-attf-style="color: {{textColor}};"
+                                >Our delivery driver picks up orders every Wednesday at noon, so yours will be delivered within 48 hours after pickup.</p>
+                <t t-if="object.carrier_tracking_url">
+                  <div style="text-align: center; margin: 30px 0;">
+                    <a
+                                            t-att-href="object.carrier_tracking_url"
+                                            target="_blank"
+                                            t-attf-style="background-color: {{headingColor}}; color: {{textColor}}; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px;"
+                                        > Track
+                      Your Order </a>
+                  </div>
+                </t>
+                <p
+                                    t-attf-style="color: {{textColor}};"
+                                > Your order was shipped using<strong>
+                    <t
+                                            t-out="object.carrier_id.name or 'votre transporteur de confiance'"
+                                        />
+                  </strong>. <t
+                                        t-if="object.carrier_tracking_ref"
+                                    > The tracking number is: <strong>
+                      <t t-out="object.carrier_tracking_ref" />
+                    </strong>. </t>
+                </p>
+
+                <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 30px 0;" />
+
+                <h1
+                                    t-attf-style="color: {{headingColor}}; font-size: 24px; margin: 0 0 10px;"
+                                >Votre commande est en préparation!</h1>
+                <p
+                                    t-attf-style="color: {{textColor}};"
+                                > Excellente nouvelle! Nous avons bien reçu votre commande <strong
+                                    >
+                    <t t-out="object.sale_id.name or 'N/A'" />
+                  </strong> et sommes présentement en train de la préparer avec soin. </p>
+                <p
+                                    t-attf-style="color: {{textColor}};"
+                                >Notre livreur passe chaque mercredi midi pour récupérer les commandes ! La vôtre sera donc livrée dans les 48 heures suivant la cueillette.</p>
+                <t t-if="object.carrier_tracking_url">
+                  <div style="text-align: center; margin: 30px 0;">
+                    <a
+                                            t-att-href="object.carrier_tracking_url"
+                                            target="_blank"
+                                            t-attf-style="background-color: {{buttonColor}}; color: {{textColor}}; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px;"
+                                        > Suivre
+                      votre commande </a>
+                  </div>
+                </t>
+                <p
+                                    t-attf-style="color: {{textColor}};"
+                                > Votre commande a été expédiée via<strong>
+                    <t
+                                            t-out="object.carrier_id.name or 'votre transporteur de confiance'"
+                                        />
+                  </strong>. <t
+                                        t-if="object.carrier_tracking_ref"
+                                    > Le numéro de suivi est: <strong>
+                      <t t-out="object.carrier_tracking_ref" />
+                    </strong>. </t>
+                </p>
+
+                <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 30px 0;" />
+
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td valign="top" style="padding-right: 10px;">
+                      <h2
+                                                t-attf-style="font-size: 18px; color: {{headingColor}}; margin: 0 0 10px;"
+                                            >Shipping To / Expédié à:</h2>
+                      <div
+                                                t-field="object.sale_id.partner_shipping_id"
+                                                t-attf-style="color:{{textColor}};"
+                                                t-options='{"widget": "contact", "fields": ["name", "address", "phone"], "no_marker": True}'
+                                            />
+                    </td>
+                    <td
+                                            valign="top"
+                                            t-attf-style="padding-left: 10px; text-align: right;color: {{textColor}};"
+                                        >
+                      <h2
+                                                t-attf-style="font-size: 18px; color: {{headingColor}}; margin: 0 0 10px;"
+                                            >Order Summary / Résumé de la commande</h2>
+                      <strong>Sale Order / Commande:</strong>
+                      <t t-out="object.sale_id.name or 'N/A'" />
+                      <br />
+                      <strong>Order Date / Date de commande:</strong>
+                      <t
+                                                t-out="object.sale_id.date_order"
+                                                t-options='{"widget": "date"}'
+                                            />
+                    </td>
+                  </tr>
+                </table>
+
+                <hr
+                                    t-attf-style="border: 0; border-top: 1px solid {{headingColor}}; margin: 30px 0;"
+                                />
+
+                <h2
+                                    t-attf-style="font-size: 18px; color: {{headingColor}}; margin: 0 0 15px;"
+                                >Items in this shipment / Articles dans cet envoi:</h2>
+                <t t-call="impress_emails.product_list" />
+
+                <p
+                                    t-attf-style="margin-top: 30px;color:{{textColor}};"
+                                > Thank you for your order! We hope you enjoy your products. <br
+                                    /> Nous vous remercions pour votre commande! Nous espérons que
+                  vous apprécierez vos produits. </p>
+                <p t-attf-style="color:{{textColor}};"> Sincerely, / Sincèrement,<br
+                                    /> The Impress Foods Team / L'équipe des Aliments Impress </p>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">
+                <p
+                                    t-attf-style="color:{{textColor}};"
+                                > Follow us on social media / Suivez nous sur les médias sociaux</p>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">
+                <table cellpadding="0" cellspacing="0" border="0" width="80%">
+                  <tr>
+                    <td align="center" style="padding-right: 20px;">
+                      <table cellpadding="5px" cellspacing="0" border="0">
+                        <tr>
+                          <td style="text-align:end;">
+                            <t t-call="impress_emails.instagram">
+                              <t
+                                                                t-set="link"
+                                                                t-value="'https://www.instagram.com/impressfoods/'"
+                                                            />
+                            </t>
+                          </td>
+                          <td style="text-align:start;">
+                            <t t-call="impress_emails.facebook">
+                              <t
+                                                                t-set="link"
+                                                                t-value="'https://www.facebook.com/impressfoods'"
+                                                            />
+                            </t>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" align="center">
+                            <span
+                                                            t-attf-style="color:{{textColor}};"
+                                                        >@impressfoods</span>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td
+                                            width="1"
+                                            t-attf-style="border-left: 1px solid {{textColor}};"
+                                        />
+                    <td align="center" style="padding-left: 20px;">
+                      <table cellpadding="5px" cellspacing="0" border="0">
+                        <tr>
+                          <td style="text-align:end;">
+                            <t t-call="impress_emails.instagram">
+                              <t
+                                                                t-set="link"
+                                                                t-value="'https://www.instagram.com/impressbabyfood/'"
+                                                            />
+                            </t>
+                          </td>
+                          <td style="text-align:start;">
+                            <t t-call="impress_emails.facebook">
+                              <t
+                                                                t-set="link"
+                                                                t-value="'https://www.facebook.com/impressbabyfood'"
+                                                            />
+                            </t>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" align="center">
+                            <span
+                                                            t-attf-style="color:{{textColor}};"
+                                                        >@impressbabyfood</span>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td
+                                align="center"
+                                t-attf-style="padding: 20px; font-size: 12px; color:{{textColor}};"
+                            > © <t t-out="datetime.datetime.now().year" /> <t
+                                    t-out="object.company_id.name"
+                                />. All rights reserved. </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </field>
+
+  </record>
+
+  <record id="email_template_pickup_impress" model="mail.template">
+    <field name="name">Impress: Pickup confirmation</field>
+    <field name="model_id" ref="stock.model_stock_picking" />
+    <field name="lang">{{ object.partner_id.lang }}</field>
+    <field name="auto_delete" eval="True" />
+    <field name="subject">Your order from {{ object.company_id.name }}</field>
+    <field
+            name="partner_to"
+        >{{ object.partner_id.email and object.partner_id.id or object.partner_id.parent_id.id }}</field>
+    <field name="body_html" type="html">
+      <t t-set="textColor" t-value="'#26837b'" />
+      <t t-set="headingColor" t-value="'#ffffff'" />
+      <t t-set="buttonColor" t-value="'#ffffff'" />
+      <t t-set="bgColor" t-value="'#96d9ca'" />
+      <div
+                t-attf-style="font-family: Arial, sans-serif; font-size: 14px; color: #333; background-color: #f9f9f9; padding: 20px;"
+            >
+        <table
+                    width="100%"
+                    cellpadding="0"
+                    cellspacing="0"
+                    border="0"
+                    style="max-width: 600px; margin: 0 auto; background-color: #96d9ca; border-radius: 8px; border: 1px solid #e0e0e0; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
+                >
+          <tbody>
+            <tr>
+              <td align="center" style="padding: 20px 0;">
+                <img
+                                    src="/impress_emails/static/img/impress_logo_gradient.png"
+                                    style="width:150px;"
+                                    alt="${object.company_id.name} Logo"
+                                />
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 20px 30px;">
+                <h1
+                                    t-attf-style="color: {{headingColor}}; font-size: 24px; margin: 0 0 10px;"
+                                >Your order is ready!</h1>
+                <p t-attf-style="color: {{textColor}};"> Great news! Your order <strong>
+                    <t t-out="object.sale_id.name or 'N/A'" />
+                  </strong> is ready for pick up! </p>
+                <p
+                                    t-attf-style="color: {{textColor}};"
+                                >You can pick up your order at 1910 avenue du sanctuaire between 9 a.m. and 4:30 p.m., Monday to Friday. Please head to the reception desk on the
+                  second floor, and we will give you your order. You can also call <a
+                                        href="tel:+14186637477"
+                                    >(418) 663-7477</a> to let us know when you have arrived at our factory, and we will bring your order to your car.</p>
+                <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 30px 0;" />
+
+                <h1
+                                    t-attf-style="color: {{headingColor}}; font-size: 24px; margin: 0 0 10px;"
+                                >Votre commande est prête!</h1>
+                <p
+                                    t-attf-style="color: {{textColor}};"
+                                > Excellente nouvelle! Votre commande <strong>
+                    <t t-out="object.sale_id.name or 'N/A'" />
+                  </strong> est prête à être ramassée.</p>
+
+                <p
+                                    t-attf-style="color: {{textColor}};"
+                                >Vous pouvez passer au 1910 avenue du sanctuaire entre 9h et 16h30 du lundi au vendredi. Veuillez vous présenter à la réception au 2e étage et nous
+                  vous remettrons votre commande. Vous pouvez également téléphoner au <a
+                                        href="tel:+14186637477"
+                                    >(418) 663-7477</a> pour nous aviser de votre arrivée à notre usine, et nous apporterons votre commande à votre voiture. . </p>
+
+                <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 30px 0;" />
+
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td
+                                            valign="top"
+                                            t-attf-style="padding-left: 10px; text-align: right;color: {{textColor}};"
+                                        >
+                      <h2
+                                                t-attf-style="font-size: 18px; color: {{headingColor}}; margin: 0 0 10px;"
+                                            >Order Summary / Résumé de la commande</h2>
+                      <strong>Sale Order / Commande:</strong>
+                      <t t-out="object.sale_id.name or 'N/A'" />
+                      <br />
+                      <strong>Order Date / Date de commande:</strong>
+                      <t
+                                                t-out="object.sale_id.date_order"
+                                                t-options='{"widget": "date"}'
+                                            />
+                    </td>
+                  </tr>
+                </table>
+
+                <hr
+                                    t-attf-style="border: 0; border-top: 1px solid {{headingColor}}; margin: 30px 0;"
+                                />
+
+                <h2
+                                    t-attf-style="font-size: 18px; color: {{headingColor}}; margin: 0 0 15px;"
+                                >Items in this order / Articles dans cette commande:</h2>
+
+                <t t-call="impress_emails.product_list" />
+                <p
+                                    t-attf-style="margin-top: 30px;color:{{textColor}};"
+                                > Thank you for your order! We hope you enjoy your products. <br
+                                    /> Nous vous remercions pour votre commande! Nous espérons que
+                  vous apprécierez vos produits. </p>
+                <p t-attf-style="color:{{textColor}};"> Sincerely, / Sincèrement,<br
+                                    /> The Impress Foods Team / L'équipe des Aliments Impress </p>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">
+                <p
+                                    t-attf-style="color:{{textColor}};"
+                                > Follow us on social media / Suivez nous sur les médias sociaux</p>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">
+                <table cellpadding="0" cellspacing="0" border="0" width="80%">
+                  <tr>
+                    <td align="center" style="padding-right: 20px;">
+                      <table cellpadding="5px" cellspacing="0" border="0">
+                        <tr>
+                          <td style="text-align:end;">
+                            <t t-call="impress_emails.instagram">
+                              <t
+                                                                t-set="link"
+                                                                t-value="'https://www.instagram.com/impressfoods/'"
+                                                            />
+                            </t>
+                          </td>
+                          <td style="text-align:start;">
+                            <t t-call="impress_emails.facebook">
+                              <t
+                                                                t-set="link"
+                                                                t-value="'https://www.facebook.com/impressfoods'"
+                                                            />
+                            </t>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" align="center">
+                            <span
+                                                            t-attf-style="color:{{textColor}};"
+                                                        >@impressfoods</span>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                    <td
+                                            width="1"
+                                            t-attf-style="border-left: 1px solid {{textColor}};"
+                                        />
+                    <td align="center" style="padding-left: 20px;">
+                      <table cellpadding="5px" cellspacing="0" border="0">
+                        <tr>
+                          <td style="text-align:end;">
+                            <t t-call="impress_emails.instagram">
+                              <t
+                                                                t-set="link"
+                                                                t-value="'https://www.instagram.com/impressbabyfood/'"
+                                                            />
+                            </t>
+                          </td>
+                          <td style="text-align:start;">
+                            <t t-call="impress_emails.facebook">
+                              <t
+                                                                t-set="link"
+                                                                t-value="'https://www.facebook.com/impressbabyfood'"
+                                                            />
+                            </t>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" align="center">
+                            <span
+                                                            t-attf-style="color:{{textColor}};"
+                                                        >@impressbabyfood</span>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td
+                                align="center"
+                                t-attf-style="padding: 20px; font-size: 12px; color:{{textColor}};"
+                            > © <t t-out="datetime.datetime.now().year" /> <t
+                                    t-out="object.company_id.name"
+                                />. All rights reserved. </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </field>
+
+  </record>
+
+  <template id="impress_emails.instagram" name="instagram_svg">
+    <a t-attf-href="{{link}}">
+      <svg
+                role="img"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                height="40px"
+            >
+        <path
+                    d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"
+                />
+      </svg>
+    </a>
+  </template>
+
+  <template id="impress_emails.facebook" name="facebook_svg">
+    <a t-attf-href="{{link}}">
+
+      <svg
+                role="img"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                t-attf-fill="{{textColor}}"
+                height="40px"
+            >
+        <path
+                    d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0
+        1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686
+        1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238
+        24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"
+                />
+      </svg>
+    </a>
+  </template>
+
+  <template id="impress_emails.product_list" name="product_list">
+    <table
+            width="100%"
+            cellpadding="10"
+            cellspacing="0"
+            style="border-collapse: collapse;"
+        >
+      <thead t-attf-style="background-color: {{bgColor}}; text-align: left;">
+        <tr>
+          <th
+                        t-attf-style="border-bottom: 2px solid {{headingColor}}; padding: 10px; color:{{textColor}}"
+                    >Product / Produit</th>
+          <th
+                        t-attf-style="border-bottom: 2px solid {{headingColor}}; padding: 10px; text-align: center; color:{{textColor}}"
+                    >Quantity / Quantité</th>
+        </tr>
+      </thead>
+      <tbody>
+        <t t-foreach="object.sale_id.order_line" t-as="line">
+          <t
+                        t-if="line.display_type == False and line.product_id.type in ['product','consu'] and line.product_uom_qty != 0"
+                    >
+            <tr>
+              <td
+                                t-attf-style="border-bottom: 1px solid {{headingColor}}; padding: 10px;"
+                            >
+                <span t-attf-style="color:{{textColor}}" t-out="line.name" />
+              </td>
+              <td
+                                t-attf-style="border-bottom: 1px solid {{headingColor}}; padding: 10px; text-align: center;"
+                            >
+                <span
+                                    t-attf-style="color:{{textColor}}"
+                                    t-out="int(line.product_uom_qty)"
+                                />
+              </td>
+
+            </tr>
+          </t>
+        </t>
+      </tbody>
+    </table>
+  </template>
+</odoo>

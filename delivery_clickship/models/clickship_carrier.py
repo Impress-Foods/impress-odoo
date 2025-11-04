@@ -26,7 +26,7 @@ class ClickShipCarrier(models.Model):
         },
     )
 
-    clickship_api_key = fields.Char(string="Click Ship Key", groups="base.group_system")
+    clickship_api_key = fields.Char(string="Click Ship Key")
     clickship_contact = fields.Many2one("hr.employee")
     clickship_payment_methods = fields.One2many(
         "clickship.payment_method",
@@ -39,7 +39,11 @@ class ClickShipCarrier(models.Model):
     def clickship_rate_shipment(
         self, order: Picking | SaleOrder
     ) -> dict[str, bool | float]:
-        sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
+        sr = ClickshipProvider(
+            self.log_xml,
+            prod_environment=self.prod_environment,
+            token=self.clickship_api_key,
+        )
         contact = self.clickship_contact
         res = sr.get_rate(order, contact)
         price = int(res.total.value) / 100.0
@@ -53,14 +57,22 @@ class ClickShipCarrier(models.Model):
 
     def clickship_get_raw_rates(self, order: Picking | SaleOrder) -> RateResponse:
         contact = self.clickship_contact
-        sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
+        sr = ClickshipProvider(
+            self.log_xml,
+            prod_environment=self.prod_environment,
+            token=self.clickship_api_key,
+        )
 
         res = sr.get_raw_rates(order, contact)
         return res
 
     def clickship_send_shipping(self, pickings: Picking) -> list[dict[str, Any]]:
         contact = self.clickship_contact
-        sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
+        sr = ClickshipProvider(
+            self.log_xml,
+            prod_environment=self.prod_environment,
+            token=self.clickship_api_key,
+        )
         res: list[dict[str, Any]] = []
         for picking in pickings:
             booking = sr.book_shipment(picking, contact)
@@ -85,7 +97,11 @@ class ClickShipCarrier(models.Model):
         return picking.clickship_tracking_url
 
     def clickship_cancel_shipment(self, picking: Picking) -> None:
-        sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
+        sr = ClickshipProvider(
+            self.log_xml,
+            prod_environment=self.prod_environment,
+            token=self.clickship_api_key,
+        )
         res = sr.cancel_shipment(picking.clickship_shipment_id)
 
         if res:
@@ -107,7 +123,11 @@ class ClickShipCarrier(models.Model):
             [("delivery_carrier_id", "=", self.id)]
         ).unlink()
 
-        sr = ClickshipProvider(self.log_xml, token=self.clickship_api_key)
+        sr = ClickshipProvider(
+            self.log_xml,
+            prod_environment=self.prod_environment,
+            token=self.clickship_api_key,
+        )
         payment_methods = sr._get_payment_methods()
 
         if isinstance(payment_methods, dict):

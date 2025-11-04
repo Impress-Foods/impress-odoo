@@ -8,22 +8,22 @@
         owl="1"
     >
         <xpath expr="//div[1]" position="after">
-            <t t-if="!props.subline and totalDemand != 0">
-                <t t-if="qtyDemand == totalDemand">
-                    <i class="fa fa-fw fa-cubes text-muted" />
-                    <span
-                        style="color: green"
-                        t-if="qtyDemand"
-                        t-esc="' Total: ' + totalDemand"
-                    />
-                </t>
-                <t t-else="">
-                    <i class="fa fa-fw fa-cubes text-muted" />
-                    <span
-                        style="color: red"
-                        t-if="qtyDemand"
-                        t-esc="' Total: ' + totalDemand"
-                    />
+            <t t-if="env.model.lineModel != 'stock.quant'">
+                <t t-if="!props.subline and totalDemand != 0">
+                    <t t-set="tsupply" t-value="totalSupply" />
+                    <t t-set="tdemand" t-value="totalDemand" />
+                    <t t-if="tsupply == tdemand">
+                        <i class="fa fa-fw fa-cubes text-muted" />
+                        <span
+                            style="color: green"
+                            t-if="tsupply"
+                            t-esc="' Total: ' + tdemand"
+                        />
+                    </t>
+                    <t t-else="">
+                        <i class="fa fa-fw fa-cubes text-muted" />
+                        <span style="color: red" t-esc="' Total: ' + tdemand" />
+                    </t>
                 </t>
             </t>
         </xpath>

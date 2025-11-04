@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-19 13:55+0000\n"
-"PO-Revision-Date: 2025-06-19 14:27+0000\n"
-"Last-Translator: Weblate Admin <cparadis@impressfoods.com>\n"
-"Language-Team: French (Canada) <http://weblate.example.com/projects/"
+"PO-Revision-Date: 2025-08-21 19:58+0000\n"
+"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
 "impress-odoo/label_printing_wizard/fr_CA/>\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.11.4\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: label_printing_wizard
 #: model:ir.model.fields.selection,name:label_printing_wizard.selection__label_wizard__label_size__2x4
@@ -48,7 +48,7 @@ msgstr "Créé par"
 #. module: label_printing_wizard
 #: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__create_date
 msgid "Created on"
-msgstr "Date de création"
+msgstr "Créé le"
 
 #. module: label_printing_wizard
 #: model:ir.model.fields,help:label_printing_wizard.field_label_wizard__uom_id

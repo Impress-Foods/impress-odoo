@@ -39,6 +39,28 @@ msgid "<strong>Unit</strong>"
 msgstr ""
 
 #. module: impress_purchase_customizations
+#: model:res.groups,name:impress_purchase_customizations.can_bypass_po_locks
+msgid "Can Bypass PO locks"
+msgstr ""
+
+#. module: impress_purchase_customizations
+#: model:ir.model,name:impress_purchase_customizations.model_purchase_order
+msgid "Purchase Order"
+msgstr ""
+
+#. module: impress_purchase_customizations
 #: model:ir.actions.report,name:impress_purchase_customizations.report_purchase_order_internal
 msgid "Purchase Order Internal"
+msgstr ""
+
+#. module: impress_purchase_customizations
+#: model:res.groups,comment:impress_purchase_customizations.can_bypass_po_locks
+msgid "This user will be able to bypass PO locks."
+msgstr ""
+
+#. module: impress_purchase_customizations
+#. odoo-python
+#: code:addons/impress_purchase_customizations/models/purchase_order.py:0
+#, python-format
+msgid "You cannot unlock another user's PO!"
 msgstr ""
