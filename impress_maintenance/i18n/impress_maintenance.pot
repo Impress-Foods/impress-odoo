@@ -51,8 +51,6 @@ msgid "Current Preventive"
 msgstr ""
 
 #. module: impress_maintenance
-#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__description
-msgid "Description"
 #: model:res.groups,comment:impress_maintenance.group_maintenance_administrator
 msgid "Deprecated, use maintenance.group_equipment_manager"
 msgstr ""
