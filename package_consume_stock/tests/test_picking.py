@@ -19,6 +19,7 @@ class TestStockPicking(TransactionCase):
         self.picking_model = self.env["stock.picking"]
         self.move_model = self.env["stock.move"]
         self.ml_model = self.env["stock.move.line"]
+        self.material_model = self.env["stock.package.material"]
 
         self.product = self.env["product.product"].create(
             {
@@ -48,12 +49,21 @@ class TestStockPicking(TransactionCase):
                 "quantity": 10,
             }
         )
+        self.material_wo_lot = self.material_model.create(
+            {
+                "product_id": self.packaging_material_wo_lot.id,
+                "location_id": self.stock_loc_id.id,
+                "quantity": 1.0,
+            }
+        )
+
         self.package_type_wo_lot = self.env["stock.package.type"].create(
             {
                 "name": "Test Package Type without Lot",
-                "packaging_material_id": self.packaging_material_wo_lot.id,
+                "packaging_material_ids": [(4, self.material_wo_lot.id, 0)],
             }
         )
+
         self.packaging_material_w_lot = self.env["product.product"].create(
             {
                 "name": "Package Material With Lot",
@@ -89,10 +99,28 @@ class TestStockPicking(TransactionCase):
                 "lot_id": self.lot_2.id,
             }
         )
+
+        self.material_w_lot = self.material_model.create(
+            {
+                "product_id": self.packaging_material_w_lot.id,
+                "location_id": self.stock_loc_id.id,
+                "quantity": 1.0,
+            }
+        )
+
         self.package_type_w_lot = self.env["stock.package.type"].create(
             {
                 "name": "Test Package Type with Lot",
-                "packaging_material_id": self.packaging_material_w_lot.id,
+                "packaging_material_ids": [(4, self.material_w_lot.id, 0)],
+            }
+        )
+
+        self.package_type_w_multiple = self.env["stock.package.type"].create(
+            {
+                "name": "Test package type with multiple material",
+                "packaging_material_ids": [
+                    (6, 0, [self.material_w_lot.id, self.material_wo_lot.id])
+                ],
             }
         )
 
@@ -372,3 +400,85 @@ class TestStockPicking(TransactionCase):
         self.assertEqual(
             len(set([ml.lot_id for ml in packaging_move.move_line_ids])), 1
         )
+
+    def test_create_new_package_w_multiple_material(self):
+        picking = self.env["stock.picking"].create(
+            {
+                "location_dest_id": self.cust_loc_id.id,
+                "location_id": self.stock_loc_id.id,
+                "picking_type_id": self.picking_type_out.id,
+            }
+        )
+        self.move_model.create(
+            {
+                "product_id": self.product.id,
+                "product_uom_qty": 4,
+                "picking_id": picking.id,
+                "location_id": self.stock_loc_id.id,
+                "location_dest_id": self.cust_loc_id.id,
+                "name": "product move",
+            }
+        )
+        picking.action_confirm()
+        picking.action_assign()
+        self.assertEqual(picking.state, "assigned")
+
+        move_lines = picking.move_line_ids
+
+        self.assertEqual(len(move_lines), 1)
+        self.assertEqual(
+            move_lines[0].product_id,
+            self.product,
+            f"Incorrect product in move line, is {move_lines[0].product_id.name}",
+        )
+        product_move_line = move_lines[0]
+        product_move_line.qty_done = 4  # type: ignore
+
+        self.env["choose.delivery.package"].create(
+            {
+                "picking_id": picking.id,
+                "delivery_package_type_id": self.package_type_w_multiple.id,
+            }
+        ).action_put_in_pack()
+
+        self.assertEqual(
+            len(picking.package_ids),
+            1,
+            f"Should be 1 package, currently {len(picking.package_ids)}",
+        )
+
+        # Line added for the new packaging material
+        self.assertEqual(
+            len(
+                picking.move_line_ids.filtered_domain(
+                    [("product_id", "=", self.packaging_material_wo_lot.id)]
+                )
+            ),
+            1,
+        )
+        self.assertEqual(
+            len(
+                picking.move_line_ids.filtered_domain(
+                    [("product_id", "=", self.packaging_material_w_lot.id)]
+                )
+            ),
+            1,
+        )
+
+        self.assertEqual(
+            len(
+                picking.move_line_ids.filtered_domain(
+                    [("product_id", "=", self.product.id)]
+                )
+            ),
+            1,
+        )
+
+        # Check if all products are in the same package
+        self.assertEqual(len(picking.move_line_ids.mapped("result_package_id")), 1)
+        picking.move_line_ids.filtered_domain(
+            [("product_id", "=", self.packaging_material_w_lot.id)]
+        ).lot_id = self.lot_1.id
+        # Check if possible to validate transfer
+        picking.button_validate()
+        self.assertEqual(picking.state, "done")

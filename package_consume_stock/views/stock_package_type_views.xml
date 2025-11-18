@@ -7,12 +7,17 @@
         <field name="model">stock.package.type</field>
         <field name="inherit_id" ref="stock.stock_package_type_form" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='barcode']" position="after">
-                <field name="packaging_material_id" />
-                <field
-                    name="source_location_id"
-                    domain="[('usage', '=', 'internal')]"
-                />
+
+            <xpath expr="//group[@name='delivery']" position="after">
+                 <group name="packaging">
+                    <field name="packaging_material_ids">
+                        <tree editable="bottom">
+                            <field name="product_id" />
+                            <field name="quantity" />
+                            <field name="location_id" />
+                        </tree>
+                    </field>
+                 </group>
             </xpath>
         </field>
     </record>
