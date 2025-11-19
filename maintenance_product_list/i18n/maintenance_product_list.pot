@@ -14,6 +14,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: maintenance_product_list
+#: model:ir.model,name:maintenance_product_list.model_mrp_bom_line
+msgid "Bill of Material Line"
+msgstr ""
+
+#. module: maintenance_product_list
 #: model:ir.model,name:maintenance_product_list.model_res_partner
 msgid "Contact"
 msgstr ""
@@ -63,6 +68,11 @@ msgid "Product"
 msgstr ""
 
 #. module: maintenance_product_list
+#: model:ir.model.fields,field_description:maintenance_product_list.field_mrp_bom_line__product_category_id
+msgid "Product Category"
+msgstr ""
+
+#. module: maintenance_product_list
 #: model:ir.model.fields,field_description:maintenance_product_list.field_maintenance_equipment__product_count
 #: model:ir.model.fields,field_description:maintenance_product_list.field_res_partner__product_count
 #: model:ir.model.fields,field_description:maintenance_product_list.field_res_users__product_count
@@ -88,6 +98,7 @@ msgid ""
 msgstr ""
 
 #. module: maintenance_product_list
+#: model:ir.model.fields,field_description:maintenance_product_list.field_mrp_bom_line__vendor_code
 #: model:ir.model.fields,field_description:maintenance_product_list.field_product_product__vendor_code
 #: model:ir.model.fields,field_description:maintenance_product_list.field_product_template__vendor_code
 msgid "Vendor Code"
