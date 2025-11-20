@@ -603,12 +603,12 @@
                             <tr
                                 t-attf-style="background:{{product.product_page_text_color if entry_parity =='even' else ''}};"
                             >
-                                <th
+                                <td
                                     class="text-center"
                                     t-attf-style="color:{{product.text_color if entry_parity =='even' else ''}};"
                                 >
                                     <t t-out="entry.name" />
-                                </th>
+                                </td>
                                 <td
                                     class="text-center"
                                     t-attf-style="color:{{product.text_color if entry_parity =='even' else ''}};"
