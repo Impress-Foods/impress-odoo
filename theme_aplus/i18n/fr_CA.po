@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-04 19:15+0000\n"
+"PO-Revision-Date: 2025-11-20 16:18+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
 "impress-odoo/theme_aplus/fr_CA/>\n"
@@ -22,12 +22,12 @@ msgstr ""
 #: code:addons/theme_aplus/static/src/snippets/s_image_marquee/options.js:0
 #, python-format
 msgid " Add Images"
-msgstr "Ajouter des images"
+msgstr " Ajouter des images"
 
 #. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.tvn
 msgid "% Daily Value"
-msgstr "% valeur recommendée"
+msgstr "% valeur recommandée"
 
 #. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.s_scrolling_text_banner_options
