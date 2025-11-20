@@ -20,85 +20,29 @@ msgstr ""
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
 msgid "-18°C"
 msgstr "-18°C"
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
 msgid "0°C"
 msgstr "0°C"
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
 msgid "15°C"
 msgstr "15°C"
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
 msgid "4°C"
 msgstr "4°C"
 
 #. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "<span>Absence d'allergènes:            </span>"
-msgstr "<span>Absence d'allergènes:            </span>"
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "<span>Identité du chauffeur: </span>"
-msgstr "<span>Identité du chauffeur: </span>"
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "<span>Non</span>"
-msgstr "<span>Non</span>"
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "<span>Oui</span>"
-msgstr "<span>Oui</span>"
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "<span>Vérification date d'expiration: </span>"
-msgstr "<span>Vérification date d'expiration: </span>"
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "<span>État des palettes: </span>"
-msgstr "<span>État des palettes: </span>"
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "<span>État du camion: </span>"
-msgstr "<span>État du camion: </span>"
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "<span>État du produit: </span>"
-msgstr "<span>État du produit: </span>"
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid ""
-"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 04 "
-"Décembre 2024. Feuille de contrôle Expédition </strong>"
-msgstr ""
-"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 04 "
-"Décembre 2024. Feuille de contrôle Expédition </strong>"
-
-#. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
-#| msgid ""
-#| "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 04 "
-#| "Décembre 2024. Feuille de contrôle Expédition </strong>"
 msgid ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 14 "
 "janvier 2025. Feuille de contrôle Expédition </strong>"
@@ -108,14 +52,15 @@ msgstr ""
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
+#, fuzzy
 #| msgid ""
 #| "<strong>Pour l'utilisation exclusive de Impress Foods.</strong><strong> "
-#| "Mis à jour le 04 Décembre 2024.</strong><strong> Feuille de contrôle "
+#| "Mis à jour le 14 janvier 2025.</strong><strong> Feuille de contrôle "
 #| "Réception </strong>"
 msgid ""
-"<strong>Pour l'utilisation exclusive de Impress Foods.</strong><strong> Mis "
-"à jour le 14 janvier 2025.</strong><strong> Feuille de contrôle Réception </"
-"strong>"
+"<strong>Pour l'utilisation exclusive de Impress Foods.</strong>\n"
+"                        <strong> Mis à jour le 14 janvier 2025.</strong>\n"
+"                        <strong> Feuille de contrôle Réception </strong>"
 msgstr ""
 "<strong>Pour l'utilisation exclusive de Impress Foods.</strong><strong> Mis "
 "à jour le 14 janvier 2025.</strong><strong> Feuille de contrôle Réception </"
@@ -127,20 +72,11 @@ msgid "Allergen mark absent"
 msgstr "Marque d'allergènes absente"
 
 #. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "Barêmes de température"
-msgstr "Barêmes de température"
-
-#. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
 msgid "Comments"
 msgstr "Commentaires"
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "Congelé"
-msgstr "Congelé"
 
 #. module: impress_stock_worksheets
 #: model:ir.model.fields,field_description:impress_stock_worksheets.receipt_20250114_x_driver_id
@@ -151,11 +87,6 @@ msgstr "Chauffeur identifié"
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
 msgid "Driver's documents match receipt documents"
 msgstr "Documents du chauffeur concordent avec documents de réception"
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "Frais"
-msgstr "Frais"
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
@@ -170,31 +101,6 @@ msgid "Frozen"
 msgstr "Congelé"
 
 #. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "Fruits et légumes entiers"
-msgstr "Fruits et légumes entiers"
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "Maximum camion"
-msgstr "Maximum camion"
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "Maximum produit"
-msgstr "Maximum produit"
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "Minimum camion"
-msgstr "Minimum camion"
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "Minimum produit"
-msgstr "Minimum produit"
-
-#. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
 msgid "No allergen markings on product or documents"
 msgstr "Aucune marque d'allergènes sur les produits ou documents"
@@ -205,6 +111,11 @@ msgid "Pallet state (No greases, oils, wood or metal chips, dusts, etc.)"
 msgstr ""
 "État des palettes (Pas de graisses, huiles, morceaux de métal ou de bois, "
 "poussières)"
+
+#. module: impress_stock_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
+msgid "Passed"
+msgstr ""
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
@@ -250,6 +161,7 @@ msgid "Product state and cleanliness"
 msgstr "État et propreté du produit"
 
 #. module: impress_stock_worksheets
+#: model:ir.model.fields,field_description:impress_stock_worksheets.delivery_20250114_x_signature
 #: model:ir.model.fields,field_description:impress_stock_worksheets.receipt_20250114_x_signature
 msgid "Signature"
 msgstr "Signature"
@@ -312,11 +224,6 @@ msgid "Truck state and cleanliness"
 msgstr "État et propreté du camion"
 
 #. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "Type de produit"
-msgstr "Type de produit"
-
-#. module: impress_stock_worksheets
 #: model:ir.model.fields,field_description:impress_stock_worksheets.delivery_20250114_x_pallet_used
 msgid "Type of pallet used"
 msgstr "Type de palettes utilisées"
@@ -326,6 +233,64 @@ msgstr "Type de palettes utilisées"
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
 msgid "Whole fruits and vegetables"
 msgstr "Fruits et légumes entiers"
+
+#~ msgid "<span>Absence d'allergènes:            </span>"
+#~ msgstr "<span>Absence d'allergènes:            </span>"
+
+#~ msgid "<span>Identité du chauffeur: </span>"
+#~ msgstr "<span>Identité du chauffeur: </span>"
+
+#~ msgid "<span>Non</span>"
+#~ msgstr "<span>Non</span>"
+
+#~ msgid "<span>Oui</span>"
+#~ msgstr "<span>Oui</span>"
+
+#~ msgid "<span>Vérification date d'expiration: </span>"
+#~ msgstr "<span>Vérification date d'expiration: </span>"
+
+#~ msgid "<span>État des palettes: </span>"
+#~ msgstr "<span>État des palettes: </span>"
+
+#~ msgid "<span>État du camion: </span>"
+#~ msgstr "<span>État du camion: </span>"
+
+#~ msgid "<span>État du produit: </span>"
+#~ msgstr "<span>État du produit: </span>"
+
+#~ msgid ""
+#~ "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 04 "
+#~ "Décembre 2024. Feuille de contrôle Expédition </strong>"
+#~ msgstr ""
+#~ "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 04 "
+#~ "Décembre 2024. Feuille de contrôle Expédition </strong>"
+
+#~ msgid "Barêmes de température"
+#~ msgstr "Barêmes de température"
+
+#~ msgid "Congelé"
+#~ msgstr "Congelé"
+
+#~ msgid "Frais"
+#~ msgstr "Frais"
+
+#~ msgid "Fruits et légumes entiers"
+#~ msgstr "Fruits et légumes entiers"
+
+#~ msgid "Maximum camion"
+#~ msgstr "Maximum camion"
+
+#~ msgid "Maximum produit"
+#~ msgstr "Maximum produit"
+
+#~ msgid "Minimum camion"
+#~ msgstr "Minimum camion"
+
+#~ msgid "Minimum produit"
+#~ msgstr "Minimum produit"
+
+#~ msgid "Type de produit"
+#~ msgstr "Type de produit"
 
 #~ msgid ""
 #~ "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 05 "

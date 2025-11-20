@@ -72,7 +72,8 @@ msgstr "Catégories d'équipements"
 #: model_terms:ir.actions.act_window,help:impress_maintenance_quality_mgmt.action_quality_maintenance_request_cal
 msgid ""
 "Follow the process of the request and communicate with the collaborator."
-msgstr "Suivre le processus de la requête et communiquer avec le collaborateur."
+msgstr ""
+"Suivre le processus de la requête et communiquer avec le collaborateur."
 
 #. module: impress_maintenance_quality_mgmt
 #: model_terms:ir.ui.view,arch_db:impress_maintenance_quality_mgmt.view_maintenance_team_tag_search

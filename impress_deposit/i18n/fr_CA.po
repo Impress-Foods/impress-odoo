@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-12 18:00+0000\n"
-"PO-Revision-Date: 2025-08-21 19:58+0000\n"
+"PO-Revision-Date: 2025-11-20 16:42+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
 "impress-odoo/impress_deposit/fr_CA/>\n"
@@ -40,7 +40,6 @@ msgstr "Quantité de contenants"
 
 #. module: impress_deposit
 #. odoo-python
-#: code:addons/impress-odoo/impress_deposit/models/sale_order.py:0
 #: code:addons/impress_deposit/models/sale_order.py:0
 #: model:ir.model.fields,field_description:impress_deposit.field_sale_order__deposit_value
 #: model_terms:ir.ui.view,arch_db:impress_deposit.view_product_template_form_inherit_deposit
@@ -57,6 +56,11 @@ msgstr "Produit pour la consigne"
 #: model_terms:ir.ui.view,arch_db:impress_deposit.view_res_config_settings_view_form_inherit_deposit
 msgid "Deposit Settings"
 msgstr "Réglages de la consigne"
+
+#. module: impress_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_sale_order_line__is_deposit_line
+msgid "Is Deposit Line"
+msgstr "Est ligne de dépôt"
 
 #. module: impress_deposit
 #: model:ir.model.fields,field_description:impress_deposit.field_stock_picking__container_qty
@@ -102,6 +106,11 @@ msgstr "Consigne requise"
 #: model:ir.model,name:impress_deposit.model_sale_order
 msgid "Sales Order"
 msgstr "Bon de vente"
+
+#. module: impress_deposit
+#: model:ir.model,name:impress_deposit.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Ligne de bon de vente"
 
 #. module: impress_deposit
 #: model_terms:ir.ui.view,arch_db:impress_deposit.view_res_config_settings_view_form_inherit_deposit

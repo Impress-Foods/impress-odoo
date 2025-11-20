@@ -30,7 +30,6 @@ msgstr "Actif"
 #. module: documents_archive
 #. odoo-javascript
 #: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#: code:addons/impress-odoo/documents_archive/static/src/documents_inspector.xml:0
 #, python-format
 msgid "Archive"
 msgstr "Archiver"
@@ -48,14 +47,8 @@ msgid "Contact"
 msgstr "Contact"
 
 #. module: documents_archive
-#: model_terms:ir.actions.act_window,help:documents_archive.see_partner_documents
-msgid "Create new document"
-msgstr "Créer un nouveau document"
-
-#. module: documents_archive
 #. odoo-javascript
 #: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#: code:addons/impress-odoo/documents_archive/static/src/documents_inspector.xml:0
 #, python-format
 msgid "Delete"
 msgstr "Supprimer"
@@ -69,7 +62,6 @@ msgstr "Document"
 #. module: documents_archive
 #. odoo-javascript
 #: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#: code:addons/impress-odoo/documents_archive/static/src/documents_inspector.xml:0
 #, python-format
 msgid "Download"
 msgstr "Télécharger"
@@ -77,7 +69,6 @@ msgstr "Télécharger"
 #. module: documents_archive
 #. odoo-javascript
 #: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#: code:addons/impress-odoo/documents_archive/static/src/documents_inspector.xml:0
 #, python-format
 msgid "Lock"
 msgstr "Verrouiller"
@@ -85,7 +76,6 @@ msgstr "Verrouiller"
 #. module: documents_archive
 #. odoo-javascript
 #: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#: code:addons/impress-odoo/documents_archive/static/src/documents_inspector.xml:0
 #, python-format
 msgid "Move to trash"
 msgstr "Déplacer à la corbeille"
@@ -93,7 +83,6 @@ msgstr "Déplacer à la corbeille"
 #. module: documents_archive
 #. odoo-javascript
 #: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#: code:addons/impress-odoo/documents_archive/static/src/documents_inspector.xml:0
 #, python-format
 msgid "Open chatter"
 msgstr "Ouvrir le chatter"
@@ -101,7 +90,6 @@ msgstr "Ouvrir le chatter"
 #. module: documents_archive
 #. odoo-javascript
 #: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#: code:addons/impress-odoo/documents_archive/static/src/documents_inspector.xml:0
 #, python-format
 msgid "Replace"
 msgstr "Remplacer"
@@ -109,7 +97,6 @@ msgstr "Remplacer"
 #. module: documents_archive
 #. odoo-javascript
 #: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#: code:addons/impress-odoo/documents_archive/static/src/documents_inspector.xml:0
 #, python-format
 msgid "Restore"
 msgstr "Rétablir"
@@ -117,7 +104,6 @@ msgstr "Rétablir"
 #. module: documents_archive
 #. odoo-javascript
 #: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#: code:addons/impress-odoo/documents_archive/static/src/documents_inspector.xml:0
 #, python-format
 msgid "Share this selection"
 msgstr "Partager cette sélection"
@@ -125,7 +111,6 @@ msgstr "Partager cette sélection"
 #. module: documents_archive
 #. odoo-javascript
 #: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#: code:addons/impress-odoo/documents_archive/static/src/documents_inspector.xml:0
 #, python-format
 msgid "Split"
 msgstr "Séparer"
@@ -133,7 +118,9 @@ msgstr "Séparer"
 #. module: documents_archive
 #. odoo-javascript
 #: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#: code:addons/impress-odoo/documents_archive/static/src/documents_inspector.xml:0
 #, python-format
 msgid "Unarchive"
 msgstr "Désarchiver"
+
+#~ msgid "Create new document"
+#~ msgstr "Créer un nouveau document"
