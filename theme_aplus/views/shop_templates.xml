@@ -493,7 +493,7 @@
         <div class="container custom-tab-container">
             <div class="row">
                 <ul
-                    class="nav nav-tabs justify-content-center"
+                    class="nav nav-tabs nav-fill justify-content-center px-2"
                     id="{{prefix}}-Tab"
                     role="tablist"
                 >
@@ -508,7 +508,7 @@
                             role="y"
                             t-attf-aria-controls="{{prefix}}-tat"
                             aria-selected="false"
-                        > Tips and Tricks </button>
+                        >Tips</button>
                     </li>
                     <li class="nav-item custom-tab-item" role="presentation">
                         <button
@@ -520,7 +520,7 @@
                             role="tab"
                             t-attf-aria-controls="{{prefix}}-dyk"
                             aria-selected="false"
-                        > Did you know? </button>
+                        >Did you know?</button>
                     </li>
                     <li
                         t-if="show_tvn"
@@ -536,7 +536,7 @@
                             role="tab"
                             t-attf-aria-controls="{{prefix}}-tvn"
                             aria-selected="false"
-                        > Tableau nutritionnel</button>
+                        >Nutritional Facts</button>
                     </li>
                 </ul>
 
@@ -562,12 +562,12 @@
                     </div>
                     <div
                         t-if="show_tvn"
-                        class="tab-pane fade"
+                        class="tab-pane fade tvn-holder"
                         t-attf-id="{{prefix}}-tvn"
                         role="tabpanel"
                         t-attf-aria-labelledby="{{prefix}}-tvn-tab"
                     >
-                        <t t-call="theme_aplus.tvn" />
+                        <!-- <t t-call="theme_aplus.tvn" /> -->
                     </div>
                 </div>
             </div>

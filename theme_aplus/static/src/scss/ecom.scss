@@ -49,6 +49,15 @@
     }
 }
 
+.ap_card_link {
+    &:link,
+    &:visited,
+    &:hover,
+    &:active {
+        text-decoration: none;
+    }
+}
+
 /* Product cart component */
 .ap_product_cart {
     /* Performance optimizations */
@@ -65,10 +74,10 @@
     overflow: hidden;
     gap: 0.5rem;
 
-    &:focus-within {
-        outline: 2px solid currentColor;
-        outline-offset: 2px;
-    }
+    // &:focus-within {
+    //     outline: 2px solid currentColor;
+    //     outline-offset: 2px;
+    // }
 
     /* Hover effects */
     &:hover {

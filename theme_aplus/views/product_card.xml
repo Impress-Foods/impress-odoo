@@ -39,12 +39,9 @@
                 t-att-value="request.csrf_token()"
                 t-nocache="The csrf token must always be up to date."
             />
-            <a
-                t-att-href="product_href"
+            <div
                 class="ap_product_image_link d-block position-relative"
-                itemprop="url"
                 contenteditable="false"
-                aria-label="View product details"
             >
                 <img
                     loading="lazy"
@@ -52,7 +49,7 @@
                     t-attf-alt="product_name"
                 />
 
-            </a>
+            </div>
         </div>
 
         <!-- Product info + buttons -->
@@ -121,6 +118,22 @@
     </template>
 
     <template id="products_item" name="Product Item">
+        <t
+            t-set="product_href"
+            t-value="keep(product.website_url, page=(pager['page']['num'] if pager['page']['num']>1 else None))"
+        />
+        <t
+            t-set="image_type"
+            t-value="product._get_suitable_image_size(ppr, td_product['x'], td_product['y'])"
+        />
+
+        <t t-set="template_price_vals" t-value="get_product_prices(product)" />
+
+        <t
+            t-set="image_holder"
+            t-value="product._get_image_holder() if product._name == 'product.template' else
+            product.product_tmpl_id._get_image_holder()"
+        />
         <form
             action="/shop/cart/update"
             method="post"
@@ -132,42 +145,31 @@
             aria-label="Product card for {{product.name}}"
             tabindex="0"
         >
-            <t
-                t-set="product_href"
-                t-value="keep(product.website_url, page=(pager['page']['num'] if pager['page']['num']>1 else None))"
-            />
-            <t
-                t-set="image_type"
-                t-value="product._get_suitable_image_size(ppr, td_product['x'], td_product['y'])"
-            />
+            <a t-att-href="product_href" itemprop="url" class="ap_card_link">
+                <t t-call="theme_aplus.wavy_product_card">
+                    <t t-set="p_color" t-value="product.card_primary_color" />
+                    <t t-set="s_color" t-value="product.card_secondary_color" />
+                    <t t-set="t_color" t-value="product.card_text_color" />
+                    <t t-set="product" t-value="product" />
 
-            <t t-set="template_price_vals" t-value="get_product_prices(product)" />
-
-            <t
-                t-set="image_holder"
-                t-value="product._get_image_holder() if product._name == 'product.template' else
-    product.product_tmpl_id._get_image_holder()"
-            />
-
-            <t t-call="theme_aplus.wavy_product_card">
-                <t t-set="p_color" t-value="product.card_primary_color" />
-                <t t-set="s_color" t-value="product.card_secondary_color" />
-                <t t-set="t_color" t-value="product.card_text_color" />
-                <t t-set="product" t-value="product" />
-
-            </t>
-            <div>
-                <t t-set="bg_color" t-value="td_product['ribbon']['bg_color'] or ''" />
-                <t t-set="text_color" t-value="td_product['ribbon']['text_color']" />
-                <t t-set="bg_class" t-value="td_product['ribbon']['html_class']" />
-                <span
-                    t-attf-class="o_ribbon o_not_editable #{bg_class}"
-                    t-attf-style="#{text_color and ('color: %s; ' % text_color)}#{bg_color and 'background-color:' + bg_color}"
-                    t-out="td_product['ribbon']['html'] or ''"
-                />
-            </div>
-
+                </t>
+                <div>
+                    <t
+                        t-set="bg_color"
+                        t-value="td_product['ribbon']['bg_color'] or ''"
+                    />
+                    <t
+                        t-set="text_color"
+                        t-value="td_product['ribbon']['text_color']"
+                    />
+                    <t t-set="bg_class" t-value="td_product['ribbon']['html_class']" />
+                    <span
+                        t-attf-class="o_ribbon o_not_editable #{bg_class}"
+                        t-attf-style="#{text_color and ('color: %s; ' % text_color)}#{bg_color and 'background-color:' + bg_color}"
+                        t-out="td_product['ribbon']['html'] or ''"
+                    />
+                </div>
+            </a>
         </form>
-
-    </template>
+</template>
 </odoo>
