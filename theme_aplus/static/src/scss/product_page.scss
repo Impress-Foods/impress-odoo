@@ -91,6 +91,16 @@
                 height: 10px;
             }
         }
+        @media (max-width: 350px) {
+            .recipe-icons {
+                width: 40px;
+                height: 40px;
+            }
+            .recipe-icons-plus {
+                width: 8px;
+                height: 8px;
+            }
+        }
     }
 
     path {
@@ -127,7 +137,7 @@
             line-height: 1;
 
             .related-flavor {
-                max-width: 80px;
+                //max-width: 80px;
                 text-align: center;
                 font-size: 0.9rem;
                 .related-flavor-image {
