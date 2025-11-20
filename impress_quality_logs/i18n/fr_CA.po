@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-04 17:01+0000\n"
-"PO-Revision-Date: 2025-11-20 16:42+0000\n"
+"PO-Revision-Date: 2025-11-20 18:14+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
 "impress-odoo/impress_quality_logs/fr_CA/>\n"
@@ -789,7 +789,7 @@ msgstr "Production"
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__production_id
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__production_id
 msgid "Production Order"
-msgstr "Ordre de production"
+msgstr "Ordre de Production"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__quality_check_id
