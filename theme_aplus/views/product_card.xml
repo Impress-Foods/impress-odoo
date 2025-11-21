@@ -54,7 +54,7 @@
 
         <!-- Product info + buttons -->
         <div
-            class="ap_product_text_container position-relative justify-content-center d-flex flex-column flex-grow-1 flex-shrink-1"
+            class="px-2 ap_product_text_container position-relative justify-content-center d-flex flex-column flex-grow-1 flex-shrink-1"
         >
             <div class="o_wsale_product_information_text flex-grow-1">
                 <h6 class="o_wsale_products_item_title mb-2">

@@ -342,7 +342,7 @@
             <xpath expr="//div[@id='product_detail_main']/div[1]" position="move" />
         </xpath>
         <xpath expr="//div[@id='left-column']" position="inside">
-            <div id="learn-more-block-desktop" class="d-none d-lg-block" />
+            <div id="learn-more-block-desktop" class="d-none d-lg-block w-100" />
         </xpath>
         <xpath expr="//div[@id='product_details']" position="inside">
             <div id="flavors-block" />
@@ -523,7 +523,7 @@
                         >Did you know?</button>
                     </li>
                     <li
-                        t-if="show_tvn"
+                        t-if="show_tvn and product.has_tvn"
                         class="nav-item custom-tab-item"
                         role="presentation"
                     >
@@ -561,7 +561,7 @@
                         <t t-out="product.did_you_know" />
                     </div>
                     <div
-                        t-if="show_tvn"
+                        t-if="show_tvn and product.has_tvn"
                         class="tab-pane fade tvn-holder"
                         t-attf-id="{{prefix}}-tvn"
                         role="tabpanel"
