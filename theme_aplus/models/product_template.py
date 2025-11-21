@@ -1,6 +1,6 @@
 import logging
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -29,6 +29,18 @@ class ProductTemplate(models.Model):
 
     did_you_know = fields.Html(translate=True)
     tips_and_tricks = fields.Html(translate=True)
+
+    has_tvn = fields.Boolean(compute="_compute_has_tvn")
+
+    @api.depends("product_variant_ids.nutrition_entry_ids")
+    def _compute_has_tvn(self):
+        for record in self:
+            has_tvn = False
+            for variant in record.product_variant_ids:
+                has_tvn = bool(len(variant.nutrition_entry_ids))
+                if has_tvn:
+                    break
+            record.has_tvn = has_tvn
 
 
 class ProductVariant(models.Model):
