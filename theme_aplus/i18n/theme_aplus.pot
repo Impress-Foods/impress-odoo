@@ -279,6 +279,12 @@ msgid "Group by Category"
 msgstr ""
 
 #. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__has_tvn
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__has_tvn
+msgid "Has Tvn"
+msgstr ""
+
+#. module: theme_aplus
 #: model:ir.model.fields,field_description:theme_aplus.field_product_product__hero_background_color
 #: model:ir.model.fields,field_description:theme_aplus.field_product_template__hero_background_color
 msgid "Hero Background Color"
