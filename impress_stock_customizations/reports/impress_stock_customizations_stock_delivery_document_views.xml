@@ -1,4 +1,5 @@
 <?xml version='1.0' encoding="utf-8" ?>
+<?xml-model href="../../import_xml.rng" type="application/xml"?>
 <odoo>
     <record
         id="impress_stock_report_delivery_document_add_total_quantity"
@@ -76,18 +77,23 @@
             <!-- Footer -->
             <xpath expr="//table[@name='stock_move_line_table']/tbody" position="after">
                 <tfoot>
-                    <td />
-                    <td class="text-center">
-                        <t t-if="not has_serial_number" t-out="total_ordered" />
-                    </td>
-                    <td class="text-center">
-                        <t t-out="total_delivered" />
-                    </td>
+                    <tr>
+                        <td />
+                        <td />
+                        <td />
+                        <td class="text-center">
+                            <t t-if="not has_serial_number" t-out="total_ordered" />
+                        </td>
+                        <td class="text-center">
+                            <t t-out="total_delivered" />
+                        </td>
+                    </tr>
                 </tfoot>
             </xpath>
 
         </field>
     </record>
+
     <record
         id="impress_stock_report_delivery_document_add_minimum_shelf_life"
         model="ir.ui.view"
@@ -197,6 +203,7 @@
             </xpath>
         </field>
     </record>
+
     <record id="impress_stock_report_delivery_document_add_barcode" model="ir.ui.view">
         <field name="name">stock.report_delivery_document.impress.add_barcode</field>
         <field name="inherit_id" ref="stock.report_delivery_document" />
@@ -220,4 +227,35 @@
             </xpath>
         </field>
     </record>
+
+    <!-- <record id="impress_stock_report_delivery_document_add_barcode" model="ir.ui.view">
+        <field name="name">stock.report_delivery_document.impress.add_barcode</field>
+        <field name="inherit_id" ref="stock.report_delivery_document" />
+        <field name="priority">53</field>
+        <field name="arch" type="xml">
+        </field>
+    </record> -->
+    <record id="report_delivery_document_add_shelf_life" model="ir.ui.view">
+        <field name="name">stock.report_delivery_document.impress.add_shelf_lift</field>
+        <field name="inherit_id" ref="stock.report_delivery_document" />
+        <field name="priority">53</field>
+        <field name="arch" type="xml">
+             <!-- For state == done -->
+            <xpath expr="//th[@name='lot_serial']" position="after">
+                <th name="shelf_life_remaining" t-if="has_serial_number">
+                    Shelf life remaining
+                </th>
+            </xpath>
+        </field>
+    </record>
+    <template
+        id="stock_report_delivery_has_serial_move_line"
+        inherit_id="stock.stock_report_delivery_has_serial_move_line"
+    >
+        <xpath expr="//t[@name='move_line_lot']" position="after">
+            <t t-if="has_serial_number" name="shelf_life_remaining">
+                <td><span t-field="move_line.lot_id.life_remaining" /></td>
+            </t>
+        </xpath>
+    </template>
 </odoo>
