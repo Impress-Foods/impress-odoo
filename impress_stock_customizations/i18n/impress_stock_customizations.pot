@@ -58,6 +58,11 @@ msgid ""
 msgstr ""
 
 #. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
+msgid "<span> days</span>"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.impress_stock_report_delivery_document_add_minimum_shelf_life
 msgid ""
 "<strong>Minimum shelf life:</strong>\n"
@@ -65,8 +70,28 @@ msgid ""
 msgstr ""
 
 #. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
+msgid "<strong>Shelf life remaining</strong>"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__life_remaining
+msgid "Life Remaining"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.model,name:impress_stock_customizations.model_stock_lot
+msgid "Lot/Serial"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model:ir.actions.report,name:impress_stock_customizations.action_report_online_sale_label
 msgid "Online Sale Label"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_delivery_document_add_shelf_life
+msgid "Shelf life remaining"
 msgstr ""
 
 #. module: impress_stock_customizations
