@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-model href="../../import_xml.rng" type="application/xml"?>
+<odoo>
+    <record id="report_picking" model="ir.ui.view">
+        <field name="name">report.picking</field>
+        <field name="inherit_id" ref="stock.report_picking" />
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <xpath
+                expr="//th[@name='th_serial_number']"
+                position="after"
+                t-if="has_serial_number"
+            >
+                <th
+                    name="th_shelflife_remaining"
+                    class="text-center"
+                    t-if="has_serial_number"
+                >
+                    <strong>Shelf life remaining</strong>
+                </th>
+            </xpath>
+            <xpath expr="//tbody/tr/td[5]" position="after">
+                <td
+                    name="shelflife_remaining"
+                    t-if="has_serial_number"
+                    class="text-center h6"
+                >
+                    <div
+                        t-if="has_serial_number and ml.lot_id and ml.lot_id.use_expiration_date"
+                    >
+                        <span t-out="ml.lot_id.life_remaining">
+                            0
+                        </span>
+                        <span> days</span>
+                    </div>
+                </td>
+            </xpath>
+        </field>
+    </record>
+</odoo>
