@@ -135,19 +135,6 @@
                     data-reload="/"
                 />
             </we-row>
-            <!-- <we-row
-                id="bottle_qty_selector"
-                string="Bottle Quantity selector"
-                data-variable="bottle_qty_selector"
-            >
-                <we-button
-                    string="Bottle Quantity selector"
-                    data-customize-website-views="theme_aplus.bottle_quantity_selector"
-                    data-name="bottle_quantity_selector_opt"
-                    data-no-preview="true"
-                    data-reload="/"
-                />
-            </we-row> -->
         </xpath>
     </template>
 
@@ -567,7 +554,6 @@
                         role="tabpanel"
                         t-attf-aria-labelledby="{{prefix}}-tvn-tab"
                     >
-                        <!-- <t t-call="theme_aplus.tvn" /> -->
                     </div>
                 </div>
             </div>
@@ -585,10 +571,11 @@
         <div class="d-flex flex-column align-items-center">
             <div class="nutrition-table justify-center w-100" id="nutrition_table">
                 <table class="table caption-top">
-                    <caption
-                        t-if="product_variant.nutrition_facts_size"
-                        t-out="'Nutritional Values (for '+product_variant.nutrition_facts_size+')'"
-                    />
+                    <caption t-if="product_variant.nutrition_facts_size">
+                    Nutritional Values ( for <t
+                            t-out="product_variant.nutrition_facts_size"
+                        /> )
+                    </caption>
                     <thead>
                         <tr>
                             <th class="text-center">Content</th>

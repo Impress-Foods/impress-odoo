@@ -279,12 +279,6 @@ msgid "Group by Category"
 msgstr ""
 
 #. module: theme_aplus
-#: model:ir.model.fields,field_description:theme_aplus.field_product_product__has_tvn
-#: model:ir.model.fields,field_description:theme_aplus.field_product_template__has_tvn
-msgid "Has Tvn"
-msgstr ""
-
-#. module: theme_aplus
 #: model:ir.model.fields,field_description:theme_aplus.field_product_product__hero_background_color
 #: model:ir.model.fields,field_description:theme_aplus.field_product_template__hero_background_color
 msgid "Hero Background Color"
@@ -419,11 +413,6 @@ msgid "Nutrition fact table entry"
 msgstr ""
 
 #. module: theme_aplus
-#: model_terms:theme.ir.ui.view,arch:theme_aplus.tabbed_container
-msgid "Nutritional Facts"
-msgstr ""
-
-#. module: theme_aplus
 #. odoo-javascript
 #: code:addons/theme_aplus/static/src/snippets/s_dynamic_snippet_product_templates/000.xml:0
 #: code:addons/theme_aplus/static/src/snippets/s_dynamic_snippet_product_templates/000.xml:0
@@ -545,6 +534,11 @@ msgid "Suggestion Image"
 msgstr ""
 
 #. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.tabbed_container
+msgid "Tableau nutritionnel"
+msgstr ""
+
+#. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.s_dynamic_snippet_product_templates_options
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.s_window_carousel_options
 msgid "Tags"
@@ -567,14 +561,14 @@ msgid "This product is unpublished."
 msgstr ""
 
 #. module: theme_aplus
-#: model_terms:theme.ir.ui.view,arch:theme_aplus.tabbed_container
-msgid "Tips"
-msgstr ""
-
-#. module: theme_aplus
 #: model:ir.model.fields,field_description:theme_aplus.field_product_product__tips_and_tricks
 #: model:ir.model.fields,field_description:theme_aplus.field_product_template__tips_and_tricks
 msgid "Tips And Tricks"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.tabbed_container
+msgid "Tips and Tricks"
 msgstr ""
 
 #. module: theme_aplus
@@ -598,6 +592,7 @@ msgid "Very Fast"
 msgstr ""
 
 #. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.wavy_product_card
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.wavy_product_card_carousel
 msgid "View product details"
 msgstr ""
