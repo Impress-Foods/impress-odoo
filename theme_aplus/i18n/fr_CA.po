@@ -70,8 +70,8 @@ msgid ""
 "<span class=\"ticker-text ticker-text-editor\" "
 "contenteditable=\"true\">Infinite Ticker</span>"
 msgstr ""
-"<span class=\"ticker-text ticker-text-editor\" contenteditable=\"true\""
-">Banderole infinie</span>"
+"<span class=\"ticker-text ticker-text-editor\" "
+"contenteditable=\"true\">Banderole infinie</span>"
 
 #. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.product_show_vectors
