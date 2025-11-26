@@ -68,6 +68,11 @@ msgid ""
 msgstr ""
 
 #. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.tvn
+msgid "<span>)</span>"
+msgstr ""
+
+#. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.product_show_vectors
 msgid "<span>Fruits</span>"
 msgstr ""
@@ -75,6 +80,11 @@ msgstr ""
 #. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.product_show_vectors
 msgid "<span>Maple</span>"
+msgstr ""
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.tvn
+msgid "<span>Nutritional Values ( for </span>"
 msgstr ""
 
 #. module: theme_aplus
@@ -421,11 +431,6 @@ msgstr ""
 #. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.tabbed_container
 msgid "Nutritional Facts"
-msgstr ""
-
-#. module: theme_aplus
-#: model_terms:theme.ir.ui.view,arch:theme_aplus.tvn
-msgid "Nutritional Values ( for"
 msgstr ""
 
 #. module: theme_aplus

@@ -572,9 +572,9 @@
             <div class="nutrition-table justify-center w-100" id="nutrition_table">
                 <table class="table caption-top">
                     <caption t-if="product_variant.nutrition_facts_size">
-                    Nutritional Values ( for <t
-                            t-out="product_variant.nutrition_facts_size"
-                        /> )
+                    <span>Nutritional Values ( for </span>
+                    <span t-out="product_variant.nutrition_facts_size" />
+                    <span>)</span>
                     </caption>
                     <thead>
                         <tr>

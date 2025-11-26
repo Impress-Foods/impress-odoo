@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2025-11-25 16:13-0500\n"
+"PO-Revision-Date: 2025-11-26 08:37-0500\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
 "impress-odoo/theme_aplus/fr_CA/>\n"
@@ -75,6 +75,11 @@ msgstr ""
 "contenteditable=\"true\">Banderole infinie</span>"
 
 #. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.tvn
+msgid "<span>)</span>"
+msgstr "<span>)</span>"
+
+#. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.product_show_vectors
 msgid "<span>Fruits</span>"
 msgstr "<span>Fruits</span>"
@@ -83,6 +88,11 @@ msgstr "<span>Fruits</span>"
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.product_show_vectors
 msgid "<span>Maple</span>"
 msgstr "<span>Érable</span>"
+
+#. module: theme_aplus
+#: model_terms:theme.ir.ui.view,arch:theme_aplus.tvn
+msgid "<span>Nutritional Values ( for </span>"
+msgstr "<span> Valeurs nutritionnelles ( pour </span>"
 
 #. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.product_show_vectors
@@ -429,11 +439,6 @@ msgstr "Élément de tableau nutritionnel"
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.tabbed_container
 msgid "Nutritional Facts"
 msgstr "Informations nutritionnelles"
-
-#. module: theme_aplus
-#: model_terms:theme.ir.ui.view,arch:theme_aplus.tvn
-msgid "Nutritional Values ( for"
-msgstr "Valeurs nutritionnelles ( pour"
 
 #. module: theme_aplus
 #. odoo-javascript
