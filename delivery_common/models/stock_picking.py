@@ -19,6 +19,8 @@ class StockPicking(models.Model):
         store=True,
     )
 
+    ready_to_ship = fields.Boolean(copy=False, compute="_compute_ready_to_ship")
+
     @api.depends("sale_id", "sale_id.note", "sale_id.delivery_message")
     def _compute_delivery_instructions(self) -> None:
         for picking in self:
@@ -36,6 +38,11 @@ class StockPicking(models.Model):
                 elif picking.sale_id.delivery_message:
                     note = picking.sale_id.delivery_message
             picking.delivery_instructions = note
+
+    @api.depends("move_line_ids", "move_line_ids.picked")
+    def _compute_ready_to_ship(self):
+        for record in self:
+            record.ready_to_ship = all(record.move_line_ids.mapped("picked"))
 
     def _get_autoprint_report_actions(self) -> list[dict]:
         report_actions: list[dict] = super()._get_autoprint_report_actions()
