@@ -50,6 +50,48 @@
         </field>
     </record>
 
+
+    <record id="view_sale_order_calendar" model="ir.ui.view">
+        <field name="inherit_id" ref="sale.view_sale_order_calendar" />
+        <field name="name">sale.order.calendar</field>
+        <field name="model">sale.order</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <xpath expr="//calendar[1]" position="attributes">
+                <attribute name="date_start">commitment_date</attribute>
+                <attribute name="js_class">sale_calendar_view</attribute>
+                <attribute name="create">0</attribute>
+                <attribute name="mode">week</attribute>
+                <attribute name="color">delivery_status</attribute>
+            </xpath>
+            <xpath expr="//field[@name='activity_ids']" position="replace">
+                <field name="client_order_ref" />
+                <field name="delivery_status" filters="1" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='state']" position="replace" />
+        </field>
+    </record>
+
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='delivery_status']" position="after">
+                <xpath
+                    expr="//group[@name='sale_shipping']//label[1]"
+                    position="move"
+                />
+                <xpath
+                    expr="//group[@name='sale_shipping']//div[hasclass('o_row')]"
+                    position="move"
+                />
+            </xpath>
+        </field>
+    </record>
+
+
     <record id="sale.action_orders" model="ir.actions.act_window">
         <field name="name">Sales Orders</field>
         <field name="res_model">sale.order</field>
