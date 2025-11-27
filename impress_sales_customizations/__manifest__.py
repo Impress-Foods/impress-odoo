@@ -1,7 +1,7 @@
 {
     "name": "impress_sales_customizations",
     "version": "17.0.0.1.0",
-    "depends": ["base", "sale_management"],
+    "depends": ["base", "sale_management", "sale_stock"],
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Sales",
@@ -9,8 +9,11 @@
     Customizations for the sales module
     """,
     "license": "GPL-2",
-    # data files always loaded at installation
     "data": ["views/sale_order_views.xml"],
-    # data files containing optionally loaded demonstration data
-    "demo": [],
+    "assets": {
+        "web.assets_backend": [
+            "impress_sales_customizations/static/src/**/*.js",
+            "impress_sales_customizations/static/src/**/*.xml",
+        ],
+    },
 }
