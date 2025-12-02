@@ -33,11 +33,11 @@
 
                     </div>
 
-                    <group>
+                    <!-- <group>
                         <group>
                             <field name="x_average_threshold" />
                         </group>
-                    </group>
+                    </group> -->
 
                     <field name="x_x_ray_log_line_ids" nolabel="1">
                         <tree>
