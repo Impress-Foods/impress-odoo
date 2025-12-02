@@ -181,7 +181,12 @@ msgstr ""
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__ceramic_detection_value
-msgid "Ceramic Detection Value"
+msgid "Ceramic detection value (2.381 mm)"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__ceramic_detection_large_value
+msgid "Ceramic detection value (3.0 mm)"
 msgstr ""
 
 #. module: impress_quality_logs
@@ -284,12 +289,17 @@ msgstr ""
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__ferrous
-msgid "Ferrous"
+msgid "Ferrous (2.0 mm)"
 msgstr ""
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__glass_detection_value
-msgid "Glass Detection Value"
+msgid "Glass detection value (2.381 mm)"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__glass_detection_large_value
+msgid "Glass detection value (3.0 mm)"
 msgstr ""
 
 #. module: impress_quality_logs
@@ -672,7 +682,7 @@ msgstr ""
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__non_ferrous
-msgid "Non Ferrous"
+msgid "Non ferrous (2.5 mm)"
 msgstr ""
 
 #. module: impress_quality_logs
@@ -914,12 +924,17 @@ msgstr ""
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__stainless
-msgid "Stainless"
+msgid "Stainless (3.5 mm)"
 msgstr ""
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__stainless_detection_value
-msgid "Stainless Detection Value"
+msgid "Stainless detection value (1.0 mm)"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__stainless_detection_large_value
+msgid "Stainless detection value (1.2 mm)"
 msgstr ""
 
 #. module: impress_quality_logs
