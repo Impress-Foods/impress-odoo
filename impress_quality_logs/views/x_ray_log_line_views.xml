@@ -34,9 +34,33 @@
                             <field
                                 name="stainless_detection_value"
                                 readonly='is_locked'
+                                invisible="not stainless_detection_value"
                             />
-<field name="ceramic_detection_value" readonly='is_locked' />
-<field name="glass_detection_value" readonly='is_locked' />
+                            <field
+                                name="ceramic_detection_value"
+                                readonly='is_locked'
+                                invisible="not ceramic_detection_value"
+                            />
+                            <field
+                                name="glass_detection_value"
+                                readonly='is_locked'
+                                invisible="not glass_detection_value"
+                            />
+                            <field
+                                name="stainless_detection_large_value"
+                                readonly='is_locked'
+                                invisible="not stainless_detection_large_value"
+                            />
+                            <field
+                                name="ceramic_detection_large_value"
+                                readonly='is_locked'
+                                invisible="not ceramic_detection_large_value"
+                            />
+                            <field
+                                name="glass_detection_large_value"
+                                readonly='is_locked'
+                                invisible="not glass_detection_large_value"
+                            />
                         </group>
                         <group>
                             <field name="start_date" readonly='is_locked' />
@@ -44,6 +68,12 @@
                             <field name="total_qty" readonly='is_locked' />
                             <field name="reject_qty" readonly='is_locked' />
                             <field name="average" readonly='is_locked' />
+                            <field
+                                name="signature"
+                                readonly='is_locked'
+                                widget="signature"
+                                options="{'size':[0,90]}"
+                            />
                         </group>
                     </group>
                 </sheet>
@@ -81,9 +111,9 @@
         <field name="domain">[]</field>
         <field name="context">{}</field>
         <field name="help" type="html">
-            <p class="oe_view_nocontent_create">
-                There is no examples click here to add new X_ray Log Line.
-            </p>
+            <p
+                class="oe_view_nocontent_create"
+            > There is no examples click here to add new X_ray Log Line. </p>
         </field>
     </record>
 

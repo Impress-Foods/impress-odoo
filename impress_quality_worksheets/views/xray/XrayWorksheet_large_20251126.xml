@@ -33,11 +33,11 @@
 
                     </div>
 
-                    <group>
+                    <!-- <group>
                         <group>
                             <field name="x_average_threshold" />
                         </group>
-                    </group>
+                    </group> -->
 
                     <field name="x_x_ray_log_line_ids" nolabel="1">
                         <tree>
@@ -55,17 +55,17 @@
                                         required='1'
                                     />
                                     <field
-                                        name="stainless_detection_value"
+                                        name="stainless_detection_large_value"
                                         required="1"
                                         string="Stainless Detection Threshold (1.2 mm)"
                                     />
                                     <field
-                                        name="ceramic_detection_value"
+                                        name="ceramic_detection_large_value"
                                         required="1"
                                         string="Ceramic Detection Threshold (3.0 mm)"
                                     />
                                     <field
-                                        name="glass_detection_value"
+                                        name="glass_detection_large_value"
                                         required="1"
                                         string="Glass Detection Threshold (3.0 mm)"
                                     />
@@ -80,11 +80,6 @@
                                 <group>
                                     <field name="total_qty" required="1" />
                                     <field name="reject_qty" required="1" />
-                                    <field
-                                        name="average"
-                                        required="1"
-                                        string="Average at least average threshold"
-                                    />
                                     <field name="start_date" required='1' />
                                     <field
                                         name="signature"

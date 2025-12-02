@@ -80,11 +80,6 @@
                                 <group>
                                     <field name="total_qty" required="1" />
                                     <field name="reject_qty" required="1" />
-                                    <field
-                                        name="average"
-                                        required="1"
-                                        string="Average at least average threshold"
-                                    />
                                     <field name="start_date" required='1' />
                                     <field
                                         name="signature"
