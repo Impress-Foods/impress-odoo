@@ -74,7 +74,7 @@
                                     <field name="ferrous" required='1' />
                                     <field name="non_ferrous" required='1' />
                                     <field name="stainless" required='1' />
-                                    <field name="torque" required='1' />
+                                    <!-- <field name="torque" required='0' /> -->
                                     <field
                                         name="signature"
                                         widget="signature"
