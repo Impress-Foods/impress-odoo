@@ -1,0 +1,18 @@
+{
+    "name": "Emails Templates - A+",
+    "version": "17.0.1.0.0",
+    "summary": """ Email templates for A+ """,
+    "author": "Cédric Paradis",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
+    "category": "Hidden",
+    "depends": ["base", "stock", "sale"],
+    "data": [
+        "views/common_templates.xml",
+        "views/socials.xml",
+        "views/delivery_confirmation.xml",
+        "views/refund.xml",
+        "views/tracking.xml",
+    ],
+    "installable": True,
+    "license": "GPL-2",
+}

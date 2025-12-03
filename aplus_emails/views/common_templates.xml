@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="aplus_emails.order_summary" name="order summary">
+        <t
+            t-set="product_lines"
+            t-value="[line for line in so.order_line if (not line.is_delivery and not line.is_deposit_line)]"
+        />
+        <t
+            t-set="shipping_lines"
+            t-value="[line for line in so.order_line if line.is_delivery ]"
+        />
+        <t
+            t-set="deposit_lines"
+            t-value="[line for line in so.order_line if line.is_deposit_line]"
+        />
+
+        <t
+            t-set="product_thumbnail"
+            t-value="'max-width: 75px; max-height: 75px; width:auto; height:100%; margin: auto;'"
+        />
+        <t
+            t-set="product_thumbnail_container"
+            t-value="'background-color:#ffffff;border-radius:8px; display:inline-block; display: flex;'"
+        />
+        <t t-set="tar" t-value="'text-align: right;'" />
+        <t t-set="tal" t-value="'text-align: left;'" />
+        <t t-set="pl" t-value="'margin-left: 20%;'" />
+        <t t-set="pr" t-value="'margin-right: 20%;'" />
+
+        <div
+            style="display: grid; grid-template-columns: 10% auto 15% 10%; align-items: center; grid-gap: 0.5rem; max-width: 100%;"
+        >
+            <!-- Items -->
+            <t t-set="grid_row" t-value="0" />
+            <t t-foreach="product_lines" t-as="line">
+
+
+                <div
+                    t-attf-style="{{pl}} {{product_thumbnail_container}} height: 100%;"
+                >
+                    <img
+                        t-attf-src="data:image/*;base64, {{ line.product_id.image_128 }}"
+                        t-attf-style="{{ product_thumbnail }} "
+                    />
+                </div>
+
+                <div
+                    t-attf-style="{{flexColumn}} grid-column: 2 / span 2; padding-left: 1rem; "
+                >
+                    <span
+                        style="padding-bottom: 0.5rem; font-weight: 600;"
+                        t-out="line.product_id.product_tmpl_id.name"
+                    />
+                    <span
+                        style="padding-bottom: 0.25rem;"
+                        t-out="'x{:.0f}'.format(line.product_uom_qty)"
+                    />
+                    <span
+                        style="padding-bottom: 0.25rem;"
+                        t-out="line.product_id.product_tmpl_id.public_categ_ids[0].name"
+                    />
+                    <t t-if="line.product_id.product_template_variant_value_ids">
+                        <span
+                            style="padding-bottom: 0.25rem;"
+                            t-out="line.product_id.product_template_variant_value_ids[0].name"
+                        />
+                    </t>
+                    <t t-elif="1">
+                        <span
+                            style="padding-bottom: 0.25rem;"
+                            t-out="line.product_id.product_tmpl_id.attribute_line_ids[0].value_ids[0].name"
+                        />
+                    </t>
+                </div>
+                <div t-attf-style="{{pr}} text-align:right;">
+                    <t t-out="line.price_subtotal" />$
+                </div>
+                <div
+                    style="grid-column: 1 / 5; border-bottom: 1px solid white; height: 1px; margin-top: 1px; margin-bottom:1px;"
+                />
+            </t>
+            <!-- Footer -->
+            <span
+                t-attf-style="{{tal}} {{pl}} font-weight: 400; grid-column: 3;"
+            >Deposit</span>
+            <span t-attf-style="{{tar}} {{pr}} grid-column: 4;"><t
+                    t-out="'{:.2f}'.format(sum([l.price_total for l in deposit_lines]))"
+                />$</span>
+
+            <span
+                t-attf-style="{{tal}} {{pl}}font-weight: 400; grid-column: 3;"
+            >Shipping</span>
+            <span t-attf-style="{{tar}} {{pr}} grid-column: 4;"><t
+                    t-out="'{:.2f}'.format(sum([l.price_total for l in shipping_lines]))"
+                />$</span>
+
+            <span
+                t-attf-style="{{tal}} {{pl}} font-weight: 400; grid-column: 3"
+            >Taxes</span>
+            <span t-attf-style="{{tar}} {{pr}} grid-column: 4;"><t
+                    t-out="'{:.2f}'.format(so.amount_tax)"
+                />$</span>
+            <div
+                t-attf-style="grid-column: 3 / 5; border-bottom: 1px solid white; height: 1px; margin-top: 1px; margin-bottom:1px;"
+            />
+
+            <span
+                t-attf-style="{{tal}} {{pl}} font-weight: 600; grid-column: 3;"
+            >Total</span>
+            <span t-attf-style="{{tar}} {{pr}} font-weight: 600; grid-column: 4;"><t
+                    t-out="'{:.2f}'.format(so.amount_total)"
+                />$</span>
+        </div>
+    </template>
+
+    <template id="aplus_emails.font_gooper" name="Font Gooper">
+        <style>
+            @font-face {
+                font-family: 'Gooper';
+                font-style: normal;
+                font-weight: 400;
+                src: url(/aplus_emails/static/fonts/Gooper-Regular.woff2) format('woff2');
+            }
+            @font-face {
+                font-family: 'Gooper';
+                font-style: normal;
+                font-weight: 700;
+                src: url(/aplus_emails/static/fonts/Gooper-Bold.woff2) format('woff2');
+            }
+            @font-face {
+                font-family: 'Gooper';
+                font-style: normal;
+                font-weight: 600;
+                src: url(/aplus_emails/static/fonts/Gooper-SemiBold.woff2) format('woff2');
+            }
+        </style>
+    </template>
+    <template id="aplus_emails.image_header" name="image_header">
+        <div
+            t-attf-style="{{flexColumn}} align-items:center; gap: 1rem; padding-top:1rem; padding-bottom:1rem;"
+            id="header"
+        >
+            <img
+                src="/aplus_emails/static/img/logo_orange.png"
+                alt="Orange A+ Logo"
+                style="height:auto; width:20%;"
+            />
+            <img
+                t-attf-src="/aplus_emails/static/img/{{image}}"
+                t-attf-alt="{{alt_text}}"
+                style="width:100%; height:auto;"
+            />
+        </div>
+    </template>
+    <template
+        id="aplus_emails.image_header_overlaid_logo"
+        name="image_header_overlaid_logo"
+    >
+        <div style=" width:100%; overflow:hidden;" id="header">
+            <img
+                style="position: absolute; left: 50%; transform: translate(-50%, 0%); width: 30%; padding-top: 2rem;"
+                src="/aplus_emails/static/img/logo_white.png"
+                alt="White A+ logo"
+            />
+            <img
+                style="width: 100%; height: auto;"
+                t-attf-src="/aplus_emails/static/img/{{image}}"
+                alt="{{alt_text}}"
+            />
+        </div>
+    </template>
+</odoo>
