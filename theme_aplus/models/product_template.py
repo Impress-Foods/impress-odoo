@@ -32,6 +32,11 @@ class ProductTemplate(models.Model):
 
     has_tvn = fields.Boolean(compute="_compute_has_tvn")
 
+    show_water = fields.Boolean()
+    show_fruits = fields.Boolean()
+    show_maple = fields.Boolean()
+    show_adq = fields.Boolean()
+
     @api.depends("product_variant_ids.nutrition_entry_ids")
     def _compute_has_tvn(self):
         for record in self:

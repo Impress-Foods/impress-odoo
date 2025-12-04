@@ -374,7 +374,7 @@
 
     <template id="product_show_adq" active="False" inherit_id="website_sale.product">
         <xpath expr="//div[@id='adq-block']" position="inside">
-            <div class="icon-block">
+            <div t-if="product.show_adq" class="icon-block">
                 <img
                     src="/theme_aplus/static/src/images/AlimentsDuQuebec_Logo_Renv.svg"
                     width="100px"
@@ -397,17 +397,26 @@
                 t-value="'--highlight-color:' + product.product_page_text_color +';'"
             />
             <div id="vector_images" class="icon-block" t-att-style="style">
-                <div class="vector-column">
+                <t
+                    t-set="show_plus_1"
+                    t-value="(product.show_fruits and product.show_water) or (product.show_fruits and product.show_maple)"
+                />
+                <t
+                    t-set="show_plus_2"
+                    t-value="(product.show_water and product.show_maple)"
+                />
+
+                <div t-if="product.show_fruits" class="vector-column">
                     <t t-call="theme_aplus.fruit_vector" />
                     <span>Fruits</span>
                 </div>
-                <t t-call="theme_aplus.plus_vector" />
-                <div class="vector-column">
+                <t t-if="show_plus_1" t-call="theme_aplus.plus_vector" />
+                <div t-if="product.show_water" class="vector-column">
                     <t t-call="theme_aplus.water_vector_alt" />
                     <span>Water</span>
                 </div>
-                <t t-call="theme_aplus.plus_vector" />
-                <div class="vector-column">
+                <t t-if="show_plus_2" t-call="theme_aplus.plus_vector" />
+                <div t-if="product.show_maple" class="vector-column">
                     <t t-call="theme_aplus.maple_vector" />
                     <span>Maple</span>
                 </div>

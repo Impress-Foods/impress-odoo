@@ -37,6 +37,12 @@
                             <field name="did_you_know" />
                             <field name="tips_and_tricks" />
                         </group>
+                        <group>
+                            <field name="show_adq" />
+                            <field name="show_water" />
+                            <field name="show_fruits" />
+                            <field name="show_maple" />
+                        </group>
                     </group>
                 </page>
             </xpath>
