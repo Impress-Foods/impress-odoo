@@ -14,13 +14,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: delivery_common
-#: model:ir.actions.report,print_report_name:delivery_common.report_shipping_label
-msgid "'%s' % object.name"
+#: model_terms:ir.ui.view,arch_db:delivery_common.stock_picking_kanban
+msgid "&amp;nbsp;-&amp;nbsp;"
 msgstr ""
 
 #. module: delivery_common
-#: model_terms:ir.ui.view,arch_db:delivery_common.stock_picking_kanban
-msgid "<span> &amp;nbsp;-&amp;nbsp;</span>"
+#: model:ir.actions.report,print_report_name:delivery_common.report_shipping_label
+msgid "'%s' % object.name"
 msgstr ""
 
 #. module: delivery_common
@@ -58,6 +58,11 @@ msgstr ""
 #. module: delivery_common
 #: model_terms:ir.ui.view,arch_db:delivery_common.view_stock_picking_form
 msgid "Print Shipping Label"
+msgstr ""
+
+#. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking__ready_to_ship
+msgid "Ready To Ship"
 msgstr ""
 
 #. module: delivery_common
