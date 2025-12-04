@@ -1,5 +1,5 @@
 {
-    "name": "impress_barcode",
+    "name": "Impress Barcode Tweaks",
     "summary": """
         Customizations to barcode app
     """,
