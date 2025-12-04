@@ -359,14 +359,15 @@
         inherit_id="website_sale.product"
     >
         <xpath expr="//div[@id='ingredients-block']" position="inside">
-            <!-- <div class="ingredients-block d-flex flex-column pb-5"> -->
-            <div class="ingredients-block d-flex flex-column">
-                <span class="subsection-header">Ingredients</span>
-                <span
-                    class="text-muted ingredient-list"
-                    t-field="product.ingredients"
-                />
-            </div>
+            <t t-if="product.ingredients">
+                <div class="ingredients-block d-flex flex-column">
+                    <span class="subsection-header">Ingredients</span>
+                    <span
+                        class="text-muted ingredient-list"
+                        t-field="product.ingredients"
+                    />
+                </div>
+            </t>
         </xpath>
 
     </template>
