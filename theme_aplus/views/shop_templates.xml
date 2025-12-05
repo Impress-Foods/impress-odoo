@@ -495,29 +495,39 @@
                     role="tablist"
                 >
 
-                    <li class="nav-item custom-tab-item" role="presentation">
+                    <li
+                        t-if="product.tab_1_title"
+                        class="nav-item custom-tab-item"
+                        role="presentation"
+                    >
                         <button
                             class="nav-link active"
-                            t-attf-id="{{prefix}}-tat-tab"
+                            t-attf-id="{{prefix}}-1-tab"
                             data-bs-toggle="tab"
-                            t-att-data-bs-target="'#'+prefix+'-tat'"
+                            t-att-data-bs-target="'#'+prefix+'-1'"
                             type="button"
                             role="y"
-                            t-attf-aria-controls="{{prefix}}-tat"
+                            t-attf-aria-controls="{{prefix}}-1"
                             aria-selected="false"
-                        >Tips</button>
+                            t-out="product.tab_1_title"
+                        />
                     </li>
-                    <li class="nav-item custom-tab-item" role="presentation">
+                    <li
+                        t-if="product.tab_2_title"
+                        class="nav-item custom-tab-item"
+                        role="presentation"
+                    >
                         <button
                             class="nav-link"
-                            t-attf-id="{{prefix}}-dyk-tab"
+                            t-attf-id="{{prefix}}-2-tab"
                             data-bs-toggle="tab"
-                            t-att-data-bs-target="'#'+prefix+'-dyk'"
+                            t-att-data-bs-target="'#'+prefix+'-2'"
                             type="button"
                             role="tab"
-                            t-attf-aria-controls="{{prefix}}-dyk"
+                            t-attf-aria-controls="{{prefix}}-2"
                             aria-selected="false"
-                        >Did you know?</button>
+                            t-out="product.tab_2_title"
+                        />
                     </li>
                     <li
                         t-if="show_tvn and product.has_tvn"
@@ -542,20 +552,22 @@
                     t-attf-id="{{prefix}}-TabContent"
                 >
                     <div
+                        t-if="product.tab_1_title"
                         class="tab-pane fade show active"
-                        t-attf-id="{{prefix}}-tat"
+                        t-attf-id="{{prefix}}-1"
                         role="tabpanel"
-                        t-attf-aria-labelledby="{{prefix}}-tat-tab"
+                        t-attf-aria-labelledby="{{prefix}}-1-tab"
                     >
-                        <t t-out="product.tips_and_tricks" />
+                        <t t-out="product.tab_1_text" />
                     </div>
                     <div
+                        t-if="product.tab_2_title"
                         class="tab-pane fade"
-                        t-attf-id="{{prefix}}-dyk"
+                        t-attf-id="{{prefix}}-2"
                         role="tabpanel"
-                        t-attf-aria-labelledby="{{prefix}}-dyk-tab"
+                        t-attf-aria-labelledby="{{prefix}}-2-tab"
                     >
-                        <t t-out="product.did_you_know" />
+                        <t t-out="product.tab_2_text" />
                     </div>
                     <div
                         t-if="show_tvn and product.has_tvn"

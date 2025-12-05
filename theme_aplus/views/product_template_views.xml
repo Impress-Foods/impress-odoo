@@ -34,8 +34,10 @@
                     <group string="Details">
                         <group>
                             <field name="ingredients" />
-                            <field name="did_you_know" />
-                            <field name="tips_and_tricks" />
+                            <field name="tab_1_title" />
+                            <field name="tab_1_text" />
+                            <field name="tab_2_title" />
+                            <field name="tab_2_text" />
                         </group>
                         <group>
                             <field name="show_adq" />

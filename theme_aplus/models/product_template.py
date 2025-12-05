@@ -27,15 +27,18 @@ class ProductTemplate(models.Model):
     carousel_order = fields.Integer()
     ingredients = fields.Html(translate=True)
 
-    did_you_know = fields.Html(translate=True)
-    tips_and_tricks = fields.Html(translate=True)
+    tab_1_title = fields.Char(translate=True)
+    tab_2_title = fields.Char(translate=True)
+
+    tab_1_text = fields.Html(translate=True)
+    tab_2_text = fields.Html(translate=True)
 
     has_tvn = fields.Boolean(compute="_compute_has_tvn")
 
-    show_water = fields.Boolean()
-    show_fruits = fields.Boolean()
-    show_maple = fields.Boolean()
-    show_adq = fields.Boolean()
+    show_water = fields.Boolean(default=True)
+    show_fruits = fields.Boolean(default=True)
+    show_maple = fields.Boolean(default=True)
+    show_adq = fields.Boolean(default=True)
 
     @api.depends("product_variant_ids.nutrition_entry_ids")
     def _compute_has_tvn(self):
