@@ -34,6 +34,11 @@ msgid "Sale"
 msgstr ""
 
 #. module: impress_sales_customizations
+#: model:ir.model,name:impress_sales_customizations.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
 msgid "Sales Orders"
 msgstr ""
@@ -41,4 +46,9 @@ msgstr ""
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
 msgid "To invoice"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order__delivery_zip
+msgid "Zip"
 msgstr ""

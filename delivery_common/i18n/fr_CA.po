@@ -6,9 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-20 16:43+0000\n"
+"PO-Revision-Date: 2025-12-08 14:24+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
-"Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
+"Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
 "impress-odoo/delivery-common/fr_CA/>\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
@@ -18,14 +18,14 @@ msgstr ""
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: delivery_common
+#: model_terms:ir.ui.view,arch_db:delivery_common.stock_picking_kanban
+msgid "&amp;nbsp;-&amp;nbsp;"
+msgstr "&amp;nbsp;-&amp;nbsp;"
+
+#. module: delivery_common
 #: model:ir.actions.report,print_report_name:delivery_common.report_shipping_label
 msgid "'%s' % object.name"
 msgstr "'%s' % object.name"
-
-#. module: delivery_common
-#: model_terms:ir.ui.view,arch_db:delivery_common.stock_picking_kanban
-msgid "<span> &amp;nbsp;-&amp;nbsp;</span>"
-msgstr "<span> &amp;nbsp;-&amp;nbsp;</span>"
 
 #. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking_type__auto_print_delivery_label
@@ -65,6 +65,11 @@ msgstr "Type de transfert"
 #: model_terms:ir.ui.view,arch_db:delivery_common.view_stock_picking_form
 msgid "Print Shipping Label"
 msgstr "Imprimer l'étiquette d'expédition"
+
+#. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking__ready_to_ship
+msgid "Ready To Ship"
+msgstr "Prêt à envoyer"
 
 #. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_delivery_carrier__send_confirmation_email

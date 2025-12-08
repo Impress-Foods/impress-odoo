@@ -25,8 +25,16 @@
         <field name="inherit_id" ref="stock.stock_picking_kanban" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='picking_properties']" position="after">
-                <span> &amp;nbsp;-&amp;nbsp;</span>
                 <field name="carrier_id" />
+                <span t-if="record.carrier_id.value"> &amp;nbsp;-&amp;nbsp;</span>
+            </xpath>
+            <xpath expr="//t[1]" position="inside">
+                <field name="ready_to_ship" invisible="1" />
+            </xpath>
+            <xpath expr="//t/div[1]" position="attributes">
+                <attribute
+                    name="t-attf-class"
+                >{{ record.ready_to_ship.raw_value ? 'oe_kanban_color_10' :  'oe_kanban_color_1' }} oe_kanban_card oe_kanban_global_click</attribute>
             </xpath>
         </field>
     </record>
