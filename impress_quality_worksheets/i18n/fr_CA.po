@@ -7,9 +7,9 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:06+0000\n"
-"PO-Revision-Date: 2025-11-20 16:42+0000\n"
+"PO-Revision-Date: 2025-12-08 14:24+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
-"Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
+"Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
 "impress-odoo/impress_quality_worksheets/fr_CA/>\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
@@ -68,32 +68,23 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20250303_form_view
-#, fuzzy
-#| msgid ""
-#| "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-#| "                            Mars 2025. Feuille de contrôle Codage </"
-#| "strong>"
 msgid ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Mars "
 "2025. Feuille de contrôle Codage </strong>"
 msgstr ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-"                            Mars 2025. Feuille de contrôle Codage </strong>"
+" Mars 2025. Feuille de contrôle Codage </strong>"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
-#, fuzzy
-#| msgid ""
-#| "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-#| "                            Mars 2025. Feuille de contrôle Rayon-X</"
-#| "strong>"
 msgid ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 26\n"
 "                            Novembre 2025. Feuille de contrôle Rayon-X (Gros "
 "témoins)</strong>"
 msgstr ""
-"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-"                            Mars 2025. Feuille de contrôle Rayon-X</strong>"
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 26\n"
+"                            Novembre 2025. Feuille de contrôle Rayon-X (Gros "
+"témoins)</strong>"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
@@ -175,10 +166,8 @@ msgstr "Seuil de détection de la céramique (2.381mm)"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
-#, fuzzy
-#| msgid "Ceramic Detection Threshold (2.381mm)"
 msgid "Ceramic Detection Threshold (3.0 mm)"
-msgstr "Seuil de détection de la céramique (2.381mm)"
+msgstr "Seuil de détection de la céramique (3.0 mm)"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
@@ -192,16 +181,12 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
-#, fuzzy
-#| msgid ""
-#| "During the last check (end of production), check that no cup is left\n"
-#| "                                in the reject bin."
 msgid ""
 "During the last check (end of production), check that no product is left\n"
 "                                in the reject bin."
 msgstr ""
 "Lors de la dernière vérification (fin de la production), vérifier qu'aucun "
-"cup \n"
+"produit\n"
 "n'est présent dans le réceptacle des rejets."
 
 #. module: impress_quality_worksheets
@@ -255,10 +240,8 @@ msgstr "Seuil de détection du verre (2.381mm)"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
-#, fuzzy
-#| msgid "Glass Detection Threshold (2.381mm)"
 msgid "Glass Detection Threshold (3.0 mm)"
-msgstr "Seuil de détection du verre (2.381mm)"
+msgstr "Seuil de détection du verre (3.0 mm)"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_hpp_log_id
@@ -359,10 +342,8 @@ msgstr "Seuil de détection Stainless (1.0mm)"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
-#, fuzzy
-#| msgid "Stainless Detection Threshold (1.0mm)"
 msgid "Stainless Detection Threshold (1.2 mm)"
-msgstr "Seuil de détection Stainless (1.0mm)"
+msgstr "Seuil de détection Stainless (1.2 mm)"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_start_date
@@ -462,10 +443,8 @@ msgstr "x_worksheet_20250303_id"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_ray_log_line_x_worksheet_large_20251126_id
-#, fuzzy
-#| msgid "x_worksheet_20250203_id"
 msgid "x_worksheet_large_20251126_id"
-msgstr "x_worksheet_20250203_id"
+msgstr "x_worksheet_large_20251126_id"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
