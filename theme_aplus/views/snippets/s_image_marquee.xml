@@ -6,8 +6,9 @@
             <div class="marquee_header">
                 <h1> Discover what we're up to!</h1>
                 <div>
-                    <i class="fa fa-instagram" style="color: var(--primary);" />
-                    <a href="#"> More goodness on our socials</a>
+                    <a href="https://www.instagram.com/aplus.superfruit/">
+                        <i class="fa fa-instagram fa-2x" />
+                    </a>
                 </div>
             </div>
             <div class="marquee" data-speed="10">

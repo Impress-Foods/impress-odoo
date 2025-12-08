@@ -7,9 +7,9 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-04 17:01+0000\n"
-"PO-Revision-Date: 2025-11-20 18:14+0000\n"
+"PO-Revision-Date: 2025-12-08 14:24+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
-"Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
+"Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
 "impress-odoo/impress_quality_logs/fr_CA/>\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
@@ -192,8 +192,13 @@ msgstr "Code de la caisse"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__ceramic_detection_value
-msgid "Ceramic Detection Value"
-msgstr "Seuil de détection céramique"
+msgid "Ceramic detection value (2.381 mm)"
+msgstr "Seuil de détection céramique (2.381 mm)"
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__ceramic_detection_large_value
+msgid "Ceramic detection value (3.0 mm)"
+msgstr "Seuil de détection céramique (3.0 mm)"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_search
@@ -295,13 +300,18 @@ msgstr "Date d'expiration"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__ferrous
-msgid "Ferrous"
-msgstr "Ferreux"
+msgid "Ferrous (2.0 mm)"
+msgstr "Ferreux (2.0 mm)"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__glass_detection_value
-msgid "Glass Detection Value"
-msgstr "Seuil de détection verre"
+msgid "Glass detection value (2.381 mm)"
+msgstr "Seuil de détection verre (2.381 mm)"
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__glass_detection_large_value
+msgid "Glass detection value (3.0 mm)"
+msgstr "Seuil de détection verre (3.0 mm)"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__global_success
@@ -627,7 +637,7 @@ msgstr "Vérification mensuelle"
 #. module: impress_quality_logs
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__subunit_check__na
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__name
@@ -675,8 +685,8 @@ msgstr "Poids nominal"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__non_ferrous
-msgid "Non Ferrous"
-msgstr "Non-ferreux"
+msgid "Non ferrous (2.5 mm)"
+msgstr "Non-ferreux (2.5 mm)"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__case_check__not_ok
@@ -735,8 +745,6 @@ msgstr "Orphelins"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__pressure_reached
-#, fuzzy
-#| msgid "Presssure Reached"
 msgid "Pressure Reached"
 msgstr "Pression atteinte"
 
@@ -813,10 +821,8 @@ msgstr "Contrôle qualité"
 #: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__quality_notes
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__quality_notes
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__quality_notes
-#, fuzzy
-#| msgid "Quality Check"
 msgid "Quality Notes"
-msgstr "Contrôle qualité"
+msgstr "Notes de contrôle qualité"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__qty_cases
@@ -924,13 +930,18 @@ msgstr "Vérification étiquette"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__stainless
-msgid "Stainless"
-msgstr "Inoxidable"
+msgid "Stainless (3.5 mm)"
+msgstr "Inoxydable (3.5 mm)"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__stainless_detection_value
-msgid "Stainless Detection Value"
-msgstr "Seuil de détection stainless"
+msgid "Stainless detection value (1.0 mm)"
+msgstr "Seuil de détection stainless (1.0 mm)"
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__stainless_detection_large_value
+msgid "Stainless detection value (1.2 mm)"
+msgstr "Seuil de détection stainless (1.2 mm)"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__start_date
@@ -1050,10 +1061,8 @@ msgstr "Limite supérieure"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__verification_signature
-#, fuzzy
-#| msgid "Monthly Signature"
 msgid "Verification Signature"
-msgstr "Signature mensuelle"
+msgstr "Signature de vérification"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__weekly_signature_date

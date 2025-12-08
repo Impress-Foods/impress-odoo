@@ -16,6 +16,23 @@ _logger = logging.getLogger(__name__)
 
 
 class CustomerPortal(portal.CustomerPortal):
+    def _prepare_portal_layout_values(self):
+        values = super()._prepare_portal_layout_values()
+        user = request.env.user
+        sale_orders = request.env["sale.order"].search(
+            [
+                (
+                    "partner_id",
+                    "in",
+                    [user.partner_id.id, user.partner_id.parent_id.id],
+                )
+            ]
+        )
+        manufacturings = [so for so in sale_orders if so.linked_production_ids]
+        has_manufacturings = bool(len(manufacturings))
+        values["has_manufacturings"] = has_manufacturings
+        return values
+
     @http.route(
         ["/my/manufacturings", "/my/manufacturings/page/<int:page>"],
         type="http",

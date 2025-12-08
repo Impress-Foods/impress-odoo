@@ -56,17 +56,27 @@ msgid ""
 msgstr ""
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
+msgid ""
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 26\n"
+"                            Novembre 2025. Feuille de contrôle Rayon-X (Gros témoins)</strong>"
+msgstr ""
+
+#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "After repairs."
 msgstr ""
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "At the end of production."
 msgstr ""
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "At the start of the day."
 msgstr ""
 
@@ -84,12 +94,8 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_average_threshold
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_large_20251126_average_threshold
 msgid "Average Threshold"
-msgstr ""
-
-#. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
-msgid "Average at least average threshold"
 msgstr ""
 
 #. module: impress_quality_worksheets
@@ -119,9 +125,21 @@ msgid "Ceramic Detection Threshold (2.381mm)"
 msgstr ""
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
+msgid "Ceramic Detection Threshold (3.0 mm)"
+msgstr ""
+
+#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 msgid ""
 "During the last check (end of production), check that no cup is left\n"
+"                                in the reject bin."
+msgstr ""
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
+msgid ""
+"During the last check (end of production), check that no product is left\n"
 "                                in the reject bin."
 msgstr ""
 
@@ -137,16 +155,19 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "Ejection OK"
 msgstr ""
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "Every 2 hours if no product change."
 msgstr ""
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "Every product change (format, recipe, lot)."
 msgstr ""
 
@@ -161,6 +182,11 @@ msgid "Glass Detection Threshold (2.381mm)"
 msgstr ""
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
+msgid "Glass Detection Threshold (3.0 mm)"
+msgstr ""
+
+#. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_hpp_log_id
 msgid "HPP Log"
 msgstr ""
@@ -172,6 +198,7 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid ""
 "If there is a metal reject during production, inform quality\n"
 "                                control."
@@ -180,6 +207,7 @@ msgstr ""
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20250303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "Initials"
 msgstr ""
 
@@ -254,6 +282,11 @@ msgid "Stainless Detection Threshold (1.0mm)"
 msgstr ""
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
+msgid "Stainless Detection Threshold (1.2 mm)"
+msgstr ""
+
+#. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_start_date
 msgid "Start Date"
 msgstr ""
@@ -289,26 +322,31 @@ msgstr ""
 #: model:ir.model.fields,field_description:impress_quality_worksheets.loma_log_x_worksheet_20250203_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.metal_log_x_worksheet_20250203_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_ray_log_x_worksheet_20250303_id
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_ray_log_x_worksheet_large_20251126_id
 msgid "Worksheet 2024-12-02"
 msgstr ""
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "X-Ray Frequency:"
 msgstr ""
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_x_ray_log_id
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_large_20251126_x_ray_log_id
 msgid "X-Ray Log"
 msgstr ""
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_x_ray_log_lines_id
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_large_20251126_x_ray_log_lines_id
 msgid "X-Ray Log Line"
 msgstr ""
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "X-Ray Reject Value"
 msgstr ""
 
@@ -342,6 +380,11 @@ msgstr ""
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_ray_log_line_x_worksheet_20250303_id
 msgid "x_worksheet_20250303_id"
+msgstr ""
+
+#. module: impress_quality_worksheets
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_ray_log_line_x_worksheet_large_20251126_id
+msgid "x_worksheet_large_20251126_id"
 msgstr ""
 
 #. module: impress_quality_worksheets

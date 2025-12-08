@@ -29,9 +29,9 @@ class MetalLogLine(models.Model):
     ejection = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
 
     reject_value = fields.Float()
-    ferrous = fields.Integer()
-    non_ferrous = fields.Integer()
-    stainless = fields.Integer()
+    ferrous = fields.Integer("Ferrous (2.0 mm)")
+    non_ferrous = fields.Integer("Non ferrous (2.5 mm)")
+    stainless = fields.Integer("Stainless (3.5 mm)")
     torque = fields.Integer()
     mean_weight = fields.Float()
 
