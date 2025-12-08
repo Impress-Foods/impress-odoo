@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="email_template_welcome_aplus" model="mail.template">
+        <field name="name">A+: Welcome</field>
+        <field name="model_id" ref="base.model_res_users" />
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True" />
+        <field name="subject">Welcome to A+ Superfruit</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="body_html" type="html">
+            <t t-set="textColor" t-value="'#f65834'" />
+            <t t-set="bgColor" t-value="'#f7eae4'" />
+            <div style="overflow: hidden;">
+                <t t-call="aplus_emails.email_format">
+                    <div style="width:80%; margin:auto;">
+                        <t t-call="aplus_emails.image_header">
+                            <t t-set="image" t-value="'new-account-1.jpg'" />
+                            <t
+                                t-set="alt_text"
+                                t-value="'Lunch bag with an A+ juice bottle'"
+                            />
+                        </t>
+                        <div style="width: 60%; min-width: 400px; max-width: 100%;">
+                            <h1> Welcome to A+ Superfruit</h1>
+                            <span> Dear <t t-out="object.name" />, <br />
+                            Your account has been successfully created. You can access your account area to view orders, change your password, and more at:
+                                <a
+                                    t-attf-style="color:{{textColor}};text-decoration: none;"
+                                    href="https://aplussuperfruit.com/my/home"
+                                >wwww.aplussuperfruit.com/my/home</a></span>
+                            <p> We look forward to seeing you soon.</p>
+                            <hr
+                                style="position:relative;left: -22%; color: white; width: 100vw; background-color: white; border:none; height:1px;"
+                            />
+                            <h3 style="">For the big and <em>little</em> moments</h3>
+                            <span> Click <a
+                                    t-attf-style="color:{{textColor}};"
+                                    href="https://aplussuperfruit.com/locator"
+                                >here</a> for the nearest store</span>
+
+                        </div>
+                        <div
+                            style="width:80%; display:grid; grid-template-columns: 25% 25% auto 40%; grid-gap: 1rem; justify-items: center; align-items: center; padding-top: 2rem; padding-bottom: 2rem;"
+                        >
+                            <img
+                                style="grid-column: 1; grid-row: 1; width:100%"
+                                src="/aplus_emails/static/img/IGA.png"
+                            />
+                            <img
+                                style="grid-column: 2; grid-row: 1; width:100%"
+                                src="/aplus_emails/static/img/Metro.png"
+                            />
+                            <img
+                                style="grid-column: 4; grid-row: 1 / 3; width: 80%;"
+                                src="/aplus_emails/static/img/strawberry_girl.png"
+                            />
+                            <img
+                                style="grid-column: 1; grid-row: 2; width:100%"
+                                src="/aplus_emails/static/img/WholeFoods.png"
+                            />
+                            <img
+                                style="grid-column: 2; grid-row: 2; width:100%"
+                                src="/aplus_emails/static/img/Avril.png"
+                            />
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </field>
+    </record>
+</odoo>

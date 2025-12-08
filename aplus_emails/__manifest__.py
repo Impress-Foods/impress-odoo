@@ -12,6 +12,8 @@
         "views/delivery_confirmation.xml",
         "views/refund.xml",
         "views/tracking.xml",
+        "views/password_reset.xml",
+        "views/new_account.xml",
     ],
     "installable": True,
     "license": "GPL-2",
