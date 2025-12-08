@@ -223,17 +223,6 @@ msgid "Details"
 msgstr ""
 
 #. module: theme_aplus
-#: model:ir.model.fields,field_description:theme_aplus.field_product_product__did_you_know
-#: model:ir.model.fields,field_description:theme_aplus.field_product_template__did_you_know
-msgid "Did You Know"
-msgstr ""
-
-#. module: theme_aplus
-#: model_terms:theme.ir.ui.view,arch:theme_aplus.tabbed_container
-msgid "Did you know?"
-msgstr ""
-
-#. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.s_image_marquee
 msgid "Discover what we're up to!"
 msgstr ""
@@ -360,11 +349,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:theme_aplus.field_product_product__minimalist_card_image
 #: model:ir.model.fields,field_description:theme_aplus.field_product_template__minimalist_card_image
 msgid "Minimalist Card Image"
-msgstr ""
-
-#. module: theme_aplus
-#: model_terms:theme.ir.ui.view,arch:theme_aplus.s_image_marquee
-msgid "More goodness on our socials"
 msgstr ""
 
 #. module: theme_aplus
@@ -508,6 +492,12 @@ msgid "Shop Now"
 msgstr ""
 
 #. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__show_adq
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__show_adq
+msgid "Show Adq"
+msgstr ""
+
+#. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.snippet_options_ecom
 msgid "Show Alim du QC"
 msgstr ""
@@ -515,6 +505,12 @@ msgstr ""
 #. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.snippet_options_ecom
 msgid "Show Fruit/Water/Maple"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__show_fruits
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__show_fruits
+msgid "Show Fruits"
 msgstr ""
 
 #. module: theme_aplus
@@ -528,6 +524,12 @@ msgid "Show Learn More Tabs"
 msgstr ""
 
 #. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__show_maple
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__show_maple
+msgid "Show Maple"
+msgstr ""
+
+#. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.snippet_options_ecom
 msgid "Show Nutrition Table"
 msgstr ""
@@ -535,6 +537,12 @@ msgstr ""
 #. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.snippet_options_ecom
 msgid "Show Related Flavors"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__show_water
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__show_water
+msgid "Show Water"
 msgstr ""
 
 #. module: theme_aplus
@@ -552,6 +560,30 @@ msgstr ""
 #: model:ir.model.fields,field_description:theme_aplus.field_product_product__suggestion_image
 #: model:ir.model.fields,field_description:theme_aplus.field_product_template__suggestion_image
 msgid "Suggestion Image"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__tab_1_text
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__tab_1_text
+msgid "Tab 1 Text"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__tab_1_title
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__tab_1_title
+msgid "Tab 1 Title"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__tab_2_text
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__tab_2_text
+msgid "Tab 2 Text"
+msgstr ""
+
+#. module: theme_aplus
+#: model:ir.model.fields,field_description:theme_aplus.field_product_product__tab_2_title
+#: model:ir.model.fields,field_description:theme_aplus.field_product_template__tab_2_title
+msgid "Tab 2 Title"
 msgstr ""
 
 #. module: theme_aplus
@@ -574,17 +606,6 @@ msgstr ""
 #. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.wavy_product_card
 msgid "This product is unpublished."
-msgstr ""
-
-#. module: theme_aplus
-#: model_terms:theme.ir.ui.view,arch:theme_aplus.tabbed_container
-msgid "Tips"
-msgstr ""
-
-#. module: theme_aplus
-#: model:ir.model.fields,field_description:theme_aplus.field_product_product__tips_and_tricks
-#: model:ir.model.fields,field_description:theme_aplus.field_product_template__tips_and_tricks
-msgid "Tips And Tricks"
 msgstr ""
 
 #. module: theme_aplus
