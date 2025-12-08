@@ -455,7 +455,10 @@
                                     t-attf-src="/web/image/product.template/{{rel_product.id}}/image_512"
                                 />
                             </a>
-                            <span t-out="rel_product.name" />
+                            <span
+                                class="related-flavor-name"
+                                t-out="rel_product.name"
+                            />
                         </div>
 
                     </t>
