@@ -19,14 +19,16 @@ msgid "&amp;nbsp;-&amp;nbsp;"
 msgstr ""
 
 #. module: delivery_common
+#: model_terms:ir.ui.view,arch_db:delivery_common.stock_picking_kanban
+#, fuzzy
+#| msgid "<span> &amp;nbsp;-&amp;nbsp;</span>"
+msgid "&amp;nbsp;-&amp;nbsp;"
+msgstr "<span> &amp;nbsp;-&amp;nbsp;</span>"
+
+#. module: delivery_common
 #: model:ir.actions.report,print_report_name:delivery_common.report_shipping_label
 msgid "'%s' % object.name"
 msgstr ""
-
-#. module: delivery_common
-#: model_terms:ir.ui.view,arch_db:delivery_common.stock_picking_kanban
-msgid "<span> &amp;nbsp;-&amp;nbsp;</span>"
-msgstr "<span> &amp;nbsp;-&amp;nbsp;</span>"
 
 #. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking_type__auto_print_delivery_label
@@ -83,6 +85,11 @@ msgstr ""
 #. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_delivery_carrier__send_confirmation_email
 msgid "Send Confirmation Email"
+msgstr ""
+
+#. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking__ready_to_ship
+msgid "Ready To Ship"
 msgstr ""
 
 #. module: delivery_common
