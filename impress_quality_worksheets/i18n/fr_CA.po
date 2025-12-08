@@ -81,17 +81,35 @@ msgstr ""
 "                            Mars 2025. Feuille de contrôle Codage </strong>"
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
+#, fuzzy
+#| msgid ""
+#| "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
+#| "                            Mars 2025. Feuille de contrôle Rayon-X</"
+#| "strong>"
+msgid ""
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 26\n"
+"                            Novembre 2025. Feuille de contrôle Rayon-X (Gros "
+"témoins)</strong>"
+msgstr ""
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
+"                            Mars 2025. Feuille de contrôle Rayon-X</strong>"
+
+#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "After repairs."
 msgstr "Après réparations."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "At the end of production."
 msgstr "À la fin de la production."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "At the start of the day."
 msgstr "Au début de la journée."
 
@@ -111,13 +129,9 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_average_threshold
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_large_20251126_average_threshold
 msgid "Average Threshold"
 msgstr "Seuil moyen"
-
-#. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
-msgid "Average at least average threshold"
-msgstr "La moyenne est d'au moins le seuil moyen"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
@@ -160,9 +174,30 @@ msgid "Ceramic Detection Threshold (2.381mm)"
 msgstr "Seuil de détection de la céramique (2.381mm)"
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
+#, fuzzy
+#| msgid "Ceramic Detection Threshold (2.381mm)"
+msgid "Ceramic Detection Threshold (3.0 mm)"
+msgstr "Seuil de détection de la céramique (2.381mm)"
+
+#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 msgid ""
 "During the last check (end of production), check that no cup is left\n"
+"                                in the reject bin."
+msgstr ""
+"Lors de la dernière vérification (fin de la production), vérifier qu'aucun "
+"cup \n"
+"n'est présent dans le réceptacle des rejets."
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
+#, fuzzy
+#| msgid ""
+#| "During the last check (end of production), check that no cup is left\n"
+#| "                                in the reject bin."
+msgid ""
+"During the last check (end of production), check that no product is left\n"
 "                                in the reject bin."
 msgstr ""
 "Lors de la dernière vérification (fin de la production), vérifier qu'aucun "
@@ -192,16 +227,19 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "Ejection OK"
 msgstr "Éjection conforme"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "Every 2 hours if no product change."
 msgstr "Tout les 2 heures si aucun changement de produit."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "Every product change (format, recipe, lot)."
 msgstr "À tout changement de produit (format, recette, lot)."
 
@@ -216,6 +254,13 @@ msgid "Glass Detection Threshold (2.381mm)"
 msgstr "Seuil de détection du verre (2.381mm)"
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
+#, fuzzy
+#| msgid "Glass Detection Threshold (2.381mm)"
+msgid "Glass Detection Threshold (3.0 mm)"
+msgstr "Seuil de détection du verre (2.381mm)"
+
+#. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_hpp_log_id
 msgid "HPP Log"
 msgstr "Registre HPP"
@@ -227,6 +272,7 @@ msgstr "Lignes de registre HPP"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid ""
 "If there is a metal reject during production, inform quality\n"
 "                                control."
@@ -237,6 +283,7 @@ msgstr ""
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20250303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "Initials"
 msgstr "Initiales"
 
@@ -311,6 +358,13 @@ msgid "Stainless Detection Threshold (1.0mm)"
 msgstr "Seuil de détection Stainless (1.0mm)"
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
+#, fuzzy
+#| msgid "Stainless Detection Threshold (1.0mm)"
+msgid "Stainless Detection Threshold (1.2 mm)"
+msgstr "Seuil de détection Stainless (1.0mm)"
+
+#. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_start_date
 msgid "Start Date"
 msgstr "Date de début"
@@ -346,26 +400,31 @@ msgstr "Limite supérieure"
 #: model:ir.model.fields,field_description:impress_quality_worksheets.loma_log_x_worksheet_20250203_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.metal_log_x_worksheet_20250203_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_ray_log_x_worksheet_20250303_id
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_ray_log_x_worksheet_large_20251126_id
 msgid "Worksheet 2024-12-02"
 msgstr "FdC 2024-12-02"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "X-Ray Frequency:"
 msgstr "Fréquence Rayon-X:"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_x_ray_log_id
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_large_20251126_x_ray_log_id
 msgid "X-Ray Log"
 msgstr "Registre Rayon-X"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_x_ray_log_lines_id
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_large_20251126_x_ray_log_lines_id
 msgid "X-Ray Log Line"
 msgstr "Ligne de registre Rayon-X"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "X-Ray Reject Value"
 msgstr "Valeur de rejet Rayon-X"
 
@@ -402,6 +461,13 @@ msgid "x_worksheet_20250303_id"
 msgstr "x_worksheet_20250303_id"
 
 #. module: impress_quality_worksheets
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_ray_log_line_x_worksheet_large_20251126_id
+#, fuzzy
+#| msgid "x_worksheet_20250203_id"
+msgid "x_worksheet_large_20251126_id"
+msgstr "x_worksheet_20250203_id"
+
+#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 msgid ""
 "À chaque changement de produit\n"
@@ -413,3 +479,6 @@ msgstr ""
 "                            (changement de format, de recette, de lot, "
 "d'étiquette US/CAD ou lors de\n"
 "                            réglage de l'appareil)"
+
+#~ msgid "Average at least average threshold"
+#~ msgstr "La moyenne est d'au moins le seuil moyen"

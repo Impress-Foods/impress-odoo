@@ -192,7 +192,16 @@ msgstr "Code de la caisse"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__ceramic_detection_value
-msgid "Ceramic Detection Value"
+#, fuzzy
+#| msgid "Ceramic Detection Value"
+msgid "Ceramic detection value (2.381 mm)"
+msgstr "Seuil de détection céramique"
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__ceramic_detection_large_value
+#, fuzzy
+#| msgid "Ceramic Detection Value"
+msgid "Ceramic detection value (3.0 mm)"
 msgstr "Seuil de détection céramique"
 
 #. module: impress_quality_logs
@@ -295,12 +304,23 @@ msgstr "Date d'expiration"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__ferrous
-msgid "Ferrous"
+#, fuzzy
+#| msgid "Ferrous"
+msgid "Ferrous (2.0 mm)"
 msgstr "Ferreux"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__glass_detection_value
-msgid "Glass Detection Value"
+#, fuzzy
+#| msgid "Glass Detection Value"
+msgid "Glass detection value (2.381 mm)"
+msgstr "Seuil de détection verre"
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__glass_detection_large_value
+#, fuzzy
+#| msgid "Glass Detection Value"
+msgid "Glass detection value (3.0 mm)"
 msgstr "Seuil de détection verre"
 
 #. module: impress_quality_logs
@@ -675,7 +695,9 @@ msgstr "Poids nominal"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__non_ferrous
-msgid "Non Ferrous"
+#, fuzzy
+#| msgid "Non Ferrous"
+msgid "Non ferrous (2.5 mm)"
 msgstr "Non-ferreux"
 
 #. module: impress_quality_logs
@@ -924,12 +946,23 @@ msgstr "Vérification étiquette"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__stainless
-msgid "Stainless"
+#, fuzzy
+#| msgid "Stainless"
+msgid "Stainless (3.5 mm)"
 msgstr "Inoxidable"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__stainless_detection_value
-msgid "Stainless Detection Value"
+#, fuzzy
+#| msgid "Stainless Detection Value"
+msgid "Stainless detection value (1.0 mm)"
+msgstr "Seuil de détection stainless"
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__stainless_detection_large_value
+#, fuzzy
+#| msgid "Stainless Detection Value"
+msgid "Stainless detection value (1.2 mm)"
 msgstr "Seuil de détection stainless"
 
 #. module: impress_quality_logs
