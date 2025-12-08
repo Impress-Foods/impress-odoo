@@ -359,21 +359,22 @@
         inherit_id="website_sale.product"
     >
         <xpath expr="//div[@id='ingredients-block']" position="inside">
-            <!-- <div class="ingredients-block d-flex flex-column pb-5"> -->
-            <div class="ingredients-block d-flex flex-column">
-                <span class="subsection-header">Ingredients</span>
-                <span
-                    class="text-muted ingredient-list"
-                    t-field="product.ingredients"
-                />
-            </div>
+            <t t-if="product.ingredients">
+                <div class="ingredients-block d-flex flex-column">
+                    <span class="subsection-header">Ingredients</span>
+                    <span
+                        class="text-muted ingredient-list"
+                        t-field="product.ingredients"
+                    />
+                </div>
+            </t>
         </xpath>
 
     </template>
 
     <template id="product_show_adq" active="False" inherit_id="website_sale.product">
         <xpath expr="//div[@id='adq-block']" position="inside">
-            <div class="icon-block">
+            <div t-if="product.show_adq" class="icon-block">
                 <img
                     src="/theme_aplus/static/src/images/AlimentsDuQuebec_Logo_Renv.svg"
                     width="100px"
@@ -396,17 +397,26 @@
                 t-value="'--highlight-color:' + product.product_page_text_color +';'"
             />
             <div id="vector_images" class="icon-block" t-att-style="style">
-                <div class="vector-column">
+                <t
+                    t-set="show_plus_1"
+                    t-value="(product.show_fruits and product.show_water) or (product.show_fruits and product.show_maple)"
+                />
+                <t
+                    t-set="show_plus_2"
+                    t-value="(product.show_water and product.show_maple)"
+                />
+
+                <div t-if="product.show_fruits" class="vector-column">
                     <t t-call="theme_aplus.fruit_vector" />
                     <span>Fruits</span>
                 </div>
-                <t t-call="theme_aplus.plus_vector" />
-                <div class="vector-column">
+                <t t-if="show_plus_1" t-call="theme_aplus.plus_vector" />
+                <div t-if="product.show_water" class="vector-column">
                     <t t-call="theme_aplus.water_vector_alt" />
                     <span>Water</span>
                 </div>
-                <t t-call="theme_aplus.plus_vector" />
-                <div class="vector-column">
+                <t t-if="show_plus_2" t-call="theme_aplus.plus_vector" />
+                <div t-if="product.show_maple" class="vector-column">
                     <t t-call="theme_aplus.maple_vector" />
                     <span>Maple</span>
                 </div>
@@ -445,7 +455,10 @@
                                     t-attf-src="/web/image/product.template/{{rel_product.id}}/image_512"
                                 />
                             </a>
-                            <span t-out="rel_product.name" />
+                            <span
+                                class="related-flavor-name"
+                                t-out="rel_product.name"
+                            />
                         </div>
 
                     </t>
@@ -485,29 +498,39 @@
                     role="tablist"
                 >
 
-                    <li class="nav-item custom-tab-item" role="presentation">
+                    <li
+                        t-if="product.tab_1_title"
+                        class="nav-item custom-tab-item"
+                        role="presentation"
+                    >
                         <button
                             class="nav-link active"
-                            t-attf-id="{{prefix}}-tat-tab"
+                            t-attf-id="{{prefix}}-1-tab"
                             data-bs-toggle="tab"
-                            t-att-data-bs-target="'#'+prefix+'-tat'"
+                            t-att-data-bs-target="'#'+prefix+'-1'"
                             type="button"
                             role="y"
-                            t-attf-aria-controls="{{prefix}}-tat"
+                            t-attf-aria-controls="{{prefix}}-1"
                             aria-selected="false"
-                        >Tips</button>
+                            t-out="product.tab_1_title"
+                        />
                     </li>
-                    <li class="nav-item custom-tab-item" role="presentation">
+                    <li
+                        t-if="product.tab_2_title"
+                        class="nav-item custom-tab-item"
+                        role="presentation"
+                    >
                         <button
                             class="nav-link"
-                            t-attf-id="{{prefix}}-dyk-tab"
+                            t-attf-id="{{prefix}}-2-tab"
                             data-bs-toggle="tab"
-                            t-att-data-bs-target="'#'+prefix+'-dyk'"
+                            t-att-data-bs-target="'#'+prefix+'-2'"
                             type="button"
                             role="tab"
-                            t-attf-aria-controls="{{prefix}}-dyk"
+                            t-attf-aria-controls="{{prefix}}-2"
                             aria-selected="false"
-                        >Did you know?</button>
+                            t-out="product.tab_2_title"
+                        />
                     </li>
                     <li
                         t-if="show_tvn and product.has_tvn"
@@ -532,20 +555,22 @@
                     t-attf-id="{{prefix}}-TabContent"
                 >
                     <div
+                        t-if="product.tab_1_title"
                         class="tab-pane fade show active"
-                        t-attf-id="{{prefix}}-tat"
+                        t-attf-id="{{prefix}}-1"
                         role="tabpanel"
-                        t-attf-aria-labelledby="{{prefix}}-tat-tab"
+                        t-attf-aria-labelledby="{{prefix}}-1-tab"
                     >
-                        <t t-out="product.tips_and_tricks" />
+                        <t t-out="product.tab_1_text" />
                     </div>
                     <div
+                        t-if="product.tab_2_title"
                         class="tab-pane fade"
-                        t-attf-id="{{prefix}}-dyk"
+                        t-attf-id="{{prefix}}-2"
                         role="tabpanel"
-                        t-attf-aria-labelledby="{{prefix}}-dyk-tab"
+                        t-attf-aria-labelledby="{{prefix}}-2-tab"
                     >
-                        <t t-out="product.did_you_know" />
+                        <t t-out="product.tab_2_text" />
                     </div>
                     <div
                         t-if="show_tvn and product.has_tvn"

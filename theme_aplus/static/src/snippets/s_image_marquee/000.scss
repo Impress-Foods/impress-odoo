@@ -9,24 +9,42 @@
         padding-left: 2rem;
         padding-right: 2rem;
         padding-bottom: 1rem;
+        padding-top: 1rem;
 
         h1 {
             color: var(--o-color-1);
+            vertical-align: bottom;
         }
         a {
+            height: 100%;
+            font-size: 32pt;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-direction: row;
             color: var(--o-color-1);
-            border: 2px solid var(--o-color-1);
+            border: 3px solid var(--o-color-1);
             border-radius: 12px;
             padding-left: 0.5rem;
             padding-right: 0.5rem;
             transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out,
                 background-color 0.25s ease-in-out;
 
+            i {
+                height: 100%;
+                color: var(--o-color-1);
+                transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out,
+                    background-color 0.25s ease-in-out;
+            }
             &:hover {
                 text-decoration: none;
                 color: var(--o-color-3);
                 background-color: var(--o-color-1);
                 border-color: var(--o-color-1);
+
+                i {
+                    color: var(--o-color-3);
+                }
             }
         }
     }
