@@ -11,61 +11,143 @@
         <field name="body_html" type="html">
             <t t-set="textColor" t-value="'#f65834'" />
             <t t-set="bgColor" t-value="'#f7eae4'" />
-            <div style="overflow: hidden;">
-                <t t-call="aplus_emails.email_format">
-                    <div style="width:80%; margin:auto;">
-                        <t t-call="aplus_emails.image_header">
-                            <t t-set="image" t-value="'new-account-1.jpg'" />
-                            <t
-                                t-set="alt_text"
-                                t-value="'Lunch bag with an A+ juice bottle'"
-                            />
-                        </t>
-                        <div style="width: 60%; min-width: 400px; max-width: 100%;">
-                            <h1> Welcome to A+ Superfruit</h1>
-                            <span> Dear <t t-out="object.name" />, <br />
-                            Your account has been successfully created. You can access your account area to view orders, change your password, and more at:
-                                <a
-                                    t-attf-style="color:{{textColor}};text-decoration: none;"
-                                    href="https://aplussuperfruit.com/my/home"
-                                >wwww.aplussuperfruit.com/my/home</a></span>
-                            <p> We look forward to seeing you soon.</p>
-                            <hr
-                                style="position:relative;left: -22%; color: white; width: 100vw; background-color: white; border:none; height:1px;"
-                            />
-                            <h3 style="">For the big and <em>little</em> moments</h3>
-                            <span> Click <a
-                                    t-attf-style="color:{{textColor}};"
-                                    href="https://aplussuperfruit.com/locator"
-                                >here</a> for the nearest store</span>
+            <t t-set="fonts" t-value="'font-family: \'Gooper\', Garamond, serif;'" />
+            <t t-call="aplus_emails.font_gooper" />
+            <div
+                t-attf-style="background-color: {{bgColor}}; {{fonts}}; color: {{textColor}}; align: center; overflow: hidden;"
+            >
+                <table t-attf-style="width: 80%; margin: auto; color: {{textColor}};">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <t t-call="aplus_emails.image_header">
+                                    <t t-set="image" t-value="'new-account-1.jpg'" />
+                                    <t
+                                        t-set="alt_text"
+                                        t-value="'Lunch bag with an A+ juice bottle'"
+                                    />
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h1
+                                    t-attf-style="color: {{textColor}};"
+                                > Welcome to A+ Superfruit</h1>
+                            </td>
+                        </tr>
 
-                        </div>
-                        <div
-                            style="width:80%; display:grid; grid-template-columns: 25% 25% auto 40%; grid-gap: 1rem; justify-items: center; align-items: center; padding-top: 2rem; padding-bottom: 2rem;"
-                        >
-                            <img
-                                style="grid-column: 1; grid-row: 1; width:100%"
-                                src="/aplus_emails/static/img/IGA.png"
-                            />
-                            <img
-                                style="grid-column: 2; grid-row: 1; width:100%"
-                                src="/aplus_emails/static/img/Metro.png"
-                            />
-                            <img
-                                style="grid-column: 4; grid-row: 1 / 3; width: 80%;"
-                                src="/aplus_emails/static/img/strawberry_girl.png"
-                            />
-                            <img
-                                style="grid-column: 1; grid-row: 2; width:100%"
-                                src="/aplus_emails/static/img/WholeFoods.png"
-                            />
-                            <img
-                                style="grid-column: 2; grid-row: 2; width:100%"
-                                src="/aplus_emails/static/img/Avril.png"
-                            />
-                        </div>
-                    </div>
-                </t>
+                        <tr>
+                            <td>
+                                <span> Dear <t t-out="object.name" />, <br />
+                                    Your account has been successfully created. You can access your account area to view orders, change your password, and more at:
+                                    <a
+                                        t-attf-style="color:{{textColor}};"
+                                        href="https://aplussuperfruit.com/my/home"
+                                    >
+                                        wwww.aplussuperfruit.com/my/home
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div
+                                    style="padding-top: 1rem;"
+                                > We look forward to seeing you soon.</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <hr
+                    style="width: 100vw; color: white; background-color: white; border:none; height:1px;"
+                />
+
+
+                <table style="width: 80%; margin: auto;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <h3
+                                    t-attf-style="color:{{textColor}};"
+                                >For the big and <em>little</em> moments</h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div
+                                    t-attf-style="color:{{textColor}}; padding-bottom:1rem;"
+                                > Click
+                                    <a
+                                        t-attf-style="color:{{textColor}};"
+                                        href="https://aplussuperfruit.com/locator"
+                                    >
+                                        here
+                                    </a>
+                                    for the nearest store
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <table
+                                    style="border-spacing: 15px; border-collapse: separate; width: 90%; margin-left:-15px;"
+                                >
+                                    <colgroup>
+                                        <col style="width: 25%;" />
+                                        <col style="width: 25%;" />
+                                        <col style="width: 50%;" />
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <img
+                                                    style="width:100%; height: auto;"
+                                                    src="/aplus_emails/static/img/IGA.png"
+                                                />
+                                            </td>
+                                            <td>
+                                                <img
+                                                    style="width:100%; height: auto;"
+                                                    src="/aplus_emails/static/img/Metro.png"
+                                                />
+                                            </td>
+                                            <td rowspan="2" style="text-align: right;">
+                                                <img
+                                                    style="width: 70%; height: auto; text-align: right;"
+                                                    src="/aplus_emails/static/img/strawberry_girl.png"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img
+                                                    style="width:100%; height: auto;"
+                                                    src="/aplus_emails/static/img/WholeFoods.png"
+                                                />
+                                            </td>
+                                            <td>
+                                                <img
+                                                    style="width:100%; height: auto;"
+                                                    src="/aplus_emails/static/img/Avril.png"
+                                                />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <t t-call="aplus_emails.social_footer" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </field>
     </record>
