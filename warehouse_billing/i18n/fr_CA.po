@@ -520,6 +520,11 @@ msgid "Stock Data"
 msgstr "Données de stock"
 
 #. module: warehouse_billing
+#: model:res.groups,comment:warehouse_billing.warehouse_billing_manager
+msgid "The user will be able to manage warehouse billing."
+msgstr ""
+
+#. module: warehouse_billing
 #: model_terms:ir.actions.act_window,help:warehouse_billing.action_quant_history
 msgid "There is no examples click here to add new Quant History."
 msgstr "There is no examples click here to add new Quant History."
@@ -557,6 +562,13 @@ msgstr "Facturation d'entreposage"
 #: model_terms:ir.ui.view,arch_db:warehouse_billing.view_warehouse_billing_config_form
 msgid "Warehouse Billing Configuration"
 msgstr "Configuration de facturation"
+
+#. module: warehouse_billing
+#: model:res.groups,name:warehouse_billing.warehouse_billing_manager
+#, fuzzy
+#| msgid "Warehouse Billing"
+msgid "Warehouse Billing Manager"
+msgstr "Facturation d'entreposage"
 
 #. module: warehouse_billing
 #. odoo-python

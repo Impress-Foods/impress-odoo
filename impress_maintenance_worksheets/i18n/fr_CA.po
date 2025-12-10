@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "<strong>Pour l'utilisation exclusive de Impress Foods.</strong>\n"
 "                        <strong> Mis à jour le 20 Mars 2025.</strong>\n"
-"                        <strong> Feuille de contrôle Calibration pH-mètre "
-"</strong>"
+"                        <strong> Feuille de contrôle Calibration pH-mètre </"
+"strong>"
 
 #. module: impress_maintenance_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_maintenance_worksheets.ws_ph_meter_calibration_20250320_form_view

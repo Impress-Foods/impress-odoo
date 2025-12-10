@@ -30,14 +30,12 @@ msgid "Assigned Employee"
 msgstr "Employé assigné"
 
 #. module: impress_maintenance
-#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__state_color
 #: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_stage__color
 msgid "Color"
 msgstr "Couleur"
 
 #. module: impress_maintenance
 #: model:ir.model.fields,field_description:impress_maintenance.field_hr_employee__color
-#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__employee_color
 msgid "Color Index"
 msgstr "Index de couleur"
 
@@ -58,9 +56,19 @@ msgid "Current Preventive"
 msgstr "Préventive actuelle"
 
 #. module: impress_maintenance
+#: model:res.groups,comment:impress_maintenance.group_maintenance_administrator
+msgid "Deprecated, use maintenance.group_equipment_manager"
+msgstr ""
+
+#. module: impress_maintenance
 #: model:ir.model,name:impress_maintenance.model_hr_employee
 msgid "Employee"
 msgstr "Employé"
+
+#. module: impress_maintenance
+#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__employee_color
+msgid "Employee Color"
+msgstr "Couleur de l'employé"
 
 #. module: impress_maintenance
 #: model_terms:ir.actions.act_window,help:impress_maintenance.hr_equipment_request_action_cal_employee
@@ -77,8 +85,17 @@ msgstr "Invisible"
 
 #. module: impress_maintenance
 #: model:res.groups,name:impress_maintenance.group_maintenance_administrator
-msgid "Maintenance / Administrator"
+#, fuzzy
+#| msgid "Maintenance / Administrator"
+msgid "Maintenance / Administrator (Deprecated)"
 msgstr "Maintenance / Administrateur"
+
+#. module: impress_maintenance
+#: model:res.groups,name:impress_maintenance.group_maintenance_technician
+#, fuzzy
+#| msgid "Maintenance Notes"
+msgid "Maintenance / User "
+msgstr "Notes de maintenance"
 
 #. module: impress_maintenance
 #: model:ir.ui.menu,name:impress_maintenance.menu_m_request_calendar_employee
@@ -91,19 +108,9 @@ msgid "Maintenance Calendar - State"
 msgstr "Calendrier de maintenance - État"
 
 #. module: impress_maintenance
-#: model_terms:ir.ui.view,arch_db:impress_maintenance.view_maintenance_request_form
-msgid "Maintenance Description"
-msgstr "Description de la maintenance"
-
-#. module: impress_maintenance
 #: model:ir.model,name:impress_maintenance.model_maintenance_equipment
 msgid "Maintenance Equipment"
 msgstr "Équipement de maintenance"
-
-#. module: impress_maintenance
-#: model_terms:ir.ui.view,arch_db:impress_maintenance.view_maintenance_request_form
-msgid "Maintenance Notes"
-msgstr "Notes de maintenance"
 
 #. module: impress_maintenance
 #: model:ir.model,name:impress_maintenance.model_maintenance_request
@@ -123,7 +130,6 @@ msgstr "État de maintenance"
 
 #. module: impress_maintenance
 #: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__notes
-#: model_terms:ir.ui.view,arch_db:impress_maintenance.view_maintenance_request_form
 msgid "Notes"
 msgstr "Notes"
 
@@ -139,12 +145,19 @@ msgid "Responsible"
 msgstr "Responsable"
 
 #. module: impress_maintenance
-#: model:res.groups,comment:impress_maintenance.group_maintenance_administrator
+#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__signature
+msgid "Signature"
+msgstr ""
+
+#. module: impress_maintenance
+#: model:ir.model.fields,field_description:impress_maintenance.field_maintenance_request__state_color
+msgid "State Color"
+msgstr "Couleur de l'état"
+
+#. module: impress_maintenance
+#: model:res.groups,comment:impress_maintenance.group_maintenance_technician
 msgid "The user will be able to manage equipment."
 msgstr "L'utilisateur sera en mesure de gérer les équipements."
 
-#~ msgid "Employee Color"
-#~ msgstr "Couleur de l'employé"
-
-#~ msgid "State Color"
-#~ msgstr "Couleur de l'état"
+#~ msgid "Maintenance Description"
+#~ msgstr "Description de la maintenance"
