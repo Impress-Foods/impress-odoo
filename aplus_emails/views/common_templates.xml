@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="aplus_emails.order_summary" name="order summary">
+        <t
+            t-set="product_lines"
+            t-value="[line for line in so.order_line if (not line.is_delivery and not line.is_deposit_line)]"
+        />
+        <t
+            t-set="shipping_lines"
+            t-value="[line for line in so.order_line if line.is_delivery ]"
+        />
+        <t
+            t-set="deposit_lines"
+            t-value="[line for line in so.order_line if line.is_deposit_line]"
+        />
+
+        <t
+            t-set="product_thumbnail"
+            t-value="'max-width: 75px; max-height: 75px; width:auto; height:100%; margin: auto;'"
+        />
+        <t
+            t-set="product_thumbnail_container"
+            t-value="'background-color:#ffffff;border-radius:8px;'"
+        />
+        <t t-set="tar" t-value="'text-align: right;'" />
+        <t t-set="tal" t-value="'text-align: left;'" />
+        <t t-set="pl" t-value="'margin-left: 20%;'" />
+        <t t-set="pr" t-value="'margin-right: 20%;'" />
+        <t t-set="table_spacing" t-value="'15px'" />
+        <t
+            t-set="table_style"
+            t-value="'width: 100%; max-width: 900px; margin: auto;'"
+        />
+        <table
+            t-attf-style="{{table_style}} color: {{textColor}}; border-spacing: {{table_spacing}}; "
+        >
+            <colgroup>
+                <col style="width:15%;" />
+                <col />
+                <col style="width:15%;" />
+            </colgroup>
+            <!-- Items -->
+            <tbody>
+                <tr t-foreach="product_lines" t-as="line">
+                    <td
+                        t-attf-style="text-align:center; height:100%; {{product_thumbnail_container}} vertical-align: middle;"
+                    >
+
+                        <img
+                            t-attf-src="data:image/*;base64, {{ line.product_id.image_128 }}"
+                            t-attf-style="{{ product_thumbnail }} "
+                        />
+                    </td>
+                    <td>
+                        <table t-attf-style="padding-left: 1rem; color: {{textColor}};">
+                            <tr>
+                                <td>
+                                    <span
+                                        style="padding-bottom: 0.5rem; font-weight: 600; font-size: x-large;"
+                                        t-out="line.product_id.product_tmpl_id.name"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span
+                                        style="padding-bottom: 0.25rem;"
+                                        t-out="'x{:.0f}'.format(line.product_uom_qty)"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span
+                                        style="padding-bottom: 0.25rem;"
+                                        t-out="line.product_id.product_tmpl_id.public_categ_ids[0].name"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <t
+                                        t-if="line.product_id.product_template_variant_value_ids"
+                                    >
+                                        <span
+                                            style="padding-bottom: 0.25rem;"
+                                            t-out="line.product_id.product_template_variant_value_ids[0].name"
+                                        />
+                                    </t>
+                                    <t t-elif="1">
+                                        <span
+                                            style="padding-bottom: 0.25rem;"
+                                            t-out="line.product_id.product_tmpl_id.attribute_line_ids[0].value_ids[0].name"
+                                        />
+                                    </t>
+                                </td>
+                            </tr>
+                        </table>
+                        <td>
+                            <div t-attf-style="{{tar}}">
+                                <t t-out="line.price_subtotal" />$
+                            </div>
+                        </td>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+        <table
+            t-attf-style="{{table_style}} color: {{textColor}}; padding-left:{{table_spacing}}; padding-right:{{table_spacing}}; "
+        >
+            <colgroup>
+                <col style="width:15%;" />
+                <col style="width:70%;" />
+                <col style="width:15%;" />
+            </colgroup>
+            <tfoot style="text-align: right;">
+                <!-- Footer -->
+                <tr>
+                    <td colspan="2">
+                        <span t-attf-style="{{tal}} font-weight: 400;">Deposit</span>
+                    </td>
+                    <td>
+                        <span t-attf-style="{{tar}}">
+                            <t
+                                t-out="'{:.2f}'.format(sum([l.price_total for l in deposit_lines]))"
+                            />$</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <span t-attf-style="{{tal}} font-weight: 400;">Shipping</span>
+                    </td>
+                    <td>
+                        <span t-attf-style="{{tar}}"><t
+                                t-out="'{:.2f}'.format(sum([l.price_total for l in shipping_lines]))"
+                            />$</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <span t-attf-style="{{tal}} font-weight: 400;">Taxes</span>
+                    </td>
+                    <td>
+                        <span t-attf-style="{{tar}}"><t
+                                t-out="'{:.2f}'.format(so.amount_tax)"
+                            />$</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <span t-attf-style="{{tal}} font-weight: 600;">Total</span>
+                    </td>
+                    <td>
+                        <span t-attf-style="{{tar}} font-weight: 600; "><t
+                                t-out="'{:.2f}'.format(so.amount_total)"
+                            />$</span>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </template>
+
+    <template id="aplus_emails.font_gooper" name="Font Gooper">
+        <style>
+            @font-face {
+                font-family: 'Gooper';
+                font-style: normal;
+                font-weight: 400;
+                src: url(/aplus_emails/static/fonts/Gooper-Regular.woff2) format('woff2');
+            }
+            @font-face {
+                font-family: 'Gooper';
+                font-style: normal;
+                font-weight: 700;
+                src: url(/aplus_emails/static/fonts/Gooper-Bold.woff2) format('woff2');
+            }
+            @font-face {
+                font-family: 'Gooper';
+                font-style: normal;
+                font-weight: 600;
+                src: url(/aplus_emails/static/fonts/Gooper-SemiBold.woff2) format('woff2');
+            }
+        </style>
+    </template>
+
+    <template id="aplus_emails.image_header" name="image_header">
+        <tr>
+            <td>
+                <table
+                    t-attf-style="padding-top:1rem; padding-bottom:1rem;margin:auto;"
+                    id="header"
+                >
+                    <tbody>
+                        <tr>
+                            <td style="text-align:center;">
+                                <img
+                                    src="/aplus_emails/static/img/logo_orange.png"
+                                    alt="Orange A+ Logo"
+                                    style="height:auto; width:20%;"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center;">
+                                <img
+                                    t-attf-src="/aplus_emails/static/img/{{image}}"
+                                    t-attf-alt="{{alt_text}}"
+                                    style="max-width: 100%;"
+                                />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </template>
+
+    <template
+        id="aplus_emails.image_header_overlaid_logo"
+        name="image_header_overlaid_logo"
+    >
+        <div style="width:100%; overflow:hidden; padding-bottom: 2rem;" id="header">
+            <img
+                style="position: absolute; left: 50%; transform: translate(-50%, 0%); width: 30%; padding-top: 2rem;"
+                src="/aplus_emails/static/img/logo_white.png"
+                alt="White A+ logo"
+            />
+            <img
+                style="width: 100%; height: auto;"
+                t-attf-src="/aplus_emails/static/img/{{image}}"
+                alt="{{alt_text}}"
+            />
+        </div>
+    </template>
+
+    <template id="aplus_emails.logo_header">
+        <div style="display: flex; justify-content: center;">
+            <img
+                style="width:20%; height: auto;"
+                src="/aplus_emails/static/img/logo_orange.png"
+            />
+        </div>
+    </template>
+
+    <template id="aplus_emails.email_format" name="Base A+ email format">
+        <t t-set="fonts" t-value="'font-family: \'Gooper\', Garamond, serif;'" />
+        <t t-call="aplus_emails.font_gooper" />
+        <div
+            t-attf-style="background-color: {{bgColor}}; {{fonts}}; color: {{textColor}}; align: center;"
+        >
+            <table style="width: 80%; margin: auto;">
+                <tbody style="">
+                    <t t-out="0" />
+                    <tr>
+                        <td>
+                            <t t-call="aplus_emails.social_footer" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </template>
+</odoo>
