@@ -21,13 +21,17 @@
             >
                 <table style="width: 80%; margin: auto;">
                     <tbody style="">
-                        <t t-call="aplus_emails.image_header">
-                            <t t-set="image" t-value="'delivery-1.jpg'" />
-                            <t
-                                t-set="alt_text"
-                                t-value="'Picture of a child with A+ juice'"
-                            />
-                        </t>
+                        <tr>
+                            <td>
+                                <t t-call="aplus_emails.image_header">
+                                    <t t-set="image" t-value="'delivery-1.jpg'" />
+                                    <t
+                                        t-set="alt_text"
+                                        t-value="'Picture of a child with A+ juice'"
+                                    />
+                                </t>
+                            </td>
+                        </tr>
                         <tr t-attf-style=" color:{{textColor}};">
                             <td t-attf-style=" color:{{textColor}};">
                                 <div>
