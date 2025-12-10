@@ -84,9 +84,7 @@
                                     <a
                                         t-attf-style="color:{{textColor}};"
                                         href="https://aplussuperfruit.com/locator"
-                                    >
-                                        here
-                                    </a>
+                                    >here</a>
                                     for the nearest store
                                 </div>
                             </td>
