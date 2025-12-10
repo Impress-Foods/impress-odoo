@@ -117,7 +117,8 @@ $promo-color: #e25822;
                 margin-bottom: 1em;
             }
 
-            strong {
+            strong,
+            b {
                 // Strong/bold text in content
                 color: $tab-active-bg;
             }
