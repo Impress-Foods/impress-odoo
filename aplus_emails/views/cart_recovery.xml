@@ -29,28 +29,28 @@
                         <tr>
                             <td>
                                 <table
-                                    style="width: 100%; margin:auto; text-align:center; font-size:x-large;padding-top:1rem;"
+                                    style="width: 90%; margin:auto; text-align:center; font-size:x-large;padding-top:1rem;"
                                 >
                                     <tr>
-                                        <td>
+                                        <td style="text-align:center;">
                                             <a
                                                 t-attf-style="color:{{textColor}};text-decoration:none;"
                                                 href="https://aplussuperfruit.com/shop/category/drinkable-fruit-1"
                                             >Juice</a>
                                         </td>
-                                        <td>
+                                        <td style="text-align:center;">
                                             <a
                                                 t-attf-style="color:{{textColor}};text-decoration:none;"
                                                 href="https://aplussuperfruit.com/shop/category/juice-shot-3"
                                             >Shots</a>
                                         </td>
-                                        <td>
+                                        <td style="text-align:center;">
                                             <a
                                                 t-attf-style="color:{{textColor}};text-decoration:none;"
                                                 href="https://aplussuperfruit.com/shop/category/boxes-2"
                                             >Boxes</a>
                                         </td>
-                                        <td>
+                                        <td style="text-align:center;">
                                             <a
                                                 t-attf-style="color:{{textColor}};text-decoration:none;"
                                                 href="https://aplussuperfruit.com/locator"
