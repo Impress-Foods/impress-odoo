@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-21 19:59+0000\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2025-12-11 09:41-0500\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
 "impress-odoo/impress_expiration_lot/fr_CA/>\n"
@@ -15,12 +16,36 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Poedit 3.5\n"
+
+#. module: impress_expiration_lot
+#: model:mail.template,subject:impress_expiration_lot.aggregated_lot_expiry_alert
+msgid " Lot expiry for {{ datetime.datetime.today().date() }} "
+msgstr ""
+
+#. module: impress_expiration_lot
+#: model:mail.template,body_html:impress_expiration_lot.aggregated_lot_expiry_alert
+msgid ""
+"<div></div>\n"
+"        "
+msgstr ""
+
+#. module: impress_expiration_lot
+#: model:mail.template,name:impress_expiration_lot.aggregated_lot_expiry_alert
+msgid "Aggregated lot expiry alert"
+msgstr ""
 
 #. module: impress_expiration_lot
 #: model:ir.actions.server,name:impress_expiration_lot.impress_expiration_parse_lot_number_action
 msgid "Execute Code"
 msgstr "Exécuter le code"
+
+#. module: impress_expiration_lot
+#. odoo-python
+#: code:addons/impress_expiration_lot/models/stock_lot.py:0
+#, python-format
+msgid "Lot alerts for %s"
+msgstr ""
 
 #. module: impress_expiration_lot
 #: model:ir.model,name:impress_expiration_lot.model_stock_lot
@@ -31,3 +56,13 @@ msgstr "Lot/Numéro de série"
 #: model:base.automation,name:impress_expiration_lot.impress_expiration_parse_lot_number_rule
 msgid "Parse lot number and set correct dates on lot creation"
 msgstr "Analyse le numéro de lot et détermine la date de création du lot"
+
+#. module: impress_expiration_lot
+#: model:ir.actions.server,name:impress_expiration_lot.ir_cron_send_aggregated_lot_alert_ir_actions_server
+msgid "Send aggregated lot alert"
+msgstr ""
+
+#. module: impress_expiration_lot
+#: model_terms:ir.ui.view,arch_db:impress_expiration_lot.body_aggregated_expiry_alert
+msgid "The following lots are expiring today ("
+msgstr ""
