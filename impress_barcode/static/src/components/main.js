@@ -9,7 +9,7 @@ import {View} from "@web/views/view";
 import GroupedLineComponent from "@stock_barcode/components/grouped_line";
 import LineComponent from "@stock_barcode/components/line";
 import PackageLineComponent from "@stock_barcode/components/package_line";
-
+import HeaderComponent from "@stock_barcode_mrp/components/header";
 const bus = new EventBus();
 
 patch(MainComponent.prototype, {
@@ -40,3 +40,4 @@ MainComponent.components = {
     PackageLineComponent,
     MoveComponent,
 };
+MainComponent.components.Header = HeaderComponent;

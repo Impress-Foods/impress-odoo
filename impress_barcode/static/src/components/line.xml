@@ -27,7 +27,9 @@
                 </t>
             </t>
         </xpath>
-
+        <xpath expr="//div[@name='kits']" position="attributes">
+            <attribute name="t-attf-style">color:{{props.line.color}};</attribute>
+        </xpath>
     </t>
 
 
