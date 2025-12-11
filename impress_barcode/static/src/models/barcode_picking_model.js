@@ -101,9 +101,13 @@ patch(BarcodePickingModel.prototype, {
             // 1. Check if the item belongs to a valid group
             if (groupKey) {
                 // Ensure the key is treated as a string and trimmed
-                const key = String(groupKey)
-                    .slice(0, item.description_bom_line.indexOf("-"))
-                    .trim();
+                if (item.description_bom_line.indexOf("-")) {
+                    const key = String(groupKey)
+                        .slice(0, item.description_bom_line.indexOf("-"))
+                        .trim();
+                } else {
+                    const key = String(groupKey).trim();
+                }
 
                 // Check if this group has been seen before
                 if (groupColorMap[key]) {
