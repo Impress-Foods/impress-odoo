@@ -14,8 +14,32 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: impress_expiration_lot
+#: model:mail.template,subject:impress_expiration_lot.aggregated_lot_expiry_alert
+msgid " Lot expiry for {{ datetime.datetime.today().date() }} "
+msgstr ""
+
+#. module: impress_expiration_lot
+#: model:mail.template,body_html:impress_expiration_lot.aggregated_lot_expiry_alert
+msgid ""
+"<div></div>\n"
+"        "
+msgstr ""
+
+#. module: impress_expiration_lot
+#: model:mail.template,name:impress_expiration_lot.aggregated_lot_expiry_alert
+msgid "Aggregated lot expiry alert"
+msgstr ""
+
+#. module: impress_expiration_lot
 #: model:ir.actions.server,name:impress_expiration_lot.impress_expiration_parse_lot_number_action
 msgid "Execute Code"
+msgstr ""
+
+#. module: impress_expiration_lot
+#. odoo-python
+#: code:addons/impress_expiration_lot/models/stock_lot.py:0
+#, python-format
+msgid "Lot alerts for %s"
 msgstr ""
 
 #. module: impress_expiration_lot
@@ -26,4 +50,14 @@ msgstr ""
 #. module: impress_expiration_lot
 #: model:base.automation,name:impress_expiration_lot.impress_expiration_parse_lot_number_rule
 msgid "Parse lot number and set correct dates on lot creation"
+msgstr ""
+
+#. module: impress_expiration_lot
+#: model:ir.actions.server,name:impress_expiration_lot.ir_cron_send_aggregated_lot_alert_ir_actions_server
+msgid "Send aggregated lot alert"
+msgstr ""
+
+#. module: impress_expiration_lot
+#: model_terms:ir.ui.view,arch_db:impress_expiration_lot.body_aggregated_expiry_alert
+msgid "The following lots are expiring today ("
 msgstr ""
