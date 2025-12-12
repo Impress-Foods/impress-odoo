@@ -8,7 +8,13 @@
     "category": "Hidden",
     "version": "17.0.1.0.1",
     "license": "GPL-2",
-    "depends": ["base", "stock", "sale_management", "stock_barcode"],
+    "depends": [
+        "base",
+        "stock",
+        "sale_management",
+        "stock_barcode",
+        "stock_barcode_mrp",
+    ],
     "data": [
         "views/stock_picking_views.xml",
     ],
