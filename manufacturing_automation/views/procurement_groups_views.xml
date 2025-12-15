@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Tree View -->
+    <record id="view_procurement_group_tree" model="ir.ui.view">
+        <field name="name">procurement.group.tree</field>
+        <field name="model">procurement.group</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="move_type" />
+                <field name="create_date" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_procurement_group" model="ir.actions.act_window">
+        <field name="name">Procurement Groups</field>
+        <field name="res_model">procurement.group</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem
+        id="menu_procurement_group_root"
+        name="Procurement Groups"
+        parent="stock.menu_stock_warehouse_mgmt"
+        action="action_procurement_group"
+        sequence="50"
+    />
+
+</odoo>

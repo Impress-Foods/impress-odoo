@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_mrp_campaign_tree" model="ir.ui.view">
+        <field name="name">mrp.campaign.tree</field>
+        <field name="model">mrp.campaign</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="product_id" />
+                <field name="state" />
+                <field name="total_demand_qty" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_mrp_campaign_form" model="ir.ui.view">
+        <field name="name">mrp.campaign.form</field>
+        <field name="model">mrp.campaign</field>
+        <field name="arch" type="xml">
+            <form string="Manufacturing Campaign">
+                <header>
+                    <button
+                        name="action_confirm"
+                        type="object"
+                        string="Confirm Campaign"
+                        class="btn-primary"
+                        invisible="state not in ['draft']"
+                    />
+                    <field name="state" widget="statusbar" />
+                </header>
+
+                <sheet>
+
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            name="action_view_provider_mos"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-flask"
+                        >
+                            <field
+                                name="provider_mo_count"
+                                widget="statinfo"
+                                string="In"
+                            />
+                        </button>
+
+                        <button
+                            name="action_view_consumer_mos"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-cubes"
+                        >
+                            <field
+                                name="consumer_mo_count"
+                                widget="statinfo"
+                                string="Out"
+                            />
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="product_id" />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                            />
+                        </group>
+
+                    </group>
+
+                    <group>
+                        <field name="total_demand_qty" readonly="1" />
+                        <field name="percent_fulfilled" widget="percentpie" />
+                    </group>
+
+                    <notebook>
+
+                        <!-- Demand -->
+                        <page string="Consumers">
+                            <field name="consumer_mo_ids">
+                                <tree
+                                    decoration-info="state == 'draft'"
+                                    decoration-danger="state == 'cancel'"
+                                >
+                                    <field name="display_name" />
+                                    <field name="product_id" />
+                                    <field name="product_qty" sum="Total" />
+                                    <field
+                                        name="campaign_product_qty"
+                                        string="Quantity needed"
+                                        sum="Total"
+                                    />
+                                    <field name="state" />
+
+                                </tree>
+                            </field>
+                        </page>
+
+                        <!-- Supply -->
+                        <page string="Producers">
+                            <field name="provider_mo_ids">
+                                <tree
+                                    decoration-info="state == 'draft'"
+                                    decoration-danger="state == 'cancel'"
+                                >
+                                    <field name="name" />
+                                    <field name="product_qty" sum="Total" />
+                                    <field name="state" />
+                                </tree>
+                            </field>
+                        </page>
+
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_mrp_campaign" model="ir.actions.act_window">
+        <field name="name">Manufacturing Campaigns</field>
+        <field name="res_model">mrp.campaign</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="menu_mrp_campaign"
+        name="Campaigns"
+        parent="mrp.menu_mrp_root"
+        action="action_mrp_campaign"
+        sequence="50"
+        groups="mrp.group_mrp_user"
+    />
+
+</odoo>

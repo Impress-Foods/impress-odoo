@@ -5,8 +5,15 @@
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
-    "depends": ["base", "mrp"],
-    "data": ["views/stock_orderpoint.xml"],
+    "depends": ["base", "mrp", "stock"],
+    "data": [
+        "security/ir.model.access.csv",
+        "security/mrp_campaign_rules.xml",
+        "views/product_views.xml",
+        "views/procurement_groups_views.xml",
+        "views/mrp_campaign_views.xml",
+        "views/mrp_production_views.xml",
+    ],
     "installable": True,
     "license": "GPL-2",
 }

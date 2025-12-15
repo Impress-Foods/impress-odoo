@@ -1,4 +1,5 @@
 from . import procurement
-from . import stock_orderpoint
-from . import procurement_group
+from . import product_template
+from . import mrp_production
+from . import mrp_campaign
 from . import stock_rule

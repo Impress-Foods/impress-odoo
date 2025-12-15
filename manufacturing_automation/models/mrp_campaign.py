@@ -1,0 +1,237 @@
+import logging
+
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
+
+from odoo.addons.stock.models.stock_rule import StockRule
+
+from .procurement import Procurement
+
+_logger = logging.getLogger(__name__)
+
+
+class MrpCampaign(models.Model):
+    _name = "mrp.campaign"
+    _description = "Manufacturing Campaign"
+
+    name = fields.Char(
+        string="Campaign Reference", required=True, copy=False, default="/"
+    )
+    state = fields.Selection(
+        [
+            ("draft", "Draft"),
+            ("confirmed", "Confirmed"),
+            ("done", "Done"),
+            ("cancel", "Cancelled"),
+        ],
+        string="Status",
+        default="draft",
+    )
+
+    date_start = fields.Date(string="Start Date", required=True)
+    date_end = fields.Date(string="End Date", required=True)
+
+    product_id = fields.Many2one(
+        "product.product",
+        string="Intermediate Product",
+        required=True,
+        domain="[('product_tmpl_id.is_campaign_manufactured', '=', True)]",
+    )
+    company_id = fields.Many2one("res.company", default=lambda self: self.env.company)
+
+    demand_move_ids = fields.Many2many(
+        "stock.move",
+        string="Demand Moves",
+        help="The individual lines from Consumer MOs requiring this product.",
+    )
+
+    provider_mo_ids = fields.One2many(
+        "mrp.production",
+        "campaign_id",
+        string="Provider MOs",
+        help="The production orders (tanks) created to satisfy this campaign.",
+    )
+
+    consumer_mo_ids = fields.Many2many(
+        "mrp.production",
+        string="Consumer MOs",
+        compute="_compute_consumer_mo_ids",
+        store=False,
+        help="Finished product MOs that triggered the demand moves.",
+    )
+    provider_mo_count = fields.Integer(compute="_compute_mo_counts")
+    consumer_mo_count = fields.Integer(compute="_compute_mo_counts")
+
+    total_demand_qty = fields.Float(string="Total Demand", compute="_compute_totals")
+    planned_supply_qty = fields.Float(
+        string="Planned Supply", compute="_compute_totals"
+    )
+    percent_fulfilled = fields.Float(compute="_compute_percent")
+    campaign_balance = fields.Float(
+        string="Balance",
+        compute="_compute_totals",
+        help="Difference between Supply and Demand. Should be >= 0.",
+    )
+
+    @api.depends("consumer_mo_ids", "provider_mo_ids", "demand_move_ids")
+    def _compute_mo_counts(self):
+        for reg in self:
+            reg.provider_mo_count = len(reg.provider_mo_ids)
+            reg.consumer_mo_count = len(reg.consumer_mo_ids)
+            if reg.provider_mo_count == 0:
+                reg.state = "draft"
+
+    @api.depends(
+        "demand_move_ids",
+        "demand_move_ids.state",
+        "demand_move_ids.product_uom_qty",
+        "provider_mo_ids.product_qty",
+        "provider_mo_ids.state",
+    )
+    def _compute_totals(self):
+        for reg in self:
+            active_demand_moves = reg.demand_move_ids.filtered(
+                lambda m: m.exists() and m.state != "cancel"
+            )
+
+            reg.total_demand_qty = sum(active_demand_moves.mapped("product_uom_qty"))
+
+            active_provider_mos = reg.provider_mo_ids.filtered(
+                lambda mo: mo.state != "cancel"
+            )
+            reg.planned_supply_qty = sum(active_provider_mos.mapped("product_qty"))
+
+            reg.campaign_balance = reg.planned_supply_qty - reg.total_demand_qty
+
+    @api.depends("planned_supply_qty", "total_demand_qty")
+    def _compute_percent(self):
+        for rec in self:
+            rec.percent_fulfilled = (
+                (rec.planned_supply_qty / rec.total_demand_qty) * 100
+                if rec.total_demand_qty > 0
+                else 100.0
+            )
+
+    @api.depends("demand_move_ids")
+    def _compute_consumer_mo_ids(self):
+        for reg in self:
+            reg.consumer_mo_ids = reg.demand_move_ids.mapped(
+                "raw_material_production_id"
+            )
+
+    def action_confirm(self):
+        """Logic to split total demand into batch-sized Provider MOs"""
+        self.ensure_one()
+        if not self.demand_move_ids:
+            raise UserError(_("No demand moves selected."))
+
+        batch_size = self.product_id.product_tmpl_id.mrp_max_batch_size
+        if batch_size <= 0:
+            raise UserError(
+                _("Please define a Max Batch Size on the product template.")
+            )
+
+        remaining = self.total_demand_qty
+        while remaining > 0:
+            qty = min(batch_size, remaining)
+            self.env["mrp.production"].create(
+                {
+                    "product_id": self.product_id.id,
+                    "product_qty": qty,
+                    "campaign_id": self.id,
+                    "origin": self.name,
+                    "bom_id": self.product_id.bom_ids[:1].id,
+                    "state": "confirmed",
+                }
+            )
+            remaining -= qty
+
+        self.state = "confirmed"
+
+    def action_cancel(self):
+        self.write({"state": "cancel"})
+
+    def action_check_availability(self):
+        """Helper for the planner: Try to reserve stock for all consumers at once."""
+        self.demand_move_ids._action_assign()
+
+    @api.model
+    def _get_or_create_active(self, product, company):
+        """
+        Finds a Draft campaign for the product/company that is 'open' for demand.
+        If none exists, creates a new planning bucket.
+        """
+        today = fields.Date.today()
+
+        campaign = self.search(
+            [
+                ("product_id", "=", product.id),
+                ("company_id", "=", company.id),
+                ("state", "=", "draft"),
+                ("date_start", "<=", today),
+                ("date_end", ">=", today),
+            ],
+            limit=1,
+        )
+
+        if not campaign:
+            campaign = self.create(
+                {
+                    "name": _("Campaign - %(product)s (%(date)s)")
+                    % {"product": product.display_name, "date": today},
+                    "product_id": product.id,
+                    "company_id": company.id,
+                    "date_start": today,
+                    "date_end": today,
+                    "state": "draft",
+                }
+            )
+
+        return campaign
+
+    @api.model
+    def _collect_procurements(self, procurements: list[tuple[Procurement, StockRule]]):
+        """
+        Main entry point from stock.rule interception.
+        Takes a list of procurement objects and routes their moves to campaigns.
+        """
+        for procurement, _rule in procurements:
+            demand_moves = procurement.values.get("move_dest_ids")
+            if not demand_moves:
+                continue
+
+            campaign = self._get_or_create_active(
+                product=procurement.product_id, company=procurement.company_id
+            )
+            campaign.demand_move_ids |= demand_moves
+
+            demand_moves.write(
+                {
+                    "origin": f"{demand_moves[0].origin or ''} - {campaign.name}".strip(
+                        "-"
+                    )
+                }
+            )
+
+    def action_view_provider_mos(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Provider Manufacturing Orders"),
+            "res_model": "mrp.production",
+            "view_mode": "list,form",
+            "domain": [("campaign_id", "=", self.id)],
+            "context": {"default_campaign_id": self.id},
+        }
+
+    def action_view_consumer_mos(self):
+        self.ensure_one()
+        consumer_ids = self.consumer_mo_ids.ids
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Consumer Manufacturing Orders"),
+            "res_model": "mrp.production",
+            "view_mode": "list,form",
+            "domain": [("id", "in", consumer_ids)],
+            "context": {"create": False},
+        }
