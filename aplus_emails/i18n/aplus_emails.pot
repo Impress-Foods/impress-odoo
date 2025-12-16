@@ -60,7 +60,6 @@ msgid ""
 "            <t t-set=\"so\" t-value=\"object.sale_id\"></t>\n"
 "            <div t-attf-style=\"background-color: {{bgColor}}; {{fonts}}; color: {{textColor}}; align: center;\">\n"
 "                <t t-call=\"aplus_emails.image_header_overlaid_logo\">\n"
-"                    <t t-set=\"image\" t-value=\"'shipping-1.jpg'\"></t>\n"
 "                    <t t-set=\"alt_text\" t-value=\"'Picture of a child with A+ juice'\"></t>\n"
 "                </t>\n"
 "                <table style=\"width: 80%; margin: auto;\">\n"
@@ -107,7 +106,6 @@ msgid ""
 "\n"
 "            <div t-attf-style=\"background-color: {{bgColor}}; {{fonts}}; color: {{textColor}}; align: center;\">\n"
 "                <t t-call=\"aplus_emails.image_header_overlaid_logo\">\n"
-"                    <t t-set=\"image\" t-value=\"'shipping-1.jpg'\"></t>\n"
 "                    <t t-set=\"alt_text\" t-value=\"'Picture of a child with A+ juice'\"></t>\n"
 "                </t>\n"
 "                <table style=\"width: 80%; margin: auto;\">\n"
@@ -173,7 +171,6 @@ msgid ""
 "            <t t-call=\"aplus_emails.font_gooper\"></t>\n"
 "            <div t-attf-style=\"background-color: {{bgColor}}; {{fonts}}; color: {{textColor}}; align: center;\">\n"
 "                <t t-call=\"aplus_emails.image_header_overlaid_logo\">\n"
-"                    <t t-set=\"image\" t-value=\"'shipping-1.jpg'\"></t>\n"
 "                    <t t-set=\"alt_text\" t-value=\"'Picture of a child with A+ juice'\"></t>\n"
 "                </t>\n"
 "                <table style=\"width: 80%; margin: auto;\">\n"
@@ -470,17 +467,28 @@ msgid ""
 "                                </table>\n"
 "                            </td>\n"
 "                        </tr>\n"
-"                        <tr>\n"
+"                        <!-- <tr>\n"
 "                            <td>\n"
-"                                <div style=\"position: relative; width: 90%; margin: auto; text-align: center;\">\n"
-"                                    <div style=\"position: absolute; left: 50%; top:25%; transform: translate(-50%, 0%); width: 75%;\">\n"
-"                                        <h1 t-attf-style=\"color:white;{{fonts}} font-size:4rem;margin-bottom:0rem;\">Howdy</h1>\n"
-"                                        <span style=\"color:white;font-size:2.5rem;\">We noticed that you forgot something in your cart.</span>\n"
+"                                <div\n"
+"                                    style=\"position: relative; width: 90%; margin: auto; text-align: center;\"\n"
+"                                >\n"
+"                                    <div\n"
+"                                        style=\"position: absolute; left: 50%; top:25%; transform: translate(-50%, 0%); width: 75%;\"\n"
+"                                    >\n"
+"                                        <h1\n"
+"                                            t-attf-style=\"color:white;{{fonts}} font-size:4rem;margin-bottom:0rem;\"\n"
+"                                        >Howdy</h1>\n"
+"                                        <span\n"
+"                                            style=\"color:white;font-size:2.5rem;\"\n"
+"                                        >We noticed that you forgot something in your cart.</span>\n"
 "                                    </div>\n"
-"                                    <img style=\"width:100%; height:auto; border-radius: 10px;\" src=\"/aplus_emails/static/img/cart-recovery-1.jpg\">\n"
+"                                    <img\n"
+"                                        style=\"width:100%; height:auto; border-radius: 10px;\"\n"
+"                                        src=\"/aplus_emails/static/img/cart-recovery-1.jpg\"\n"
+"                                    />\n"
 "                                </div>\n"
 "                            </td>\n"
-"                        </tr>\n"
+"                        </tr> -->\n"
 "                        <tr>\n"
 "                            <td>\n"
 "                                <div style=\"width:90%; margin: auto;\">\n"
@@ -717,6 +725,16 @@ msgid "Deposit"
 msgstr ""
 
 #. module: aplus_emails
+#: model_terms:ir.ui.view,arch_db:aplus_emails.facebook
+msgid "Facebook Logo"
+msgstr ""
+
+#. module: aplus_emails
+#: model_terms:ir.ui.view,arch_db:aplus_emails.instagram
+msgid "Instagram Logo"
+msgstr ""
+
+#. module: aplus_emails
 #: model_terms:ir.ui.view,arch_db:aplus_emails.image_header
 msgid "Orange A+ Logo"
 msgstr ""
@@ -732,6 +750,11 @@ msgid "Taxes"
 msgstr ""
 
 #. module: aplus_emails
+#: model_terms:ir.ui.view,arch_db:aplus_emails.tiktok
+msgid "Tiktok Logo"
+msgstr ""
+
+#. module: aplus_emails
 #: model_terms:ir.ui.view,arch_db:aplus_emails.order_summary
 msgid "Total"
 msgstr ""
@@ -739,11 +762,6 @@ msgstr ""
 #. module: aplus_emails
 #: model:mail.template,subject:aplus_emails.email_template_welcome_aplus
 msgid "Welcome to A+ Superfruit"
-msgstr ""
-
-#. module: aplus_emails
-#: model_terms:ir.ui.view,arch_db:aplus_emails.image_header_overlaid_logo
-msgid "White A+ logo"
 msgstr ""
 
 #. module: aplus_emails

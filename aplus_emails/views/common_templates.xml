@@ -48,7 +48,7 @@
                     >
 
                         <img
-                            t-attf-src="data:image/*;base64, {{ line.product_id.image_128 }}"
+                            t-attf-src="/web/image/product.product/{{line.product_id.id}}/image_128"
                             t-attf-style="{{ product_thumbnail }} "
                         />
                     </td>
@@ -223,13 +223,8 @@
     >
         <div style="width:100%; overflow:hidden; padding-bottom: 2rem;" id="header">
             <img
-                style="position: absolute; left: 50%; transform: translate(-50%, 0%); width: 30%; padding-top: 2rem;"
-                src="/aplus_emails/static/img/logo_white.png"
-                alt="White A+ logo"
-            />
-            <img
                 style="width: 100%; height: auto;"
-                t-attf-src="/aplus_emails/static/img/{{image}}"
+                t-attf-src="/aplus_emails/static/img/tracking-1.png"
                 alt="{{alt_text}}"
             />
         </div>
