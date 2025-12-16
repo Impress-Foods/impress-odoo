@@ -65,16 +65,6 @@
                                 <div
                                     style="position: relative; width: 90%; margin: auto; text-align: center;"
                                 >
-                                    <div
-                                        style="position: absolute; left: 50%; top:25%; transform: translate(-50%, 0%); width: 75%;"
-                                    >
-                                        <h1
-                                            t-attf-style="color:white;{{fonts}} font-size:4rem;margin-bottom:0rem;"
-                                        >Howdy</h1>
-                                        <span
-                                            style="color:white;font-size:2.5rem;"
-                                        >We noticed that you forgot something in your cart.</span>
-                                    </div>
                                     <img
                                         style="width:100%; height:auto; border-radius: 10px;"
                                         src="/aplus_emails/static/img/cart-recovery-1.jpg"

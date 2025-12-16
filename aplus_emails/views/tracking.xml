@@ -23,7 +23,6 @@
                 t-attf-style="background-color: {{bgColor}}; {{fonts}}; color: {{textColor}}; align: center;"
             >
                 <t t-call="aplus_emails.image_header_overlaid_logo">
-                    <t t-set="image" t-value="'shipping-1.jpg'" />
                     <t t-set="alt_text" t-value="'Picture of a child with A+ juice'" />
                 </t>
                 <table style="width: 80%; margin: auto;">
@@ -117,7 +116,6 @@
                 t-attf-style="background-color: {{bgColor}}; {{fonts}}; color: {{textColor}}; align: center;"
             >
                 <t t-call="aplus_emails.image_header_overlaid_logo">
-                    <t t-set="image" t-value="'shipping-1.jpg'" />
                     <t t-set="alt_text" t-value="'Picture of a child with A+ juice'" />
                 </t>
                 <table style="width: 80%; margin: auto;">
@@ -212,7 +210,6 @@
                 t-attf-style="background-color: {{bgColor}}; {{fonts}}; color: {{textColor}}; align: center;"
             >
                 <t t-call="aplus_emails.image_header_overlaid_logo">
-                    <t t-set="image" t-value="'shipping-1.jpg'" />
                     <t t-set="alt_text" t-value="'Picture of a child with A+ juice'" />
                 </t>
                 <table style="width: 80%; margin: auto;">
