@@ -467,28 +467,13 @@ msgid ""
 "                                </table>\n"
 "                            </td>\n"
 "                        </tr>\n"
-"                        <!-- <tr>\n"
+"                        <tr>\n"
 "                            <td>\n"
-"                                <div\n"
-"                                    style=\"position: relative; width: 90%; margin: auto; text-align: center;\"\n"
-"                                >\n"
-"                                    <div\n"
-"                                        style=\"position: absolute; left: 50%; top:25%; transform: translate(-50%, 0%); width: 75%;\"\n"
-"                                    >\n"
-"                                        <h1\n"
-"                                            t-attf-style=\"color:white;{{fonts}} font-size:4rem;margin-bottom:0rem;\"\n"
-"                                        >Howdy</h1>\n"
-"                                        <span\n"
-"                                            style=\"color:white;font-size:2.5rem;\"\n"
-"                                        >We noticed that you forgot something in your cart.</span>\n"
-"                                    </div>\n"
-"                                    <img\n"
-"                                        style=\"width:100%; height:auto; border-radius: 10px;\"\n"
-"                                        src=\"/aplus_emails/static/img/cart-recovery-1.jpg\"\n"
-"                                    />\n"
+"                                <div style=\"position: relative; width: 90%; margin: auto; text-align: center;\">\n"
+"                                    <img style=\"width:100%; height:auto; border-radius: 10px;\" src=\"/aplus_emails/static/img/cart-recovery-1.jpg\">\n"
 "                                </div>\n"
 "                            </td>\n"
-"                        </tr> -->\n"
+"                        </tr>\n"
 "                        <tr>\n"
 "                            <td>\n"
 "                                <div style=\"width:90%; margin: auto;\">\n"
@@ -726,12 +711,12 @@ msgstr ""
 
 #. module: aplus_emails
 #: model_terms:ir.ui.view,arch_db:aplus_emails.facebook
-msgid "Facebook Logo"
+msgid "Facebook"
 msgstr ""
 
 #. module: aplus_emails
 #: model_terms:ir.ui.view,arch_db:aplus_emails.instagram
-msgid "Instagram Logo"
+msgid "Instagram"
 msgstr ""
 
 #. module: aplus_emails
@@ -751,7 +736,7 @@ msgstr ""
 
 #. module: aplus_emails
 #: model_terms:ir.ui.view,arch_db:aplus_emails.tiktok
-msgid "Tiktok Logo"
+msgid "Tiktok"
 msgstr ""
 
 #. module: aplus_emails
