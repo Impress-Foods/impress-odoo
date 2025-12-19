@@ -6,6 +6,9 @@
         <field name="model">mrp.campaign</field>
         <field name="arch" type="xml">
             <tree>
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm" />
+                </header>
                 <field name="name" />
                 <field name="product_id" />
                 <field name="state" />
@@ -67,6 +70,9 @@
                                 name="company_id"
                                 groups="base.group_multi_company"
                             />
+                        </group>
+                        <group>
+                            <field name="color" widget="color" />
                         </group>
 
                     </group>

@@ -1,12 +1,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import logging
 
-from odoo.exceptions import UserError
+from psycopg2.errors import ForeignKeyViolation
+
 from odoo.tests.common import TransactionCase
 
-try:
-    import psycopg2
-except ImportError:
-    psycopg2 = None
+_logger = logging.getLogger(__name__)
 
 
 class TestMrpCampaign(TransactionCase):
@@ -15,7 +14,6 @@ class TestMrpCampaign(TransactionCase):
         self.MrpProduction = self.env["mrp.production"]
         self.MrpCampaign = self.env["mrp.campaign"]
         self.StockMove = self.env["stock.move"]
-
         # Main product that will be consumed
         self.finished_product = self.env["product.product"].create(
             {"name": "Finished Product", "type": "product"}
@@ -54,8 +52,13 @@ class TestMrpCampaign(TransactionCase):
         )
         # Set up routes
         manufacture_route = self.env.ref("mrp.route_warehouse0_manufacture")
+        mto_route = self.env.ref("stock.route_warehouse0_mto")
+        mto_route.active = True
+
         self.finished_product.route_ids = [(6, 0, [manufacture_route.id])]
-        self.intermediate_product.route_ids = [(6, 0, [manufacture_route.id])]
+        self.intermediate_product.route_ids = [
+            (6, 0, [manufacture_route.id, mto_route.id])
+        ]
 
     def test_01_procurement_creates_campaign(self):
         """Triggering a procurement for a campaign-managed product should
@@ -149,5 +152,5 @@ class TestMrpCampaign(TransactionCase):
         )
 
         # Expect an IntegrityError due to the 'ondelete=restrict' constraint
-        with self.assertRaises((UserError, psycopg2.errors.ForeignKeyViolation)):
+        with self.assertRaises(ForeignKeyViolation):
             campaign.unlink()

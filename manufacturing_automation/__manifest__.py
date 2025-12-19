@@ -14,6 +14,9 @@
         "views/mrp_campaign_views.xml",
         "views/mrp_production_views.xml",
     ],
+    "assets": {
+        "web.assets_backend": ["manufacturing_automation/static/src/**/*"],
+    },
     "installable": True,
     "license": "GPL-2",
 }

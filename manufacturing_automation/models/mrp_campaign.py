@@ -1,4 +1,6 @@
+import colorsys
 import logging
+import random
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
@@ -27,6 +29,7 @@ class MrpCampaign(models.Model):
         string="Status",
         default="draft",
     )
+    color = fields.Char(default=lambda self: self._generate_color())
 
     date_start = fields.Date(string="Start Date", required=True)
     date_end = fields.Date(string="End Date", required=True)
@@ -72,6 +75,17 @@ class MrpCampaign(models.Model):
         compute="_compute_totals",
         help="Difference between Supply and Demand. Should be >= 0.",
     )
+
+    lot_id = fields.Char(compute="_compute_lot_id")
+
+    @api.model
+    def _generate_color(self) -> str:
+        hue, sat, lum = random.random(), random.uniform(0.4, 0.8), 0.5
+
+        rgb: tuple[float, float, float] = colorsys.hls_to_rgb(hue, sat, lum)
+        r, g, b = (round(rgb[0] * 255), round(rgb[1] * 255), round(rgb[2] * 255))
+
+        return f"#{r:02x}{g:02x}{b:02x}"
 
     @api.depends("consumer_mo_ids", "provider_mo_ids", "demand_move_ids")
     def _compute_mo_counts(self):
@@ -119,34 +133,82 @@ class MrpCampaign(models.Model):
                 "raw_material_production_id"
             )
 
+    def _sync_campaign_lots(self, reference_lot):
+        """
+        Triggered when any MO in the campaign gets a lot assigned.
+        Propagates the same Lot to providers and the same Name to consumers.
+        """
+        self.ensure_one()
+        lot_name = reference_lot.name
+        company_id = reference_lot.company_id.id
+
+        providers_to_update = self.provider_mo_ids.filtered(
+            lambda m: m.lot_producing_id != reference_lot
+        )
+        if providers_to_update:
+            providers_to_update.with_context(skip_campaign_sync=True).write(
+                {"lot_producing_id": reference_lot.id}
+            )
+
+        lot_cache = {}
+
+        for mo in self.consumer_mo_ids:
+            target_product = mo.product_id
+
+            if target_product not in lot_cache:
+                existing_lot = self.env["stock.lot"].search(
+                    [
+                        ("name", "=", lot_name),
+                        ("product_id", "=", target_product.id),
+                        ("company_id", "=", company_id),
+                    ],
+                    limit=1,
+                )
+
+                if existing_lot:
+                    lot_cache[target_product] = existing_lot
+                else:
+                    lot_cache[target_product] = self.env["stock.lot"].create(
+                        {
+                            "name": lot_name,
+                            "product_id": target_product.id,
+                            "company_id": company_id,
+                        }
+                    )
+
+            if mo.lot_producing_id != lot_cache[target_product]:
+                mo.with_context(skip_campaign_sync=True).write(
+                    {"lot_producing_id": lot_cache[target_product].id}
+                )
+
     def action_confirm(self):
         """Logic to split total demand into batch-sized Provider MOs"""
-        self.ensure_one()
-        if not self.demand_move_ids:
-            raise UserError(_("No demand moves selected."))
+        for rec in self:
+            if not rec.demand_move_ids:
+                raise UserError(_("No demand moves selected."))
 
-        batch_size = self.product_id.product_tmpl_id.mrp_max_batch_size
-        if batch_size <= 0:
-            raise UserError(
-                _("Please define a Max Batch Size on the product template.")
-            )
+            batch_size = rec.product_id.product_tmpl_id.mrp_max_batch_size
+            if batch_size <= 0:
+                raise UserError(
+                    _("Please define a Max Batch Size on the product template.")
+                )
 
-        remaining = self.total_demand_qty
-        while remaining > 0:
-            qty = min(batch_size, remaining)
-            self.env["mrp.production"].create(
-                {
-                    "product_id": self.product_id.id,
-                    "product_qty": qty,
-                    "campaign_id": self.id,
-                    "origin": self.name,
-                    "bom_id": self.product_id.bom_ids[:1].id,
-                    "state": "confirmed",
-                }
-            )
-            remaining -= qty
+            remaining = rec.total_demand_qty
+            while remaining > 0:
+                qty = min(batch_size, remaining)
+                self.env["mrp.production"].create(
+                    {
+                        "product_id": rec.product_id.id,
+                        "product_uom_id": rec.product_id.uom_id.id,
+                        "product_qty": qty,
+                        "campaign_id": rec.id,
+                        "origin": rec.name,
+                        "bom_id": rec.product_id.bom_ids[0].id,
+                    }
+                ).action_confirm()
+                remaining -= qty
 
-        self.state = "confirmed"
+            rec.state = "confirmed"
 
     def action_cancel(self):
         self.write({"state": "cancel"})

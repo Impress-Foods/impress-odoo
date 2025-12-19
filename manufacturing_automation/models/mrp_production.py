@@ -1,4 +1,8 @@
+import logging
+
 from odoo import api, fields, models
+
+_logger = logging.getLogger(__name__)
 
 
 class ProductionOrder(models.Model):
@@ -14,10 +18,23 @@ class ProductionOrder(models.Model):
         "mrp.campaign",
         string="Associated Campaign",
         compute="_compute_associated_campaign_id",
-        store=False,  # Dynamic to ensure it's always accurate
+        store=False,
     )
 
     campaign_product_qty = fields.Float(compute="_compute_associated_campaign_id")
+    campaign_color = fields.Char(compute="_compute_associated_campaign_id")
+
+    def write(self, vals):
+        res = super().write(vals)
+        # Only trigger if lot_producing_id is changed and we aren't already syncing
+        if (
+            "lot_producing_id" in vals
+            and vals["lot_producing_id"]
+            and not self.env.context.get("skip_campaign_sync")
+        ):
+            for mo in self.filtered(lambda m: m.associated_campaign_id):
+                mo.associated_campaign_id._sync_campaign_lots(mo.lot_producing_id)
+        return res
 
     @api.depends("campaign_id", "move_raw_ids")
     def _compute_associated_campaign_id(self):
@@ -32,6 +49,7 @@ class ProductionOrder(models.Model):
                 mo.associated_campaign_id = campaign
 
             if mo.associated_campaign_id:
+                mo.campaign_color = mo.associated_campaign_id.color
                 product = mo.associated_campaign_id.product_id
                 move = mo.move_raw_ids.filtered_domain(
                     [("product_id", "=", product.id)]
