@@ -67,3 +67,17 @@ class ProductionOrder(models.Model):
             "view_mode": "form",
             "target": "current",
         }
+
+    def _split_productions(
+        self, amounts=False, cancel_remaining_qty=False, set_consumed_qty=False
+    ):
+        res = super()._split_productions(
+            amounts=amounts,
+            cancel_remaining_qty=cancel_remaining_qty,
+            set_consumed_qty=set_consumed_qty,
+        )
+        for rec in self:
+            bos = rec.procurement_group_id.mrp_production_ids
+            for bo in bos:
+                bo.lot_producing_id = rec.lot_producing_id
+        return res

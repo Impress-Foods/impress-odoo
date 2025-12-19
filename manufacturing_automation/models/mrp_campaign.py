@@ -15,10 +15,11 @@ _logger = logging.getLogger(__name__)
 class MrpCampaign(models.Model):
     _name = "mrp.campaign"
     _description = "Manufacturing Campaign"
-
+    _order = "date_start desc,sequence desc"
     name = fields.Char(
         string="Campaign Reference", required=True, copy=False, default="/"
     )
+    sequence = fields.Integer()
     state = fields.Selection(
         [
             ("draft", "Draft"),
@@ -76,7 +77,9 @@ class MrpCampaign(models.Model):
         help="Difference between Supply and Demand. Should be >= 0.",
     )
 
-    lot_id = fields.Char(compute="_compute_lot_id")
+    lot_id = fields.Many2one(comodel_name="stock.lot")
+    override_batch_size = fields.Boolean()
+    batch_size = fields.Float()
 
     @api.model
     def _generate_color(self) -> str:
@@ -140,6 +143,7 @@ class MrpCampaign(models.Model):
         """
         self.ensure_one()
         lot_name = reference_lot.name
+        self.lot_id = reference_lot
         company_id = reference_lot.company_id.id
 
         providers_to_update = self.provider_mo_ids.filtered(
@@ -188,10 +192,16 @@ class MrpCampaign(models.Model):
                 raise UserError(_("No demand moves selected."))
 
             batch_size = rec.product_id.product_tmpl_id.mrp_max_batch_size
+
             if batch_size <= 0:
                 raise UserError(
                     _("Please define a Max Batch Size on the product template.")
                 )
+
+            if rec.override_batch_size:
+                if rec.batch_size <= 0:
+                    raise UserError(_("Please define an Override batch size"))
+                batch_size = rec.batch_size
 
             remaining = rec.total_demand_qty
             while remaining > 0:
@@ -239,8 +249,7 @@ class MrpCampaign(models.Model):
         if not campaign:
             campaign = self.create(
                 {
-                    "name": _("Campaign - %(product)s (%(date)s)")
-                    % {"product": product.display_name, "date": today},
+                    "name": f"{product.display_name} ({today})",
                     "product_id": product.id,
                     "company_id": company.id,
                     "date_start": today,
