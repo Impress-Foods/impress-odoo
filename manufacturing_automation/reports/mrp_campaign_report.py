@@ -1,0 +1,15 @@
+from odoo import api, models
+
+
+class MrpCampaignReport(models.AbstractModel):
+    _name = "report.manufacturing_automation.report_mrp_campaign_document"
+    _description = "MRP Campaign Report"
+
+    @api.model
+    def _get_report_values(self, docids, data=None):
+        docs = self.env["mrp.campaign"].browse(docids)
+        return {
+            "doc_ids": docs.ids,
+            "doc_model": "mrp.campaign",
+            "docs": docs,
+        }

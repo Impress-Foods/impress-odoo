@@ -30,6 +30,12 @@
                         class="btn-primary"
                         invisible="state not in ['draft']"
                     />
+                    <button
+                        name="%(action_report_mrp_campaign)d"
+                        type="action"
+                        string="Print Tracking Report"
+                        class="btn-primary"
+                    />
                     <field name="state" widget="statusbar" />
                 </header>
 

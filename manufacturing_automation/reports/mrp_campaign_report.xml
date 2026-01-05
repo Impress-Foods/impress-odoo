@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_mrp_campaign_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure" />
+                        <div class="row">
+                            <div class="col-8">
+                                <strong>Campaign:</strong> <span
+                                    t-field="doc.name"
+                                /><br />
+                                <strong>Lot/Batch:</strong> <span
+                                    t-field="doc.lot_id.name"
+                                /><br />
+                            </div>
+                            <div class="col-4 text-right">
+                                <strong>Start Date:</strong> <span
+                                    t-field="doc.date_start"
+                                /><br />
+                                <strong>End Date:</strong> <span
+                                    t-field="doc.date_end"
+                                /><br />
+                            </div>
+                        </div>
+
+                        <h3 class="mt32">Intermediate Product: <span
+                                t-field="doc.product_id.display_name"
+                            /></h3>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th style="width: 7%;">Done</th>
+                                    <th>MO</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.provider_mo_ids" t-as="mo">
+                                    <tr>
+                                        <td>&#9744;</td>
+                                        <td><span t-field="mo.name" /></td>
+                                        <td
+                                        >&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;/ <span
+                                                t-field="mo.product_qty"
+                                            /> <span
+                                                t-field="mo.product_uom_id.name"
+                                            /></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="padding-left: 20px;">
+                                            <table
+                                                class="table table-sm table-borderless"
+                                            >
+                                                <thead>
+                                                    <tr>
+                                                        <th>Component</th>
+                                                        <th>Qty Consumed</th>
+                                                        <th>Lot Number</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr
+                                                        t-foreach="mo.bom_id.bom_line_ids"
+                                                        t-as="line"
+                                                    >
+                                                        <td><span
+                                                                t-field="line.product_id.display_name"
+                                                            /></td>
+                                                        <td
+                                                        >&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;/ <span
+                                                                t-field="line.product_qty"
+                                                            /> <span
+                                                                t-field="line.product_uom_id.name"
+                                                            /></td>
+                                                        <td />
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <h3 class="mt32">Finished Products</h3>
+                        <t
+                            t-foreach="doc.consumer_mo_ids.mapped('product_id')"
+                            t-as="product"
+                        >
+                            <h4 class="mt16"><strong>Product:</strong> <span
+                                    t-esc="product.display_name"
+                                /></h4>
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 7%;">Done</th>
+                                        <th>MO</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t
+                                        t-foreach="doc.consumer_mo_ids.filtered(lambda mo: mo.product_id == product)"
+                                        t-as="mo"
+                                    >
+                                        <tr>
+                                            <td>&#9744;</td>
+                                            <td><span t-field="mo.name" /></td>
+                                            <td
+                                            >&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;/ <span
+                                                    t-field="mo.product_qty"
+                                                /> <span
+                                                    t-field="mo.product_uom_id.name"
+                                                /></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" style="padding-left: 20px;">
+                                                <table
+                                                    class="table table-sm table-borderless"
+                                                >
+                                                    <thead>
+                                                        <tr>
+                                                            <th
+                                                                style="text-align:center;"
+                                                            >Component</th>
+                                                            <th>Qty Consumed</th>
+                                                            <th>Lot Number</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr
+                                                            t-foreach="mo.bom_id.bom_line_ids"
+                                                            t-as="line"
+                                                        >
+                                                            <td
+                                                                style="text-align:center;"
+                                                            ><span
+                                                                    t-field="line.product_id.display_name"
+                                                                /></td>
+                                                            <td
+                                                            >&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;/ <span
+                                                                    t-field="line.product_qty"
+                                                                /> <span
+                                                                    t-field="line.product_uom_id.name"
+                                                                /></td>
+                                                            <td />
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_mrp_campaign" model="ir.actions.report">
+        <field name="name">Campaign Tracking Report</field>
+        <field name="model">mrp.campaign</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >manufacturing_automation.report_mrp_campaign_document</field>
+        <field
+            name="report_file"
+        >manufacturing_automation.report_mrp_campaign_document</field>
+        <field name="print_report_name">(object.name)</field>
+        <field name="binding_model_id" ref="model_mrp_campaign" />
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
