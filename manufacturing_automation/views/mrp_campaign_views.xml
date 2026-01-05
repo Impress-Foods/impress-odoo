@@ -80,7 +80,7 @@
                             <field name="percent_fulfilled" widget="percentpie" />
                         </group>
                         <group>
-                            <field name="color" widget="color" />
+                            <field name="campaign_color" widget="color" />
                             <field name="override_batch_size" widget="boolean_toggle" />
                             <field
                                 name="batch_size"
@@ -138,8 +138,8 @@
         <field name="name">mrp.campaign.kanban</field>
         <field name="model">mrp.campaign</field>
         <field name="arch" type="xml">
-            <kanban>
-                <field name="color" />
+            <kanban color="no_color_field">
+                <field name="campaign_color" />
                 <field name="lot_id" invisible="1" />
                 <field
                     name="state"
@@ -159,7 +159,7 @@
                     <t t-name="kanban-box">
                         <div
                             t-attf-class="oe_kanban_card oe_kanban_global_click"
-                            t-attf-style="border-left: 1px solid {{record.color}};"
+                            t-attf-style="border-left: 4px solid {{record.campaign_color.raw_value}};"
                         >
                             <div class="o_kanban_record_top">
                                 <div class="o_kanban_record_headings ms-1">

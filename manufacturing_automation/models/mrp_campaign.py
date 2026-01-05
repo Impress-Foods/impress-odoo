@@ -30,7 +30,7 @@ class MrpCampaign(models.Model):
         string="Status",
         default="draft",
     )
-    color = fields.Char(default=lambda self: self._generate_color())
+    campaign_color = fields.Char(default=lambda self: self._generate_color())
 
     date_start = fields.Date(string="Start Date", required=True)
     date_end = fields.Date(string="End Date", required=True)
@@ -212,6 +212,7 @@ class MrpCampaign(models.Model):
                         "product_uom_id": rec.product_id.uom_id.id,
                         "product_qty": qty,
                         "campaign_id": rec.id,
+                        "associated_campaign_id": rec.id,
                         "origin": rec.name,
                         "bom_id": rec.product_id.bom_ids[0].id,
                     }
@@ -278,9 +279,10 @@ class MrpCampaign(models.Model):
 
             demand_moves.write(
                 {
+                    "demanded_by_campaign_id": campaign.id,
                     "origin": f"{demand_moves[0].origin or ''} - {campaign.name}".strip(
                         "-"
-                    )
+                    ),
                 }
             )
 

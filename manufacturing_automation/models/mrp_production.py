@@ -12,17 +12,29 @@ class ProductionOrder(models.Model):
         "mrp.campaign",
         string="Campaign",
         ondelete="restrict",
+        help="The campaign that created this manufacturing order (provider MO).",
     )
 
     associated_campaign_id = fields.Many2one(
         "mrp.campaign",
         string="Associated Campaign",
-        compute="_compute_associated_campaign_id",
-        store=False,
+        copy=False,
+        index=True,
+        help="The campaign this manufacturing order is linked to, either as a "
+        "provider (set directly) or as a consumer (set via stock moves).",
     )
 
-    campaign_product_qty = fields.Float(compute="_compute_associated_campaign_id")
-    campaign_color = fields.Char(compute="_compute_associated_campaign_id")
+    campaign_product_qty = fields.Float(
+        compute="_compute_campaign_product_qty",
+        store=True,
+        help="If this is a consumer MO, this field shows the quantity of the "
+        "campaign's intermediate product that this order consumes.",
+    )
+
+    campaign_color = fields.Char(
+        related="associated_campaign_id.campaign_color",
+        string="Campaign Color",
+    )
 
     def write(self, vals):
         res = super().write(vals)
@@ -36,25 +48,27 @@ class ProductionOrder(models.Model):
                 mo.associated_campaign_id._sync_campaign_lots(mo.lot_producing_id)
         return res
 
-    @api.depends("campaign_id", "move_raw_ids")
-    def _compute_associated_campaign_id(self):
+    @api.depends(
+        "associated_campaign_id", "move_raw_ids.product_uom_qty", "move_raw_ids.state"
+    )
+    def _compute_campaign_product_qty(self):
+        """
+        Computes the total quantity of a campaign's specific intermediate product
+        that is consumed by this manufacturing order.
+        """
         for mo in self:
-            if mo.campaign_id:
-                mo.associated_campaign_id = mo.campaign_id
+            if not mo.associated_campaign_id:
+                mo.campaign_product_qty = 0.0
+                continue
 
-            else:
-                campaign = self.env["mrp.campaign"].search(
-                    [("demand_move_ids", "in", mo.move_raw_ids.ids)], limit=1
-                )
-                mo.associated_campaign_id = campaign
-
-            if mo.associated_campaign_id:
-                mo.campaign_color = mo.associated_campaign_id.color
-                product = mo.associated_campaign_id.product_id
-                move = mo.move_raw_ids.filtered_domain(
-                    [("product_id", "=", product.id)]
-                )
-                mo.campaign_product_qty = move.product_uom_qty
+            campaign_product = mo.associated_campaign_id.product_id
+            # Filter the raw moves to find the ones for the campaign's product
+            # that are not cancelled and sum their quantities.
+            moves = mo.move_raw_ids.filtered(
+                lambda m, product=campaign_product: m.product_id == product
+                and m.state != "cancel"
+            )
+            mo.campaign_product_qty = sum(moves.mapped("product_uom_qty"))
 
     def action_view_campaign(self):
         self.ensure_one()
