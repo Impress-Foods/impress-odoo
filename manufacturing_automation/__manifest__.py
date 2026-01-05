@@ -14,6 +14,7 @@
         "views/procurement_groups_views.xml",
         "views/mrp_campaign_views.xml",
         "views/mrp_production_views.xml",
+        "data/mrp_campaign_sequence.xml",
     ],
     "assets": {
         "web.assets_backend": ["manufacturing_automation/static/src/**/*"],

@@ -17,7 +17,10 @@ class MrpCampaign(models.Model):
     _description = "Manufacturing Campaign"
     _order = "date_start desc,sequence desc"
     name = fields.Char(
-        string="Campaign Reference", required=True, copy=False, default="/"
+        string="Campaign Reference",
+        required=True,
+        copy=False,
+        default=lambda self: self._get_name_seq(),
     )
     sequence = fields.Integer()
     state = fields.Selection(
@@ -82,6 +85,11 @@ class MrpCampaign(models.Model):
     batch_size = fields.Float()
 
     @api.model
+    def _get_name_seq(self):
+        """Generates a sequence number for the campaign name."""
+        return self.env["ir.sequence"].next_by_code("mrp.campaign") or _("New")
+
+    @api.model
     def _generate_color(self) -> str:
         hue, sat, lum = random.random(), random.uniform(0.4, 0.8), 0.5
 
@@ -92,11 +100,15 @@ class MrpCampaign(models.Model):
 
     @api.depends("consumer_mo_ids", "provider_mo_ids", "demand_move_ids")
     def _compute_mo_counts(self):
-        for reg in self:
-            reg.provider_mo_count = len(reg.provider_mo_ids)
-            reg.consumer_mo_count = len(reg.consumer_mo_ids)
-            if reg.provider_mo_count == 0:
-                reg.state = "draft"
+        for rec in self:
+            rec.provider_mo_count = len(rec.provider_mo_ids)
+            rec.consumer_mo_count = len(rec.consumer_mo_ids)
+            if rec.provider_mo_count == 0:
+                rec._action_draft()
+
+    def _action_draft(self):
+        for rec in self:
+            rec.state = "draft"
 
     @api.depends(
         "demand_move_ids",
@@ -106,19 +118,19 @@ class MrpCampaign(models.Model):
         "provider_mo_ids.state",
     )
     def _compute_totals(self):
-        for reg in self:
-            active_demand_moves = reg.demand_move_ids.filtered(
+        for rec in self:
+            active_demand_moves = rec.demand_move_ids.filtered(
                 lambda m: m.exists() and m.state != "cancel"
             )
 
-            reg.total_demand_qty = sum(active_demand_moves.mapped("product_uom_qty"))
+            rec.total_demand_qty = sum(active_demand_moves.mapped("product_uom_qty"))
 
-            active_provider_mos = reg.provider_mo_ids.filtered(
+            active_provider_mos = rec.provider_mo_ids.filtered(
                 lambda mo: mo.state != "cancel"
             )
-            reg.planned_supply_qty = sum(active_provider_mos.mapped("product_qty"))
+            rec.planned_supply_qty = sum(active_provider_mos.mapped("product_qty"))
 
-            reg.campaign_balance = reg.planned_supply_qty - reg.total_demand_qty
+            rec.campaign_balance = rec.planned_supply_qty - rec.total_demand_qty
 
     @api.depends("planned_supply_qty", "total_demand_qty")
     def _compute_percent(self):
@@ -131,8 +143,8 @@ class MrpCampaign(models.Model):
 
     @api.depends("demand_move_ids")
     def _compute_consumer_mo_ids(self):
-        for reg in self:
-            reg.consumer_mo_ids = reg.demand_move_ids.mapped(
+        for rec in self:
+            rec.consumer_mo_ids = rec.demand_move_ids.mapped(
                 "raw_material_production_id"
             )
 
@@ -250,7 +262,7 @@ class MrpCampaign(models.Model):
         if not campaign:
             campaign = self.create(
                 {
-                    "name": f"{product.display_name} ({today})",
+                    "name": self._get_name_seq(),  # Use sequence for naming
                     "product_id": product.id,
                     "company_id": company.id,
                     "date_start": today,

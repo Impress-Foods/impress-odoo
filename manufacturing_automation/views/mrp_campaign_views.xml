@@ -138,7 +138,7 @@
         <field name="name">mrp.campaign.kanban</field>
         <field name="model">mrp.campaign</field>
         <field name="arch" type="xml">
-            <kanban color="no_color_field">
+            <kanban>
                 <field name="campaign_color" />
                 <field name="lot_id" invisible="1" />
                 <field
