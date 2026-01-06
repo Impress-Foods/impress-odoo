@@ -12,6 +12,19 @@
                     name="mrp_max_batch_size"
                     invisible="not is_campaign_manufactured"
                 />
+                <label
+                    for="campaign_bucket_size"
+                    invisible="not is_campaign_manufactured"
+                    string="Planning horizon"
+                />
+                <div
+                    class="o_row"
+                    name="campaign_bucket_size"
+                    invisible="not is_campaign_manufactured"
+                >
+                    <field class="oe_inline" name="campaign_bucket_size" required="1" />
+                    <field class="oe_inline" name="campaign_bucket_type" required="1" />
+                </div>
             </xpath>
         </field>
     </record>

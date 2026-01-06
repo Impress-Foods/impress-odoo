@@ -2,6 +2,8 @@ import colorsys
 import logging
 import random
 
+from dateutil.relativedelta import relativedelta
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
@@ -228,7 +230,7 @@ class MrpCampaign(models.Model):
                         "origin": rec.name,
                         "bom_id": rec.product_id.bom_ids[0].id,
                     }
-                ).action_confirm()
+                ).action_confirm().action_assign_all()
                 remaining -= qty
 
             rec.state = "confirmed"
@@ -247,14 +249,34 @@ class MrpCampaign(models.Model):
         If none exists, creates a new planning bucket.
         """
         today = fields.Date.today()
+        bucket_size = product.product_tmpl_id.campaign_bucket_size
+        bucket_type = product.product_tmpl_id.campaign_bucket_type
+
+        start_date = today
+        end_date = today
+
+        if bucket_type == "day":
+            start_date = today
+            end_date = today + relativedelta(days=bucket_size - 1)
+        elif bucket_type == "week":
+            # Assuming week starts on Monday (weekday() returns 0 for Monday)
+            start_date = today - relativedelta(days=today.weekday())
+            end_date = (
+                start_date + relativedelta(weeks=bucket_size) - relativedelta(days=1)
+            )
+        elif bucket_type == "month":
+            start_date = today.replace(day=1)
+            end_date = (
+                start_date + relativedelta(months=bucket_size) - relativedelta(days=1)
+            )
 
         campaign = self.search(
             [
                 ("product_id", "=", product.id),
                 ("company_id", "=", company.id),
                 ("state", "=", "draft"),
-                ("date_start", "<=", today),
-                ("date_end", ">=", today),
+                ("date_start", "<=", start_date),
+                ("date_end", ">=", end_date),
             ],
             limit=1,
         )
@@ -262,11 +284,11 @@ class MrpCampaign(models.Model):
         if not campaign:
             campaign = self.create(
                 {
-                    "name": self._get_name_seq(),  # Use sequence for naming
+                    "name": self._get_name_seq(),
                     "product_id": product.id,
                     "company_id": company.id,
-                    "date_start": today,
-                    "date_end": today,
+                    "date_start": start_date,
+                    "date_end": end_date,
                     "state": "draft",
                 }
             )
