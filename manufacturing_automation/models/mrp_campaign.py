@@ -220,7 +220,7 @@ class MrpCampaign(models.Model):
             remaining = rec.total_demand_qty
             while remaining > 0:
                 qty = min(batch_size, remaining)
-                self.env["mrp.production"].create(
+                mo = self.env["mrp.production"].create(
                     {
                         "product_id": rec.product_id.id,
                         "product_uom_id": rec.product_id.uom_id.id,
@@ -230,7 +230,9 @@ class MrpCampaign(models.Model):
                         "origin": rec.name,
                         "bom_id": rec.product_id.bom_ids[0].id,
                     }
-                ).action_confirm().action_assign_all()
+                )
+                mo.action_confirm()
+                mo.action_assign_all()
                 remaining -= qty
 
             rec.state = "confirmed"

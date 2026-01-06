@@ -27,10 +27,13 @@ class StockMove(models.Model):
         all affected MOs (before and after the change)
         and explicitly sets their 'associated_campaign_id' field.
         """
+        res = super().write(vals)
+
+        if self.env.context.get("is_auto_deadline"):
+            return res
+
         # Capture production orders linked to these moves BEFORE the write operation.
         productions_before = self.mapped("raw_material_production_id")
-
-        res = super().write(vals)
 
         # If the campaign link or the production link of these moves has changed,
         # we need to ensure the associated MOs are updated.
@@ -60,4 +63,24 @@ class StockMove(models.Model):
                 if production.associated_campaign_id != campaign_to_set:
                     production.associated_campaign_id = campaign_to_set
 
+        if "date" in vals or "move_dest_ids" in vals:
+            moves_to_recalculate = self.env["stock.move"]
+            if "date" in vals:
+                moves_to_recalculate |= self.move_orig_ids
+            if "move_dest_ids" in vals:
+                moves_to_recalculate |= self
+
+            for move in moves_to_recalculate.filtered(
+                lambda m: m.state not in ("done", "cancel")
+            ):
+                new_deadline = False
+                if move.move_dest_ids:
+                    new_deadline = min(move.move_dest_ids.mapped("date"))
+
+                if move.date_deadline != new_deadline:
+                    move.with_context(is_auto_deadline=True).write(
+                        {
+                            "date_deadline": new_deadline,
+                        }
+                    )
         return res

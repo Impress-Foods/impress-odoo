@@ -2,6 +2,8 @@ import logging
 
 from odoo import api, fields, models
 
+from odoo.addons.mrp.models.mrp_production import MrpProduction
+
 _logger = logging.getLogger(__name__)
 
 
@@ -70,18 +72,6 @@ class ProductionOrder(models.Model):
             )
             mo.campaign_product_qty = sum(moves.mapped("product_uom_qty"))
 
-    def action_view_campaign(self):
-        self.ensure_one()
-        if not self.associated_campaign_id:
-            return
-        return {
-            "type": "ir.actions.act_window",
-            "res_model": "mrp.campaign",
-            "res_id": self.associated_campaign_id.id,
-            "view_mode": "form",
-            "target": "current",
-        }
-
     def _split_productions(
         self, amounts=False, cancel_remaining_qty=False, set_consumed_qty=False
     ):
@@ -95,3 +85,20 @@ class ProductionOrder(models.Model):
             for bo in bos:
                 bo.lot_producing_id = rec.lot_producing_id
         return res
+
+    def action_confirm(self: MrpProduction):
+        rec = super().action_confirm()
+        self.action_assign_all()
+        return rec
+
+    def action_view_campaign(self):
+        self.ensure_one()
+        if not self.associated_campaign_id:
+            return
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "mrp.campaign",
+            "res_id": self.associated_campaign_id.id,
+            "view_mode": "form",
+            "target": "current",
+        }

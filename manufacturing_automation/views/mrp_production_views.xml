@@ -23,7 +23,12 @@
                     <field name="associated_campaign_id" invisible="1" />
                 </button>
             </xpath>
-
+            <xpath
+                expr="//group[@name='group_extra_info']//field[@name='date_finished']"
+                position="before"
+            >
+                <field name="date_deadline" readonly="1" />
+            </xpath>
         </field>
     </record>
 
