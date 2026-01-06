@@ -349,10 +349,9 @@ class TestClickshipRequest(TestDeliveryCommon):
         picking = self.make_picking()
         picking.clickship_service_id = "test_service_id"
         picking.origin = "SO001"
-
         request = self.sr._make_shipment_request(picking, self.contact)
 
-        self.assertEqual(request.unique_id, "SO001")
+        self.assertEqual(request.unique_id, f"SO001-{picking.name}")
         self.assertEqual(request.service_id, "test_service_id")
         self.assertEqual(request.payment_method_id, self.payment_method.code)
         self.assertIsNotNone(request.details)
