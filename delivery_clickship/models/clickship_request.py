@@ -464,7 +464,13 @@ class ClickshipProvider:
     def _make_shipment_request(
         self, order: Picking, contact: Partner | HrEmployeeBase
     ) -> ShipmentRequest:
-        unique_id: str = str(getattr(order, "origin", False) or order.name)
+        origin_name: str = getattr(order, "origin", "")
+        unique_id: str = ""
+        if origin_name:
+            unique_id = origin_name + "-" + order.name
+        else:
+            unique_id = order.name
+
         payment_method = order.carrier_id.clickship_payment_method.code  # type: ignore
         shipping_details = self._make_shipping_details(order, contact)
         pickup_details = self._make_pickup_details(contact)
