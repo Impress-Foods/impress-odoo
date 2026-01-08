@@ -7,7 +7,9 @@
         <field name="inherit_id" ref="product.product_template_only_form_view" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='responsible_id']" position="after">
+
                 <field name="is_campaign_manufactured" />
+                <field name="is_campaign_anchor" />
                 <field
                     name="mrp_max_batch_size"
                     invisible="not is_campaign_manufactured"

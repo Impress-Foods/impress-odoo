@@ -17,7 +17,7 @@
         "data/mrp_campaign_sequence.xml",
     ],
     "assets": {
-        "web.assets_backend": ["manufacturing_automation/static/src/**/*"],
+        "web.assets_backend": ["mrp_campaign/static/src/**/*"],
     },
     "installable": True,
     "license": "GPL-2",

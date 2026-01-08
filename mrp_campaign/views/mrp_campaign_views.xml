@@ -12,7 +12,7 @@
                 <field name="name" />
                 <field name="product_id" />
                 <field name="state" />
-                <field name="total_demand_qty" />
+                <!-- <field name="total_demand_qty" /> -->
             </tree>
         </field>
     </record>
@@ -31,6 +31,13 @@
                         invisible="state not in ['draft']"
                     />
                     <button
+                        name="action_reset"
+                        type="object"
+                        string="Reset Campaign"
+                        class="btn-primary"
+                        invisible="state not in ['confirmed']"
+                    />
+                    <button
                         name="%(action_report_mrp_campaign)d"
                         type="action"
                         string="Print Tracking Report"
@@ -42,7 +49,7 @@
                 <sheet>
 
                     <div class="oe_button_box" name="button_box">
-                        <button
+                        <!-- <button
                             name="action_view_provider_mos"
                             type="object"
                             class="oe_stat_button"
@@ -53,9 +60,9 @@
                                 widget="statinfo"
                                 string="In"
                             />
-                        </button>
+                        </button> -->
 
-                        <button
+                        <!-- <button
                             name="action_view_consumer_mos"
                             type="object"
                             class="oe_stat_button"
@@ -66,7 +73,7 @@
                                 widget="statinfo"
                                 string="Out"
                             />
-                        </button>
+                        </button> -->
                     </div>
                     <group>
                         <group>
@@ -76,8 +83,8 @@
                                 name="company_id"
                                 groups="base.group_multi_company"
                             />
-                            <field name="total_demand_qty" readonly="1" />
-                            <field name="percent_fulfilled" widget="percentpie" />
+                            <!-- <field name="total_demand_qty" readonly="1" />
+                            <field name="percent_fulfilled" widget="percentpie" /> -->
                         </group>
                         <group>
                             <field name="campaign_color" widget="color" />
@@ -92,41 +99,21 @@
                     </group>
 
                     <notebook>
-
-                        <!-- Demand -->
-                        <page string="Consumers">
-                            <field name="consumer_mo_ids">
-                                <tree
-                                    decoration-info="state == 'draft'"
-                                    decoration-danger="state == 'cancel'"
-                                >
-                                    <field name="display_name" />
+                        <page string="Campaign Line">
+                            <field name="line_ids">
+                                <tree>
                                     <field name="product_id" />
-                                    <field name="product_qty" sum="Total" />
-                                    <field
-                                        name="campaign_product_qty"
-                                        string="Quantity needed"
-                                        sum="Total"
-                                    />
-                                    <field name="state" />
-
+                                    <field name="product_uom_qty" />
+                                    <field name="product_uom_id" />
+                                    <field name="bom_id" optional="hide" />
                                 </tree>
                             </field>
                         </page>
+                        <!-- Demand -->
+                        <page string="Consumers"> </page>
 
                         <!-- Supply -->
-                        <page string="Producers">
-                            <field name="provider_mo_ids">
-                                <tree
-                                    decoration-info="state == 'draft'"
-                                    decoration-danger="state == 'cancel'"
-                                >
-                                    <field name="name" />
-                                    <field name="product_qty" sum="Total" />
-                                    <field name="state" />
-                                </tree>
-                            </field>
-                        </page>
+                        <page string="Producers"> </page>
 
                     </notebook>
                 </sheet>
@@ -148,8 +135,8 @@
                     on_change="1"
                     field_id="state_0"
                 />
-                <field name="date_start" />
-                <field name="date_end" />
+                <field name="date_planned_start" />
+                <!-- <field name="date_end" /> -->
                 <progessbar
                     field="state"
                     colors='{"draft": "muted", "confirmed": "info", "done": "success", "cancel": "danger"}'
@@ -163,9 +150,9 @@
                         >
                             <div class="o_kanban_record_top">
                                 <div class="o_kanban_record_headings ms-1">
-                                    <strong class="o_kanban_record_title"><field
-                                            name="name"
-                                        /></strong>
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name" />
+                                    </strong>
                                 </div>
                                 <div class="float-end text-end">
                                     <field name='sequence' widget="handle" />
@@ -173,15 +160,16 @@
                             </div>
 
                             <div class="o_kanban_record_body">
+                                <field name="product_id" />
                                 <span t-if="record.lot_id.value">
                                     <field name="lot_id" />
                                 </span>
                                 <br t-else="" />
                             </div>
                             <div class="o_kanban_record_bottom">
-                                <span><field name="date_start" /> - <field
+                                <!-- <span><field name="date_start" /> - <field
                                         name="date_end"
-                                    /></span>
+                                    /></span> -->
                             </div>
                         </div>
                     </t>
@@ -198,8 +186,8 @@
                     name="today"
                     string="Today"
                     domain="[
-                    ('date_start', '&gt;=', (context_today()).strftime('%Y-%m-%d')),
-                    ('date_start', '&lt;=',  (context_today()).strftime('%Y-%m-%d'))
+                    ('date_planned_start', '&gt;=', (context_today()).strftime('%Y-%m-%d')),
+                    ('date_planned_start', '&lt;=',  (context_today()).strftime('%Y-%m-%d'))
                 ]"
                 />
 
@@ -208,7 +196,7 @@
                         string="Date"
                         name="date"
                         domain="[]"
-                        context="{'group_by': 'date_start:day'}"
+                        context="{'group_by': 'date_planned_start:day'}"
                         help="Date"
                     />
                 </group>

@@ -27,9 +27,7 @@ patch(MrpDisplay.prototype, {
         const groupMinDates = {};
 
         for (const record of records) {
-            const campaignId = record.data.associated_campaign_id
-                ? record.data.associated_campaign_id[0]
-                : 0;
+            const campaignId = record.data.campaign_id ? record.data.campaign_id[0] : 0;
 
             const prodId =
                 this.state.activeResModel == "mrp.workorder"
@@ -47,12 +45,8 @@ patch(MrpDisplay.prototype, {
 
         // --- 2. Perform the Hierarchical Sort ---
         records.sort((record1, record2) => {
-            const cid1 = record1.data.associated_campaign_id
-                ? record1.data.associated_campaign_id[0]
-                : 0;
-            const cid2 = record2.data.associated_campaign_id
-                ? record2.data.associated_campaign_id[0]
-                : 0;
+            const cid1 = record1.data.campaign_id ? record1.data.campaign_id[0] : 0;
+            const cid2 = record2.data.campaign_id ? record2.data.campaign_id[0] : 0;
 
             // Level A: Sort Groups by their earliest Start Date
             if (cid1 !== cid2) {
