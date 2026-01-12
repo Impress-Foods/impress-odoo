@@ -33,6 +33,10 @@
             <xpath expr="//field[@name='default_code']" position="after">
                 <field name="vendor_code" optional="hide" />
             </xpath>
+            <xpath expr="//field[@name='virtual_available']" position="after">
+                <field name="reordering_min_qty" optional="hide" />
+                <field name="reordering_max_qty" optional="hide" />
+            </xpath>
         </field>
     </record>
 </odoo>
