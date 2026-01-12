@@ -127,7 +127,7 @@
         <field name="arch" type="xml">
             <kanban>
                 <field name="campaign_color" />
-                <field name="lot_id" invisible="1" />
+                <field name="lot_name" invisible="1" />
                 <field
                     name="state"
                     invisible="1"
@@ -161,8 +161,8 @@
 
                             <div class="o_kanban_record_body">
                                 <field name="product_id" />
-                                <span t-if="record.lot_id.value">
-                                    <field name="lot_id" />
+                                <span t-if="record.lot_name.value">
+                                    <field name="lot_name" />
                                 </span>
                                 <br t-else="" />
                             </div>

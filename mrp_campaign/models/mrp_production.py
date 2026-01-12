@@ -31,6 +31,16 @@ class ProductionOrder(models.Model):
     def write(self, vals):
         res = super().write(vals)
 
+        if "lot_producing_id" in vals and not self.env.context.get("syncing_lot"):
+            lot_id = vals.get("lot_producing_id")
+            if lot_id:
+                lot = self.env["stock.lot"].browse(lot_id)
+                for production in self:
+                    if production.campaign_id:
+                        production.campaign_id._sync_lot_on_productions(
+                            lot.name, productions_to_skip=production
+                        )
+
         return res
 
     @api.depends("move_raw_ids.product_uom_qty", "move_raw_ids.state")

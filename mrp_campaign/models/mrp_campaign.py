@@ -52,7 +52,7 @@ class MrpCampaign(models.Model):
     )
     company_id = fields.Many2one("res.company", default=lambda self: self.env.company)
 
-    lot_id = fields.Many2one(comodel_name="stock.lot")
+    lot_name = fields.Char()
     override_batch_size = fields.Boolean()
     batch_size = fields.Float()
 
@@ -66,6 +66,8 @@ class MrpCampaign(models.Model):
         string="Provider Moves",
         help="Stock moves created to produce the batched product for this campaign.",
     )
+
+    production_ids = fields.One2many("mrp.production", "campaign_id")
 
     @api.depends("bucket_start_date")
     def _compute_bucket_end_date(self) -> None:
@@ -234,6 +236,43 @@ class MrpCampaign(models.Model):
 
         return campaign
 
+    def _sync_lot_on_productions(self, lot_name, productions_to_skip=None):
+        self.ensure_one()
+        if productions_to_skip is None:
+            productions_to_skip = self.env["mrp.production"]
+
+        productions_to_update = self.production_ids - productions_to_skip
+
+        for production in productions_to_update:
+            if (
+                production.lot_producing_id
+                and production.lot_producing_id.name == lot_name
+            ):
+                continue
+
+            Lot = self.env["stock.lot"]
+            lot_to_assign = Lot.search(
+                [
+                    ("name", "=", lot_name),
+                    ("product_id", "=", production.product_id.id),
+                    ("company_id", "=", production.company_id.id),
+                ],
+                limit=1,
+            )
+
+            if not lot_to_assign:
+                lot_to_assign = Lot.create(
+                    {
+                        "name": lot_name,
+                        "product_id": production.product_id.id,
+                        "company_id": production.company_id.id,
+                    }
+                )
+
+            production.with_context(syncing_lot=True).write(
+                {"lot_producing_id": lot_to_assign.id}
+            )
+
     @api.model
     def _collect_procurements(
         self, procurements: list[tuple[Procurement, "StockRule"]]
@@ -350,6 +389,9 @@ class MrpCampaignLine(models.Model):
     product_uom_id = fields.Many2one(
         "uom.uom", string="Unit of Measure", related="product_id.uom_id"
     )
+
+    production_id = fields.Many2one("mrp.production")
+
     bom_id = fields.Many2one(
         "mrp.bom",
         string="Bill of Materials",
@@ -403,7 +445,7 @@ class MrpCampaignLine(models.Model):
         )
 
         mo.action_confirm()
-
+        self.production_id = mo
         # Link the MO's finished move to the original
         # demand moves from the campaign line
         if mo.move_finished_ids:
