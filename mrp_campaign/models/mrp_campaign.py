@@ -67,14 +67,27 @@ class MrpCampaign(models.Model):
         help="Stock moves created to produce the batched product for this campaign.",
     )
 
-    production_ids = fields.One2many("mrp.production", "campaign_id")
+    bulk_created = fields.Boolean()
+    end_created = fields.Boolean()
 
-    @api.depends("bucket_start_date")
+    production_ids = fields.One2many("mrp.production", "campaign_id")
+    production_count = fields.Integer(compute="_compute_production_count")
+
+    @api.depends("production_ids")
+    def _compute_production_count(self):
+        for rec in self:
+            rec.production_count = len(self.production_ids)
+
+    @api.depends(
+        "bucket_start_date",
+        "product_id.campaign_bucket_type",
+        "product_id.campaign_bucket_size",
+    )
     def _compute_bucket_end_date(self) -> None:
         for rec in self:
-            bucket_period: Literal[
-                "day", "week", "month", "year"
-            ] = rec.product_id.campaign_bucket_type
+            bucket_period: Literal["day", "week", "month", "year"] = (
+                rec.product_id.campaign_bucket_type
+            )
             bucket_length: int = rec.product_id.campaign_bucket_size
 
             delta: timedelta = timedelta(days=1)
@@ -91,11 +104,24 @@ class MrpCampaign(models.Model):
 
             rec.bucket_end_date = rec.bucket_start_date + delta
 
-    def action_confirm(self):
+    def action_confirm_end(self):
         self.ensure_one()
         if not self.line_ids:
             raise UserError(_("Cannot confirm a campaign without any demand lines."))
 
+        # Part 2: Create MOs for the finished goods on each line
+        mos = self.env["mrp.production"]
+        for line in self.line_ids:
+            mos += line._create_finished_product_mo(self, confirm=False)
+
+        mos.action_confirm()
+        # Part 3: Update campaign state
+        self.write({"state": "confirmed"})
+        self.end_created = True
+        return True
+
+    def action_confirm_bulk(self):
+        self.ensure_one()
         # Part 1: Calculate total anchor demand and create batched MOs for it
         anchor_product = self.product_id
         total_anchor_qty_needed = sum(
@@ -153,14 +179,7 @@ class MrpCampaign(models.Model):
                         "move_orig_ids": [(6, 0, original_demand_moves.ids)],
                     }
                 )
-
-        # Part 2: Create MOs for the finished goods on each line
-        for line in self.line_ids:
-            line._create_finished_product_mo(self)
-
-        # Part 3: Update campaign state
-        self.write({"state": "confirmed"})
-        return True
+            self.bulk_created = True
 
     def action_reset(self):
         """
@@ -185,7 +204,23 @@ class MrpCampaign(models.Model):
                 provider_moves.unlink()
 
             campaign.write({"state": "draft"})
+
+            campaign.line_ids.filtered(
+                lambda line, campaign=campaign: line.product_id == campaign.product_id
+            ).unlink()
+
+            campaign.bulk_created = False
+            campaign.end_created = False
         return True
+
+    def action_view_mos(self):
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "mrp.production",
+            "domain": [("id", "in", self.production_ids.ids)],
+            "view_mode": "tree,form",
+            "target": "current",
+        }
 
     @api.model
     def _get_name_seq(self):
@@ -380,7 +415,9 @@ class MrpCampaignLine(models.Model):
         "mrp.campaign", string="Campaign", required=True, ondelete="cascade"
     )
     product_id = fields.Many2one("product.product", string="Product", required=True)
-    product_uom_qty = fields.Float("Quantity", default=1.0)
+    product_uom_qty = fields.Float(
+        "Quantity", default=1.0, compute="_compute_product_uom_qty"
+    )
     move_dest_ids = fields.Many2many(
         "stock.move",
         string="Destination Moves",
@@ -397,6 +434,11 @@ class MrpCampaignLine(models.Model):
         string="Bill of Materials",
         help="The specific BoM to be used for manufacturing the product on this line.",
     )
+
+    @api.depends("move_dest_ids")
+    def _compute_product_uom_qty(self):
+        for rec in self:
+            rec.product_uom_qty = sum(rec.move_dest_ids.mapped("product_uom_qty"))
 
     def _get_anchor_product_qty(self, anchor_product):
         """
@@ -415,7 +457,7 @@ class MrpCampaignLine(models.Model):
                 needed_qty += line_data["qty"]
         return needed_qty
 
-    def _create_finished_product_mo(self, campaign):
+    def _create_finished_product_mo(self, campaign, confirm=True):
         """
         Creates a manufacturing order for the finished product of this line
         and links it to the campaign and original demand moves.
@@ -444,7 +486,8 @@ class MrpCampaignLine(models.Model):
             }
         )
 
-        mo.action_confirm()
+        if confirm:
+            mo.action_confirm()
         self.production_id = mo
         # Link the MO's finished move to the original
         # demand moves from the campaign line

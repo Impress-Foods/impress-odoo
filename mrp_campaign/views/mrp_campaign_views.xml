@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
     <record id="view_mrp_campaign_tree" model="ir.ui.view">
@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <tree>
                 <header>
-                    <button name="action_confirm" type="object" string="Confirm" />
+                    <button name="action_confirm_end" type="object" string="Confirm" />
                 </header>
                 <field name="name" />
                 <field name="product_id" />
@@ -22,58 +22,54 @@
         <field name="model">mrp.campaign</field>
         <field name="arch" type="xml">
             <form string="Manufacturing Campaign">
+                <field name="end_created" invisible="1" />
+                <field name="bulk_created" invisible="1" />
                 <header>
                     <button
-                        name="action_confirm"
+                        name="action_confirm_end"
                         type="object"
-                        string="Confirm Campaign"
+                        string="Make End Products"
                         class="btn-primary"
-                        invisible="state not in ['draft']"
+                        invisible="end_created"
+                    />
+                    <button
+                        name="action_confirm_bulk"
+                        type="object"
+                        string="Make Bulk Products"
+                        class="btn-primary"
+                        invisible="bulk_created or not end_created"
                     />
                     <button
                         name="action_reset"
                         type="object"
                         string="Reset Campaign"
                         class="btn-primary"
-                        invisible="state not in ['confirmed']"
+                        invisible="not bulk_created and not end_created"
                     />
-                    <button
+                    <!-- <button
                         name="%(action_report_mrp_campaign)d"
                         type="action"
                         string="Print Tracking Report"
                         class="btn-primary"
-                    />
+                    /> -->
                     <field name="state" widget="statusbar" />
                 </header>
 
                 <sheet>
 
                     <div class="oe_button_box" name="button_box">
-                        <!-- <button
-                            name="action_view_provider_mos"
+                        <button
+                            name="action_view_mos"
                             type="object"
                             class="oe_stat_button"
                             icon="fa-flask"
                         >
                             <field
-                                name="provider_mo_count"
+                                name="production_count"
                                 widget="statinfo"
-                                string="In"
+                                string="Productions"
                             />
-                        </button> -->
-
-                        <!-- <button
-                            name="action_view_consumer_mos"
-                            type="object"
-                            class="oe_stat_button"
-                            icon="fa-cubes"
-                        >
-                            <field
-                                name="consumer_mo_count"
-                                widget="statinfo"
-                                string="Out"
-                            />
-                        </button> -->
+                        </button>
                     </div>
                     <group>
                         <group>
@@ -83,8 +79,6 @@
                                 name="company_id"
                                 groups="base.group_multi_company"
                             />
-                            <!-- <field name="total_demand_qty" readonly="1" />
-                            <field name="percent_fulfilled" widget="percentpie" /> -->
                         </group>
                         <group>
                             <field name="campaign_color" widget="color" />
@@ -109,12 +103,6 @@
                                 </tree>
                             </field>
                         </page>
-                        <!-- Demand -->
-                        <page string="Consumers"> </page>
-
-                        <!-- Supply -->
-                        <page string="Producers"> </page>
-
                     </notebook>
                 </sheet>
             </form>
@@ -137,7 +125,7 @@
                 />
                 <field name="date_planned_start" />
                 <!-- <field name="date_end" /> -->
-                <progessbar
+                <progressbar
                     field="state"
                     colors='{"draft": "muted", "confirmed": "info", "done": "success", "cancel": "danger"}'
                 />
