@@ -1,7 +1,7 @@
 import colorsys
 import logging
 import random
-from datetime import timedelta
+from datetime import datetime, time, timedelta
 from typing import Literal
 
 from odoo import _, api, fields, models
@@ -112,7 +112,7 @@ class MrpCampaign(models.Model):
         # Part 2: Create MOs for the finished goods on each line
         mos = self.env["mrp.production"]
         for line in self.line_ids:
-            mos += line._create_finished_product_mo(self, confirm=False)
+            mos += line._create_finished_product_mo(confirm=False)
 
         mos.action_confirm()
         # Part 3: Update campaign state
@@ -146,7 +146,7 @@ class MrpCampaign(models.Model):
             batch_size = (
                 self.batch_size
                 if self.override_batch_size and self.batch_size > 0
-                else 1000.0
+                else self.product_id.mrp_max_batch_size
             )
             remaining_qty = total_anchor_qty_needed
             mos_to_create = []
@@ -170,15 +170,15 @@ class MrpCampaign(models.Model):
                 anchor_mos = self.env["mrp.production"].create(mos_to_create)
                 anchor_mos.action_confirm()
 
-                # Link the resulting provider moves to the network
-                provider_moves = anchor_mos.mapped("move_finished_ids")
-                original_demand_moves = self.line_ids.mapped("move_dest_ids")
-                provider_moves.write(
-                    {
-                        "campaign_id": self.id,
-                        "move_orig_ids": [(6, 0, original_demand_moves.ids)],
-                    }
-                )
+                # # Link the resulting provider moves to the network
+                # provider_moves = anchor_mos.mapped("move_finished_ids")
+                # original_demand_moves = self.line_ids.mapped("move_dest_ids")
+                # provider_moves.write(
+                #     {
+                #         "campaign_id": self.id,
+                #         "move_orig_ids": [(6, 0, original_demand_moves.ids)],
+                #     }
+                # )
             self.bulk_created = True
 
     def action_reset(self):
@@ -353,7 +353,6 @@ class MrpCampaign(models.Model):
                     procurement.product_id
                 ]
 
-            _logger.debug(bom)
             # 3. Search/Create Campaign for that Anchor
             campaign = self._get_or_create_campaign_for_anchor(
                 anchor_product=anchor_product, company=procurement.company_id
@@ -395,15 +394,6 @@ class MrpCampaign(models.Model):
                     procurement.product_id.display_name,
                     bom.code or "Default BoM",
                     procurement.product_qty,
-                )
-
-            # Update origin of demand moves for better traceability in stock views.
-            if demand_moves:
-                origin = demand_moves[0].origin or ""
-                demand_moves.write(
-                    {
-                        "origin": f"{origin} ({campaign.name})".strip(),
-                    }
                 )
 
 
@@ -457,7 +447,7 @@ class MrpCampaignLine(models.Model):
                 needed_qty += line_data["qty"]
         return needed_qty
 
-    def _create_finished_product_mo(self, campaign, confirm=True):
+    def _create_finished_product_mo(self, confirm=True):
         """
         Creates a manufacturing order for the finished product of this line
         and links it to the campaign and original demand moves.
@@ -480,17 +470,21 @@ class MrpCampaignLine(models.Model):
                 "bom_id": self.bom_id.id,
                 "product_qty": self.product_uom_qty,
                 "product_uom_id": self.product_uom_id.id,
-                "origin": campaign.name,
-                "date_start": campaign.date_planned_start,
-                "campaign_id": campaign.id,  # Link as a consumer
+                "origin": self.campaign_id.name,
+                "date_start": datetime.combine(
+                    self.campaign_id.date_planned_start, time.min
+                ),
+                "date_deadline": datetime.combine(
+                    self.campaign_id.date_planned_start, time.max
+                ),
+                "campaign_id": self.campaign_id.id,  # Link as a consumer
             }
         )
 
         if confirm:
             mo.action_confirm()
         self.production_id = mo
-        # Link the MO's finished move to the original
-        # demand moves from the campaign line
+
         if mo.move_finished_ids:
             mo.move_finished_ids.write(
                 {"move_dest_ids": [(6, 0, self.move_dest_ids.ids)]}

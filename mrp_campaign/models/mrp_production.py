@@ -79,7 +79,7 @@ class ProductionOrder(models.Model):
 
     def action_confirm(self: MrpProduction):
         rec = super().action_confirm()
-        self.action_assign_all()
+        # self.action_assign_all()
         return rec
 
     def action_view_campaign(self):
