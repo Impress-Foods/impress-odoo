@@ -86,9 +86,9 @@ class MrpCampaign(models.Model):
     )
     def _compute_bucket_end_date(self) -> None:
         for rec in self:
-            bucket_period: Literal["day", "week", "month", "year"] = (
-                rec.product_id.campaign_bucket_type
-            )
+            bucket_period: Literal[
+                "day", "week", "month", "year"
+            ] = rec.product_id.campaign_bucket_type
             bucket_length: int = rec.product_id.campaign_bucket_size
 
             delta: timedelta = timedelta(days=1)
@@ -506,6 +506,10 @@ class MrpCampaignLine(models.Model):
             }
         )
 
+        if self.move_dest_ids:
+            # Link the original SO moves to this consolidated MO for traceability
+            self.move_dest_ids.write({"created_production_id": mo.id})
+
         if confirm:
             mo.action_confirm()
         self.production_id = mo
@@ -514,6 +518,5 @@ class MrpCampaignLine(models.Model):
             mo.move_finished_ids.write(
                 {"move_dest_ids": [(6, 0, self.move_dest_ids.ids)]}
             )
-            # self.move_dest_ids.mapped("group_id").mrp_production_ids += mo
 
         return mo
