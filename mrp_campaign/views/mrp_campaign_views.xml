@@ -79,6 +79,9 @@
                                 name="company_id"
                                 groups="base.group_multi_company"
                             />
+                            <field name="date_planned_start" />
+                            <field name="bucket_start_date" readonly="1" />
+                            <field name="bucket_end_date" readonly="1" />
                         </group>
                         <group>
                             <field name="campaign_color" widget="color" />

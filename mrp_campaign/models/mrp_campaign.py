@@ -29,6 +29,7 @@ class MrpCampaign(models.Model):
     state = fields.Selection(
         [
             ("draft", "Draft"),
+            ("review", "In Review"),
             ("confirmed", "Confirmed"),
             ("done", "Done"),
             ("cancel", "Cancelled"),
@@ -114,21 +115,32 @@ class MrpCampaign(models.Model):
         for line in self.line_ids:
             mos += line._create_finished_product_mo(confirm=False)
 
-        mos.action_confirm()
+        # MOs are created in draft, awaiting user adjustment.
         # Part 3: Update campaign state
-        self.write({"state": "confirmed"})
+        self.write({"state": "review"})
         self.end_created = True
         return True
 
     def action_confirm_bulk(self):
         self.ensure_one()
-        # Part 1: Calculate total anchor demand and create batched MOs for it
-        anchor_product = self.product_id
-        total_anchor_qty_needed = sum(
-            self.line_ids.mapped(
-                lambda line: line._get_anchor_product_qty(anchor_product)
-            )
+        # 1. Confirm 'end' MOs that are still in draft state
+        end_mos_to_confirm = self.production_ids.filtered(
+            lambda mo: mo.state == "draft"
         )
+        if end_mos_to_confirm:
+            end_mos_to_confirm.action_confirm()
+
+        anchor_product = self.product_id
+        total_anchor_qty_needed = 0.0
+
+        # 2. Calculate total anchor demand from confirmed 'end' MOs' raw moves
+        # The self.production_ids will now contain confirmed MOs
+        for mo in self.production_ids:
+            # Filter for raw moves that consume the anchor product
+            for move in mo.move_raw_ids.filtered(
+                lambda m: m.product_id == anchor_product
+            ):
+                total_anchor_qty_needed += move.product_uom_qty
 
         if total_anchor_qty_needed > 0:
             # Find BoM for anchor product, needed to create MO
@@ -166,27 +178,40 @@ class MrpCampaign(models.Model):
                     }
                 )
 
+            anchor_mos = self.env["mrp.production"]
             if mos_to_create:
                 anchor_mos = self.env["mrp.production"].create(mos_to_create)
+                # 3. Create and confirm 'bulk' MOs
                 anchor_mos.action_confirm()
 
-                # # Link the resulting provider moves to the network
-                # provider_moves = anchor_mos.mapped("move_finished_ids")
-                # original_demand_moves = self.line_ids.mapped("move_dest_ids")
-                # provider_moves.write(
-                #     {
-                #         "campaign_id": self.id,
-                #         "move_orig_ids": [(6, 0, original_demand_moves.ids)],
-                #     }
-                # )
-            self.bulk_created = True
+            # 4. Link bulk MO finished moves to end MO raw moves
+            if anchor_mos and total_anchor_qty_needed > 0:
+                provider_moves = anchor_mos.mapped("move_finished_ids")
+                consumer_moves = self.production_ids.mapped("move_raw_ids").filtered(
+                    lambda move: move.product_id == anchor_product
+                )
+
+                if provider_moves and consumer_moves:
+                    provider_moves.write(
+                        {"move_dest_ids": [(6, 0, consumer_moves.ids)]}
+                    )
+
+        # 5. Update campaign state
+        self.write({"state": "confirmed", "bulk_created": True})
+        return True
 
     def action_reset(self):
         """
         Resets a confirmed campaign back to draft, deleting any manufacturing
         orders and stock moves that were created by the confirmation process.
         """
-        for campaign in self.filtered(lambda c: c.state == "confirmed"):
+        for campaign in self.filtered(
+            lambda c: c.state
+            in [
+                "review",
+                "confirmed",
+            ]
+        ):
             # Find and cancel any manufacturing orders created for this campaign
             productions = self.env["mrp.production"].search(
                 [("campaign_id", "=", campaign.id)]
@@ -243,7 +268,7 @@ class MrpCampaign(models.Model):
             [
                 ("product_id", "=", anchor_product.id),
                 ("company_id", "=", company.id),
-                ("state", "=", "draft"),
+                ("state", "in", ["draft", "review"]),
             ],
             limit=1,
             order="date_planned_start asc",  # Get the oldest one
@@ -489,5 +514,6 @@ class MrpCampaignLine(models.Model):
             mo.move_finished_ids.write(
                 {"move_dest_ids": [(6, 0, self.move_dest_ids.ids)]}
             )
+            # self.move_dest_ids.mapped("group_id").mrp_production_ids += mo
 
         return mo
