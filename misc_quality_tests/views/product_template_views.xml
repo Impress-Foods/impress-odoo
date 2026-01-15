@@ -13,6 +13,7 @@
                     name="action_open_misc_tests"
                     type="object"
                     icon="fa-eyedropper"
+                    invisible="not misc_test_count"
                 >
                     <field string="Tests" name="misc_test_count" widget="statinfo" />
                 </button>

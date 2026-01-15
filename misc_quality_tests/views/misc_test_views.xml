@@ -22,6 +22,21 @@
         <field name="arch" type="xml">
             <form string="Misc Test">
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            class="oe_stat_button"
+                            name="action_open_affected_products"
+                            type="object"
+                            icon="fa-cubes"
+                            invisible="not affected_product_ids"
+                        >
+                            <field
+                                string="Products"
+                                name="affected_product_count"
+                                widget="statinfo"
+                            />
+                        </button>
+                    </div>
                     <div class="oe_title">
                         <label for="sequence" />
                         <h1>
@@ -33,7 +48,7 @@
                             <field name="product_id" />
                             <field
                                 name="lot_id"
-                                domain="[('product_id', '=', product_id)]"
+                                domain="[('product_id.product_tmpl_id', '=', product_id)]"
                             />
                             <field
                                 name="affected_product_ids"

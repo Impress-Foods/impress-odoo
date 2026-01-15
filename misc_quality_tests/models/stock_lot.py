@@ -33,7 +33,7 @@ class StockLot(models.Model):
                 "type": "ir.actions.act_window",
                 "view_mode": "tree,form",
                 "res_model": "misc.test",
-                "domain": [("id", "in", [self.misc_test_ids.mapped("id")])],
+                "domain": [("id", "in", self.misc_test_ids.ids)],
             }
 
         return action
