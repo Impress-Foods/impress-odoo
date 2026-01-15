@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- View misc.test View Tree -->
+    <record id="view_misc_test_tree" model="ir.ui.view">
+        <field name="name">view.misc.test.tree</field>
+        <field name="model">misc.test</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" />
+                <field name="date" />
+                <field name="product_id" />
+                <field name="lot_id" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- View misc.test form -->
+    <record id="view_misc_test_form" model="ir.ui.view">
+        <field name="name">view.misc.test.form</field>
+        <field name="model">misc.test</field>
+        <field name="arch" type="xml">
+            <form string="Misc Test">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="sequence" />
+                        <h1>
+                            <field name="sequence" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="product_id" />
+                            <field
+                                name="lot_id"
+                                domain="[('product_id', '=', product_id)]"
+                            />
+                            <field
+                                name="affected_product_ids"
+                                widget="many2many_tags"
+                            />
+                        </group>
+                        <group>
+                            <field name="date" />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" />
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" />
+                    <field name="activity_ids" />
+                    <field name="message_ids" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- View misc.test search -->
+    <record id="view_misc_test_search" model="ir.ui.view">
+        <field name="name">view.misc.test.search</field>
+        <field name="model">misc.test</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By"> </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action misc.test -->
+    <record id="action_misc_test" model="ir.actions.act_window">
+        <field name="name">Misc Test</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">misc.test</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p
+                class="oe_view_nocontent_create"
+            > There is no examples click here to add new Misc Test. </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_misc_test"
+        name="Misc Test"
+        action="action_misc_test"
+        parent="quality_control.menu_quality_root"
+        sequence="10"
+    />
+
+</odoo>

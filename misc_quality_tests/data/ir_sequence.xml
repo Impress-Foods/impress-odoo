@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="misc_test" model="ir.sequence">
+        <field name="name">Misc Test</field>
+        <field name="code">misc.test</field>
+        <field name="padding">7</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+</odoo>
