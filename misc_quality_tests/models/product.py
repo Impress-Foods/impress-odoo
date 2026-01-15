@@ -8,6 +8,8 @@ class ProductTemplate(models.Model):
     misc_test_ids = fields.Many2many("misc.test")
     misc_test_target_ids = fields.One2many("misc.test", "product_id")
 
+    shelf_life_change = fields.Text()
+
     @api.depends("misc_test_ids", "misc_test_target_ids")
     def _compute_misc_test_count(self) -> None:
         for rec in self:

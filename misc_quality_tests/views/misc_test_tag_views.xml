@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- View misc.test.tag View Tree -->
+    <record id="view_misc_test_tag_tree" model="ir.ui.view">
+        <field name="name">view.misc.test.tag.tree</field>
+        <field name="model">misc.test.tag</field>
+        <field name="arch" type="xml">
+            <tree create="1" edit="1" editable="bottom">
+                <field name="name" />
+                <field name="color" widget="color_picker" />
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- View misc.test.tag search -->
+    <record id="view_misc_test_tag_search" model="ir.ui.view">
+        <field name="name">view.misc.test.tag.search</field>
+        <field name="model">misc.test.tag</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By">
+                    <filter
+                        string="Name"
+                        name="name"
+                        domain="[]"
+                        context="{'group_by':'name'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action misc.test.tag -->
+    <record id="action_misc_test_tag" model="ir.actions.act_window">
+        <field name="name">Misc Test Tag</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">misc.test.tag</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p
+                class="oe_view_nocontent_create"
+            > There is no examples click here to add new Misc Test Tag. </p>
+        </field>
+    </record>
+
+</odoo>

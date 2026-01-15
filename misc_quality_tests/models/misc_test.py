@@ -11,6 +11,7 @@ class MiscTest(models.Model):
     _order = "sequence"
     sequence = fields.Char()
 
+    tag_ids = fields.Many2many("misc.test.tag")
     product_id = fields.Many2one("product.template")
     lot_id = fields.Many2one("stock.lot")
     affected_product_ids = fields.Many2many(

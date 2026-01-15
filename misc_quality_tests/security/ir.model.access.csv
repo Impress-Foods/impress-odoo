@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 misc_quality_tests.access_misc_test,access_misc_test,misc_quality_tests.model_misc_test,quality.group_quality_user,1,1,1,1
+misc_quality_tests.access_misc_test_tag,access_misc_test_tag,misc_quality_tests.model_misc_test_tag,quality.group_quality_user,1,1,1,1

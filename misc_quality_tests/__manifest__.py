@@ -9,9 +9,11 @@
     "data": [
         "data/ir_sequence.xml",
         "security/ir.model.access.csv",
+        "views/misc_test_tag_views.xml",
         "views/misc_test_views.xml",
         "views/product_template_views.xml",
         "views/stock_lot_views.xml",
+        "views/menu.xml",
     ],
     "application": False,
     "installable": True,

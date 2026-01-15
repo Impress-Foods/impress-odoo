@@ -11,6 +11,11 @@
                 <field name="date" />
                 <field name="product_id" />
                 <field name="lot_id" />
+                <field
+                    name="tag_ids"
+                    widget="many2many_tags"
+                    options="{'no_create': True, 'color_field': 'color'}"
+                />
             </tree>
         </field>
     </record>
@@ -53,10 +58,12 @@
                             <field
                                 name="affected_product_ids"
                                 widget="many2many_tags"
+                                options="{'no_create': True, 'color_field': 'color'}"
                             />
                         </group>
                         <group>
                             <field name="date" />
+                            <field name="tag_ids" widget="many2many_tags" />
                         </group>
                     </group>
                     <group>
@@ -78,6 +85,10 @@
         <field name="model">misc.test</field>
         <field name="arch" type="xml">
             <search>
+                <field name="sequence" string="Sequence" />
+                <field name="product_id" string="Product" />
+                <field name="tag_ids" string="Tag" />
+                <field name="affected_product_ids" string="Affected Products" />
                 <group expand="1" string="Group By"> </group>
             </search>
         </field>
@@ -98,12 +109,5 @@
         </field>
     </record>
 
-    <menuitem
-        id="menu_misc_test"
-        name="Misc Test"
-        action="action_misc_test"
-        parent="quality_control.menu_quality_root"
-        sequence="10"
-    />
 
 </odoo>
