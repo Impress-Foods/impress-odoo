@@ -7,6 +7,7 @@
         <field name="name">Worksheet x_ray (Large) 2025-11-26</field>
         <field name="color">3</field>
         <field name="res_model">quality.check</field>
+        <field name="xray_indicator_size">large</field>
     </record>
 
     <!-- Add the required fields -->

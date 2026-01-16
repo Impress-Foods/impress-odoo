@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="report_hpp_log_view"
+        inherit_id="report_quality_log_main"
+        primary="True"
+    >
+        <xpath expr="//div[@id='extra_info_block']" position="inside">
+            <strong>Quantity Produced: </strong>
+            <span t-field="doc.qty_produced" />
+            <br />
+            <strong>Quantity Redone: </strong>
+            <span t-field="doc.qty_redone" />
+            <br />
+            <strong>Quantity Quality: </strong>
+            <span t-field="doc.qty_quality" />
+            <br />
+            <strong>Quantity Scrapped: </strong>
+            <span t-field="doc.qty_scrapped" />
+            <br />
+            <strong>Quantity Total: </strong>
+            <span t-field="doc.qty_total" />
+        </xpath>
+
+        <xpath expr="//div[@id='lines_block']" position="inside">
+            <h3>HPP Cycles</h3>
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr>
+                        <th>Cycle Number</th>
+                        <th>Start Date</th>
+                        <th>Quantity</th>
+                        <th>Cycle Time</th>
+                        <th>Cleaning Cycle</th>
+                        <th>Signature</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="doc.log_line_ids" t-as="line">
+                        <tr>
+                            <td style="text-align:center;">
+                                <span t-field="line.cycle_number" />
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.start_date" />
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.total_qty" />
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.cycle_time" />
+                            </td>
+                            <td style="text-align:center;">
+                                <t t-if="line.is_cleaning_cycle">
+                                    <span class="fa fa-check-square-o " />
+                                </t>
+                                <t t-else="">
+                                    <span class="fa fa-square-o" />
+                                </t>
+                            </td>
+                            <td style="text-align:center;">
+                                <img
+                                    t-if="line.signature"
+                                    t-att-src="image_data_uri(line.signature)"
+                                    style="max-height: 30px; max-width: 80px;"
+                                    alt="Line Signature"
+                                />
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </xpath>
+        <xpath expr="//div[@id='monthly_signature_block']" position="inside">
+            <div t-if="doc.monthly_signature" class="col-6">
+                <strong>Monthly Verification</strong>
+                <br />
+                <img
+                    t-if="doc.monthly_signature"
+                    t-att-src="image_data_uri(doc.monthly_signature)"
+                    style="max-height: 100px; max-width: 200px;"
+                    alt="Signature"
+                />
+                <br />
+                <span t-field="doc.monthly_signature_date" />
+            </div>
+        </xpath>
+    </template>
+    <template id="report_hpp_log">
+        <t t-call="impress_quality_logs.report_hpp_log_view" t-lang="user.lang" />
+    </template>
+    <record id="action_report_hpp_log" model="ir.actions.report">
+        <field name="name">HPP Log PDF</field>
+        <field name="model">hpp.log</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">impress_quality_logs.report_hpp_log</field>
+        <field name="report_file">impress_quality_logs.report_hpp_log</field>
+        <field
+            name="print_report_name"
+        >'HPP Log - %s' % (object.name if object and object.exists() else 'DELETED')</field>
+        <field name="binding_model_id" ref="model_hpp_log" />
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

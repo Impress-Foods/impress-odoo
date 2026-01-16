@@ -32,12 +32,13 @@
         "views/x_ray_log_views.xml",
         "views/x_ray_log_line_views.xml",
         "views/menus.xml",
+        "reports/quality_log_report_views.xml",
+        "reports/hpp_log_report.xml",
+        "reports/loma_log_report.xml",
+        "reports/coding_log_report.xml",
+        "reports/metal_log_report.xml",
+        "reports/xray_log_report.xml",
     ],
-    "assets": {
-        # 'web.assets_backend': [
-        #    'impress_quality_logs/static/src/**/*'
-        # ],
-    },
     "installable": True,
     "application": True,
     "auto_install": False,

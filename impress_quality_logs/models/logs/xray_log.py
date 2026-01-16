@@ -22,6 +22,16 @@ class Xray_log(models.Model):
         compute="_compute_monthly_signature_date", store=True
     )
 
+    def get_indicator_sizes(self) -> tuple[str, str, str]:
+        self.ensure_one()
+        match self.quality_check_id.worksheet_template_id.xray_indicator_size:
+            case "small":
+                return ("1.0 mm", "2.381 mm", "2.381 mm")
+            case "large":
+                return ("1.2 mm", "3.0 mm", "3.0 mm")
+            case _:
+                return ("1.0 mm", "2.381 mm", "2.381 mm")
+
     @api.depends("monthly_signature")
     def _compute_monthly_signature_date(self):
         for rec in self:

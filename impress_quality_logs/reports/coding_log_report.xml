@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template
+        id="report_coding_log_view"
+        inherit_id="report_quality_log_main"
+        primary="True"
+    >
+        <xpath expr="//div[@id='lines_block']" position="inside">
+            <div class="row">
+                <div class="col-6">
+                    <strong>Shelf life:</strong>
+                    <span t-field="doc.shelf_life" />
+                    <span>days</span>
+                    <br />
+                    <strong>Case Code:</strong>
+                    <span t-field="doc.case_code" />
+                    <br />
+                    <strong>Unit Code:</strong>
+                    <span t-field="doc.unit_code" />
+                    <br />
+                    <strong>Unit Check:</strong>
+                    <span t-field="doc.unit_check" />
+                    <br />
+                    <strong>Sleeve Check:</strong>
+                    <span t-field="doc.sleeve_check" />
+                    <br />
+                    <strong>Subunit check</strong>
+                    <span t-field="doc.subunit_check" />
+                </div>
+                <div class="col-6">
+                    <strong>Shelf life check:</strong>
+                    <span t-field="doc.shelf_life_check" />
+                    <br />
+                    <strong>"Keep Cold" check:</strong>
+                    <span t-field="doc.keep_cold_check" />
+                    <br />
+                    <strong>Signature: </strong>
+                    <img
+                        t-if="doc.signature"
+                        t-att-src="image_data_uri(doc.signature)"
+                        style="max-height: 100px; max-width: 200px;"
+                        alt="Signature"
+                    />
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="//div[@id='weekly_signature_block']" position="attributes">
+            <attribute name="t-if">doc.verification_signature</attribute>
+        </xpath>
+        <xpath expr="//div[@id='weekly_signature_block']//img" position="attributes">
+            <attribute
+                name="t-att-src"
+            >image_data_uri(doc.verification_signature)</attribute>
+        </xpath>
+    </template>
+    <template id="report_coding_log">
+        <t t-call="impress_quality_logs.report_coding_log_view" t-lang="user.lang" />
+    </template>
+    <record id="action_report_coding_log" model="ir.actions.report">
+        <field name="name">Coding Log PDF</field>
+        <field name="model">coding.log</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">impress_quality_logs.report_coding_log</field>
+        <field name="report_file">impress_quality_logs.report_coding_log</field>
+        <field
+            name="print_report_name"
+        >'Coding Log - %s' % (object.name if object and object.exists() else 'DELETED')</field>
+        <field name="binding_model_id" ref="model_coding_log" />
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

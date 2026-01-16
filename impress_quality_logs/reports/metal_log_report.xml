@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template
+        id="report_metal_log_view"
+        inherit_id="report_quality_log_main"
+        primary="True"
+    >
+        <xpath expr="//div[@id='extra_info_block']" position="inside"> </xpath>
+        <xpath expr="//div[@id='lines_block']" position="inside">
+            <h3>Metal Detector Validation</h3>
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr>
+                        <th style="text-align:center;">Sequence</th>
+                        <th style="text-align:center;">Start Date</th>
+                        <th style="text-align:center;">Calibration</th>
+                        <th style="text-align:center;">Ejection</th>
+                        <th style="text-align:center;">Rejection Value</th>
+                        <th style="text-align:center;">Ferrous <br /> (2.0 mm)</th>
+                        <th style="text-align:center;">Non-Ferrous <br /> (2.5 mm)</th>
+                        <th style="text-align:center;">Stainless <br /> (3.5 mm)</th>
+                        <th style="text-align:center;">Signature</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="doc.log_line_ids" t-as="line">
+                        <tr>
+                            <td style="text-align:center;">
+                                <span t-field="line.sequence" />
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.start_date" />
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.calibration" />
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.ejection" />
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.reject_value" />
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.ferrous" />
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.non_ferrous" />
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.stainless" />
+                            </td>
+                            <td style="text-align:center;">
+                                <img
+                                    t-if="line.signature"
+                                    t-att-src="image_data_uri(line.signature)"
+                                    style="max-height: 30px; max-width: 80px;"
+                                    alt="Line Signature"
+                                />
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </xpath>
+        <xpath expr="//div[@id='monthly_signature_block']" position="inside">
+            <div t-if="doc.monthly_signature" class="col-6">
+                <strong>Monthly Verification</strong>
+                <br />
+                <img
+                    t-if="doc.monthly_signature"
+                    t-att-src="image_data_uri(doc.monthly_signature)"
+                    style="max-height: 100px; max-width: 200px;"
+                    alt="Signature"
+                />
+                <br />
+                <span t-field="doc.monthly_signature_date" />
+            </div>
+        </xpath>
+    </template>
+    <template id="report_metal_log">
+        <t t-call="impress_quality_logs.report_metal_log_view" t-lang="user.lang" />
+    </template>
+    <record id="action_report_metal_log" model="ir.actions.report">
+        <field name="name">Metal Log PDF</field>
+        <field name="model">metal.log</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">impress_quality_logs.report_metal_log</field>
+        <field name="report_file">impress_quality_logs.report_metal_log</field>
+        <field
+            name="print_report_name"
+        >'Metal Log - %s' % (object.name if object and object.exists() else 'DELETED')</field>
+        <field name="binding_model_id" ref="model_metal_log" />
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>
