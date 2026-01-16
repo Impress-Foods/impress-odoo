@@ -31,11 +31,6 @@ msgid "Aggregated lot expiry alert"
 msgstr ""
 
 #. module: impress_expiration_lot
-#: model:ir.actions.server,name:impress_expiration_lot.impress_expiration_parse_lot_number_action
-msgid "Execute Code"
-msgstr ""
-
-#. module: impress_expiration_lot
 #. odoo-python
 #: code:addons/impress_expiration_lot/models/stock_lot.py:0
 #, python-format
@@ -48,8 +43,8 @@ msgid "Lot/Serial"
 msgstr ""
 
 #. module: impress_expiration_lot
-#: model:base.automation,name:impress_expiration_lot.impress_expiration_parse_lot_number_rule
-msgid "Parse lot number and set correct dates on lot creation"
+#: model:ir.actions.server,name:impress_expiration_lot.impress_expiration_parse_lot_number_action
+msgid "Parse lot number and set correct dates"
 msgstr ""
 
 #. module: impress_expiration_lot
