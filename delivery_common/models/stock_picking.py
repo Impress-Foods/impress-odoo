@@ -13,7 +13,7 @@ class StockPicking(models.Model):
     _inherit = "stock.picking"
 
     tracking_email_sent = fields.Boolean(copy=False)
-    shipping_label_attachment_id = fields.Many2one("ir.attachment")
+    shipping_label_attachment_id = fields.Many2one("ir.attachment", copy=False)
     delivery_instructions = fields.Char(
         compute="_compute_delivery_instructions",
         store=True,
