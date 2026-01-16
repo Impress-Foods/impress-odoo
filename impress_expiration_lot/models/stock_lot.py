@@ -14,6 +14,7 @@ class StockLot(models.Model):
             if (
                 lot.product_id.use_expiration_date
                 and len(lot.name) >= 5
+                and lot.product_id.default_code
                 and lot.product_id.default_code[0] == "E"
             ):
                 lot_number = lot.name[:5]
@@ -46,6 +47,12 @@ class StockLot(models.Model):
                         "alert_date": alert_date.strftime("%Y-%m-%d %H:%M:%S"),
                     }
                 )
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super().create(vals_list)
+        res._calculate_expiration_date()
+        return res
 
     @api.model
     def _get_lots_to_send_alert(self, alert_date):

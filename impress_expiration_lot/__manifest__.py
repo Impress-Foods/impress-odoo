@@ -12,9 +12,9 @@
     # data files always loaded at installation
     "data": [
         "actions/server_actions.xml",
-        "actions/automation_rules.xml",
         "actions/lot_cron.xml",
         "data/templates.xml",
+        "views/stock_lot.xml",
     ],
     "assets": {},
 }
