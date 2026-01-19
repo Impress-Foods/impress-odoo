@@ -5,14 +5,11 @@ class BaseLogReport(models.AbstractModel):
     _name = "report.base.log.report"
     _description = "Base Log Report Logic"
 
-    def _get_common_report_values(self, docs):
-        """
-        This method can be called by child reports to get common, pre-processed
-        data that should appear on all log reports.
-        """
+    def _get_report_values(self, docids, data=None):
         return {
-            "report_date": fields.Date.today(),
+            "report_date": fields.Data.today(),
             "company": self.env.company,
+            "doc_ids": docids,
         }
 
 
@@ -25,11 +22,10 @@ class ReportHppLog(models.AbstractModel):
     def _get_report_values(self, docids, data=None):
         docs = self.env["hpp.log"].browse(docids)
 
-        report_values = self._get_common_report_values(docs)
+        report_values = super()._get_report_values(docids, data)
         total_produced = sum(docs.mapped("qty_produced"))
         report_values.update(
             {
-                "doc_ids": docids,
                 "doc_model": "hpp.log",
                 "docs": docs,
                 "total_produced_in_batch": total_produced,
@@ -48,11 +44,10 @@ class ReportMetalLog(models.AbstractModel):
     @api.model
     def _get_report_values(self, docids, data=None):
         docs = self.env["metal.log"].browse(docids)
-        report_values = self._get_common_report_values(docs)
+        report_values = super()._get_report_values(docids, data)
 
         report_values.update(
             {
-                "doc_ids": docids,
                 "doc_model": "metal.log",
                 "docs": docs,
                 "doc_name": _("Metal log"),
@@ -71,10 +66,9 @@ class ReportXRayLog(models.AbstractModel):
     def _get_report_values(self, docids, data=None):
         docs = self.env["x_ray.log"].browse(docids)
 
-        report_values = self._get_common_report_values(docs)
+        report_values = super()._get_report_values(docids, data)
         report_values.update(
             {
-                "doc_ids": docids,
                 "doc_model": "x_ray.log",
                 "docs": docs,
                 "doc_name": _("X-Ray log"),
@@ -94,11 +88,10 @@ class ReportLomaLog(models.AbstractModel):
         # Get the records for the report
         docs = self.env["loma.log"].browse(docids)
 
-        report_values = self._get_common_report_values(docs)
+        report_values = super()._get_report_values(docids, data)
 
         report_values.update(
             {
-                "doc_ids": docids,
                 "doc_model": "loma.log",
                 "docs": docs,
                 "doc_name": _("Loma log"),
@@ -118,11 +111,10 @@ class ReportCodingLog(models.AbstractModel):
         # Get the records for the report
         docs = self.env["coding.log"].browse(docids)
 
-        report_values = self._get_common_report_values(docs)
+        report_values = super()._get_report_values(docids, data)
 
         report_values.update(
             {
-                "doc_ids": docids,
                 "doc_model": "coding.log",
                 "docs": docs,
                 "doc_name": _("Coding log"),

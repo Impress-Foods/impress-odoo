@@ -28,13 +28,13 @@
                             <hr />
                             <div id="lines_block" />
                             <hr />
-                            <div class="row">
+                            <div class="row" t-if="doc.quality_notes">
                                 <div class="col-6">
                                     <h3>Notes</h3>
                                     <span t-field="doc.quality_notes" />
                                 </div>
                             </div>
-                            <hr />
+                            <hr t-if="doc.quality_notes" />
                             <div class="row">
                                 <div
                                     class="col-6"
