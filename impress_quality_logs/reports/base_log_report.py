@@ -7,7 +7,7 @@ class BaseLogReport(models.AbstractModel):
 
     def _get_report_values(self, docids, data=None):
         return {
-            "report_date": fields.Data.today(),
+            "report_date": fields.Date.today(),
             "company": self.env.company,
             "doc_ids": docids,
         }

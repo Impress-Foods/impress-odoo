@@ -37,8 +37,8 @@
                     <br />
                     <strong>Signature: </strong>
                     <img
-                        t-if="doc.signature"
-                        t-att-src="image_data_uri(doc.signature)"
+                        t-if="doc.operator_signature"
+                        t-att-src="image_data_uri(doc.operator_signature)"
                         style="max-height: 100px; max-width: 200px;"
                         alt="Signature"
                     />
@@ -46,12 +46,10 @@
             </div>
         </xpath>
         <xpath expr="//div[@id='weekly_signature_block']" position="attributes">
-            <attribute name="t-if">doc.verification_signature</attribute>
+            <attribute name="t-if">doc.signature</attribute>
         </xpath>
         <xpath expr="//div[@id='weekly_signature_block']//img" position="attributes">
-            <attribute
-                name="t-att-src"
-            >image_data_uri(doc.verification_signature)</attribute>
+            <attribute name="t-att-src">image_data_uri(doc.signature)</attribute>
         </xpath>
     </template>
     <template id="report_coding_log">
