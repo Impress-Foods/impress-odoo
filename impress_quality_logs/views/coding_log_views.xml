@@ -73,7 +73,7 @@
                             <field name="start_date" />
 
                             <field
-                                name="signature"
+                                name="operator_signature"
                                 widget="signature"
                                 options="{'size':[0,90]}"
                             />
@@ -82,7 +82,7 @@
                     <group>
                         <group>
                             <field
-                                name="verification_signature"
+                                name="signature"
                                 widget="signature"
                                 options="{'size':[0,90]}"
                             />
