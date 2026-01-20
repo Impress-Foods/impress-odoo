@@ -41,8 +41,8 @@ class MrpCampaign(models.Model):
 
     bucket_start_date = fields.Date()
     bucket_end_date = fields.Date(compute="_compute_bucket_end_date")
-    date_planned_start = fields.Datetime(
-        string="Scheduled Date", required=True, default=fields.Datetime.now
+    date_planned_start = fields.Date(
+        string="Scheduled Date", required=True, default=fields.Date.today
     )
 
     product_id = fields.Many2one(
@@ -166,7 +166,12 @@ class MrpCampaign(models.Model):
                         "product_qty": qty_to_produce,
                         "campaign_id": self.id,
                         "origin": self.name,
-                        "date_start": self.date_planned_start,
+                        "date_start": datetime.combine(
+                            self.date_planned_start, time.min
+                        ),
+                        "date_deadline": datetime.combine(
+                            self.date_planned_start, time.max
+                        ),
                         "bom_id": anchor_bom.id,
                     }
                 )
@@ -239,6 +244,56 @@ class MrpCampaign(models.Model):
             "view_mode": "tree,form",
             "target": "current",
         }
+
+    def write(self, vals):
+        # Store old date_planned_starts values (which will be Date objects after Part 0)
+        old_date_planned_starts = {rec.id: rec.date_planned_start for rec in self}
+
+        res = super().write(vals)
+
+        if "date_planned_start" in vals:
+            for rec in self:
+                # Only proceed if date_planned_start is set, there are MOs,
+                # and the DATE part of date_planned_start has actually changed.
+                if (
+                    rec.date_planned_start
+                    and rec.production_ids
+                    and (
+                        not old_date_planned_starts.get(rec.id)
+                        or old_date_planned_starts[rec.id] != rec.date_planned_start
+                    )
+                ):
+                    new_campaign_date = (
+                        rec.date_planned_start
+                    )  # This is now a Date object
+
+                    for mo in rec.production_ids:
+                        # Preserve MO's original time, apply new campaign day
+                        # If mo.date_start is not set,
+                        # default to time.min (beginning of day)
+                        mo_original_time = (
+                            mo.date_start.time() if mo.date_start else time.min
+                        )
+                        mo_new_date_start = datetime.combine(
+                            new_campaign_date, mo_original_time
+                        )
+                        mo_new_date_deadline = datetime.combine(
+                            new_campaign_date, time.max
+                        )
+
+                        # Write only if a change is needed to
+                        # avoid unnecessary database updates
+                        if (
+                            mo.date_start != mo_new_date_start
+                            or mo.date_deadline != mo_new_date_deadline
+                        ):
+                            mo.write(
+                                {
+                                    "date_start": mo_new_date_start,
+                                    "date_deadline": mo_new_date_deadline,
+                                }
+                            )
+        return res
 
     @api.model
     def _get_name_seq(self):
