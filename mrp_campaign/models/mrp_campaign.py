@@ -77,7 +77,7 @@ class MrpCampaign(models.Model):
     @api.depends("production_ids")
     def _compute_production_count(self):
         for rec in self:
-            rec.production_count = len(self.production_ids)
+            rec.production_count = len(rec.production_ids)
 
     @api.depends(
         "bucket_start_date",
@@ -131,16 +131,9 @@ class MrpCampaign(models.Model):
             end_mos_to_confirm.action_confirm()
 
         anchor_product = self.product_id
-        total_anchor_qty_needed = 0.0
-
         # 2. Calculate total anchor demand from confirmed 'end' MOs' raw moves
         # The self.production_ids will now contain confirmed MOs
-        for mo in self.production_ids:
-            # Filter for raw moves that consume the anchor product
-            for move in mo.move_raw_ids.filtered(
-                lambda m: m.product_id == anchor_product
-            ):
-                total_anchor_qty_needed += move.product_uom_qty
+        total_anchor_qty_needed = sum(self.line_ids.mapped("anchor_product_qty"))
 
         if total_anchor_qty_needed > 0:
             # Find BoM for anchor product, needed to create MO
@@ -390,12 +383,13 @@ class MrpCampaign(models.Model):
             )
 
             if campaign_line:
-                # Aggregate quantity on the existing line.
-                campaign_line.product_uom_qty += procurement.product_qty
                 # Add new demand moves to the existing ones.
                 campaign_line.move_dest_ids |= demand_moves
                 _logger.info(
-                    "Updated line in campaign %s: %s (%s) +%f units.",
+                    (
+                        "Updated line in campaign %s: %s (%s) by "
+                        "adding demand for %f units."
+                    ),
                     campaign.name,
                     campaign_line.product_id.display_name,
                     campaign_line.bom_id.code or "Default BoM",
@@ -404,21 +398,20 @@ class MrpCampaign(models.Model):
 
             else:
                 # Create a new line for this product/bom combination.
-                self.env["mrp.campaign.line"].create(
+                new_line = self.env["mrp.campaign.line"].create(
                     {
                         "campaign_id": campaign.id,
                         "product_id": procurement.product_id.id,
                         "bom_id": bom.id if bom else False,
-                        "product_uom_qty": procurement.product_qty,
                         "move_dest_ids": [(6, 0, demand_moves.ids)],
                     }
                 )
                 _logger.info(
                     "Created new line in campaign %s: %s (%s), %f units.",
                     campaign.name,
-                    procurement.product_id.display_name,
-                    bom.code or "Default BoM",
-                    procurement.product_qty,
+                    new_line.product_id.display_name,
+                    new_line.bom_id.code or "Default BoM",
+                    new_line.product_demand_qty,
                 )
 
 
@@ -430,8 +423,17 @@ class MrpCampaignLine(models.Model):
         "mrp.campaign", string="Campaign", required=True, ondelete="cascade"
     )
     product_id = fields.Many2one("product.product", string="Product", required=True)
-    product_uom_qty = fields.Float(
-        "Quantity", default=1.0, compute="_compute_product_uom_qty"
+    product_demand_qty = fields.Float(
+        "Demand Quantity", compute="_compute_product_demand_qty", store=True
+    )
+    anchor_product_qty = fields.Float(
+        string="Required Component Qty",
+        compute="_compute_anchor_product_qty",
+        store=True,
+        help=(
+            "The quantity of the intermediate product (anchor) required "
+            "to fulfill the demand for this line."
+        ),
     )
     move_dest_ids = fields.Many2many(
         "stock.move",
@@ -441,8 +443,11 @@ class MrpCampaignLine(models.Model):
     product_uom_id = fields.Many2one(
         "uom.uom", string="Unit of Measure", related="product_id.uom_id"
     )
+    component_uom_id = fields.Many2one(
+        related="campaign_id.product_id.product_tmpl_id.uom_id"
+    )
 
-    production_id = fields.Many2one("mrp.production")
+    production_id = fields.Many2one("mrp.production", ondelete="set null")
 
     bom_id = fields.Many2one(
         "mrp.bom",
@@ -451,26 +456,31 @@ class MrpCampaignLine(models.Model):
     )
 
     @api.depends("move_dest_ids")
-    def _compute_product_uom_qty(self):
+    def _compute_product_demand_qty(self):
         for rec in self:
-            rec.product_uom_qty = sum(rec.move_dest_ids.mapped("product_uom_qty"))
+            rec.product_demand_qty = sum(rec.move_dest_ids.mapped("product_uom_qty"))
 
-    def _get_anchor_product_qty(self, anchor_product):
+    @api.depends("product_demand_qty", "bom_id", "campaign_id.product_id")
+    def _compute_anchor_product_qty(self):
         """
-        Calculates the required quantity of a given anchor_product
+        Calculates the required quantity of the campaign's anchor product
         for this specific campaign line.
         """
-        self.ensure_one()
-        if not self.bom_id:
-            return 0.0
+        for line in self:
+            if not line.bom_id or not line.campaign_id.product_id:
+                line.anchor_product_qty = 0.0
+                continue
 
-        _boms, bom_lines = self.bom_id.explode(self.product_id, self.product_uom_qty)
+            anchor_product = line.campaign_id.product_id
+            _boms, bom_lines = line.bom_id.explode(
+                line.product_id, line.product_demand_qty
+            )
 
-        needed_qty = 0.0
-        for bom_line, line_data in bom_lines:
-            if bom_line.product_id == anchor_product:
-                needed_qty += line_data["qty"]
-        return needed_qty
+            needed_qty = 0.0
+            for bom_line, line_data in bom_lines:
+                if bom_line.product_id == anchor_product:
+                    needed_qty += line_data["qty"]
+            line.anchor_product_qty = needed_qty
 
     def _create_finished_product_mo(self, confirm=True):
         """
@@ -493,7 +503,7 @@ class MrpCampaignLine(models.Model):
             {
                 "product_id": self.product_id.id,
                 "bom_id": self.bom_id.id,
-                "product_qty": self.product_uom_qty,
+                "product_qty": self.product_demand_qty,
                 "product_uom_id": self.product_uom_id.id,
                 "origin": self.campaign_id.name,
                 "date_start": datetime.combine(
