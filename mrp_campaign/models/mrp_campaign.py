@@ -170,7 +170,7 @@ class MrpCampaign(models.Model):
                             self.date_planned_start, time.min
                         ),
                         "date_deadline": datetime.combine(
-                            self.date_planned_start, time.max
+                            self.date_planned_start, time(12, 0)
                         ),
                         "bom_id": anchor_bom.id,
                     }
@@ -295,6 +295,34 @@ class MrpCampaign(models.Model):
                             )
         return res
 
+    def _sync_date_planned_start(self):
+        """
+        Synchronizes date_planned_start and bucket_start_date based on the latest
+        date_deadline of all demand moves linked to the campaign lines.
+        """
+        for campaign in self:
+            max_demand_date_deadline = fields.Date.today()
+            if campaign.line_ids:
+                all_move_dest_deadlines = campaign.line_ids.mapped(
+                    "move_dest_ids.date_deadline"
+                )
+                if all_move_dest_deadlines:
+                    max_demand_date_deadline = max(all_move_dest_deadlines).date()
+
+            # Update date_planned_start only if it's earlier than the max demand date
+            # or if it's the default (today) and a later demand date exists.
+            # This allows user to set an earlier date if desired.
+            if (
+                campaign.date_planned_start < max_demand_date_deadline
+                or campaign.date_planned_start == fields.Date.today()
+                and max_demand_date_deadline > fields.Date.today()
+            ):
+                campaign.date_planned_start = max_demand_date_deadline
+
+            # Ensure bucket_start_date is always aligned with date_planned_start
+            if campaign.bucket_start_date != campaign.date_planned_start:
+                campaign.bucket_start_date = campaign.date_planned_start
+
     @api.model
     def _get_name_seq(self):
         """Generates a sequence number for the campaign name."""
@@ -327,9 +355,9 @@ class MrpCampaign(models.Model):
                 {
                     "product_id": anchor_product.id,
                     "company_id": company.id,
-                    "bucket_start_date": fields.datetime.now().date(),
                 }
             )
+            campaign._sync_date_planned_start()
             _logger.info(
                 "Created new campaign %s for anchor %s.",
                 campaign.name,
@@ -450,6 +478,7 @@ class MrpCampaign(models.Model):
                     campaign_line.bom_id.code or "Default BoM",
                     procurement.product_qty,
                 )
+                campaign._sync_date_planned_start()
 
             else:
                 # Create a new line for this product/bom combination.
@@ -468,6 +497,7 @@ class MrpCampaign(models.Model):
                     new_line.bom_id.code or "Default BoM",
                     new_line.product_demand_qty,
                 )
+                campaign._sync_date_planned_start()
 
 
 class MrpCampaignLine(models.Model):
@@ -562,10 +592,10 @@ class MrpCampaignLine(models.Model):
                 "product_uom_id": self.product_uom_id.id,
                 "origin": self.campaign_id.name,
                 "date_start": datetime.combine(
-                    self.campaign_id.date_planned_start, time.min
+                    self.campaign_id.date_planned_start, time(13, 0)
                 ),
                 "date_deadline": datetime.combine(
-                    self.campaign_id.date_planned_start, time.max
+                    self.campaign_id.date_planned_start, time(23, 0)
                 ),
                 "campaign_id": self.campaign_id.id,  # Link as a consumer
             }

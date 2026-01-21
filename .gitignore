@@ -100,3 +100,4 @@ CLAUDE.md
 impress-odoo.code-workspace
 **/*.zip
 **/gemini.md
+**/*.md

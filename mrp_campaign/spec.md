@@ -69,8 +69,6 @@ Trigger: Onchange or Write on mrp.campaign.date_planned_start. Logic:
 
     Update the date_planned_start of all records in mo_ids.
 
-    Maintain the internal sequence (Tanks first, then Bottling).
-
 4. Constraint Handling
 
    Tank Capacity: The WIP splitting logic must strictly adhere to the 1000kg limit per
@@ -89,8 +87,16 @@ Trigger: Onchange or Write on mrp.campaign.date_planned_start. Logic:
    Coloring: Apply color to the mrp.production list view based on the linked
    campaign_id.
 
-6. Technical Implementation Note for Agent
+6. Scheduling
 
-   Important: When creating consolidated MOs, you must preserve the link to the
-   stock.move.dest (Delivery Orders). Do not allow the stock.move to be orphaned, or the
-   shipping team will lose the ability to reserve stock against specific Sales Orders.
+   Manufacturing Orders should be able to be planned using the existing Odoo planning
+   tools.
+
+   Scheduling should respect production ordering. End product productions should be
+   automatically planned after the intermediate product productions that supply them
+   with intermediate product stock.
+
+   Scheduling of MOs within a campaign should require little to no manual actions. Users
+   should be able to set the day for a campaign and plan the complete set of MOs. The
+   result should be correct, with the right ordering of the Manufacturing Orders based
+   on dependency.

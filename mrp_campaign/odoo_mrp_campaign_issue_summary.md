@@ -52,7 +52,7 @@ revealing a deeper layer of the problem:
   `stock.move.date_deadline`.
   - **Correction (User):** After _recreating MOs without planning_, the staggered
     `date_start` was indeed visible. This confirmed that the staggering implementation
-    worked, but was overridden by the subsequent "Plan` action.
+    worked, but was overridden by the subsequent "Plan` action. Staggering was removed.
 - **Seventh Hypothesis (Agent):** The core problem was inconsistent `date_deadline`
   values on `stock.move` records, particularly for anchor product components. An
   observed `date_deadline` of `13:00:00` for an anchor component move (meaning it's
@@ -63,6 +63,27 @@ revealing a deeper layer of the problem:
     delivery order) shouldn't be modified, as their deadlines and planned dates are what
     drives the true timeline and needs to be synced with client communications and
     delivery vendors."
+- **Eighth Hypothesis (Agent):** Odoo's scheduler, via `mrp.workorder._plan_workorder`,
+  uses `max(self.production_id.date_start, datetime.now())` for a work order's
+  `date_start`. This means if MOs are planned later in the day, work orders will not be
+  scheduled to start before `datetime.now()`, even if the MO's `date_start` is earlier.
+  Early `date_deadline` values for MOs (e.g., 1 AM) can be infeasible due to work center
+  operating hours, leading to conflicts.
+- **Ninth Hypothesis (Agent):** The Odoo scheduler actively modifies the `date_deadline`
+  of related `stock.picking` records during MO planning. It attempts to back-schedule
+  the delivery deadline to match the earliest possible completion of the MOs, even if
+  this results in a delivery `date_deadline` that precedes the actual `scheduled_date`
+  of the delivery. This creates an impossible delivery timeline from the perspective of
+  external commitments. This dynamic modification of delivery `date_deadline` happens
+  when `campaign.date_planned_start` is set to an earlier date (e.g.,
+  `fields.Date.today()`) than the actual `scheduled_date` of the delivery order.
+- **Tenth Hypothesis (Agent):** The `Procurement` object's `move_dest_ids`, when
+  received by `mrp_campaign._collect_procurements`, can sometimes be empty or contain
+  incomplete `date_deadline` information. This causes `campaign.date_planned_start` to
+  default to `fields.Date.today()` (the campaign creation date) instead of aligning with
+  the actual demand `date_deadline` from the Sales/Delivery Order. The
+  `mrp.campaign.line.move_dest_ids` field is a more reliable source for demand dates
+  after the `mrp.campaign.line` records have been created/updated.
 
 ## 3. Key Modules & Methods Involved
 
@@ -74,6 +95,12 @@ revealing a deeper layer of the problem:
     MOs.
   - `MrpCampaign.write`: Logic for updating MO dates if campaign `date_planned_start`
     changes.
+  - `MrpCampaign._sync_date_planned_start`: New method to synchronize
+    `date_planned_start` and `bucket_start_date` with demand move deadlines.
+  - `MrpCampaign._get_or_create_campaign_for_anchor`: Method to find or create a
+    campaign, now calls `_sync_date_planned_start` after creation.
+  - `MrpCampaign._collect_procurements`: Method to collect procurements, now calls
+    `_sync_date_planned_start` after campaign line updates.
 - **`mrp_campaign/models/stock_rule.py`**:
   - `StockRuleInherit._run_manufacture`: Intercepts standard procurement, diverting to
     campaign logic.
@@ -90,29 +117,6 @@ revealing a deeper layer of the problem:
   - `stock.move.date_deadline`: Hard deadline for the move.
   - `stock.move.move_orig_ids` / `stock.move.move_dest_ids`: Dependency links between
     moves.
-
-## 4. Root Cause Re-evaluation (Final)
-
-The fundamental issue is a **conflict between the desired production day of the campaign
-(`campaign.date_planned_start`) and earlier `date_deadline` requirements propagated from
-external demand `stock.move`s, combined with Odoo's scheduling logic for zero-lead-time
-dependent operations.**
-
-- When MOs are created, the `campaign.date_planned_start` specifies a target day.
-- However, `stock.move` records that represent external demand (e.g., linked to a
-  delivery order) often carry an earlier `date_deadline`.
-- Odoo's scheduler, during its planning cycle, _propagates this earlier `date_deadline`
-  backward_ through the dependency chain to the internal MO `stock.move`s (specifically,
-  the raw material moves of the consuming MOs and the finished product moves of the
-  producing MOs).
-- This results in internal production `stock.move`s (e.g., an anchor product being
-  produced) having a `date_deadline` that is _earlier_ than their actual planned
-  execution `date` (even with zero lead time, because of the necessary sequential
-  ordering).
-- Odoo correctly identifies this as an impossible contradiction (a deadline before
-  completion), issuing warnings and creating "out of order" plans.
-- Attempts to force a specific `date_start` (like staggering) are then overwritten by
-  `mrp.production._plan_workorders`. Attempts to force `date_deadline` on
-  `mrp.production` are ignored because it's a computed field. Aggressively overriding
-  `stock.move.date_deadline` for _all_ moves is not allowed due to the need to respect
-  external demand.
+- **`/opt/odoo/addons/mrp/models/mrp_workorder.py` (Odoo Core)**:
+  - `MrpWorkorder._plan_workorder`: Core work order planning logic, uses
+    `max(self.production_id.date_start, datetime.now())`.
