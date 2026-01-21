@@ -2,6 +2,21 @@
 <templates xml:space="preserve">
 
     <t
+        t-name="impress_barcode.add_image"
+        t-inherit="stock_barcode.LineComponent"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//div[hasclass('o_barcode_line_details')]" position='before'>
+            <div class="d-flex flex-row flex-nowrap px-4">
+                <img
+                    t-attf-src="/web/image?model=product.product&amp;id={{props.line.product_id.id}}&amp;field=image_128"
+                />
+            </div>
+        </xpath>
+
+    </t>
+    <t
         t-name="stock_barcode.lineQuantity_add_total_demand"
         t-inherit="stock_barcode.LineQuantity"
         t-inherit-mode="extension"
