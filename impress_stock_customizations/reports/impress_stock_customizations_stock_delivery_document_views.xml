@@ -247,6 +247,7 @@
             </xpath>
         </field>
     </record>
+
     <template
         id="stock_report_delivery_has_serial_move_line"
         inherit_id="stock.stock_report_delivery_has_serial_move_line"
