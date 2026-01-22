@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-04 17:01+0000\n"
-"PO-Revision-Date: 2025-12-08 14:24+0000\n"
+"PO-Revision-Date: 2026-01-22 14:38+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
 "impress-odoo/impress_quality_logs/fr_CA/>\n"
@@ -686,7 +686,7 @@ msgstr "Poids nominal"
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__non_ferrous
 msgid "Non ferrous (2.5 mm)"
-msgstr "Non-ferreux (2.5 mm)"
+msgstr "Non Ferreux (2.5 mm)"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__case_check__not_ok
