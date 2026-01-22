@@ -326,11 +326,6 @@ msgid "Shelf Life Check"
 msgstr "Vérification durée de vie"
 
 #. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_signature
-msgid "Signature"
-msgstr "Signature"
-
-#. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_sleeve_check
 msgid "Sleeve Check"
 msgstr "Vérification étiquette"
@@ -458,6 +453,9 @@ msgstr ""
 "                            (changement de format, de recette, de lot, "
 "d'étiquette US/CAD ou lors de\n"
 "                            réglage de l'appareil)"
+
+#~ msgid "Signature"
+#~ msgstr "Signature"
 
 #~ msgid "Average at least average threshold"
 #~ msgstr "La moyenne est d'au moins le seuil moyen"

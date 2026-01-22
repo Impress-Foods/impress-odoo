@@ -267,11 +267,6 @@ msgid "Shelf Life Check"
 msgstr ""
 
 #. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_signature
-msgid "Signature"
-msgstr ""
-
-#. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_sleeve_check
 msgid "Sleeve Check"
 msgstr ""
