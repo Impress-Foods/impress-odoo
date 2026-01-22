@@ -20,9 +20,7 @@
                         </group>
                     </group>
                     <div>
-                        <div style="font-weight: bold;">
-                            X-Ray Frequency:
-                        </div>
+                        <div style="font-weight: bold;"> X-Ray Frequency: </div>
                         <ul>
                             <li>At the start of the day.</li>
                             <li>Every product change (format, recipe, lot).</li>
@@ -57,17 +55,17 @@
                                     <field
                                         name="stainless_detection_large_value"
                                         required="1"
-                                        string="Stainless Detection Threshold (1.2 mm)"
+                                        string="Stainless Detection Threshold (2.0 mm)"
                                     />
                                     <field
                                         name="ceramic_detection_large_value"
                                         required="1"
-                                        string="Ceramic Detection Threshold (3.0 mm)"
+                                        string="Ceramic Detection Threshold (4.0 mm)"
                                     />
                                     <field
                                         name="glass_detection_large_value"
                                         required="1"
-                                        string="Glass Detection Threshold (3.0 mm)"
+                                        string="Glass Detection Threshold (4.0 mm)"
                                     />
                                     <field
                                         name="ejection"
@@ -96,17 +94,14 @@
                     <div>
                         <ul>
                             <li
-                            >If there is a metal reject during production, inform quality
-                                control. </li>
+                            >If there is a metal reject during production, inform quality control. </li>
                             <li
-                            >During the last check (end of production), check that no product is left
-                                in the reject bin.</li>
+                            >During the last check (end of production), check that no product is left in the reject bin.</li>
                         </ul>
                     </div>
                     <div class="text-center">
                         <strong
-                        >Pour l'utilisation exclusive de Impress Foods. Mis à jour le 26
-                            Novembre 2025. Feuille de contrôle Rayon-X (Gros témoins)</strong>
+                        >Pour l'utilisation exclusive de Impress Foods. Mis à jour le 22 janvier 2026. Feuille de contrôle Rayon-X (Gros témoins)</strong>
                     </div>
                 </sheet>
             </form>
