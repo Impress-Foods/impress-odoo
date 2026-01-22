@@ -19,37 +19,6 @@ msgstr ""
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: impress_quality_logs
-#: model:ir.actions.report,print_report_name:impress_quality_logs.action_report_coding_log
-msgid ""
-"'Coding Log - %s' % (object.name if object and object.exists() else "
-"'DELETED')"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model:ir.actions.report,print_report_name:impress_quality_logs.action_report_hpp_log
-msgid ""
-"'HPP Log - %s' % (object.name if object and object.exists() else 'DELETED')"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model:ir.actions.report,print_report_name:impress_quality_logs.action_report_loma_log
-msgid ""
-"'Loma Log - %s' % (object.name if object and object.exists() else 'DELETED')"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model:ir.actions.report,print_report_name:impress_quality_logs.action_report_metal_log
-msgid ""
-"'Metal Log - %s' % (object.name if object and object.exists() else 'DELETED')"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model:ir.actions.report,print_report_name:impress_quality_logs.action_report_xray_log
-msgid ""
-"'X-Ray Log - %s' % (object.name if object and object.exists() else 'DELETED')"
-msgstr ""
-
-#. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_line_form
 msgid "0000"
 msgstr "0000"
@@ -68,97 +37,6 @@ msgstr "120 secondes"
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__hpp_log_line__cycle_time__300sec
 msgid "300 seconds"
 msgstr "300 secondes"
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_quality_log_main
-msgid ""
-"<br/>\n"
-"                                    <strong>Date:</strong>"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_quality_log_main
-msgid ""
-"<br/>\n"
-"                                    <strong>Lot:</strong>"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_quality_log_main
-msgid ""
-"<br/>\n"
-"                                    <strong>Product:</strong>"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_coding_log_view
-msgid ""
-"<br/>\n"
-"                    <strong>\"Keep Cold\" check:</strong>"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_coding_log_view
-msgid ""
-"<br/>\n"
-"                    <strong>Signature: </strong>"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_coding_log_view
-msgid ""
-"<br/>\n"
-"                    <strong>Sleeve Check:</strong>"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_coding_log_view
-msgid ""
-"<br/>\n"
-"                    <strong>Subunit check</strong>"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_coding_log_view
-msgid ""
-"<br/>\n"
-"                    <strong>Unit Check:</strong>"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_coding_log_view
-msgid ""
-"<br/>\n"
-"                    <strong>Unit Code:</strong>"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_hpp_log_view
-msgid ""
-"<br/>\n"
-"            <strong>Quantity Quality: </strong>"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_hpp_log_view
-msgid ""
-"<br/>\n"
-"            <strong>Quantity Redone: </strong>"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_hpp_log_view
-msgid ""
-"<br/>\n"
-"            <strong>Quantity Scrapped: </strong>"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_hpp_log_view
-msgid ""
-"<br/>\n"
-"            <strong>Quantity Total: </strong>"
-msgstr ""
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_mrp_production_form
@@ -252,52 +130,6 @@ msgstr ""
 "class=\"text-danger\">HPP non-conforme</span>"
 
 #. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_coding_log_view
-msgid ""
-"<span>days</span>\n"
-"                    <br/>\n"
-"                    <strong>Case Code:</strong>"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_hpp_log_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_metal_log_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_xray_log_view
-msgid ""
-"<strong>Monthly Verification</strong>\n"
-"                <br/>"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_quality_log_main
-#, fuzzy
-msgid "<strong>Production Order:</strong>"
-msgstr "Ordre de Production"
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_hpp_log_view
-#, fuzzy
-msgid "<strong>Quantity Produced: </strong>"
-msgstr "Quantité produite"
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_coding_log_view
-msgid "<strong>Shelf life check:</strong>"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_coding_log_view
-msgid "<strong>Shelf life:</strong>"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_quality_log_main
-msgid ""
-"<strong>Weekly Verification</strong>\n"
-"                                    <br/>"
-msgstr ""
-
-#. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__active_worksheet_field
 #: model:ir.model.fields,field_description:impress_quality_logs.field_log_line_mixin__active_worksheet_field
 #: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__active_worksheet_field
@@ -344,13 +176,7 @@ msgid "Barrels must be empty during cleaning cycle"
 msgstr "Les barils doivent être vides lors d'un cycle de nettoyage"
 
 #. module: impress_quality_logs
-#: model:ir.model,name:impress_quality_logs.model_report_base_log_report
-msgid "Base Log Report Logic"
-msgstr ""
-
-#. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__calibration
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_metal_log_view
 msgid "Calibration"
 msgstr "Calibration"
 
@@ -363,11 +189,6 @@ msgstr "Vérification caisse"
 #: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__case_code
 msgid "Case Code"
 msgstr "Code de la caisse"
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_xray_log_view
-msgid "Ceramic <br/>("
-msgstr ""
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__ceramic_detection_value
@@ -385,12 +206,6 @@ msgid "Cleaning"
 msgstr "Nettoyage"
 
 #. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_hpp_log_view
-#, fuzzy
-msgid "Cleaning Cycle"
-msgstr "Est un cycle de nettoyage?"
-
-#. module: impress_quality_logs
 #: model:ir.ui.menu,name:impress_quality_logs.coding_menu
 msgid "Coding"
 msgstr "Codage"
@@ -402,18 +217,6 @@ msgstr "Codage"
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_coding_log_form
 msgid "Coding Log"
 msgstr "Registre Codage"
-
-#. module: impress_quality_logs
-#: model:ir.actions.report,name:impress_quality_logs.action_report_coding_log
-#, fuzzy
-msgid "Coding Log PDF"
-msgstr "Registre Codage"
-
-#. module: impress_quality_logs
-#: model:ir.model,name:impress_quality_logs.model_report_impress_quality_logs_report_coding_log
-#, fuzzy
-msgid "Coding Log Report"
-msgstr "Registres Codage pour %s"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__create_uid
@@ -445,7 +248,6 @@ msgstr "Créé le"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__cycle_number
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_hpp_log_view
 msgid "Cycle Number"
 msgstr "# de cycle"
 
@@ -456,7 +258,6 @@ msgstr "# de cycle doit être unique pour une même production!"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__cycle_time
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_hpp_log_view
 msgid "Cycle Time"
 msgstr "Temps de cycle"
 
@@ -489,8 +290,6 @@ msgstr "Nom d'affichage"
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__ejection
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__ejection
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_metal_log_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_xray_log_view
 msgid "Ejection"
 msgstr "Éjection"
 
@@ -503,17 +302,6 @@ msgstr "Date d'expiration"
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__ferrous
 msgid "Ferrous (2.0 mm)"
 msgstr "Ferreux (2.0 mm)"
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_metal_log_view
-#, fuzzy
-msgid "Ferrous <br/> (2.0 mm)"
-msgstr "Ferreux (2.0 mm)"
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_xray_log_view
-msgid "Glass <br/>("
-msgstr ""
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__glass_detection_value
@@ -555,11 +343,6 @@ msgid "HPP"
 msgstr "HPP"
 
 #. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_hpp_log_view
-msgid "HPP Cycles"
-msgstr ""
-
-#. module: impress_quality_logs
 #: model:ir.ui.menu,name:impress_quality_logs.hpp_log_menu
 msgid "HPP Log"
 msgstr "Registre HPP"
@@ -569,18 +352,6 @@ msgstr "Registre HPP"
 #: model:ir.ui.menu,name:impress_quality_logs.hpp_log_line_menu
 msgid "HPP Log Lines"
 msgstr "Lignes de registre HPP"
-
-#. module: impress_quality_logs
-#: model:ir.actions.report,name:impress_quality_logs.action_report_hpp_log
-#, fuzzy
-msgid "HPP Log PDF"
-msgstr "Registre HPP"
-
-#. module: impress_quality_logs
-#: model:ir.model,name:impress_quality_logs.model_report_impress_quality_logs_report_hpp_log
-#, fuzzy
-msgid "HPP Log Report"
-msgstr "Rapport HPP"
 
 #. module: impress_quality_logs
 #: model:ir.actions.act_window,name:impress_quality_logs.action_hpp_log
@@ -674,11 +445,6 @@ msgid "LOMA logs"
 msgstr "Registres LOMA"
 
 #. module: impress_quality_logs
-#: model:ir.model.fields.selection,name:impress_quality_logs.selection__worksheet_template__xray_indicator_size__large
-msgid "Large"
-msgstr ""
-
-#. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__last_check_for_product
 msgid "Last Check For Product"
 msgstr "Dernière vérification pour le produit"
@@ -712,18 +478,20 @@ msgid "Last Updated on"
 msgstr "Mis à jour le"
 
 #. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_xray_log_view
-#, fuzzy
-msgid "Last check"
-msgstr "Vérification caisse"
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_line_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_line_form
+msgid "Lock"
+msgstr "Verrouiller"
 
 #. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_hpp_log_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_metal_log_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_xray_log_view
-#, fuzzy
-msgid "Line Signature"
-msgstr "Signature"
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__is_locked
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_line_mixin__is_locked
+#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__is_locked
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__is_locked
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__is_locked
+msgid "Locked"
+msgstr "Verrouillé"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__log_line_ids
@@ -748,18 +516,6 @@ msgstr "Registres"
 #: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__loma_log_id
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_form
 msgid "Loma Log"
-msgstr "Registre LOMA"
-
-#. module: impress_quality_logs
-#: model:ir.actions.report,name:impress_quality_logs.action_report_loma_log
-#, fuzzy
-msgid "Loma Log PDF"
-msgstr "Registre LOMA"
-
-#. module: impress_quality_logs
-#: model:ir.model,name:impress_quality_logs.model_report_impress_quality_logs_report_loma_log
-#, fuzzy
-msgid "Loma Log Report"
 msgstr "Registre LOMA"
 
 #. module: impress_quality_logs
@@ -835,12 +591,6 @@ msgid "Metal Detector Log"
 msgstr "Registre Métal"
 
 #. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_metal_log_view
-#, fuzzy
-msgid "Metal Detector Validation"
-msgstr "Lignes Métal"
-
-#. module: impress_quality_logs
 #: model:ir.ui.menu,name:impress_quality_logs.metal_log_line_menu
 msgid "Metal Line"
 msgstr "Ligne Métal"
@@ -852,18 +602,6 @@ msgstr "Ligne Métal"
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_form
 msgid "Metal Log"
 msgstr "Registre Métal"
-
-#. module: impress_quality_logs
-#: model:ir.actions.report,name:impress_quality_logs.action_report_metal_log
-#, fuzzy
-msgid "Metal Log PDF"
-msgstr "Registre Métal"
-
-#. module: impress_quality_logs
-#: model:ir.model,name:impress_quality_logs.model_report_impress_quality_logs_report_metal_log
-#, fuzzy
-msgid "Metal Log Report"
-msgstr "Registre Métal pour %s"
 
 #. module: impress_quality_logs
 #: model:ir.ui.menu,name:impress_quality_logs.metal_log_menu
@@ -951,12 +689,6 @@ msgid "Non ferrous (2.5 mm)"
 msgstr "Non Ferreux (2.5 mm)"
 
 #. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_metal_log_view
-#, fuzzy
-msgid "Non-Ferrous <br/> (2.5 mm)"
-msgstr "Non Ferreux (2.5 mm)"
-
-#. module: impress_quality_logs
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__case_check__not_ok
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__global_success_check__not_ok
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__keep_cold_check__not_ok
@@ -977,7 +709,6 @@ msgstr "Non Conforme"
 #: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__notes
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__notes
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__notes
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_quality_log_main
 msgid "Notes"
 msgstr "Notes"
 
@@ -1005,11 +736,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__x_ray_log_line__ejection__ok
 msgid "Ok"
 msgstr "Conforme"
-
-#. module: impress_quality_logs
-#: model:ir.model.constraint,message:impress_quality_logs.constraint_hpp_log_production_id_uniq
-msgid "Only one HPP log is allowed per Production Order!"
-msgstr ""
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_search
@@ -1099,12 +825,6 @@ msgid "Quality Notes"
 msgstr "Notes de contrôle qualité"
 
 #. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_hpp_log_view
-#, fuzzy
-msgid "Quantity"
-msgstr "Quantité HPP"
-
-#. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__qty_cases
 msgid "Quantity Cases"
 msgstr "Quantité en caisses"
@@ -1137,21 +857,13 @@ msgstr "Quantité par caisse"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__reject_qty
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_xray_log_view
 msgid "Reject Quantity"
 msgstr "Quantité rejetée"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__reject_value
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__reject_value
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_xray_log_view
 msgid "Reject Value"
-msgstr "Valeur de rejet"
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_metal_log_view
-#, fuzzy
-msgid "Rejection Value"
 msgstr "Valeur de rejet"
 
 #. module: impress_quality_logs
@@ -1163,8 +875,6 @@ msgstr "Sceau OK"
 #: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__sequence
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__sequence
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__sequence
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_metal_log_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_xray_log_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_coding_log_search
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_search
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_search
@@ -1210,11 +920,6 @@ msgstr "Signer les registres"
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__signature
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__signature
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__signature
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_coding_log_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_hpp_log_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_metal_log_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_quality_log_main
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_xray_log_view
 msgid "Signature"
 msgstr "Signature"
 
@@ -1226,18 +931,6 @@ msgstr "Vérification étiquette"
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__stainless
 msgid "Stainless (3.5 mm)"
-msgstr "Inoxydable (3.5 mm)"
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_metal_log_view
-#, fuzzy
-msgid "Stainless <br/> (3.5 mm)"
-msgstr "Inoxydable (3.5 mm)"
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_xray_log_view
-#, fuzzy
-msgid "Stainless <br/>("
 msgstr "Inoxydable (3.5 mm)"
 
 #. module: impress_quality_logs
@@ -1257,9 +950,6 @@ msgstr "Seuil de détection stainless (1.2 mm)"
 #: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__start_date
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__start_date
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__start_date
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_hpp_log_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_metal_log_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_xray_log_view
 msgid "Start Date"
 msgstr "Date de début"
 
@@ -1343,7 +1033,6 @@ msgstr "Couple"
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__qty_total
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__total_qty
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__total_qty
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_xray_log_view
 msgid "Total Quantity"
 msgstr "Quantité totale"
 
@@ -1358,10 +1047,22 @@ msgid "Unit Code"
 msgstr "Code unité"
 
 #. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_line_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_line_form
+msgid "Unlock"
+msgstr "Dévérouiller"
+
+#. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__upper_limit
 #: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__upper_limit
 msgid "Upper Limit"
 msgstr "Limite supérieure"
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__verification_signature
+msgid "Verification Signature"
+msgstr "Signature de vérification"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__weekly_signature_date
@@ -1386,22 +1087,6 @@ msgid "Weight Ok"
 msgstr "Poids OK"
 
 #. module: impress_quality_logs
-#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__x_worksheet_20250303_id
-#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__x_worksheet_20250203_id
-#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__x_worksheet_20250203_id
-#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__x_worksheet_20250203_id
-#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__x_worksheet_20250303_id
-#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__x_worksheet_large_20251126_id
-msgid "Worksheet 2024-12-02"
-msgstr "Worksheet 2024-12-02"
-
-#. module: impress_quality_logs
-#: model:ir.model,name:impress_quality_logs.model_worksheet_template
-#, fuzzy
-msgid "Worksheet Template"
-msgstr "Active Worksheet Field"
-
-#. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__x_ray_log_id
 msgid "X Ray Log"
 msgstr "Registre Rayon-X"
@@ -1422,27 +1107,9 @@ msgid "X-Ray Detector Log Line"
 msgstr "Lignes de registre Rayon-X"
 
 #. module: impress_quality_logs
-#: model:ir.actions.report,name:impress_quality_logs.action_report_xray_log
-#, fuzzy
-msgid "X-Ray Log PDF"
-msgstr "Registres Rayon-X"
-
-#. module: impress_quality_logs
-#: model:ir.model,name:impress_quality_logs.model_report_impress_quality_logs_report_xray_log
-#, fuzzy
-msgid "X-Ray Log Report"
-msgstr "Registre Métal pour %s"
-
-#. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_mrp_production__x_ray_log_ids
 msgid "X-Ray Logs"
 msgstr "Registres Rayon-X"
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_xray_log_view
-#, fuzzy
-msgid "X-Ray Validation"
-msgstr "Lignes Rayon-X"
 
 #. module: impress_quality_logs
 #: model:ir.ui.menu,name:impress_quality_logs.x_ray_log_line_menu
@@ -1484,35 +1151,114 @@ msgstr "mixin registre"
 msgid "metal.log.line"
 msgstr "ligne.registre.métal"
 
-#. module: impress_quality_logs
-#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__x_worksheet_20250203_id
-#: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__x_worksheet_20250203_id
-#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__x_worksheet_20250203_id
-msgid "x_worksheet_20250203_id"
-msgstr "x_worksheet_20250203_id"
-
-#. module: impress_quality_logs
-#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__x_worksheet_20250303_id
-msgid "x_worksheet_20250303_id"
-msgstr "x_worksheet_20250203_id"
-
-#. module: impress_quality_logs
-#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__x_worksheet_large_20251126_id
 #, fuzzy
-msgid "x_worksheet_large_20251126_id"
-msgstr "x_worksheet_20250203_id"
+#~ msgid "<strong>Production Order:</strong>"
+#~ msgstr "Ordre de Production"
 
-#~ msgid "Lock"
-#~ msgstr "Verrouiller"
+#, fuzzy
+#~ msgid "<strong>Quantity Produced: </strong>"
+#~ msgstr "Quantité produite"
 
-#~ msgid "Locked"
-#~ msgstr "Verrouillé"
+#, fuzzy
+#~ msgid "Cleaning Cycle"
+#~ msgstr "Est un cycle de nettoyage?"
 
-#~ msgid "Unlock"
-#~ msgstr "Dévérouiller"
+#, fuzzy
+#~ msgid "Coding Log PDF"
+#~ msgstr "Registre Codage"
 
-#~ msgid "Verification Signature"
-#~ msgstr "Signature de vérification"
+#, fuzzy
+#~ msgid "Coding Log Report"
+#~ msgstr "Registres Codage pour %s"
+
+#, fuzzy
+#~ msgid "Ferrous <br/> (2.0 mm)"
+#~ msgstr "Ferreux (2.0 mm)"
+
+#, fuzzy
+#~ msgid "HPP Log PDF"
+#~ msgstr "Registre HPP"
+
+#, fuzzy
+#~ msgid "HPP Log Report"
+#~ msgstr "Rapport HPP"
+
+#, fuzzy
+#~ msgid "Last check"
+#~ msgstr "Vérification caisse"
+
+#, fuzzy
+#~ msgid "Line Signature"
+#~ msgstr "Signature"
+
+#, fuzzy
+#~ msgid "Loma Log PDF"
+#~ msgstr "Registre LOMA"
+
+#, fuzzy
+#~ msgid "Loma Log Report"
+#~ msgstr "Registre LOMA"
+
+#, fuzzy
+#~ msgid "Metal Detector Validation"
+#~ msgstr "Lignes Métal"
+
+#, fuzzy
+#~ msgid "Metal Log PDF"
+#~ msgstr "Registre Métal"
+
+#, fuzzy
+#~ msgid "Metal Log Report"
+#~ msgstr "Registre Métal pour %s"
+
+#, fuzzy
+#~ msgid "Non-Ferrous <br/> (2.5 mm)"
+#~ msgstr "Non Ferreux (2.5 mm)"
+
+#, fuzzy
+#~ msgid "Quantity"
+#~ msgstr "Quantité HPP"
+
+#, fuzzy
+#~ msgid "Rejection Value"
+#~ msgstr "Valeur de rejet"
+
+#, fuzzy
+#~ msgid "Stainless <br/> (3.5 mm)"
+#~ msgstr "Inoxydable (3.5 mm)"
+
+#, fuzzy
+#~ msgid "Stainless <br/>("
+#~ msgstr "Inoxydable (3.5 mm)"
+
+#~ msgid "Worksheet 2024-12-02"
+#~ msgstr "Worksheet 2024-12-02"
+
+#, fuzzy
+#~ msgid "Worksheet Template"
+#~ msgstr "Active Worksheet Field"
+
+#, fuzzy
+#~ msgid "X-Ray Log PDF"
+#~ msgstr "Registres Rayon-X"
+
+#, fuzzy
+#~ msgid "X-Ray Log Report"
+#~ msgstr "Registre Métal pour %s"
+
+#, fuzzy
+#~ msgid "X-Ray Validation"
+#~ msgstr "Lignes Rayon-X"
+
+#~ msgid "x_worksheet_20250203_id"
+#~ msgstr "x_worksheet_20250203_id"
+
+#~ msgid "x_worksheet_20250303_id"
+#~ msgstr "x_worksheet_20250203_id"
+
+#, fuzzy
+#~ msgid "x_worksheet_large_20251126_id"
+#~ msgstr "x_worksheet_20250203_id"
 
 #, python-format
 #~ msgid "HPP Logs for %s"
