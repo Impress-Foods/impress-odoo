@@ -98,12 +98,14 @@
                                         string="Demand Qty"
                                     />
                                     <field name="product_uom_id" />
-                                    <field
+                                                                         <field
                                         name="anchor_product_qty"
                                         string="Required Component Qty"
+                                        sum="Required Component Qty"
                                         optional="show"
+                                    />                                    <field
+                                        name="component_uom_id"
                                     />
-                                    <field name="component_uom_id" />
                                     <field name="bom_id" optional="hide" />
                                 </tree>
                             </field>
