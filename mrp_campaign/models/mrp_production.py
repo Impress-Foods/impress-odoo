@@ -26,7 +26,13 @@ class ProductionOrder(models.Model):
     campaign_color = fields.Char(
         related="campaign_id.campaign_color",
     )
-    campaign_sequence = fields.Integer(help="Sequence of this MO within its campaign.")
+    campaign_sequence = fields.Integer(
+        string="Campaign Sequence",
+        related="campaign_id.sequence",
+        store=True,
+        readonly=True,
+        help="Sequence of the parent campaign",
+    )
 
     def write(self, vals):
         res = super().write(vals)

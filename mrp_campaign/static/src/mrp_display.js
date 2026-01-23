@@ -53,14 +53,21 @@ patch(MrpDisplay.prototype, {
                 return groupMinDates[cid1] - groupMinDates[cid2];
             }
 
-            // Level B: Within the same group, sort by State Priority
+            // Level B: Within the same group, sort by Campaign Sequence (descending)
+            const seq1 = record1.data.campaign_sequence ?? 0;
+            const seq2 = record2.data.campaign_sequence ?? 0;
+            if (seq1 !== seq2) {
+                return seq2 - seq1; // Descending order
+            }
+
+            // Level C: Within the same group, sort by State Priority
             const v1 = statesComparativeValues[record1.data.state] ?? 99;
             const v2 = statesComparativeValues[record2.data.state] ?? 99;
             if (v1 !== v2) {
                 return v1 - v2;
             }
 
-            // Level C: Within the same state, sort by individual Start Date
+            // Level D: Within the same state, sort by individual Start Date
             const d1 = record1.data.date_start
                 ? new Date(record1.data.date_start).getTime()
                 : 0;

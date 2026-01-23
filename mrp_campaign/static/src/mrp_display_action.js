@@ -7,8 +7,10 @@ patch(MrpDisplayAction.prototype, {
         const fieldsStructure = super.fieldsStructure;
         fieldsStructure["mrp.production"].push("campaign_color");
         fieldsStructure["mrp.production"].push("campaign_id");
+        fieldsStructure["mrp.production"].push("campaign_sequence");
         fieldsStructure["mrp.workorder"].push("campaign_color");
         fieldsStructure["mrp.workorder"].push("campaign_id");
+        fieldsStructure["mrp.workorder"].push("campaign_sequence");
         fieldsStructure["mrp.workorder"].push("production_date");
 
         return fieldsStructure;

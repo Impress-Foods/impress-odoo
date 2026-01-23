@@ -11,7 +11,6 @@
         "security/mrp_campaign_rules.xml",
         "reports/mrp_campaign_report.xml",
         "views/product_views.xml",
-        "views/procurement_groups_views.xml",
         "views/mrp_campaign_views.xml",
         "views/mrp_production_views.xml",
         "data/mrp_campaign_sequence.xml",
