@@ -134,7 +134,9 @@ class MrpCampaign(models.Model):
                     lambda mo: mo.state == "draft"
                 )
                 if end_mos_to_confirm:
-                    end_mos_to_confirm.action_confirm()
+                    end_mos_to_confirm.with_context(
+                        ignore_campaign_procurement=True
+                    ).action_confirm()
 
                 anchor_product = campaign.product_id
                 # 2. Calculate total anchor demand from confirmed 'end' MOs' raw moves
@@ -241,9 +243,6 @@ class MrpCampaign(models.Model):
                 {"state": "draft", "bulk_created": False, "end_created": False}
             )
 
-            campaign.line_ids.filtered(
-                lambda line, campaign=campaign: line.product_id == campaign.product_id
-            ).unlink()
         return True
 
     def action_view_mos(self):
@@ -332,11 +331,6 @@ class MrpCampaign(models.Model):
                 or campaign.date_planned_start > min_demand_date_deadline
             ):
                 campaign.date_planned_start = min_demand_date_deadline
-
-            # The bucket_start_date should always be the start of the bucket, which
-            # is anchored by the date_planned_start.
-            if campaign.bucket_start_date != campaign.date_planned_start:
-                campaign.bucket_start_date = campaign.date_planned_start
 
     @api.model
     def _get_name_seq(self):
@@ -479,6 +473,17 @@ class MrpCampaign(models.Model):
             )
 
             for procurement, _rule in grouped_procurements:
+                # If the ignore_campaign_procurement flag is set in context,
+                # this procurement originated from action_confirm_bulk
+                #  and should be ignored
+                # by our custom campaign logic.
+                if self.env.context.get("ignore_campaign_procurement"):
+                    _logger.info(
+                        "Ignoring campaign procurement for %s.",
+                        procurement.product_id.display_name,
+                    )
+                    continue
+
                 _logger.info(
                     "Campaign route found for product %s through anchor %s.",
                     procurement.product_id.display_name,
@@ -503,6 +508,10 @@ class MrpCampaign(models.Model):
                     # The demand date is the latest deadline
                     # of all moves in the procurement
                     demand_date = max(demand_moves.mapped("date_deadline")).date()
+
+                # If no demand date could be determined, default to today's date.
+                if not demand_date:
+                    demand_date = fields.Date.context_today(self)
 
                 # Determine the BoM
                 bom = procurement.values.get("bom_id")
