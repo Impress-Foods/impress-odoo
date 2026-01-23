@@ -9,6 +9,8 @@ patch(MrpDisplayAction.prototype, {
         fieldsStructure["mrp.production"].push("campaign_id");
         fieldsStructure["mrp.workorder"].push("campaign_color");
         fieldsStructure["mrp.workorder"].push("campaign_id");
+        fieldsStructure["mrp.workorder"].push("production_date");
+
         return fieldsStructure;
     },
 });
