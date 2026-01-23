@@ -7,7 +7,19 @@
         <field name="arch" type="xml">
             <tree>
                 <header>
-                    <button name="action_confirm_end" type="object" string="Confirm" />
+                    <button
+                        name="action_confirm_end"
+                        type="object"
+                        string="Confirm End Products"
+                        class="oe_highlight"
+                    />
+                    <button
+                        name="action_confirm_bulk"
+                        type="object"
+                        string="Confirm Bulk Products"
+                        class="oe_highlight"
+                    />
+                    <button name="action_reset" type="object" string="Reset" class="" />
                 </header>
                 <field name="name" />
                 <field name="product_id" />
@@ -98,14 +110,13 @@
                                         string="Demand Qty"
                                     />
                                     <field name="product_uom_id" />
-                                                                         <field
+                                    <field
                                         name="anchor_product_qty"
                                         string="Required Component Qty"
                                         sum="Required Component Qty"
                                         optional="show"
-                                    />                                    <field
-                                        name="component_uom_id"
                                     />
+                                    <field name="component_uom_id" />
                                     <field name="bom_id" optional="hide" />
                                 </tree>
                             </field>

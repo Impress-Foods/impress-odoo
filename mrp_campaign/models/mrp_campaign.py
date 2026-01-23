@@ -106,96 +106,107 @@ class MrpCampaign(models.Model):
             rec.bucket_end_date = rec.bucket_start_date + delta
 
     def action_confirm_end(self):
-        self.ensure_one()
-        if not self.line_ids:
-            raise UserError(_("Cannot confirm a campaign without any demand lines."))
+        for campaign in self:
+            if not campaign.end_created:
+                if not campaign.line_ids:
+                    raise UserError(
+                        _(
+                            "Cannot confirm campaign %s without any demand.",
+                            campaign.name,
+                        )
+                    )
 
-        # Part 2: Create MOs for the finished goods on each line
-        mos = self.env["mrp.production"]
-        for line in self.line_ids:
-            mos += line._create_finished_product_mo(confirm=False)
+                # Part 2: Create MOs for the finished goods on each line
+                mos = self.env["mrp.production"]
+                for line in campaign.line_ids:
+                    mos += line._create_finished_product_mo(confirm=False)
 
-        # MOs are created in draft, awaiting user adjustment.
-        # Part 3: Update campaign state
-        self.write({"state": "review"})
-        self.end_created = True
+                # MOs are created in draft, awaiting user adjustment.
+                # Part 3: Update campaign state
+                campaign.write({"state": "review", "end_created": True})
         return True
 
     def action_confirm_bulk(self):
-        self.ensure_one()
-        # 1. Confirm 'end' MOs that are still in draft state
-        end_mos_to_confirm = self.production_ids.filtered(
-            lambda mo: mo.state == "draft"
-        )
-        if end_mos_to_confirm:
-            end_mos_to_confirm.action_confirm()
+        for campaign in self:
+            if not campaign.bulk_created:
+                # 1. Confirm 'end' MOs that are still in draft state
+                end_mos_to_confirm = campaign.production_ids.filtered(
+                    lambda mo: mo.state == "draft"
+                )
+                if end_mos_to_confirm:
+                    end_mos_to_confirm.action_confirm()
 
-        anchor_product = self.product_id
-        # 2. Calculate total anchor demand from confirmed 'end' MOs' raw moves
-        # The self.production_ids will now contain confirmed MOs
-        total_anchor_qty_needed = sum(self.line_ids.mapped("anchor_product_qty"))
+                anchor_product = campaign.product_id
+                # 2. Calculate total anchor demand from confirmed 'end' MOs' raw moves
+                # The campaign.production_ids will now contain confirmed MOs
+                total_anchor_qty_needed = sum(
+                    campaign.line_ids.mapped("anchor_product_qty")
+                )
 
-        if total_anchor_qty_needed > 0:
-            # Find BoM for anchor product, needed to create MO
-            anchor_bom = self.env["mrp.bom"]._bom_find(products=anchor_product)[
-                anchor_product
-            ]
-            if not anchor_bom:
-                raise UserError(
-                    _(
-                        "No Bill of Materials found for the anchor product %s.",
-                        anchor_product.display_name,
+                if total_anchor_qty_needed > 0:
+                    # Find BoM for anchor product, needed to create MO
+                    anchor_bom = self.env["mrp.bom"]._bom_find(products=anchor_product)[
+                        anchor_product
+                    ]
+                    if not anchor_bom:
+                        raise UserError(
+                            _(
+                                "No Bill of Materials found for the anchor product %s.",
+                                anchor_product.display_name,
+                            )
+                        )
+
+                    batch_size = (
+                        campaign.batch_size
+                        if campaign.override_batch_size and campaign.batch_size > 0
+                        else campaign.product_id.mrp_max_batch_size
                     )
-                )
+                    remaining_qty = total_anchor_qty_needed
+                    mos_to_create = []
+                    while remaining_qty > 1e-6:
+                        qty_to_produce = min(batch_size, remaining_qty)
+                        remaining_qty -= qty_to_produce
 
-            batch_size = (
-                self.batch_size
-                if self.override_batch_size and self.batch_size > 0
-                else self.product_id.mrp_max_batch_size
-            )
-            remaining_qty = total_anchor_qty_needed
-            mos_to_create = []
-            while remaining_qty > 1e-6:
-                qty_to_produce = min(batch_size, remaining_qty)
-                remaining_qty -= qty_to_produce
+                        mos_to_create.append(
+                            {
+                                "product_id": anchor_product.id,
+                                "product_uom_id": anchor_product.uom_id.id,
+                                "product_qty": qty_to_produce,
+                                "campaign_id": campaign.id,
+                                "origin": campaign.name,
+                                "date_start": datetime.combine(
+                                    campaign.date_planned_start, time(5, 0)
+                                ),
+                                "date_deadline": datetime.combine(
+                                    campaign.date_planned_start, time(12, 0)
+                                ),
+                                "bom_id": anchor_bom.id,
+                            }
+                        )
 
-                mos_to_create.append(
-                    {
-                        "product_id": anchor_product.id,
-                        "product_uom_id": anchor_product.uom_id.id,
-                        "product_qty": qty_to_produce,
-                        "campaign_id": self.id,
-                        "origin": self.name,
-                        "date_start": datetime.combine(
-                            self.date_planned_start, time.min
-                        ),
-                        "date_deadline": datetime.combine(
-                            self.date_planned_start, time(12, 0)
-                        ),
-                        "bom_id": anchor_bom.id,
-                    }
-                )
+                    anchor_mos = self.env["mrp.production"]
+                    if mos_to_create:
+                        anchor_mos = self.env["mrp.production"].create(mos_to_create)
+                        # 3. Create and confirm 'bulk' MOs
+                        anchor_mos.action_confirm()
 
-            anchor_mos = self.env["mrp.production"]
-            if mos_to_create:
-                anchor_mos = self.env["mrp.production"].create(mos_to_create)
-                # 3. Create and confirm 'bulk' MOs
-                anchor_mos.action_confirm()
+                    # 4. Link bulk MO finished moves to end MO raw moves
+                    if anchor_mos and total_anchor_qty_needed > 0:
+                        provider_moves = anchor_mos.mapped("move_finished_ids")
+                        consumer_moves = campaign.production_ids.mapped(
+                            "move_raw_ids"
+                        ).filtered(
+                            lambda move, anchor_product=anchor_product: move.product_id
+                            == anchor_product
+                        )
 
-            # 4. Link bulk MO finished moves to end MO raw moves
-            if anchor_mos and total_anchor_qty_needed > 0:
-                provider_moves = anchor_mos.mapped("move_finished_ids")
-                consumer_moves = self.production_ids.mapped("move_raw_ids").filtered(
-                    lambda move: move.product_id == anchor_product
-                )
+                        if provider_moves and consumer_moves:
+                            provider_moves.write(
+                                {"move_dest_ids": [(6, 0, consumer_moves.ids)]}
+                            )
 
-                if provider_moves and consumer_moves:
-                    provider_moves.write(
-                        {"move_dest_ids": [(6, 0, consumer_moves.ids)]}
-                    )
-
-        # 5. Update campaign state
-        self.write({"state": "confirmed", "bulk_created": True})
+                # 5. Update campaign state
+                campaign.write({"state": "confirmed", "bulk_created": True})
         return True
 
     def action_reset(self):
@@ -226,14 +237,13 @@ class MrpCampaign(models.Model):
             if provider_moves:
                 provider_moves.unlink()
 
-            campaign.write({"state": "draft"})
+            campaign.write(
+                {"state": "draft", "bulk_created": False, "end_created": False}
+            )
 
             campaign.line_ids.filtered(
                 lambda line, campaign=campaign: line.product_id == campaign.product_id
             ).unlink()
-
-            campaign.bulk_created = False
-            campaign.end_created = False
         return True
 
     def action_view_mos(self):
