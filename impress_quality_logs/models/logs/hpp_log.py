@@ -12,6 +12,14 @@ class HppLog(models.Model):
     _description = "Hpp_log"
     _inherit = "log.mixin"
 
+    _sql_constraints = [
+        (
+            "production_id_uniq",
+            "unique(production_id)",
+            "Only one HPP log is allowed per Production Order!",
+        )
+    ]
+
     log_line_ids = fields.One2many(
         comodel_name="hpp.log.line", inverse_name="hpp_log_id"
     )

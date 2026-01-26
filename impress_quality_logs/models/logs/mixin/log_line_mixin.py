@@ -1,7 +1,6 @@
 import logging
 
-from odoo import _, api, fields, models
-from odoo.exceptions import UserError, ValidationError
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -40,7 +39,6 @@ class LogLineMixin(models.AbstractModel):
     active_worksheet_field = fields.Char(
         compute="_compute_active_worksheet_field", store=True
     )
-    is_locked = fields.Boolean("Locked")
 
     def _get_worksheet_fields(self):
         # The current model name needs to be fetched dynamically,
@@ -90,29 +88,6 @@ class LogLineMixin(models.AbstractModel):
         record = super().create(vals_list)
         return record
 
-    def _check_lock(self, vals):
-        if "is_locked" in vals and not vals["is_locked"]:
-            return True
-        if self.is_locked:
-            raise ValidationError(_("This record is locked and cannot be modified."))
-
-    def write(self, vals):
-        return super().write(vals)
-
-    def action_lock(self):
-        if self.is_locked:
-            raise UserError(_("This record is already locked."))
-        else:
-            self.is_locked = True
-
-    def action_unlock(self):
-        if self.is_locked:
-            self.is_locked = False
-        else:
-            raise UserError(_("This record is not locked."))
-
     def sign_log_line(self):
         for rec in self:
             rec.write({"signature": rec.env.user.sign_initials})
-
-    # TODO: Refactor action_view_log into log.line.mixin to reduce maintenance
