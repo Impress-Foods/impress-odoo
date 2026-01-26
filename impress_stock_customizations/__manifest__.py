@@ -16,5 +16,6 @@
         "reports/online_sale_labels.xml",
         "views/stock_lot_views.xml",
         "reports/stock_picking_document_views.xml",
+        "reports/online_sale_labels.xml",
     ],
 }
