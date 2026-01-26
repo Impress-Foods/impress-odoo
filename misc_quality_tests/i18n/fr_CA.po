@@ -6,176 +6,179 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2026-01-26 14:50+0000\n"
+"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
+"impress-odoo/misc_quality_tests/fr_CA/>\n"
+"Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Action Requise"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__activity_ids
 msgid "Activities"
-msgstr ""
+msgstr "Activités"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "Décoration d'exception d'activité"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "État d'activité"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__activity_type_icon
 msgid "Activity Type Icon"
-msgstr ""
+msgstr "Icône de type d'activité"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__affected_product_count
 msgid "Affected Product Count"
-msgstr ""
+msgstr "Nombre de produits affectés"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__affected_product_ids
 msgid "Affected Product(s)"
-msgstr ""
+msgstr "Produit(s) affecté(s)"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Nombre de pièces jointes"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test_tag__color
 msgid "Color Index"
-msgstr ""
+msgstr "Index de couleur"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__create_uid
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test_tag__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Créé par"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__create_date
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test_tag__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Créé le"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__date
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__description
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__display_name
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test_tag__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom d'affichage"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Abonnés"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Abonnés (Contacts)"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,help:misc_quality_tests.field_misc_test__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "Icône Font awesome ex: fa-tasks"
 
 #. module: misc_quality_tests
 #: model_terms:ir.ui.view,arch_db:misc_quality_tests.view_misc_test_search
 #: model_terms:ir.ui.view,arch_db:misc_quality_tests.view_misc_test_tag_search
 msgid "Group By"
-msgstr ""
+msgstr "Grouper par"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "À un message"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__id
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test_tag__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__activity_exception_icon
 msgid "Icon"
-msgstr ""
+msgstr "Icône"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,help:misc_quality_tests.field_misc_test__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "Icône pour indiquer une activité d'exception."
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,help:misc_quality_tests.field_misc_test__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Si coché, une nouveau message a besoin de votre attention."
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,help:misc_quality_tests.field_misc_test__message_has_error
 #: model:ir.model.fields,help:misc_quality_tests.field_misc_test__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Si coché, certains message ont une erreur de livraison."
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Est abonné"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__write_uid
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test_tag__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Mis à jour par"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__write_date
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test_tag__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Mis à jour le"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__lot_id
 msgid "Lot"
-msgstr ""
+msgstr "Lot"
 
 #. module: misc_quality_tests
 #: model:ir.model,name:misc_quality_tests.model_stock_lot
 msgid "Lot/Serial"
-msgstr ""
+msgstr "Lot/Numéro de série"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Erreur de livraison du message"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Messages"
 
 #. module: misc_quality_tests
 #: model:ir.actions.act_window,name:misc_quality_tests.action_misc_test
@@ -184,88 +187,88 @@ msgstr ""
 #: model:ir.ui.menu,name:misc_quality_tests.menu_misc_test
 #: model_terms:ir.ui.view,arch_db:misc_quality_tests.view_misc_test_form
 msgid "Misc Test"
-msgstr ""
+msgstr "Test"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_product_product__misc_test_count
 #: model:ir.model.fields,field_description:misc_quality_tests.field_product_template__misc_test_count
 #: model:ir.model.fields,field_description:misc_quality_tests.field_stock_lot__misc_test_count
 msgid "Misc Test Count"
-msgstr ""
+msgstr "Nombre de tests"
 
 #. module: misc_quality_tests
 #: model:ir.actions.act_window,name:misc_quality_tests.action_misc_test_tag
 #: model:ir.model,name:misc_quality_tests.model_misc_test_tag
 msgid "Misc Test Tag"
-msgstr ""
+msgstr "Tag de test"
 
 #. module: misc_quality_tests
 #: model:ir.ui.menu,name:misc_quality_tests.menu_misc_test_tags
 msgid "Misc Test Tags"
-msgstr ""
+msgstr "Tags de test"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_product_product__misc_test_target_ids
 #: model:ir.model.fields,field_description:misc_quality_tests.field_product_template__misc_test_target_ids
 msgid "Misc Test Target"
-msgstr ""
+msgstr "Cible du test"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_stock_lot__misc_test_ids
 msgid "Miscellaneous Tests"
-msgstr ""
+msgstr "Tests"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr ""
+msgstr "Date limite de l'activité"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test_tag__name
 #: model_terms:ir.ui.view,arch_db:misc_quality_tests.view_misc_test_tag_search
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr ""
+msgstr "Date limite de la prochaine activité"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__activity_summary
 msgid "Next Activity Summary"
-msgstr ""
+msgstr "Résumé de la prochaine activité"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__activity_type_id
 msgid "Next Activity Type"
-msgstr ""
+msgstr "Type de la prochaine activité"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Nombre d'actions"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Nombre d'erreurs"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,help:misc_quality_tests.field_misc_test__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Nombre de messages nécessitant une action"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,help:misc_quality_tests.field_misc_test__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Nombre de messages avec une erreur de livraison"
 
 #. module: misc_quality_tests
 #: model:ir.model,name:misc_quality_tests.model_product_template
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__product_id
 msgid "Product"
-msgstr ""
+msgstr "Produit"
 
 #. module: misc_quality_tests
 #. odoo-python
@@ -273,28 +276,28 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:misc_quality_tests.view_misc_test_form
 #, python-format
 msgid "Products"
-msgstr ""
+msgstr "Produits"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__activity_user_id
 msgid "Responsible User"
-msgstr ""
+msgstr "Utilisateur responsable"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "Erreur de livraison SMS"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Séquence"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_product_product__shelf_life_change
 #: model:ir.model.fields,field_description:misc_quality_tests.field_product_template__shelf_life_change
 msgid "Shelf Life Change"
-msgstr ""
+msgstr "Changement de durée de vie"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,help:misc_quality_tests.field_misc_test__activity_state
@@ -304,16 +307,20 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"Statut basé sur les activités\n"
+"En retard: Dale limite déjà passée\n"
+"Aujourd'hui: Date limite aujourd'hui\n"
+"Planifié: Activités futures."
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__tag_ids
 msgid "Tag"
-msgstr ""
+msgstr "Tag"
 
 #. module: misc_quality_tests
 #: model:ir.model,name:misc_quality_tests.model_misc_test
 msgid "Test"
-msgstr ""
+msgstr "Test"
 
 #. module: misc_quality_tests
 #. odoo-python
@@ -323,34 +330,35 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:misc_quality_tests.view_stock_lot_form
 #, python-format
 msgid "Tests"
-msgstr ""
+msgstr "Tests"
 
 #. module: misc_quality_tests
 #: model:ir.model.constraint,message:misc_quality_tests.constraint_misc_test_tag_tag_name_unique
 msgid "The tag name must be unique."
-msgstr ""
+msgstr "Le nom du tag doit être unique."
 
 #. module: misc_quality_tests
 #: model_terms:ir.actions.act_window,help:misc_quality_tests.action_misc_test_tag
 msgid "There is no examples click here to add new Misc Test Tag."
 msgstr ""
+"Il n'existe pas d'exemples cliquez ici pour ajouter un nouveau Tag de test."
 
 #. module: misc_quality_tests
 #: model_terms:ir.actions.act_window,help:misc_quality_tests.action_misc_test
 msgid "There is no examples click here to add new Misc Test."
-msgstr ""
+msgstr "Il n'existe pas d'exemple cliquez ici pour ajouter un nouveau test."
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,help:misc_quality_tests.field_misc_test__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Type d'activité d'exception sur l'enregistrement."
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Messages du site web"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,help:misc_quality_tests.field_misc_test__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Historique de communication du site web"
