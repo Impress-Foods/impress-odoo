@@ -82,6 +82,28 @@ msgid "<strong>Shelf life remaining</strong>"
 msgstr ""
 
 #. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__alert_date
+msgid "Alert Date"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__use_date
+msgid "Best before Date"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.model.fields,help:impress_stock_customizations.field_stock_lot__alert_date
+msgid ""
+"Date to determine the expired lots and serial numbers using the filter "
+"\"Expiration Alerts\"."
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__expiration_date
+msgid "Expiration Date"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__life_remaining
 msgid "Life Remaining"
 msgstr ""
@@ -117,8 +139,34 @@ msgid "Qty"
 msgstr ""
 
 #. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__removal_date
+msgid "Removal Date"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_delivery_document_add_shelf_life
 msgid "Shelf life remaining"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.model.fields,help:impress_stock_customizations.field_stock_lot__expiration_date
+msgid ""
+"This is the date on which the goods with this Serial Number may become "
+"dangerous and must not be consumed."
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.model.fields,help:impress_stock_customizations.field_stock_lot__removal_date
+msgid ""
+"This is the date on which the goods with this Serial Number should be "
+"removed from the stock. This date will be used in FEFO removal strategy."
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.model.fields,help:impress_stock_customizations.field_stock_lot__use_date
+msgid ""
+"This is the date on which the goods with this Serial Number start "
+"deteriorating, without being dangerous yet."
 msgstr ""
 
 #. module: impress_stock_customizations
