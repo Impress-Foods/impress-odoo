@@ -10,6 +10,11 @@ class StockLot(models.Model):
 
     life_remaining = fields.Integer(compute="_compute_life_remaining")
 
+    expiration_date = fields.Datetime(tracking=True)
+    use_date = fields.Datetime(tracking=True)
+    removal_date = fields.Datetime(tracking=True)
+    alert_date = fields.Datetime(tracking=True)
+
     @api.depends("expiration_date")
     def _compute_life_remaining(self):
         today = fields.Date.today()
