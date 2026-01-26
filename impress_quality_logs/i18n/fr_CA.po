@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-04 17:01+0000\n"
-"PO-Revision-Date: 2026-01-22 14:38+0000\n"
+"PO-Revision-Date: 2026-01-26 16:16+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
 "impress-odoo/impress_quality_logs/fr_CA/>\n"
@@ -24,30 +24,40 @@ msgid ""
 "'Coding Log - %s' % (object.name if object and object.exists() else "
 "'DELETED')"
 msgstr ""
+"'Registre Codage - %s' % (object.name if object and object.exists() else "
+"'DELETED')"
 
 #. module: impress_quality_logs
 #: model:ir.actions.report,print_report_name:impress_quality_logs.action_report_hpp_log
 msgid ""
 "'HPP Log - %s' % (object.name if object and object.exists() else 'DELETED')"
 msgstr ""
+"'Registre HPP - %s' % (object.name if object and object.exists() else "
+"'DELETED')"
 
 #. module: impress_quality_logs
 #: model:ir.actions.report,print_report_name:impress_quality_logs.action_report_loma_log
 msgid ""
 "'Loma Log - %s' % (object.name if object and object.exists() else 'DELETED')"
 msgstr ""
+"'Registre Loma - %s' % (object.name if object and object.exists() else "
+"'DELETED')"
 
 #. module: impress_quality_logs
 #: model:ir.actions.report,print_report_name:impress_quality_logs.action_report_metal_log
 msgid ""
 "'Metal Log - %s' % (object.name if object and object.exists() else 'DELETED')"
 msgstr ""
+"'Registre Métal - %s' % (object.name if object and object.exists() else "
+"'DELETED')"
 
 #. module: impress_quality_logs
 #: model:ir.actions.report,print_report_name:impress_quality_logs.action_report_xray_log
 msgid ""
 "'X-Ray Log - %s' % (object.name if object and object.exists() else 'DELETED')"
 msgstr ""
+"'Registre Rayon-X - %s' % (object.name if object and object.exists() else "
+"'DELETED')"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_line_form
@@ -75,6 +85,8 @@ msgid ""
 "<br/>\n"
 "                                    <strong>Date:</strong>"
 msgstr ""
+"<br/>\n"
+"                                    <strong>Date:</strong>"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_quality_log_main
@@ -82,6 +94,8 @@ msgid ""
 "<br/>\n"
 "                                    <strong>Lot:</strong>"
 msgstr ""
+"<br/>\n"
+"                                    <strong>Lot:</strong>"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_quality_log_main
@@ -89,6 +103,8 @@ msgid ""
 "<br/>\n"
 "                                    <strong>Product:</strong>"
 msgstr ""
+"<br/>\n"
+"                                    <strong>Produit:</strong>"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_coding_log_view
@@ -96,6 +112,8 @@ msgid ""
 "<br/>\n"
 "                    <strong>\"Keep Cold\" check:</strong>"
 msgstr ""
+"<br/>\n"
+"                    <strong>Vérification \"Garder Froid\":</strong>"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_coding_log_view
@@ -103,6 +121,8 @@ msgid ""
 "<br/>\n"
 "                    <strong>Signature: </strong>"
 msgstr ""
+"<br/>\n"
+"                    <strong>Signature: </strong>"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_coding_log_view
@@ -110,6 +130,8 @@ msgid ""
 "<br/>\n"
 "                    <strong>Sleeve Check:</strong>"
 msgstr ""
+"<br/>\n"
+"                    <strong>Vérification Étiquette:</strong>"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_coding_log_view
@@ -117,6 +139,8 @@ msgid ""
 "<br/>\n"
 "                    <strong>Subunit check</strong>"
 msgstr ""
+"<br/>\n"
+"                    <strong>Vérification sous-unité</strong>"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_coding_log_view
@@ -124,6 +148,8 @@ msgid ""
 "<br/>\n"
 "                    <strong>Unit Check:</strong>"
 msgstr ""
+"<br/>\n"
+"                    <strong>Vérification unité:</strong>"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_coding_log_view
@@ -131,6 +157,8 @@ msgid ""
 "<br/>\n"
 "                    <strong>Unit Code:</strong>"
 msgstr ""
+"<br/>\n"
+"                    <strong>Code unité:</strong>"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_hpp_log_view
@@ -262,6 +290,9 @@ msgid ""
 "                    <br/>\n"
 "                    <strong>Case Code:</strong>"
 msgstr ""
+"<span>jours</span>\n"
+"                    <br/>\n"
+"                    <strong>Code caisse:</strong>"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_hpp_log_view
@@ -271,6 +302,8 @@ msgid ""
 "<strong>Monthly Verification</strong>\n"
 "                <br/>"
 msgstr ""
+"<strong>Vérification mensuelle</strong>\n"
+"                <br/>"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_quality_log_main
@@ -302,6 +335,8 @@ msgid ""
 "<strong>Weekly Verification</strong>\n"
 "                                    <br/>"
 msgstr ""
+"<strong>Vérification hebdomadaire</strong>\n"
+"                                    <br/>"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__active_worksheet_field
@@ -574,7 +609,7 @@ msgstr "HPP"
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_hpp_log_view
 msgid "HPP Cycles"
-msgstr ""
+msgstr "Cycles HPP"
 
 #. module: impress_quality_logs
 #: model:ir.ui.menu,name:impress_quality_logs.hpp_log_menu
@@ -701,7 +736,7 @@ msgstr "Registres LOMA"
 #. module: impress_quality_logs
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__worksheet_template__xray_indicator_size__large
 msgid "Large"
-msgstr ""
+msgstr "Gros"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__last_check_for_product
@@ -1050,7 +1085,7 @@ msgstr "Conforme"
 #. module: impress_quality_logs
 #: model:ir.model.constraint,message:impress_quality_logs.constraint_hpp_log_production_id_uniq
 msgid "Only one HPP log is allowed per Production Order!"
-msgstr ""
+msgstr "Un seul registre HPP est permis par ordre de production!"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__operator_signature
@@ -1148,9 +1183,8 @@ msgstr "Notes de contrôle qualité"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_hpp_log_view
-#, fuzzy
 msgid "Quantity"
-msgstr "Quantité HPP"
+msgstr "Quantité"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__qty_cases
@@ -1274,7 +1308,7 @@ msgstr "Vérification étiquette"
 #. module: impress_quality_logs
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__worksheet_template__xray_indicator_size__small
 msgid "Small"
-msgstr ""
+msgstr "Petit"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__stainless
@@ -1506,7 +1540,7 @@ msgstr "Ligne de registre Rayon-X"
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_worksheet_template__xray_indicator_size
 msgid "Xray Indicator Size"
-msgstr ""
+msgstr "Taille des indicateurs rayon-x"
 
 #. module: impress_quality_logs
 #: model:ir.model,name:impress_quality_logs.model_log_mixin
