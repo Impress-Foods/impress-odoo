@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-14 15:43+0000\n"
-"PO-Revision-Date: 2026-01-26 16:01+0000\n"
+"PO-Revision-Date: 2026-01-26 16:29+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
 "impress-odoo/impress_maintenance/fr_CA/>\n"
@@ -58,7 +58,7 @@ msgstr "Préventive actuelle"
 #. module: impress_maintenance
 #: model:res.groups,comment:impress_maintenance.group_maintenance_administrator
 msgid "Deprecated, use maintenance.group_equipment_manager"
-msgstr ""
+msgstr "Désuet, utiliser maintenance.group_equipment_manager"
 
 #. module: impress_maintenance
 #: model:ir.model,name:impress_maintenance.model_hr_employee
@@ -85,10 +85,8 @@ msgstr "Invisible"
 
 #. module: impress_maintenance
 #: model:res.groups,name:impress_maintenance.group_maintenance_administrator
-#, fuzzy
-#| msgid "Maintenance / Administrator"
 msgid "Maintenance / Administrator (Deprecated)"
-msgstr "Maintenance / Administrateur"
+msgstr "Maintenance / Administrateur (Désuet)"
 
 #. module: impress_maintenance
 #: model:res.groups,name:impress_maintenance.group_maintenance_technician
