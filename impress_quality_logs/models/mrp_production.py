@@ -24,9 +24,8 @@ class MrpProduction(models.Model):
     @api.depends("hpp_log_ids", "hpp_log_ids.qty_cases")
     def _compute_hpp_qty_cases(self):
         for record in self:
-            if len(record.hpp_log_ids) != 0:
+            if record.hpp_log_ids:
                 record.hpp_qty_cases = record.hpp_log_ids[0].qty_cases
-                _logger.warning(record.hpp_qty_cases == record.hpp_log_ids[0].qty_cases)
             else:
                 record.hpp_qty_cases = 0
 
@@ -129,7 +128,7 @@ class MrpProduction(models.Model):
             "type": "ir.actions.act_window",
         }
 
-        if len(self.coding_log_ids) == 1:
+        if len(self.x_ray_log_ids) == 1:
             action.update(
                 {"view_mode": "form", "res_id": self.x_ray_log_ids.id}  # type: ignore
             )

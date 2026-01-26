@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template
+        id="report_xray_log_view"
+        inherit_id="report_quality_log_main"
+        primary="True"
+    >
+        <xpath expr="//div[@id='lines_block']" position="inside">
+            <h3>X-Ray Validation</h3>
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <t t-set="indicator_sizes" t-value="doc.get_indicator_sizes()" />
+                    <tr>
+                        <th style="text-align:center;">Sequence</th>
+                        <th style="text-align:center;">Start Date</th>
+                        <th style="text-align:center;">Reject Value</th>
+                        <th style="text-align:center;">Stainless <br />(<t
+                                t-out="indicator_sizes[0]"
+                            />)</th>
+                        <th style="text-align:center;">Ceramic <br />(<t
+                                t-out="indicator_sizes[1]"
+                            />)</th>
+                        <th style="text-align:center;">Glass <br />(<t
+                                t-out="indicator_sizes[2]"
+                            />)</th>
+                        <th style="text-align:center;">Ejection</th>
+                        <th style="text-align:center;">Total Quantity</th>
+                        <th style="text-align:center;">Reject Quantity</th>
+                        <th style="text-align:center;">Last check</th>
+                        <th style="text-align:center;">Signature</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="doc.log_line_ids" t-as="line">
+                        <tr>
+                            <td style="text-align:center;">
+                                <span t-field="line.sequence" />
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.start_date" />
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.reject_value" />
+                            </td>
+                            <td style="text-align:center;">
+                                <t
+                                    t-out="line.stainless_detection_value if line.stainless_detection_value else line.stainless_detection_large_value"
+                                />
+                            </td>
+                            <td style="text-align:center;">
+                                <t
+                                    t-out="line.ceramic_detection_value if line.ceramic_detection_value else line.ceramic_detection_large_value"
+                                />
+                            </td>
+                            <td style="text-align:center;">
+                                <t
+                                    t-out="line.glass_detection_value if line.glass_detection_value else line.glass_detection_large_value"
+                                />
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.ejection" />
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.total_qty" />
+                            </td>
+                            <td style="text-align:center;">
+                                <span t-field="line.reject_qty" />
+                            </td>
+                            <td style="text-align:center;">
+                                <t t-if="line.last_check_for_product">
+                                    <span class="fa fa-check-square-o " />
+                                </t>
+                                <t t-else="">
+                                    <span class="fa fa-square-o" />
+                                </t>
+                            </td>
+                            <td style="text-align:center;">
+                                <img
+                                    t-if="line.signature"
+                                    t-att-src="image_data_uri(line.signature)"
+                                    style="max-height: 30px; max-width: 80px;"
+                                    alt="Line Signature"
+                                />
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </xpath>
+        <xpath expr="//div[@id='monthly_signature_block']" position="inside">
+            <div t-if="doc.monthly_signature" class="col-6">
+                <strong>Monthly Verification</strong>
+                <br />
+                <img
+                    t-if="doc.monthly_signature"
+                    t-att-src="image_data_uri(doc.monthly_signature)"
+                    style="max-height: 100px; max-width: 200px;"
+                    alt="Signature"
+                />
+                <br />
+                <span t-field="doc.monthly_signature_date" />
+            </div>
+        </xpath>
+    </template>
+    <template id="report_xray_log">
+        <t t-call="impress_quality_logs.report_xray_log_view" t-lang="user.lang" />
+    </template>
+    <record id="action_report_xray_log" model="ir.actions.report">
+        <field name="name">X-Ray Log PDF</field>
+        <field name="model">x_ray.log</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">impress_quality_logs.report_xray_log</field>
+        <field name="report_file">impress_quality_logs.report_xray_log</field>
+        <field
+            name="print_report_name"
+        >'X-Ray Log - %s' % (object.name if object and object.exists() else 'DELETED')</field>
+        <field name="binding_model_id" ref="model_x_ray_log" />
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

@@ -23,25 +23,6 @@
         <field name="model">hpp.log.line</field>
         <field name="arch" type="xml">
             <form string="Hpp_log_line">
-                <header>
-                    <field name="is_locked" invisible="1" />
-                    <field name="create_date" invisible="1" />
-                    <button
-                        name="action_lock"
-                        type="object"
-                        string="Lock"
-                        class="btn-primary"
-                        invisible="is_locked or not create_date"
-                    />
-                    <button
-                        name="action_unlock"
-                        type="object"
-                        string="Unlock"
-                        class="btn-secondary"
-                        invisible="not is_locked or not create_date"
-                        groups="quality.group_quality_manager"
-                    />
-                </header>
                 <sheet>
                     <field name="hpp_log_id" invisible="1" />
                     <div class="oe_button_box" name="button_box">
@@ -61,34 +42,25 @@
                     <div class="oe_title">
                         <label for="cycle_number" />
                         <h1>
-                            <field
-                                name="cycle_number"
-                                placeholder="000000"
-                                readonly='is_locked'
-                            />
+                            <field name="cycle_number" placeholder="000000" />
 </h1>
 </div>
 <group>
 <group>
-<field name="barrel_1_qty" readonly='is_locked' />
-                            <field name="barrel_2_qty" readonly='is_locked' />
-                            <field name="barrel_3_qty" readonly='is_locked' />
-                            <field name="barrel_4_qty" readonly='is_locked' />
-                            <field name="notes" readonly='is_locked' />
+<field name="barrel_1_qty" />
+                            <field name="barrel_2_qty" />
+                            <field name="barrel_3_qty" />
+                            <field name="barrel_4_qty" />
+                            <field name="notes" />
                         </group>
                         <group>
-                            <field
-                                name="cycle_time"
-                                readonly='is_locked'
-                                widget='radio'
-                            />
-<field name="is_cleaning_cycle" readonly='is_locked' />
-                            <field name="start_date" readonly='is_locked' />
+                            <field name="cycle_time" widget='radio' />
+<field name="is_cleaning_cycle" />
+                            <field name="start_date" />
                             <field
                                 name="signature"
                                 widget="signature"
                                 options="{'size':[0,90]}"
-                                readonly='is_locked'
                             />
 </group>
 </group>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_quality_log_main">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-if="doc.exists()">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h2><span t-out="doc_name" />: <span
+                                    t-field="doc.name"
+                                /></h2>
+                            <div class="row">
+                                <div class="col-6">
+                                    <strong>Production Order:</strong>
+                                    <span t-field="doc.production_id.name" />
+                                    <br />
+                                    <strong>Product:</strong>
+                                    <span t-field="doc.product_id.name" />
+                                    <br />
+                                    <strong>Lot:</strong>
+                                    <span t-field="doc.lot_id.name" />
+                                    <br />
+                                    <strong>Date:</strong>
+                                    <span t-field="doc.date" />
+                                </div>
+                                <div class="col-6" id="extra_info_block" />
+                            </div>
+                            <hr />
+                            <div id="lines_block" />
+                            <hr />
+                            <div class="row" t-if="doc.quality_notes">
+                                <div class="col-6">
+                                    <h3>Notes</h3>
+                                    <span t-field="doc.quality_notes" />
+                                </div>
+                            </div>
+                            <hr t-if="doc.quality_notes" />
+                            <div class="row">
+                                <div
+                                    class="col-6"
+                                    id="weekly_signature_block"
+                                    t-if="doc.signature"
+                                >
+                                    <strong>Weekly Verification</strong>
+                                    <br />
+                                    <img
+                                        t-att-src="image_data_uri(doc.signature)"
+                                        style="max-height: 100px; max-width: 200px;"
+                                        alt="Signature"
+                                    />
+                                    <br />
+                                    <span t-field="doc.weekly_signature_date" />
+                                </div>
+                                <div id="monthly_signature_block" />
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
