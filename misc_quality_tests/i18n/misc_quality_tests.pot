@@ -49,6 +49,11 @@ msgid "Affected Product(s)"
 msgstr ""
 
 #. module: misc_quality_tests
+#: model_terms:ir.ui.view,arch_db:misc_quality_tests.view_misc_test_search
+msgid "Affected Products"
+msgstr ""
+
+#. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__message_attachment_count
 msgid "Attachment Count"
 msgstr ""
@@ -263,6 +268,7 @@ msgstr ""
 #. module: misc_quality_tests
 #: model:ir.model,name:misc_quality_tests.model_product_template
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__product_id
+#: model_terms:ir.ui.view,arch_db:misc_quality_tests.view_misc_test_search
 msgid "Product"
 msgstr ""
 
@@ -273,6 +279,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:misc_quality_tests.view_misc_test_form
 #, python-format
 msgid "Products"
+msgstr ""
+
+#. module: misc_quality_tests
+#: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__rating_ids
+msgid "Ratings"
 msgstr ""
 
 #. module: misc_quality_tests
@@ -287,6 +298,7 @@ msgstr ""
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__sequence
+#: model_terms:ir.ui.view,arch_db:misc_quality_tests.view_misc_test_search
 msgid "Sequence"
 msgstr ""
 
@@ -307,6 +319,7 @@ msgstr ""
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__tag_ids
+#: model_terms:ir.ui.view,arch_db:misc_quality_tests.view_misc_test_search
 msgid "Tag"
 msgstr ""
 
