@@ -110,7 +110,7 @@
             <xpath expr="//*[@name='div_sched_date']" position="after">
                 <div
                     class="col-auto"
-                    name="minimimum_shelf_life"
+                    name="minimum_shelf_life"
                     t-if="o.fields_get().get('x_minimum_shelf_life', False)"
                 >
                     <strong>Minimum shelf life:</strong>
