@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_put_in_pack_form" model="ir.ui.view">
+        <field name="name">stock.put.in.pack.form</field>
+        <field name="model">stock.put.in.pack</field>
+        <field name="inherit_id" ref="stock.stock_put_in_pack_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='package_type_id']" position="attributes">
+                <attribute name="domain">[]</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

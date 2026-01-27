@@ -6,45 +6,46 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-12-08 14:24+0000\n"
+"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
+"impress-odoo/delivery-common/fr_CA/>\n"
+"Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: delivery_common
 #: model_terms:ir.ui.view,arch_db:delivery_common.stock_picking_kanban
 msgid "&amp;nbsp;-&amp;nbsp;"
-msgstr ""
-
+msgstr "&amp;nbsp;-&amp;nbsp;"
 
 #. module: delivery_common
 #: model:ir.actions.report,print_report_name:delivery_common.report_shipping_label
 msgid "'%s' % object.name"
-msgstr ""
+msgstr "'%s' % object.name"
 
 #. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking_type__auto_print_delivery_label
 msgid "Auto Print Delivery Label"
-msgstr ""
+msgstr "Impression étiquette d'expédition"
 
 #. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_delivery_carrier__confirmation_template_id
 msgid "Confirmation Template"
-msgstr ""
-
+msgstr "Modèle de confirmation"
 
 #. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking__delivery_instructions
 msgid "Delivery Instructions"
-msgstr ""
+msgstr "Instructions de livraison"
 
 #. module: delivery_common
 #: model_terms:ir.ui.view,arch_db:delivery_common.delivery_carrier_for_inherit_module_name
 msgid "Emails"
-msgstr ""
-
+msgstr "Courriels"
 
 #. module: delivery_common
 #: model:ir.model.fields,help:delivery_common.field_stock_picking_type__auto_print_delivery_label
@@ -52,57 +53,55 @@ msgid ""
 "If checked, the delivery label will be printed\n"
 "        automatically when the picking is validated."
 msgstr ""
+"Si sélectionné, l'étiquette d'expédition sera automatiquement imprimée "
+"lorsque le transfert sera validé."
 
 #. module: delivery_common
 #: model:ir.model,name:delivery_common.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Type de transfert"
 
 #. module: delivery_common
 #: model_terms:ir.ui.view,arch_db:delivery_common.view_stock_picking_form
 msgid "Print Shipping Label"
-msgstr ""
+msgstr "Imprimer l'étiquette d'expédition"
 
 #. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking__ready_to_ship
 msgid "Ready To Ship"
-msgstr ""
+msgstr "Prêt à envoyer"
 
 #. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_delivery_carrier__send_confirmation_email
 msgid "Send Confirmation Email"
-msgstr ""
+msgstr "Envoyer le courriel de confirmation"
 
 #. module: delivery_common
 #: model:ir.actions.report,name:delivery_common.report_shipping_label
 msgid "Shipping Label"
-msgstr ""
+msgstr "Étiquette d'expédition"
 
 #. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking__shipping_label_attachment_id
 msgid "Shipping Label Attachment"
-msgstr ""
+msgstr "Pièce jointe - Étiquette d'expédition"
 
 #. module: delivery_common
 #: model:ir.model,name:delivery_common.model_delivery_carrier
 msgid "Shipping Methods"
-msgstr ""
-
-
+msgstr "Méthodes d'expédition"
 
 #. module: delivery_common
 #: model:ir.model,name:delivery_common.model_report_delivery_common_report_shipping_label_view
 msgid "Shipping labels (ZPL)"
-msgstr ""
+msgstr "Étiquettes d'expédition (ZPL)"
 
 #. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking__tracking_email_sent
 msgid "Tracking Email Sent"
-msgstr ""
-
-
+msgstr "Courriel de suivi envoyé"
 
 #. module: delivery_common
 #: model:ir.model,name:delivery_common.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Transfert"

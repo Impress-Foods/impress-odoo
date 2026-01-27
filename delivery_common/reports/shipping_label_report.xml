@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="report_shipping_label" model="ir.actions.report">
         <field name="name">Shipping Label</field>
@@ -16,5 +16,4 @@
             <t t-out="doc" />
         </t>
     </template>
-
 </odoo>

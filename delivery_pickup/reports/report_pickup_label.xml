@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="report_pickup_delivery_label" model="ir.actions.report">
         <field name="name">Pickup Label</field>
         <field name="model">stock.picking</field>
@@ -13,10 +12,9 @@
 
     <template id="pickup_delivery_label">
         <t t-set="contact" t-value="docs.partner_id" />
-        <t t-set="packages" t-value="docs.package_ids" />
+        <t t-set="picking_packages" t-value="packages[docs[0].id]" />
 
-
-        <t t-foreach="packages" t-as="package">
+        <t t-foreach="picking_packages" t-as="package">
             <t t-call="delivery_pickup.pickup_delivery_label_sub">
                 <t t-set="total_packages" t-value="package_size" />
                 <t t-set="package_number" t-value="package_index + 1" />

@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <!-- View stock.picking.type form -->
     <record id="view_stock_picking_type_form" model="ir.ui.view">
         <field name="name">view.stock.picking.type.form</field>
@@ -15,5 +14,4 @@
             </xpath>
         </field>
     </record>
-
 </odoo>
