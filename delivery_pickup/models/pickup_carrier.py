@@ -38,7 +38,7 @@ class PickupCarrier(models.Model):
                 {
                     "name": f"{picking.name} Shipping Label",
                     "type": "binary",
-                    "datas": base64.b64encode(report_data),
+                    "datas": base64.b64encode(report_data).decode("utf-8"),
                     "store_fname": f"{picking.name}-ShippingLabel.txt",
                     "res_model": "stock.picking",
                     "res_id": picking.id,

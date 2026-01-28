@@ -1,10 +1,9 @@
 import logging
 
 from odoo import api, fields, models
+from odoo.tools import html2plaintext
 
 from odoo.addons.web.controllers.utils import clean_action  # noqa
-
-from ..tools.tools import text_from_html
 
 _logger = logging.getLogger(__name__)
 
@@ -27,9 +26,9 @@ class StockPicking(models.Model):
             note = ""
             if picking.sale_id:
                 if picking.sale_id.note:
-                    text = text_from_html(picking.sale_id.note)
+                    text = html2plaintext(picking.sale_id.note)
                     # prevent default T&C from showing up
-                    if picking.env.company.terms_type and text.find("http"):
+                    if picking.env.company.terms_type and "http" in text:
                         pass
                     elif text == picking.env.company.invoice_terms:
                         pass
@@ -67,9 +66,10 @@ class StockPicking(models.Model):
                 and record.carrier_id.send_confirmation_email
                 and record.carrier_id.confirmation_template_id
             ):
-                subtype_id = self.env["ir.model.data"]._xmlid_to_res_id(
-                    "mail.mt_comment"
-                )
+                # subtype_id = self.env["ir.model.data"]._xmlid_to_res_id(
+                #     "mail.mt_comment"
+                # )
+                subtype_id = self.env.ref("mail.mt_comment").id
                 record.tracking_email_sent = True
                 delivery_template = record.carrier_id.confirmation_template_id
                 record.with_context(force_send=True).message_post_with_source(
