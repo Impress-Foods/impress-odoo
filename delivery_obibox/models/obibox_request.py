@@ -12,12 +12,12 @@ from werkzeug.urls import url_join
 from odoo.exceptions import ValidationError
 from odoo.orm.environments import Environment as env
 
-from odoo.addons.base.models.res_company import Company
-from odoo.addons.base.models.res_partner import Partner
+from odoo.addons.base.models.res_company import ResCompany
+from odoo.addons.base.models.res_partner import ResPartner
+from odoo.addons.product.models.uom_uom import UomUom
 from odoo.addons.sale.models.sale_order import SaleOrder
-from odoo.addons.stock.models.stock_picking import Picking
-from odoo.addons.stock.models.stock_quant import QuantPackage
-from odoo.addons.uom.models.uom_uom import UoM
+from odoo.addons.stock.models.stock_package import StockPackage
+from odoo.addons.stock.models.stock_picking import StockPicking
 
 from .schema import (
     Box,
@@ -51,7 +51,7 @@ class ObiboxProvider:
         else:
             self.url = "https://integrationapi.xpedigo.com/api/"
 
-    def check_coverage(self, partner: Partner) -> bool:
+    def check_coverage(self, partner: ResPartner) -> bool:
         zip_code = partner.zip
         if not zip_code:
             raise ValidationError(
@@ -65,7 +65,7 @@ class ObiboxProvider:
 
         return True
 
-    def get_rate(self, order: SaleOrder | Picking) -> dict[str, bool | float]:
+    def get_rate(self, order: SaleOrder | StockPicking) -> dict[str, bool | float]:
         data = self._make_rate_request(order)
         res = self._get_rate(data)
 
@@ -76,13 +76,13 @@ class ObiboxProvider:
             "warning_message": False,
         }
 
-    def book_shipment(self, picking: Picking) -> dict[str, Any]:
-        rate_request = self._make_rate_request(picking)
+    def book_shipment(self, StockPicking: StockPicking) -> dict[str, Any]:
+        rate_request = self._make_rate_request(StockPicking)
         rate = self._get_rate(rate_request)
         price = rate.price_in_cad if rate else 0
-        data = self._make_shipment_request(picking)
+        data = self._make_shipment_request(StockPicking)
 
-        label_format = picking.carrier_id.obibox_label_format
+        label_format = StockPicking.carrier_id.obibox_label_format
         params = {"withWaybill": True}
 
         if label_format == "zpl":
@@ -106,8 +106,8 @@ class ObiboxProvider:
         }
         return res
 
-    def cancel_shipment(self, picking: Picking) -> bool:
-        trackings = picking.obibox_tracking_numbers.split(",")
+    def cancel_shipment(self, StockPicking: StockPicking) -> bool:
+        trackings = StockPicking.obibox_tracking_numbers.split(",")
         for tracking in trackings:
             res = self._cancel_shipment(tracking)
             if isinstance(res, str):
@@ -208,27 +208,27 @@ class ObiboxProvider:
             return res["errors"]
         return True
 
-    def _get_postal_code(self, order: SaleOrder | Picking) -> str:
+    def _get_postal_code(self, order: SaleOrder | StockPicking) -> str:
         if isinstance(order, SaleOrder):
             return order.partner_shipping_id.zip or ""
-        elif isinstance(order, Picking):
+        elif isinstance(order, StockPicking):
             return order.partner_id.zip or ""
         else:
             _logger.error("Unsupported order type for postal code extraction.")
             return ""
 
-    def _make_package(self, package: QuantPackage) -> tuple[Box, BoxesDimensions]:
+    def _make_package(self, package: StockPackage) -> tuple[Box, BoxesDimensions]:
         box = Box()
         package_type = package.package_type_id
 
-        feet: UoM = package.env.ref("uom.product_uom_foot")
-        inches: UoM = package.env.ref("uom.product_uom_inch")
-        pounds: UoM = package.env.ref("uom.product_uom_lb")
+        feet: UomUom = package.env.ref("uom.product_uom_foot")
+        inches: UomUom = package.env.ref("uom.product_uom_inch")
+        pounds: UomUom = package.env.ref("uom.product_uom_lb")
 
-        length_uom: UoM = package.env["uom.uom"].search(
+        length_uom: UomUom = package.env["uom.uom"].search(
             [("name", "=", package_type.length_uom_name)]
         )[0]
-        weight_uom: UoM = package.env["uom.uom"].search(
+        weight_uom: UomUom = package.env["uom.uom"].search(
             [("name", "=", package_type.weight_uom_name)]
         )[0]
 
@@ -252,7 +252,7 @@ class ObiboxProvider:
         )
         return box, dimensions
 
-    def _make_address(self, contact: Partner | Company) -> dict[str, str]:
+    def _make_address(self, contact: ResPartner | ResCompany) -> dict[str, str]:
         return {
             "address1": contact.street or "",
             "address2": contact.street2 or "",
@@ -261,12 +261,12 @@ class ObiboxProvider:
             "postal_code": contact.zip or "",
         }
 
-    def _make_shipment_request(self, picking) -> ShippingRequestMulti:
-        from_address = self._make_address(picking.company_id.partner_id)
-        to_address = self._make_address(picking.partner_id)
+    def _make_shipment_request(self, StockPicking) -> ShippingRequestMulti:
+        from_address = self._make_address(StockPicking.company_id.partner_id)
+        to_address = self._make_address(StockPicking.partner_id)
         boxes = []
         dims = []
-        for package in picking.package_ids:
+        for package in StockPicking.package_ids:
             box, dim = self._make_package(package)
             boxes.append(box)
             dims.append(dim)
@@ -274,10 +274,10 @@ class ObiboxProvider:
         total_weight = sum(map(lambda x: x.weight, dims))
 
         pickup_date = self._get_pickup_date(
-            picking.date_done, picking.carrier_id.obibox_delivery_day
+            StockPicking.date_done, StockPicking.carrier_id.obibox_delivery_day
         )
         data = ShippingRequestMulti(
-            order_ref_number=self._get_order_ref(picking),
+            order_ref_number=self._get_order_ref(StockPicking),
             from_address1=from_address["address1"],
             from_address2=from_address["address2"],
             from_city=from_address["city"],
@@ -288,12 +288,12 @@ class ObiboxProvider:
             to_city=to_address["city"],
             to_province=to_address["province"],
             to_postal_code=to_address["postal_code"],
-            client_name=picking.partner_id.name or "",
-            name=picking.partner_id.name or "",
-            phone=picking.partner_id.phone or "",
-            email=picking.partner_id.email or "",
-            instructions=picking.delivery_instructions or "",
-            b2b="1" if picking.partner_id.is_company else "0",
+            client_name=StockPicking.partner_id.name or "",
+            name=StockPicking.partner_id.name or "",
+            phone=StockPicking.partner_id.phone or "",
+            email=StockPicking.partner_id.email or "",
+            instructions=StockPicking.delivery_instructions or "",
+            b2b="1" if StockPicking.partner_id.is_company else "0",
             nb_items=len(boxes),
             delivery_date_time=pickup_date + timedelta(days=1),
             service="NEXTDAY",
@@ -303,11 +303,11 @@ class ObiboxProvider:
         )
         return data
 
-    def _get_order_ref(self, operation: SaleOrder | Picking) -> str:
+    def _get_order_ref(self, operation: SaleOrder | StockPicking) -> str:
         ref = ""
         if isinstance(operation, SaleOrder):
             ref = operation.name
-        elif isinstance(operation, Picking):
+        elif isinstance(operation, StockPicking):
             if operation.origin:
                 ref = operation.origin
             else:
@@ -318,8 +318,8 @@ class ObiboxProvider:
 
         return ref.replace("/", "")
 
-    def _make_rate_request(self, order: SaleOrder | Picking) -> RateRequest:
-        if isinstance(order, Picking):
+    def _make_rate_request(self, order: SaleOrder | StockPicking) -> RateRequest:
+        if isinstance(order, StockPicking):
             boxes = []
             boxes_dimensions = []
             for package in order.package_ids:
@@ -345,8 +345,12 @@ class ObiboxProvider:
         )
         return data
 
-    def _get_pickup_date(self, picking_date: datetime, delivery_day: str) -> datetime:
-        next_delivery_day = picking_date + relativedelta(weekday=days[delivery_day])
+    def _get_pickup_date(
+        self, StockPicking_date: datetime, delivery_day: str
+    ) -> datetime:
+        next_delivery_day = StockPicking_date + relativedelta(
+            weekday=days[delivery_day]
+        )
         today = datetime.today()
         if next_delivery_day.date() == today.date():
             if today.hour >= (15 + 4):  # Add UTC <-> EST offset

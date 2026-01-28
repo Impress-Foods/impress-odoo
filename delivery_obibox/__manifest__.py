@@ -11,7 +11,7 @@
             "pydantic>=2.0.0",
         ]
     },
-    "data": ["views/delivery_carrier_views.xml"],
+    "data": ["views/delivery_carrier_views.xml", "data/delivery_obibox.xml"],
     "application": True,
     "installable": True,
     "auto_install": False,
