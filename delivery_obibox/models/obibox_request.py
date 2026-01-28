@@ -9,8 +9,8 @@ from pydantic import BaseModel
 from requests.auth import HTTPBasicAuth
 from werkzeug.urls import url_join
 
+from odoo import _
 from odoo.exceptions import ValidationError
-from odoo.orm.environments import Environment as env
 
 from odoo.addons.base.models.res_company import ResCompany
 from odoo.addons.base.models.res_partner import ResPartner
@@ -55,7 +55,7 @@ class ObiboxProvider:
         zip_code = partner.zip
         if not zip_code:
             raise ValidationError(
-                env._(f"Could not find zip code for partner {partner.name}")
+                _("Could not find zip code for partner %s", partner.name)
             )
 
         response = self._make_api_request(f"Order/GetServices/{zip_code}", "GET")
@@ -111,7 +111,7 @@ class ObiboxProvider:
         for tracking in trackings:
             res = self._cancel_shipment(tracking)
             if isinstance(res, str):
-                raise ValidationError(env._(f"Could not cancel shipment: {res}"))
+                raise ValidationError(_("Could not cancel shipment: %s", res))
         return True
 
     def _make_api_request(
@@ -199,7 +199,7 @@ class ObiboxProvider:
                 raise KeyError
         except KeyError as e:
             _logger.error(response)
-            raise ValidationError(env._(f"Rate not found: {e}")) from e
+            raise ValidationError(_("Rate not found: %s", e)) from e
         return res
 
     def _cancel_shipment(self, tracking: str) -> bool | str:
@@ -261,23 +261,26 @@ class ObiboxProvider:
             "postal_code": contact.zip or "",
         }
 
-    def _make_shipment_request(self, StockPicking) -> ShippingRequestMulti:
-        from_address = self._make_address(StockPicking.company_id.partner_id)
-        to_address = self._make_address(StockPicking.partner_id)
+    def _make_shipment_request(self, picking) -> ShippingRequestMulti:
+        from_address = self._make_address(picking.company_id.partner_id)
+        to_address = self._make_address(picking.partner_id)
         boxes = []
         dims = []
-        for package in StockPicking.package_ids:
-            box, dim = self._make_package(package)
+        packages = picking.env["stock.package.history"].search(
+            [("picking_ids", "in", [picking.id])]
+        )
+        for package in packages:
+            box, dim = self._make_package(package.package_id)
             boxes.append(box)
             dims.append(dim)
 
         total_weight = sum(map(lambda x: x.weight, dims))
 
         pickup_date = self._get_pickup_date(
-            StockPicking.date_done, StockPicking.carrier_id.obibox_delivery_day
+            picking.date_done, picking.carrier_id.obibox_delivery_day
         )
         data = ShippingRequestMulti(
-            order_ref_number=self._get_order_ref(StockPicking),
+            order_ref_number=self._get_order_ref(picking),
             from_address1=from_address["address1"],
             from_address2=from_address["address2"],
             from_city=from_address["city"],
@@ -288,12 +291,12 @@ class ObiboxProvider:
             to_city=to_address["city"],
             to_province=to_address["province"],
             to_postal_code=to_address["postal_code"],
-            client_name=StockPicking.partner_id.name or "",
-            name=StockPicking.partner_id.name or "",
-            phone=StockPicking.partner_id.phone or "",
-            email=StockPicking.partner_id.email or "",
-            instructions=StockPicking.delivery_instructions or "",
-            b2b="1" if StockPicking.partner_id.is_company else "0",
+            client_name=picking.partner_id.name or "",
+            name=picking.partner_id.name or "",
+            phone=picking.partner_id.phone or "",
+            email=picking.partner_id.email or "",
+            instructions=picking.delivery_instructions or "",
+            b2b="1" if picking.partner_id.is_company else "0",
             nb_items=len(boxes),
             delivery_date_time=pickup_date + timedelta(days=1),
             service="NEXTDAY",
@@ -322,8 +325,15 @@ class ObiboxProvider:
         if isinstance(order, StockPicking):
             boxes = []
             boxes_dimensions = []
-            for package in order.package_ids:
-                box, dim = self._make_package(package)
+
+            packages: list[StockPackage] = []
+            if isinstance(order, StockPicking):
+                packages = order.env["stock.package.history"].search(
+                    [("picking_ids", "in", [order.id])]
+                )
+
+            for package in packages:
+                box, dim = self._make_package(package.package_id)
                 boxes.append(box)
                 boxes_dimensions.append(dim)
 

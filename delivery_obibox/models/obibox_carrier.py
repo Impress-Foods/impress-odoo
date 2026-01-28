@@ -4,9 +4,9 @@ from typing import Any
 
 from odoo import fields, models
 
-from odoo.addons.base.models.res_partner import Partner
+from odoo.addons.base.models.res_partner import ResPartner
 from odoo.addons.sale.models.sale_order import SaleOrder
-from odoo.addons.stock.models.stock_picking import Picking
+from odoo.addons.stock.models.stock_picking import StockPicking
 
 from .obibox_request import ObiboxProvider
 
@@ -49,7 +49,7 @@ class ObiboxCarrier(models.Model):
         help="Select the day when the package will be picked up.",
     )
 
-    def obibox_rate_shipment(self, order: Picking | SaleOrder) -> dict:
+    def obibox_rate_shipment(self, order: StockPicking | SaleOrder) -> dict:
         sr = ObiboxProvider(
             self.log_xml,
             prod_environment=self.prod_environment,
@@ -59,7 +59,7 @@ class ObiboxCarrier(models.Model):
         res = sr.get_rate(order)
         return res
 
-    def obibox_send_shipping(self, pickings: Picking) -> list:
+    def obibox_send_shipping(self, pickings: StockPicking) -> list:
         sr = ObiboxProvider(
             self.log_xml,
             prod_environment=self.prod_environment,
@@ -92,11 +92,11 @@ class ObiboxCarrier(models.Model):
             picking.shipping_label_attachment_id = att_id.id
         return res
 
-    def obibox_get_tracking_link(self, picking: Picking) -> str:
+    def obibox_get_tracking_link(self, picking: StockPicking) -> str:
         self.ensure_one()
         return f"https://tracking.obibox.io/{picking.carrier_tracking_ref}"
 
-    def obibox_cancel_shipment(self, pickings: Picking) -> None:
+    def obibox_cancel_shipment(self, pickings: StockPicking) -> None:
         sr = ObiboxProvider(
             self.log_xml,
             prod_environment=self.prod_environment,
@@ -111,7 +111,7 @@ class ObiboxCarrier(models.Model):
     def _obibox_get_default_custom_package_code(self) -> str:
         return ""
 
-    def _match_address(self, partner: Partner) -> bool:
+    def _match_address(self, partner: ResPartner) -> bool:
         res: bool = super()._match_address(partner)
 
         if self.delivery_type == "obibox":

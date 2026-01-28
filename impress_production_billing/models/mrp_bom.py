@@ -36,6 +36,7 @@ class MrpBom(models.Model):
             raise ValidationError(
                 self.env._(
                     "No matching service product found."
-                    f"Expected product with reference {reference_to_match}"
+                    "Expected product with reference %s",
+                    reference_to_match,
                 )
             )
