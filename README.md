@@ -6,8 +6,6 @@
 
 <!-- /!\ do not modify above this line -->
 
-# Impress Odoo
-
 Odoo modules for Impress Foods
 
 <!-- /!\ do not modify below this line -->
