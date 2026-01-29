@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -196,6 +196,15 @@ msgstr ""
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_lower_limit
 msgid "Lower Limit"
+msgstr ""
+
+#. module: impress_quality_worksheets
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_1_field_x_name
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_2_field_x_name
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_3_field_x_name
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_4_field_x_name
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_5_field_x_name
+msgid "Name"
 msgstr ""
 
 #. module: impress_quality_worksheets
