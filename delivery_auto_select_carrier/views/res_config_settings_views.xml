@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- View res.config.settings form -->
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">view.res.config.settings.view.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form" />
+        <field name="priority" eval="30" />
+        <field name="arch" type="xml">
+            <xpath expr="//setting[@id='delivery']" position="after">
+                <setting id="domain">
+                    <field
+                        name="auto_select_carrier_domain"
+                        widget="domain"
+                        options="{'model': 'sale.order', 'in_dialog': True, 'foldable': True}"
+                    />
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

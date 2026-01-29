@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -160,7 +160,6 @@ msgstr ""
 #. module: impress_quality_logs
 #. odoo-python
 #: code:addons/impress_quality_logs/models/logs/hpp_log_line.py:0
-#, python-format
 msgid "Barrels must be empty during cleaning cycle"
 msgstr ""
 
@@ -203,6 +202,12 @@ msgid "Coding Log"
 msgstr ""
 
 #. module: impress_quality_logs
+#. odoo-python
+#: code:addons/impress_quality_logs/models/mrp_production.py:0
+msgid "Coding Logs for %s"
+msgstr ""
+
+#. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__create_uid
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__create_uid
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__create_uid
@@ -236,7 +241,7 @@ msgid "Cycle Number"
 msgstr ""
 
 #. module: impress_quality_logs
-#: model:ir.model.constraint,message:impress_quality_logs.constraint_hpp_log_line_unique_cycle_number
+#: model:ir.model.constraint,message:impress_quality_logs.constraint_hpp_log_line_check_cycle_number
 msgid "Cycle Number must be unique for a production!"
 msgstr ""
 
@@ -261,11 +266,15 @@ msgstr ""
 #: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__display_name
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__display_name
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__display_name
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_line_mixin__display_name
 #: model:ir.model.fields,field_description:impress_quality_logs.field_log_mixin__display_name
 #: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__display_name
 #: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__display_name
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__display_name
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__display_name
+#: model:ir.model.fields,field_description:impress_quality_logs.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:impress_quality_logs.field_product_product__display_name
+#: model:ir.model.fields,field_description:impress_quality_logs.field_product_template__display_name
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__display_name
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__display_name
 msgid "Display Name"
@@ -303,19 +312,6 @@ msgid "Global Success Check"
 msgstr ""
 
 #. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_coding_log_search
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_search
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_search
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_line_search
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_search
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_line_search
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_search
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_x_ray_log_line_search
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_x_ray_log_search
-msgid "Group By"
-msgstr ""
-
-#. module: impress_quality_logs
 #: model:ir.ui.menu,name:impress_quality_logs.hpp_menu
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_mrp_production_form
 msgid "HPP"
@@ -336,6 +332,12 @@ msgstr ""
 #: model:ir.actions.act_window,name:impress_quality_logs.action_hpp_log
 #: model:ir.model.fields,field_description:impress_quality_logs.field_mrp_production__hpp_log_ids
 msgid "HPP Logs"
+msgstr ""
+
+#. module: impress_quality_logs
+#. odoo-python
+#: code:addons/impress_quality_logs/models/mrp_production.py:0
+msgid "HPP Logs for %s"
 msgstr ""
 
 #. module: impress_quality_logs
@@ -373,11 +375,15 @@ msgstr ""
 #: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__id
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__id
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_log_line_mixin__id
 #: model:ir.model.fields,field_description:impress_quality_logs.field_log_mixin__id
 #: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__id
 #: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__id
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__id
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_mrp_production__id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_product_product__id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_product_template__id
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__id
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__id
 msgid "ID"
@@ -406,6 +412,12 @@ msgstr ""
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_mrp_production__loma_log_ids
 msgid "LOMA Logs"
+msgstr ""
+
+#. module: impress_quality_logs
+#. odoo-python
+#: code:addons/impress_quality_logs/models/mrp_production.py:0
+msgid "LOMA Logs for %s"
 msgstr ""
 
 #. module: impress_quality_logs
@@ -459,7 +471,6 @@ msgstr ""
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_form
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_line_form
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_line_form
 msgid "Lock"
 msgstr ""
 
@@ -522,6 +533,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__lower_limit
 #: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__lower_limit
 msgid "Lower Limit"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model,name:impress_quality_logs.model_mrp_production
+msgid "Manufacturing Order"
 msgstr ""
 
 #. module: impress_quality_logs
@@ -588,6 +604,12 @@ msgid "Metal Logs"
 msgstr ""
 
 #. module: impress_quality_logs
+#. odoo-python
+#: code:addons/impress_quality_logs/models/mrp_production.py:0
+msgid "Metal Logs for %s"
+msgstr ""
+
+#. module: impress_quality_logs
 #: model:ir.model,name:impress_quality_logs.model_metal_log_line
 msgid "Metal_log_line"
 msgstr ""
@@ -611,6 +633,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_form
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_x_ray_log_form
 msgid "Monthly Verification"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__subunit_check__na
+msgid "N/A"
 msgstr ""
 
 #. module: impress_quality_logs
@@ -644,18 +671,9 @@ msgstr ""
 #. module: impress_quality_logs
 #. odoo-python
 #: code:addons/impress_quality_logs/models/logs/coding_log_line.py:0
-#: code:addons/impress_quality_logs/models/logs/coding_log_line.py:0
-#: code:addons/impress_quality_logs/models/logs/coding_log_line.py:0
-#: code:addons/impress_quality_logs/models/logs/loma_log_line.py:0
-#: code:addons/impress_quality_logs/models/logs/loma_log_line.py:0
 #: code:addons/impress_quality_logs/models/logs/loma_log_line.py:0
 #: code:addons/impress_quality_logs/models/logs/metal_log_line.py:0
-#: code:addons/impress_quality_logs/models/logs/metal_log_line.py:0
-#: code:addons/impress_quality_logs/models/logs/metal_log_line.py:0
 #: code:addons/impress_quality_logs/models/logs/xray_log_line.py:0
-#: code:addons/impress_quality_logs/models/logs/xray_log_line.py:0
-#: code:addons/impress_quality_logs/models/logs/xray_log_line.py:0
-#, python-format
 msgid "New"
 msgstr ""
 
@@ -723,8 +741,8 @@ msgid "Orphans"
 msgstr ""
 
 #. module: impress_quality_logs
-#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__presssure_reached
-msgid "Presssure Reached"
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__pressure_reached
+msgid "Pressure Reached"
 msgstr ""
 
 #. module: impress_quality_logs
@@ -763,7 +781,6 @@ msgid "Production"
 msgstr ""
 
 #. module: impress_quality_logs
-#: model:ir.model,name:impress_quality_logs.model_mrp_production
 #: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__production_id
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__production_id
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__production_id
@@ -857,9 +874,9 @@ msgid "Sequence"
 msgstr ""
 
 #. module: impress_quality_logs
-#: model:ir.model.constraint,message:impress_quality_logs.constraint_loma_log_line_unique_sequence_number
-#: model:ir.model.constraint,message:impress_quality_logs.constraint_metal_log_line_unique_sequence_number
-#: model:ir.model.constraint,message:impress_quality_logs.constraint_x_ray_log_line_unique_sequence_number
+#: model:ir.model.constraint,message:impress_quality_logs.constraint_loma_log_line_check_sequence
+#: model:ir.model.constraint,message:impress_quality_logs.constraint_metal_log_line_check_sequence
+#: model:ir.model.constraint,message:impress_quality_logs.constraint_x_ray_log_line_check_sequence
 msgid "Sequence Number must be unique!"
 msgstr ""
 
@@ -970,21 +987,18 @@ msgstr ""
 #. module: impress_quality_logs
 #. odoo-python
 #: code:addons/impress_quality_logs/models/logs/mixin/log_line_mixin.py:0
-#, python-format
 msgid "This record is already locked."
 msgstr ""
 
 #. module: impress_quality_logs
 #. odoo-python
 #: code:addons/impress_quality_logs/models/logs/mixin/log_line_mixin.py:0
-#, python-format
 msgid "This record is locked and cannot be modified."
 msgstr ""
 
 #. module: impress_quality_logs
 #. odoo-python
 #: code:addons/impress_quality_logs/models/logs/mixin/log_line_mixin.py:0
-#, python-format
 msgid "This record is not locked."
 msgstr ""
 
@@ -1013,7 +1027,6 @@ msgstr ""
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_form
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_loma_log_line_form
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_line_form
 msgid "Unlock"
 msgstr ""
 
@@ -1021,6 +1034,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log__upper_limit
 #: model:ir.model.fields,field_description:impress_quality_logs.field_loma_log_line__upper_limit
 msgid "Upper Limit"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__verification_signature
+msgid "Verification Signature"
 msgstr ""
 
 #. module: impress_quality_logs
@@ -1068,6 +1086,12 @@ msgstr ""
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_mrp_production__x_ray_log_ids
 msgid "X-Ray Logs"
+msgstr ""
+
+#. module: impress_quality_logs
+#. odoo-python
+#: code:addons/impress_quality_logs/models/mrp_production.py:0
+msgid "X-Ray Logs for %s"
 msgstr ""
 
 #. module: impress_quality_logs

@@ -1,0 +1,21 @@
+{
+    "name": "Delivery Common",
+    "version": "19.0.1.0.1",
+    "summary": """ Base module for Impress Delivery Connectors """,
+    "author": "Cédric Paradis",
+    "website": "https://github.com/impress-foods/impress-odoo",
+    "category": "Hidden",
+    "depends": ["stock_delivery", "mail"],
+    "data": [
+        # "security/ir.model.access.csv",
+        "reports/shipping_label_report.xml",
+        "views/stock_put_in_pack_views.xml",
+        "views/stock_picking_type_views.xml",
+        "views/stock_picking_views.xml",
+        "views/delivery_carrier_views.xml",
+    ],
+    "application": False,
+    "installable": True,
+    "auto_install": False,
+    "license": "GPL-2",
+}

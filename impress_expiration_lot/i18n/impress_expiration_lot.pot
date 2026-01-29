@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,13 +14,23 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: impress_expiration_lot
-#: model:ir.actions.server,name:impress_expiration_lot.impress_expiration_parse_lot_number_action
-msgid "Execute Code"
+#: model:ir.model.fields,field_description:impress_expiration_lot.field_stock_lot__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: impress_expiration_lot
+#: model:ir.model.fields,field_description:impress_expiration_lot.field_stock_lot__id
+msgid "ID"
 msgstr ""
 
 #. module: impress_expiration_lot
 #: model:ir.model,name:impress_expiration_lot.model_stock_lot
 msgid "Lot/Serial"
+msgstr ""
+
+#. module: impress_expiration_lot
+#: model:ir.actions.server,name:impress_expiration_lot.impress_expiration_parse_lot_number_action
+msgid "Parse lot number and set correct dates"
 msgstr ""
 
 #. module: impress_expiration_lot
