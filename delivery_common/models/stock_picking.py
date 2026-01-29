@@ -3,6 +3,7 @@ import logging
 from odoo import api, fields, models
 from odoo.tools import html2plaintext
 
+from odoo.addons.stock.models.stock_package import StockPackage
 from odoo.addons.web.controllers.utils import clean_action  # noqa
 
 _logger = logging.getLogger(__name__)
@@ -79,3 +80,8 @@ class StockPicking(models.Model):
                 )
 
         return res
+
+    def _get_packages(self) -> StockPackage:
+        self.ensure_one()
+        packages = self.env["stock.package"].search([("picking_ids", "in", [self.id])])
+        return packages
