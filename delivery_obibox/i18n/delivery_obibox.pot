@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -19,6 +19,25 @@ msgid "Carrier"
 msgstr ""
 
 #. module: delivery_obibox
+#. odoo-python
+#: code:addons/delivery_obibox/models/obibox_request.py:0
+msgid "Could not cancel shipment: %s"
+msgstr ""
+
+#. module: delivery_obibox
+#. odoo-python
+#: code:addons/delivery_obibox/models/obibox_request.py:0
+msgid "Could not find zip code for partner %s"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:delivery_obibox.field_stock_package_type__display_name
+#: model:ir.model.fields,field_description:delivery_obibox.field_stock_picking__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: delivery_obibox
 #: model:ir.model.fields,help:delivery_obibox.field_delivery_carrier__obibox_label_format
 msgid "Format of the label to be printed."
 msgstr ""
@@ -26,6 +45,13 @@ msgstr ""
 #. module: delivery_obibox
 #: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__obibox_delivery_day__fri
 msgid "Friday"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:delivery_obibox.field_stock_package_type__id
+#: model:ir.model.fields,field_description:delivery_obibox.field_stock_picking__id
+msgid "ID"
 msgstr ""
 
 #. module: delivery_obibox
@@ -39,6 +65,7 @@ msgid "Monday"
 msgstr ""
 
 #. module: delivery_obibox
+#: model:delivery.carrier,name:delivery_obibox.delivery_carrier_obibox
 #: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__delivery_type__obibox
 #: model:ir.model.fields.selection,name:delivery_obibox.selection__stock_package_type__package_carrier_type__obibox
 msgid "Obibox"
@@ -77,6 +104,12 @@ msgstr ""
 #. module: delivery_obibox
 #: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__delivery_type
 msgid "Provider"
+msgstr ""
+
+#. module: delivery_obibox
+#. odoo-python
+#: code:addons/delivery_obibox/models/obibox_request.py:0
+msgid "Rate not found: %s"
 msgstr ""
 
 #. module: delivery_obibox
