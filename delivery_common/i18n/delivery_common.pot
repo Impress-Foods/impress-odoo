@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -17,7 +17,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:delivery_common.stock_picking_kanban
 msgid "&amp;nbsp;-&amp;nbsp;"
 msgstr ""
-
 
 #. module: delivery_common
 #: model:ir.actions.report,print_report_name:delivery_common.report_shipping_label
@@ -34,10 +33,17 @@ msgstr ""
 msgid "Confirmation Template"
 msgstr ""
 
-
 #. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking__delivery_instructions
 msgid "Delivery Instructions"
+msgstr ""
+
+#. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:delivery_common.field_report_delivery_common_report_shipping_label_view__display_name
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking_type__display_name
+msgid "Display Name"
 msgstr ""
 
 #. module: delivery_common
@@ -45,6 +51,13 @@ msgstr ""
 msgid "Emails"
 msgstr ""
 
+#. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:delivery_common.field_report_delivery_common_report_shipping_label_view__id
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking__id
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking_type__id
+msgid "ID"
+msgstr ""
 
 #. module: delivery_common
 #: model:ir.model.fields,help:delivery_common.field_stock_picking_type__auto_print_delivery_label
@@ -88,8 +101,6 @@ msgstr ""
 msgid "Shipping Methods"
 msgstr ""
 
-
-
 #. module: delivery_common
 #: model:ir.model,name:delivery_common.model_report_delivery_common_report_shipping_label_view
 msgid "Shipping labels (ZPL)"
@@ -99,8 +110,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking__tracking_email_sent
 msgid "Tracking Email Sent"
 msgstr ""
-
-
 
 #. module: delivery_common
 #: model:ir.model,name:delivery_common.model_stock_picking
