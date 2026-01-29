@@ -9,8 +9,8 @@ from pydantic import BaseModel
 from requests.auth import HTTPBasicAuth
 from werkzeug.urls import url_join
 
-from odoo import _
 from odoo.exceptions import ValidationError
+from odoo.orm.environments import Environment
 
 from odoo.addons.base.models.res_company import ResCompany
 from odoo.addons.base.models.res_partner import ResPartner
@@ -37,6 +37,7 @@ class ObiboxProvider:
     def __init__(
         self,
         debug_logger,
+        env: Environment,
         prod_environment: bool = False,
         username: str = "",
         token: str = "",
@@ -45,6 +46,7 @@ class ObiboxProvider:
         self.session = requests.Session()
         self.username = username
         self.token = token
+        self.env = env
 
         if not prod_environment:
             self.url = "https://integrationapi.sandbox.agmtsolution.com/api/"
@@ -55,7 +57,7 @@ class ObiboxProvider:
         zip_code = partner.zip
         if not zip_code:
             raise ValidationError(
-                _("Could not find zip code for partner %s", partner.name)
+                self.env._("Could not find zip code for partner %s", partner.name)
             )
 
         response = self._make_api_request(f"Order/GetServices/{zip_code}", "GET")
@@ -106,12 +108,12 @@ class ObiboxProvider:
         }
         return res
 
-    def cancel_shipment(self, StockPicking: StockPicking) -> bool:
-        trackings = StockPicking.obibox_tracking_numbers.split(",")
+    def cancel_shipment(self, picking: StockPicking) -> bool:
+        trackings = picking.obibox_tracking_numbers.split(",")
         for tracking in trackings:
             res = self._cancel_shipment(tracking)
             if isinstance(res, str):
-                raise ValidationError(_("Could not cancel shipment: %s", res))
+                raise ValidationError(self._("Could not cancel shipment: %s", res))
         return True
 
     def _make_api_request(
@@ -199,7 +201,7 @@ class ObiboxProvider:
                 raise KeyError
         except KeyError as e:
             _logger.error(response)
-            raise ValidationError(_("Rate not found: %s", e)) from e
+            raise ValidationError(self.env._("Rate not found: %s", e)) from e
         return res
 
     def _cancel_shipment(self, tracking: str) -> bool | str:

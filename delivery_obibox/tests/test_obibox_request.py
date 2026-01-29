@@ -13,7 +13,7 @@ class TestObiboxRequest(TestDeliveryCommon):
     def setUp(self):
         super().setUp()
 
-        company = self.env["res.company"].browse([1])  # noqa
+        company = self.env["res.company"].browse([1])
         state = self.env.ref("base.state_ca_qc")
         company.state_id = state
 

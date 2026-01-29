@@ -52,6 +52,7 @@ class ObiboxCarrier(models.Model):
     def obibox_rate_shipment(self, order: StockPicking | SaleOrder) -> dict:
         sr = ObiboxProvider(
             self.log_xml,
+            self.env,
             prod_environment=self.prod_environment,
             username=self.obibox_username,
             token=self.obibox_api_key,
@@ -62,6 +63,7 @@ class ObiboxCarrier(models.Model):
     def obibox_send_shipping(self, pickings: StockPicking) -> list:
         sr = ObiboxProvider(
             self.log_xml,
+            self.env,
             prod_environment=self.prod_environment,
             username=self.obibox_username,
             token=self.obibox_api_key,
@@ -99,6 +101,7 @@ class ObiboxCarrier(models.Model):
     def obibox_cancel_shipment(self, pickings: StockPicking) -> None:
         sr = ObiboxProvider(
             self.log_xml,
+            self.env,
             prod_environment=self.prod_environment,
             username=self.obibox_username,
             token=self.obibox_api_key,
@@ -117,6 +120,7 @@ class ObiboxCarrier(models.Model):
         if self.delivery_type == "obibox":
             sr = ObiboxProvider(
                 self.log_xml,
+                self.env,
                 prod_environment=self.prod_environment,
                 username=self.obibox_username,
                 token=self.obibox_api_key,
