@@ -50,14 +50,16 @@ class TestDeliveryCommon(common.TransactionCase):
         self.productA = self.env["product.product"].create(
             {
                 "name": "Test Product",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "weight": 0.1,
             }
         )
         self.productB = self.env["product.product"].create(
             {
                 "name": "Test Product",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "weight": 0.1,
             }
         )
@@ -150,7 +152,6 @@ class TestDeliveryCommon(common.TransactionCase):
             {
                 "location_dest_id": self.partner_location.id,
                 "location_id": self.location.id,
-                "name": "Test Move",
                 "product_id": self.productA.id,
                 "product_uom": self.productA.uom_id.id,
                 "product_uom_qty": 10,
@@ -162,7 +163,6 @@ class TestDeliveryCommon(common.TransactionCase):
                 {
                     "location_dest_id": self.partner_location.id,
                     "location_id": self.location.id,
-                    "name": "Test Move",
                     "product_id": self.productB.id,
                     "product_uom": self.productB.uom_id.id,
                     "product_uom_qty": 10,
@@ -172,18 +172,17 @@ class TestDeliveryCommon(common.TransactionCase):
 
         picking.action_confirm()
         picking.action_assign()
-        self.assertEqual(len(picking.move_ids_without_package), n_packages)
+        self.assertEqual(len(picking.move_ids), n_packages)
 
         smlA = picking.move_line_ids.filtered(lambda ml: ml.product_id == self.productA)
         smlA.write({"quantity": 10.0, "picked": True})
         quantA = smlA.quant_id
 
-        pack1 = self.env["stock.quant.package"].create(
+        pack1 = self.env["stock.package"].create(
             {"package_type_id": self.package_type.id, "quant_ids": [quantA.id]}
         )
         smlA.result_package_id = pack1.id
 
-        self.assertEqual(len(picking.package_ids), 1)
         if n_packages > 1:
             smlB = picking.move_line_ids.filtered(
                 lambda ml: ml.product_id == self.productB
@@ -191,9 +190,8 @@ class TestDeliveryCommon(common.TransactionCase):
             smlB.quantity = 10
             smlB.picked = True
             quantB = smlB.quant_id
-            pack2 = self.env["stock.quant.package"].create(
+            pack2 = self.env["stock.package"].create(
                 {"package_type_id": self.package_type.id, "quant_ids": [quantB.id]}
             )
             smlB.result_package_id = pack2.id
-            self.assertEqual(len(picking.package_ids), 2)
         return picking

@@ -266,11 +266,9 @@ class ObiboxProvider:
         to_address = self._make_address(picking.partner_id)
         boxes = []
         dims = []
-        packages = picking.env["stock.package.history"].search(
-            [("picking_ids", "in", [picking.id])]
-        )
+        packages = picking._get_packages()
         for package in packages:
-            box, dim = self._make_package(package.package_id)
+            box, dim = self._make_package(package)
             boxes.append(box)
             dims.append(dim)
 
@@ -323,17 +321,12 @@ class ObiboxProvider:
 
     def _make_rate_request(self, order: SaleOrder | StockPicking) -> RateRequest:
         if isinstance(order, StockPicking):
-            boxes = []
-            boxes_dimensions = []
+            boxes: list[Box] = []
+            boxes_dimensions: list[BoxesDimensions] = []
 
-            packages: list[StockPackage] = []
-            if isinstance(order, StockPicking):
-                packages = order.env["stock.package.history"].search(
-                    [("picking_ids", "in", [order.id])]
-                )
-
+            packages = order._get_packages()
             for package in packages:
-                box, dim = self._make_package(package.package_id)
+                box, dim = self._make_package(package)
                 boxes.append(box)
                 boxes_dimensions.append(dim)
 
@@ -346,7 +339,8 @@ class ObiboxProvider:
                     long_side=10,
                 )
             ]
-
+        # _logger.warning(boxes)
+        # _logger.warning(boxes_dimensions)
         data = RateRequest(
             from_postal_code=order.company_id.zip,
             to_postal_code=self._get_postal_code(order),

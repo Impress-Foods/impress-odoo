@@ -13,8 +13,12 @@ class TestObiboxRequest(TestDeliveryCommon):
     def setUp(self):
         super().setUp()
 
+        company = self.env["res.company"].browse([1])  # noqa
+        state = self.env.ref("base.state_ca_qc")
+        company.state_id = state
+
     def test_make_package_1_package(self):
-        package = self.env["stock.quant.package"].create({})
+        package = self.env["stock.package"].create({})
         package.package_type_id = self.package_type
 
         self.env["stock.quant"].create(
@@ -38,7 +42,7 @@ class TestObiboxRequest(TestDeliveryCommon):
         self.assertEqual(dim, expected_dim)
 
     def test_make_package_2_packages(self):
-        package_1 = self.env["stock.quant.package"].create(
+        package_1 = self.env["stock.package"].create(
             {"package_type_id": self.package_type.id}
         )
         package_2 = package_1.copy()
@@ -150,8 +154,10 @@ class TestObiboxRequest(TestDeliveryCommon):
     @freeze_time(datetime(year=2025, month=7, day=15))
     def test_make_shipment_request(self):
         picking = self.make_picking(n_packages=2)
-        pack1 = picking.package_ids[0]
-        pack2 = picking.package_ids[1]
+
+        packages = picking._get_packages()
+        pack1 = packages[0]
+        pack2 = packages[1]
 
         pack1_weight = self.package_w_uom._compute_quantity(
             pack1.shipping_weight, self.lb_uom
@@ -207,6 +213,10 @@ class TestObiboxRequest(TestDeliveryCommon):
             boxes_dimensions=dims,
         )
         shipping_request = self.sr._make_shipment_request(picking)
+        # from pprint import pformat
+
+        # _logger.warning(pformat(expected_shipping_request))
+        # _logger.warning(pformat(shipping_request))
         self.assertEqual(shipping_request, expected_shipping_request)
 
     def test_make_rate_request_sale_order(self):
@@ -229,8 +239,9 @@ class TestObiboxRequest(TestDeliveryCommon):
 
     def test_make_rate_request_picking(self):
         picking = self.make_picking(n_packages=2)
-        pack1 = picking.package_ids[0]
-        pack2 = picking.package_ids[1]
+        packages = picking._get_packages()
+        pack1 = packages[0]
+        pack2 = packages[1]
         pack1_weight = self.package_w_uom._compute_quantity(
             pack1.shipping_weight, self.lb_uom
         )
