@@ -42,7 +42,7 @@ class MrpProduction(models.Model):
         else:
             action.update(
                 {
-                    "name": self.env._(f"HPP Logs for {self.name}"),
+                    "name": self.env._("HPP Logs for %s", self.name),
                     "domain": [("id", "in", self.hpp_log_ids.ids)],
                     "view_mode": "list,form",
                 }
@@ -63,7 +63,7 @@ class MrpProduction(models.Model):
         else:
             action.update(
                 {
-                    "name": self.env._(f"Metal Logs for {self.name}"),
+                    "name": self.env._("Metal Logs for %s", self.name),
                     "domain": [("id", "in", self.metal_log_ids.ids)],
                     "view_mode": "list,form",
                 }
@@ -84,7 +84,7 @@ class MrpProduction(models.Model):
         else:
             action.update(
                 {
-                    "name": self.env._(f"LOMA Logs for {self.name}"),
+                    "name": self.env._("LOMA Logs for %s", self.name),
                     "domain": [("id", "in", self.loma_log_ids.ids)],
                     "view_mode": "list,form",
                 }
@@ -105,7 +105,7 @@ class MrpProduction(models.Model):
         else:
             action.update(
                 {
-                    "name": self.env._(f"Coding Logs for {self.name}"),
+                    "name": self.env._("Coding Logs for %s", self.name),
                     "domain": [("id", "in", self.coding_log_ids.ids)],
                     "view_mode": "list,form",
                 }
@@ -126,7 +126,7 @@ class MrpProduction(models.Model):
         else:
             action.update(
                 {
-                    "name": self.env._(f"X-Ray Logs for {self.name}"),
+                    "name": self.env._("X-Ray Logs for %s", self.name),
                     "domain": [("id", "in", self.x_ray_log_ids.ids)],
                     "view_mode": "list,form",
                 }

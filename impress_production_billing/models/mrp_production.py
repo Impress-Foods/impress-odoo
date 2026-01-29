@@ -43,8 +43,8 @@ class MrpProduction(models.Model):
                 if not value:
                     raise ValidationError(
                         self.env._(
-                            "No Sale Order found with"
-                            f"reference {rec.billing_sale_order_ref}"
+                            "No Sale Order found withreference %s",
+                            rec.billing_sale_order_ref,
                         )
                     )
                 else:
@@ -95,7 +95,8 @@ class MrpProduction(models.Model):
                         raise ValidationError(
                             self.env._(
                                 "No Sale Order Line found in SO. Expected "
-                                f"line with product {billing_product.display_name}"
+                                "line with product %s",
+                                billing_product.display_name,
                             )
                         )
 
