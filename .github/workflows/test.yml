@@ -39,7 +39,7 @@ jobs:
               impress_quality_customizations, impress_project_billing_production,
               impress_lot_lab
             name: test all modules
-            makepot: "false"
+            makepot: "true"
     services:
       postgres:
         image: postgres:13
