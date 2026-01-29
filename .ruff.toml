@@ -4,9 +4,6 @@ fix = true
 [format]
 exclude = ["setup/*"]
 
-[format]
-exclude = ["setup/*"]
-
 [lint]
 extend-select = [
     "B",
