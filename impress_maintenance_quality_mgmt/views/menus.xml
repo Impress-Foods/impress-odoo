@@ -83,7 +83,7 @@
     />
 
     <menuitem
-        id="maintenance_team_tag_menu"
+        id="maintenance_quality_team_tag_menu"
         name="Maintenance Team Tag"
         action="action_maintenance_team_tag"
         parent="menu_impress_maintenance_quality_mgmt_configuration"
