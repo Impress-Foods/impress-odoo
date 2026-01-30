@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- View stock.scrap form -->
+    <record id="view_stock_scrap_form" model="ir.ui.view">
+        <field name="name">view.stock.scrap.form</field>
+        <field name="model">stock.scrap</field>
+        <field name="inherit_id" ref="stock.stock_scrap_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <field name="maintenance_request_id" invisible="1" />
+                <button
+                    class="oe_stat_button"
+                    name="action_view_maintenance_request"
+                    type="object"
+                    invisible="not maintenance_request_id"
+                    icon="fa-wrench"
+                >
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Maintenance Request</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

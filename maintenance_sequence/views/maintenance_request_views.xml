@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- View maintenance.request tree -->
+    <record id="view_maintenance_request_tree" model="ir.ui.view">
+        <field name="name">view.maintenance.request.tree</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_tree" />
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="replace">
+                <field name="display_name" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- View maintenance.request search -->
+    <record id="view_maintenance_request_search" model="ir.ui.view">
+        <field name="name">view.maintenance.request.search</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_search" />
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="replace">
+                <field
+                    name="name"
+                    string="Request"
+                    filter_domain="['|', ('name', 'ilike', self), ('sequence', 'ilike', self)]"
+                />
+            </xpath>
+        </field>
+    </record>
+    <!-- View maintenance.request search -->
+    <record id="view_maintenance_request_kanban" model="ir.ui.view">
+        <field name="name">view.maintenance.request.kanban</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_kanban" />
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="replace">
+                <field name="display_name" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

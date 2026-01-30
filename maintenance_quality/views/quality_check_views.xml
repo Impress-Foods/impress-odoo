@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- View quality.check form -->
+    <record id="view_quality_check_form" model="ir.ui.view">
+        <field name="name">view.quality.check.form</field>
+        <field name="model">quality.check</field>
+        <field name="inherit_id" ref="quality_control.quality_check_view_form" />
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button
+                    name="action_view_request"
+                    type="object"
+                    class="oe_button"
+                    icon="fa-bolt"
+                    invisible="not maintenance_request_id"
+                >
+                    <span class="o_stat_text">Maintenance</span>
+                </button>
+            </xpath>
+
+            <xpath expr="//field[@name='picking_id']" position="after">
+                <field name="maintenance_request_id" />
+            </xpath>
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="equipment_id" invisible="not maintenance_request_id" />
+                <field name="workcenter_id" invisible="not maintenance_request_id" />
+            </xpath>
+
+            <xpath expr="//field[@name='product_id']" position="attributes">
+                <attribute
+                    name="invisible"
+                >measure_on == 'operation' or maintenance_request_id</attribute>
+            </xpath>
+            <xpath expr="//field[@name='measure_on']" position="attributes">
+                <attribute name="invisible">maintenance_request_id</attribute>
+            </xpath>
+            <xpath expr="//field[@name='picking_id']" position="attributes">
+                <attribute
+                    name="invisible"
+                >(quality_state in ('pass', 'fail') and not picking_id) or maintenance_request_id</attribute>
+            </xpath>
+            <xpath expr="//field[@name='production_id']" position="attributes">
+                <attribute
+                    name="invisible"
+                >(quality_state in ('pass', 'fail') and not production_id) or maintenance_request_id</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_quality_check_tree_maintenance" model="ir.ui.view">
+        <field name="name">quality.check.view.tree.maintenance</field>
+        <field name="model">quality.check</field>
+
+        <field name="arch" type="xml">
+            <list
+                default_order="id desc"
+                sample="1"
+                decoration-info="quality_state == 'none'"
+            >
+                <field name="name" decoration-bf="1" />
+                <field name="maintenance_request_id" optional="show" string="Request" />
+                <field name="equipment_id" optional="show" />
+                <field name="workcenter_id" optional="hide" />
+                <field name="control_date" string="Checked Date" optional="show" />
+                <field
+                    name="user_id"
+                    string="Checked By"
+                    optional="show"
+                    widget="many2one_avatar_user"
+                />
+                <field name="point_id" optional="hide" />
+                <field name="team_id" optional="hide" />
+                <field name="company_id" groups="base.group_multi_company" />
+                <field
+                    name="quality_state"
+                    optional="show"
+                    widget="badge"
+                    decoration-success="quality_state == 'pass'"
+                    decoration-info="quality_state == 'none'"
+                    decoration-danger="quality_state == 'fail'"
+                />
+            </list>
+        </field>
+    </record>
+</odoo>

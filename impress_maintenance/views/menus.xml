@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="make_invisible" model="res.groups">
+        <field name="name">Invisible</field>
+    </record>
+
+    <record id="maintenance.menu_m_request_calendar" model="ir.ui.menu">
+        <field name="group_ids" eval="[(6,0,[ref('make_invisible')])]" />
+    </record>
+
+    <menuitem
+        id="menu_m_request_calendar_employee"
+        name="Maintenance Calendar - Employee"
+        parent="maintenance.menu_m_request"
+        action="hr_equipment_request_action_cal_employee"
+        groups="maintenance.group_equipment_manager,base.group_user"
+        sequence="2"
+    />
+
+    <menuitem
+        id="menu_m_request_calendar_state"
+        name="Maintenance Calendar - State"
+        parent="maintenance.menu_m_request"
+        action="hr_equipment_request_action_cal_state"
+        groups="maintenance.group_equipment_manager,base.group_user"
+        sequence="3"
+    />
+</odoo>

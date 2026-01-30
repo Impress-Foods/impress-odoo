@@ -1,0 +1,20 @@
+{
+    "name": "Impress Maintenance",
+    "version": "19.0.0.0.1",
+    "summary": """ Impress_maintenance Summary """,
+    "author": "Cédric Paradis",
+    "website": "https://github.com/impress-foods/impress-odoo",
+    "category": "Hidden",
+    "depends": ["hr_maintenance", "base_maintenance"],
+    "data": [
+        "security/maintenance.xml",
+        "views/hr_employee_views.xml",
+        "views/maintenance_equipment_views.xml",
+        "views/maintenance_request_views.xml",
+        "views/maintenance_stage_views.xml",
+        "views/menus.xml",
+    ],
+    "installable": True,
+    "auto_install": False,
+    "license": "GPL-2",
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <record
+        id="documents_maintenance_folder"
+        model="documents.document"
+        forcecreate="0"
+    >
+        <field name="name">Maintenance</field>
+        <field name="access_internal">edit</field>
+        <field name="type">folder</field>
+    </record>
+</odoo>

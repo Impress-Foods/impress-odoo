@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_maintenance_request_tree_ph_calibration" model="ir.ui.view">
+        <field name="name">view_maintenance_request_tree_ph_calibration</field>
+        <field name="model">maintenance.request</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="schedule_date" />
+                <field name="user_id" />
+                <field name="stage_id" />
+            </list>
+        </field>
+    </record>
+
+    <record id="action_maintenance_quality_dashboard" model="ir.actions.act_window">
+        <field name="name">Quality Dashboard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">maintenance.team</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="view_id" ref="maintenance.maintenance_team_kanban" />
+        <field
+            name="domain"
+            eval="[('team_tag_ids', 'in', [ref('impress_maintenance_quality_mgmt.team_tag_quality')])]"
+        />
+    </record>
+
+    <record id="action_quality_maintenance_request_cal" model="ir.actions.act_window">
+        <field name="name">Maintenance Requests</field>
+        <field name="res_model">maintenance.request</field>
+        <field name="view_mode">calendar,kanban,list,form,pivot,graph,activity</field>
+        <field name="view_id" ref="maintenance.hr_equipment_view_calendar" />
+        <field
+            name="domain"
+            eval="[('maintenance_team_id.team_tag_ids', 'in', [ref('impress_maintenance_quality_mgmt.team_tag_quality')])]"
+        />
+        <field name="context">{
+            'search_default_active': True,
+            'search_default_todo': True,
+            }</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new maintenance request
+            </p>
+            <p>
+                Follow the process of the request and communicate with the collaborator.
+            </p>
+        </field>
+    </record>
+</odoo>
