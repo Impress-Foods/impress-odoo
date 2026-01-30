@@ -7,10 +7,10 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:06+0000\n"
-"PO-Revision-Date: 2026-01-22 14:58+0000\n"
+"PO-Revision-Date: 2026-01-30 17:52+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
-"impress-odoo/impress_quality_worksheets/fr_CA/>\n"
+"impress-odoo-17/impress_quality_worksheets/fr_CA/>\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,15 +47,6 @@ msgstr ""
 "                            Février 2025. Feuille de contrôle LOMA </strong>"
 
 #. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
-msgid ""
-"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-"                            Mars 2025. Feuille de contrôle Rayon-X</strong>"
-msgstr ""
-"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-"                            Mars 2025. Feuille de contrôle Rayon-X</strong>"
-
-#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 msgid ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 "
@@ -74,6 +65,15 @@ msgstr ""
 " Mars 2025. Feuille de contrôle Codage </strong>"
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+msgid ""
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Mars "
+"2025. Feuille de contrôle Rayon-X</strong>"
+msgstr ""
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
+" Mars 2025. Feuille de contrôle Rayon-X </strong>"
+
+#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 22 "
@@ -89,26 +89,26 @@ msgid "After repairs."
 msgstr "Après réparations."
 
 #. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
-msgid "At the end of production."
-msgstr "À la fin de la production."
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+msgid "Après le temps d'arrêt à des fins de réparation."
+msgstr "Après le temps d'arrêt à des fins de réparation."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
-msgid "At the start of the day."
-msgstr "Au début de la journée."
+msgid "At intervals of ≤2 hours producing continuously."
+msgstr "À des intervalles de ≤ 2 heures pendant l'exécution de la production."
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
+msgid "At the start and end of work shifts/production every day."
+msgstr "Au début et à la fin du quart de travail/production chaque jour."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
-msgid "Au début de l'embouteillage"
-msgstr "Au début de l'embouteillage"
-
-#. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
-msgid "Aux 2 heures si aucun changement lors d'une production en continue"
-msgstr "Aux 2 heures si aucun changement lors d'une production en continue"
+msgid "Au début et à la fin du quart de travail/production chaque jour."
+msgstr "Au début et à la fin du quart de travail/production chaque jour."
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_average_threshold
@@ -128,8 +128,8 @@ msgid ""
 "                            reste dans les bacs de rejet. <br/>"
 msgstr ""
 "Calibration : Comparer le poids d'une bouteille avec la balance de table et "
-"la Loma, si l'écart est de 2g et +, faire une calibration. <br/> Remplissage "
-": Comparer le\n"
+"la Loma, si l'écart est de 2g et +, faire une calibration. <br/> "
+"Remplissage : Comparer le\n"
 "                            poids moyen des bouteilles vs le poids visé. Si "
 "l'écart est de + / - 3g, ajuster l'embouteilleuse. <br/> Lors de la dernière "
 "vérification, vérifier qu'aucune bouteille ne\n"
@@ -158,12 +158,11 @@ msgstr "Seuil de détection de la céramique (4.0 mm)"
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 msgid ""
-"During the last check (end of production), check that no cup is left\n"
-"                                in the reject bin."
+"During the last check (end of production), check that no cup is left in the "
+"reject bin."
 msgstr ""
 "Lors de la dernière vérification (fin de la production), vérifier qu'aucun "
-"cup \n"
-"n'est présent dans le réceptacle des rejets."
+"produit n'est présent dans le réceptacle des rejets."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
@@ -198,18 +197,6 @@ msgid "Ejection OK"
 msgstr "Éjection conforme"
 
 #. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
-msgid "Every 2 hours if no product change."
-msgstr "Tout les 2 heures si aucun changement de produit."
-
-#. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
-msgid "Every product change (format, recipe, lot)."
-msgstr "À tout changement de produit (format, recette, lot)."
-
-#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 msgid "Ferrous (2.0 mm)"
 msgstr "Ferreux (2.0 mm)"
@@ -241,14 +228,6 @@ msgstr "Lignes de registre HPP"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
-msgid ""
-"If there is a metal reject during production, inform quality\n"
-"                                control."
-msgstr ""
-"Si un reject dû à la présence de métal a lieu pendant\n"
-" la production, aviser le contrôle qualité."
-
-#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "If there is a metal reject during production, inform quality control."
 msgstr ""
@@ -271,6 +250,16 @@ msgstr "Vérification mention \"Garder réfrigéré\" ou \"Garder congelé\""
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_loma_log_id
 msgid "LOMA Log"
 msgstr "Registre LOMA"
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+msgid "Lorsque des changements surviennent dans les lots de production."
+msgstr "Lorsque des changements surviennent dans les lots de production."
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+msgid "Lorsque des changements surviennent dans les réglages de l'appareil."
+msgstr "Lorsque des changements surviennent dans les réglages de l'appareil."
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_lot_id
@@ -358,11 +347,6 @@ msgid "Subunit Check"
 msgstr "Vérification sous-emballage"
 
 #. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
-msgid "Une fois l'embouteillage terminé"
-msgstr "Une fois l'embouteillage terminé"
-
-#. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_unit_check
 msgid "Unit Check"
 msgstr "Vérification unité"
@@ -376,6 +360,18 @@ msgstr "Code unité"
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_upper_limt
 msgid "Upper Limit"
 msgstr "Limite supérieure"
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
+msgid "When changes happen after machine adjustments."
+msgstr "Lorsque des changements surviennent dans les réglages de l'appareil."
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
+msgid "When changes happen in production lots."
+msgstr "Lorsque des changements surviennent dans les lots de production."
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.coding_log_x_worksheet_20250303_id
@@ -450,12 +446,57 @@ msgstr "x_worksheet_large_20251126_id"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
-msgid ""
-"À chaque changement de produit (changement de format, de recette, de lot, "
-"d'étiquette US/CAD ou lors de réglage de l'appareil)"
-msgstr ""
-"À chaque changement de produit (changement de format, de recette, de lot, "
-"d'étiquette US/CAD ou lors de réglage de l'appareil)"
+msgid "À des intervalles de ≤ 2 heures pendant l'exécution de la production."
+msgstr "À des intervalles de ≤ 2 heures pendant l'exécution de la production."
+
+#~ msgid ""
+#~ "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
+#~ "                            Mars 2025. Feuille de contrôle Rayon-X</"
+#~ "strong>"
+#~ msgstr ""
+#~ "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
+#~ "                            Mars 2025. Feuille de contrôle Rayon-X</"
+#~ "strong>"
+
+#~ msgid "At the start of the day."
+#~ msgstr "Au début de la journée."
+
+#~ msgid "Au début de l'embouteillage"
+#~ msgstr "Au début de l'embouteillage"
+
+#~ msgid "Aux 2 heures si aucun changement lors d'une production en continue"
+#~ msgstr "Aux 2 heures si aucun changement lors d'une production en continue"
+
+#~ msgid ""
+#~ "During the last check (end of production), check that no cup is left\n"
+#~ "                                in the reject bin."
+#~ msgstr ""
+#~ "Lors de la dernière vérification (fin de la production), vérifier "
+#~ "qu'aucun cup \n"
+#~ "n'est présent dans le réceptacle des rejets."
+
+#~ msgid "Every 2 hours if no product change."
+#~ msgstr "Tout les 2 heures si aucun changement de produit."
+
+#~ msgid "Every product change (format, recipe, lot)."
+#~ msgstr "À tout changement de produit (format, recette, lot)."
+
+#~ msgid ""
+#~ "If there is a metal reject during production, inform quality\n"
+#~ "                                control."
+#~ msgstr ""
+#~ "Si un reject dû à la présence de métal a lieu pendant\n"
+#~ " la production, aviser le contrôle qualité."
+
+#~ msgid "Une fois l'embouteillage terminé"
+#~ msgstr "Une fois l'embouteillage terminé"
+
+#~ msgid ""
+#~ "À chaque changement de produit (changement de format, de recette, de lot, "
+#~ "d'étiquette US/CAD ou lors de réglage de l'appareil)"
+#~ msgstr ""
+#~ "À chaque changement de produit (changement de format, de recette, de lot, "
+#~ "d'étiquette US/CAD ou lors de réglage de l'appareil)"
 
 #, fuzzy
 #~ msgid ""
