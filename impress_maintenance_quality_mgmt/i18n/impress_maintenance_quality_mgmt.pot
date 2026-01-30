@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -49,6 +49,8 @@ msgid "Default Team"
 msgstr ""
 
 #. module: impress_maintenance_quality_mgmt
+#: model:ir.model.fields,field_description:impress_maintenance_quality_mgmt.field_maintenance_equipment_category__display_name
+#: model:ir.model.fields,field_description:impress_maintenance_quality_mgmt.field_maintenance_team__display_name
 #: model:ir.model.fields,field_description:impress_maintenance_quality_mgmt.field_maintenance_team_tag__display_name
 msgid "Display Name"
 msgstr ""
@@ -70,11 +72,8 @@ msgid ""
 msgstr ""
 
 #. module: impress_maintenance_quality_mgmt
-#: model_terms:ir.ui.view,arch_db:impress_maintenance_quality_mgmt.view_maintenance_team_tag_search
-msgid "Group By"
-msgstr ""
-
-#. module: impress_maintenance_quality_mgmt
+#: model:ir.model.fields,field_description:impress_maintenance_quality_mgmt.field_maintenance_equipment_category__id
+#: model:ir.model.fields,field_description:impress_maintenance_quality_mgmt.field_maintenance_team__id
 #: model:ir.model.fields,field_description:impress_maintenance_quality_mgmt.field_maintenance_team_tag__id
 msgid "ID"
 msgstr ""
@@ -112,6 +111,7 @@ msgstr ""
 #. module: impress_maintenance_quality_mgmt
 #: model:ir.actions.act_window,name:impress_maintenance_quality_mgmt.action_maintenance_team_tag
 #: model:ir.model,name:impress_maintenance_quality_mgmt.model_maintenance_team_tag
+#: model:ir.ui.menu,name:impress_maintenance_quality_mgmt.maintenance_quality_team_tag_menu
 #: model:ir.ui.menu,name:impress_maintenance_quality_mgmt.maintenance_team_tag_menu
 msgid "Maintenance Team Tag"
 msgstr ""
@@ -145,11 +145,6 @@ msgstr ""
 #. module: impress_maintenance_quality_mgmt
 #: model:ir.model.fields,field_description:impress_maintenance_quality_mgmt.field_maintenance_team_tag__name
 msgid "Tag Name"
-msgstr ""
-
-#. module: impress_maintenance_quality_mgmt
-#: model:ir.model.constraint,message:impress_maintenance_quality_mgmt.constraint_maintenance_team_tag_tag_name_unique
-msgid "Tag name must be unique!"
 msgstr ""
 
 #. module: impress_maintenance_quality_mgmt
