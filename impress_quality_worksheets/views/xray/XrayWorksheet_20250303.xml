@@ -20,24 +20,17 @@
                         </group>
                     </group>
                     <div>
-                        <div style="font-weight: bold;">
-                            X-Ray Frequency:
-                        </div>
+                        <div style="font-weight: bold;"> X-Ray Frequency: </div>
                         <ul>
-                            <li>At the start of the day.</li>
-                            <li>Every product change (format, recipe, lot).</li>
+                            <li
+                            >At the start and end of work shifts/production every day.</li>
+                            <li>At intervals of ≤2 hours producing continuously.</li>
+                            <li>When changes happen in production lots.</li>
+                            <li>When changes happen after machine adjustments.</li>
                             <li>After repairs.</li>
-                            <li>Every 2 hours if no product change.</li>
-                            <li>At the end of production.</li>
                         </ul>
 
                     </div>
-
-                    <!-- <group>
-                        <group>
-                            <field name="x_average_threshold" />
-                        </group>
-                    </group> -->
 
                     <field name="x_x_ray_log_line_ids" nolabel="1">
                         <tree>
@@ -96,17 +89,14 @@
                     <div>
                         <ul>
                             <li
-                            >If there is a metal reject during production, inform quality
-                                control. </li>
+                            >If there is a metal reject during production, inform quality control. </li>
                             <li
-                            >During the last check (end of production), check that no cup is left
-                                in the reject bin.</li>
+                            >During the last check (end of production), check that no cup is left in the reject bin.</li>
                         </ul>
                     </div>
                     <div class="text-center">
                         <strong
-                        >Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03
-                            Mars 2025. Feuille de contrôle Rayon-X</strong>
+                        >Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Mars 2025. Feuille de contrôle Rayon-X</strong>
                     </div>
                 </sheet>
             </form>
