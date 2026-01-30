@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -44,8 +44,36 @@ msgid "Control Point Type"
 msgstr ""
 
 #. module: maintenance_quality
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_equipment__display_name
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_equipment_category__display_name
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_quality_mixin__display_name
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_request__display_name
+#: model:ir.model.fields,field_description:maintenance_quality.field_mrp_workcenter__display_name
+#: model:ir.model.fields,field_description:maintenance_quality.field_product_product__display_name
+#: model:ir.model.fields,field_description:maintenance_quality.field_product_template__display_name
+#: model:ir.model.fields,field_description:maintenance_quality.field_quality_alert__display_name
+#: model:ir.model.fields,field_description:maintenance_quality.field_quality_check__display_name
+#: model:ir.model.fields,field_description:maintenance_quality.field_quality_point__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: maintenance_quality
 #: model:ir.model.fields,field_description:maintenance_quality.field_quality_check__equipment_id
 msgid "Equipment"
+msgstr ""
+
+#. module: maintenance_quality
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_equipment__id
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_equipment_category__id
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_quality_mixin__id
+#: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_request__id
+#: model:ir.model.fields,field_description:maintenance_quality.field_mrp_workcenter__id
+#: model:ir.model.fields,field_description:maintenance_quality.field_product_product__id
+#: model:ir.model.fields,field_description:maintenance_quality.field_product_template__id
+#: model:ir.model.fields,field_description:maintenance_quality.field_quality_alert__id
+#: model:ir.model.fields,field_description:maintenance_quality.field_quality_check__id
+#: model:ir.model.fields,field_description:maintenance_quality.field_quality_point__id
+msgid "ID"
 msgstr ""
 
 #. module: maintenance_quality
@@ -79,6 +107,8 @@ msgid "Maintenance Quality Mixin"
 msgstr ""
 
 #. module: maintenance_quality
+#. odoo-python
+#: code:addons/maintenance_quality/models/quality_check.py:0
 #: model:ir.model,name:maintenance_quality.model_maintenance_request
 #: model:ir.model.fields,field_description:maintenance_quality.field_quality_alert__maintenance_request_id
 #: model:ir.model.fields,field_description:maintenance_quality.field_quality_check__maintenance_request_id
@@ -108,10 +138,8 @@ msgstr ""
 #. module: maintenance_quality
 #. odoo-python
 #: code:addons/maintenance_quality/models/maintenance_request.py:0
-#: code:addons/maintenance_quality/models/maintenance_request.py:0
 #: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_request__quality_alert_ids
 #: model_terms:ir.ui.view,arch_db:maintenance_quality.view_maintenance_request_form
-#, python-format
 msgid "Quality Alerts"
 msgstr ""
 
@@ -148,14 +176,8 @@ msgstr ""
 #. module: maintenance_quality
 #. odoo-python
 #: code:addons/maintenance_quality/models/maintenance_request.py:0
-#: code:addons/maintenance_quality/models/maintenance_request.py:0
-#: code:addons/maintenance_quality/models/maintenance_request.py:0
-#: code:addons/maintenance_quality/models/maintenance_request.py:0
-#: code:addons/maintenance_quality/models/maintenance_request.py:0
-#: code:addons/maintenance_quality/models/maintenance_request.py:0
 #: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_request__quality_check_ids
 #: model_terms:ir.ui.view,arch_db:maintenance_quality.view_maintenance_request_form
-#, python-format
 msgid "Quality Checks"
 msgstr ""
 
@@ -167,8 +189,6 @@ msgstr ""
 #. module: maintenance_quality
 #. odoo-python
 #: code:addons/maintenance_quality/models/maintenance_equipment.py:0
-#: code:addons/maintenance_quality/models/maintenance_equipment.py:0
-#: code:addons/maintenance_quality/models/maintenance_quality_mixin.py:0
 #: code:addons/maintenance_quality/models/maintenance_quality_mixin.py:0
 #: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_equipment__quality_point_ids
 #: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_equipment_category__quality_point_ids
@@ -177,7 +197,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:maintenance_quality.view_maintenance_equipment_category_form
 #: model_terms:ir.ui.view,arch_db:maintenance_quality.view_maintenance_equipment_form
 #: model_terms:ir.ui.view,arch_db:maintenance_quality.view_mrp_workcenter_form
-#, python-format
 msgid "Quality Points"
 msgstr ""
 
@@ -212,4 +231,17 @@ msgstr ""
 #. module: maintenance_quality
 #: model:ir.model.fields,field_description:maintenance_quality.field_quality_point__workcenter_ids
 msgid "Workcenters"
+msgstr ""
+
+#. module: maintenance_quality
+#. odoo-python
+#: code:addons/maintenance_quality/models/maintenance_equipment.py:0
+#: code:addons/maintenance_quality/models/maintenance_quality_mixin.py:0
+msgid "id"
+msgstr ""
+
+#. module: maintenance_quality
+#. odoo-python
+#: code:addons/maintenance_quality/models/maintenance_request.py:0
+msgid "maintenance_request_id"
 msgstr ""
