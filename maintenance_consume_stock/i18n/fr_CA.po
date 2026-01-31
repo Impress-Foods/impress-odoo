@@ -6,28 +6,31 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2026-01-31 15:06+0000\n"
+"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
+"impress-odoo-19/maintenance_consume_stock/fr_CA/>\n"
+"Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: maintenance_consume_stock
 #: model_terms:ir.ui.view,arch_db:maintenance_consume_stock.view_stock_scrap_form
 msgid "<span class=\"o_stat_text\">Maintenance Request</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Requête de maintenance</span>"
 
 #. module: maintenance_consume_stock
 #: model_terms:ir.ui.view,arch_db:maintenance_consume_stock.view_maintenance_request_form
 msgid "<span class=\"o_stat_text\">Scraps</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Rebuts</span>"
 
 #. module: maintenance_consume_stock
 #: model:ir.model.fields,field_description:maintenance_consume_stock.field_maintenance_request__all_scraps_done
 msgid "All Scraps Done"
-msgstr ""
+msgstr "Tout les rebuts complétés"
 
 #. module: maintenance_consume_stock
 #. odoo-python
@@ -35,6 +38,8 @@ msgstr ""
 #, python-format
 msgid "Cannot delete a maintenance request with done scrap moves"
 msgstr ""
+"Il n'est pas possible de supprimer une requête de maintenance ayant de "
+"rebuts de complétés"
 
 #. module: maintenance_consume_stock
 #. odoo-python
@@ -43,16 +48,17 @@ msgstr ""
 msgid ""
 "Cannot unlink a scrap move that is done and assigned to a maintenance request"
 msgstr ""
+"Impossible de supprimer un rebut complété et lié à une requête de maintenance"
 
 #. module: maintenance_consume_stock
 #: model_terms:ir.ui.view,arch_db:maintenance_consume_stock.view_maintenance_request_form
 msgid "Consume Parts"
-msgstr ""
+msgstr "Consommer des pièces"
 
 #. module: maintenance_consume_stock
 #: model:ir.model.fields,field_description:maintenance_consume_stock.field_stock_scrap__maintenance_equipement_id
 msgid "Equipment"
-msgstr ""
+msgstr "Équipement"
 
 #. module: maintenance_consume_stock
 #. odoo-python
@@ -61,31 +67,31 @@ msgstr ""
 #: model:ir.model.fields,field_description:maintenance_consume_stock.field_stock_scrap__maintenance_request_id
 #, python-format
 msgid "Maintenance Request"
-msgstr ""
+msgstr "Requête de maintenance"
 
 #. module: maintenance_consume_stock
 #: model_terms:ir.ui.view,arch_db:maintenance_consume_stock.view_maintenance_request_form
 msgid "Parts"
-msgstr ""
+msgstr "Pièces"
 
 #. module: maintenance_consume_stock
 #: model:ir.model,name:maintenance_consume_stock.model_stock_scrap
 msgid "Scrap"
-msgstr ""
+msgstr "Rebut"
 
 #. module: maintenance_consume_stock
 #: model:ir.model.fields,field_description:maintenance_consume_stock.field_maintenance_request__scrap_count
 msgid "Scrap Count"
-msgstr ""
+msgstr "Nombre de rebuts"
 
 #. module: maintenance_consume_stock
 #. odoo-python
 #: code:addons/maintenance_consume_stock/models/maintenance_request.py:0
 #, python-format
 msgid "Scrap Moves"
-msgstr ""
+msgstr "Mouvements de rebut"
 
 #. module: maintenance_consume_stock
 #: model:ir.model.fields,field_description:maintenance_consume_stock.field_maintenance_request__scrap_ids
 msgid "Scraps"
-msgstr ""
+msgstr "Rebuts"
