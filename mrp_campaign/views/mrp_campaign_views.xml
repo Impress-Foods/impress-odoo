@@ -178,6 +178,7 @@
             </kanban>
         </field>
     </record>
+
     <record id="view_mrp_campaign_search" model="ir.ui.view">
         <field name="name">mrp.campaign.search</field>
         <field name="model">mrp.campaign</field>
@@ -210,6 +211,35 @@
         <field name="res_model">mrp.campaign</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="context">{'search_default_date': 1}</field>
+    </record>
+
+
+    <record id="view_mrp_campaign_line_form" model="ir.ui.view">
+        <field name="name">mrp.campaign.line.form</field>
+        <field name="model">mrp.campaign.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="campaign_id" />
+                        <field name="product_id" />
+                        <field name="product_demand_qty" />
+                        <field name="product_uom_id" />
+                        <field name="production_id" />
+                    </group>
+                    <group>
+                        <field name="anchor_product_qty" />
+                        <field name="component_uom_id" />
+                        <field name="product_tmpl_id" invisible="1" />
+                        <field
+                            name="bom_id"
+                            domain="['|', ('product_tmpl_id','=', product_tmpl_id), ('product_id', '=', product_id)]"
+                        />
+                    </group>
+                </group>
+                <field name="move_dest_ids" />
+            </form>
+        </field>
     </record>
 
     <menuitem

@@ -81,11 +81,14 @@ class MrpCampaign(models.Model):
 
     @api.depends(
         "bucket_start_date",
-        "product_id.campaign_bucket_type",
-        "product_id.campaign_bucket_size",
+        "product_id.product_tmpl_id.campaign_bucket_type",
+        "product_id.product_tmpl_id.campaign_bucket_size",
     )
     def _compute_bucket_end_date(self) -> None:
         for rec in self:
+            if not rec.bucket_start_date:
+                rec.bucket_end_date = False
+                return
             bucket_period: Literal[
                 "day", "week", "month", "year"
             ] = rec.product_id.campaign_bucket_type
@@ -102,6 +105,8 @@ class MrpCampaign(models.Model):
                     delta = timedelta(days=bucket_length * 30)
                 case "year":
                     delta = timedelta(days=bucket_length * 365)
+                case _:
+                    delta = timedelta(days=bucket_length)
 
             rec.bucket_end_date = rec.bucket_start_date + delta
 
@@ -183,6 +188,7 @@ class MrpCampaign(models.Model):
                                     campaign.date_planned_start, time(12, 0)
                                 ),
                                 "bom_id": anchor_bom.id,
+                                "created_by_campaign": True,
                             }
                         )
 
@@ -225,7 +231,11 @@ class MrpCampaign(models.Model):
         ):
             # Find and cancel any manufacturing orders created for this campaign
             productions = self.env["mrp.production"].search(
-                [("campaign_id", "=", campaign.id)]
+                [
+                    "&",
+                    ("campaign_id", "=", campaign.id),
+                    ("created_by_campaign", "=", True),
+                ]
             )
             if productions:
                 productions.action_cancel()
@@ -576,6 +586,9 @@ class MrpCampaignLine(models.Model):
         "mrp.campaign", string="Campaign", required=True, ondelete="cascade"
     )
     product_id = fields.Many2one("product.product", string="Product", required=True)
+    product_tmpl_id = fields.Many2one(
+        "product.template", related="product_id.product_tmpl_id"
+    )
     product_demand_qty = fields.Float(
         "Demand Quantity", compute="_compute_product_demand_qty", store=True
     )
@@ -671,6 +684,7 @@ class MrpCampaignLine(models.Model):
                     self.campaign_id.date_planned_start, time(23, 0)
                 ),
                 "campaign_id": self.campaign_id.id,  # Link as a consumer
+                "created_by_campaign": True,
             }
         )
 

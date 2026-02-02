@@ -10,6 +10,10 @@ _logger = logging.getLogger(__name__)
 class ProductionOrder(models.Model):
     _inherit = "mrp.production"
 
+    anchor_product_id = fields.Many2one(
+        "product.product", compute="_compute_anchor_product_id", store=True
+    )
+
     campaign_id = fields.Many2one(
         "mrp.campaign",
         ondelete="restrict",
@@ -33,6 +37,8 @@ class ProductionOrder(models.Model):
         readonly=True,
         help="Sequence of the parent campaign",
     )
+
+    created_by_campaign = fields.Boolean()
 
     def write(self, vals):
         res = super().write(vals)
@@ -82,6 +88,13 @@ class ProductionOrder(models.Model):
             for bo in bos:
                 bo.lot_producing_id = rec.lot_producing_id
         return res
+
+    def _compute_anchor_product_id(self) -> None:
+        for rec in self:
+            if rec.product_id:
+                rec.anchor_product_id = rec.product_id._get_anchor_product()
+            else:
+                rec.anchor_product_id = self.env["product.product"]
 
     def action_confirm(self: MrpProduction):
         rec = super().action_confirm()

@@ -29,6 +29,14 @@
             >
                 <field name="date_deadline" readonly="1" />
             </xpath>
+            <xpath expr="//field[@name='user_id']" position="before">
+                <field name="anchor_product_id" invisible="1" />
+                <field
+                    name="campaign_id"
+                    readonly="state in ['done','cancelled']"
+                    domain="['|',('product_id','=', product_id), ('product_id','=', anchor_product_id)]"
+                />
+            </xpath>
         </field>
     </record>
 

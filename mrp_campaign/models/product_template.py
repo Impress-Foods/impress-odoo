@@ -1,7 +1,6 @@
 import logging
-from pprint import pformat
 
-from odoo import _, fields, models
+from odoo import fields, models
 from odoo.exceptions import ValidationError
 
 from odoo.addons.mrp.models.mrp_bom import MrpBom
@@ -43,11 +42,12 @@ class ProductProductModel(models.Model):
             .mapped("product_id")
             .mapped(lambda p: p._get_anchor_product())
         )
-        _logger.warning(pformat([product.display_name for product in anchors]))
 
         if len(anchors) == 1:
             return anchors
         else:
             raise ValidationError(
-                _(f"Could not find anchor product. Expected 1, found {len(anchors)}")
+                self.env._(
+                    f"Could not find anchor product. Expected 1, found {len(anchors)}"
+                )
             )
