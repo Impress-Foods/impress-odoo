@@ -15,20 +15,45 @@
         <field name="name">view.mrp.campaign.creator.form</field>
         <field name="model">mrp.campaign.creator</field>
         <field name="arch" type="xml">
-            <form string="Mrp Campaign Creator">
-                <sheet string="Campaign Creation Wizard">
+            <form>
+                <sheet>
                     <group>
-                        <group>
-                            <field name="product_id" />
-                            <field name="planned_date" />
-                        </group>
+                        <field name="product_id" />
+                        <field name="planned_date" />
                     </group>
-                    <field name="valid_demand_move_ids" invisible="1" />
-                    <field
-                        name="demand_move_ids"
-                        domain="[('id', 'in', valid_demand_move_ids)]"
-                    />
+                    <notebook>
+                        <page string="Demand Moves" name="demand_moves">
+                            <field name="demand_move_ids" nolabel="1">
+                                <tree>
+                                    <field name="product_id" readonly="1" />
+                                    <field name="product_uom_qty" readonly="1" />
+                                    <field name="origin" readonly="1" />
+                                    <field
+                                        name="date_deadline"
+                                        widget="date"
+                                        readonly="1"
+                                    />
+                                    <field name="state" readonly="1" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
+                <footer>
+                    <button
+                        name="make_campaign"
+                        string="Create Campaign"
+                        type="object"
+                        class="btn-primary"
+                        data-hotkey="q"
+                    />
+                    <button
+                        string="Cancel"
+                        class="btn-secondary"
+                        special="cancel"
+                        data-hotkey="z"
+                    />
+                </footer>
             </form>
         </field>
     </record>

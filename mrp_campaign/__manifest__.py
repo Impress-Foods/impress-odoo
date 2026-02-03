@@ -11,6 +11,7 @@
         "security/ir.model.access.csv",
         "security/mrp_campaign_rules.xml",
         "views/mrp_campaign_creator_views.xml",
+        "wizards/mrp_campaign_add_demand_views.xml",
         "views/mrp_campaign_views.xml",
         "views/mrp_production_views.xml",
         "views/product_views.xml",

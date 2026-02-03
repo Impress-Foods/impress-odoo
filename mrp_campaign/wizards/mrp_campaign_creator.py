@@ -21,75 +21,62 @@ class MrpCampaignCreator(models.TransientModel):
     )
     planned_date = fields.Date()
 
-    demand_move_ids = fields.Many2many(
-        "stock.move", relation="mrp_campaign_creator_actual"
-    )
-    valid_demand_move_ids = fields.Many2many(
-        "stock.move",
-        relation="mrp_campaign_creator_valid",
-        compute="_compute_valid_demand_move_ids",
-    )
+    demand_move_ids = fields.Many2many("stock.move")
 
-    @api.depends("product_id")
-    def _compute_valid_demand_move_ids(self):
-        for rec in self:
-            if not rec.product_id:
-                rec.valid_demand_move_ids = False
-                return
+    @api.onchange("product_id")
+    def _onchange_product_id(self):
+        if not self.product_id:
+            self.demand_move_ids = False
+            return {"domain": {"demand_move_ids": [("id", "in", [])]}}
 
-            anchor_product = rec.product_id
+        anchor_product = self.product_id
 
-            # Find all products that use this anchor, by traversing BoMs upwards
-            all_descendants = self.env["product.product"].browse(anchor_product.id)
-            products_to_check = self.env["product.product"].browse(anchor_product.id)
+        # Find all products that use this anchor, by traversing BoMs upwards
+        all_descendants = self.env["product.product"].browse(anchor_product.id)
+        products_to_check = self.env["product.product"].browse(anchor_product.id)
 
-            while products_to_check:
-                # Find boms where products_to_check are components
-                boms = (
-                    self.env["mrp.bom.line"]
-                    .search([("product_id", "in", products_to_check.ids)])
-                    .mapped("bom_id")
-                )
+        while products_to_check:
+            # Find boms where products_to_check are components
+            boms = (
+                self.env["mrp.bom.line"]
+                .search([("product_id", "in", products_to_check.ids)])
+                .mapped("bom_id")
+            )
 
-                # Find finished goods for these boms
-                parent_products = boms.mapped("product_id")
-                parent_from_template = boms.mapped("product_tmpl_id").mapped(
-                    "product_variant_ids"
-                )
+            # Find finished goods for these boms
+            parent_products = boms.mapped("product_id")
+            parent_from_template = boms.mapped("product_tmpl_id").mapped(
+                "product_variant_ids"
+            )
 
-                all_parents = parent_products | parent_from_template
+            all_parents = parent_products | parent_from_template
 
-                # Find new products we haven't seen before to avoid infinite loops
-                newly_found = all_parents - all_descendants
+            # Find new products we haven't seen before to avoid infinite loops
+            newly_found = all_parents - all_descendants
 
-                if not newly_found:
-                    break
+            if not newly_found:
+                break
 
-                all_descendants |= newly_found
-                products_to_check = newly_found
+            all_descendants |= newly_found
+            products_to_check = newly_found
 
-            # Now search for moves for these products.
-            domain = [
+        # Now find available moves for these products.
+        available_moves = self.env["stock.move"].search(
+            [
                 (
                     "state",
                     "in",
-                    [
-                        "draft",
-                        "waiting",
-                        "confirmed",
-                        "partially_available",
-                        "assigned",
-                    ],
+                    ["confirmed", "waiting", "partially_available", "assigned"],
                 ),
                 ("product_id", "in", all_descendants.ids),
+                ("created_production_id", "=", False),
+                ("production_id", "=", False),
             ]
-            rec.valid_demand_move_ids = self.env["stock.move"].search(domain)
+        )
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        res = super().create(vals_list)
-        res.make_campaign()
-        return res
+        # Clear selection and return the new domain for the UI
+        self.demand_move_ids = False
+        return {"domain": {"demand_move_ids": [("id", "in", available_moves.ids)]}}
 
     def make_campaign(self):
         self.ensure_one()

@@ -57,6 +57,13 @@
                         class="btn-primary"
                         invisible="not bulk_created and not end_created"
                     />
+                    <button
+                        name="action_open_add_demand_wizard"
+                        type="object"
+                        string="Add Demand"
+                        class="btn-primary"
+                        invisible="state not in ['draft', 'review']"
+                    />
                     <field name="state" widget="statusbar" />
                 </header>
 

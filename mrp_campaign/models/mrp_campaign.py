@@ -264,6 +264,65 @@ class MrpCampaign(models.Model):
             "target": "current",
         }
 
+    def action_open_add_demand_wizard(self):
+        self.ensure_one()
+
+        anchor_product = self.product_id
+
+        # 1. Find all products that use this anchor by traversing BoMs upwards
+        all_descendants = self.env["product.product"].browse(anchor_product.id)
+        products_to_check = self.env["product.product"].browse(anchor_product.id)
+        while products_to_check:
+            boms = (
+                self.env["mrp.bom.line"]
+                .search([("product_id", "in", products_to_check.ids)])
+                .mapped("bom_id")
+            )
+            parent_products = boms.mapped("product_id")
+            parent_from_template = boms.mapped("product_tmpl_id").mapped(
+                "product_variant_ids"
+            )
+            all_parents = parent_products | parent_from_template
+            newly_found = all_parents - all_descendants
+            if not newly_found:
+                break
+            all_descendants |= newly_found
+            products_to_check = newly_found
+
+        # 2. Find potential demand moves for these products
+        potential_moves = self.env["stock.move"].search(
+            [
+                ("product_id", "in", all_descendants.ids),
+                (
+                    "state",
+                    "in",
+                    ["confirmed", "waiting", "partially_available", "assigned"],
+                ),
+                ("created_production_id", "=", False),
+                ("production_id", "=", False),
+            ]
+        )
+
+        # 3. Find moves already in any campaign to exclude them
+        all_campaign_lines = self.env["mrp.campaign.line"].search([])
+        moves_in_campaigns = all_campaign_lines.mapped("move_dest_ids")
+
+        # 4. Filter out moves already in other campaigns
+        available_moves = potential_moves - moves_in_campaigns
+
+        # 5. Return action to open the wizard
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Add Demand to Campaign",
+            "res_model": "mrp.campaign.add.demand",
+            "view_mode": "form",
+            "target": "new",
+            "context": {
+                "default_campaign_id": self.id,
+                "available_move_ids": available_moves.ids,
+            },
+        }
+
     def write(self, vals):
         # Store old date_planned_starts values (which will be Date objects after Part 0)
         old_date_planned_starts = {rec.id: rec.date_planned_start for rec in self}
