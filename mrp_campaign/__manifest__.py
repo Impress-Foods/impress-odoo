@@ -7,13 +7,14 @@
     "category": "Hidden",
     "depends": ["base", "mrp", "stock", "mrp_fast_allocation"],
     "data": [
+        "data/mrp_campaign_sequence.xml",
         "security/ir.model.access.csv",
         "security/mrp_campaign_rules.xml",
-        "reports/mrp_campaign_report.xml",
-        "views/product_views.xml",
+        "views/mrp_campaign_creator_views.xml",
         "views/mrp_campaign_views.xml",
         "views/mrp_production_views.xml",
-        "data/mrp_campaign_sequence.xml",
+        "views/product_views.xml",
+        "reports/mrp_campaign_report.xml",
     ],
     "assets": {
         "web.assets_backend": ["mrp_campaign/static/src/**/*"],

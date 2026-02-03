@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- View mrp.campaign.creator View Tree -->
+    <record id="view_mrp_campaign_creator_tree" model="ir.ui.view">
+        <field name="name">view.mrp.campaign.creator.tree</field>
+        <field name="model">mrp.campaign.creator</field>
+        <field name="arch" type="xml">
+            <tree> </tree>
+        </field>
+    </record>
+
+    <!-- View mrp.campaign.creator form -->
+    <record id="view_mrp_campaign_creator_form" model="ir.ui.view">
+        <field name="name">view.mrp.campaign.creator.form</field>
+        <field name="model">mrp.campaign.creator</field>
+        <field name="arch" type="xml">
+            <form string="Mrp Campaign Creator">
+                <sheet string="Campaign Creation Wizard">
+                    <group>
+                        <group>
+                            <field name="product_id" />
+                            <field name="planned_date" />
+                        </group>
+                    </group>
+                    <field name="valid_demand_move_ids" invisible="1" />
+                    <field
+                        name="demand_move_ids"
+                        domain="[('id', 'in', valid_demand_move_ids)]"
+                    />
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View mrp.campaign.creator search -->
+    <record id="view_mrp_campaign_creator_search" model="ir.ui.view">
+        <field name="name">view.mrp.campaign.creator.search</field>
+        <field name="model">mrp.campaign.creator</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By"> </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action mrp.campaign.creator -->
+    <record id="action_mrp_campaign_creator" model="ir.actions.act_window">
+        <field name="name">Mrp Campaign Creator</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mrp.campaign.creator</field>
+        <field name="view_mode">form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+        <field name="help" type="html">
+            <p
+                class="oe_view_nocontent_create"
+            > There is no examples click here to add new Mrp Campaign Creator. </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_mrp_campaign_creator"
+        name="Campaign Creator"
+        parent="mrp.menu_mrp_root"
+        action="action_mrp_campaign_creator"
+        sequence="50"
+    />
+</odoo>
