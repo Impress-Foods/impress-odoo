@@ -21,6 +21,7 @@ class ProductTemplate(models.Model):
     campaign_bucket_type = fields.Selection(
         selection=[("day", "Day"), ("week", "Week"), ("month", "Month")], default="day"
     )
+    campaign_buffer_percent = fields.Float()
 
 
 class ProductProductModel(models.Model):

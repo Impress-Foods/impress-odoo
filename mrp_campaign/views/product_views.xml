@@ -14,6 +14,11 @@
                     name="mrp_max_batch_size"
                     invisible="not is_campaign_manufactured"
                 />
+                <field
+                    name="campaign_buffer_percent"
+                    invisible="not is_campaign_anchor"
+                    widget="percentage"
+                />
                 <label
                     for="campaign_bucket_size"
                     invisible="not is_campaign_manufactured"

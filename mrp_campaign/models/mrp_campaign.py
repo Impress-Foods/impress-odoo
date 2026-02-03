@@ -51,6 +51,11 @@ class MrpCampaign(models.Model):
         required=True,
         domain="[('product_tmpl_id.is_campaign_anchor', '=', True)]",
     )
+    buffer_percent = fields.Float(
+        compute="_compute_buffer_percent",
+        inverse="_inverse_buffer_percent",
+        store=True,
+    )
     company_id = fields.Many2one("res.company", default=lambda self: self.env.company)
 
     lot_name = fields.Char()
@@ -78,6 +83,17 @@ class MrpCampaign(models.Model):
     def _compute_production_count(self):
         for rec in self:
             rec.production_count = len(rec.production_ids)
+
+    @api.depends("product_id")
+    def _compute_buffer_percent(self):
+        for rec in self:
+            if rec.product_id:
+                rec.buffer_percent = rec.product_id.campaign_buffer_percent
+            else:
+                rec.buffer_percent = 0
+
+    def _inverse_buffer_percent(self):
+        return
 
     @api.depends(
         "bucket_start_date",
@@ -669,7 +685,7 @@ class MrpCampaignLine(models.Model):
         "uom.uom", string="Unit of Measure", related="product_id.uom_id"
     )
     component_uom_id = fields.Many2one(
-        related="campaign_id.product_id.product_tmpl_id.uom_id"
+        string="Component UoM", related="campaign_id.product_id.product_tmpl_id.uom_id"
     )
 
     production_id = fields.Many2one("mrp.production", ondelete="set null")
@@ -690,7 +706,12 @@ class MrpCampaignLine(models.Model):
                     rec.move_dest_ids.mapped("product_uom_qty")
                 )
 
-    @api.depends("product_demand_qty", "bom_id", "campaign_id.product_id")
+    @api.depends(
+        "product_demand_qty",
+        "bom_id",
+        "campaign_id.product_id",
+        "campaign_id.buffer_percent",
+    )
     def _compute_anchor_product_qty(self):
         """
         Calculates the required quantity of the campaign's anchor product
@@ -710,7 +731,8 @@ class MrpCampaignLine(models.Model):
             for bom_line, line_data in bom_lines:
                 if bom_line.product_id == anchor_product:
                     needed_qty += line_data["qty"]
-            line.anchor_product_qty = needed_qty
+            buffer_multiplier = line.campaign_id.buffer_percent + 1
+            line.anchor_product_qty = needed_qty * buffer_multiplier
 
     def _create_finished_product_mo(self, confirm=True):
         """
