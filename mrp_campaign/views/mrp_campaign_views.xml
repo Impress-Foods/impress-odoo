@@ -41,7 +41,7 @@
                         type="object"
                         string="Make End Products"
                         class="btn-primary"
-                        invisible="end_created"
+                        invisible="end_created or state == 'cancel'"
                     />
                     <button
                         name="action_confirm_bulk"
@@ -63,6 +63,13 @@
                         string="Add Demand"
                         class="btn-primary"
                         invisible="state not in ['draft']"
+                    />
+                    <button
+                        name="action_open_split_wizard"
+                        type="object"
+                        string="Split Campaign"
+                        class="btn-primary"
+                        invisible="state not in ['draft', 'review']"
                     />
                     <field name="state" widget="statusbar" />
                 </header>

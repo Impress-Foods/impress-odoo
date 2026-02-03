@@ -339,6 +339,30 @@ class MrpCampaign(models.Model):
             },
         }
 
+    def action_open_split_wizard(self):
+        self.ensure_one()
+        # Check if the campaign is in a splittable state (e.g., draft or review)
+        if self.state not in ["draft", "review"]:
+            raise UserError(
+                _("Only campaigns in 'Draft' or 'Review' state can be split.")
+            )
+
+        # Check if there are any moves to split
+        if not self.line_ids or not self.line_ids.mapped("move_dest_ids"):
+            raise UserError(_("This campaign has no demand moves to split."))
+
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("Split Campaign: %s", self.name),
+            "res_model": "mrp.campaign.split.wizard",
+            "view_mode": "form",
+            "target": "new",  # Keep it as 'new' for a standard modal window
+            "context": {
+                "active_id": self.id,
+                "active_model": "mrp.campaign",
+            },
+        }
+
     def write(self, vals):
         # Store old date_planned_starts values (which will be Date objects after Part 0)
         old_date_planned_starts = {rec.id: rec.date_planned_start for rec in self}
