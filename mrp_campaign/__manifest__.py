@@ -5,7 +5,7 @@
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
-    "depends": ["base", "mrp", "stock", "mrp_fast_allocation"],
+    "depends": ["mrp", "mrp_fast_allocation"],
     "data": [
         "data/mrp_campaign_sequence.xml",
         "security/ir.model.access.csv",
@@ -17,6 +17,7 @@
         "views/mrp_production_views.xml",
         "views/product_views.xml",
         "reports/mrp_campaign_report.xml",
+        "views/mrp_campaign_demand_views.xml",
     ],
     "assets": {
         "web.assets_backend": ["mrp_campaign/static/src/**/*"],

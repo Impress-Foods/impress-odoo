@@ -14,11 +14,7 @@ class ProductionOrder(models.Model):
         "product.product", compute="_compute_anchor_product_id", store=True
     )
 
-    campaign_id = fields.Many2one(
-        "mrp.campaign",
-        ondelete="restrict",
-        help="The campaign that created this manufacturing order (provider MO).",
-    )
+    campaign_id = fields.Many2one(related="campaign_line_id.campaign_id")
 
     campaign_product_qty = fields.Float(
         compute="_compute_campaign_product_qty",
@@ -39,6 +35,7 @@ class ProductionOrder(models.Model):
     )
 
     created_by_campaign = fields.Boolean()
+    campaign_line_id = fields.Many2one("mrp.campaign.line")
 
     def write(self, vals):
         res = super().write(vals)
@@ -70,8 +67,9 @@ class ProductionOrder(models.Model):
             # Filter the raw moves to find the ones for the campaign's product
             # that are not cancelled and sum their quantities.
             moves = mo.move_raw_ids.filtered(
-                lambda m, product=campaign_product: m.product_id == product
-                and m.state != "cancel"
+                lambda m, product=campaign_product: (
+                    m.product_id == product and m.state != "cancel"
+                )
             )
             mo.campaign_product_qty = sum(moves.mapped("product_uom_qty"))
 
@@ -92,7 +90,7 @@ class ProductionOrder(models.Model):
     def _compute_anchor_product_id(self) -> None:
         for rec in self:
             if rec.product_id:
-                rec.anchor_product_id = rec.product_id._get_anchor_product()
+                rec.anchor_product_id = rec.product_id.anchor_product_id
             else:
                 rec.anchor_product_id = self.env["product.product"]
 
