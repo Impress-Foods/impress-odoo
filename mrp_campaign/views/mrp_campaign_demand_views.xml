@@ -10,7 +10,6 @@
                         <field name="campaign_id" />
                         <field name="product_id" />
                         <field name="product_uom_id" />
-                        <field name="production_id" />
                     </group>
                     <group>
                         <field name="product_tmpl_id" invisible="1" />
@@ -24,5 +23,15 @@
             </form>
         </field>
     </record>
-
+    <record id="view_mrp_campaign_demand_tree" model="ir.ui.view">
+        <field name="name">mrp.campaign.demand.tree</field>
+        <field name="model">mrp.campaign.demand</field>
+        <field name="arch" type="xml">
+            <tree create="0">
+                <field name="product_id" />
+                <field name="qty" />
+                <field name="bom_id" />
+            </tree>
+        </field>
+    </record>
 </odoo>

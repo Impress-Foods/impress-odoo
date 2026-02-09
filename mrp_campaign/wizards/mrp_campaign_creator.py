@@ -111,4 +111,4 @@ class MrpCampaignCreator(models.TransientModel):
                     "bom_id": bom.id if bom else False,
                 }
             )
-        self.env["mrp.campaign.line"].create(line_values)
+        self.env["mrp.campaign.demand"].create(line_values)

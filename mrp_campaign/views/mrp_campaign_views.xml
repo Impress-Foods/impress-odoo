@@ -8,15 +8,15 @@
             <tree>
                 <header>
                     <button
-                        name="action_confirm_end"
+                        name="action_plan"
                         type="object"
-                        string="Confirm End Products"
+                        string="Plan"
                         class="oe_highlight"
                     />
                     <button
-                        name="action_confirm_bulk"
+                        name="action_confirm"
                         type="object"
-                        string="Confirm Bulk Products"
+                        string="Confirm"
                         class="oe_highlight"
                     />
                     <button name="action_reset" type="object" string="Reset" class="" />
@@ -33,45 +33,48 @@
         <field name="model">mrp.campaign</field>
         <field name="arch" type="xml">
             <form string="Manufacturing Campaign">
-                <field name="end_created" invisible="1" />
-                <field name="bulk_created" invisible="1" />
                 <header>
                     <button
-                        name="action_confirm_end"
+                        name="action_plan"
                         type="object"
-                        string="Make End Products"
+                        string="Plan"
                         class="btn-primary"
-                        invisible="end_created or state == 'cancel'"
+                        invisible="state not in ['draft']"
                     />
                     <button
-                        name="action_confirm_bulk"
+                        name="action_confirm"
                         type="object"
-                        string="Make Bulk Products"
+                        string="Confirm"
                         class="btn-primary"
-                        invisible="bulk_created or not end_created"
+                        invisible="state not in ['plan']"
                     />
-                    <button
-                        name="action_reset"
-                        type="object"
-                        string="Reset Campaign"
-                        class="btn-primary"
-                        invisible="not bulk_created and not end_created"
-                    />
+
                     <button
                         name="action_open_add_demand_wizard"
                         type="object"
                         string="Add Demand"
-                        class="btn-primary"
+                        class="btn-secondary"
                         invisible="state not in ['draft']"
                     />
                     <button
                         name="action_open_split_wizard"
                         type="object"
                         string="Split Campaign"
-                        class="btn-primary"
-                        invisible="state not in ['draft', 'review']"
+                        class="btn-secondary"
+                        invisible="state not in ['draft', 'plan']"
                     />
-                    <field name="state" widget="statusbar" />
+                    <button
+                        name="action_reset"
+                        type="object"
+                        string="Reset Campaign"
+                        class="btn-secondary"
+                        invisible="state in ['draft']"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,plan,confirm,done"
+                    />
                 </header>
 
                 <sheet>
@@ -93,14 +96,14 @@
                     <group>
                         <group>
                             <field name="name" />
-                            <field name="product_id" />
+                            <field name="product_id" readonly="1" />
                             <field
                                 name="company_id"
                                 groups="base.group_multi_company"
                             />
                             <field
                                 name="date_planned_start"
-                                readonly="state not in ['draft', 'review']"
+                                readonly="state not in ['draft', 'plan', 'confirmed']"
                             />
                             <field name="bucket_start_date" readonly="1" />
                             <field name="bucket_end_date" readonly="1" />
@@ -110,92 +113,38 @@
                             <field
                                 name="override_batch_size"
                                 widget="boolean_toggle"
-                                readonly="state not in ['draft', 'review']"
+                                readonly="state not in ['draft']"
                             />
                             <field
                                 name="batch_size"
                                 required="override_batch_size"
                                 invisible="not override_batch_size"
-                                readonly="state not in ['draft', 'review']"
+                                readonly="state not in ['draft']"
                             />
                             <field
                                 name="buffer_percent"
                                 widget="percentage"
-                                readonly="state not in ['draft', 'review']"
+                                readonly="state not in ['draft']"
                             />
                         </group>
-
                     </group>
-
                     <notebook>
                         <page string="Demand">
                             <field
                                 name="demand_line_ids"
-                                readonly="state not in ['draft', 'review']"
-                            >
-                                <tree>
-                                    <field name="product_id" />
-                                    <field name="qty" />
-                                    <field name="bom_id" />
-                                </tree>
-                            </field>
+                                readonly="state not in ['draft']"
+                            />
                         </page>
                         <page string="Lines">
-                            <field name="line_ids">
-                                <tree default_order="sequence asc">
-                                    <field name="sequence" column_invisible="1" />
-                                    <field name="product_id" />
-                                    <field
-                                        name="bom_id"
-                                        domain="[('product_id','=','product_id')]"
-                                    />
-                                    <field name="qty" />
-                                    <field name="downstream_product_id" />
-                                </tree>
-                                <form>
-                                    <group>
-                                        <group>
-                                            <field name="campaign_id" readonly="1" />
-                                            <field name="product_id" readonly="1" />
-                                            <field name="qty" readonly="1" />
-                                            <field
-                                                name="product_template_variant_value_ids"
-                                                widget="many2many_tags"
-                                            />
-                                        </group>
-                                        <group>
-                                            <field
-                                                name="product_tmpl_id"
-                                                invisible="1"
-                                            />
-                                            <field
-                                                name="bom_id"
-                                                domain="['|',('product_tmpl_id','=',product_tmpl_id),('product_id','=',product_id)]"
-                                                required="1"
-                                            />
-                                            <field
-                                                name="downstream_product_id"
-                                                readonly="1"
-                                            />
-                                            <field
-                                                name="downstream_line_id"
-                                                readonly="1"
-                                            />
-                                            <field
-                                                name="is_batch_produced"
-                                                readonly="1"
-                                            />
-                                            <field name="batch_size" readonly="1" />
-                                            <field name="use_buffer" />
-                                            <field name="buffer_percent" />
-                                        </group>
-                                        <field name="production_ids" readonly="1" />
-                                    </group>
-                                </form>
-                            </field>
+                            <field name="line_ids" />
                         </page>
                     </notebook>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" />
+                    <field name="activity_ids" />
+                    <field name="message_ids" />
+                </div>
             </form>
         </field>
     </record>

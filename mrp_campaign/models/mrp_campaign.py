@@ -16,6 +16,7 @@ _logger = logging.getLogger(__name__)
 
 class MrpCampaign(models.Model):
     _name = "mrp.campaign"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "Manufacturing Campaign"
     _order = "date_planned_start desc,sequence desc"
 
@@ -29,11 +30,13 @@ class MrpCampaign(models.Model):
     state = fields.Selection(
         [
             ("draft", "Draft"),
-            ("review", "In Review"),
-            ("confirmed", "Confirmed"),
+            ("plan", "Planned"),
+            ("confirm", "Confirmed"),
+            ("progress", "In Progress"),
             ("done", "Done"),
             ("cancel", "Cancelled"),
         ],
+        compute="_compute_state",
         string="Status",
         default="draft",
     )
@@ -73,11 +76,28 @@ class MrpCampaign(models.Model):
         help="Stock moves created to produce the batched product for this campaign.",
     )
 
-    bulk_created = fields.Boolean()
-    end_created = fields.Boolean()
-
     production_ids = fields.One2many("mrp.production", "campaign_id")
     production_count = fields.Integer(compute="_compute_production_count")
+
+    @api.depends("production_ids", "production_ids.state")
+    def _compute_state(self):
+        for rec in self:
+            if rec.production_count == 0:
+                rec.state = "draft"
+            elif any(
+                [prod.state in ["progress", "to_close"] for prod in rec.production_ids]
+            ):
+                rec.state = "progress"
+            elif any([prod.state in ["confirmed"] for prod in rec.production_ids]):
+                rec.state = "confirm"
+            elif all([prod.state in ["cancelled"] for prod in rec.production_ids]):
+                rec.state = "cancelled"
+            elif all(
+                [prod.state in ["done", "cancelled"] for prod in rec.production_ids]
+            ):
+                rec.state = "done"
+            else:
+                rec.state = "plan"
 
     @api.depends("production_ids")
     def _compute_production_count(self):
@@ -288,130 +308,37 @@ class MrpCampaign(models.Model):
         for line in created_lines:
             line._construct_downstream_tree_line(depth=0)
 
-    def action_confirm_end(self):
-        for campaign in self:
-            if not campaign.end_created:
-                if not campaign.demand_line_ids:
-                    raise UserError(
-                        _(
-                            "Cannot confirm campaign %s without any demand.",
-                            campaign.name,
-                        )
+    def action_plan(self):
+        for campaign in self.filtered(lambda x: x.state == "draft"):
+            if not campaign.demand_line_ids:
+                raise UserError(
+                    _(
+                        "Cannot confirm campaign %s without any demand.",
+                        campaign.name,
                     )
-
-                # Part 2: Create MOs for the finished goods on each line
-                # mos = self.env["mrp.production"]
-                # for line in campaign.demand_line_ids:
-                #     mos += line._create_finished_product_mo(confirm=False)
-                for line in campaign.line_ids:
-                    line.make_production_order()
-
-                # MOs are created in draft, awaiting user adjustment.
-                # Part 3: Update campaign state
-                campaign.write({"state": "review", "end_created": True})
-        return True
-
-    def action_confirm_bulk(self):
-        for campaign in self:
-            if not campaign.bulk_created:
-                # 1. Confirm 'end' MOs that are still in draft state
-                end_mos_to_confirm = campaign.production_ids.filtered(
-                    lambda mo: mo.state == "draft"
-                )
-                if end_mos_to_confirm:
-                    end_mos_to_confirm.with_context(
-                        ignore_campaign_procurement=True
-                    ).action_confirm()
-
-                anchor_product = campaign.product_id
-                # 2. Calculate total anchor demand from confirmed 'end' MOs' raw moves
-                # The campaign.production_ids will now contain confirmed MOs
-                total_anchor_qty_needed = sum(
-                    campaign.demand_line_ids.mapped("anchor_product_qty")
                 )
 
-                if total_anchor_qty_needed > 0:
-                    # Find BoM for anchor product, needed to create MO
-                    anchor_bom = self.env["mrp.bom"]._bom_find(products=anchor_product)[
-                        anchor_product
-                    ]
-                    if not anchor_bom:
-                        raise UserError(
-                            _(
-                                "No Bill of Materials found for the anchor product %s.",
-                                anchor_product.display_name,
-                            )
-                        )
+            campaign._construct_tree_from_demand()
 
-                    batch_size = (
-                        campaign.batch_size
-                        if campaign.override_batch_size and campaign.batch_size > 0
-                        else campaign.product_id.mrp_max_batch_size
-                    )
-                    remaining_qty = total_anchor_qty_needed
-                    mos_to_create = []
-                    while remaining_qty > 1e-6:
-                        qty_to_produce = min(batch_size, remaining_qty)
-                        remaining_qty -= qty_to_produce
+            for line in campaign.line_ids:
+                line.make_production_order()
 
-                        mos_to_create.append(
-                            {
-                                "product_id": anchor_product.id,
-                                "product_uom_id": anchor_product.uom_id.id,
-                                "product_qty": qty_to_produce,
-                                "campaign_id": campaign.id,
-                                "origin": campaign.name,
-                                "date_start": datetime.combine(
-                                    campaign.date_planned_start, time(5, 0)
-                                ),
-                                "date_deadline": datetime.combine(
-                                    campaign.date_planned_start, time(12, 0)
-                                ),
-                                "bom_id": anchor_bom.id,
-                                "created_by_campaign": True,
-                            }
-                        )
-
-                    anchor_mos = self.env["mrp.production"]
-                    if mos_to_create:
-                        anchor_mos = self.env["mrp.production"].create(mos_to_create)
-                        # 3. Create and confirm 'bulk' MOs
-                        anchor_mos.action_confirm()
-
-                    # 4. Link bulk MO finished moves to end MO raw moves
-                    if anchor_mos and total_anchor_qty_needed > 0:
-                        provider_moves = anchor_mos.mapped("move_finished_ids")
-                        consumer_moves = campaign.production_ids.mapped(
-                            "move_raw_ids"
-                        ).filtered(
-                            lambda move, anchor_product=anchor_product: (
-                                move.product_id == anchor_product
-                            )
-                        )
-
-                        if provider_moves and consumer_moves:
-                            provider_moves.write(
-                                {"move_dest_ids": [(6, 0, consumer_moves.ids)]}
-                            )
-
-                # 5. Update campaign state
-                campaign.write({"state": "confirmed", "bulk_created": True})
-        return True
+    def action_confirm(self):
+        for campaign in self.filtered(lambda x: x.state == "plan"):
+            end_mos_to_confirm = campaign.production_ids.filtered(
+                lambda mo: mo.state == "draft"
+            )
+            if end_mos_to_confirm:
+                end_mos_to_confirm.with_context(
+                    ignore_campaign_procurement=True
+                ).action_confirm()
 
     def action_reset(self):
         """
         Resets a confirmed campaign back to draft, deleting any manufacturing
         orders and stock moves that were created by the confirmation process.
         """
-        for campaign in self.filtered(
-            lambda c: (
-                c.state
-                in [
-                    "review",
-                    "confirmed",
-                ]
-            )
-        ):
+        for campaign in self.filtered(lambda c: c.state in ["plan", "confirm"]):
             # Find and cancel any manufacturing orders created for this campaign
             productions = self.env["mrp.production"].search(
                 [
@@ -423,12 +350,7 @@ class MrpCampaign(models.Model):
             if productions:
                 productions.action_cancel()
                 productions.unlink()
-
-            campaign.write(
-                {"state": "draft", "bulk_created": False, "end_created": False}
-            )
-
-        return True
+            campaign.line_ids.unlink()
 
     def action_view_mos(self):
         return {
@@ -501,9 +423,9 @@ class MrpCampaign(models.Model):
     def action_open_split_wizard(self):
         self.ensure_one()
         # Check if the campaign is in a splittable state (e.g., draft or review)
-        if self.state not in ["draft", "review"]:
+        if self.state not in ["draft", "plan"]:
             raise UserError(
-                _("Only campaigns in 'Draft' or 'Review' state can be split.")
+                _("Only campaigns in 'Draft' or 'Planned' state can be split.")
             )
 
         # Check if there are any moves to split

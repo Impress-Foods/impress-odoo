@@ -31,7 +31,7 @@ class MrpCampaignSplitWizard(models.TransientModel):
             campaign = self.env["mrp.campaign"].browse(active_id)
             res["original_campaign_id"] = campaign.id
 
-            moves = campaign.line_ids.mapped("move_dest_ids")
+            moves = campaign.demand_line_ids.mapped("move_dest_ids")
             lines_vals = [
                 (
                     0,
@@ -107,7 +107,7 @@ class MrpCampaignSplitWizard(models.TransientModel):
             grouped_lines_data[key] |= move
 
         for (product_id, bom_id), line_moves in grouped_lines_data.items():
-            self.env["mrp.campaign.line"].create(
+            self.env["mrp.campaign.demand"].create(
                 {
                     "campaign_id": new_campaign.id,
                     "product_id": product_id,

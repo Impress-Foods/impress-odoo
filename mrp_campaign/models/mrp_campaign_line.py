@@ -14,7 +14,7 @@ class CampaignLine(models.Model):
     _name = "mrp.campaign.line"
     _description = "Campaign breakdown line"
 
-    campaign_id = fields.Many2one("mrp.campaign")
+    campaign_id = fields.Many2one("mrp.campaign", ondelete="cascade")
     production_ids = fields.One2many("mrp.production", "campaign_line_id")
 
     product_id = fields.Many2one("product.product")
