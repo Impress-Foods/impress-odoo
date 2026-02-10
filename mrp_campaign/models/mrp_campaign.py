@@ -198,9 +198,6 @@ class MrpCampaign(models.Model):
                             )
         return res
 
-    def _compute_available_anchor(self) -> float:
-        self.ensure_one()
-
     def _sync_date_planned_start(self):
         """
         Synchronizes date_planned_start and bucket_start_date based on the earliest
@@ -297,7 +294,7 @@ class MrpCampaign(models.Model):
                 )
             )
             if existing_line:
-                existing_line.qty += demand.qty
+                existing_line.qty += demand.target_qty
                 created_lines |= existing_line
             else:
                 new_line = self.env["mrp.campaign.line"].create(
@@ -305,7 +302,7 @@ class MrpCampaign(models.Model):
                         "campaign_id": self.id,
                         "product_id": demand.product_id.id,
                         "bom_id": demand_bom.id,
-                        "qty": demand.qty,
+                        "qty": demand.target_qty,
                     }
                 )
                 created_lines |= new_line

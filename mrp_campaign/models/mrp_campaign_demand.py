@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class MrpCampaignDemand(models.Model):
@@ -14,6 +14,12 @@ class MrpCampaignDemand(models.Model):
         "product.template", related="product_id.product_tmpl_id"
     )
     qty = fields.Float(compute="_compute_qty")
+    target_qty = fields.Float(
+        string="Target Quantity",
+        compute="_compute_target_qty",
+        inverse="_inverse_target_qty",
+        store=True,
+    )
 
     move_dest_ids = fields.Many2many(
         "stock.move",
@@ -38,3 +44,11 @@ class MrpCampaignDemand(models.Model):
     def _compute_qty(self):
         for rec in self:
             rec.qty = sum(rec.move_dest_ids.mapped("product_uom_qty"))
+
+    @api.depends("qty")
+    def _compute_target_qty(self):
+        for rec in self:
+            rec.target_qty = rec.qty
+
+    def _inverse_target_qty(self):
+        pass

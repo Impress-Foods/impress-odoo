@@ -2,7 +2,9 @@ import json
 import logging
 from typing import NamedTuple
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
+from odoo.tools import float_compare
 
 from ..models.mrp_campaign import MrpCampaign
 from ..models.mrp_campaign_demand import MrpCampaignDemand
@@ -40,9 +42,9 @@ class CampaignBackorderWizard(models.TransientModel):
             {
                 "id": demand.id,
                 "product": (demand.product_id.id, demand.product_id.display_name),
-                "qty": demand.qty,
-                "planned_qty": 0,
-                "total_allocated": 0,
+                "qty": demand.target_qty,  # Use target_qty here
+                "planned_qty": demand.target_qty,  # Use target_qty as initial planned
+                "total_allocated": demand.target_qty,  # Set initially to target_qty
                 "needed_qty": 0,
                 "factor": demand._get_anchor_factor(),
                 "moves": [
@@ -73,12 +75,52 @@ class CampaignBackorderWizard(models.TransientModel):
     def action_confirm(self):
         self.ensure_one()
         data = json.loads(self.allocation_json)
-        demands: dict[MrpCampaignDemand, Quantities] = {}
-        for demand in data["demands"]:
+        current_campaign = self.campaign_id
+        backorder_campaign = self.env["mrp.campaign"]
+
+        for demand_data in data["demands"]:
             demand_line: MrpCampaignDemand = self.env["mrp.campaign.demand"].browse(
-                demand["id"]
+                demand_data["id"]
             )
-            allocated = demand["total_allocated"]
-            final_fulfilled = allocated / demand_line._get_anchor_factor()
-            demands[demand_line] = Quantities(allocated, final_fulfilled)
-        _logger.warning(demands)
+            original_target_qty: float = demand_line.target_qty
+            factor: float = demand_data["factor"]
+            keep_qty: float = demand_data["total_allocated"] / factor
+            _logger.warning(f"orignal {original_target_qty} - keep {keep_qty}")
+            comparison = float_compare(original_target_qty, keep_qty, 2)
+
+            # Do nothing with fulfilled demands, error out on over fulfilled demands
+            # and continue on under fulfilled demands
+            match comparison:
+                case 0:
+                    continue
+                case -1:
+                    raise ValidationError(_("Allocated bulk qty > original target qty"))
+                case _:
+                    pass
+
+            # For ease of use, round qty in units to ints
+            if demand_line.product_id.uom_id.category_id == self.env.ref(
+                "uom.product_uom_categ_unit"
+            ):
+                keep_qty = round(keep_qty)
+
+            qty_to_bo = original_target_qty - keep_qty
+            demand_line.target_qty -= qty_to_bo
+
+            if not backorder_campaign:
+                backorder_campaign = current_campaign.copy(
+                    {"bo_source": current_campaign.id}
+                )
+
+            self.env["mrp.campaign.demand"].create(
+                [
+                    {
+                        "product_id": demand_line.product_id.id,
+                        "move_dest_ids": demand_line.move_dest_ids.ids,
+                        "bom_id": demand_line.bom_id.id,
+                        "campaign_id": backorder_campaign.id,
+                    }
+                ]
+            ).write({"target_qty": qty_to_bo})
+
+        return {"type": "ir.actions.act_window_close"}

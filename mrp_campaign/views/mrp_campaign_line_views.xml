@@ -11,6 +11,7 @@
                 <field name="product_id" />
                 <field name="bom_id" domain="[('product_id','=','product_id')]" />
                 <field name="qty" />
+                <field name="producing_qty" />
                 <field name="fulfilled_qty" />
                 <field name="downstream_product_id" />
             </tree>
@@ -49,6 +50,7 @@
                             <field name="use_buffer" />
                             <field name="buffer_percent" />
                         </group>
+                        <field name="upstream_line_ids" />
                         <field name="production_ids" readonly="1" />
                     </group>
                 </sheet>

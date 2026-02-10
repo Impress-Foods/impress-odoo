@@ -18,6 +18,7 @@
                             domain="['|', ('product_tmpl_id','=', product_tmpl_id), ('product_id', '=', product_id)]"
                         />
                         <field name="campaign_line_id" />
+                        <field name="target_qty" />
                     </group>
                 </group>
                 <field name="move_dest_ids" />
@@ -30,7 +31,7 @@
         <field name="arch" type="xml">
             <tree create="0">
                 <field name="product_id" />
-                <field name="qty" />
+                <field name="target_qty" />
                 <field name="bom_id" />
             </tree>
         </field>
