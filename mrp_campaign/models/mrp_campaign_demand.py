@@ -8,6 +8,7 @@ class MrpCampaignDemand(models.Model):
     campaign_id = fields.Many2one(
         "mrp.campaign", string="Campaign", required=True, ondelete="cascade"
     )
+    campaign_line_id = fields.Many2one("mrp.campaign.line")
     product_id = fields.Many2one("product.product", string="Product", required=True)
     product_tmpl_id = fields.Many2one(
         "product.template", related="product_id.product_tmpl_id"
@@ -19,6 +20,7 @@ class MrpCampaignDemand(models.Model):
         string="Destination Moves",
         help="Moves that this production will fulfill.",
     )
+
     product_uom_id = fields.Many2one(
         "uom.uom", string="Unit of Measure", related="product_id.uom_id"
     )
@@ -28,6 +30,10 @@ class MrpCampaignDemand(models.Model):
         string="Bill of Materials",
         help="The specific BoM to be used for manufacturing the product on this line.",
     )
+
+    def _get_anchor_factor(self) -> float:
+        self.ensure_one()
+        return self.campaign_line_id._get_anchor_factor()
 
     def _compute_qty(self):
         for rec in self:

@@ -49,6 +49,7 @@
                         invisible="state not in ['plan']"
                     />
 
+
                     <button
                         name="action_open_add_demand_wizard"
                         type="object"
@@ -70,6 +71,13 @@
                         class="btn-secondary"
                         invisible="state in ['draft']"
                     />
+                    <button
+                        name="action_bo"
+                        type="object"
+                        string="Backorder Campaign"
+                        class="btn-secondary"
+                        invisible="state not in ['progress'] and False"
+                    />
                     <field
                         name="state"
                         widget="statusbar"
@@ -78,18 +86,33 @@
                 </header>
 
                 <sheet>
-
+                    <field name="bo_count" invisible="1" />
+                    <field name="production_count" invisible="1" />
                     <div class="oe_button_box" name="button_box">
                         <button
                             name="action_view_mos"
                             type="object"
                             class="oe_stat_button"
                             icon="fa-flask"
+                            invisible="production_count == 0"
                         >
                             <field
                                 name="production_count"
                                 widget="statinfo"
                                 string="Productions"
+                            />
+                        </button>
+                        <button
+                            name="action_view_bos"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-share"
+                            invisible="bo_count == 0"
+                        >
+                            <field
+                                name="bo_count"
+                                widget="statinfo"
+                                string="Back Orders"
                             />
                         </button>
                     </div>
@@ -136,7 +159,7 @@
                             />
                         </page>
                         <page string="Lines">
-                            <field name="line_ids" />
+                            <field name="line_ids" readonly="1" />
                         </page>
                     </notebook>
                 </sheet>

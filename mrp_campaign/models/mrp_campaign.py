@@ -69,15 +69,17 @@ class MrpCampaign(models.Model):
 
     line_ids = fields.One2many("mrp.campaign.line", "campaign_id")
 
-    provider_move_ids = fields.One2many(
-        "stock.move",
-        "campaign_id",
-        string="Provider Moves",
-        help="Stock moves created to produce the batched product for this campaign.",
-    )
-
     production_ids = fields.One2many("mrp.production", "campaign_id")
     production_count = fields.Integer(compute="_compute_production_count")
+
+    backorder_campaign_ids = fields.One2many("mrp.campaign", "bo_source")
+    bo_count = fields.Integer(compute="_compute_bo_count")
+    bo_source = fields.Many2one("mrp.campaign")
+
+    @api.depends("backorder_campaign_ids")
+    def _compute_bo_count(self):
+        for rec in self:
+            rec.bo_count = len(rec.backorder_campaign_ids)
 
     @api.depends("production_ids", "production_ids.state")
     def _compute_state(self):
@@ -196,6 +198,9 @@ class MrpCampaign(models.Model):
                             )
         return res
 
+    def _compute_available_anchor(self) -> float:
+        self.ensure_one()
+
     def _sync_date_planned_start(self):
         """
         Synchronizes date_planned_start and bucket_start_date based on the earliest
@@ -305,6 +310,8 @@ class MrpCampaign(models.Model):
                 )
                 created_lines |= new_line
 
+            demand.campaign_line_id = new_line or existing_line
+
         for line in created_lines:
             line._construct_downstream_tree_line(depth=0)
 
@@ -352,11 +359,35 @@ class MrpCampaign(models.Model):
                 productions.unlink()
             campaign.line_ids.unlink()
 
+    def action_bo(self):
+        self.ensure_one()
+
+        return {
+            "type": "ir.actions.act_window",
+            "name": _("backorder Campaign: %s", self.name),
+            "res_model": "mrp.campaign.backorder.wizard",
+            "view_mode": "form",
+            "target": "new",  # Keep it as 'new' for a standard modal window
+            "context": {
+                "active_id": self.id,
+                "active_model": "mrp.campaign",
+            },
+        }
+
     def action_view_mos(self):
         return {
             "type": "ir.actions.act_window",
             "res_model": "mrp.production",
             "domain": [("id", "in", self.production_ids.ids)],
+            "view_mode": "tree,form",
+            "target": "current",
+        }
+
+    def action_view_bos(self):
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "mrp.campaign",
+            "domain": [("id", "in", self.backorder_campaign_ids.ids)],
             "view_mode": "tree,form",
             "target": "current",
         }

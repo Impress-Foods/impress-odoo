@@ -17,6 +17,7 @@
                             name="bom_id"
                             domain="['|', ('product_tmpl_id','=', product_tmpl_id), ('product_id', '=', product_id)]"
                         />
+                        <field name="campaign_line_id" />
                     </group>
                 </group>
                 <field name="move_dest_ids" />

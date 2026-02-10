@@ -16,13 +16,14 @@ class CampaignLine(models.Model):
 
     campaign_id = fields.Many2one("mrp.campaign", ondelete="cascade")
     production_ids = fields.One2many("mrp.production", "campaign_line_id")
-
+    demand_ids = fields.One2many("mrp.campaign.demand", "campaign_line_id")
     product_id = fields.Many2one("product.product")
     product_tmpl_id = fields.Many2one(related="product_id.product_tmpl_id")
     product_template_variant_value_ids = fields.Many2many(
         related="product_id.product_template_variant_value_ids"
     )
     qty = fields.Float()
+    fulfilled_qty = fields.Float(compute="_compute_fulfilled_qty")
     bom_id = fields.Many2one("mrp.bom")
 
     is_batch_produced = fields.Boolean(compute="_compute_is_batch_produced")
@@ -35,6 +36,7 @@ class CampaignLine(models.Model):
     downstream_product_id = fields.Many2one(
         "product.product", compute="_compute_downstream_product"
     )
+
     upstream_line_ids = fields.One2many("mrp.campaign.line", "downstream_line_id")
     sequence = fields.Integer(default=0)
 
@@ -60,6 +62,11 @@ class CampaignLine(models.Model):
     def _compute_downstream_product(self) -> None:
         for rec in self:
             rec.downstream_product_id = rec._get_downstream_product()
+
+    @api.depends("production_ids", "production_ids.qty_produced")
+    def _compute_fulfilled_qty(self):
+        for rec in self:
+            rec.fulfilled_qty = sum(rec.production_ids.mapped("qty_produced"))
 
     def _get_downstream_product(self) -> ProductProduct:
         self.ensure_one()
@@ -92,7 +99,6 @@ class CampaignLine(models.Model):
     def _construct_downstream_tree_line(self, depth=0) -> None:
         self.ensure_one()
         self.sequence = depth
-        _logger.warning(f"Product: {self.product_id.name}")
 
         if not self.bom_id:
             return
@@ -139,7 +145,6 @@ class CampaignLine(models.Model):
     def make_production_order(self) -> None:
         values = []
         for rec in self:
-            _logger.warning(f"Processing line for {rec.product_id.name}")
             values += rec._make_production_order()
         self.env["mrp.production"].create(values)
 
@@ -186,3 +191,12 @@ class CampaignLine(models.Model):
 
         union = self.product_template_variant_value_ids & bom_line_variant_ids
         return union
+
+    def _get_anchor_factor(self) -> float:
+        self.ensure_one()
+        if not self.downstream_product_id:
+            return 1
+        else:
+            own_factor = self.bom_id.get_factor_to_product(self.downstream_product_id)
+            downstream_factor = self.downstream_line_id._get_anchor_factor()
+            return own_factor * downstream_factor

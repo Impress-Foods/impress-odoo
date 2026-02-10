@@ -10,6 +10,7 @@
         "data/mrp_campaign_sequence.xml",
         "security/ir.model.access.csv",
         "security/mrp_campaign_rules.xml",
+        "wizards/mrp_campaign_backorder_wizard_views.xml",
         "views/mrp_campaign_demand_views.xml",
         "views/mrp_campaign_line_views.xml",
         "views/mrp_campaign_views.xml",
