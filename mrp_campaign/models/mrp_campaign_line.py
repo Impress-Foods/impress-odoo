@@ -5,6 +5,7 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.tools import float_is_zero
 
 from odoo.addons.mrp.models.mrp_bom import MrpBomLine
+from odoo.addons.mrp.models.mrp_production import MrpProduction
 from odoo.addons.mrp.wizard.change_production_qty import ChangeProductionQty
 from odoo.addons.product.models.product_product import ProductProduct
 
@@ -43,6 +44,8 @@ class CampaignLine(models.Model):
 
     upstream_line_ids = fields.One2many("mrp.campaign.line", "downstream_line_id")
     sequence = fields.Integer(default=0)
+
+    productions_created = fields.Boolean()
 
     @api.depends("product_id")
     def _compute_is_batch_produced(self):
@@ -92,7 +95,7 @@ class CampaignLine(models.Model):
                 rec.qty = sum(rec.demand_ids.mapped("target_qty")) * buffer
             else:
                 rec.qty = 0
-            if rec.qty != previous_qty:
+            if rec.productions_created and rec.qty != previous_qty:
                 rec._adjust_mos(rec.qty)
 
     @api.depends("production_ids", "production_ids.product_qty")
@@ -179,6 +182,7 @@ class CampaignLine(models.Model):
         for rec in self:
             values += rec._make_production_order()
         self.env["mrp.production"].create(values)
+        self.productions_created = True
 
     def _make_production_order(self) -> list[dict]:
         self.ensure_one()
@@ -235,85 +239,151 @@ class CampaignLine(models.Model):
 
     def _adjust_mos(self, new_quantity: float) -> None:
         self.ensure_one()
-        if self.is_batch_produced:
-            full_mos = self.production_ids.filtered(
-                lambda x: x.product_qty == self.batch_size
-            )
-            _logger.warning(self.production_ids)
-            _logger.warning(full_mos)
 
-            partial_mos = self.production_ids - full_mos
-            _logger.warning(partial_mos)
-            full_mos_qty = sum(full_mos.mapped("product_qty"))
-            _logger.warning(f"new_qty: {new_quantity} vs full mos {full_mos_qty}")
+        # Separate MOs into those that can be adjusted/deleted and
+        # those that are fixed (e.g., done or cancelled)
+        # MOs in 'draft', 'confirmed', 'progress' states are considered adjustable.
+        adjustable_mos = self.production_ids.filtered(
+            lambda mo: mo.state in ["draft", "confirmed", "progress"]
+        )
+        fixed_mos = self.production_ids - adjustable_mos
+        fixed_qty_produced = sum(fixed_mos.mapped("product_qty"))
 
-            if len(partial_mos) > 1:
-                raise ValidationError(_("Multiple partial MOs"))
+        required_from_adjustable_mos = new_quantity - fixed_qty_produced
 
-            if new_quantity < full_mos_qty:
-                # we now have to cancel MOs and set the quantities to match
-                _logger.warning("complicated path")
-                needed_full_mos = new_quantity // self.batch_size
-                remainder = new_quantity % self.batch_size
-                needed_mos = needed_full_mos + 1 if remainder else 0
-                n_mos_to_delete = len(self.production_ids) - needed_mos
-                mos_possible_to_delete = self.production_ids.filtered_domain(
-                    [("state", "in", ["draft", "confirmed", "progress"])]
+        if float_is_zero(
+            new_quantity, precision_rounding=self.product_id.uom_id.rounding
+        ):
+            adjustable_mos.unlink()
+            return
+
+        if required_from_adjustable_mos < 0:
+            raise ValidationError(
+                _(
+                    "Cannot adjust to a quantity less than what has already "
+                    "been produced by existing Manufacturing Orders "
+                    "that are in 'Done' or 'Cancelled' states. "
+                    "(Requested: %(new_quantity)s, "
+                    "Fixed Produced: %(fixed_qty_produced)s)"
                 )
-                if len(mos_possible_to_delete) < n_mos_to_delete:
+                % {
+                    "new_quantity": new_quantity,
+                    "fixed_qty_produced": fixed_qty_produced,
+                }
+            )
+
+        if self.is_batch_produced:
+            self._adjust_batch_mos(adjustable_mos, required_from_adjustable_mos)
+
+        else:  # Not batch produced
+            if not float_is_zero(
+                required_from_adjustable_mos,
+                precision_rounding=self.product_id.uom_id.rounding,
+            ):
+                if len(adjustable_mos) > 1:
                     raise ValidationError(
-                        _("Insufficient number of possible MOs to delete")
+                        _(
+                            "Non-batch produced line should only "
+                            "have one Manufacturing Order."
+                        )
                     )
-
-                if partial_mos[0] and partial_mos[0] in mos_possible_to_delete:
-                    n_mos_to_delete -= 1
-                    partial_mos.unlink()
-                mos_to_delete = full_mos[:n_mos_to_delete]
-                full_mos -= mos_to_delete
-                mos_to_delete.unlink()
-                if remainder:
-                    full_mos[0].write({"product_qty": remainder})
-
-            else:
-                _logger.warning("simple path")
-                remainder = new_quantity - full_mos_qty
-                if remainder <= self.batch_size:
+                elif len(adjustable_mos) == 1:
+                    mo = adjustable_mos[0]
                     _wizard: ChangeProductionQty = (
                         self.env["change.production.qty"]
-                        .create({"mo_id": partial_mos[0].id, "product_qty": remainder})
+                        .create(
+                            {
+                                "mo_id": mo.id,
+                                "product_qty": required_from_adjustable_mos,
+                            }
+                        )
                         .change_prod_qty()
                     )
-                else:
-                    # TODO: handle existing partial MO
-                    n_new_mos, overflow = divmod(new_quantity, self.batch_size)
-                    values = [
+                else:  # len(adjustable_mos) == 0, create a new one
+                    self.env["mrp.production"].create(
                         {
                             "product_id": self.product_id.id,
                             "bom_id": self.bom_id.id,
-                            "product_qty": self.batch_size,
+                            "product_qty": required_from_adjustable_mos,
                             "campaign_line_id": self.id,
                             "created_by_campaign": True,
                         }
-                        for _n in range(n_new_mos)
-                    ]
-                    if overflow:
-                        values.append(
-                            {
-                                "product_id": self.product_id.id,
-                                "bom_id": self.bom_id.id,
-                                "product_qty": overflow,
-                                "campaign_line_id": self.id,
-                                "created_by_campaign": True,
-                            }
-                        )
-                    self.env["mrp.production"].create()
+                    )
+            else:
+                adjustable_mos.unlink()
 
-        elif len(self.production_ids) > 1:
-            raise ValidationError(_("Standard line with multiple MOs"))
-        elif len(self.production_ids) == 1:
-            mo = self.production_ids[0]
-            _wizard: ChangeProductionQty = (
-                self.env["change.production.qty"]
-                .create({"mo_id": mo.id, "product_qty": new_quantity})
-                .change_prod_qty()
-            )
+    def _adjust_batch_mos(
+        self, adjustable_mos: MrpProduction, required_from_adjustable_mos: float
+    ):
+        # 1. Determine the target structure of MOs required from adjustable quantity
+        target_mo_quantities = []
+        n_full_batches = int(required_from_adjustable_mos / self.batch_size)
+        remaining_qty_for_partial = required_from_adjustable_mos % self.batch_size
+
+        for _n in range(n_full_batches):
+            target_mo_quantities.append(self.batch_size)
+        if not float_is_zero(
+            remaining_qty_for_partial,
+            precision_rounding=self.product_id.uom_id.rounding,
+        ):
+            target_mo_quantities.append(remaining_qty_for_partial)
+        target_mo_quantities.sort()  # Sort for easier comp and greedy matching
+
+        # 2. Prepare current adjustable MOs,
+        # sorted by quantity to facilitate matching
+        current_adjustable_mo_list = adjustable_mos.sorted("product_qty")
+
+        # Keep track of MOs that will be updated/kept
+        mos_to_keep_or_update = self.env["mrp.production"]
+        # Keep track of target quantities that have been assigned to an MO
+        assigned_target_quantities_indices = [False] * len(target_mo_quantities)
+
+        # Greedily match and update existing MOs to target quantities
+        for _current_mo_idx, current_mo in enumerate(current_adjustable_mo_list):
+            # Try to find a target quantity that matches
+            # or can be assigned to this current_mo
+            best_match_target_idx = -1
+            for target_qty_idx, _target_qty in enumerate(target_mo_quantities):
+                if not assigned_target_quantities_indices[target_qty_idx]:
+                    # Simple greedy: take the first available target quantity
+                    best_match_target_idx = target_qty_idx
+                    break
+
+            if best_match_target_idx != -1:
+                target_qty = target_mo_quantities[best_match_target_idx]
+
+                if not float_is_zero(
+                    current_mo.product_qty - target_qty,
+                    precision_rounding=self.product_id.uom_id.rounding,
+                ):
+                    # Quantity is different, use wizard to update
+                    _wizard: ChangeProductionQty = (
+                        self.env["change.production.qty"]
+                        .create({"mo_id": current_mo.id, "product_qty": target_qty})
+                        .change_prod_qty()
+                    )
+
+                mos_to_keep_or_update |= current_mo
+                assigned_target_quantities_indices[best_match_target_idx] = True
+
+        # 3. Delete excess adjustable MOs
+        # Any adjustable MOs not in mos_to_keep_or_update are considered excess
+        mos_to_unlink = adjustable_mos - mos_to_keep_or_update
+        mos_to_unlink.unlink()
+
+        # 4. Create new MOs for remaining unmatched target quantities
+        values_to_create = []
+        for target_qty_idx, target_qty in enumerate(target_mo_quantities):
+            if not assigned_target_quantities_indices[target_qty_idx]:
+                values_to_create.append(
+                    {
+                        "product_id": self.product_id.id,
+                        "bom_id": self.bom_id.id,
+                        "product_qty": target_qty,
+                        "campaign_line_id": self.id,
+                        "created_by_campaign": True,
+                    }
+                )
+
+        if values_to_create:
+            self.env["mrp.production"].create(values_to_create)
