@@ -270,7 +270,7 @@ class MrpCampaign(models.Model):
         for rec in self:
             rec._construct_tree_from_demand()
 
-    def _construct_tree_from_demand(self):
+    def _construct_tree_from_demand(self, propagate: bool = True) -> None:
         """
         Constructs the initial level of the campaign production tree
         from demand lines and then recursively builds the downstream tree.
@@ -309,8 +309,9 @@ class MrpCampaign(models.Model):
 
             demand.campaign_line_id = new_line or existing_line
 
-        for line in created_lines:
-            line._construct_downstream_tree_line(depth=0)
+        if propagate:
+            for line in created_lines:
+                line._construct_downstream_tree_line(depth=0)
 
     def action_plan(self):
         for campaign in self.filtered(lambda x: x.state == "draft"):

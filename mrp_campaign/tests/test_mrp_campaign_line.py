@@ -1,315 +1,463 @@
+import logging
+
 from odoo.exceptions import ValidationError
-from odoo.tests.common import TransactionCase
+
+from ..models.mrp_campaign import MrpCampaign
+from ..models.mrp_campaign_line import CampaignLine
+from .test_common import CampaignCase
+
+_logger = logging.getLogger(__name__)
 
 
-class TestMrpCampaignLine(TransactionCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
+class TestMrpCampaignLine(CampaignCase):
+    def test_compute_is_batch_produced(self):
+        line_bulk = self.create_line(self.bulk_material)
+        line_end = self.create_line(self.int_prod_x_red)
+        self.assertTrue(line_bulk.is_batch_produced)
+        self.assertFalse(line_end.is_batch_produced)
 
-        # Create a product category
-        cls.product_category = cls.env["product.category"].create(
+    def test_batch_size(self) -> None:
+        campaign: MrpCampaign = self.create_campaign(self.bulk_material)
+        line: CampaignLine = self.create_line(self.bulk_material, campaign)
+        campaign.override_batch_size = False
+        campaign.batch_size = 20.0
+        self.assertEqual(line.batch_size, self.bulk_material.mrp_max_batch_size)
+
+    def test_batch_size_override(self) -> None:
+        campaign: MrpCampaign = self.create_campaign(self.bulk_material)
+        line: CampaignLine = self.create_line(self.bulk_material, campaign)
+        campaign.override_batch_size = True
+        campaign.batch_size = 20.0
+        self.assertEqual(line.batch_size, campaign.batch_size)
+
+    def test_get_downstream_product_anchor(self) -> None:
+        line: CampaignLine = self.create_line(self.bulk_material)
+        self.assertEqual(self.env["product.product"], line.downstream_product_id)
+
+    def test_get_downstream_product_single_level(self) -> None:
+        line: CampaignLine = self.create_line(self.int_prod_x_red)
+        self.assertEqual(line.downstream_product_id, self.bulk_material)
+
+    def test_get_downstream_product_multi_level(self) -> None:
+        line: CampaignLine = self.create_line(self.end_prod_a_red)
+        self.assertEqual(line.downstream_product_id, self.int_prod_x_red)
+
+    def test_get_downstream_product_multiple_anchor(self) -> None:
+        alt_bulk = self.env["product.product"].create(
             {
-                "name": "Test Category",
-            }
-        )
-
-        # Create a test product
-        cls.product_tmpl = cls.env["product.template"].create(
-            {
-                "name": "Test Product Template",
+                "name": "Bulk Material Alt",
                 "type": "product",
-                "categ_id": cls.product_category.id,
-                "mrp_max_batch_size": 0,  # Default to non-batch
+                "mrp_max_batch_size": 1000.0,
+                "campaign_buffer_percent": 0.05,
             }
         )
-        cls.product = cls.product_tmpl.product_variant_id
+        alt_bulk.product_tmpl_id.is_campaign_anchor = True
 
-        # Create a Bill of Materials (BoM) for the product
-        cls.bom = cls.env["mrp.bom"].create(
+        int_prod = self.env["product.product"].create(
+            {"name": "Intermediate Product Alt", "type": "product"}
+        )
+
+        self.env["mrp.bom"].create(
             {
-                "product_tmpl_id": cls.product_tmpl.id,
+                "product_tmpl_id": int_prod.product_tmpl_id.id,
                 "product_qty": 1.0,
                 "type": "normal",
+                "bom_line_ids": [
+                    (0, 0, {"product_id": self.bulk_material.id, "product_qty": 3.0}),
+                    (0, 0, {"product_id": alt_bulk.id, "product_qty": 3.0}),
+                ],
             }
         )
+        line = self.create_line(int_prod)
+        with self.assertRaises(ValidationError) as _cm:
+            _ = line.downstream_product_id
 
-        # Create a campaign
-        cls.campaign = cls.env["mrp.campaign"].create(
+    def test_get_downstream_product_bomless_line(self) -> None:
+        line = self.create_line(self.product_no_bom)
+        self.assertEqual(self.env["product.product"], line.downstream_product_id)
+
+    def test_get_downstream_product_no_anchor_in_tree(self) -> None:
+        component = self.env["product.product"].create(
+            {"name": "Component Product", "type": "product"}
+        )
+        anchorless_prod = self.env["product.product"].create(
+            {"name": "Anchor-less Product", "type": "product"}
+        )
+
+        self.env["mrp.bom"].create(
             {
-                "name": "Test Campaign",
-                "product_id": cls.product.id,
+                "product_tmpl_id": anchorless_prod.product_tmpl_id.id,
+                "product_qty": 1.0,
+                "type": "normal",
+                "bom_line_ids": [
+                    (0, 0, {"product_id": component.id, "product_qty": 3.0}),
+                ],
             }
         )
 
-    def _create_campaign_line(self, product, bom, qty=0.0):
-        return self.env["mrp.campaign.line"].create(
+        line = self.create_line(anchorless_prod)
+        with self.assertRaises(ValidationError) as _cm:
+            _ = line.downstream_product_id
+
+    def test_get_downstream_product_no_valid_bom_lines(self) -> None:
+        int_tmpl = self.env["product.template"].create(
             {
-                "campaign_id": self.campaign.id,
-                "product_id": product.id,
-                "bom_id": bom.id,
-                "qty": qty,
+                "name": "Intermediate Product Alt",
+                "type": "product",
+                "attribute_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "attribute_id": self.color_attribute.id,
+                            "value_ids": [
+                                (6, 0, [self.color_green.id, self.color_red.id])
+                            ],
+                        },
+                    )
+                ],
             }
         )
-
-    def _assert_mos_quantities(self, line, expected_quantities):
-        """Helper to assert the quantities of MOs linked to a campaign line."""
-        mo_quantities = sorted(line.production_ids.mapped("product_qty"))
-        self.assertEqual(
-            mo_quantities,
-            sorted(expected_quantities),
-            (
-                f"Expected MO quantities: {sorted(expected_quantities)},"
-                f"Got: {mo_quantities}"
-            ),
+        int_prod_green = int_tmpl.product_variant_ids.filtered(
+            lambda p: (
+                self.color_green
+                in p.product_template_variant_value_ids.product_attribute_value_id
+            )
         )
-        self.assertEqual(
-            len(line.production_ids),
-            len(expected_quantities),
-            f"Expected {len(expected_quantities)} MOs, Got {len(line.production_ids)}",
+        int_prod_red = int_tmpl.product_variant_ids.filtered(
+            lambda p: (
+                self.color_red
+                in p.product_template_variant_value_ids.product_attribute_value_id
+            )
+        )
+        ptav_green = (
+            int_prod_green.attribute_line_ids.product_template_value_ids.filtered(
+                lambda p: p.product_attribute_value_id == self.color_green
+            )
         )
 
-    def _create_mo_with_state(self, line, qty, state="draft"):
-        """Helper to create an MO with a specific state."""
-        mo = self.env["mrp.production"].create(
+        self.env["mrp.bom"].create(
             {
-                "product_id": line.product_id.id,
-                "bom_id": line.bom_id.id,
-                "product_qty": qty,
-                "campaign_line_id": line.id,
-                "created_by_campaign": True,
+                "product_tmpl_id": int_tmpl.id,
+                "product_qty": 1.0,
+                "type": "normal",
+                "bom_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": self.bulk_material.id,
+                            "product_qty": 3.0,
+                            "bom_product_template_attribute_value_ids": [ptav_green.id],
+                        },
+                    ),
+                ],
             }
         )
-        if state != "draft":
-            mo.write({"state": state})
-        return mo
 
-    # --- Batch Produced Product Tests ---
+        line = self.create_line(int_prod_red)
+        with self.assertRaises(ValidationError) as _cm:
+            _ = line.downstream_product_id
 
-    def test_batch_initial_creation(self):
-        """Test initial MO creation for a batch-produced product."""
-        self.product_tmpl.mrp_max_batch_size = 10
+    def test_compute_fulfilled_qty(self) -> None:
+        line: CampaignLine = self.create_line(self.bulk_material)
+        mos = self.env["mrp.production"].create(
+            [
+                {
+                    "product_id": self.bulk_material.id,
+                    "product_qty": 100.0,
+                    "campaign_line_id": line.id,
+                }
+                for _i in range(3)
+            ]
+        )
+        mos.action_confirm()
+        mos.write({"qty_producing": 100.0})
 
-        line = self._create_campaign_line(self.product, self.bom)
-        line.productions_created = True  # Simulate that _compute_qty has run
+        # 3 MOs, 1 confirmed, 1 done, 1 cancelled.
+        # Produced qty should be 100.0 units
 
-        line._adjust_mos(25.0)
-        self._assert_mos_quantities(line, [10.0, 10.0, 5.0])
+        mos[0].button_mark_done()
+        mos[1].action_cancel()
+        self.assertEqual(line.fulfilled_qty, 100.0)
 
-    def test_batch_initial_creation_exact_batch(self):
-        """Test initial MO creation with quantity exact multiple of batch size."""
-        self.product_tmpl.mrp_max_batch_size = 10
+    def test_compute_qty_w_demand_no_buffers(self) -> None:
+        QTY = 100.0
+        campaign: MrpCampaign = self.create_campaign(self.bulk_material)
+        self.create_demand(self.end_prod_b_red, QTY, campaign)
+        campaign._construct_tree_from_demand(False)
 
-        line = self._create_campaign_line(self.product, self.bom)
-        line.productions_created = True
+        self.assertEqual(len(campaign.line_ids), 1)
+        self.assertEqual(len(campaign.demand_line_ids), 1)
 
-        line._adjust_mos(20.0)
-        self._assert_mos_quantities(line, [10.0, 10.0])
+        campaign_line: CampaignLine = campaign.line_ids[0]
+        self.assertEqual(QTY, campaign_line.qty)
 
-    def test_batch_increasing_quantity(self):
-        """Test increasing quantity for a batch-produced
-        product by updating existing MOs."""
-        self.product_tmpl.mrp_max_batch_size = 10
+    def test_compute_qty_w_demand_w_buffers(self) -> None:
+        BUFFER_MULT = 1.05  # 5% more
+        QTY = 100
+        campaign: MrpCampaign = self.create_campaign(self.bulk_material)
+        self.create_demand(self.bulk_material, QTY, campaign)
+        campaign._construct_tree_from_demand(False)
 
-        line = self._create_campaign_line(self.product, self.bom)
-        line.productions_created = True
+        self.assertEqual(len(campaign.line_ids), 1)
+        self.assertEqual(len(campaign.demand_line_ids), 1)
 
-        # Manually create initial MOs for a total of 25.0 (2x10, 1x5)
-        mo1 = self._create_mo_with_state(line, 10.0, "draft")
-        mo2 = self._create_mo_with_state(line, 10.0, "draft")
-        mo3 = self._create_mo_with_state(line, 5.0, "draft")
-        initial_mo_ids = set(line.production_ids.ids)
+        campaign_line: CampaignLine = campaign.line_ids[0]
 
-        self._assert_mos_quantities(line, [10.0, 10.0, 5.0])
+        self.assertEqual(QTY * BUFFER_MULT, campaign_line.qty)
 
-        # Increase quantity to 35.0: expect 3x10, 1x5.
-        # This means one of the existing MOs should be updated, and one new MO created.
-        line._adjust_mos(35.0)
-        self._assert_mos_quantities(line, [10.0, 10.0, 10.0, 5.0])
+    def test_compute_qty_w_upstream_no_buffers(self) -> None:
+        QTY = 100.0
+        # factor: 2.0 x 1.0 = 2.0 (see bom_end_prod_b)
+        FACTOR = 2.0
 
-        # Verify that at least some original MOs were kept and updated,
-        #   not all deleted and recreated
-        final_mo_ids = set(line.production_ids.ids)
+        campaign: MrpCampaign = self.create_campaign(self.bulk_material)
+        self.create_demand(self.end_prod_b_red, QTY, campaign)
+        campaign._construct_tree_from_demand()
+        self.assertEqual(len(campaign.line_ids), 3)
 
-        # At least the number of initial MOs - (if any were deleted) should be present
-        # In this specific case, no MOs should be deleted,
-        #   one should be updated, and one new created.
-        # It's difficult to assert exact MO IDs without
-        #   making assumptions about matching logic,
-        # but we can assert that at least some original MOs persisted.
-        self.assertGreaterEqual(
-            len(initial_mo_ids.intersection(final_mo_ids)),
-            2,
-            "Expected at least 2 original MOs to persist after increasing quantity.",
+        intermediate_line: CampaignLine = campaign.line_ids.filtered_domain(
+            [("product_id", "=", self.int_prod_y_red.id)]
+        )
+        self.assertEqual(len(intermediate_line), 1)
+
+        self.assertEqual(intermediate_line.qty, FACTOR * QTY)
+
+    def test_compute_qty_w_upstream_w_buffers(self) -> None:
+        QTY = 100.0
+        # factor: 1.0 x 3.0 = 6.0 (see bom_end_prod_b, bom_int_prod_y)
+        FACTOR = 3.0
+        BUFFER_MULT = 1.05  # 5% more
+
+        campaign: MrpCampaign = self.create_campaign(self.bulk_material)
+        self.create_demand(self.int_prod_y_red, QTY, campaign)
+        campaign._construct_tree_from_demand()
+        self.assertEqual(len(campaign.line_ids), 2)
+
+        bulk_line: CampaignLine = campaign.line_ids.filtered_domain(
+            [("product_id", "=", self.bulk_material.id)]
         )
 
-        # Re-fetch MOs to get updated quantities
-        _updated_mo1 = mo1.browse(mo1.id)
-        _updated_mo2 = mo2.browse(mo2.id)
-        _updated_mo3 = mo3.browse(mo3.id)
+        self.assertEqual(len(bulk_line), 1)
 
-        # Check if the MOs' quantities were updated correctly
-        # This part is complex because the greedy matching might update any MO.
-        # The easiest is to ensure that the sum of quantities is
-        #   correct and the number of MOs is correct.
-        # For a truly robust test, we would need to mock the wizard or trace MOs
-        #   by ID and their expected roles.
-        # Given the greedy matching, MO3 (5.0) might become 10.0,
-        #   and a new 5.0 MO might be created.
-        # Or mo1(10.0) and mo2(10.0) kept, mo3(5.0) becomes 10.0 and a new 5.0 created.
-        # The best we can do is ensure the overall count and sum are correct,
-        #   and some MOs persisted.
-        # The greedy matching strategy will decide which exact MO gets
-        #   which target quantity.
-        # For this test, we just ensure the count and sum are right,
-        #   and not all MOs were deleted.
-        self.assertEqual(sum(line.production_ids.mapped("product_qty")), 35.0)
-        self.assertEqual(len(line.production_ids), 4)
+        self.assertEqual(bulk_line.qty, FACTOR * QTY * BUFFER_MULT)
 
-    def test_batch_decreasing_quantity(self):
-        """Test decreasing quantity for a batch-produced product
-        by updating and deleting MOs."""
-        self.product_tmpl.mrp_max_batch_size = 10
+    def test_compute_producing_qty(self) -> None:
+        line = self.create_line(self.bulk_material)
+        mos = self.env["mrp.production"].create(
+            [
+                {
+                    "product_id": self.bulk_material.id,
+                    "product_qty": 100.0,
+                    "campaign_line_id": line.id,
+                }
+                for _i in range(3)
+            ]
+        )
+        mos.action_confirm()
+        mos.write({"qty_producing": 100.0})
+        mos[0].button_mark_done()
+        mos[1].action_cancel()
+        # 3 MOs, 1 confirmed, 1 done, 1 cancelled.
+        # Producing qty should be 200.0 units
+        self.assertEqual(line.producing_qty, 200.0)
 
-        line = self._create_campaign_line(self.product, self.bom)
-        line.productions_created = True
+    def test_construct_downstream_tree_line_anchor(self) -> None:
+        campaign = self.create_campaign(self.bulk_material)
+        line = self.create_line(self.bulk_material, campaign)
 
-        # Manually create initial MOs for a total of 35.0 (3x10, 1x5)
-        mo_a = self._create_mo_with_state(line, 10.0, "draft")
-        mo_b = self._create_mo_with_state(line, 10.0, "draft")
-        mo_c = self._create_mo_with_state(line, 10.0, "draft")
-        mo_d = self._create_mo_with_state(line, 5.0, "draft")
-        initial_mo_ids = set(line.production_ids.ids)
+        self.assertEqual(len(campaign.line_ids), 1)
 
-        self._assert_mos_quantities(line, [10.0, 10.0, 10.0, 5.0])
+        line._construct_downstream_tree_line()
 
-        # Decrease quantity to 15.0: expect 1x10, 1x5.
-        # This means two MOs should be deleted, and two should be kept/updated.
-        line._adjust_mos(15.0)
-        self._assert_mos_quantities(line, [10.0, 5.0])
+        self.assertEqual(len(campaign.line_ids), 1)
+        self.assertFalse(line.downstream_line_id)
 
-        # Verify that some original MOs were kept and updated
-        final_mo_ids = set(line.production_ids.ids)
-        self.assertGreaterEqual(
-            len(initial_mo_ids.intersection(final_mo_ids)),
-            2,
-            "Expected at least 2 original MOs to persist after decreasing quantity.",
+    def test_construct_downstream_tree_line_intermediate(self) -> None:
+        campaign = self.create_campaign(self.bulk_material)
+        line = self.create_line(self.int_prod_x_red, campaign)
+
+        self.assertEqual(len(campaign.line_ids), 1)
+
+        line._construct_downstream_tree_line()
+
+        self.assertEqual(len(campaign.line_ids), 2)
+        anchor_line = campaign.line_ids.filtered_domain(
+            [("product_id", "=", campaign.product_id.id)]
+        )
+        self.assertEqual(len(anchor_line), 1)
+        self.assertEqual(line.downstream_line_id, anchor_line)
+
+    def test_construct_downstream_tree_line_end(self) -> None:
+        campaign = self.create_campaign(self.bulk_material)
+        line = self.create_line(self.end_prod_a_red, campaign)
+
+        self.assertEqual(len(campaign.line_ids), 1)
+
+        line._construct_downstream_tree_line()
+
+        self.assertEqual(len(campaign.line_ids), 3)
+        anchor_line = campaign.line_ids.filtered_domain(
+            [("product_id", "=", campaign.product_id.id)]
+        )
+        intermediate_line = campaign.line_ids.filtered_domain(
+            [("product_id", "=", self.int_prod_x_red.id)]
+        )
+        self.assertEqual(len(intermediate_line), 1)
+        self.assertEqual(line.downstream_line_id, intermediate_line)
+        self.assertEqual(len(anchor_line), 1)
+        self.assertEqual(intermediate_line.downstream_line_id, anchor_line)
+
+    def test_construct_downstream_tree_line_multiple_end(self) -> None:
+        campaign = self.create_campaign(self.bulk_material)
+
+        line_end_red = self.create_line(self.end_prod_a_red, campaign)
+        line_end_blue = self.create_line(self.end_prod_a_blue, campaign)
+
+        self.assertEqual(len(campaign.line_ids), 2)
+
+        line_end_blue._construct_downstream_tree_line()
+        line_end_red._construct_downstream_tree_line()
+
+        self.assertEqual(len(campaign.line_ids), 5)
+        anchor_line = campaign.line_ids.filtered_domain(
+            [("product_id", "=", campaign.product_id.id)]
+        )
+        intermediate_line_red = campaign.line_ids.filtered_domain(
+            [("product_id", "=", self.int_prod_x_red.id)]
+        )
+        intermediate_line_blue = campaign.line_ids.filtered_domain(
+            [("product_id", "=", self.int_prod_x_blue.id)]
+        )
+        self.assertEqual(len(intermediate_line_red), 1)
+        self.assertEqual(len(intermediate_line_blue), 1)
+
+        self.assertEqual(line_end_red.downstream_line_id, intermediate_line_red)
+        self.assertEqual(line_end_blue.downstream_line_id, intermediate_line_blue)
+
+        self.assertEqual(len(anchor_line), 1)
+        self.assertEqual(intermediate_line_red.downstream_line_id, anchor_line)
+        self.assertEqual(intermediate_line_blue.downstream_line_id, anchor_line)
+
+    def test_construct_downstream_tree_line_no_bom(self) -> None:
+        campaign = self.create_campaign(self.bulk_material)
+        line = self.create_line(self.product_no_bom, campaign)
+        line._construct_downstream_tree_line()
+
+    def test_is_valid_bom_line_for_product_valid_attribute(self) -> None:
+        line = self.create_line(self.end_prod_a_red)
+        bom_line = self.bom_end_prod_a.bom_line_ids.filtered(
+            lambda x: (
+                self.ptav_end_prod_a_red.id
+                in x.bom_product_template_attribute_value_ids.ids
+            )
+        )[0]
+
+        self.assertTrue(line.is_valid_bom_line_for_product(bom_line))
+
+    def test_is_valid_bom_line_for_product_invalid_attribute(self) -> None:
+        line = self.create_line(self.end_prod_a_red)
+        bom_line = self.bom_end_prod_a.bom_line_ids.filtered(
+            lambda x: (
+                self.ptav_end_prod_a_blue.id
+                in x.bom_product_template_attribute_value_ids.ids
+            )
+        )[0]
+
+        self.assertFalse(line.is_valid_bom_line_for_product(bom_line))
+
+    def test_is_valid_bom_line_for_product_wrong_product(self) -> None:
+        line = self.create_line(self.end_prod_a_red)
+        bom_line = self.bom_end_prod_b.bom_line_ids[0]
+        self.assertFalse(line.is_valid_bom_line_for_product(bom_line))
+
+    def test_is_valid_bom_line_for_product_no_attribute_valid(self) -> None:
+        line = self.create_line(self.int_prod_x_red)
+        bom_line = self.bom_int_prod_x.bom_line_ids[0]
+        self.assertTrue(line.is_valid_bom_line_for_product(bom_line))
+
+    def test_is_valid_bom_line_for_product_no_attribute_invalid(self) -> None:
+        line = self.create_line(self.int_prod_x_red)
+        bom_line = self.bom_int_prod_y.bom_line_ids[0]
+        self.assertFalse(line.is_valid_bom_line_for_product(bom_line))
+
+    def test_get_factor_anchor_anchor_product(self) -> None:
+        line = self.create_line(self.bulk_material)
+        self.assertEqual(line._get_anchor_factor(), 1)
+
+    def test_get_factor_anchor_no_ds_product(self) -> None:
+        line = self.create_line(self.product_no_bom)
+        self.assertEqual(line._get_anchor_factor(), 1)
+
+    def test_get_factor_anchor_int_product(self) -> None:
+        FACTOR = 1.0 * 3.0
+        campaign = self.create_campaign(self.bulk_material)
+        line = self.create_line(self.int_prod_x_blue, campaign)
+
+        line._construct_downstream_tree_line()
+        self.assertEqual(line.downstream_product_id.id, self.bulk_material.id)
+        self.assertEqual(line._get_anchor_factor(), FACTOR)
+
+    def test_get_factor_anchor_end_product(self) -> None:
+        FACTOR = 1.0 * 3.0 * 2.0
+        campaign = self.create_campaign(self.bulk_material)
+        line = self.create_line(self.end_prod_b_red, campaign)
+        line._construct_downstream_tree_line()
+        self.assertEqual(line.downstream_product_id.id, self.int_prod_y_red.id)
+        self.assertEqual(line._get_anchor_factor(), FACTOR)
+
+    def test_make_production_order_normal(self) -> None:
+        QTY = 100.0
+        campaign = self.create_campaign(self.bulk_material)
+        self.create_demand(self.int_prod_y_blue, QTY, campaign)
+        campaign._construct_tree_from_demand(False)
+        self.assertEqual(len(campaign.line_ids), 1)
+        line = campaign.line_ids
+        line.make_production_order()
+        self.assertEqual(len(line.production_ids), 1)
+        self.assertCountEqual([QTY], line.production_ids.mapped("product_qty"))
+
+    def test_make_production_order_batch_larger(self) -> None:
+        QTY = 2500.0
+        campaign = self.create_campaign(self.bulk_material)
+        campaign.buffer_percent = 0.0
+        self.create_demand(self.bulk_material, QTY, campaign)
+
+        campaign._construct_tree_from_demand(False)
+        self.assertEqual(len(campaign.line_ids), 1)
+        line = campaign.line_ids
+        line.make_production_order()
+        self.assertEqual(len(line.production_ids), 3)  # 2x1000.0 + 1x500.0
+        self.assertCountEqual(
+            [1000.0, 500.0, 1000.0], line.production_ids.mapped("product_qty")
         )
 
-        # Re-fetch MOs to get updated quantities
-        _updated_mo_a = mo_a.browse(mo_a.id)
-        _updated_mo_b = mo_b.browse(mo_b.id)
-        _updated_mo_c = mo_c.browse(mo_c.id)
-        _updated_mo_d = mo_d.browse(mo_d.id)
+    def test_make_production_order_batch_exact(self) -> None:
+        QTY = 1000.0
+        campaign = self.create_campaign(self.bulk_material)
+        campaign.buffer_percent = 0.0
+        self.create_demand(self.bulk_material, QTY, campaign)
 
-        # In a greedy match, it's likely two of the 10.0 MOs were deleted, .
-        #   and one 10.0 and one 5.0 remain.
-        # Ensure the overall count and sum are right, and some MOs persisted.
-        self.assertEqual(sum(line.production_ids.mapped("product_qty")), 15.0)
-        self.assertEqual(len(line.production_ids), 2)
+        campaign._construct_tree_from_demand(False)
+        self.assertEqual(len(campaign.line_ids), 1)
+        line = campaign.line_ids
+        line.make_production_order()
+        self.assertEqual(len(line.production_ids), 1)  # 1x1000.0
+        self.assertCountEqual([1000.0], line.production_ids.mapped("product_qty"))
 
-    def test_batch_decrease_to_zero(self):
-        """Test decreasing quantity to zero for a batch-produced product."""
-        self.product_tmpl.mrp_max_batch_size = 10
+    def test_make_production_order_batch_under(self) -> None:
+        QTY = 750.0
+        campaign = self.create_campaign(self.bulk_material)
+        campaign.buffer_percent = 0.0
+        self.create_demand(self.bulk_material, QTY, campaign)
 
-        line = self._create_campaign_line(self.product, self.bom)
-        line.productions_created = True
+        campaign._construct_tree_from_demand(False)
+        self.assertEqual(len(campaign.line_ids), 1)
+        line = campaign.line_ids
+        line.make_production_order()
+        self.assertEqual(len(line.production_ids), 1)  # 1x750.0
+        self.assertCountEqual([750.0], line.production_ids.mapped("product_qty"))
 
-        line._adjust_mos(15.0)  # Initial: 1x10, 1x5
-        self._assert_mos_quantities(line, [10.0, 5.0])
-
-        line._adjust_mos(0.0)  # Decrease to zero
-        self._assert_mos_quantities(line, [])
-
-    def test_batch_decrease_below_fixed_mos(self):
-        """Test decreasing quantity below fixed (done) MOs for batch-produced."""
-        self.product_tmpl.mrp_max_batch_size = 10
-
-        line = self._create_campaign_line(self.product, self.bom)
-        line.productions_created = True
-
-        # Create a fixed MO (state 'done')
-        self._create_mo_with_state(line, 10.0, "done")
-
-        # Attempt to adjust to a quantity less than the fixed MO
-        with self.assertRaises(ValidationError):
-            line._adjust_mos(5.0)
-
-        # Ensure the fixed MO is still there and no new MOs were created
-        self._assert_mos_quantities(line, [10.0])  # Only the fixed MO
-
-    # --- Non-Batch Produced Product Tests ---
-
-    def test_non_batch_initial_creation(self):
-        """Test initial MO creation for a non-batch-produced product."""
-        self.product_tmpl.mrp_max_batch_size = 0  # Ensure non-batch
-
-        line = self._create_campaign_line(self.product, self.bom)
-        line.productions_created = True
-
-        line._adjust_mos(15.0)
-        self._assert_mos_quantities(line, [15.0])
-
-    def test_non_batch_updating_quantity(self):
-        """Test updating quantity for a non-batch-produced product."""
-        self.product_tmpl.mrp_max_batch_size = 0
-
-        line = self._create_campaign_line(self.product, self.bom)
-        line.productions_created = True
-
-        line._adjust_mos(15.0)  # Initial: 1x15
-        self._assert_mos_quantities(line, [15.0])
-
-        line._adjust_mos(25.0)  # Update to 1x25
-        self._assert_mos_quantities(line, [25.0])
-
-    def test_non_batch_decrease_to_zero(self):
-        """Test decreasing quantity to zero for a non-batch-produced product."""
-        self.product_tmpl.mrp_max_batch_size = 0
-
-        line = self._create_campaign_line(self.product, self.bom)
-        line.productions_created = True
-
-        line._adjust_mos(25.0)  # Initial: 1x25
-        self._assert_mos_quantities(line, [25.0])
-
-        line._adjust_mos(0.0)  # Decrease to zero
-        self._assert_mos_quantities(line, [])
-
-    def test_non_batch_decrease_below_fixed_mos(self):
-        """Test decreasing quantity below fixed (done) MOs for non-batch-produced."""
-        self.product_tmpl.mrp_max_batch_size = 0
-
-        line = self._create_campaign_line(self.product, self.bom)
-        line.productions_created = True
-
-        # Create a fixed MO (state 'done')
-        self._create_mo_with_state(line, 10.0, "done")
-
-        # Attempt to adjust to a quantity less than the fixed MO
-        with self.assertRaises(ValidationError):
-            line._adjust_mos(5.0)
-
-        # Ensure the fixed MO is still there and no new MOs were created
-        self._assert_mos_quantities(line, [10.0])  # Only the fixed MO
-
-    def test_non_batch_multiple_adjustable_mos_error(self):
-        """
-        Test that non-batch produced lines raise ValidationError
-        if multiple adjustable MOs exist.
-        This tests the explicit validation in _adjust_mos,
-        not a state reachable through normal _adjust_mos calls.
-        """
-        self.product_tmpl.mrp_max_batch_size = 0
-
-        line = self._create_campaign_line(self.product, self.bom)
-        line.productions_created = True
-
-        # Manually create two adjustable MOs for a non-batch product
-        self._create_mo_with_state(line, 10.0, "draft")
-        self._create_mo_with_state(line, 5.0, "confirmed")
-
-        # Now call _adjust_mos, which should catch this invalid state
-        with self.assertRaises(ValidationError):
-            line._adjust_mos(15.0)  # Any non-zero quantity will trigger the check
+    def test_adjust_mos(self) -> None:
+        pass

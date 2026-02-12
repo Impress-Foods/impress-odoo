@@ -41,40 +41,32 @@ class ProductProductModel(models.Model):
             rec.anchor_product_id = self._get_root_anchor(rec)
 
     def _get_root_anchor(self, product, visited=None):
-        # 1. Prevent infinite loops (Safety First)
         if visited is None:
             visited = set()
         if product.id in visited:
             return self.env["product.product"]
         visited.add(product.id)
 
-        # 2. Base Case: The product itself is the anchor
         if product.is_campaign_anchor:
             return product
 
-        # 3. Find the "Active" BoM
-        # In Odoo 17, use the helper that finds the BoM based on context/company
         bom = self.env["mrp.bom"]._bom_find(product)[product]
         if not bom or bom.type != "normal":
             return self.env["product.product"]
 
-        # 4. Recursive Step: Check all components
         anchors_found = set()
         for line in bom.bom_line_ids:
-            # Recursively call this same helper for the component
             anchor = self._get_root_anchor(line.product_id, visited)
             if anchor:
                 anchors_found.add(anchor)
 
-        # 5. Logic Unification (The "Single Anchor" Rule)
         if len(anchors_found) == 1:
-            # Success: All components with anchors lead to the same root
             return list(anchors_found)[0]
 
         elif len(anchors_found) > 1:
-            # Conflict: This product is made of multiple different anchor lineages
-            # You should log a warning or return empty to indicate a configuration error
+            _logger.debug("Multiple anchors found")
             return self.env["product.product"]
 
         # 6. Default: No anchor found in any lineage
+        _logger.debug("No anchors found")
         return self.env["product.product"]

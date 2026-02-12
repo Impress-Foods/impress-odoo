@@ -1,7 +1,7 @@
 import logging
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import ValidationError
 from odoo.tools import float_is_zero
 
 from odoo.addons.mrp.models.mrp_bom import MrpBomLine
@@ -52,12 +52,15 @@ class CampaignLine(models.Model):
         for rec in self:
             rec.is_batch_produced = rec.product_tmpl_id.mrp_max_batch_size != 0
 
-    @api.depends("product_id")
+    @api.depends(
+        "product_id", "campaign_id.override_batch_size", "campaign_id.batch_size"
+    )
     def _compute_batch_size(self):
         for rec in self:
             rec.batch_size = (
-                rec.campaign_id.override_batch_size
-                or rec.product_tmpl_id.mrp_max_batch_size
+                rec.campaign_id.batch_size
+                if rec.campaign_id.override_batch_size
+                else rec.product_tmpl_id.mrp_max_batch_size
             )
 
     @api.depends("is_batch_produced")
@@ -98,34 +101,43 @@ class CampaignLine(models.Model):
             if rec.productions_created and rec.qty != previous_qty:
                 rec._adjust_mos(rec.qty)
 
-    @api.depends("production_ids", "production_ids.product_qty")
+    @api.depends("production_ids", "production_ids.product_qty", "production_ids.state")
     def _compute_producing_qty(self):
         for rec in self:
-            rec.producing_qty = sum(rec.production_ids.mapped("product_qty"))
+            rec.producing_qty = sum(
+                rec.production_ids.filtered_domain(
+                    [
+                        (
+                            "state",
+                            "!=",
+                            "cancel",
+                        )
+                    ]
+                ).mapped("product_qty")
+            )
 
     def _get_downstream_product(self) -> ProductProduct:
         self.ensure_one()
         if not self.bom_id:
-            raise UserError(_("Product %s has no BoM" % self.product_id.name))
+            return self.env["product.product"]
+        if self.product_tmpl_id.is_campaign_anchor:
+            return self.env["product.product"]
 
         anchors: ProductProduct = (
             self.bom_id.bom_line_ids.filtered(
-                lambda line: self.is_valid_bom_line_for_product(self.product_id, line)
+                lambda line: self.is_valid_bom_line_for_product(line)
             )
             .mapped("product_id")
             .filtered("anchor_product_id")
         )
-
-        if not anchors:
-            return self.env["product.product"]
         if len(anchors) != 1:
-            return UserError(
+            raise ValidationError(
                 _(
                     "Could not resolve downstream product "
-                    "for %(product) with BoM %(bom)",
-                    {
-                        "product": self.product_id,
-                        "bom": self.bom_id,
+                    "for %(product)s with BoM %(bom)s"
+                    % {
+                        "product": self.product_id.display_name,
+                        "bom": self.bom_id.code,
                     },
                 )
             )
@@ -139,10 +151,7 @@ class CampaignLine(models.Model):
             return
 
         for bom_line in self.bom_id.bom_line_ids.filtered(
-            lambda x: (
-                self.is_valid_bom_line_for_product(self.product_id, x)
-                and x.product_id.bom_ids
-            )
+            lambda x: self.is_valid_bom_line_for_product(x) and x.product_id.bom_ids
         ):
             downstream_product = bom_line.product_id
             downstream_bom = self.env["mrp.bom"]._bom_find(products=downstream_product)[
@@ -177,12 +186,13 @@ class CampaignLine(models.Model):
                 self.downstream_line_id = new_downstream_line
                 new_downstream_line._construct_downstream_tree_line(depth + 1)
 
-    def make_production_order(self) -> None:
+    def make_production_order(self) -> MrpProduction:
         values = []
         for rec in self:
             values += rec._make_production_order()
-        self.env["mrp.production"].create(values)
+        mos: MrpProduction = self.env["mrp.production"].create(values)
         self.productions_created = True
+        return mos
 
     def _make_production_order(self) -> list[dict]:
         self.ensure_one()
@@ -216,10 +226,10 @@ class CampaignLine(models.Model):
 
         return values
 
-    def is_valid_bom_line_for_product(
-        self, product_id: ProductProduct, bom_line: MrpBomLine
-    ) -> bool:
+    def is_valid_bom_line_for_product(self, bom_line: MrpBomLine) -> bool:
         self.ensure_one()
+        if self.product_id.product_tmpl_id != bom_line.bom_id.product_tmpl_id:
+            return False
         bom_line_variant_ids = bom_line.bom_product_template_attribute_value_ids
 
         if not bom_line_variant_ids or not self.product_template_variant_value_ids:
