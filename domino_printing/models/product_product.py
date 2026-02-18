@@ -24,4 +24,4 @@ class ProductProduct(models.Model):
 
     def _domino_sync(self, domino_api: DominoAPI):
         self.ensure_one()
-        domino_api._make_api_request("/ping")
+        domino_api.sync_product(self)
