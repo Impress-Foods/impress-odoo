@@ -1,0 +1,4 @@
+[[config]]
+name = "17.0"
+extends = "base"
+addons_paths = ["."]
