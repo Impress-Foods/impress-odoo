@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="mrp_campaign.AllocationWidget">
+        <div class="o_campaign_allocation_container">
+            <div class="bulk-capacity-wrapper mb-4">
+                <label>Bulk Usage</label>
+                <div>
+                    <t t-out="state.allocatedBulk.toFixed(2)" />L / <t
+                        t-out="state.availableBulk.toFixed(2)"
+                    />L
+                </div>
+                <div class="progress" style="height: 30px;">
+                    <div
+                        class="progress-bar"
+                        t-att-class="state.allocatedBulk > state.availableBulk ? 'bg-danger' : 'bg-success'"
+                        t-attf-style="display:inline-block; width: {{ (state.allocatedBulk / state.availableBulk) * 100 }}%"
+                    >
+                    </div>
+                </div>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Demand / Source</th>
+                        <th>Units</th>
+                        <th>Bulk Needed</th>
+                        <th>Allocate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="state.demands" t-as="demand" t-key="demand.id">
+                        <tr class="table-active">
+                            <td><strong><t t-out="demand.product[1]" /></strong></td>
+                            <td><t t-out="demand.qty.toFixed(2)" /></td>
+                            <td><t
+                                    t-out="(demand.qty * demand.factor).toFixed(2)"
+                                /></td>
+                            <td><t t-out="demand.total_allocated.toFixed(2)" /></td>
+                        </tr>
+                        <t t-foreach="demand.moves" t-as="move" t-key="move.id">
+                            <tr>
+                                <td class="ps-4">↳ <t t-out="move.origin" /></td>
+                                <td><t t-out="move.qty.toFixed(2)" /></td>
+                                <td><t
+                                        t-out="(move.qty * demand.factor).toFixed(2)"
+                                    /></td>
+                                <td>
+                                    <div style="display:flex;">
+                                        <input
+                                            type="number"
+                                            class="form-control form-control-sm"
+                                            t-att-value="move.allocated_qty.toFixed(2)"
+                                            t-on-change="(ev) => this.onQtyChange(demand.id, move.id, ev.target.value)"
+                                        />
+                                        <button
+                                            t-on-click="(ev) => this.onQtyChange(demand.id, move.id, move.qty * demand.factor)"
+                                        >Autofill</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </t>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+</templates>

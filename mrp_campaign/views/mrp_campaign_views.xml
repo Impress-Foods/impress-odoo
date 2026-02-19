@@ -8,15 +8,15 @@
             <tree>
                 <header>
                     <button
-                        name="action_confirm_end"
+                        name="action_plan"
                         type="object"
-                        string="Confirm End Products"
+                        string="Plan"
                         class="oe_highlight"
                     />
                     <button
-                        name="action_confirm_bulk"
+                        name="action_confirm"
                         type="object"
-                        string="Confirm Bulk Products"
+                        string="Confirm"
                         class="oe_highlight"
                     />
                     <button name="action_reset" type="object" string="Reset" class="" />
@@ -33,41 +33,68 @@
         <field name="model">mrp.campaign</field>
         <field name="arch" type="xml">
             <form string="Manufacturing Campaign">
-                <field name="end_created" invisible="1" />
-                <field name="bulk_created" invisible="1" />
                 <header>
                     <button
-                        name="action_confirm_end"
+                        name="action_plan"
                         type="object"
-                        string="Make End Products"
+                        string="Plan"
                         class="btn-primary"
-                        invisible="end_created"
+                        invisible="state not in ['draft']"
                     />
                     <button
-                        name="action_confirm_bulk"
+                        name="action_confirm"
                         type="object"
-                        string="Make Bulk Products"
+                        string="Confirm"
                         class="btn-primary"
-                        invisible="bulk_created or not end_created"
+                        invisible="state not in ['plan']"
+                    />
+
+
+                    <button
+                        name="action_open_add_demand_wizard"
+                        type="object"
+                        string="Add Demand"
+                        class="btn-secondary"
+                        invisible="state not in ['draft']"
+                    />
+                    <button
+                        name="action_open_split_wizard"
+                        type="object"
+                        string="Split Campaign"
+                        class="btn-secondary"
+                        invisible="state not in ['draft', 'plan']"
                     />
                     <button
                         name="action_reset"
                         type="object"
                         string="Reset Campaign"
-                        class="btn-primary"
-                        invisible="not bulk_created and not end_created"
+                        class="btn-secondary"
+                        invisible="state in ['draft']"
                     />
-                    <field name="state" widget="statusbar" />
+                    <button
+                        name="action_bo"
+                        type="object"
+                        string="Backorder Campaign"
+                        class="btn-secondary"
+                        invisible="state not in ['progress'] and False"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,plan,confirm,done"
+                    />
                 </header>
 
                 <sheet>
-
+                    <field name="bo_count" invisible="1" />
+                    <field name="production_count" invisible="1" />
                     <div class="oe_button_box" name="button_box">
                         <button
                             name="action_view_mos"
                             type="object"
                             class="oe_stat_button"
                             icon="fa-flask"
+                            invisible="production_count == 0"
                         >
                             <field
                                 name="production_count"
@@ -75,54 +102,72 @@
                                 string="Productions"
                             />
                         </button>
+                        <button
+                            name="action_view_bos"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-share"
+                            invisible="bo_count == 0"
+                        >
+                            <field
+                                name="bo_count"
+                                widget="statinfo"
+                                string="Back Orders"
+                            />
+                        </button>
                     </div>
                     <group>
                         <group>
                             <field name="name" />
-                            <field name="product_id" />
+                            <field name="product_id" readonly="1" />
                             <field
                                 name="company_id"
                                 groups="base.group_multi_company"
                             />
-                            <field name="date_planned_start" />
+                            <field
+                                name="date_planned_start"
+                                readonly="state not in ['draft', 'plan', 'confirmed']"
+                            />
                             <field name="bucket_start_date" readonly="1" />
                             <field name="bucket_end_date" readonly="1" />
                         </group>
                         <group>
                             <field name="campaign_color" widget="color" />
-                            <field name="override_batch_size" widget="boolean_toggle" />
+                            <field
+                                name="override_batch_size"
+                                widget="boolean_toggle"
+                                readonly="state not in ['draft']"
+                            />
                             <field
                                 name="batch_size"
                                 required="override_batch_size"
                                 invisible="not override_batch_size"
+                                readonly="state not in ['draft']"
+                            />
+                            <field
+                                name="buffer_percent"
+                                widget="percentage"
+                                readonly="state not in ['draft']"
                             />
                         </group>
-
                     </group>
-
                     <notebook>
-                        <page string="Campaign Line">
-                            <field name="line_ids">
-                                <tree>
-                                    <field name="product_id" />
-                                    <field
-                                        name="product_demand_qty"
-                                        string="Demand Qty"
-                                    />
-                                    <field name="product_uom_id" />
-                                    <field
-                                        name="anchor_product_qty"
-                                        string="Required Component Qty"
-                                        sum="Required Component Qty"
-                                        optional="show"
-                                    />
-                                    <field name="component_uom_id" />
-                                    <field name="bom_id" optional="hide" />
-                                </tree>
-                            </field>
+                        <page string="Demand">
+                            <field
+                                name="demand_line_ids"
+                                readonly="state not in ['draft'] and False"
+                            />
+                        </page>
+                        <page string="Lines">
+                            <field name="line_ids" readonly="1" />
                         </page>
                     </notebook>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" />
+                    <field name="activity_ids" />
+                    <field name="message_ids" />
+                </div>
             </form>
         </field>
     </record>
@@ -178,6 +223,7 @@
             </kanban>
         </field>
     </record>
+
     <record id="view_mrp_campaign_search" model="ir.ui.view">
         <field name="name">mrp.campaign.search</field>
         <field name="model">mrp.campaign</field>
@@ -211,6 +257,7 @@
         <field name="view_mode">kanban,tree,form</field>
         <field name="context">{'search_default_date': 1}</field>
     </record>
+
 
     <menuitem
         id="menu_mrp_campaign"

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_mrp_campaign_split_wizard_form" model="ir.ui.view">
+        <field name="name">mrp.campaign.split.wizard.form</field>
+        <field name="model">mrp.campaign.split.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="original_campaign_id" readonly="1" />
+                </group>
+                <p
+                >Assign each demand move to its desired destination campaign. All moves are initially set to 'Campaign A'.</p>
+                <field name="line_ids" nolabel="1">
+                    <!-- <tree editable="bottom"> -->
+                    <tree>
+                        <field name="move_id" force_save="1" />
+                        <field name="product_id" />
+                        <field name="product_uom_qty" sum="Total Quantity" />
+                        <field name="date_deadline" />
+                        <field name="destination_campaign" widget="radio" />
+                    </tree>
+                </field>
+                <footer>
+                    <button
+                        name="action_split_campaign"
+                        string="Confirm Split"
+                        type="object"
+                        class="btn-primary"
+                        data-hotkey="q"
+                    />
+                    <button
+                        string="Cancel"
+                        class="btn-secondary"
+                        special="cancel"
+                        data-hotkey="z"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

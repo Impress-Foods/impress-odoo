@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- View mrp.campaign.line View Tree -->
+    <record id="view_mrp_campaign_line_tree" model="ir.ui.view">
+        <field name="name">view.mrp.campaign.line.tree</field>
+        <field name="model">mrp.campaign.line</field>
+        <field name="arch" type="xml">
+            <tree default_order="sequence asc">
+                <field name="sequence" column_invisible="1" />
+                <field name="product_id" />
+                <field name="bom_id" domain="[('product_id','=','product_id')]" />
+                <field name="qty" />
+                <field name="producing_qty" />
+                <field name="fulfilled_qty" />
+                <field name="downstream_product_id" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- View mrp.campaign.line form -->
+    <record id="view_mrp_campaign_line_form" model="ir.ui.view">
+        <field name="name">view.mrp.campaign.line.form</field>
+        <field name="model">mrp.campaign.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+
+                    <group>
+                        <group>
+                            <field name="campaign_id" readonly="1" />
+                            <field name="product_id" readonly="1" />
+                            <field name="qty" readonly="1" />
+                            <field
+                                name="product_template_variant_value_ids"
+                                widget="many2many_tags"
+                            />
+                        </group>
+                        <group>
+                            <field name="product_tmpl_id" invisible="1" />
+                            <field
+                                name="bom_id"
+                                domain="['|',('product_tmpl_id','=',product_tmpl_id),('product_id','=',product_id)]"
+                                required="1"
+                            />
+                            <field name="downstream_product_id" readonly="1" />
+                            <field name="downstream_line_id" readonly="1" />
+                            <field name="is_batch_produced" readonly="1" />
+                            <field name="batch_size" readonly="1" />
+                            <field name="use_buffer" />
+                            <field name="buffer_percent" />
+                        </group>
+                        <field name="upstream_line_ids" />
+                        <field name="production_ids" readonly="1" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View mrp.campaign.line search -->
+    <record id="view_mrp_campaign_line_search" model="ir.ui.view">
+        <field name="name">view.mrp.campaign.line.search</field>
+        <field name="model">mrp.campaign.line</field>
+        <field name="arch" type="xml">
+            <search> </search>
+        </field>
+    </record>
+
+    <!-- Action mrp.campaign.line -->
+    <record id="action_mrp_campaign_line" model="ir.actions.act_window">
+        <field name="name">Mrp Campaign Line</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mrp.campaign.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p
+                class="oe_view_nocontent_create"
+            > There is no examples click here to add new Mrp Campaign Line. </p>
+        </field>
+    </record>
+
+</odoo>
