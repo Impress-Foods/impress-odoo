@@ -4,7 +4,11 @@
 #
 msgid ""
 msgstr ""
+<<<<<<< HEAD:documents_archive/i18n/fr_CA.po
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
+=======
+"Project-Id-Version: Odoo Server 17.0+e-20260219\n"
+>>>>>>> [UPD] Update documents_archive.pot:documents_archive/i18n/documents_archive.pot
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-11 19:14+0000\n"
 "PO-Revision-Date: 2024-12-11 14:17-0500\n"
