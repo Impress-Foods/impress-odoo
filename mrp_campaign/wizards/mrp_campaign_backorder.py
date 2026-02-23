@@ -35,7 +35,7 @@ class CampaignBackorderWizard(models.TransientModel):
         values["available_bulk"] = sum(
             campaign.line_ids.filtered_domain(
                 [("product_id", "=", campaign.product_id.id)]
-            ).mapped("qty")
+            ).mapped("pre_buffer_qty")
         )
         values["allocated_bulk"] = 0
         values["demands"] = [

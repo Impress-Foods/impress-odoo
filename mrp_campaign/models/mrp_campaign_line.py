@@ -28,6 +28,7 @@ class CampaignLine(models.Model):
     )
 
     qty = fields.Float(compute="_compute_qty", recursive=True, store=True)
+    pre_buffer_qty = fields.Float(compute="_compute_qty", recursive=True, store=True)
     fulfilled_qty = fields.Float(compute="_compute_fulfilled_qty", store=True)
     producing_qty = fields.Float(compute="_compute_producing_qty", store=True)
     bom_id = fields.Many2one("mrp.bom")
@@ -94,10 +95,15 @@ class CampaignLine(models.Model):
                     line.qty * line.bom_id.get_factor_to_product(rec.product_id)
                     for line in rec.upstream_line_ids
                 ]
-                rec.qty = sum(quantities) * buffer
+                rec.pre_buffer_qty = sum(quantities)
+                rec.qty = rec.pre_buffer_qty * buffer
+
             elif rec.demand_ids:
-                rec.qty = sum(rec.demand_ids.mapped("target_qty")) * buffer
+                rec.pre_buffer_qty = sum(rec.demand_ids.mapped("target_qty"))
+                rec.qty = rec.pre_buffer_qty * buffer
+
             else:
+                rec.pre_buffer_qty = 0
                 rec.qty = 0
             if rec.productions_created and rec.qty != previous_qty:
                 rec._adjust_mos(rec.qty)

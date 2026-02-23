@@ -82,9 +82,10 @@ class MrpCampaign(models.Model):
         for rec in self:
             rec.bo_count = len(rec.backorder_campaign_ids)
 
-    @api.depends("production_ids", "production_ids.state")
+    @api.depends("production_ids", "production_ids.state", "production_count")
     def _compute_state(self):
         for rec in self:
+            _logger.warning(rec.production_count)
             if rec.production_count == 0:
                 rec.state = "draft"
             elif any(
@@ -328,6 +329,7 @@ class MrpCampaign(models.Model):
                 productions.action_cancel()
                 productions.unlink()
             campaign.line_ids.unlink()
+            campaign._compute_state()
 
     def action_bo(self):
         self.ensure_one()
