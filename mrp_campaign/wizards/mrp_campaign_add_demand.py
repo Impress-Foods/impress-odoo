@@ -36,7 +36,7 @@ class MrpCampaignAddDemand(models.TransientModel):
 
         grouped_moves = moves_to_add.grouped("product_id")
 
-        for product, moves in grouped_moves.items():
+        for product, _moves in grouped_moves.items():
             bom = boms_by_product.get(product)
             # Find an existing line for this product/bom combination
             demand_line = campaign.demand_line_ids.filtered(
@@ -45,15 +45,12 @@ class MrpCampaignAddDemand(models.TransientModel):
                 )
             )
 
-            if demand_line:
-                demand_line.move_dest_ids |= moves
-            else:
-                self.env["mrp.campaign.demand"].create(
+            if not demand_line:
+                demand_line = self.env["mrp.campaign.demand"].create(
                     {
                         "campaign_id": campaign.id,
                         "product_id": product.id,
                         "bom_id": bom.id if bom else False,
-                        "move_dest_ids": [(6, 0, moves.ids)],
                     }
                 )
 

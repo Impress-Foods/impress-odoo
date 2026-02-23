@@ -11,9 +11,10 @@ class MrpCampaignDemand(models.Model):
     _name = "mrp.campaign.demand"
     _description = "Manufacturing Campaign Demand Line"
 
-    campaign_id = fields.Many2one(
-        "mrp.campaign", string="Campaign", required=True, ondelete="cascade"
-    )
+    campaign_id = fields.Many2one("mrp.campaign", string="Campaign", ondelete="cascade")
+
+    demand_proxy_ids = fields.One2many("mrp.campaign.demand.proxy", "demand_id")
+
     campaign_line_id = fields.Many2one("mrp.campaign.line")
     product_id = fields.Many2one("product.product", string="Product", required=True)
     product_tmpl_id = fields.Many2one(
@@ -22,14 +23,15 @@ class MrpCampaignDemand(models.Model):
     target_qty = fields.Float(
         string="Target Quantity",
         compute="_compute_target_qty",
-        inverse="_inverse_target_qty",
         store=True,
     )
 
-    move_dest_ids = fields.Many2many(
+    move_ids = fields.Many2many(
         "stock.move",
         string="Destination Moves",
         help="Moves that this production will fulfill.",
+        compute="_compute_move_ids",
+        store=False,  # Not stored as it's a computed field
     )
 
     product_uom_id = fields.Many2one(
@@ -46,16 +48,15 @@ class MrpCampaignDemand(models.Model):
         self.ensure_one()
         return self.campaign_line_id._get_anchor_factor()
 
-    @api.depends("move_dest_ids.product_uom_qty")
+    @api.depends("demand_proxy_ids.promised_qty")
     def _compute_target_qty(self) -> None:
         for rec in self:
-            if (
-                not rec.target_qty
-            ):  # Only compute if not already set or manually overridden
-                rec.target_qty = sum(rec.move_dest_ids.mapped("product_uom_qty"))
+            rec.target_qty = sum(rec.demand_proxy_ids.mapped("promised_qty"))
 
-    def _inverse_target_qty(self) -> None:  # pragma: no cover
-        pass
+    @api.depends("demand_proxy_ids.move_id")
+    def _compute_move_ids(self) -> None:
+        for rec in self:
+            rec.move_ids = rec.demand_proxy_ids.mapped("move_id")
 
     def create_campaign_line(self) -> CampaignLine:
         created_lines = self.env["mrp.campaign.line"]
@@ -91,3 +92,39 @@ class MrpCampaignDemand(models.Model):
             rec.campaign_line_id = new_line or existing_line
 
         return created_lines
+
+    @api.model_create_multi
+    def create(self, vals):
+        res = super().create(vals)
+        if not self.env.context.get("campaign_skip_proxies"):
+            res._create_proxies()
+        return res
+
+    def _create_proxies(self):
+        values = []
+        for demand in self:
+            for move in demand.move_ids:
+                values.append(
+                    {
+                        "demand_id": self.id,
+                        "move_id": move.id,
+                        "promised_qty": move.product_uom_qty,
+                    }
+                )
+        self.env["mrp.campaign.demand.proxy"].create(values)
+
+
+class MrpCampaignDemandProxy(models.Model):
+    _name = "mrp.campaign.demand.proxy"
+    _description = "Proxy between mrp.campaign.demand and stock.move"
+
+    demand_id = fields.Many2one(
+        "mrp.campaign.demand", required=True, ondelete="cascade"
+    )
+    move_id = fields.Many2one("stock.move", required=True, ondelete="cascade")
+    upstream_qty = fields.Float(
+        related="move_id.product_uom_qty", string="Upstream Demand"
+    )
+    promised_qty = fields.Float()
+    campaign_id = fields.Many2one(related="demand_id.campaign_id")
+    origin = fields.Char(related="move_id.origin")

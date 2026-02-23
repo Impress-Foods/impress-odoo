@@ -9,17 +9,14 @@
                 <sheet>
                     <group>
                         <field name="campaign_id" readonly="1" />
-                        <field name="partition_mode" widget="radio" />
-                    </group>
-                    <group invisible="'partition_mode', '!=', 'split'">
-                        <field name="new_campaign_name_a" />
-                        <field name="new_campaign_name_b" />
                     </group>
                     <field
                         name="partition_data_json"
-                        widget="campaign_partition_allocation"
+                        widget="campaign_orchestrator"
                         nolabel="1"
+                        style="--fieldWidget-display: inline;"
                     />
+
                 </sheet>
                 <footer>
                     <button

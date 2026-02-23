@@ -1,8 +1,12 @@
 import json
 import logging
+from typing import Any
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import ValidationError
+
+from ..models.mrp_campaign import MrpCampaign
+from ..models.mrp_campaign_line import CampaignLine
 
 _logger = logging.getLogger(__name__)
 
@@ -25,188 +29,263 @@ class MrpCampaignPartitionWizard(models.TransientModel):
             ("backorder", "Backorder remaining demand"),
         ],
         required=True,
-        default="split",  # Default to split, as it's the most explicit action
+        default="split",
     )
 
-    # Fields for 'split' mode
-    new_campaign_name_a = fields.Char(string="New Campaign Name 1")
-    new_campaign_name_b = fields.Char(string="New Campaign Name 2")
-
-    # Fields for 'backorder' mode (no explicit name needed, as it's generated)
-
-    # This field will hold the JSON data for the custom widget
     partition_data_json = fields.Text(string="Demand Allocation Data")
 
     @api.model
-    def default_get(self, fields_list):
+    def default_get(self, fields_list):  # pragma: no coverage
         res = super().default_get(fields_list)
         active_id = self.env.context.get("active_id")
         if self.env.context.get("active_model") == "mrp.campaign" and active_id:
             campaign = self.env["mrp.campaign"].browse(active_id)
             res["campaign_id"] = campaign.id
-            res["partition_data_json"] = self._make_partition_json(campaign)
-            res["new_campaign_name_a"] = f"{campaign.name}-1"
-            res["new_campaign_name_b"] = f"{campaign.name}-2"
+            res["partition_data_json"] = json.dumps(self._make_partition_json(campaign))
         return res
 
     @api.model
-    def _make_partition_json(self, campaign):
+    def _make_partition_json(self, campaign: MrpCampaign) -> dict:
         """
         Prepares the JSON data structure for the custom allocation widget.
         It includes all demand lines and their current target_qty.
         """
-        demands_data = []
+        campaign.ensure_one()
+        root_line = campaign.line_ids.filtered(
+            lambda line, campaign=campaign: line.product_id.id == campaign.product_id.id
+        )
+        if len(root_line) == 0:
+            raise ValidationError(
+                _("Cannot produce JSON for campaign without root line")
+            )
+        if len(root_line) > 1:
+            raise ValidationError(
+                _("Cannot produce JSON for campaign with multiple root lines")
+            )
+        data = {
+            "meta": {
+                "campaign_id": campaign.id,
+                "campaign_name": campaign.name,
+                "mode": self.env.context.get("default_partition_mode", "split"),
+            },
+            "tree": self._build_tree_recursive(root_line[0]),
+            "demand_moves": self._format_demand(campaign),
+        }
+        # _logger.warning(json.dumps(data))
+        return data
+
+    @api.model
+    def _build_tree_recursive(self, line: CampaignLine) -> dict[str, Any]:
+        mos = line.production_ids
+        planned = line.pre_buffer_qty
+        done = sum(mos.mapped("qty_produced"))
+        wip = line.committed_qty
+
+        quantities = {
+            "planned": 0,
+            "done": done,
+            "wip": wip,
+            "floor": wip,
+            "initial_planned": planned,
+        }
+
+        data = {
+            "line_id": line.id,
+            "product_name": line.product_id.display_name,
+            "product_id": line.product_id.id,
+            "uom": line.product_id.uom_id.display_name,
+            "quantities": quantities,
+            "ratio": line._get_downstream_factor(),
+            "upstream_branches": [
+                self._build_tree_recursive(parent) for parent in line.upstream_line_ids
+            ],
+        }
+
+        return data
+
+    @api.model
+    def _format_demand(self, campaign: MrpCampaign) -> list[dict[str, Any]]:
+        """Aggregates demand from SOs/Deliveries linked to the campaign lines"""
+        moves: list[dict[str, Any]] = []
         for demand in campaign.demand_line_ids:
-            demands_data.append(
-                {
-                    "id": demand.id,
-                    "product": (demand.product_id.id, demand.product_id.display_name),
-                    "current_target_qty": demand.target_qty,  # The original quantity
-                    "allocated_to_a": demand.target_qty,
-                    "allocated_to_b": 0.0,  # Default: none to Campaign B / Backorder
-                    "product_uom_name": demand.product_uom_id.name,
-                    "moves": [
-                        {
-                            "id": move.id,
-                            "origin": move.origin,
-                            "qty": move.product_uom_qty,
-                        }
-                        for move in demand.move_dest_ids
-                    ],
-                }
+            sorted_proxies = demand.demand_proxy_ids.sorted(
+                key=lambda proxy: (
+                    proxy.move_id.priority,
+                    proxy.move_id.date_deadline or proxy.move_id.date,
+                )
             )
 
-        return json.dumps({"demands": demands_data})
-
-    def action_partition_campaign(self):
-        self.ensure_one()
-        data = json.loads(self.partition_data_json)
-        original_campaign = self.campaign_id
-
-        # Validate allocations
-        for demand_data in data["demands"]:
-            total_allocated = (
-                demand_data["allocated_to_a"] + demand_data["allocated_to_b"]
-            )
-            if (
-                abs(total_allocated - demand_data["current_target_qty"]) > 0.001
-            ):  # Use float comparison
-                raise UserError(
-                    _(
-                        "Total allocated quantity for product %s does "
-                        "not match its original demand.",
-                        demand_data["product"][1],
-                    )
+            for proxy in sorted_proxies:
+                move = proxy.move_id
+                order_ref = move.group_id.sale_id.client_order_ref
+                moves.append(
+                    {
+                        "proxy_id": proxy.id,
+                        "move_id": move.id,
+                        "product_id": move.product_id.id,
+                        "product_name": move.product_id.display_name,
+                        "origin": move.origin or move.picking_id.name,
+                        "customer_ref": order_ref,
+                        "customer": move.partner_id.name or "Internal",
+                        "fulfilled_qty": 0,
+                        "target_qty": proxy.promised_qty,
+                        "uom": move.product_uom.display_name,
+                        "deadline": move.date_deadline.strftime("%Y-%m-%d")
+                        if move.date_deadline
+                        else False,
+                    }
                 )
 
-        if self.partition_mode == "split":
-            self._do_split(original_campaign, data["demands"])
-        elif self.partition_mode == "backorder":
-            self._do_backorder(original_campaign, data["demands"])
+        return moves
+
+    def action_partition_campaign(self):  # pragma: no coverage
+        self.ensure_one()
+        data = json.loads(self.partition_data_json)
+        prod_lines = self._validate_json_production(data)
+        demand_lines = self._validate_json_demand(data)
+
+        # Deltas represent the difference between the initial campaign
+        # and the input by the user.
+        # as such, they are the quantities to backorder.
+        prod_deltas = self._get_deltas_production(prod_lines)
+        demand_deltas = self._get_deltas_demand(demand_lines)
+
+        dest_campaign = self.with_context(
+            campaign_skip_mo_adjustment=True
+        ).campaign_id._split(prod_deltas, demand_deltas)
+
+        # Trigger re-synchronization of MOs after the partition changes have propagated
+        self.campaign_id._resync_mos()
+        if dest_campaign:
+            dest_campaign._resync_mos()
 
         return {"type": "ir.actions.act_window_close"}
 
-    def _do_split(self, original_campaign, demands_data):
-        """
-        Performs the split operation: creates two
-        new campaigns and cancels the original.
-        """
-        if not self.new_campaign_name_a or not self.new_campaign_name_b:
-            raise UserError(_("New Campaign names are required for split mode."))
+    def _validate_json_production(self, data: dict[str, Any]) -> dict[int, tuple]:
+        tree: dict = data.get("tree", None)
+        if not tree:
+            raise ValidationError(
+                _("Malformed Data: missing 'tree' attribute in JSON.")
+            )
 
-        new_campaign_a = original_campaign.copy(
-            {
-                "name": self.new_campaign_name_a,
-                "line_ids": False,  # Clear demand lines to be recreated
-                "bo_source": False,  # Not a backorder
-            }
-        )
-        new_campaign_b = original_campaign.copy(
-            {
-                "name": self.new_campaign_name_b,
-                "line_ids": False,  # Clear demand lines to be recreated
-                "bo_source": False,  # Not a backorder
-            }
-        )
+        def get_all_lines(root: dict, result: dict | None = None) -> dict[int, dict]:
+            if result is None:
+                result = {}
 
-        for demand_data in demands_data:
-            demand_line = self.env["mrp.campaign.demand"].browse(demand_data["id"])
-            moves = demand_line.move_dest_ids
+            node_data = {k: v for k, v in root.items() if k != "upstream_branches"}
+            result[node_data["line_id"]] = node_data
+            branches = root.get("upstream_branches", [])
+            for branch in branches:
+                get_all_lines(branch, result)
 
-            if demand_data["allocated_to_a"] > 0:
-                self.env["mrp.campaign.demand"].create(
-                    {
-                        "campaign_id": new_campaign_a.id,
-                        "product_id": demand_line.product_id.id,
-                        "bom_id": demand_line.bom_id.id,
-                        "move_dest_ids": [
-                            (6, 0, moves.ids)
-                        ],  # Link all moves for traceability
-                        "target_qty": demand_data["allocated_to_a"],
-                    }
+            return result
+
+        campaign_lines: dict[int, dict] = get_all_lines(tree)
+        records = self.env["mrp.campaign.line"].browse(campaign_lines.keys())
+
+        if set(campaign_lines.keys()) != set(records.exists().mapped("id")):
+            if len(set(campaign_lines.keys())) != len(
+                set(records.exists().mapped("id"))
+            ):
+                raise ValidationError(_("Not all campaign line exists"))
+
+        if not all([record.campaign_id == self.campaign_id for record in records]):
+            raise ValidationError(
+                _("Not all campaign_line belong to the current campaign")
+            )
+
+        mapped_data = {}
+        for record in records:
+            mapped_data[record.id] = (record, campaign_lines[record.id])
+        return mapped_data
+
+    def _get_deltas_production(self, lines: dict[int, tuple]) -> dict[int, tuple]:
+        deltas = {}
+        for rec_id, data in lines.items():
+            line = data[0]
+            intent = data[1]
+            quantities = intent["quantities"]
+
+            if line.product_id.id != intent["product_id"]:
+                raise ValidationError(_("Line product and intent product do not match"))
+            if quantities["planned"] < line.committed_qty:
+                values = {
+                    "product": intent["product_name"],
+                    "plan": quantities["planned"],
+                    "actual": line.committed_qty,
+                }
+                raise ValidationError(
+                    _(
+                        "Cannot plan less of %(product)s than currently "
+                        "produced quantity (%(plan)f < %(actual)f) " % values
+                    )
                 )
-            if demand_data["allocated_to_b"] > 0:
-                self.env["mrp.campaign.demand"].create(
-                    {
-                        "campaign_id": new_campaign_b.id,
-                        "product_id": demand_line.product_id.id,
-                        "bom_id": demand_line.bom_id.id,
-                        "move_dest_ids": [
-                            (6, 0, moves.ids)
-                        ],  # Link all moves for traceability
-                        "target_qty": demand_data["allocated_to_b"],
-                    }
+            delta = line.pre_buffer_qty - quantities["planned"]
+            if delta == 0:
+                continue
+            deltas[rec_id] = (line, delta)
+
+        return deltas
+
+    def _validate_json_demand(self, data: dict[str, Any]) -> dict[int, tuple]:
+        demand_data = data.get("demand_moves", None)
+        if demand_data is None:
+            raise ValidationError(
+                _("Malformed data: missing 'demand_moves' attribute in JSON.")
+            )
+        mapped_proxy = {v["proxy_id"]: v for v in demand_data}
+        proxies = self.env["mrp.campaign.demand.proxy"].browse(mapped_proxy.keys())
+
+        if set(mapped_proxy.keys()) != set(proxies.exists().ids):
+            raise ValidationError(_("Not all proxies could be found in the database."))
+
+        if not all(proxies.mapped(lambda proxy: proxy.campaign_id == self.campaign_id)):
+            bad_proxies = [
+                proxy.id for proxy in proxies if proxy.campaign_id != self.campaign_id
+            ]
+            raise ValidationError(
+                _(
+                    "Proxies %s are not associated with the current campaign",
+                    bad_proxies,
+                )
+            )
+
+        mapped_data = {}
+        mapped_data = {proxy.id: (proxy, mapped_proxy[proxy.id]) for proxy in proxies}
+        return mapped_data
+
+    def _get_deltas_demand(self, lines: dict[int, tuple]) -> dict[int, tuple]:
+        deltas = {}
+        for rec_id, data in lines.items():
+            rec = data[0]
+            intent = data[1]
+            current_promised_qty = rec.promised_qty
+            intended_promised_qty = intent["fulfilled_qty"]
+
+            if intended_promised_qty < 0:
+                raise ValidationError(
+                    _(
+                        "Trying to assign a negative quantity (%(qty)d) to a SO."
+                        % {"qty": intended_promised_qty}
+                    )
                 )
 
-        # Cancel the original campaign to preserve history
-        if original_campaign.state != "cancel":
-            if original_campaign.production_ids:
-                original_campaign.action_reset()
-            original_campaign.state = "cancel"
-
-        new_campaign_a._sync_date_planned_start()
-        new_campaign_b._sync_date_planned_start()
-
-    def _do_backorder(self, original_campaign, demands_data):
-        """
-        Performs the backorder operation: modifies original
-        campaign and creates one new backorder campaign.
-        """
-        backorder_campaign = self.env["mrp.campaign"]  # Initialize empty
-
-        for demand_data in demands_data:
-            demand_line = self.env["mrp.campaign.demand"].browse(demand_data["id"])
-            moves = demand_line.move_dest_ids
-
-            # Update original demand line's target_qty
-            demand_line.target_qty = demand_data[
-                "allocated_to_a"
-            ]  # 'A' is for original campaign
-
-            # Create backorder demand line if there's quantity for backorder
-            if demand_data["allocated_to_b"] > 0:
-                if not backorder_campaign:
-                    backorder_campaign = original_campaign.copy(
-                        {
-                            "name": f"{original_campaign.name}-BO",
-                            "line_ids": False,  # Clear demand lines to be recreated
-                            "bo_source": original_campaign.id,
+            if intended_promised_qty > rec.upstream_qty:
+                raise ValidationError(
+                    _(
+                        "Trying to assign a larger quantity "
+                        "than required (%(assigned)d > %(demand)d)."
+                        % {
+                            "assigned": intended_promised_qty,
+                            "demand": rec.upstream_qty,
                         }
                     )
-
-                self.env["mrp.campaign.demand"].create(
-                    {
-                        "campaign_id": backorder_campaign.id,
-                        "product_id": demand_line.product_id.id,
-                        "bom_id": demand_line.bom_id.id,
-                        "move_dest_ids": [
-                            (6, 0, moves.ids)
-                        ],  # Link all moves for traceability
-                        "target_qty": demand_data["allocated_to_b"],
-                    }
                 )
 
-        if backorder_campaign:
-            backorder_campaign._sync_date_planned_start()
+            delta = current_promised_qty - intended_promised_qty
 
-        original_campaign._sync_date_planned_start()
+            if delta == 0:
+                continue
+
+            deltas[rec_id] = (rec, delta)
+        return deltas

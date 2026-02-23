@@ -21,7 +21,13 @@
                         <field name="target_qty" />
                     </group>
                 </group>
-                <field name="move_dest_ids" />
+                <field name="demand_proxy_ids">
+                    <tree editable="bottom">
+                        <field name="origin" />
+                        <field name="promised_qty" />
+                        <field name="upstream_qty" />
+                    </tree>
+                </field>
             </form>
         </field>
     </record>

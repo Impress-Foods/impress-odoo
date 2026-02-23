@@ -51,6 +51,7 @@
                             <field name="use_buffer" />
                             <field name="buffer_percent" />
                         </group>
+                        <field name="demand_ids" />
                         <field name="upstream_line_ids" />
                         <field name="production_ids" readonly="1" />
                     </group>

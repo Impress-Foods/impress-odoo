@@ -119,9 +119,14 @@ class TestStockRule(CampaignCase):
         self.assertEqual(
             len(campaigns.demand_line_ids), 1, "Campaign should have 1 demand line"
         )
+        self.assertEqual(
+            len(campaigns.demand_line_ids.demand_proxy_ids),
+            1,
+            "Campaign should have 1 demand proxy",
+        )
         self.assertIn(
             demand_move,
-            campaigns.demand_line_ids.move_dest_ids,
+            campaigns.demand_line_ids.move_ids,
             "Demand move should be linked to campaign",
         )
 

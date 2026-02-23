@@ -1,0 +1,68 @@
+.production-bar-container {
+    position: relative; // Absolute anchor for the marker
+    padding-top: 15px; // Space for the "Floor" label so it doesn't hit the product name
+
+    .bg-success {
+        background-color: var(--success) !important;
+    }
+
+    .bg-danger {
+        background: var(--danger) !important;
+    }
+
+    .progress {
+        border-radius: 10px;
+        overflow: hidden; // Keeps the green/blue bars clipped
+        background-color: var(--gray-200); // Fallback
+        background-image: linear-gradient(
+            45deg,
+            var(--gray-300) 25%,
+
+            transparent 25%,
+
+            transparent 50%,
+
+            var(--gray-300) 50%,
+
+            var(--gray-300) 75%,
+
+            transparent 75%,
+
+            transparent
+        );
+
+        background-size: 10px 10px;
+    }
+
+    .floor-marker {
+        position: absolute;
+        top: 15px; /* Match the padding-top of container to align with bar */
+        margin-top: -4px; /* (20px marker - 12px bar) / 2 = 4px offset to center it */
+        height: 20px;
+        width: 2px;
+        background-color: #ff4d4f;
+        z-index: 3; /* Sit above everything */
+        pointer-events: none;
+
+        // The vertical line itself
+        &::before {
+            content: "";
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background: inherit;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+        }
+    }
+
+    .floor-label {
+        position: absolute;
+        top: -18px; /* Move label above the line */
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #ff4d4f;
+    }
+}

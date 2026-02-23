@@ -1,3 +1,5 @@
+from typing import Any
+
 from odoo.tests.common import TransactionCase
 
 from odoo.addons.mrp.models.mrp_bom import MrpBom
@@ -381,20 +383,44 @@ class CampaignCase(TransactionCase):
         qty: float = 1.0,
         campaign: MrpCampaign | None = None,
     ) -> MrpCampaignDemand:
-        values: dict = {}
-        values["product_id"] = product.id
-        values["campaign_id"] = campaign.id if campaign else False
-        values["move_dest_ids"] = [
-            (
-                0,
-                0,
-                {
-                    "name": "move",
-                    "product_id": product.id,
-                    "product_uom_qty": qty,
-                    "location_id": cls.stock_location.id,
-                    "location_dest_id": cls.stock_location.id,
-                },
-            )
-        ]
-        return cls.env["mrp.campaign.demand"].create(values)
+        demand = cls.env["mrp.campaign.demand"].create(
+            {
+                "product_id": product.id,
+                "campaign_id": campaign.id if campaign else False,
+            }
+        )
+        move = cls.env["stock.move"].create(
+            {
+                "name": "move",
+                "product_id": product.id,
+                "product_uom_qty": qty,
+                "location_id": cls.stock_location.id,
+                "location_dest_id": cls.stock_location.id,
+            }
+        )
+        cls.env["mrp.campaign.demand.proxy"].create(
+            {
+                "demand_id": demand.id,
+                "move_id": move.id,
+                "promised_qty": qty,
+            }
+        )
+        return demand
+
+    @classmethod
+    def get_all_values_for_key(
+        cls, target: dict, target_key: Any, result=None
+    ) -> list[Any]:
+        if result is None:
+            result = []
+
+        for key, value in target.items():
+            if key == target_key:
+                result.append(value)
+            elif isinstance(value, dict):
+                cls.get_all_values_for_key(value, target_key, result)
+            elif isinstance(value, list):
+                for item in value:
+                    cls.get_all_values_for_key(item, target_key, result)
+
+        return result

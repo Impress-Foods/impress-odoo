@@ -93,7 +93,6 @@ class MrpCampaignCreator(models.TransientModel):
             "product_id": self.product_id.id,
         }
         campaign_id: MrpCampaign = self.env["mrp.campaign"].create([values])
-        line_values: list[dict] = []
 
         products = self.demand_move_ids.mapped("product_id")
         boms_by_product = self.env["mrp.bom"]._bom_find(products=products)
@@ -103,12 +102,19 @@ class MrpCampaignCreator(models.TransientModel):
         )
         for product, moves in grouped_demand.items():
             bom = boms_by_product.get(product)
-            line_values.append(
+            demand_line = self.env["mrp.campaign.demand"].create(
                 {
                     "campaign_id": campaign_id.id,
                     "product_id": product.id,
-                    "move_dest_ids": moves.ids,
                     "bom_id": bom.id if bom else False,
                 }
             )
-        self.env["mrp.campaign.demand"].create(line_values)
+            proxy_vals = [
+                {
+                    "demand_id": demand_line.id,
+                    "move_id": move.id,
+                    "promised_qty": move.product_uom_qty,
+                }
+                for move in moves
+            ]
+            self.env["mrp.campaign.demand.proxy"].create(proxy_vals)

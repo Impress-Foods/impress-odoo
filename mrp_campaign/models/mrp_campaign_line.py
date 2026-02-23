@@ -7,7 +7,6 @@ from odoo.tools import float_is_zero
 
 from odoo.addons.mrp.models.mrp_bom import MrpBomLine
 from odoo.addons.mrp.models.mrp_production import MrpProduction
-from odoo.addons.mrp.wizard.change_production_qty import ChangeProductionQty
 from odoo.addons.product.models.product_product import ProductProduct
 
 _logger = logging.getLogger(__name__)
@@ -27,10 +26,31 @@ class CampaignLine(models.Model):
         related="product_id.product_template_variant_value_ids"
     )
 
-    qty = fields.Float(compute="_compute_qty", recursive=True, store=True)
-    pre_buffer_qty = fields.Float(compute="_compute_qty", recursive=True, store=True)
-    fulfilled_qty = fields.Float(compute="_compute_fulfilled_qty", store=True)
-    producing_qty = fields.Float(compute="_compute_producing_qty", store=True)
+    qty = fields.Float(
+        compute="_compute_qty",
+        recursive=True,
+        store=True,
+        help="Total quantity planned",
+    )
+    pre_buffer_qty = fields.Float(
+        compute="_compute_qty",
+        recursive=True,
+        store=True,
+        help="Quantity before buffer was applied",
+    )
+    fulfilled_qty = fields.Float(
+        compute="_compute_fulfilled_qty", store=True, help="Quantity already produced"
+    )
+    producing_qty = fields.Float(
+        compute="_compute_production_qtys",
+        store=True,
+        help="Total quantity (planned, commited and complete) by MOs",
+    )
+    committed_qty = fields.Float(
+        compute="_compute_production_qtys",
+        store=True,
+        help="Quantity committed by MOs (in progress and done)",
+    )
     bom_id = fields.Many2one("mrp.bom")
 
     is_batch_produced = fields.Boolean(compute="_compute_is_batch_produced", store=True)
@@ -47,6 +67,7 @@ class CampaignLine(models.Model):
     upstream_line_ids = fields.One2many("mrp.campaign.line", "downstream_line_id")
     sequence = fields.Integer(default=0)
 
+    production_ids = fields.One2many("mrp.production", "campaign_line_id")
     productions_created = fields.Boolean()
 
     @api.depends("product_id")
@@ -88,7 +109,6 @@ class CampaignLine(models.Model):
     )
     def _compute_qty(self):
         for rec in self:
-            previous_qty = rec.qty
             buffer = (1 + rec.buffer_percent) if rec.is_batch_produced else 1
             if rec.upstream_line_ids:
                 quantities = [
@@ -105,11 +125,9 @@ class CampaignLine(models.Model):
             else:
                 rec.pre_buffer_qty = 0
                 rec.qty = 0
-            if rec.productions_created and rec.qty != previous_qty:
-                rec._adjust_mos(rec.qty)
 
     @api.depends("production_ids", "production_ids.product_qty", "production_ids.state")
-    def _compute_producing_qty(self):
+    def _compute_production_qtys(self):
         for rec in self:
             rec.producing_qty = sum(
                 rec.production_ids.filtered_domain(
@@ -122,6 +140,27 @@ class CampaignLine(models.Model):
                     ]
                 ).mapped("product_qty")
             )
+            committed_qty = sum(
+                rec.production_ids.filtered_domain(
+                    [("state", "not in", ["draft", "cancel", "confirmed"])]
+                ).mapped("product_qty")
+            )
+            rec.committed_qty = committed_qty / (
+                (1 + rec.buffer_percent) if rec.is_batch_produced else 1
+            )
+
+    def write(self, vals):
+        res = super().write(vals)
+
+        if self.env.context.get("campaign_skip_mo_adjustment"):
+            return res
+
+        # After the math is written to the DB, sync the physical MOs
+        if "qty" in vals or self.env.is_to_compute("qty", self):
+            for rec in self.filtered("productions_created"):
+                rec._adjust_mos(rec.qty)
+
+        return res
 
     def _get_downstream_product(self) -> ProductProduct:
         self.ensure_one()
@@ -253,27 +292,35 @@ class CampaignLine(models.Model):
         if not self.downstream_product_id:
             return 1
         else:
-            own_factor = self.bom_id.get_factor_to_product(self.downstream_product_id)
+            own_factor = self._get_downstream_factor()
             downstream_factor = self.downstream_line_id._get_anchor_factor()
             return own_factor * downstream_factor
+
+    def _get_downstream_factor(self) -> float:
+        self.ensure_one()
+        return (
+            self.bom_id.get_factor_to_product(self.downstream_product_id)
+            if self.downstream_product_id
+            else 1
+        )
 
     def _adjust_mos(self, new_quantity: float) -> None:
         self.ensure_one()
 
+        rounding_precision = self.product_id.uom_id.rounding
+
         # Separate MOs into those that can be adjusted/deleted and
         # those that are fixed (e.g., done or cancelled)
-        # MOs in 'draft', 'confirmed', 'progress' states are considered adjustable.
+        # MOs in 'draft', 'confirmed' states are considered adjustable.
         adjustable_mos = self.production_ids.filtered(
-            lambda mo: mo.state in ["draft", "confirmed", "progress"]
+            lambda mo: mo.state in ["draft", "confirmed"]
         )
         fixed_mos = self.production_ids - adjustable_mos
         fixed_qty_produced = sum(fixed_mos.mapped("product_qty"))
 
         required_from_adjustable_mos = new_quantity - fixed_qty_produced
 
-        if float_is_zero(
-            new_quantity, precision_rounding=self.product_id.uom_id.rounding
-        ):
+        if float_is_zero(new_quantity, precision_rounding=rounding_precision):
             adjustable_mos.unlink()
             return
 
@@ -298,7 +345,7 @@ class CampaignLine(models.Model):
         else:  # Not batch produced
             if not float_is_zero(
                 required_from_adjustable_mos,
-                precision_rounding=self.product_id.uom_id.rounding,
+                precision_rounding=rounding_precision,
             ):
                 if len(adjustable_mos) > 1:
                     raise ValidationError(
@@ -309,16 +356,12 @@ class CampaignLine(models.Model):
                     )
                 elif len(adjustable_mos) == 1:
                     mo = adjustable_mos[0]
-                    _wizard: ChangeProductionQty = (
-                        self.env["change.production.qty"]
-                        .create(
-                            {
-                                "mo_id": mo.id,
-                                "product_qty": required_from_adjustable_mos,
-                            }
-                        )
-                        .change_prod_qty()
-                    )
+                    self.env["change.production.qty"].create(
+                        {
+                            "mo_id": mo.id,
+                            "product_qty": required_from_adjustable_mos,
+                        }
+                    ).change_prod_qty()
                 else:  # len(adjustable_mos) == 0, create a new one
                     self.env["mrp.production"].create(
                         {
@@ -335,7 +378,10 @@ class CampaignLine(models.Model):
     def _adjust_batch_mos(
         self, adjustable_mos: MrpProduction, required_from_adjustable_mos: float
     ):
-        # 1. Determine the target structure of MOs required from adjustable quantity
+        self.ensure_one()
+        rounding_precision = self.product_id.uom_id.rounding
+
+        # 1. Determine the target structure of MOs required
         target_mo_quantities = []
         n_full_batches = int(required_from_adjustable_mos / self.batch_size)
         remaining_qty_for_partial = required_from_adjustable_mos % self.batch_size
@@ -344,66 +390,68 @@ class CampaignLine(models.Model):
             target_mo_quantities.append(self.batch_size)
         if not float_is_zero(
             remaining_qty_for_partial,
-            precision_rounding=self.product_id.uom_id.rounding,
+            precision_rounding=rounding_precision,
         ):
             target_mo_quantities.append(remaining_qty_for_partial)
-        target_mo_quantities.sort()  # Sort for easier comp and greedy matching
 
-        # 2. Prepare current adjustable MOs,
-        # sorted by quantity to facilitate matching
-        current_adjustable_mo_list = adjustable_mos.sorted("product_qty")
+        unassigned_targets = list(target_mo_quantities)
 
-        # Keep track of MOs that will be updated/kept
-        mos_to_keep_or_update = self.env["mrp.production"]
-        # Keep track of target quantities that have been assigned to an MO
-        assigned_target_quantities_indices = [False] * len(target_mo_quantities)
+        # 2. Match existing MOs to target quantities
+        #  (Exact matches first, then closest fit)
+        mo_updates = []
+        assigned_adjustable_mos = self.env["mrp.production"]
 
-        # Greedily match and update existing MOs to target quantities
-        for _current_mo_idx, current_mo in enumerate(current_adjustable_mo_list):
-            # Try to find a target quantity that matches
-            # or can be assigned to this current_mo
-            best_match_target_idx = -1
-            for target_qty_idx, _target_qty in enumerate(target_mo_quantities):
-                if not assigned_target_quantities_indices[target_qty_idx]:
-                    # Simple greedy: take the first available target quantity
-                    best_match_target_idx = target_qty_idx
+        # Sort MOs to process them consistently
+        for current_mo in adjustable_mos.sorted("product_qty", reverse=True):
+            best_match_idx = -1
+            min_diff = float("inf")
+
+            for idx, target_qty in enumerate(unassigned_targets):
+                if target_qty is None:
+                    continue
+
+                diff = abs(current_mo.product_qty - target_qty)
+                if diff < min_diff:
+                    min_diff = diff
+                    best_match_idx = idx
+
+                # Optimization: take exact match immediately
+                if float_is_zero(diff, precision_rounding=rounding_precision):
                     break
 
-            if best_match_target_idx != -1:
-                target_qty = target_mo_quantities[best_match_target_idx]
-
+            if best_match_idx != -1:
+                matched_target_qty = unassigned_targets[best_match_idx]
                 if not float_is_zero(
-                    current_mo.product_qty - target_qty,
-                    precision_rounding=self.product_id.uom_id.rounding,
+                    current_mo.product_qty - matched_target_qty,
+                    precision_rounding=rounding_precision,
                 ):
-                    # Quantity is different, use wizard to update
-                    _wizard: ChangeProductionQty = (
-                        self.env["change.production.qty"]
-                        .create({"mo_id": current_mo.id, "product_qty": target_qty})
-                        .change_prod_qty()
-                    )
+                    mo_updates.append((current_mo, matched_target_qty))
 
-                mos_to_keep_or_update |= current_mo
-                assigned_target_quantities_indices[best_match_target_idx] = True
+                unassigned_targets[best_match_idx] = None
+                assigned_adjustable_mos |= current_mo
 
-        # 3. Delete excess adjustable MOs
-        # Any adjustable MOs not in mos_to_keep_or_update are considered excess
-        mos_to_unlink = adjustable_mos - mos_to_keep_or_update
-        mos_to_unlink.unlink()
+        # 3. Identify MOs to unlink and new values to create
+        mo_unlinks = adjustable_mos - assigned_adjustable_mos
+        mo_creation_values = [
+            {
+                "product_id": self.product_id.id,
+                "bom_id": self.bom_id.id,
+                "product_qty": target_qty,
+                "campaign_line_id": self.id,
+                "created_by_campaign": True,
+            }
+            for target_qty in unassigned_targets
+            if target_qty is not None
+        ]
 
-        # 4. Create new MOs for remaining unmatched target quantities
-        values_to_create = []
-        for target_qty_idx, target_qty in enumerate(target_mo_quantities):
-            if not assigned_target_quantities_indices[target_qty_idx]:
-                values_to_create.append(
-                    {
-                        "product_id": self.product_id.id,
-                        "bom_id": self.bom_id.id,
-                        "product_qty": target_qty,
-                        "campaign_line_id": self.id,
-                        "created_by_campaign": True,
-                    }
-                )
+        # 4. Execute database operations
+        if mo_unlinks:
+            mo_unlinks.unlink()
 
-        if values_to_create:
-            self.env["mrp.production"].create(values_to_create)
+        for mo_record, new_qty in mo_updates:
+            self.env["change.production.qty"].create(
+                {"mo_id": mo_record.id, "product_qty": new_qty}
+            ).change_prod_qty()
+
+        if mo_creation_values:
+            self.env["mrp.production"].create(mo_creation_values)

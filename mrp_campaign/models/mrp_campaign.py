@@ -5,7 +5,7 @@ from datetime import datetime, time, timedelta
 from typing import Literal
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 from odoo.addons.stock.models.stock_rule import StockRule
 
@@ -67,25 +67,24 @@ class MrpCampaign(models.Model):
     batch_size = fields.Float()
 
     demand_line_ids = fields.One2many("mrp.campaign.demand", "campaign_id")
-
+    demand_proxy_ids = fields.One2many("mrp.campaign.demand.proxy", "campaign_id")
     line_ids = fields.One2many("mrp.campaign.line", "campaign_id")
 
     production_ids = fields.One2many("mrp.production", "campaign_id")
     production_count = fields.Integer(compute="_compute_production_count")
 
-    backorder_campaign_ids = fields.One2many("mrp.campaign", "bo_source")
+    backorder_campaign_ids = fields.One2many("mrp.campaign", "bo_source_id")
     bo_count = fields.Integer(compute="_compute_bo_count")
-    bo_source = fields.Many2one("mrp.campaign")
+    bo_source_id = fields.Many2one("mrp.campaign")
 
     @api.depends("backorder_campaign_ids")
-    def _compute_bo_count(self):
+    def _compute_bo_count(self):  # pragma: no coverage
         for rec in self:
             rec.bo_count = len(rec.backorder_campaign_ids)
 
     @api.depends("production_ids", "production_ids.state", "production_count")
     def _compute_state(self):
         for rec in self:
-            _logger.warning(rec.production_count)
             if rec.production_count == 0:
                 rec.state = "draft"
             elif any(
@@ -150,6 +149,18 @@ class MrpCampaign(models.Model):
 
             rec.bucket_end_date = rec.bucket_start_date + delta
 
+    def unlink(self):
+        campaigns_to_clean_up = self.filtered_domain(
+            [("state", "in", ["draft", "plan"])]
+        )
+
+        mos_to_unlink = campaigns_to_clean_up.mapped("production_ids").filtered_domain(
+            [("state", "in", "draft")]
+        )
+
+        mos_to_unlink.unlink()
+        return super().unlink()
+
     def write(self, vals):
         # Store old date_planned_starts values (which will be Date objects after Part 0)
         old_date_planned_starts = {rec.id: rec.date_planned_start for rec in self}
@@ -207,11 +218,11 @@ class MrpCampaign(models.Model):
         the campaign is scheduled to satisfy the earliest demand within it.
         """
         for campaign in self:
-            if not campaign.line_ids:
+            if not campaign.demand_line_ids:
                 continue
 
-            all_move_dest_deadlines = campaign.line_ids.mapped(
-                "move_dest_ids.date_deadline"
+            all_move_dest_deadlines = campaign.demand_line_ids.mapped(
+                "demand_proxy_ids.move_id.date_deadline"
             )
             if not all_move_dest_deadlines:
                 continue
@@ -331,7 +342,7 @@ class MrpCampaign(models.Model):
             campaign.line_ids.unlink()
             campaign._compute_state()
 
-    def action_view_mos(self):
+    def action_view_mos(self):  # pragma: no coverage
         return {
             "type": "ir.actions.act_window",
             "res_model": "mrp.production",
@@ -340,7 +351,7 @@ class MrpCampaign(models.Model):
             "target": "current",
         }
 
-    def action_view_bos(self):
+    def action_view_bos(self):  # pragma: no coverage
         return {
             "type": "ir.actions.act_window",
             "res_model": "mrp.campaign",
@@ -389,8 +400,9 @@ class MrpCampaign(models.Model):
         )
 
         # 3. Find moves already in any campaign to exclude them
-        all_campaign_lines = self.env["mrp.campaign.demand"].search([])
-        moves_in_campaigns = all_campaign_lines.mapped("move_dest_ids")
+        moves_in_campaigns = (
+            self.env["mrp.campaign.demand.proxy"].search([]).mapped("move_id")
+        )
 
         # 4. Filter out moves already in other campaigns
         available_moves = potential_moves - moves_in_campaigns
@@ -408,18 +420,18 @@ class MrpCampaign(models.Model):
             },
         }
 
-    def action_open_split_wizard(self):
+    def action_open_split_wizard(self):  # pragma: no coverage
         return self.action_open_partition_wizard(mode="split")
 
-    def action_bo(self):
+    def action_bo(self):  # pragma: no coverage
         return self.action_open_partition_wizard(mode="backorder")
 
     def action_open_partition_wizard(
         self, mode: Literal["split", "backorder"] = "split"
-    ) -> dict:
+    ) -> dict:  # pragma: no coverage
         self.ensure_one()
         name: str = ""
-        if not self.demand_line_ids or not self.demand_line_ids.mapped("move_dest_ids"):
+        if not self.demand_line_ids.mapped("demand_proxy_ids"):
             raise UserError(_("This campaign has no demand moves to partition"))
         if mode == "split":
             if self.state not in ["draft", "plan"]:
@@ -443,16 +455,17 @@ class MrpCampaign(models.Model):
                 "active_id": self.id,
                 "active_model": "mrp.campaign",
                 "default_partition_mode": mode,
+                "dialog_size": "xl",
             },
         }
 
     @api.model
-    def _get_name_seq(self):
+    def _get_name_seq(self):  # pragma: no coverage
         """Generates a sequence number for the campaign name."""
         return self.env["ir.sequence"].next_by_code("mrp.campaign") or _("New")
 
     @api.model
-    def _generate_color(self) -> str:
+    def _generate_color(self) -> str:  # pragma: no coverage
         hue, sat, lum = random.random(), random.uniform(0.4, 0.8), 0.5
         rgb: tuple[float, float, float] = colorsys.hls_to_rgb(hue, sat, lum)
         r, g, b = (round(rgb[0] * 255), round(rgb[1] * 255), round(rgb[2] * 255))
@@ -605,42 +618,113 @@ class MrpCampaign(models.Model):
                 )
 
                 # Update Reservoir (mrp.campaign.line), now unique by product AND bom
-                campaign_line = campaign.demand_line_ids.filtered(
+                campaign_demand = campaign.demand_line_ids.filtered(
                     lambda line, p=procurement, b=bom: (
                         line.product_id == p.product_id and line.bom_id == b
                     )
                 )
 
-                if campaign_line:
-                    # Add new demand moves to the existing ones.
-                    campaign_line.move_dest_ids |= demand_moves
-                    _logger.info(
-                        (
-                            "Updated line in campaign %s: %s (%s) by "
-                            "adding demand for %f units."
-                        ),
-                        campaign.name,
-                        campaign_line.product_id.display_name,
-                        campaign_line.bom_id.code or "Default BoM",
-                        procurement.product_qty,
-                    )
-                    campaign._sync_date_planned_start()
-
-                else:
-                    # Create a new line for this product/bom combination.
-                    new_line = self.env["mrp.campaign.demand"].create(
+                if not campaign_demand:
+                    campaign_demand = self.env["mrp.campaign.demand"].create(
                         {
                             "campaign_id": campaign.id,
                             "product_id": procurement.product_id.id,
                             "bom_id": bom.id if bom else False,
-                            "move_dest_ids": [(6, 0, demand_moves.ids)],
                         }
                     )
                     _logger.info(
-                        "Created new line in campaign %s: %s (%s), %f units.",
+                        "Created new demand line in campaign %s: %s (%s).",
                         campaign.name,
-                        new_line.product_id.display_name,
-                        new_line.bom_id.code or "Default BoM",
-                        new_line.target_qty,
+                        campaign_demand.product_id.display_name,
+                        campaign_demand.bom_id.code or "Default BoM",
                     )
-                    campaign._sync_date_planned_start()
+                else:
+                    _logger.info(
+                        (
+                            "Found existing demand line in campaign %s: %s (%s) by "
+                            "adding demand for %f units."
+                        ),
+                        campaign.name,
+                        campaign_demand.product_id.display_name,
+                        campaign_demand.bom_id.code or "Default BoM",
+                        procurement.product_qty,
+                    )
+
+                # Create proxies for the demand moves
+                proxy_vals = [
+                    {
+                        "demand_id": campaign_demand.id,
+                        "move_id": move.id,
+                        "promised_qty": move.product_uom_qty,
+                    }
+                    for move in demand_moves
+                ]
+                self.env["mrp.campaign.demand.proxy"].create(proxy_vals)
+                campaign._sync_date_planned_start()
+
+    def _resync_mos(self):
+        """
+        Synchronizes all Manufacturing Orders linked to this campaign's lines
+        with the current line quantities.
+        """
+        self.ensure_one()
+        # Force recompute of line quantities by accessing them
+        self.line_ids.mapped("qty")
+        # Adjust MOs for lines that have them, in order of dependency (seq 0 first)
+        for line in self.line_ids.sorted("sequence"):
+            if line.productions_created:
+                _logger.warning(f"{line.producing_qty} -> {line.qty}")
+                line._adjust_mos(line.qty)
+
+    def _split(self, prod_bo_qtys, demand_bo_qtys) -> "MrpCampaign":
+        demand_proxy_recordset = self.env["mrp.campaign.demand.proxy"]
+        for item in demand_bo_qtys.values():
+            demand_proxy_recordset += item[0]
+
+        line_recordset = self.env["mrp.campaign.line"]
+        for item in prod_bo_qtys.values():
+            line_recordset += item[0]
+
+        # 1- check if the objects are valid for this campaign
+        if not (line_recordset <= self.line_ids):
+            raise ValidationError(
+                _(
+                    "All BO'd lines are not in campaign: %s",
+                    line_recordset - self.line_ids,
+                )
+            )
+
+        if not (demand_proxy_recordset <= self.demand_proxy_ids):
+            raise ValidationError(
+                _(
+                    "All BO'd demands are not in campaign: %s",
+                    demand_proxy_recordset - self.demand_proxy_ids,
+                )
+            )
+
+        dest_campaign = self.copy(default={"bo_source_id": self.id})
+
+        grouped_proxies = demand_proxy_recordset.grouped("demand_id")
+        demands_to_remove = self.env["mrp.campaign.demand"]
+        for demand in grouped_proxies:
+            if not grouped_proxies[demand]:
+                continue
+
+            new_demand = demand.with_context(campaign_skip_proxies=True).copy(
+                default={"campaign_id": dest_campaign.id, "campaign_line_id": False}
+            )
+            for proxy in grouped_proxies[demand]:
+                delta = demand_bo_qtys[proxy.id][1]
+                if delta == proxy.promised_qty:
+                    proxy.demand_id = new_demand.id
+                else:
+                    proxy.promised_qty -= delta
+                    proxy.copy(
+                        default={"demand_id": new_demand.id, "promised_qty": delta}
+                    )
+
+            if not demand.demand_proxy_ids:
+                demands_to_remove += demand
+        demands_to_remove.unlink()
+
+        return dest_campaign

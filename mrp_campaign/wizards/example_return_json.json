@@ -1,0 +1,161 @@
+{
+  "meta": {"campaign_id": 28, "campaign_name": "MCP00029", "mode": "split"},
+  "tree": {
+    "line_id": 53,
+    "product_name": "[CPP2001] Spicy Lemon",
+    "product_id": 9,
+    "uom": "kg",
+    "quantities": {
+      "planned": 0,
+      "done": 0.0,
+      "wip": 0.0,
+      "floor": 0.0,
+      "initial_planned": 6480.0
+    },
+    "ratio": 1,
+    "upstream_branches": [
+      {
+        "line_id": 52,
+        "product_name": "[DPP2001USA] 1x355 ml Spicy Lemon (USA)",
+        "product_id": 7,
+        "uom": "Units",
+        "quantities": {
+          "planned": 0,
+          "done": 0.0,
+          "wip": 0.0,
+          "floor": 0.0,
+          "initial_planned": 9000.0
+        },
+        "ratio": 0.36,
+        "upstream_branches": [
+          {
+            "line_id": 50,
+            "product_name": "[EPP2001USA] 6x355 ml Spicy Lemon (USA)",
+            "product_id": 4,
+            "uom": "Units",
+            "quantities": {
+              "planned": 0,
+              "done": 0.0,
+              "wip": 0.0,
+              "floor": 0.0,
+              "initial_planned": 1500.0
+            },
+            "ratio": 6.0,
+            "upstream_branches": []
+          }
+        ]
+      },
+      {
+        "line_id": 54,
+        "product_name": "[DPP2001CAN] 1x355 ml Spicy Lemon (CAN)",
+        "product_id": 8,
+        "uom": "Units",
+        "quantities": {
+          "planned": 0,
+          "done": 0.0,
+          "wip": 0.0,
+          "floor": 0.0,
+          "initial_planned": 9000.0
+        },
+        "ratio": 0.36,
+        "upstream_branches": [
+          {
+            "line_id": 51,
+            "product_name": "[EPP2001CAN] 6x355 ml Spicy Lemon (CAN)",
+            "product_id": 5,
+            "uom": "Units",
+            "quantities": {
+              "planned": 0,
+              "done": 0.0,
+              "wip": 0.0,
+              "floor": 0.0,
+              "initial_planned": 1500.0
+            },
+            "ratio": 6.0,
+            "upstream_branches": []
+          }
+        ]
+      }
+    ]
+  },
+  "demand_moves": [
+    {
+      "proxy_id": 37,
+      "move_id": 1,
+      "product_id": 4,
+      "product_name": "[EPP2001USA] 6x355 ml Spicy Lemon (USA)",
+      "origin": "S00001",
+      "customer_ref": "PO195",
+      "customer": "Administrator",
+      "fulfilled_qty": 0,
+      "target_qty": 250.0,
+      "uom": "Units",
+      "deadline": "2026-02-23"
+    },
+    {
+      "proxy_id": 38,
+      "move_id": 101,
+      "product_id": 4,
+      "product_name": "[EPP2001USA] 6x355 ml Spicy Lemon (USA)",
+      "origin": "S00002",
+      "customer_ref": false,
+      "customer": "Administrator",
+      "fulfilled_qty": 0,
+      "target_qty": 250.0,
+      "uom": "Units",
+      "deadline": "2026-02-24"
+    },
+    {
+      "proxy_id": 39,
+      "move_id": 103,
+      "product_id": 4,
+      "product_name": "[EPP2001USA] 6x355 ml Spicy Lemon (USA)",
+      "origin": "S00003",
+      "customer_ref": false,
+      "customer": "Administrator",
+      "fulfilled_qty": 0,
+      "target_qty": 250.0,
+      "uom": "Units",
+      "deadline": "2026-02-24"
+    },
+    {
+      "proxy_id": 43,
+      "move_id": 2,
+      "product_id": 5,
+      "product_name": "[EPP2001CAN] 6x355 ml Spicy Lemon (CAN)",
+      "origin": "S00001",
+      "customer_ref": "PO195",
+      "customer": "Administrator",
+      "fulfilled_qty": 0,
+      "target_qty": 250.0,
+      "uom": "Units",
+      "deadline": "2026-02-23"
+    },
+    {
+      "proxy_id": 44,
+      "move_id": 102,
+      "product_id": 5,
+      "product_name": "[EPP2001CAN] 6x355 ml Spicy Lemon (CAN)",
+      "origin": "S00002",
+      "customer_ref": false,
+      "customer": "Administrator",
+      "fulfilled_qty": 0,
+      "target_qty": 250.0,
+      "uom": "Units",
+      "deadline": "2026-02-24"
+    },
+    {
+      "proxy_id": 45,
+      "move_id": 104,
+      "product_id": 5,
+      "product_name": "[EPP2001CAN] 6x355 ml Spicy Lemon (CAN)",
+      "origin": "S00003",
+      "customer_ref": false,
+      "customer": "Administrator",
+      "fulfilled_qty": 0,
+      "target_qty": 250.0,
+      "uom": "Units",
+      "deadline": "2026-02-24"
+    }
+  ]
+}
