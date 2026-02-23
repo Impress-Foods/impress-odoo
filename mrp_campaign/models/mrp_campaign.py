@@ -39,6 +39,7 @@ class MrpCampaign(models.Model):
         compute="_compute_state",
         string="Status",
         default="draft",
+        store=True,
     )
     campaign_color = fields.Char(default=lambda self: self._generate_color())
 
@@ -278,36 +279,7 @@ class MrpCampaign(models.Model):
         self.ensure_one()
         self.line_ids.unlink()
 
-        created_lines = self.env["mrp.campaign.line"]
-        for demand in self.demand_line_ids:
-            # Determine the BOM for the demand product
-            demand_bom = (
-                demand.bom_id
-                or self.env["mrp.bom"]._bom_find(products=demand.product_id)[
-                    demand.product_id
-                ]
-            )
-
-            existing_line = self.line_ids.filtered(
-                lambda line, demand=demand, demand_bom=demand_bom: (
-                    line.product_id == demand.product_id and line.bom_id == demand_bom
-                )
-            )
-            if existing_line:
-                existing_line.qty += demand.target_qty
-                created_lines |= existing_line
-            else:
-                new_line = self.env["mrp.campaign.line"].create(
-                    {
-                        "campaign_id": self.id,
-                        "product_id": demand.product_id.id,
-                        "bom_id": demand_bom.id,
-                        "qty": demand.target_qty,
-                    }
-                )
-                created_lines |= new_line
-
-            demand.campaign_line_id = new_line or existing_line
+        created_lines = self.demand_line_ids.create_campaign_line()
 
         if propagate:
             for line in created_lines:
@@ -668,6 +640,6 @@ class MrpCampaign(models.Model):
                         campaign.name,
                         new_line.product_id.display_name,
                         new_line.bom_id.code or "Default BoM",
-                        new_line.product_demand_qty,
+                        new_line.qty,
                     )
                     campaign._sync_date_planned_start()

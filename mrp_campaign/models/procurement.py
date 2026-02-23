@@ -15,6 +15,7 @@ class Procurement(NamedTuple):
     product_qty: float
     product_uom: UoM
     location_id: Location
+    name: str
     origin: str
     company_id: Company
     values: dict[str, Any]

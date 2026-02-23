@@ -1,4 +1,10 @@
+import logging
+
 from odoo import api, fields, models
+
+from .mrp_campaign_line import CampaignLine
+
+_logger = logging.getLogger(__name__)
 
 
 class MrpCampaignDemand(models.Model):
@@ -46,9 +52,44 @@ class MrpCampaignDemand(models.Model):
             rec.qty = sum(rec.move_dest_ids.mapped("product_uom_qty"))
 
     @api.depends("qty")
-    def _compute_target_qty(self):
+    def _compute_target_qty(self) -> None:  # pragma: no cover
         for rec in self:
             rec.target_qty = rec.qty
 
-    def _inverse_target_qty(self):
+    def _inverse_target_qty(self) -> None:  # pragma: no cover
         pass
+
+    def create_campaign_line(self) -> CampaignLine:
+        created_lines = self.env["mrp.campaign.line"]
+        for rec in self:
+            bom = (
+                rec.bom_id
+                or self.env["mrp.bom"]._bom_find(products=rec.product_id)[
+                    rec.product_id
+                ]
+            )
+
+            existing_line = rec.campaign_id.line_ids.filtered(
+                lambda line, rec=rec, bom=bom: (
+                    line.product_id == rec.product_id and line.bom_id == bom
+                )
+            )
+            new_line = self.env["mrp.campaign.line"]
+
+            if existing_line:
+                existing_line.qty += rec.target_qty
+                created_lines |= existing_line
+            else:
+                new_line = new_line.create(
+                    {
+                        "campaign_id": rec.campaign_id.id,
+                        "product_id": rec.product_id.id,
+                        "bom_id": bom.id,
+                        "qty": rec.target_qty,
+                    }
+                )
+                created_lines |= new_line
+
+            rec.campaign_line_id = new_line or existing_line
+
+        return created_lines

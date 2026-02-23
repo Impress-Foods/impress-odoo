@@ -20,6 +20,7 @@ class CampaignCase(TransactionCase):
         cls.env.user.groups_id |= cls.env.ref("stock.group_stock_manager")
 
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
+        cls.company = cls.env.ref("base.main_company")
 
         product_template_model: ProductTemplate = cls.env["product.template"]
         product_model: ProductProduct = cls.env["product.product"]
@@ -359,9 +360,11 @@ class CampaignCase(TransactionCase):
             }
         )
 
+    @classmethod
     def create_campaign(cls, product: ProductProduct) -> MrpCampaign:
         return cls.env["mrp.campaign"].create({"product_id": product.id})
 
+    @classmethod
     def create_line(
         cls, product: ProductProduct, campaign: MrpCampaign | None = None
     ) -> CampaignLine:
@@ -371,6 +374,7 @@ class CampaignCase(TransactionCase):
         values["campaign_id"] = campaign.id if campaign else False
         return cls.env["mrp.campaign.line"].create(values)
 
+    @classmethod
     def create_demand(
         cls,
         product: ProductProduct,

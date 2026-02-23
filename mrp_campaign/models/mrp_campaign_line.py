@@ -2,6 +2,7 @@ import logging
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.fields import Many2many
 from odoo.tools import float_is_zero
 
 from odoo.addons.mrp.models.mrp_bom import MrpBomLine
@@ -230,7 +231,9 @@ class CampaignLine(models.Model):
         self.ensure_one()
         if self.product_id.product_tmpl_id != bom_line.bom_id.product_tmpl_id:
             return False
-        bom_line_variant_ids = bom_line.bom_product_template_attribute_value_ids
+        bom_line_variant_ids: Many2many = (
+            bom_line.bom_product_template_attribute_value_ids
+        )
 
         if not bom_line_variant_ids or not self.product_template_variant_value_ids:
             return True
@@ -240,6 +243,7 @@ class CampaignLine(models.Model):
 
     def _get_anchor_factor(self) -> float:
         self.ensure_one()
+
         if not self.downstream_product_id:
             return 1
         else:

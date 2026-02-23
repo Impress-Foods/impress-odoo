@@ -2,6 +2,8 @@ import logging
 
 from odoo import fields, models
 
+from odoo.addons.mrp.models.mrp_production import MrpProduction
+
 _logger = logging.getLogger(__name__)
 
 
@@ -43,8 +45,8 @@ class ProductionOrder(models.Model):
 
     def _split_productions(
         self, amounts=False, cancel_remaining_qty=False, set_consumed_qty=False
-    ):
-        res = super()._split_productions(
+    ) -> MrpProduction:
+        res: MrpProduction = super()._split_productions(
             amounts=amounts,
             cancel_remaining_qty=cancel_remaining_qty,
             set_consumed_qty=set_consumed_qty,
@@ -56,7 +58,7 @@ class ProductionOrder(models.Model):
                 bo.campaign_line_id = rec.campaign_line_id
         return res
 
-    def action_view_campaign(self):
+    def action_view_campaign(self):  # pragma: no cover
         self.ensure_one()
         if not self.campaign_id:
             return
