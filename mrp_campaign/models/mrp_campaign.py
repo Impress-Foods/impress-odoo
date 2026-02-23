@@ -331,21 +331,6 @@ class MrpCampaign(models.Model):
             campaign.line_ids.unlink()
             campaign._compute_state()
 
-    def action_bo(self):
-        self.ensure_one()
-
-        return {
-            "type": "ir.actions.act_window",
-            "name": _("backorder Campaign: %s", self.name),
-            "res_model": "mrp.campaign.backorder.wizard",
-            "view_mode": "form",
-            "target": "new",  # Keep it as 'new' for a standard modal window
-            "context": {
-                "active_id": self.id,
-                "active_model": "mrp.campaign",
-            },
-        }
-
     def action_view_mos(self):
         return {
             "type": "ir.actions.act_window",
@@ -424,26 +409,40 @@ class MrpCampaign(models.Model):
         }
 
     def action_open_split_wizard(self):
-        self.ensure_one()
-        # Check if the campaign is in a splittable state (e.g., draft or review)
-        if self.state not in ["draft", "plan"]:
-            raise UserError(
-                _("Only campaigns in 'Draft' or 'Planned' state can be split.")
-            )
+        return self.action_open_partition_wizard(mode="split")
 
-        # Check if there are any moves to split
+    def action_bo(self):
+        return self.action_open_partition_wizard(mode="backorder")
+
+    def action_open_partition_wizard(
+        self, mode: Literal["split", "backorder"] = "split"
+    ) -> dict:
+        self.ensure_one()
+        name: str = ""
         if not self.demand_line_ids or not self.demand_line_ids.mapped("move_dest_ids"):
-            raise UserError(_("This campaign has no demand moves to split."))
+            raise UserError(_("This campaign has no demand moves to partition"))
+        if mode == "split":
+            if self.state not in ["draft", "plan"]:
+                raise UserError(
+                    _("Only campaigns in 'Draft' or 'Planned' state can be split")
+                )
+            name = _("Split Campaign: %s", self.name)
+
+        elif mode == "backorder":
+            name = _("Backorder Campaign: %s", self.name)
+        else:
+            raise ValueError(_("Invalid partition mode"))
 
         return {
             "type": "ir.actions.act_window",
-            "name": _("Split Campaign: %s", self.name),
-            "res_model": "mrp.campaign.split.wizard",
+            "name": name,
+            "res_model": "mrp.campaign.partition.wizard",
             "view_mode": "form",
-            "target": "new",  # Keep it as 'new' for a standard modal window
+            "target": "new",
             "context": {
                 "active_id": self.id,
                 "active_model": "mrp.campaign",
+                "default_partition_mode": mode,
             },
         }
 
@@ -642,6 +641,6 @@ class MrpCampaign(models.Model):
                         campaign.name,
                         new_line.product_id.display_name,
                         new_line.bom_id.code or "Default BoM",
-                        new_line.qty,
+                        new_line.target_qty,
                     )
                     campaign._sync_date_planned_start()

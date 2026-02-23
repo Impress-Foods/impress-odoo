@@ -11,7 +11,6 @@
         "data/mrp_campaign_sequence.xml",
         "security/ir.model.access.csv",
         "security/mrp_campaign_rules.xml",
-        "wizards/mrp_campaign_backorder_wizard_views.xml",
         "views/mrp_campaign_demand_views.xml",
         "views/mrp_campaign_line_views.xml",
         "views/mrp_campaign_views.xml",
@@ -20,7 +19,7 @@
         "reports/mrp_campaign_report.xml",
         "wizards/mrp_campaign_add_demand_views.xml",
         "wizards/mrp_campaign_creator_views.xml",
-        "wizards/mrp_campaign_split_views.xml",
+        "wizards/mrp_campaign_partition_views.xml",
     ],
     "assets": {
         "web.assets_backend": ["mrp_campaign/static/src/**/*"],

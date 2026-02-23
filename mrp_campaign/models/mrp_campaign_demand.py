@@ -19,7 +19,6 @@ class MrpCampaignDemand(models.Model):
     product_tmpl_id = fields.Many2one(
         "product.template", related="product_id.product_tmpl_id"
     )
-    qty = fields.Float(compute="_compute_qty")
     target_qty = fields.Float(
         string="Target Quantity",
         compute="_compute_target_qty",
@@ -47,14 +46,13 @@ class MrpCampaignDemand(models.Model):
         self.ensure_one()
         return self.campaign_line_id._get_anchor_factor()
 
-    def _compute_qty(self):
+    @api.depends("move_dest_ids.product_uom_qty")
+    def _compute_target_qty(self) -> None:
         for rec in self:
-            rec.qty = sum(rec.move_dest_ids.mapped("product_uom_qty"))
-
-    @api.depends("qty")
-    def _compute_target_qty(self) -> None:  # pragma: no cover
-        for rec in self:
-            rec.target_qty = rec.qty
+            if (
+                not rec.target_qty
+            ):  # Only compute if not already set or manually overridden
+                rec.target_qty = sum(rec.move_dest_ids.mapped("product_uom_qty"))
 
     def _inverse_target_qty(self) -> None:  # pragma: no cover
         pass

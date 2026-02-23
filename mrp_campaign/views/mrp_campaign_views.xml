@@ -216,7 +216,20 @@
                                 </span>
                                 <br t-else="" />
                             </div>
-                            <div class="o_kanban_record_bottom"> </div>
+                            <div class="o_kanban_record_bottom">
+                                <div
+                                    t-attf-class="oe_kanban_bottom_left
+                                    #{record.state.raw_value === 'draft' ? 'oe_kanban_status_grey' : ''}
+                                    #{record.state.raw_value === 'plan' ? 'oe_kanban_status_orange' : ''}
+                                    #{record.state.raw_value === 'confirm' ? 'oe_kanban_status_green' : ''}
+                                    #{record.state.raw_value === 'progress' ? 'oe_kanban_status_blue' : ''}
+                                    #{record.state.raw_value === 'done' ? 'oe_kanban_status_green' : ''}
+                                    #{record.state.raw_value === 'cancel' ? 'oe_kanban_status_red' : ''}
+                                    "
+                                >
+                                    <field name="state" />
+                                </div>
+                            </div>
                         </div>
                     </t>
                 </templates>
