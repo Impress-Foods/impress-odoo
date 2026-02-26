@@ -14,7 +14,7 @@ class SaleOrderLine(models.Model):
 
     def get_deposit_container_qty(self) -> int:
         self.ensure_one()
-        if self.order_id.website_id:
+        if self.order_id.website_id and self.product_id.requires_deposit:
             return int(self.product_uom_qty * self.product_id.qty_multiple)
         else:
             return super().get_deposit_container_qty()
