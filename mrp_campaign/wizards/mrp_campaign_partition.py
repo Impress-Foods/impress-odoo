@@ -116,25 +116,8 @@ class MrpCampaignPartitionWizard(models.TransientModel):
             )
 
             for proxy in sorted_proxies:
-                move = proxy.move_id
-                order_ref = move.group_id.sale_id.client_order_ref
-                moves.append(
-                    {
-                        "proxy_id": proxy.id,
-                        "move_id": move.id,
-                        "product_id": move.product_id.id,
-                        "product_name": move.product_id.display_name,
-                        "origin": move.origin or move.picking_id.name,
-                        "customer_ref": order_ref,
-                        "customer": move.partner_id.name or "Internal",
-                        "fulfilled_qty": 0,
-                        "target_qty": proxy.promised_qty,
-                        "uom": move.product_uom.display_name,
-                        "deadline": move.date_deadline.strftime("%Y-%m-%d")
-                        if move.date_deadline
-                        else False,
-                    }
-                )
+                values = proxy._get_partition_wizard_fields()
+                moves.append(values)
 
         return moves
 

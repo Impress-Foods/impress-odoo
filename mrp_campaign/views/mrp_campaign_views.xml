@@ -121,6 +121,14 @@
                                 string="Back Orders"
                             />
                         </button>
+                        <field name="bo_source_id" invisible="1" />
+                        <button
+                            name="action_view_source"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-reply"
+                            invisible="not bo_source_id"
+                        > Source </button>
                     </div>
                     <group>
                         <group>

@@ -118,3 +118,11 @@ class MrpCampaignCreator(models.TransientModel):
                 for move in moves
             ]
             self.env["mrp.campaign.demand.proxy"].create(proxy_vals)
+
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "mrp.campaign",
+            "views": [[False, "form"]],
+            "res_id": campaign_id.id,
+            "target": "current",
+        }

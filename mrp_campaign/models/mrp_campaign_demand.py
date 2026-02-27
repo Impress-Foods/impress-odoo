@@ -108,3 +108,21 @@ class MrpCampaignDemandProxy(models.Model):
     promised_qty = fields.Float()
     campaign_id = fields.Many2one(related="demand_id.campaign_id")
     origin = fields.Char(related="move_id.origin")
+
+    def _get_partition_wizard_fields(self):
+        self.ensure_one()
+        move = self.move_id
+        return {
+            "proxy_id": self.id,
+            "move_id": move.id,
+            "product_id": move.product_id.id,
+            "product_name": move.product_id.display_name,
+            "origin": move.origin or move.picking_id.name,
+            "customer": move.partner_id.name or "Internal",
+            "fulfilled_qty": 0,
+            "target_qty": self.promised_qty,
+            "uom": move.product_uom.display_name,
+            "deadline": move.date_deadline.strftime("%Y-%m-%d")
+            if move.date_deadline
+            else False,
+        }

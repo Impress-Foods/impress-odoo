@@ -321,8 +321,10 @@ class MrpCampaign(models.Model):
             campaign._compute_state()
 
     def action_view_mos(self):  # pragma: no coverage
+        self.ensure_one()
         return {
             "type": "ir.actions.act_window",
+            "name": "Production orders for %s" % self.name,
             "res_model": "mrp.production",
             "domain": [("id", "in", self.production_ids.ids)],
             "view_mode": "tree,form",
@@ -330,11 +332,34 @@ class MrpCampaign(models.Model):
         }
 
     def action_view_bos(self):  # pragma: no coverage
+        self.ensure_one()
+        if self.bo_count == 1:
+            return {
+                "type": "ir.actions.act_window",
+                "name": "Backorders for %s" % self.name,
+                "res_model": "mrp.campaign",
+                "res_id": self.backorder_campaign_ids[0].id,
+                "view_mode": "form",
+                "target": "current",
+            }
         return {
             "type": "ir.actions.act_window",
+            "name": "Backorders for %s" % self.name,
             "res_model": "mrp.campaign",
             "domain": [("id", "in", self.backorder_campaign_ids.ids)],
             "view_mode": "tree,form",
+            "target": "current",
+        }
+
+    def action_view_source(self):  # pragma: no coverage
+        self.ensure_one()
+
+        return {
+            "type": "ir.actions.act_window",
+            "name": self.bo_source_id.name,
+            "res_model": "mrp.campaign",
+            "res_id": self.bo_source_id.id,
+            "view_mode": "form",
             "target": "current",
         }
 
