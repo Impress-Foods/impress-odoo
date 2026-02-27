@@ -67,7 +67,6 @@ class CampaignLine(models.Model):
     upstream_line_ids = fields.One2many("mrp.campaign.line", "downstream_line_id")
     sequence = fields.Integer(default=0)
 
-    production_ids = fields.One2many("mrp.production", "campaign_line_id")
     productions_created = fields.Boolean()
 
     @api.depends("product_id")

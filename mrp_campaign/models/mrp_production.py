@@ -53,9 +53,13 @@ class ProductionOrder(models.Model):
         )
         for rec in self:
             bos = rec.procurement_group_id.mrp_production_ids
-            for bo in bos:
-                bo.lot_producing_id = rec.lot_producing_id
-                bo.campaign_line_id = rec.campaign_line_id
+            bos.write(
+                {
+                    "lot_producing_id": rec.lot_producing_id.id,
+                    "campaign_line_id": rec.campaign_line_id.id,
+                }
+            )
+
         return res
 
     def action_view_campaign(self):  # pragma: no cover

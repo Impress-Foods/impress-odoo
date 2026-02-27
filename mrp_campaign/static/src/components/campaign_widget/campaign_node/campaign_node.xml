@@ -40,7 +40,7 @@
                     <div
                         class="floor-marker"
                         t-if="props.node.quantities.floor != 0"
-                        t-attf-style="left: {{ (props.node.quantities.floor / props.node.quantities.initial_planned) * 100 }}%;"
+                        t-attf-style="left: #{ (props.node.quantities.floor / props.node.quantities.initial_planned) * 100 }%;"
                     >
                         <span class="floor-label">Min</span>
                     </div>

@@ -104,11 +104,9 @@ class MrpCampaign(models.Model):
                 rec.state = "progress"
             elif any([prod.state in ["confirmed"] for prod in rec.production_ids]):
                 rec.state = "confirm"
-            elif all([prod.state in ["cancelled"] for prod in rec.production_ids]):
-                rec.state = "cancelled"
-            elif all(
-                [prod.state in ["done", "cancelled"] for prod in rec.production_ids]
-            ):
+            elif all([prod.state in ["cancel"] for prod in rec.production_ids]):
+                rec.state = "cancel"
+            elif all([prod.state in ["done", "cancel"] for prod in rec.production_ids]):
                 rec.state = "done"
             else:
                 rec.state = "plan"

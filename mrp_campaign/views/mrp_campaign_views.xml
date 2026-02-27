@@ -74,7 +74,7 @@
                         type="object"
                         string="Backorder Campaign"
                         class="btn-secondary"
-                        invisible="state not in ['progress'] and False"
+                        invisible="state not in ['progress']"
                     />
                     <field name="is_out_of_sync" invisible="1" />
                     <button

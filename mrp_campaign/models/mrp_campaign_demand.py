@@ -83,7 +83,7 @@ class MrpCampaignDemand(models.Model):
                     {
                         "campaign_id": rec.campaign_id.id,
                         "product_id": rec.product_id.id,
-                        "bom_id": bom.id,
+                        "bom_id": bom.id if bom else False,
                         "qty": rec.target_qty,
                     }
                 )

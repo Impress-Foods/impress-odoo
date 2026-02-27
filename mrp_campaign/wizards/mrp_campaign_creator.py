@@ -22,8 +22,10 @@ class MrpCampaignCreator(models.TransientModel):
     planned_date = fields.Date()
 
     demand_move_ids = fields.Many2many("stock.move")
-    available_demand_move_ids = fields.Binary(
-        compute="_compute_available_demand_move_ids", store=False
+    available_demand_move_ids = fields.Many2many(
+        comodel_name="stock.move",
+        compute="_compute_available_demand_move_ids",
+        store=False,
     )
 
     @api.depends("product_id")
