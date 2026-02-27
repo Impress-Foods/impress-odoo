@@ -52,13 +52,14 @@ class ProductionOrder(models.Model):
             set_consumed_qty=set_consumed_qty,
         )
         for rec in self:
-            bos = rec.procurement_group_id.mrp_production_ids
-            bos.write(
-                {
-                    "lot_producing_id": rec.lot_producing_id.id,
-                    "campaign_line_id": rec.campaign_line_id.id,
-                }
-            )
+            productions_to_update = res
+            vals_to_write = {}
+            if rec.lot_producing_id:
+                vals_to_write["lot_producing_id"] = rec.lot_producing_id.id
+            if rec.campaign_line_id:
+                vals_to_write["campaign_line_id"] = rec.campaign_line_id.id
+            if vals_to_write:
+                productions_to_update.write(vals_to_write)
 
         return res
 

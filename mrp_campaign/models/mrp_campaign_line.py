@@ -211,15 +211,12 @@ class CampaignLine(models.Model):
             if not downstream_bom:
                 continue
 
-            downstream_qty = (self.qty / self.bom_id.product_qty) * bom_line.product_qty
-
             existing_downstream_line = self.campaign_id.line_ids.filtered(
                 lambda line, ds_product=downstream_product, ds_bom=downstream_bom: (
                     line.product_id == ds_product and line.bom_id == ds_bom
                 )
             )
             if existing_downstream_line:
-                existing_downstream_line.qty += downstream_qty
                 self.downstream_line_id = existing_downstream_line
                 existing_downstream_line._construct_downstream_tree_line(depth + 1)
 
@@ -229,7 +226,6 @@ class CampaignLine(models.Model):
                         "campaign_id": self.campaign_id.id,
                         "product_id": downstream_product.id,
                         "bom_id": downstream_bom.id,
-                        "qty": downstream_qty,
                         "sequence": depth + 1,
                     }
                 )

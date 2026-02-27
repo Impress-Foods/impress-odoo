@@ -9,7 +9,7 @@
             <tree default_order="sequence asc">
                 <field name="sequence" column_invisible="1" />
                 <field name="product_id" />
-                <field name="bom_id" domain="[('product_id','=','product_id')]" />
+                <field name="bom_id" domain="[('product_id','=', product_id)]" />
                 <field name="pre_buffer_qty" />
                 <field name="qty" />
                 <field name="producing_qty" />
@@ -41,7 +41,7 @@
                             <field name="product_tmpl_id" invisible="1" />
                             <field
                                 name="bom_id"
-                                domain="['|',('product_tmpl_id','=',product_tmpl_id),('product_id','=',product_id)]"
+                                domain="['|',('product_tmpl_id','=',product_tmpl_id),('product_id','=', product_id)]"
                                 required="1"
                             />
                             <field name="downstream_product_id" readonly="1" />

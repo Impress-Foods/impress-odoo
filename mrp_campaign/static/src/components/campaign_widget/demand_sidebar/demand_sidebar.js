@@ -95,7 +95,8 @@ export class DemandSidebar extends Component {
     getPercentFulfilled(productId) {
         const moves = this.props.moves.filter((m) => m.product_id === productId);
         const fulfilled = this.getFulfilledQty(productId);
-        const needed = moves.reduce((sum, m) => sum + m.target_qty, 0);
+        const needed = moves.reduce((sum, m) => sum + (m.target_qty || 0), 0);
+        if (!needed) return 0;
         return (fulfilled / needed) * 100;
     }
 }

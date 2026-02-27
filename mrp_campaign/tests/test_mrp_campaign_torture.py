@@ -186,5 +186,3 @@ class TestMrpCampaignTorture(CampaignCase):
         bulk_mos_b = line_b_bulk.production_ids.filtered(lambda m: m.state != "cancel")
         self.assertEqual(len(bulk_mos_b), 3, "10, 10, 3.1")
         assert_qty(sum(bulk_mos_b.mapped("product_qty")), 23.1)
-
-        _logger.info("Bedrock torture test passed successfully.")

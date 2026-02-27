@@ -45,15 +45,14 @@ class ProductProductModel(models.Model):
         if product.is_campaign_anchor:
             return product
 
-        bom = self.env["mrp.bom"]._bom_find(product)[product]
+        bom = self.env["mrp.bom"]._bom_find(product).get(product)
         if not bom or bom.type != "normal":
             return self.env["product.product"]
 
-        anchors_found = set()
+        anchors_found = self.env["product.product"]
         for line in bom.bom_line_ids:
-            anchor = self._get_root_anchor(line.product_id, visited)
-            if anchor:
-                anchors_found.add(anchor)
+            anchor = self._get_root_anchor(line.product_id, visited.copy())
+            anchors_found |= anchor
 
         if len(anchors_found) == 1:
             return list(anchors_found)[0]

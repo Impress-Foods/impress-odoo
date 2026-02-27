@@ -133,7 +133,7 @@ class MrpCampaign(models.Model):
         )
 
         mos_to_unlink = campaigns_to_clean_up.mapped("production_ids").filtered_domain(
-            [("state", "in", "draft")]
+            [("state", "in", ["draft"])]
         )
 
         mos_to_unlink.unlink()

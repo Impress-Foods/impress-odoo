@@ -51,11 +51,9 @@ export class CampaignOrchestrator extends Component {
     _syncTreeWithDemand(productId) {
         const data = this.state.data;
 
-        const group = data.demand.find((d) => d.product_id === productId);
-        const totalForProduct = group.move_breakdown.reduce(
-            (sum, m) => sum + m.fulfilled_qty,
-            0
-        );
+        const totalForProduct = (data.demand_moves || [])
+            .filter((m) => m.product_id === productId)
+            .reduce((sum, m) => sum + (m.fulfilled_qty || 0), 0);
 
         const leaf = this._findLeafByProductId(data.tree, productId);
         if (leaf) {

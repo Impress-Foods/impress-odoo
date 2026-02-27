@@ -140,7 +140,7 @@
                             />
                             <field
                                 name="date_planned_start"
-                                readonly="state not in ['draft', 'plan', 'confirmed']"
+                                readonly="state not in ['draft', 'plan', 'confirm']"
                             />
                         </group>
                         <group>
@@ -201,7 +201,7 @@
                 <field name="date_planned_start" />
                 <progressbar
                     field="state"
-                    colors='{"draft": "muted", "confirmed": "info", "done": "success", "cancel": "danger"}'
+                    colors='{"draft": "muted", "confirm": "info", "done": "success", "cancel": "danger"}'
                 />
 
                 <templates>
