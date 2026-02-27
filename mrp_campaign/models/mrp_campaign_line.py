@@ -196,6 +196,11 @@ class CampaignLine(models.Model):
         if not self.bom_id:
             return
 
+        # Anchors are the last level of the campaign tree.
+        # We do not manage the production of their components here.
+        if self.product_tmpl_id.is_campaign_anchor:
+            return
+
         for bom_line in self.bom_id.bom_line_ids.filtered(
             lambda x: self.is_valid_bom_line_for_product(x) and x.product_id.bom_ids
         ):

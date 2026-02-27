@@ -1,6 +1,6 @@
 # pragma: no coverage
 {
-    "name": "Manufacturing Automation",
+    "name": "Manufacturing Campaigns",
     "version": "17.0.1.0.0",
     "summary": """ Addon to automatize part of the manufacturing process """,
     "author": "Cédric Paradis",

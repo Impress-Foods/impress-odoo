@@ -154,10 +154,12 @@ class MrpCampaignPartitionWizard(models.TransientModel):
             campaign_skip_mo_adjustment=True
         ).campaign_id._split(prod_deltas, demand_deltas)
 
-        # Trigger re-synchronization of MOs after the partition changes have propagated
+        # Trigger re-synchronization of MOs for the original campaign
         self.campaign_id._resync_mos()
+
+        # For the destination campaign, we need to build its tree and create initial MOs
         if dest_campaign:
-            dest_campaign._resync_mos()
+            dest_campaign.action_plan()
 
         return {"type": "ir.actions.act_window_close"}
 

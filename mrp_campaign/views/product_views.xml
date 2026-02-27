@@ -7,31 +7,13 @@
         <field name="inherit_id" ref="product.product_template_only_form_view" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='responsible_id']" position="after">
-
-                <field name="is_campaign_manufactured" />
                 <field name="is_campaign_anchor" />
-                <field
-                    name="mrp_max_batch_size"
-                    invisible="not is_campaign_manufactured"
-                />
+                <field name="mrp_max_batch_size" />
                 <field
                     name="campaign_buffer_percent"
                     invisible="not is_campaign_anchor"
                     widget="percentage"
                 />
-                <label
-                    for="campaign_bucket_size"
-                    invisible="not is_campaign_manufactured"
-                    string="Planning horizon"
-                />
-                <div
-                    class="o_row"
-                    name="campaign_bucket_size"
-                    invisible="not is_campaign_manufactured"
-                >
-                    <field class="oe_inline" name="campaign_bucket_size" required="1" />
-                    <field class="oe_inline" name="campaign_bucket_type" required="1" />
-                </div>
             </xpath>
         </field>
     </record>

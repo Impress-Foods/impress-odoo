@@ -1,15 +1,12 @@
 import colorsys
 import logging
 import random
-from datetime import datetime, time, timedelta
+from datetime import datetime, time
 from typing import Literal
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
-
-from odoo.addons.stock.models.stock_rule import StockRule
-
-from .procurement import Procurement
+from odoo.tools import float_is_zero
 
 _logger = logging.getLogger(__name__)
 
@@ -43,8 +40,6 @@ class MrpCampaign(models.Model):
     )
     campaign_color = fields.Char(default=lambda self: self._generate_color())
 
-    bucket_start_date = fields.Date()
-    bucket_end_date = fields.Date(compute="_compute_bucket_end_date")
     date_planned_start = fields.Date(
         string="Scheduled Date", required=True, default=fields.Date.today
     )
@@ -76,6 +71,22 @@ class MrpCampaign(models.Model):
     backorder_campaign_ids = fields.One2many("mrp.campaign", "bo_source_id")
     bo_count = fields.Integer(compute="_compute_bo_count")
     bo_source_id = fields.Many2one("mrp.campaign")
+
+    is_out_of_sync = fields.Boolean(compute="_compute_is_out_of_sync", store=True)
+
+    @api.depends("line_ids.qty", "line_ids.producing_qty")
+    def _compute_is_out_of_sync(self):
+        for rec in self:
+            rec.is_out_of_sync = any(
+                rec.line_ids.mapped(
+                    lambda line: (
+                        not float_is_zero(
+                            line.qty - line.producing_qty,
+                            line.product_id.uom_id.rounding,
+                        )
+                    )
+                )
+            )
 
     @api.depends("backorder_campaign_ids")
     def _compute_bo_count(self):  # pragma: no coverage
@@ -117,37 +128,6 @@ class MrpCampaign(models.Model):
 
     def _inverse_buffer_percent(self):
         return
-
-    @api.depends(
-        "bucket_start_date",
-        "product_id.product_tmpl_id.campaign_bucket_type",
-        "product_id.product_tmpl_id.campaign_bucket_size",
-    )
-    def _compute_bucket_end_date(self) -> None:
-        for rec in self:
-            if not rec.bucket_start_date:
-                rec.bucket_end_date = False
-                return
-            bucket_period: Literal[
-                "day", "week", "month", "year"
-            ] = rec.product_id.campaign_bucket_type
-            bucket_length: int = rec.product_id.campaign_bucket_size
-
-            delta: timedelta = timedelta(days=1)
-
-            match bucket_period:
-                case "day":
-                    delta = timedelta(days=bucket_length)
-                case "week":
-                    delta = timedelta(days=bucket_length * 7)
-                case "month":
-                    delta = timedelta(days=bucket_length * 30)
-                case "year":
-                    delta = timedelta(days=bucket_length * 365)
-                case _:
-                    delta = timedelta(days=bucket_length)
-
-            rec.bucket_end_date = rec.bucket_start_date + delta
 
     def unlink(self):
         campaigns_to_clean_up = self.filtered_domain(
@@ -213,7 +193,7 @@ class MrpCampaign(models.Model):
 
     def _sync_date_planned_start(self):
         """
-        Synchronizes date_planned_start and bucket_start_date based on the earliest
+        Synchronizes date_planned_start based on the earliest
         date_deadline of all demand moves linked to the campaign lines. This ensures
         the campaign is scheduled to satisfy the earliest demand within it.
         """
@@ -318,9 +298,7 @@ class MrpCampaign(models.Model):
                 lambda mo: mo.state == "draft"
             )
             if end_mos_to_confirm:
-                end_mos_to_confirm.with_context(
-                    ignore_campaign_procurement=True
-                ).action_confirm()
+                end_mos_to_confirm.action_confirm()
 
     def action_reset(self):
         """
@@ -471,196 +449,9 @@ class MrpCampaign(models.Model):
         r, g, b = (round(rgb[0] * 255), round(rgb[1] * 255), round(rgb[2] * 255))
         return f"#{r:02x}{g:02x}{b:02x}"
 
-    @api.model
-    def _get_or_create_campaign_for_anchor(
-        self, anchor_product, company, demand_date=None
-    ):
-        """
-        Finds a Draft campaign that can accommodate the demand_date, or creates a
-        new one. If no demand_date is provided, it falls back to finding the
-        oldest existing campaign or creating a new one.
-        """
-        # If a demand date is specified, try to find a campaign bucket that fits it.
-        if demand_date:
-            campaigns = self.search(
-                [
-                    ("product_id", "=", anchor_product.id),
-                    ("company_id", "=", company.id),
-                    ("state", "in", ["draft", "review"]),
-                ],
-                order="date_planned_start asc",
-            )
-
-            for campaign in campaigns:
-                if campaign.bucket_start_date and campaign.bucket_end_date:
-                    if (
-                        campaign.bucket_start_date
-                        <= demand_date
-                        < campaign.bucket_end_date
-                    ):
-                        _logger.info(
-                            "Found exist campaign %s for anchor %s for demand date %s.",
-                            campaign.name,
-                            anchor_product.display_name,
-                            demand_date,
-                        )
-                        return campaign
-
-        # If no demand_date is provided or no suitable campaign was found,
-        # create a new one.
-        _logger.info(
-            "No suitable campaign found for anchor %s and date %s. Creating a new one.",
-            anchor_product.display_name,
-            demand_date,
-        )
-        campaign = self.create(
-            {
-                "product_id": anchor_product.id,
-                "company_id": company.id,
-                "date_planned_start": demand_date,
-                "bucket_start_date": demand_date,
-            }
-        )
-        _logger.info(
-            "Created new campaign %s for anchor %s for demand date %s.",
-            campaign.name,
-            anchor_product.display_name,
-            demand_date,
-        )
-        return campaign
-
-    @api.model
-    def _collect_procurements(
-        self, procurements: list[tuple[Procurement, "StockRule"]]
-    ):
-        """
-        Main entry point from stock.rule interception.
-        Takes a list of procurement objects and routes their moves to campaigns.
-        """
-        _logger.info(
-            "Attempting to collect %d procurements into campaigns.", len(procurements)
-        )
-
-        procurements_by_anchor = {}
-        for procurement, rule in procurements:
-            anchor_product = procurement.product_id.anchor_product_id
-            if not anchor_product:
-                continue
-
-            # Group by anchor to process procurements for the same anchor together
-            key = (anchor_product, procurement.company_id)
-            if key not in procurements_by_anchor:
-                procurements_by_anchor[key] = []
-            procurements_by_anchor[key].append((procurement, rule))
-
-        for (
-            anchor_product,
-            _company,
-        ), grouped_procurements in procurements_by_anchor.items():
-            # Sort procurements by date to process them chronologically
-            grouped_procurements.sort(
-                key=lambda p: p[0].values.get("date_planned") or datetime.max
-            )
-
-            for procurement, _rule in grouped_procurements:
-                # If the ignore_campaign_procurement flag is set in context,
-                # this procurement originated from action_confirm_bulk
-                #  and should be ignored
-                # by our custom campaign logic.
-                if self.env.context.get("ignore_campaign_procurement"):
-                    _logger.info(
-                        "Ignoring campaign procurement for %s.",
-                        procurement.product_id.display_name,
-                    )
-                    continue
-
-                _logger.info(
-                    "Campaign route found for product %s through anchor %s.",
-                    procurement.product_id.display_name,
-                    anchor_product.display_name,
-                )
-
-                demand_moves = procurement.values.get("move_dest_ids")
-                if not demand_moves:
-                    _logger.warning(
-                        (
-                            "Procurement for product %s is being added to a "
-                            "campaign without destination moves. "
-                            "Traceability to the original demand "
-                            "(e.g., Sales Order) may be lost."
-                        ),
-                        procurement.product_id.display_name,
-                    )
-                    demand_moves = self.env["stock.move"]
-
-                demand_date = None
-                if demand_moves:
-                    # The demand date is the latest deadline
-                    # of all moves in the procurement
-                    demand_date = max(demand_moves.mapped("date_deadline")).date()
-
-                # If no demand date could be determined, default to today's date.
-                if not demand_date:
-                    demand_date = fields.Date.context_today(self)
-
-                # Determine the BoM
-                bom = procurement.values.get("bom_id")
-                if not bom:
-                    bom = self.env["mrp.bom"]._bom_find(
-                        products=procurement.product_id
-                    )[procurement.product_id]
-
-                # Search/Create Campaign for that Anchor
-                campaign = self._get_or_create_campaign_for_anchor(
-                    anchor_product=anchor_product,
-                    company=procurement.company_id,
-                    demand_date=demand_date,
-                )
-
-                # Update Reservoir (mrp.campaign.line), now unique by product AND bom
-                campaign_demand = campaign.demand_line_ids.filtered(
-                    lambda line, p=procurement, b=bom: (
-                        line.product_id == p.product_id and line.bom_id == b
-                    )
-                )
-
-                if not campaign_demand:
-                    campaign_demand = self.env["mrp.campaign.demand"].create(
-                        {
-                            "campaign_id": campaign.id,
-                            "product_id": procurement.product_id.id,
-                            "bom_id": bom.id if bom else False,
-                        }
-                    )
-                    _logger.info(
-                        "Created new demand line in campaign %s: %s (%s).",
-                        campaign.name,
-                        campaign_demand.product_id.display_name,
-                        campaign_demand.bom_id.code or "Default BoM",
-                    )
-                else:
-                    _logger.info(
-                        (
-                            "Found existing demand line in campaign %s: %s (%s) by "
-                            "adding demand for %f units."
-                        ),
-                        campaign.name,
-                        campaign_demand.product_id.display_name,
-                        campaign_demand.bom_id.code or "Default BoM",
-                        procurement.product_qty,
-                    )
-
-                # Create proxies for the demand moves
-                proxy_vals = [
-                    {
-                        "demand_id": campaign_demand.id,
-                        "move_id": move.id,
-                        "promised_qty": move.product_uom_qty,
-                    }
-                    for move in demand_moves
-                ]
-                self.env["mrp.campaign.demand.proxy"].create(proxy_vals)
-                campaign._sync_date_planned_start()
+    def action_sync_mos(self):
+        for rec in self:
+            rec._resync_mos()
 
     def _resync_mos(self):
         """
@@ -673,7 +464,6 @@ class MrpCampaign(models.Model):
         # Adjust MOs for lines that have them, in order of dependency (seq 0 first)
         for line in self.line_ids.sorted("sequence"):
             if line.productions_created:
-                _logger.warning(f"{line.producing_qty} -> {line.qty}")
                 line._adjust_mos(line.qty)
 
     def _split(self, prod_bo_qtys, demand_bo_qtys) -> "MrpCampaign":

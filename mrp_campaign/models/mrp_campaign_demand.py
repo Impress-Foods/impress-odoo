@@ -31,7 +31,7 @@ class MrpCampaignDemand(models.Model):
         string="Destination Moves",
         help="Moves that this production will fulfill.",
         compute="_compute_move_ids",
-        store=False,  # Not stored as it's a computed field
+        store=False,
     )
 
     product_uom_id = fields.Many2one(
@@ -92,26 +92,6 @@ class MrpCampaignDemand(models.Model):
             rec.campaign_line_id = new_line or existing_line
 
         return created_lines
-
-    @api.model_create_multi
-    def create(self, vals):
-        res = super().create(vals)
-        if not self.env.context.get("campaign_skip_proxies"):
-            res._create_proxies()
-        return res
-
-    def _create_proxies(self):
-        values = []
-        for demand in self:
-            for move in demand.move_ids:
-                values.append(
-                    {
-                        "demand_id": self.id,
-                        "move_id": move.id,
-                        "promised_qty": move.product_uom_qty,
-                    }
-                )
-        self.env["mrp.campaign.demand.proxy"].create(values)
 
 
 class MrpCampaignDemandProxy(models.Model):
