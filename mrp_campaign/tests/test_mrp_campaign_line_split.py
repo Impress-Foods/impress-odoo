@@ -444,6 +444,14 @@ class TestMrpCampaignLineAdjust(CampaignCase):
                     "bom_id": self.bom_int_prod_x.id,
                     "product_qty": FIXED_QTY_2,
                     "campaign_line_id": line.id,
+                    "state": "to_close",
+                },
+                {
+                    "product_id": self.int_prod_x_red.id,
+                    "product_uom_id": self.int_prod_x_red.uom_id.id,
+                    "bom_id": self.bom_int_prod_x.id,
+                    "product_qty": FIXED_QTY_2,
+                    "campaign_line_id": line.id,
                     "state": "cancel",
                 },
             ]

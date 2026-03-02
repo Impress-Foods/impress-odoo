@@ -312,10 +312,13 @@ class CampaignLine(models.Model):
         # Separate MOs into those that can be adjusted/deleted and
         # those that are fixed (e.g., done or cancelled)
         # MOs in 'draft', 'confirmed' states are considered adjustable.
-        adjustable_mos = self.production_ids.filtered(
+        active_mos = self.production_ids.filtered_domain(
+            [("state", "not in", ["cancel"])]
+        )
+        adjustable_mos = active_mos.filtered(
             lambda mo: mo.state in ["draft", "confirmed"]
         )
-        fixed_mos = self.production_ids - adjustable_mos
+        fixed_mos = active_mos - adjustable_mos
         fixed_qty_produced = sum(fixed_mos.mapped("product_qty"))
 
         required_from_adjustable_mos = new_quantity - fixed_qty_produced
