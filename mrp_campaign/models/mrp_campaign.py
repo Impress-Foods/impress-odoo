@@ -490,6 +490,7 @@ class MrpCampaign(models.Model):
                 line._adjust_mos(line.qty)
 
     def _split(self, prod_bo_qtys, demand_bo_qtys) -> "MrpCampaign":
+        self.ensure_one()
         demand_proxy_recordset = self.env["mrp.campaign.demand.proxy"]
         for item in demand_bo_qtys.values():
             demand_proxy_recordset += item[0]
