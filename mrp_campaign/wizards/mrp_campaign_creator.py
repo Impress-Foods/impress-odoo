@@ -36,50 +36,14 @@ class MrpCampaignCreator(models.TransientModel):
                 continue
 
             anchor_product = rec.product_id
-
-            # Find all products that use this anchor, by traversing BoMs upwards
-            all_descendants = self.env["product.product"].browse(anchor_product.id)
-            products_to_check = self.env["product.product"].browse(anchor_product.id)
-
-            while products_to_check:
-                # Find boms where products_to_check are components
-                boms = (
-                    self.env["mrp.bom.line"]
-                    .search([("product_id", "in", products_to_check.ids)])
-                    .mapped("bom_id")
-                )
-
-                # Find finished goods for these boms
-                parent_products = boms.mapped("product_id")
-                parent_from_template = boms.mapped("product_tmpl_id").mapped(
-                    "product_variant_ids"
-                )
-
-                all_parents = parent_products | parent_from_template
-
-                # Find new products we haven't seen before to avoid infinite loops
-                newly_found = all_parents - all_descendants
-
-                if not newly_found:
-                    break
-
-                all_descendants |= newly_found
-                products_to_check = newly_found
-
-            # Now find available moves for these products.
             available_moves = self.env["stock.move"].search(
                 [
-                    (
-                        "state",
-                        "in",
-                        ["confirmed", "waiting", "partially_available", "assigned"],
-                    ),
-                    ("product_id", "in", all_descendants.ids),
-                    ("created_production_id", "=", False),
-                    ("production_id", "=", False),
+                    "&",
+                    ("product_id.anchor_product_id", "=", anchor_product.id),
+                    ("campaign_can_be_added", "=", True),
                 ]
             )
-            rec.available_demand_move_ids = available_moves.ids
+            rec.available_demand_move_ids = available_moves
 
     @api.onchange("product_id")
     def _onchange_product_id(self):
