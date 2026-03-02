@@ -31,10 +31,14 @@ class MrpCampaignAddDemand(models.TransientModel):
     @api.model
     def default_get(self, fields_list):  # pragma: no coverage
         res = super().default_get(fields_list)
-        active_id = self.env.context.get("active_id", False)
-        if active_id:
-            campaign = self.env["mrp.campaign"].browse(active_id)
-            res["valid_move_ids"] = self._get_valid_move_ids(campaign)
+
+        if "valid_move_ids" in fields_list:
+            active_id = self.env.context.get("active_id", False)
+
+            if active_id:
+                campaign = self.env["mrp.campaign"].browse(active_id)
+
+                res["valid_move_ids"] = self._get_valid_move_ids(campaign)
         return res
 
     @api.model
@@ -42,7 +46,6 @@ class MrpCampaignAddDemand(models.TransientModel):
         anchor_product = campaign.product_id
         return self.env["stock.move"].search(
             [
-                "&",
                 ("product_id.anchor_product_id", "=", anchor_product.id),
                 ("campaign_can_be_added", "=", True),
             ]
@@ -60,18 +63,12 @@ class MrpCampaignAddDemand(models.TransientModel):
         if not moves_to_add:
             return {"type": "ir.actions.act_window_close"}
 
-        products = moves_to_add.mapped("product_id")
-        boms_by_product = self.env["mrp.bom"]._bom_find(products=products)
-
         grouped_moves = moves_to_add.grouped("product_id")
         proxy_values = []
         for product, moves in grouped_moves.items():
-            bom = boms_by_product.get(product)
             # Find an existing line for this product/bom combination
             demand_line = campaign.demand_line_ids.filtered(
-                lambda line, product=product, bom=bom: (
-                    line.product_id == product and line.bom_id == bom
-                )
+                lambda line, product=product: line.product_id == product
             )
 
             if not demand_line:
@@ -79,7 +76,6 @@ class MrpCampaignAddDemand(models.TransientModel):
                     {
                         "campaign_id": campaign.id,
                         "product_id": product.id,
-                        "bom_id": bom.id if bom else False,
                     }
                 )
 

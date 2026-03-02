@@ -57,7 +57,7 @@
     <menuitem
         id="menu_mrp_campaign_demand"
         name="Campaign Demands"
-        parent="menu_mrp_campaign"
+        parent="mrp_campaign.menu_mrp_campaign"
         action="action_mrp_campaign_demand"
         sequence="2"
         groups="mrp.group_mrp_user"

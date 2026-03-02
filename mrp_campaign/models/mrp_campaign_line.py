@@ -323,10 +323,6 @@ class CampaignLine(models.Model):
 
         required_from_adjustable_mos = new_quantity - fixed_qty_produced
 
-        if float_is_zero(new_quantity, precision_rounding=rounding_precision):
-            adjustable_mos.unlink()
-            return
-
         if required_from_adjustable_mos < 0:
             raise ValidationError(
                 _(
@@ -341,6 +337,10 @@ class CampaignLine(models.Model):
                     "fixed_qty_produced": fixed_qty_produced,
                 }
             )
+
+        if float_is_zero(new_quantity, precision_rounding=rounding_precision):
+            adjustable_mos.unlink()
+            return
 
         if self.is_batch_produced:
             self._adjust_batch_mos(adjustable_mos, required_from_adjustable_mos)

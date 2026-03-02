@@ -5,7 +5,7 @@ import {formatDate, deserializeDate} from "@web/core/l10n/dates";
 export class DemandSidebar extends Component {
     static template = "mrp_campaign.DemandSidebar";
     static props = {
-        moves: {type: Object},
+        moves: {type: Array},
         onUpdateMove: {type: Function},
         minimumQtys: {type: Object},
     };

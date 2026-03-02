@@ -38,7 +38,6 @@ class MrpCampaignCreator(models.TransientModel):
             anchor_product = rec.product_id
             available_moves = self.env["stock.move"].search(
                 [
-                    "&",
                     ("product_id.anchor_product_id", "=", anchor_product.id),
                     ("campaign_can_be_added", "=", True),
                 ]

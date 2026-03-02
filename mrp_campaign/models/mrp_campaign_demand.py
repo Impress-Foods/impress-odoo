@@ -61,12 +61,9 @@ class MrpCampaignDemand(models.Model):
     def create_campaign_line(self) -> CampaignLine:
         created_lines = self.env["mrp.campaign.line"]
         for rec in self:
-            bom = (
-                rec.bom_id
-                or self.env["mrp.bom"]._bom_find(products=rec.product_id)[
-                    rec.product_id
-                ]
-            )
+            bom = rec.bom_id or self.env["mrp.bom"]._bom_find(
+                products=rec.product_id
+            ).get(rec.product_id)
 
             existing_line = rec.campaign_id.line_ids.filtered(
                 lambda line, rec=rec, bom=bom: (
@@ -113,7 +110,7 @@ class MrpCampaignDemandProxy(models.Model):
         related="move_id.product_uom_qty", string="Upstream Demand"
     )
     promised_qty = fields.Float()
-    campaign_id = fields.Many2one(related="demand_id.campaign_id")
+    campaign_id = fields.Many2one(related="demand_id.campaign_id", store=True)
     origin = fields.Char(related="move_id.origin")
 
     def _get_partition_wizard_fields(self):
