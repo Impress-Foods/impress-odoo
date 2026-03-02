@@ -73,7 +73,6 @@ class MrpCampaignDemand(models.Model):
             new_line = self.env["mrp.campaign.line"]
 
             if existing_line:
-                existing_line.qty += rec.target_qty
                 created_lines |= existing_line
             else:
                 new_line = new_line.create(
@@ -81,7 +80,6 @@ class MrpCampaignDemand(models.Model):
                         "campaign_id": rec.campaign_id.id,
                         "product_id": rec.product_id.id,
                         "bom_id": bom.id if bom else False,
-                        "qty": rec.target_qty,
                     }
                 )
                 created_lines |= new_line

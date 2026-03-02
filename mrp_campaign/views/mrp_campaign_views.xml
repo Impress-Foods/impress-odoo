@@ -167,7 +167,7 @@
                         <page string="Demand">
                             <field
                                 name="demand_line_ids"
-                                readonly="state not in ['draft'] and False"
+                                readonly="state not in ['draft']"
                             />
                         </page>
                         <page string="Lines">

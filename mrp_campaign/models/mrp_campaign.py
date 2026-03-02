@@ -127,16 +127,20 @@ class MrpCampaign(models.Model):
     def _inverse_buffer_percent(self):
         return
 
-    def unlink(self):
-        campaigns_to_clean_up = self.filtered_domain(
-            [("state", "in", ["draft", "plan"])]
-        )
+    @api.ondelete(at_uninstall=False)
+    def _unlink_if_campaign_inactive(self):
+        if any(rec.state in ["progress"] for rec in self):
+            raise UserError(_("Can't delete a campaign in progress!"))
+        if any(rec.state in ["progress"] for rec in self):
+            raise UserError(_("Can't delete a completed campaign!"))
 
-        mos_to_unlink = campaigns_to_clean_up.mapped("production_ids").filtered_domain(
+    def unlink(self):
+        mos_to_unlink = self.mapped("production_ids").filtered_domain(
             [("state", "in", ["draft"])]
         )
 
         mos_to_unlink.unlink()
+
         return super().unlink()
 
     def write(self, vals):
