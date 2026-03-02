@@ -7,3 +7,5 @@ from . import test_mrp_campaign_line
 from . import test_mrp_production
 from . import test_wizard_partition
 from . import test_mrp_campaign_torture
+from . import test_wizard_add_demand
+from . import test_stock_move

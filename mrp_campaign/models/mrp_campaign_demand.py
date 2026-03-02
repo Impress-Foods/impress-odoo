@@ -93,6 +93,13 @@ class MrpCampaignDemand(models.Model):
 
         return created_lines
 
+    # Somehow, required to have the fields depending on demand_proxy_ids
+    # in stock.move to be recomputed. Without this, the recomputation
+    # is not triggered
+    def unlink(self):
+        self.demand_proxy_ids.unlink()
+        return super().unlink()
+
 
 class MrpCampaignDemandProxy(models.Model):
     _name = "mrp.campaign.demand.proxy"

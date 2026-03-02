@@ -42,4 +42,32 @@
             </tree>
         </field>
     </record>
+
+    <record id="action_mrp_campaign_demand" model="ir.actions.act_window">
+        <field name="name">Manufacturing Campaign Demands</field>
+        <field name="res_model">mrp.campaign.demand</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record id="action_mrp_campaign_demand_proxies" model="ir.actions.act_window">
+        <field name="name">Manufacturing Campaign Demand Proxies</field>
+        <field name="res_model">mrp.campaign.demand.proxy</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+    <menuitem
+        id="menu_mrp_campaign_demand"
+        name="Campaign Demands"
+        parent="menu_mrp_campaign"
+        action="action_mrp_campaign_demand"
+        sequence="2"
+        groups="mrp.group_mrp_user"
+    />
+    <menuitem
+        id="menu_mrp_campaign_demand_proxy"
+        name="Campaign Demand Proxies"
+        parent="menu_mrp_campaign"
+        action="action_mrp_campaign_demand_proxies"
+        sequence="3"
+        groups="mrp.group_mrp_user"
+    />
 </odoo>

@@ -1,4 +1,8 @@
-from odoo import fields, models
+import logging
+
+from odoo import api, fields, models
+
+_logger = logging.getLogger(__name__)
 
 
 class MrpCampaignAddDemand(models.TransientModel):
@@ -13,11 +17,36 @@ class MrpCampaignAddDemand(models.TransientModel):
         default=lambda self: self.env.context.get("active_id"),
     )
 
+    valid_move_ids = fields.Many2many(
+        "stock.move",
+        "inverse_valid_move_ids",
+    )
+
     demand_move_ids = fields.Many2many(
         "stock.move",
         string="Demands to Add",
         help="Select the demand moves you want to add to this campaign.",
     )
+
+    @api.model
+    def default_get(self, fields_list):  # pragma: no coverage
+        res = super().default_get(fields_list)
+        active_id = self.env.context.get("active_id", False)
+        if active_id:
+            campaign = self.env["mrp.campaign"].browse(active_id)
+            res["valid_move_ids"] = self._get_valid_move_ids(campaign)
+        return res
+
+    @api.model
+    def _get_valid_move_ids(self, campaign):
+        anchor_product = campaign.product_id
+        return self.env["stock.move"].search(
+            [
+                "&",
+                ("product_id.anchor_product_id", "=", anchor_product.id),
+                ("campaign_can_be_added", "=", True),
+            ]
+        )
 
     def add_demands(self):
         """
@@ -35,8 +64,8 @@ class MrpCampaignAddDemand(models.TransientModel):
         boms_by_product = self.env["mrp.bom"]._bom_find(products=products)
 
         grouped_moves = moves_to_add.grouped("product_id")
-
-        for product, _moves in grouped_moves.items():
+        proxy_values = []
+        for product, moves in grouped_moves.items():
             bom = boms_by_product.get(product)
             # Find an existing line for this product/bom combination
             demand_line = campaign.demand_line_ids.filtered(
@@ -54,4 +83,14 @@ class MrpCampaignAddDemand(models.TransientModel):
                     }
                 )
 
+            proxy_values += [
+                {
+                    "move_id": move.id,
+                    "demand_id": demand_line.id,
+                    "promised_qty": move.campaign_qty_to_supply,
+                }
+                for move in moves
+            ]
+
+        self.env["mrp.campaign.demand.proxy"].create(proxy_values)
         return {"type": "ir.actions.act_window_close"}

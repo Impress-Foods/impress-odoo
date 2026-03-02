@@ -288,8 +288,15 @@
         id="menu_mrp_campaign"
         name="Campaigns"
         parent="mrp.menu_mrp_root"
-        action="action_mrp_campaign"
         sequence="50"
+        groups="mrp.group_mrp_user"
+    />
+    <menuitem
+        id="menu_mrp_campaign_campaign"
+        name="Campaigns"
+        parent="mrp_campaign.menu_mrp_campaign"
+        action="action_mrp_campaign"
+        sequence="1"
         groups="mrp.group_mrp_user"
     />
 
