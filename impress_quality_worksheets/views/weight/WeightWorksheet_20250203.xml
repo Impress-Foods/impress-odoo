@@ -19,12 +19,25 @@
                             <field name="x_quality_check_id" />
                         </group>
                     </group>
-
+                    <div name="instructions">
+                        <ol>
+                            <li
+                            >S'assurer que la balance est stable sur une table de travail.</li>
+                            <li
+                            >Faire la tare (cup + pellicule de plastique ou pochette).</li>
+                            <li
+                            >Prise du poids de 5 produits à toutes les 30 minutes lors du dosage.</li>
+                            <li
+                            >Comparer le poids du produit avec le poids visé* pour cette production : si poids sous la cible ou + de 3g, faire un ajustement.</li>
+                            <li
+                            >Vérifier que le scellage est conforme (temps et température + les 5 positions si VC999 utilisé).</li>
+                            <li
+                            >Aviser le contrôle qualité si le poids est en dessous de la limite visée.</li>
+                        </ol>
+                    </div>
                     <group>
                         <group>
                             <field name="x_nominal_weight" readonly='0' />
-                            <field name="x_upper_limit" readonly='0' />
-                            <field name="x_lower_limit" readonly='0' />
                         </group>
 
                     </group>
@@ -34,8 +47,6 @@
                             <group>
                                 <group>
                                     <field name="nominal_weight" required='1' />
-                                    <field name="lower_limit" required='1' />
-                                    <field name="upper_limit" required='1' />
                                     <field name="is_seal_ok" required='1' />
                                     <field name="is_weight_ok" required='1' />
                                     <field name="start_date" required='1' />

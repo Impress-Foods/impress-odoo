@@ -24,6 +24,8 @@
         "views/xray/XrayWorksheet_20250303.xml",
         "data/xray/XrayWorksheet_large_20251126.xml",
         "views/xray/XrayWorksheet_large_20251126.xml",
+        "data/metal/MetalWorksheet_large_20260303.xml",
+        "views/metal/MetalWorksheet_large_20260303.xml",
     ],
     "installable": True,
     "license": "GPL-2",

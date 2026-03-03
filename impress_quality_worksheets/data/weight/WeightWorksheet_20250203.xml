@@ -118,28 +118,4 @@
         <field name="ttype">float</field>
     </record>
 
-    <record id="x_worksheet_20250203_upper_limt" model="ir.model.fields">
-        <field name="name">x_upper_limit</field>
-        <field name="field_description">Upper Limit</field>
-        <field
-            name="model_id"
-            model="ir.model"
-            eval="obj().env.ref('impress_quality_worksheets.ws_weight_20250203').model_id.id"
-        />
-        <field name="related">x_weight_log_id.upper_limit</field>
-        <field name="ttype">float</field>
-    </record>
-
-    <record id="x_worksheet_20250203_lower_limit" model="ir.model.fields">
-        <field name="name">x_lower_limit</field>
-        <field name="field_description">Lower Limit</field>
-        <field
-            name="model_id"
-            model="ir.model"
-            eval="obj().env.ref('impress_quality_worksheets.ws_weight_20250203').model_id.id"
-        />
-        <field name="related">x_weight_log_id.lower_limit</field>
-        <field name="ttype">float</field>
-    </record>
-
 </odoo>

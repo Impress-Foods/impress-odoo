@@ -14,8 +14,6 @@ class weightLog(models.Model):
         comodel_name="weight.log.line", inverse_name="weight_log_id"
     )
 
-    lower_limit = fields.Float()
-    upper_limit = fields.Float()
     nominal_weight = fields.Float()
 
     def action_view_weight_lines(self):

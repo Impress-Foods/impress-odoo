@@ -15,8 +15,6 @@
                 <field name="measure_4" />
                 <field name="measure_5" />
                 <field name="nominal_weight" />
-                <field name="lower_limit" />
-                <field name="upper_limit" />
                 <field name="is_seal_ok" />
                 <field name="is_weight_ok" />
             </tree>
@@ -54,8 +52,6 @@
                         <group>
                             <group>
                                 <field name="nominal_weight" />
-                                <field name="lower_limit" />
-                                <field name="upper_limit" />
                                 <field name="is_seal_ok" />
                                 <field name="is_weight_ok" />
                                 <field name="notes" />

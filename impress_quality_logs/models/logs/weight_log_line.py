@@ -24,16 +24,6 @@ class WeightLogLine(models.Model):
         comodel_name="weight.log", compute="_compute_weight_log_id", store=True
     )
 
-    lower_limit = fields.Float(
-        related="weight_log_id.lower_limit",
-        store=True,
-        depends=["weight_log_id.lower_limit"],
-    )
-    upper_limit = fields.Float(
-        related="weight_log_id.upper_limit",
-        store=True,
-        depends=["weight_log_id.upper_limit"],
-    )
     nominal_weight = fields.Float(
         related="weight_log_id.nominal_weight",
         store=True,
