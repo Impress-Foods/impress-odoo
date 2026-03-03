@@ -92,7 +92,7 @@ class MrpProduction(models.Model):
         else:
             action.update(
                 {
-                    "name": _("weight Logs for %s" % self.name),
+                    "name": _("Weight Logs for %s" % self.name),
                     "domain": [("id", "in", self.weight_log_ids.ids)],
                     "view_mode": "tree,form",
                 }  # type: ignore
