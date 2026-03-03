@@ -35,11 +35,10 @@ class ProductionOrder(models.Model):
             lot_id = vals.get("lot_producing_id")
             if lot_id:
                 lot = self.env["stock.lot"].browse(lot_id)
-                for production in self:
-                    if production.campaign_id:
-                        production.campaign_id._sync_lot_on_productions(
-                            lot.name, productions_to_skip=production
-                        )
+                campaigns = self.mapped("campaign_id")
+                for campaign in campaigns:
+                    if campaign.lot_name != lot.name:
+                        campaign.write({"lot_name": lot.name})
 
         return res
 
@@ -51,15 +50,12 @@ class ProductionOrder(models.Model):
             cancel_remaining_qty=cancel_remaining_qty,
             set_consumed_qty=set_consumed_qty,
         )
-        for rec in self:
-            productions_to_update = res
-            vals_to_write = {}
-            if rec.lot_producing_id:
-                vals_to_write["lot_producing_id"] = rec.lot_producing_id.id
-            if rec.campaign_line_id:
-                vals_to_write["campaign_line_id"] = rec.campaign_line_id.id
-            if vals_to_write:
-                productions_to_update.write(vals_to_write)
+        if self.lot_producing_id:
+            res.with_context(syncing_lot=True).write(
+                {"lot_producing_id": self.lot_producing_id.id}
+            )
+        if self.campaign_line_id:
+            res.write({"campaign_line_id": self.campaign_line_id.id})
 
         return res
 

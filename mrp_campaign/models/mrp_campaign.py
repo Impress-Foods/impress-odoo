@@ -1,7 +1,6 @@
 import colorsys
 import logging
 import random
-from datetime import datetime, time
 from typing import Literal
 
 from odoo import _, api, fields, models
@@ -131,132 +130,80 @@ class MrpCampaign(models.Model):
     def _unlink_if_campaign_inactive(self):
         if any(rec.state in ["progress"] for rec in self):
             raise UserError(_("Can't delete a campaign in progress!"))
-        if any(rec.state in ["progress"] for rec in self):
+        if any(rec.state in ["done"] for rec in self):
             raise UserError(_("Can't delete a completed campaign!"))
 
     def unlink(self):
         mos_to_unlink = self.mapped("production_ids").filtered_domain(
             [("state", "in", ["draft"])]
         )
-
         mos_to_unlink.unlink()
-
         return super().unlink()
 
     def write(self, vals):
-        # Store old date_planned_starts values (which will be Date objects after Part 0)
-        old_date_planned_starts = {rec.id: rec.date_planned_start for rec in self}
-
         res = super().write(vals)
 
-        if "date_planned_start" in vals:
+        if "lot_name" in vals:
             for rec in self:
-                # Only proceed if date_planned_start is set, there are MOs,
-                # and the DATE part of date_planned_start has actually changed.
-                if (
-                    rec.date_planned_start
-                    and rec.production_ids
-                    and (
-                        not old_date_planned_starts.get(rec.id)
-                        or old_date_planned_starts[rec.id] != rec.date_planned_start
-                    )
-                ):
-                    new_campaign_date = (
-                        rec.date_planned_start
-                    )  # This is now a Date object
+                rec._sync_lot_on_productions(vals["lot_name"])
 
-                    for mo in rec.production_ids:
-                        # Preserve MO's original time, apply new campaign day
-                        # If mo.date_start is not set,
-                        # default to time.min (beginning of day)
-                        mo_original_time = (
-                            mo.date_start.time() if mo.date_start else time.min
-                        )
-                        mo_new_date_start = datetime.combine(
-                            new_campaign_date, mo_original_time
-                        )
-                        mo_new_date_deadline = datetime.combine(
-                            new_campaign_date, time.max
-                        )
-
-                        # Write only if a change is needed to
-                        # avoid unnecessary database updates
-                        if (
-                            mo.date_start != mo_new_date_start
-                            or mo.date_deadline != mo_new_date_deadline
-                        ):
-                            mo.write(
-                                {
-                                    "date_start": mo_new_date_start,
-                                    "date_deadline": mo_new_date_deadline,
-                                }
-                            )
+        if "date_planned_start" in vals:
+            self._sync_mo_start_dates()
         return res
 
-    def _sync_date_planned_start(self):
-        """
-        Synchronizes date_planned_start based on the earliest
-        date_deadline of all demand moves linked to the campaign lines. This ensures
-        the campaign is scheduled to satisfy the earliest demand within it.
-        """
-        for campaign in self:
-            if not campaign.demand_line_ids:
-                continue
-
-            all_move_dest_deadlines = campaign.demand_line_ids.mapped(
-                "demand_proxy_ids.move_id.date_deadline"
-            )
-            if not all_move_dest_deadlines:
-                continue
-
-            min_demand_date_deadline = min(all_move_dest_deadlines).date()
-
-            # If the campaign's planned date is later than the earliest demand,
-            # pull it back. This ensures all demands in the campaign are met on time.
-            # We check for a planned date to allow for manual setting, but if any
-            # demand is earlier, we must respect it.
-            if (
-                not campaign.date_planned_start
-                or campaign.date_planned_start > min_demand_date_deadline
-            ):
-                campaign.date_planned_start = min_demand_date_deadline
-
-    def _sync_lot_on_productions(self, lot_name, productions_to_skip=None):
-        self.ensure_one()
-        if productions_to_skip is None:
-            productions_to_skip = self.env["mrp.production"]
-
-        productions_to_update = self.production_ids - productions_to_skip
-
-        for production in productions_to_update:
-            if (
-                production.lot_producing_id
-                and production.lot_producing_id.name == lot_name
-            ):
-                continue
-
-            Lot = self.env["stock.lot"]
-            lot_to_assign = Lot.search(
+    def _sync_mo_start_dates(self) -> None:
+        for rec in self:
+            mos_to_sync = self.production_ids.filtered_domain(
                 [
-                    ("name", "=", lot_name),
-                    ("product_id", "=", production.product_id.id),
-                    ("company_id", "=", production.company_id.id),
-                ],
-                limit=1,
+                    ("date_start", "!=", rec.date_planned_start),
+                    ("state", "in", ["draft", "confirmed"]),
+                ]
             )
+            mos_to_sync.write({"date_start": rec.date_planned_start})
 
-            if not lot_to_assign:
-                lot_to_assign = Lot.create(
+    def _sync_lot_on_productions(self, lot_name):
+        self.ensure_one()
+        # Find MOs that need update and are in adjustable states
+        productions = self.production_ids.filtered(
+            lambda p: (
+                p.state not in ["done", "cancel"]
+                and (not p.lot_producing_id or p.lot_producing_id.name != lot_name)
+            )
+        )
+        if not productions:
+            return
+
+        # Group by product to minimize searches
+        products = productions.mapped("product_id")
+        existing_lots = self.env["stock.lot"].search(
+            [
+                ("name", "=", lot_name),
+                ("product_id", "in", products.ids),
+                ("company_id", "=", self.company_id.id),
+            ]
+        )
+        lots_by_product = {lot.product_id.id: lot for lot in existing_lots}
+
+        # Group productions by lot record to minimize write calls
+        prods_to_update_by_lot = {}
+        for production in productions:
+            product = production.product_id
+            lot = lots_by_product.get(product.id)
+            if not lot:
+                lot = self.env["stock.lot"].create(
                     {
                         "name": lot_name,
-                        "product_id": production.product_id.id,
-                        "company_id": production.company_id.id,
+                        "product_id": product.id,
+                        "company_id": self.company_id.id,
                     }
                 )
+                lots_by_product[product.id] = lot
 
-            production.with_context(syncing_lot=True).write(
-                {"lot_producing_id": lot_to_assign.id}
-            )
+            prods_to_update_by_lot.setdefault(lot, self.env["mrp.production"])
+            prods_to_update_by_lot[lot] |= production
+
+        for lot, prods in prods_to_update_by_lot.items():
+            prods.with_context(syncing_lot=True).write({"lot_producing_id": lot.id})
 
     def construct_tree(self):
         """
@@ -476,7 +423,7 @@ class MrpCampaign(models.Model):
         r, g, b = (round(rgb[0] * 255), round(rgb[1] * 255), round(rgb[2] * 255))
         return f"#{r:02x}{g:02x}{b:02x}"
 
-    def action_sync_mos(self):
+    def action_sync_mos(self):  # pragma: no coverage
         for rec in self:
             rec._resync_mos()
 

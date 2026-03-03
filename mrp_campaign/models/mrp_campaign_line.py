@@ -257,6 +257,7 @@ class CampaignLine(models.Model):
                         "product_qty": qty_to_produce,
                         "campaign_line_id": self.id,
                         "created_by_campaign": True,
+                        "date_start": self.campaign_id.date_planned_start,
                     }
                 )
         else:
@@ -267,6 +268,7 @@ class CampaignLine(models.Model):
                     "product_qty": self.qty,
                     "campaign_line_id": self.id,
                     "created_by_campaign": True,
+                    "date_start": self.campaign_id.date_planned_start,
                 }
             )
 
