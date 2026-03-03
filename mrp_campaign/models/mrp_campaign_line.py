@@ -59,6 +59,8 @@ class CampaignLine(models.Model):
     use_buffer = fields.Boolean(compute="_compute_use_buffer", store=True)
     buffer_percent = fields.Float(related="campaign_id.buffer_percent")
 
+    is_out_of_sync = fields.Boolean(compute="_compute_is_out_of_sync")
+
     downstream_line_id = fields.Many2one("mrp.campaign.line", ondelete="cascade")
     downstream_product_id = fields.Many2one(
         "product.product", compute="_compute_downstream_product"
@@ -68,6 +70,18 @@ class CampaignLine(models.Model):
     sequence = fields.Integer(default=0)
 
     productions_created = fields.Boolean()
+
+    @api.depends("qty", "producing_qty")
+    def _compute_is_out_of_sync(self):
+        for rec in self:
+            rec.is_out_of_sync = not float_is_zero(
+                rec.qty - rec.producing_qty,
+                precision_rounding=rec.product_id.uom_id.rounding,
+            )
+
+    def action_sync_line(self):
+        self.ensure_one()
+        self._adjust_mos(self.qty)
 
     @api.depends("product_id")
     def _compute_is_batch_produced(self):
@@ -204,9 +218,9 @@ class CampaignLine(models.Model):
             lambda x: self.is_valid_bom_line_for_product(x) and x.product_id.bom_ids
         ):
             downstream_product = bom_line.product_id
-            downstream_bom = self.env["mrp.bom"]._bom_find(products=downstream_product)[
-                downstream_product
-            ]
+            downstream_bom = self.env["mrp.bom"]._bom_find(
+                products=downstream_product, company_id=self.campaign_id.company_id.id
+            )[downstream_product]
 
             if not downstream_bom:
                 continue
@@ -243,7 +257,7 @@ class CampaignLine(models.Model):
     def _make_production_order(self) -> list[dict]:
         self.ensure_one()
         values = []
-        if self.is_batch_produced:
+        if self.is_batch_produced and self.batch_size > 0:
             remaining_qty = self.qty
 
             while not float_is_zero(remaining_qty, self.product_id.uom_id.rounding):
@@ -344,10 +358,10 @@ class CampaignLine(models.Model):
             adjustable_mos.unlink()
             return
 
-        if self.is_batch_produced:
+        if self.is_batch_produced and self.batch_size > 0:
             self._adjust_batch_mos(adjustable_mos, required_from_adjustable_mos)
 
-        else:  # Not batch produced
+        else:  # Not batch produced or infinite batch size
             if not float_is_zero(
                 required_from_adjustable_mos,
                 precision_rounding=rounding_precision,

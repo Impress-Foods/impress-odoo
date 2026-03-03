@@ -5,7 +5,6 @@ from typing import Literal
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools import float_is_zero
 
 _logger = logging.getLogger(__name__)
 
@@ -73,19 +72,10 @@ class MrpCampaign(models.Model):
 
     is_out_of_sync = fields.Boolean(compute="_compute_is_out_of_sync", store=True)
 
-    @api.depends("line_ids.qty", "line_ids.producing_qty")
+    @api.depends("line_ids.is_out_of_sync")
     def _compute_is_out_of_sync(self):
         for rec in self:
-            rec.is_out_of_sync = any(
-                rec.line_ids.mapped(
-                    lambda line: (
-                        not float_is_zero(
-                            line.qty - line.producing_qty,
-                            line.product_id.uom_id.rounding,
-                        )
-                    )
-                )
-            )
+            rec.is_out_of_sync = any(rec.line_ids.mapped("is_out_of_sync"))
 
     @api.depends("backorder_campaign_ids")
     def _compute_bo_count(self):  # pragma: no coverage
@@ -341,6 +331,7 @@ class MrpCampaign(models.Model):
         potential_moves = self.env["stock.move"].search(
             [
                 ("product_id", "in", all_descendants.ids),
+                ("company_id", "=", self.company_id.id),
                 (
                     "state",
                     "in",

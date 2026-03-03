@@ -62,7 +62,7 @@ class MrpCampaignDemand(models.Model):
         created_lines = self.env["mrp.campaign.line"]
         for rec in self:
             bom = rec.bom_id or self.env["mrp.bom"]._bom_find(
-                products=rec.product_id
+                products=rec.product_id, company_id=rec.campaign_id.company_id.id
             ).get(rec.product_id)
 
             existing_line = rec.campaign_id.line_ids.filtered(

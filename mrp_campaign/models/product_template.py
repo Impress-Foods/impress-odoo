@@ -45,7 +45,11 @@ class ProductProductModel(models.Model):
         if product.is_campaign_anchor:
             return product
 
-        bom = self.env["mrp.bom"]._bom_find(product).get(product)
+        bom = (
+            self.env["mrp.bom"]
+            ._bom_find(product, company_id=product.company_id.id)
+            .get(product)
+        )
         if not bom or bom.type != "normal":
             return self.env["product.product"]
 

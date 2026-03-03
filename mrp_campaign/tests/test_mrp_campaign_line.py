@@ -459,5 +459,59 @@ class TestMrpCampaignLine(CampaignCase):
         self.assertEqual(len(line.production_ids), 1)  # 1x750.0
         self.assertCountEqual([750.0], line.production_ids.mapped("product_qty"))
 
+    def test_batch_size_zero_as_infinite(self):
+        """Test that batch_size=0 creates only one MO for the entire quantity."""
+        QTY = 2500.0
+        campaign = self.create_campaign(self.bulk_material)
+        campaign.override_batch_size = True
+        campaign.batch_size = 0.0
+        campaign.buffer_percent = 0.0
+        self.create_demand(self.bulk_material, QTY, campaign)
+
+        campaign.action_plan()
+        line = campaign.line_ids.filtered(
+            lambda line: line.product_id == self.bulk_material
+        )
+        self.assertEqual(
+            len(line.production_ids),
+            1,
+            "Should have created only one MO for infinite batch size",
+        )
+        self.assertEqual(line.production_ids.product_qty, QTY)
+
+    def test_out_of_sync_detection_and_sync_button(self):
+        """Test that changing MO quantity triggers out_of_sync
+        and action_sync_line fixes it."""
+        QTY = 100.0
+        campaign = self.create_campaign(self.bulk_material)
+        self.create_demand(self.bulk_material, QTY, campaign)
+        campaign.action_plan()
+
+        line = campaign.line_ids[0]
+        self.assertFalse(line.is_out_of_sync)
+        self.assertFalse(campaign.is_out_of_sync)
+
+        # Manually change MO quantity
+        mo = line.production_ids[0]
+        mo.product_qty = QTY + 10.0
+
+        # Accessing computed fields to trigger recompute
+        self.assertTrue(
+            line.is_out_of_sync, "Line should be out of sync after MO quantity change"
+        )
+        self.assertTrue(
+            campaign.is_out_of_sync,
+            "Campaign should be out of sync after MO quantity change",
+        )
+
+        # Resolve via sync button
+        line.action_sync_line()
+        self.assertFalse(line.is_out_of_sync, "Line should be back in sync")
+        self.assertEqual(
+            mo.product_qty,
+            QTY * 1.05,
+            "MO quantity should have been adjusted back (including buffer)",
+        )
+
     def test_adjust_mos(self) -> None:
         pass
