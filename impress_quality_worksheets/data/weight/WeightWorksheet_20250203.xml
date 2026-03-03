@@ -3,104 +3,104 @@
 <odoo>
 
     <!-- Create a new Worksheet Template -->
-    <record id="ws_loma_20250203" model="worksheet.template">
-        <field name="name">Worksheet Loma 2025-02-03</field>
+    <record id="ws_weight_20250203" model="worksheet.template">
+        <field name="name">Worksheet weight 2025-02-03</field>
         <field name="color">4</field>
         <field name="res_model">quality.check</field>
     </record>
 
     <!-- Add the required fields -->
 
-    <!-- ws: x_loma_log_id - Many2One Compute -->
-    <record id='x_worksheet_20250203_loma_log_id' model='ir.model.fields'>
-        <field name="name">x_loma_log_id</field>
-        <field name="field_description">LOMA Log</field>
+    <!-- ws: x_weight_log_id - Many2One Compute -->
+    <record id='x_worksheet_20250203_weight_log_id' model='ir.model.fields'>
+        <field name="name">x_weight_log_id</field>
+        <field name="field_description">weight Log</field>
         <field
             name="model_id"
             model="ir.model"
-            eval="obj().env.ref('impress_quality_worksheets.ws_loma_20250203').model_id.id"
+            eval="obj().env.ref('impress_quality_worksheets.ws_weight_20250203').model_id.id"
         />
-        <field name="relation" model="ir.model" eval="'loma.log'" />
+        <field name="relation" model="ir.model" eval="'weight.log'" />
         <field name="ttype">many2one</field>
     </record>
 
 
-    <record id='x_worksheet_20250203_loma_log_id' model='ir.model.fields'>
+    <record id='x_worksheet_20250203_weight_log_id' model='ir.model.fields'>
         <field name="depends">x_quality_check_id</field>
         <field
             name="compute"
             eval="
 'for rec in self:\n
-    if not rec.x_loma_log_id:\n
-        existing_log = rec.env[\'loma.log\'].search([\n
+    if not rec.x_weight_log_id:\n
+        existing_log = rec.env[\'weight.log\'].search([\n
             (\'name\', \'=\', rec.x_quality_check_id.production_id.name)\n
         ])\n
         if not existing_log:\n
-            rec[\'x_loma_log_id\'] = rec.env[\'loma.log\'].create({\n
+            rec[\'x_weight_log_id\'] = rec.env[\'weight.log\'].create({\n
                 \'name\': rec.x_quality_check_id.production_id.name,\n
                 \'quality_check_id\': rec.x_quality_check_id.id\n
             })\n
         else: \n
-            rec[\'x_loma_log_id\'] = existing_log[0]
+            rec[\'x_weight_log_id\'] = existing_log[0]
             '"
         />
     </record>
 
-    <!-- log: x_ws_xx_id - One2Many - x_loma_log_id -->
-    <record id='loma_log_x_worksheet_20250203_id' model='ir.model.fields'>
+    <!-- log: x_ws_xx_id - One2Many - x_weight_log_id -->
+    <record id='weight_log_x_worksheet_20250203_id' model='ir.model.fields'>
         <field name="name">x_worksheet_20250203_id</field>
         <field name="field_description">Worksheet 2024-12-02</field>
         <field
             name="model_id"
             model="ir.model"
-            eval="obj().env.ref('impress_quality_logs.model_loma_log').id"
+            eval="obj().env.ref('impress_quality_logs.model_weight_log').id"
         />
         <field
             name="relation"
             model="ir.model"
-            eval="obj().env.ref('impress_quality_worksheets.ws_loma_20250203').model_id.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_weight_20250203').model_id.model"
         />
         <field
             name="relation_field"
             model="ir.model.fields"
-            eval="obj().env.ref('impress_quality_worksheets.x_worksheet_20250203_loma_log_id').name"
+            eval="obj().env.ref('impress_quality_worksheets.x_worksheet_20250203_weight_log_id').name"
         />
         <field name="ttype">one2many</field>
         <field name="on_delete">cascade</field>
     </record>
 
-    <!-- log_line: x_ws_xx_id - Many2One - x_loma_log_line_ids -->
-    <record id='loma_log_line_x_worksheet_20250203_id' model='ir.model.fields'>
+    <!-- log_line: x_ws_xx_id - Many2One - x_weight_log_line_ids -->
+    <record id='weight_log_line_x_worksheet_20250203_id' model='ir.model.fields'>
         <field name="name">x_worksheet_20250203_id</field>
         <field name="field_description">x_worksheet_20250203_id</field>
         <field
             name="model_id"
             model="ir.model"
-            eval="obj().env.ref('impress_quality_logs.model_loma_log_line').id"
+            eval="obj().env.ref('impress_quality_logs.model_weight_log_line').id"
         />
         <field
             name="relation"
             model="ir.model"
-            eval="obj().env.ref('impress_quality_worksheets.ws_loma_20250203').model_id.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_weight_20250203').model_id.model"
         />
         <field name="ttype">many2one</field>
     </record>
 
     <!--ws:
-    x_loma_log_line_ids - One2Many -->
-    <record id='x_worksheet_20250203_loma_log_lines_id' model='ir.model.fields'>
-        <field name="name">x_loma_log_line_ids</field>
-        <field name="field_description">loma Log lines</field>
+    x_weight_log_line_ids - One2Many -->
+    <record id='x_worksheet_20250203_weight_log_lines_id' model='ir.model.fields'>
+        <field name="name">x_weight_log_line_ids</field>
+        <field name="field_description">weight Log lines</field>
         <field
             name="model_id"
             model="ir.model"
-            eval="obj().env.ref('impress_quality_worksheets.ws_loma_20250203').model_id.id"
+            eval="obj().env.ref('impress_quality_worksheets.ws_weight_20250203').model_id.id"
         />
-        <field name="relation" model="ir.model" eval="'loma.log.line'" />
+        <field name="relation" model="ir.model" eval="'weight.log.line'" />
         <field
             name="relation_field"
             model="ir.model.fields"
-            eval="obj().env.ref('impress_quality_worksheets.loma_log_line_x_worksheet_20250203_id').name"
+            eval="obj().env.ref('impress_quality_worksheets.weight_log_line_x_worksheet_20250203_id').name"
         />
         <field name="ttype">one2many</field>
         <field name="on_delete">cascade</field>
@@ -112,9 +112,9 @@
         <field
             name="model_id"
             model="ir.model"
-            eval="obj().env.ref('impress_quality_worksheets.ws_loma_20250203').model_id.id"
+            eval="obj().env.ref('impress_quality_worksheets.ws_weight_20250203').model_id.id"
         />
-        <field name="related">x_loma_log_id.nominal_weight</field>
+        <field name="related">x_weight_log_id.nominal_weight</field>
         <field name="ttype">float</field>
     </record>
 
@@ -124,9 +124,9 @@
         <field
             name="model_id"
             model="ir.model"
-            eval="obj().env.ref('impress_quality_worksheets.ws_loma_20250203').model_id.id"
+            eval="obj().env.ref('impress_quality_worksheets.ws_weight_20250203').model_id.id"
         />
-        <field name="related">x_loma_log_id.upper_limit</field>
+        <field name="related">x_weight_log_id.upper_limit</field>
         <field name="ttype">float</field>
     </record>
 
@@ -136,9 +136,9 @@
         <field
             name="model_id"
             model="ir.model"
-            eval="obj().env.ref('impress_quality_worksheets.ws_loma_20250203').model_id.id"
+            eval="obj().env.ref('impress_quality_worksheets.ws_weight_20250203').model_id.id"
         />
-        <field name="related">x_loma_log_id.lower_limit</field>
+        <field name="related">x_weight_log_id.lower_limit</field>
         <field name="ttype">float</field>
     </record>
 

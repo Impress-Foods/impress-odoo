@@ -28,17 +28,17 @@ msgid ""
 msgstr ""
 
 #. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.LOMAWorksheet_20250203_form_view
-msgid ""
-"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-"                            Février 2025. Feuille de contrôle LOMA </strong>"
-msgstr ""
-
-#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 msgid ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 "
 "Février 2025. Feuille de contrôle Détecteur de Métal </strong>"
+msgstr ""
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20250203_form_view
+msgid ""
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 "
+"Février 2025. Feuille de contrôle weight </strong>"
 msgstr ""
 
 #. module: impress_quality_worksheets
@@ -125,6 +125,11 @@ msgid "Ceramic Detection Threshold (4.0 mm)"
 msgstr ""
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20250303_form_view
+msgid "Check unit code and lot code"
+msgstr ""
+
+#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 msgid ""
 "During the last check (end of production), check that no cup is left in the "
@@ -197,11 +202,6 @@ msgstr ""
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_keep_cold_check
 msgid "Keep Cold Check"
-msgstr ""
-
-#. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_loma_log_id
-msgid "LOMA Log"
 msgstr ""
 
 #. module: impress_quality_worksheets
@@ -329,8 +329,8 @@ msgstr ""
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.coding_log_x_worksheet_20250303_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.hpp_log_x_worksheet_20250203_id
-#: model:ir.model.fields,field_description:impress_quality_worksheets.loma_log_x_worksheet_20250203_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.metal_log_x_worksheet_20250203_id
+#: model:ir.model.fields,field_description:impress_quality_worksheets.weight_log_x_worksheet_20250203_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_ray_log_x_worksheet_20250303_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_ray_log_x_worksheet_large_20251126_id
 msgid "Worksheet 2024-12-02"
@@ -366,11 +366,6 @@ msgid "coding Log"
 msgstr ""
 
 #. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_loma_log_lines_id
-msgid "loma Log lines"
-msgstr ""
-
-#. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_metal_log_id
 msgid "metal Log"
 msgstr ""
@@ -381,9 +376,19 @@ msgid "metal Log lines"
 msgstr ""
 
 #. module: impress_quality_worksheets
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_weight_log_id
+msgid "weight Log"
+msgstr ""
+
+#. module: impress_quality_worksheets
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_weight_log_lines_id
+msgid "weight Log lines"
+msgstr ""
+
+#. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.hpp_log_line_x_worksheet_20250203_id
-#: model:ir.model.fields,field_description:impress_quality_worksheets.loma_log_line_x_worksheet_20250203_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.metal_log_line_x_worksheet_20250203_id
+#: model:ir.model.fields,field_description:impress_quality_worksheets.weight_log_line_x_worksheet_20250203_id
 msgid "x_worksheet_20250203_id"
 msgstr ""
 

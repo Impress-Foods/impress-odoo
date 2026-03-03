@@ -38,7 +38,11 @@
                             <field name="x_notes" />
                         </group>
                         <group>
-                            <field name="x_subunit_check" required='1' />
+                            <field
+                                string="Check unit code and lot code"
+                                name="x_subunit_check"
+                                required='1'
+                            />
                             <field name="x_shelf_life_check" required='1' />
                             <field name="x_keep_cold_check" required='1' />
                             <field name="x_sleeve_check" required='1' />

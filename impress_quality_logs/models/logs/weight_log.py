@@ -5,25 +5,25 @@ from odoo import fields, models
 _logger = logging.getLogger(__name__)
 
 
-class LomaLog(models.Model):
-    _name = "loma.log"
+class weightLog(models.Model):
+    _name = "weight.log"
     _inherit = "log.mixin"
-    _description = "LOMA log"
+    _description = "weight log"
 
     log_line_ids = fields.One2many(
-        comodel_name="loma.log.line", inverse_name="loma_log_id"
+        comodel_name="weight.log.line", inverse_name="weight_log_id"
     )
 
     lower_limit = fields.Float()
     upper_limit = fields.Float()
     nominal_weight = fields.Float()
 
-    def action_view_loma_lines(self):
+    def action_view_weight_lines(self):
         self.ensure_one()
         action = {
-            "res_model": "loma.log.line",
+            "res_model": "weight.log.line",
             "type": "ir.actions.act_window",
             "view_mode": "list,form",
-            "domain": [("loma_log_id", "=", self.id)],
+            "domain": [("weight_log_id", "=", self.id)],
         }
         return action

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <record id='LOMAWorksheet_20250203_form_view' model='ir.ui.view'>
-        <field name="name">LOMA.worksheet.20250203.form.view</field>
+    <record id='weightWorksheet_20250203_form_view' model='ir.ui.view'>
+        <field name="name">weight.worksheet.20250203.form.view</field>
         <field
             name="model"
             model="ir.model"
-            eval="obj().env.ref('impress_quality_worksheets.ws_loma_20250203').model_id.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_weight_20250203').model_id.model"
         />
         <field name="priority">1</field>
         <field name="arch" type="xml">
@@ -29,7 +29,7 @@
 
                     </group>
 
-                    <field name="x_loma_log_line_ids" nolabel="1">
+                    <field name="x_weight_log_line_ids" nolabel="1">
                         <form>
                             <group>
                                 <group>
@@ -60,8 +60,7 @@
 
                     <div class="text-center">
                         <strong
-                        >Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03
-                            Février 2025. Feuille de contrôle LOMA </strong>
+                        >Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Février 2025. Feuille de contrôle Poids </strong>
                     </div>
                 </sheet>
             </form>

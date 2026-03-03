@@ -12,8 +12,8 @@
         "quality_control_worksheet",
     ],
     "data": [
-        "data/LOMA/LOMAWorksheet_20250203.xml",
-        "views/LOMA/LOMAWorksheet_20250203.xml",
+        "data/weight/WeightWorksheet_20250203.xml",
+        "views/weight/WeightWorksheet_20250203.xml",
         "data/HPP/HPPWorksheet_20250203.xml",
         "views/HPP/HPPWorksheet_20250203.xml",
         "data/metal/MetalWorksheet_20250203.xml",
