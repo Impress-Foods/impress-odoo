@@ -23,4 +23,13 @@ class MrpBom(models.Model):
         if len(bom_lines) > 1:
             raise ValidationError(_("Bom has more than one line with target product"))
         else:
-            return bom_lines.product_qty / self.product_qty
+            line = bom_lines[0]
+            # Normalize parent quantity to the product's reference UoM
+            parent_ref_qty = self.product_uom_id._compute_quantity(
+                self.product_qty, self.product_tmpl_id.uom_id
+            )
+            # Normalize component quantity to its reference UoM
+            component_ref_qty = line.product_uom_id._compute_quantity(
+                line.product_qty, line.product_id.uom_id
+            )
+            return component_ref_qty / parent_ref_qty

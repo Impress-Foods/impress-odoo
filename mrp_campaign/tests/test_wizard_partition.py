@@ -378,3 +378,85 @@ class TestMrpCampaignPartitionWizard(CampaignCase):
         wizard = self.wizard.create({"campaign_id": campaign.id})
         with self.assertRaises(ValidationError):
             wizard._get_deltas_demand(lines)
+
+    def test_partition_with_partial_progress(self):
+        """Test partitioning when some MOs are already in progress or done."""
+        QTY = 100.0
+        campaign = self.create_campaign(self.bulk_material)
+        self.create_demand(self.bulk_material, QTY, campaign)
+        campaign.action_plan()
+        campaign.action_confirm()
+
+        mo = campaign.production_ids[0]
+        mo.button_mark_done()
+
+        wizard = self.wizard.create({"campaign_id": campaign.id})
+        data = wizard._make_partition_json(campaign)
+
+        self.assertEqual(data["tree"]["quantities"]["floor"], QTY)
+
+        # Attempting to set planned to 50.0 should fail validation
+        data["tree"]["quantities"]["planned"] = 50.0
+        lines = wizard._validate_json_production(data)
+        with self.assertRaisesRegex(ValidationError, "Cannot plan less of"):
+            wizard._get_deltas_production(lines)
+
+    def test_partition_with_mo_backorder(self):
+        """Test partitioning when an MO has been backordered."""
+        QTY = 100.0
+        BUFFER_MULT = 1.05
+        campaign = self.create_campaign(self.bulk_material)
+        self.create_demand(self.bulk_material, QTY, campaign)
+        campaign.action_plan()
+        campaign.action_confirm()
+
+        # Total planned qty including buffer is 105.0
+        mo = campaign.production_ids[0]
+        self.assertEqual(mo.product_qty, 105.0)
+
+        # Simulate partial production and backorder
+        # We produce 40, leaving 65 for backorder (105 - 40)
+        mo.qty_producing = 40.0
+        action = mo.button_mark_done()
+        if (
+            isinstance(action, dict)
+            and action.get("res_model") == "mrp.production.backorder"
+        ):
+            backorder_wizard = (
+                self.env["mrp.production.backorder"]
+                .with_context(**action["context"])
+                .create({})
+            )
+            backorder_wizard.action_backorder()
+
+        # Check that we have 2 MOs now
+        mos = campaign.production_ids.filtered(lambda m: m.state != "cancel")
+        self.assertEqual(len(mos), 2)
+        mo_done = mos.filtered(lambda m: m.state == "done")
+        mo_backorder = mos.filtered(lambda m: m.state != "done")
+        self.assertEqual(mo_done.qty_produced, 40.0)
+        self.assertEqual(mo_backorder.product_qty, 65.0)
+
+        wizard = self.wizard.create({"campaign_id": campaign.id})
+        data = wizard._make_partition_json(campaign)
+
+        # Floor is line.committed_qty
+        # committed_qty = sum(prods not in draft/cancel/confirmed) / buffer
+        # mo_done is 'done' (40.0)
+        # mo_backorder is 'confirmed' (65.0) - NOT committed
+        # Floor = 40.0 / 1.05 = 38.095...
+        # Wait, the floor in JSON is wip = line.committed_qty
+        expected_floor = 40.0 / BUFFER_MULT
+        self.assertAlmostEqual(data["tree"]["quantities"]["floor"], expected_floor)
+        self.assertAlmostEqual(data["tree"]["quantities"]["done"], 40.0)
+        self.assertAlmostEqual(data["tree"]["quantities"]["wip"], expected_floor)
+
+        # Now let's say we produce 10 more from the backorder (making it 'progress')
+        mo_backorder.qty_producing = 10.0
+        mo_backorder.write({"state": "progress"})
+
+        data = wizard._make_partition_json(campaign)
+        # Now both are committed: (40.0 + 65.0) / 1.05 = 100.0
+        self.assertAlmostEqual(data["tree"]["quantities"]["floor"], 100.0)
+        self.assertAlmostEqual(data["tree"]["quantities"]["done"], 40.0)
+        self.assertAlmostEqual(data["tree"]["quantities"]["wip"], 100.0)

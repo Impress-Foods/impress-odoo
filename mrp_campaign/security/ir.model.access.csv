@@ -1,10 +1,10 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_mrp_campaign_user,mrp.campaign user,model_mrp_campaign,mrp.group_mrp_user,1,0,0,0
+access_mrp_campaign_user,mrp.campaign user,model_mrp_campaign,mrp.group_mrp_user,1,1,1,0
 access_mrp_campaign_manager,mrp.campaign manager,model_mrp_campaign,mrp.group_mrp_manager,1,1,1,1
-access_mrp_campaign_demand_user,mrp.campaign.demand user,model_mrp_campaign_demand,mrp.group_mrp_user,1,0,0,0
+access_mrp_campaign_demand_user,mrp.campaign.demand user,model_mrp_campaign_demand,mrp.group_mrp_user,1,1,1,0
 access_mrp_campaign_demand_manager,mrp.campaign.demand manager,model_mrp_campaign_demand,mrp.group_mrp_manager,1,1,1,1
-mrp_campaign.access_mrp_campaign_creator,access_mrp_campaign_creator,mrp_campaign.model_mrp_campaign_creator,base.group_user,1,1,1,1
-mrp_campaign.access_mrp_campaign_add_demand,access_mrp_campaign_add_demand,mrp_campaign.model_mrp_campaign_add_demand,base.group_user,1,1,1,1
-mrp_campaign.access_mrp_campaign_line,access_mrp_campaign_line,mrp_campaign.model_mrp_campaign_line,base.group_user,1,1,1,1
-mrp_campaign.access_mrp_campaign_partition_wizard,access_mrp_campaign_partition_wizard,mrp_campaign.model_mrp_campaign_partition_wizard,base.group_user,1,1,1,1
-mrp_campaign.access_mrp_campaign_demand_proxy,access_mrp_campaign_demand_proxy,mrp_campaign.model_mrp_campaign_demand_proxy,base.group_user,1,1,1,1
+mrp_campaign.access_mrp_campaign_line,access_mrp_campaign_line,mrp_campaign.model_mrp_campaign_line,mrp.group_mrp_user,1,1,1,1
+mrp_campaign.access_mrp_campaign_creator,access_mrp_campaign_creator,mrp_campaign.model_mrp_campaign_creator,mrp.group_mrp_user,1,1,1,1
+mrp_campaign.access_mrp_campaign_add_demand,access_mrp_campaign_add_demand,mrp_campaign.model_mrp_campaign_add_demand,mrp.group_mrp_user,1,1,1,1
+mrp_campaign.access_mrp_campaign_demand_proxy,access_mrp_campaign_demand_proxy,mrp_campaign.model_mrp_campaign_demand_proxy,mrp.group_mrp_user,1,1,1,1
+mrp_campaign.access_mrp_campaign_partition_wizard,access_mrp_campaign_partition_wizard,mrp_campaign.model_mrp_campaign_partition_wizard,mrp.group_mrp_user,1,1,1,1

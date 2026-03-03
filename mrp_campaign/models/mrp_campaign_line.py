@@ -182,6 +182,11 @@ class CampaignLine(models.Model):
         if self.product_tmpl_id.is_campaign_anchor:
             return self.env["product.product"]
 
+        if self.bom_id.type == "phantom":
+            raise ValidationError(
+                _("Kits (Phantom BoMs) are not supported in manufacturing campaigns.")
+            )
+
         anchors: ProductProduct = (
             self.bom_id.bom_line_ids.filtered(
                 lambda line: self.is_valid_bom_line_for_product(line)
@@ -224,6 +229,16 @@ class CampaignLine(models.Model):
 
             if not downstream_bom:
                 continue
+
+            if downstream_bom.type == "phantom":
+                raise ValidationError(
+                    _(
+                        "Kits (Phantom BoMs) are not supported in "
+                        "manufacturing campaigns. "
+                        "Found kit: %s",
+                        downstream_bom.display_name,
+                    )
+                )
 
             existing_downstream_line = self.campaign_id.line_ids.filtered(
                 lambda line, ds_product=downstream_product, ds_bom=downstream_bom: (

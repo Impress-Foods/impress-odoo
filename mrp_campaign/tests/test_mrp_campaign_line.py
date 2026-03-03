@@ -513,5 +513,112 @@ class TestMrpCampaignLine(CampaignCase):
             "MO quantity should have been adjusted back (including buffer)",
         )
 
-    def test_adjust_mos(self) -> None:
-        pass
+    def test_get_factor_to_product_uom_conversion(self) -> None:
+        # Create a product with a different UoM category
+        uom_unit = self.env.ref("uom.product_uom_unit")
+        uom_kg = self.env.ref("uom.product_uom_kgm")
+        uom_gram = self.env.ref("uom.product_uom_gram")
+
+        product_parent = self.env["product.product"].create(
+            {"name": "Product Parent", "type": "product", "uom_id": uom_unit.id}
+        )
+        product_component = self.env["product.product"].create(
+            {"name": "Product Component", "type": "product", "uom_id": uom_kg.id}
+        )
+
+        # BoM for 1 Unit of Product Parent, uses 500 grams of Product Component
+        bom = self.env["mrp.bom"].create(
+            {
+                "product_tmpl_id": product_parent.product_tmpl_id.id,
+                "product_qty": 1.0,
+                "product_uom_id": uom_unit.id,
+                "type": "normal",
+                "bom_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": product_component.id,
+                            "product_qty": 500.0,
+                            "product_uom_id": uom_gram.id,
+                        },
+                    ),
+                ],
+            }
+        )
+
+        # factor should be (500g -> 0.5kg) / (1 Unit -> 1 Unit) = 0.5
+        factor = bom.get_factor_to_product(product_component)
+        self.assertEqual(factor, 0.5)
+
+    def test_kit_bom_guard(self) -> None:
+        parent_product = self.env["product.product"].create(
+            {"name": "Kit Product", "type": "product"}
+        )
+
+        kit_product = self.env["product.product"].create(
+            {"name": "Kit Product", "type": "product"}
+        )
+        self.env["mrp.bom"].create(
+            {
+                "product_tmpl_id": parent_product.product_tmpl_id.id,
+                "product_qty": 1.0,
+                "type": "normal",
+                "bom_line_ids": [
+                    (0, 0, {"product_id": kit_product.id, "product_qty": 1.0}),
+                ],
+            }
+        )
+        self.env["mrp.bom"].create(
+            {
+                "product_tmpl_id": kit_product.product_tmpl_id.id,
+                "product_qty": 1.0,
+                "type": "phantom",
+                "bom_line_ids": [
+                    (0, 0, {"product_id": self.bulk_material.id, "product_qty": 1.0}),
+                ],
+            }
+        )
+
+        campaign = self.create_campaign(self.bulk_material)
+        line = self.create_line(parent_product, campaign)
+        kit_line = self.create_line(kit_product, campaign)
+
+        with self.assertRaisesRegex(
+            ValidationError,
+            r"Kits \(Phantom BoMs\) are not supported in manufacturing campaigns",
+        ):
+            kit_line._get_downstream_product()
+
+        with self.assertRaisesRegex(
+            ValidationError,
+            r"Kits \(Phantom BoMs\) are not supported in manufacturing campaigns",
+        ):
+            line._construct_downstream_tree_line()
+
+    def test_zero_anchor_error(self) -> None:
+        # Product with BoM but no anchor in its lineage
+        component = self.env["product.product"].create(
+            {"name": "Component", "type": "product"}
+        )
+        product_no_anchor = self.env["product.product"].create(
+            {"name": "No Anchor Product", "type": "product"}
+        )
+        self.env["mrp.bom"].create(
+            {
+                "product_tmpl_id": product_no_anchor.product_tmpl_id.id,
+                "product_qty": 1.0,
+                "type": "normal",
+                "bom_line_ids": [
+                    (0, 0, {"product_id": component.id, "product_qty": 1.0}),
+                ],
+            }
+        )
+
+        campaign = self.create_campaign(self.bulk_material)
+        line = self.create_line(product_no_anchor, campaign)
+
+        with self.assertRaisesRegex(
+            ValidationError, "Could not resolve downstream product"
+        ):
+            line._get_downstream_product()

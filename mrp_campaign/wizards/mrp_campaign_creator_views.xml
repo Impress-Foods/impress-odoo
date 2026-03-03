@@ -93,7 +93,7 @@
     <menuitem
         id="menu_mrp_campaign_creator"
         name="Campaign Creator"
-        parent="mrp.menu_mrp_root"
+        parent="mrp_campaign.menu_mrp_campaign"
         action="action_mrp_campaign_creator"
         sequence="50"
     />

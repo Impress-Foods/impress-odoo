@@ -176,3 +176,16 @@ class TestCampaign(CampaignCase):
                 ]
             )
         )
+
+    def test_action_reset(self) -> None:
+        campaign = self.create_campaign(self.bulk_material)
+        self.create_demand(self.bulk_material, 100, campaign)
+        campaign.action_plan()
+        self.assertEqual(campaign.state, "plan")
+        self.assertTrue(campaign.line_ids)
+        self.assertTrue(campaign.production_ids)
+
+        campaign.action_reset()
+        self.assertEqual(campaign.state, "draft")
+        self.assertFalse(campaign.line_ids)
+        self.assertFalse(campaign.production_ids)

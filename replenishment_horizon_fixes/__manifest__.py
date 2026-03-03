@@ -8,6 +8,7 @@
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
     "depends": ["stock"],
+    "data": ["views/orderpoint_views.xml"],
     "installable": True,
     "license": "GPL-2",
 }

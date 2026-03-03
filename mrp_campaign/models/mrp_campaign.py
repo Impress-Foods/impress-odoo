@@ -203,10 +203,6 @@ class MrpCampaign(models.Model):
             rec._construct_tree_from_demand()
 
     def _construct_tree_from_demand(self, propagate: bool = True) -> None:
-        """
-        Constructs the initial level of the campaign production tree
-        from demand lines and then recursively builds the downstream tree.
-        """
         self.ensure_one()
         self.line_ids.unlink()
 
@@ -240,10 +236,6 @@ class MrpCampaign(models.Model):
                 end_mos_to_confirm.action_confirm()
 
     def action_reset(self):
-        """
-        Resets a confirmed campaign back to draft, deleting any manufacturing
-        orders and stock moves that were created by the confirmation process.
-        """
         for campaign in self.filtered(lambda c: c.state in ["plan", "confirm"]):
             # Find and cancel any manufacturing orders created for this campaign
             productions = self.env["mrp.production"].search(
@@ -419,10 +411,6 @@ class MrpCampaign(models.Model):
             rec._resync_mos()
 
     def _resync_mos(self):
-        """
-        Synchronizes all Manufacturing Orders linked to this campaign's lines
-        with the current line quantities.
-        """
         self.ensure_one()
         # Force recompute of line quantities by accessing them
         self.line_ids.mapped("qty")

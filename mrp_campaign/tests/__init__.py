@@ -9,3 +9,4 @@ from . import test_mrp_campaign_torture
 from . import test_wizard_add_demand
 from . import test_stock_move
 from . import test_campaign
+from . import test_wizard_campaign_creator

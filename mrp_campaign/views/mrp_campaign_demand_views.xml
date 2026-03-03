@@ -56,6 +56,7 @@
     </record>
     <menuitem
         id="menu_mrp_campaign_demand"
+        active="false"
         name="Campaign Demands"
         parent="mrp_campaign.menu_mrp_campaign"
         action="action_mrp_campaign_demand"
@@ -64,6 +65,7 @@
     />
     <menuitem
         id="menu_mrp_campaign_demand_proxy"
+        active="false"
         name="Campaign Demand Proxies"
         parent="menu_mrp_campaign"
         action="action_mrp_campaign_demand_proxies"
