@@ -45,6 +45,40 @@ class ReportLabelBase(models.AbstractModel):
         return quantity_barcode
 
     @api.model
+    def _get_qty_barcode(self, quantity, uom):
+        uom_type = uom.category_id.name if uom else "Unit"
+
+        if uom:
+            ref_unit = uom.category_id.uom_ids.filtered(
+                lambda u: u.uom_type == "reference"
+            )[:1]
+            if ref_unit:
+                quantity = uom._compute_quantity(
+                    quantity, ref_unit, raise_if_failure=False
+                )
+
+        # Standard Odoo categories for weight and volume
+        weight_categ = self.env.ref(
+            "uom.product_uom_categ_kgm", raise_if_not_found=False
+        )
+        volume_categ = self.env.ref(
+            "uom.product_uom_categ_vol", raise_if_not_found=False
+        )
+
+        if weight_categ and uom and uom.category_id == weight_categ:
+            quantity_barcode = self._make_variable_decimal_code(quantity, "310")
+        elif volume_categ and uom and uom.category_id == volume_categ:
+            quantity_barcode = self._make_variable_decimal_code(quantity, "315")
+        elif uom_type == "Weight":
+            quantity_barcode = self._make_variable_decimal_code(quantity, "310")
+        elif uom_type == "Volume":
+            quantity_barcode = self._make_variable_decimal_code(quantity, "315")
+        else:
+            quantity_barcode = "30" + pad_to_size(str(int(quantity)), 8)
+
+        return quantity_barcode
+
+    @api.model
     def _get_gs1_barcode(
         self,
         product_id=None,
@@ -62,8 +96,8 @@ class ReportLabelBase(models.AbstractModel):
                 _(f"Product {product_id.name} does not have a valid EAN")
             )
 
-        barcode: str = product_id.barcode
-        if not barcode.isnumeric():
+        barcode: str = product_id.barcode or ""
+        if not barcode or not barcode.isnumeric():
             raise ValidationError(_(f"Barcode must be numeric: {barcode}"))
         if len(barcode) not in [12, 13, 14]:
             raise ValidationError(
@@ -73,6 +107,7 @@ class ReportLabelBase(models.AbstractModel):
         product_barcode = "01" + pad_to_size(barcode, 14)
         lot_barcode = ""
         quantity_barcode = ""
+        date_barcode = ""
 
         if quantity and quantity < 0:
             raise ValidationError(_("Quantity cannot be negative!"))
@@ -83,42 +118,21 @@ class ReportLabelBase(models.AbstractModel):
             elif lot_id.product_id.tracking == "serial":
                 lot_barcode = "21" + lot_id.name
 
-        # To work with Odoo's barcode parser, the UoM encoded in the
-        # barcode needs to be the same as the UoM used for the products
-        # in the packaging. Example:
-        # Product in kg, 10 packaging of 20 kgs
-        # code should be (3100)000010 (10 kgs), not (30)00000010 (10 units)
-        # even if semantically it should be 10 units of packaging x 20 kg/packaging
-        # and not 10 kg of packaging x 20 kg/packaging
+            # Add expiration date (AI 17) or best before (AI 15)
+            expiry_date = lot_id.expiration_date or lot_id.use_date
+            if expiry_date:
+                ai = "17" if lot_id.expiration_date else "15"
+                date_barcode = ai + expiry_date.strftime("%y%m%d")
+
         if packaging_id:
-            product_barcode = "01" + packaging_id.barcode
+            product_barcode = "01" + pad_to_size(packaging_id.barcode or "", 14)
             if packaging_qty:
                 quantity = packaging_qty
 
         if quantity != 0:
-            uom_type = uom.category_id.name if uom else "Unit"
+            quantity_barcode = self._get_qty_barcode(quantity, uom)
 
-            if uom:
-                ref_unit = self.env["uom.uom"].search(
-                    [
-                        ("category_id", "=", uom.category_id.id),
-                        ("uom_type", "=", "reference"),
-                    ]
-                )
-
-                quantity = uom._compute_quantity(
-                    quantity, ref_unit, raise_if_failure=False
-                )
-
-            match uom_type:
-                case "Weight":
-                    quantity_barcode = self._make_variable_decimal_code(quantity, "310")
-                case "Volume":
-                    quantity_barcode = self._make_variable_decimal_code(quantity, "315")
-                case _:
-                    quantity_barcode = "30" + pad_to_size(str(int(quantity)), 8)
-
-        return product_barcode + quantity_barcode + lot_barcode
+        return product_barcode + quantity_barcode + date_barcode + lot_barcode
 
 
 class ReportProductProductLabel2x4(models.AbstractModel):

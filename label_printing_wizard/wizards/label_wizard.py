@@ -69,14 +69,14 @@ class LabelWizard(models.TransientModel):
     def _compute_product_domain(self):
         for record in self:
             domain = []
-            if self.model == "lot":
+            if record.model == "lot":
                 domain = [("tracking", "in", ["serial", "lot"])]
 
-            if self.product_template_id:
-                domain += [("product_tmpl_id", "=", self.product_template_id.id)]
+            if record.product_template_id:
+                domain += [("product_tmpl_id", "=", record.product_template_id.id)]
 
-            if self.picking_id:
-                product_ids = [move.product_id.id for move in self.picking_id.move_ids]
+            if record.picking_id:
+                product_ids = record.picking_id.move_ids.product_id.ids
                 domain += [("id", "in", product_ids)]
 
             record.product_domain = domain
@@ -93,62 +93,51 @@ class LabelWizard(models.TransientModel):
 
             record.lot_domain = domain
 
-    @api.depends("model")
+    @api.depends("model", "label_size")
     def _compute_label_report(self) -> None:
         for record in self:
-            match record.model:
-                case "product":
-                    match record.label_size:
-                        case "2x4":
-                            record.label_report = self.env.ref(
-                                "label_printing_wizard.report_label_product_product_zpl_2x4"
-                            )
-                        case "4x6":
-                            record.label_report = self.env.ref(
-                                "label_printing_wizard.report_label_product_product_zpl_4x6"
-                            )
+            report_ref = False
+            if record.model == "product":
+                if record.label_size == "2x4":
+                    report_ref = (
+                        "label_printing_wizard.report_label_product_product_zpl_2x4"
+                    )
+                else:
+                    report_ref = (
+                        "label_printing_wizard.report_label_product_product_zpl_4x6"
+                    )
+            elif record.model == "lot":
+                if record.label_size == "2x4":
+                    report_ref = "label_printing_wizard.report_label_lot_zpl_2x4"
+                else:
+                    report_ref = "label_printing_wizard.report_label_lot_zpl_4x6"
 
-                case "lot":
-                    match record.label_size:
-                        case "2x4":
-                            record.label_report = self.env.ref(
-                                "label_printing_wizard.report_label_lot_zpl_2x4"
-                            )
-                        case "4x6":
-                            record.label_report = self.env.ref(
-                                "label_printing_wizard.report_label_lot_zpl_4x6"
-                            )
+            record.label_report = self.env.ref(report_ref) if report_ref else False
 
     @api.onchange("picking_id", "product_id", "lot_id")
     def get_product_qty(self) -> None:
         for record in self:
-            if len(record.picking_id) == 0 or len(record.product_id) == 0:
-                return
+            if not record.picking_id or not record.product_id:
+                continue
 
             quantity = 0
             if record.product_id.tracking in ["lot", "serial"] and record.lot_id:
-                stock_move_line = record.env["stock.move.line"].search(
-                    [
-                        ("picking_id", "=", record.picking_id.id),
-                        ("lot_id", "=", record.lot_id.id),
-                    ]
+                move_lines = record.picking_id.move_line_ids.filtered(
+                    lambda ml, record=record: (
+                        ml.product_id == record.product_id
+                        and ml.lot_id == record.lot_id
+                    )
                 )
-
-                quantity = sum(stock_move_line.mapped("qty_done"))
-
+                quantity = sum(move_lines.mapped("qty_done"))
             else:
-                stock_move = record.env["stock.move"].search(
-                    [
-                        ("picking_id", "=", record.picking_id.id),
-                        ("product_id", "=", record.product_id.id),
-                    ]
+                moves = record.picking_id.move_ids.filtered(
+                    lambda m, record=record: m.product_id == record.product_id
                 )
-                quantity = sum(stock_move.mapped("product_uom_qty"))
+                quantity = sum(moves.mapped("product_uom_qty"))
 
             record.product_qty = quantity
 
     def create(self, vals_list):
-        _logger.warning(self.env.context)
         return super().create(vals_list)
 
     def print_label(self):
