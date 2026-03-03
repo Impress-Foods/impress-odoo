@@ -127,7 +127,7 @@ class LabelWizard(models.TransientModel):
 
             quantity = 0
             if record.product_id.tracking in ["lot", "serial"] and record.lot_id:
-                stock_move_line = self.env["stock.move.line"].search(
+                stock_move_line = record.env["stock.move.line"].search(
                     [
                         ("picking_id", "=", record.picking_id.id),
                         ("lot_id", "=", record.lot_id.id),
@@ -137,7 +137,7 @@ class LabelWizard(models.TransientModel):
                 quantity = sum(stock_move_line.mapped("qty_done"))
 
             else:
-                stock_move = self.env["stock.move"].search(
+                stock_move = record.env["stock.move"].search(
                     [
                         ("picking_id", "=", record.picking_id.id),
                         ("product_id", "=", record.product_id.id),

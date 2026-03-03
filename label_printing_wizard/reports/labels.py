@@ -65,12 +65,12 @@ class ReportLabelBase(models.AbstractModel):
         barcode: str = product_id.barcode
         if not barcode.isnumeric():
             raise ValidationError(_(f"Barcode must be numeric: {barcode}"))
-        if len(barcode) not in [13, 14]:
+        if len(barcode) not in [12, 13, 14]:
             raise ValidationError(
-                _(f"Invalid barcode length (must be 13 or 14): {len(barcode)}")
+                _(f"Invalid barcode length (must be 12, 13 or 14): {len(barcode)}")
             )
 
-        product_barcode = "01" + barcode
+        product_barcode = "01" + pad_to_size(barcode, 14)
         lot_barcode = ""
         quantity_barcode = ""
 
