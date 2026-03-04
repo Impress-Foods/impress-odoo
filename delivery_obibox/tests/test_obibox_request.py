@@ -213,10 +213,6 @@ class TestObiboxRequest(TestDeliveryCommon):
             boxes_dimensions=dims,
         )
         shipping_request = self.sr._make_shipment_request(picking)
-        # from pprint import pformat
-
-        # _logger.warning(pformat(expected_shipping_request))
-        # _logger.warning(pformat(shipping_request))
         self.assertEqual(shipping_request, expected_shipping_request)
 
     def test_make_rate_request_sale_order(self):
@@ -315,3 +311,53 @@ class TestObiboxRequest(TestDeliveryCommon):
         expected_date = datetime(year=2025, month=7, day=23)
         date = self.sr._get_pickup_date(picking_date, delivery_day)
         self.assertEqual(expected_date, date)
+
+    def test_make_destination_fallback_sibling_billing(self):
+        """Test fallback to billing info when Shipping and Billing are siblings."""
+        # Create Main Customer
+        main_customer = self.env["res.partner"].create({"name": "Main Corp"})
+
+        # Create Billing Address (sibling of Shipping)
+        billing_partner = self.env["res.partner"].create(
+            {
+                "parent_id": main_customer.id,
+                "name": "Billing Address",
+                "phone": "555-BILL",
+                "email": "bill@corp.com",
+                "type": "invoice",
+            }
+        )
+
+        # Create Shipping Address (sibling of Billing)
+        delivery_partner = self.env["res.partner"].create(
+            {
+                "parent_id": main_customer.id,
+                "name": "Shipping Address",
+                "type": "delivery",
+                "street": "123 Shipping St",
+                "city": "Ship City",
+                "state_id": self.partner.state_id.id,
+                "country_id": self.partner.country_id.id,
+                "zip": "S1S1S1",
+            }
+        )
+
+        # Create SO to link them properly
+        so = self.env["sale.order"].create(
+            {
+                "partner_id": main_customer.id,
+                "partner_invoice_id": billing_partner.id,
+                "partner_shipping_id": delivery_partner.id,
+            }
+        )
+
+        # Create Picking from SO
+        picking = self.make_picking(contact=delivery_partner)
+        picking.sale_id = so.id  # Ensure sale_id is set
+        picking.date_done = datetime.today()
+        # Check request info
+        request: schema.ShippingRequestMulti = self.sr._make_shipment_request(picking)
+        self.assertEqual(request.phone, "555-BILL")
+        self.assertEqual(request.email, "bill@corp.com")
+        # Ensure address is still from delivery partner
+        self.assertEqual(request.to_address1, "123 Shipping St")

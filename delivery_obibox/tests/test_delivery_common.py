@@ -94,6 +94,21 @@ class TestDeliveryCommon(common.TransactionCase):
             }
         )
 
+        # Ensure company has required fields
+        self.env.company.write(
+            {
+                "phone": "5141234567",
+                "email": "company@test.com",
+                "state_id": self.partner.state_id.id,
+                "country_id": self.env["res.country"]
+                .search([("code", "=", "CA")], limit=1)
+                .id,
+                "zip": "H1H1H1",
+                "city": "Montreal",
+                "street": "123 Main St",
+            }
+        )
+
     def get_package_values(self, package):
         package_l = self.package_l_uom._compute_quantity(
             self.package_type.packaging_length, self.in_uom
@@ -122,13 +137,16 @@ class TestDeliveryCommon(common.TransactionCase):
         )
         return volume, long_side, weight
 
-    def make_picking(self, n_packages=1):
+    def make_picking(self, n_packages=1, contact=None):
+        if not contact:
+            contact = self.partner
+
         picking = self.env["stock.picking"].create(
             {
                 "location_id": self.location.id,
                 "location_dest_id": self.partner_location.id,
                 "picking_type_id": self.out.id,
-                "partner_id": self.partner.id,
+                "partner_id": contact.id,
                 "carrier_id": self.obibox_method.id,
             }
         )
