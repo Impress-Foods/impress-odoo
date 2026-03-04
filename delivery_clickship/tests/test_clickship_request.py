@@ -258,6 +258,56 @@ class TestClickshipRequest(TestDeliveryCommon):
             self.sr._make_destination(picking)
         self.assertIn("Could not find phone number", str(context.exception))
 
+    def test_make_destination_fallback_sibling_billing(self):
+        """Test fallback to billing info when Shipping and Billing are siblings."""
+        # Create Main Customer
+        main_customer = self.env["res.partner"].create({"name": "Main Corp"})
+
+        # Create Billing Address (sibling of Shipping)
+        billing_partner = self.env["res.partner"].create(
+            {
+                "parent_id": main_customer.id,
+                "name": "Billing Address",
+                "phone": "555-BILL",
+                "email": "bill@corp.com",
+                "type": "invoice",
+            }
+        )
+
+        # Create Shipping Address (sibling of Billing)
+        delivery_partner = self.env["res.partner"].create(
+            {
+                "parent_id": main_customer.id,
+                "name": "Shipping Address",
+                "type": "delivery",
+                "street": "123 Shipping St",
+                "city": "Ship City",
+                "state_id": self.partner.state_id.id,
+                "country_id": self.partner.country_id.id,
+                "zip": "S1S1S1",
+            }
+        )
+
+        # Create SO to link them properly
+        so = self.env["sale.order"].create(
+            {
+                "partner_id": main_customer.id,
+                "partner_invoice_id": billing_partner.id,
+                "partner_shipping_id": delivery_partner.id,
+            }
+        )
+
+        # Create Picking from SO
+        picking = self.make_picking(contact=delivery_partner)
+        picking.sale_id = so.id  # Ensure sale_id is set
+
+        # Check destination info
+        destination = self.sr._make_destination(picking)
+        self.assertEqual(destination.phone_number.number, "555-BILL")
+        self.assertEqual(destination.email_addresses[0], "bill@corp.com")
+        # Ensure address is still from delivery partner
+        self.assertEqual(destination.address.address_line_1, "123 Shipping St")
+
     def test_make_package_with_package(self):
         """Test creating package from stock.quant.package"""
         picking = self.make_picking()
