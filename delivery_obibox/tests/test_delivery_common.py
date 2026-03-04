@@ -77,6 +77,7 @@ class TestDeliveryCommon(common.TransactionCase):
             [("name", "=", self.package_type.length_uom_name)]
         )[0]
 
+        # Create test partner
         self.partner = self.env["res.partner"].create(
             {
                 "name": "Test Client",
@@ -84,11 +85,26 @@ class TestDeliveryCommon(common.TransactionCase):
                 "street2": "App 1010",
                 "city": "TestVille",
                 "state_id": self.env["res.country.state"]
-                .search([("code", "=", "QC")])[0]
+                .search([("code", "=", "QC")], limit=1)
                 .id,
                 "zip": "H0H0H0",
                 "phone": "4181234567",
                 "email": "test@test.com",
+            }
+        )
+
+        # Ensure company has required fields
+        self.env.company.write(
+            {
+                "phone": "5141234567",
+                "email": "company@test.com",
+                "state_id": self.partner.state_id.id,
+                "country_id": self.env["res.country"]
+                .search([("code", "=", "CA")], limit=1)
+                .id,
+                "zip": "H1H1H1",
+                "city": "Montreal",
+                "street": "123 Main St",
             }
         )
 
