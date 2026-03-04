@@ -259,6 +259,35 @@ class ObiboxProvider:
             "postal_code": contact.zip or "",
         }
 
+    def _get_contact_info(self, picking: Picking) -> tuple[str, str]:
+        """Get phone and email with fallback to billing or parent."""
+        partner = picking.partner_id
+        phone = partner.phone or partner.mobile
+        email = partner.email
+
+        # If missing, try billing address (partner_invoice_id from sale_id)
+        if (not phone or not email) and picking.sale_id:
+            billing = picking.sale_id.partner_invoice_id
+            if billing and billing != partner:
+                phone = phone or billing.phone or billing.mobile
+                email = email or billing.email
+
+        # If still missing, try parent
+        if (not phone or not email) and partner.parent_id:
+            phone = phone or partner.parent_id.phone or partner.parent_id.mobile
+            email = email or partner.parent_id.email
+
+        # If still missing, try commercial partner
+        if (not phone or not email) and partner.commercial_partner_id:
+            phone = (
+                phone
+                or partner.commercial_partner_id.phone
+                or partner.commercial_partner_id.mobile
+            )
+            email = email or partner.commercial_partner_id.email
+
+        return phone or "", email or ""
+
     def _make_shipment_request(self, picking) -> ShippingRequestMulti:
         from_address = self._make_address(picking.company_id.partner_id)
         to_address = self._make_address(picking.partner_id)
@@ -270,6 +299,8 @@ class ObiboxProvider:
             dims.append(dim)
 
         total_weight = sum(map(lambda x: x.weight, dims))
+
+        phone, email = self._get_contact_info(picking)
 
         pickup_date = self._get_pickup_date(
             picking.date_done, picking.carrier_id.obibox_delivery_day
@@ -288,8 +319,8 @@ class ObiboxProvider:
             to_postal_code=to_address["postal_code"],
             client_name=picking.partner_id.name or "",
             name=picking.partner_id.name or "",
-            phone=picking.partner_id.phone or "",
-            email=picking.partner_id.email or "",
+            phone=phone,
+            email=email,
             instructions=picking.delivery_instructions or "",
             b2b="1" if picking.partner_id.is_company else "0",
             nb_items=len(boxes),

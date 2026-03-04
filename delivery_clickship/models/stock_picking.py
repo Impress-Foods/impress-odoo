@@ -54,8 +54,10 @@ class StockPicking(models.Model):
     def _clickship_parse_rates(self, rates: list[Rate]) -> RateModel:
         rate_data = []
         for rate in rates:
-            currency = self.env["res.currency"].search(
-                [("name", "=", rate.total.currency)], limit=1
+            currency = (
+                self.env["res.currency"]
+                .with_context(active_test=False)
+                .search([("name", "=", rate.total.currency)], limit=1)
             )
 
             if not currency:

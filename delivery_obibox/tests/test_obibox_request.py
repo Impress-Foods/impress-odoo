@@ -101,11 +101,11 @@ class TestObiboxRequest(TestDeliveryCommon):
     def test_make_address_company(self):
         partner = self.env["res.company"].browse([1])  # noqa
         expected_address = {
-            "address1": partner.street,
+            "address1": partner.street or "",
             "address2": partner.street2 or "",
-            "city": partner.city,
-            "province": partner.state_id.code,
-            "postal_code": partner.zip,
+            "city": partner.city or "",
+            "province": partner.state_id.code or "",
+            "postal_code": partner.zip or "",
         }
 
         address = self.sr._make_address(partner)
