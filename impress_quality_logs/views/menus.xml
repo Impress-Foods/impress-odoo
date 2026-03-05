@@ -55,22 +55,22 @@
 
     <menuitem parent="coding_menu" id="coding_log_line_menu" action='action_coding_log_line' sequence='11' name="Coding Lines"/>
 -->
-    <menuitem id="loma_menu" parent="logs_menu" sequence='13' name="LOMA" />
+    <menuitem id="weight_menu" parent="logs_menu" sequence='13' name="weight" />
 
     <menuitem
-        parent="loma_menu"
-        id="loma_log_menu"
-        action='action_loma_log'
+        parent="weight_menu"
+        id="weight_log_menu"
+        action='action_weight_log'
         sequence='10'
-        name="LOMA logs"
+        name="weight logs"
     />
 
     <menuitem
-        parent="loma_menu"
-        id="loma_log_line_menu"
-        action='action_loma_log_line'
+        parent="weight_menu"
+        id="weight_log_line_menu"
+        action='action_weight_log_line'
         sequence='11'
-        name="LOMA lines"
+        name="weight lines"
     />
 
     <menuitem id="x_ray_menu" parent="logs_menu" sequence='14' name="X-Ray" />

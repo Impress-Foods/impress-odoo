@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <record id='MetalWorksheet_20250203_form_view' model='ir.ui.view'>
-        <field name="name">Metal.worksheet.20250203.form.view</field>
+    <record id='MetalWorksheet_large_20260303_form_view' model='ir.ui.view'>
+        <field name="name">Metal.worksheet.large.20260303.form.view</field>
         <field
             name="model"
             model="ir.model"
-            eval="obj().env.ref('impress_quality_worksheets.ws_metal_20250203').model_id.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_metal_large_20260303').model_id.model"
         />
         <field name="priority">1</field>
         <field name="arch" type="xml">
@@ -19,11 +19,7 @@
                             <field name="x_quality_check_id" />
                         </group>
                     </group>
-                    <div
-                        class="alert alert-warning"
-                        role="alert"
-                        name="studio_div_3b1faf"
-                    >
+                    <div class="alert alert-warning" role="alert">
                         <p
                         >Détecteur métal : Si l'éjection de l'un des témoins de métal est Non-Conforme, appeler le contrôle de la qualité, remplir un registre d'écart, réajuster l'appareil et
                             repasser tous les produits depuis la dernière vérification conforme. S'il y a un rejet de métal durant la production, aviser le contrôle de la qualité.</p>
@@ -61,19 +57,19 @@
                                 </group>
                                 <group>
                                     <field
-                                        name="ferrous"
+                                        name="ferrous_large"
                                         required='1'
                                         string="Ferrous (2.0 mm)"
                                     />
                                     <field
-                                        name="non_ferrous"
+                                        name="non_ferrous_large"
                                         required='1'
-                                        string="Non ferrous (2.5 mm)"
+                                        string="Non ferrous (3.0 mm)"
                                     />
                                     <field
-                                        name="stainless"
+                                        name="stainless_large"
                                         required='1'
-                                        string="Stainless (3.5 mm)"
+                                        string="Stainless (4.0 mm)"
                                     />
                                     <field
                                         name="signature"
@@ -87,7 +83,7 @@
                     </field>
                     <div class="text-center">
                         <strong
-                        >Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Février 2025. Feuille de contrôle Détecteur de Métal </strong>
+                        >Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Mars 2026. Feuille de contrôle Détecteur de Métal (Gros indicateurs) </strong>
                     </div>
                 </sheet>
             </form>
