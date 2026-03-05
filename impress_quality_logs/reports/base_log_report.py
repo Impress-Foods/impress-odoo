@@ -81,7 +81,7 @@ class ReportXRayLog(models.AbstractModel):
 class ReportweightLog(models.AbstractModel):
     _name = "report.impress_quality_logs.report_weight_log"
     _inherit = "report.base.log.report"
-    _description = "weight Log Report"
+    _description = "Weight Log Report"
 
     @api.model
     def _get_report_values(self, docids, data=None):
@@ -94,7 +94,7 @@ class ReportweightLog(models.AbstractModel):
             {
                 "doc_model": "weight.log",
                 "docs": docs,
-                "doc_name": _("weight log"),
+                "doc_name": _("Weight log"),
             }
         )
 
