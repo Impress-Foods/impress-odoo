@@ -34,7 +34,7 @@
                     <t name="barcode">
                         <t t-if="lot['gs1_barcode']">
                             <t
-                                t-out="'^FO550,50^BY3 ^BXN,11,200 ^FD' + lot['gs1_barcode'] + '^FS'"
+                                t-out="'^FO550,50^BY3 ^BXN,11,200,,,,6 ^FD' + lot['gs1_barcode'] + '^FS'"
                             />
                         </t>
                         <t t-elif="lot['lot_record'].product_id.barcode">
