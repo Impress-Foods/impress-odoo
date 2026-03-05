@@ -14,25 +14,23 @@ class LogLineMixin(models.AbstractModel):
     notes = fields.Text()
     signature = fields.Binary()
 
+    quality_check_id = fields.Many2one("quality.check", "Quality Check")
     production_id = fields.Many2one(
         "mrp.production",
         "Production Order",
         related="quality_check_id.production_id",
         store=True,
-        depends=["quality_check_id", "quality_check_id.production_id"],
     )
     product_id = fields.Many2one(
         "product.product",
         "Product",
         related="production_id.product_id",
         store=True,
-        depends=["production_id", "production_id.product_id"],
     )
     product_lot_id = fields.Many2one(
         "stock.lot", "Lot", store=True, compute="_compute_product_lot_id"
     )
 
-    quality_check_id = fields.Many2one("quality.check", "Quality Check")
     active_worksheet_field = fields.Char(
         compute="_compute_active_worksheet_field", store=True
     )
@@ -56,9 +54,11 @@ class LogLineMixin(models.AbstractModel):
         ]
         return worksheet_fields
 
-    @api.depends(lambda self: ["quality_check_id"] + self._get_worksheet_fields())
+    @api.depends("quality_check_id")
     def _compute_active_worksheet_field(self):
         for record in self:
+            if record.active_worksheet_field:
+                continue
             if not record.active_worksheet_field:
                 # The worksheet relational field(s) are not known
                 # to the model when it's created in the DB.
@@ -68,15 +68,19 @@ class LogLineMixin(models.AbstractModel):
                 #   A) Custom fields (and need to start with 'x_')
                 #   B) follow the 'x_' with 'worksheet' by convention
 
-                worksheet_fields = record._get_worksheet_fields()
-                worksheet_field = [f for f in worksheet_fields if record[f]]
+                worksheet_fields = [
+                    name
+                    for name, field in self._fields.items()
+                    if name.startswith("x_worksheet") or "x_worksheet" in name
+                ]
+                found_field = next((f for f in worksheet_fields if record[f]), False)
 
-                if worksheet_field:
+                if found_field:
                     # Since the worksheet fields are set from the worksheet
                     # containing the new record at creation, we can assume
                     # that only one worksheet field is set. We can when take
                     # the first (and only) one in the list
-                    record.active_worksheet_field = worksheet_field[0]
+                    record.active_worksheet_field = found_field
 
     # Hooking into the quality_wizard_id context to be able to set
     # the current quality.check id when creating a new log line.
