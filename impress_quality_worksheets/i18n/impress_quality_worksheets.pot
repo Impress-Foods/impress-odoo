@@ -35,13 +35,6 @@ msgid ""
 msgstr ""
 
 #. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20250203_form_view
-msgid ""
-"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 "
-"Février 2025. Feuille de contrôle Poids </strong>"
-msgstr ""
-
-#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20250303_form_view
 msgid ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Mars"
@@ -60,6 +53,13 @@ msgstr ""
 msgid ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Mars"
 " 2026. Feuille de contrôle Détecteur de Métal (Gros indicateurs) </strong>"
+msgstr ""
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20250203_form_view
+msgid ""
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 05 mars"
+" 2026. Feuille de contrôle Poids </strong>"
 msgstr ""
 
 #. module: impress_quality_worksheets
