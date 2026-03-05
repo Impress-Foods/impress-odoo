@@ -7,7 +7,14 @@
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
-    "depends": ["base", "product", "stock", "product_expiry", "stock_barcode"],
+    "depends": [
+        "base",
+        "product",
+        "stock",
+        "product_expiry",
+        "stock_barcode",
+        "barcodes_gs1_nomenclature",
+    ],
     "data": [
         "wizards/label_wizard.xml",
         "reports/datamatrix.xml",
@@ -19,7 +26,6 @@
         "views/stock_lot.xml",
         "views/stock_picking.xml",
         "security/ir.model.access.csv",
-        "data/gs1_rules.xml",
     ],
     "assets": {
         "web.assets_backend": [
