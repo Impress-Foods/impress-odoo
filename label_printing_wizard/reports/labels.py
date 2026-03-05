@@ -109,9 +109,6 @@ class ReportLabelBase(models.AbstractModel):
         quantity_barcode = ""
         date_barcode = ""
 
-        if quantity and quantity < 0:
-            raise ValidationError(_("Quantity cannot be negative!"))
-
         if lot_id:
             if lot_id.product_id.tracking == "lot":
                 lot_barcode = "10" + lot_id.name
@@ -124,10 +121,14 @@ class ReportLabelBase(models.AbstractModel):
                 ai = "17" if lot_id.expiration_date else "15"
                 date_barcode = ai + expiry_date.strftime("%y%m%d")
 
+        # If packaging_id provided, use that directly (replaces the product's GTIN)
         if packaging_id:
             product_barcode = "01" + pad_to_size(packaging_id.barcode or "", 14)
             if packaging_qty:
                 quantity = packaging_qty
+
+        if quantity and quantity < 0:
+            raise ValidationError(_("Quantity cannot be negative!"))
 
         if quantity != 0:
             quantity_barcode = self._get_qty_barcode(quantity, uom)

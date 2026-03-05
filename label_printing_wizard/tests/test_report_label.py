@@ -255,31 +255,32 @@ class TestReportLabelBase(common.TransactionCase):
                 product_id=self.product_tracking_none, quantity=-5
             )
 
-
-def test_barcode_with_expiration_date(self):
-    """Test barcode with expiration date (AI 17)"""
-    expiry = datetime.date(2026, 12, 31)  # noqa: F821
-    self.lot_lot.expiration_date = expiry
-    barcode = self.report._get_gs1_barcode(
-        product_id=self.product_tracking_lot,
-        lot_id=self.lot_lot,
-        quantity=1,
-        uom=self.weight_uom_kg,
-    )
-    # Expected: 01 + product_barcode (padded) + 3101000010 (qty) +
-    #  17 + 261231 (expiry) + 10 + lot (24558)
-    expected_padded_product = self.product_tracking_lot.barcode.zfill(14)
-    expected = f"01{expected_padded_product}3101000010172612311024558"
-    self.assertEqual(barcode, expected)
-    self._assert_parsed_gs1(
-        barcode,
-        {"01": expected_padded_product, "3101": 1.0, "10": "24558", "17": expiry},
-    )
-
-    def test_barcode_with_large_quantity(self):
-        """Test barcode with large quantity"""
+    def test_barcode_with_expiration_date(self):
+        """Test barcode with expiration date (AI 17)"""
+        expiry = datetime.date(2026, 12, 31)  # noqa: F821
+        self.lot_lot.expiration_date = expiry
         barcode = self.report._get_gs1_barcode(
-            product_id=self.product_tracking_none, quantity=99999999
+            product_id=self.product_tracking_lot,
+            lot_id=self.lot_lot,
+            quantity=1,
+            uom=self.weight_uom_kg,
         )
-        self.assertEqual(barcode, f"01{self.product_tracking_none.barcode}3099999999")
-        self._assert_parsed_gs1(barcode, {"30": 99999999})
+        # Expected: 01 + product_barcode (padded) + 3101000010 (qty) +
+        #  17 + 261231 (expiry) + 10 + lot (24558)
+        expected_padded_product = self.product_tracking_lot.barcode.zfill(14)
+        expected = f"01{expected_padded_product}3101000010172612311024558"
+        self.assertEqual(barcode, expected)
+        self._assert_parsed_gs1(
+            barcode,
+            {"01": expected_padded_product, "3101": 1.0, "10": "24558", "17": expiry},
+        )
+
+        def test_barcode_with_large_quantity(self):
+            """Test barcode with large quantity"""
+            barcode = self.report._get_gs1_barcode(
+                product_id=self.product_tracking_none, quantity=99999999
+            )
+            self.assertEqual(
+                barcode, f"01{self.product_tracking_none.barcode}3099999999"
+            )
+            self._assert_parsed_gs1(barcode, {"30": 99999999})
