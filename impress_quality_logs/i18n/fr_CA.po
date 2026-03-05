@@ -7,10 +7,10 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-04 17:01+0000\n"
-"PO-Revision-Date: 2026-01-26 16:29+0000\n"
+"PO-Revision-Date: 2026-03-05 20:32+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
-"impress-odoo/impress_quality_logs/fr_CA/>\n"
+"impress-odoo-17/impress_quality_logs/fr_CA/>\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -53,12 +53,11 @@ msgstr ""
 
 #. module: impress_quality_logs
 #: model:ir.actions.report,print_report_name:impress_quality_logs.action_report_weight_log
-#, fuzzy
 msgid ""
 "'weight Log - %s' % (object.name if object and object.exists() else "
 "'DELETED')"
 msgstr ""
-"'Registre Métal - %s' % (object.name if object and object.exists() else "
+"'Registre Poids - %s' % (object.name if object and object.exists() else "
 "'DELETED')"
 
 #. module: impress_quality_logs
@@ -243,6 +242,12 @@ msgid "<span class=\"o_stat_text\">Metal</span>"
 msgstr "<span class=\"o_stat_text\">Métal</span>"
 
 #. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_weight_log_line_form
+#, fuzzy
+msgid "<span class=\"o_stat_text\">Weight Log</span>"
+msgstr "<span class=\"o_stat_text\">Registre Métal</span>"
+
+#. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_coding_log_form
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_form
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_form
@@ -263,15 +268,8 @@ msgstr "<span class=\"o_stat_text\">Rayon-X</span>"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_weight_log_form
-#, fuzzy
 msgid "<span class=\"o_stat_text\">weight Lines</span>"
-msgstr "<span class=\"o_stat_text\">Lignes Métal</span>"
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_weight_log_line_form
-#, fuzzy
-msgid "<span class=\"o_stat_text\">weight Log</span>"
-msgstr "<span class=\"o_stat_text\">Registre Métal</span>"
+msgstr "<span class=\"o_stat_text\">Lignes Poids</span>"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_mrp_production_form
@@ -558,6 +556,7 @@ msgstr "Date d'expiration"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__ferrous
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__ferrous_large
 msgid "Ferrous (2.0 mm)"
 msgstr "Ferreux (2.0 mm)"
 
@@ -780,11 +779,6 @@ msgid "Logs"
 msgstr "Registres"
 
 #. module: impress_quality_logs
-#: model:ir.model,name:impress_quality_logs.model_report_impress_quality_logs_report_loma_log
-msgid "Loma Log Report"
-msgstr "Rapport registre LOMA"
-
-#. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__lot_id
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__lot_id
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__product_lot_id
@@ -969,6 +963,13 @@ msgstr "Poids nominal"
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__non_ferrous
 msgid "Non ferrous (2.5 mm)"
+msgstr "Non Ferreux (2.5 mm)"
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__non_ferrous_large
+#, fuzzy
+#| msgid "Non ferrous (2.5 mm)"
+msgid "Non ferrous (3.0 mm)"
 msgstr "Non Ferreux (2.5 mm)"
 
 #. module: impress_quality_logs
@@ -1216,6 +1217,7 @@ msgstr "Vérification durée de vie"
 #: model:ir.actions.server,name:impress_quality_logs.action_sign_logs_coding
 #: model:ir.actions.server,name:impress_quality_logs.action_sign_logs_hpp
 #: model:ir.actions.server,name:impress_quality_logs.action_sign_logs_metal
+#: model:ir.actions.server,name:impress_quality_logs.action_sign_logs_weight
 #: model:ir.actions.server,name:impress_quality_logs.action_sign_logs_x_ray
 msgid "Sign logs"
 msgstr "Signer les registres"
@@ -1253,6 +1255,13 @@ msgstr "Petit"
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__stainless
 msgid "Stainless (3.5 mm)"
+msgstr "Inoxydable (3.5 mm)"
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__stainless_large
+#, fuzzy
+#| msgid "Stainless (3.5 mm)"
+msgid "Stainless (4.0 mm)"
 msgstr "Inoxydable (3.5 mm)"
 
 #. module: impress_quality_logs
@@ -1381,6 +1390,12 @@ msgid "Weekly Verification"
 msgstr "Vérification hebdomadaire"
 
 #. module: impress_quality_logs
+#: model:ir.actions.act_window,name:impress_quality_logs.action_weight_log_line
+#, fuzzy
+msgid "Weight Lines"
+msgstr "Lignes Codage"
+
+#. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_weight_log_line__weight_log_id
 #, fuzzy
 msgid "Weight Log"
@@ -1391,6 +1406,13 @@ msgstr "Poids OK"
 #, fuzzy
 msgid "Weight Log Line"
 msgstr "Lignes de registre Codage"
+
+#. module: impress_quality_logs
+#: model:ir.model,name:impress_quality_logs.model_report_impress_quality_logs_report_weight_log
+#, fuzzy
+#| msgid "Metal Log Report"
+msgid "Weight Log Report"
+msgstr "Rapport registre métal"
 
 #. module: impress_quality_logs
 #. odoo-python
@@ -1405,10 +1427,22 @@ msgid "Weight Ok"
 msgstr "Poids OK"
 
 #. module: impress_quality_logs
+#: model:ir.ui.menu,name:impress_quality_logs.weight_log_line_menu
+#, fuzzy
+msgid "Weight lines"
+msgstr "Lignes Codage"
+
+#. module: impress_quality_logs
 #. odoo-python
 #: code:addons/impress_quality_logs/reports/base_log_report.py:0
 #, fuzzy, python-format
 msgid "Weight log"
+msgstr "Poids OK"
+
+#. module: impress_quality_logs
+#: model:ir.ui.menu,name:impress_quality_logs.weight_log_menu
+#, fuzzy
+msgid "Weight logs"
 msgstr "Poids OK"
 
 #. module: impress_quality_logs
@@ -1522,12 +1556,6 @@ msgid "weight"
 msgstr "Poids OK"
 
 #. module: impress_quality_logs
-#: model:ir.actions.act_window,name:impress_quality_logs.action_weight_log_line
-#, fuzzy
-msgid "weight Lines"
-msgstr "Lignes Codage"
-
-#. module: impress_quality_logs
 #: model:ir.actions.act_window,name:impress_quality_logs.action_weight_log
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_weight_log_form
 #, fuzzy
@@ -1547,27 +1575,23 @@ msgid "weight Logs"
 msgstr "Registres Métal"
 
 #. module: impress_quality_logs
-#: model:ir.ui.menu,name:impress_quality_logs.weight_log_line_menu
-msgid "weight lines"
-msgstr ""
-
-#. module: impress_quality_logs
 #: model:ir.model,name:impress_quality_logs.model_weight_log
 #, fuzzy
 msgid "weight log"
 msgstr "Poids OK"
 
 #. module: impress_quality_logs
-#: model:ir.ui.menu,name:impress_quality_logs.weight_log_menu
-#, fuzzy
-msgid "weight logs"
-msgstr "Signer les registres"
-
-#. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_weight_log_line_form
 #, fuzzy
 msgid "weight_log_line"
 msgstr "ligne_registre_métal"
+
+#~ msgid "Loma Log Report"
+#~ msgstr "Rapport registre LOMA"
+
+#, fuzzy
+#~ msgid "weight logs"
+#~ msgstr "Signer les registres"
 
 #, python-format
 #~ msgid "Loma log"
