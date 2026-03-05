@@ -25,6 +25,11 @@ msgstr ""
 
 #. module: label_printing_wizard
 #: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_labelWizard_form
+msgid "<span class=\"ms-1\" invisible=\"not packaging_id\">Cases</span>"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_labelWizard_form
 msgid "Cancel"
 msgstr ""
 
