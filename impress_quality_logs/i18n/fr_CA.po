@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-04 17:01+0000\n"
-"PO-Revision-Date: 2026-03-05 20:32+0000\n"
+"PO-Revision-Date: 2026-03-05 21:26+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
 "impress-odoo-17/impress_quality_logs/fr_CA/>\n"
@@ -273,9 +273,8 @@ msgstr "<span class=\"o_stat_text\">Lignes Poids</span>"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_mrp_production_form
-#, fuzzy
 msgid "<span class=\"o_stat_text\">weight</span>"
-msgstr "<span class=\"o_stat_text\">Métal</span>"
+msgstr "<span class=\"o_stat_text\">Poids</span>"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_mrp_production_form
@@ -1259,10 +1258,8 @@ msgstr "Inoxydable (3.5 mm)"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__stainless_large
-#, fuzzy
-#| msgid "Stainless (3.5 mm)"
 msgid "Stainless (4.0 mm)"
-msgstr "Inoxydable (3.5 mm)"
+msgstr "Inoxydable (4.0 mm)"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.report_metal_log_view
@@ -1339,15 +1336,13 @@ msgstr "There is no examples click here to add new metal.log.line."
 
 #. module: impress_quality_logs
 #: model_terms:ir.actions.act_window,help:impress_quality_logs.action_weight_log
-#, fuzzy
 msgid "There is no examples click here to add new weight Log."
-msgstr "There is no examples click here to add new Metal Log."
+msgstr "There is no examples click here to add new weight Log."
 
 #. module: impress_quality_logs
 #: model_terms:ir.actions.act_window,help:impress_quality_logs.action_weight_log_line
-#, fuzzy
 msgid "There is no examples click here to add new weight_log_line."
-msgstr "There is no examples click here to add new Coding_log_line."
+msgstr "There is no examples click here to add new weight_log_line."
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__torque
@@ -1488,7 +1483,7 @@ msgstr "Registres Rayon-X"
 #. module: impress_quality_logs
 #. odoo-python
 #: code:addons/impress_quality_logs/models/mrp_production.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "X-Ray Logs for %s"
 msgstr "Registres Rayon-X pour %s"
 
@@ -1551,40 +1546,34 @@ msgstr "ligne.registre.métal"
 
 #. module: impress_quality_logs
 #: model:ir.ui.menu,name:impress_quality_logs.weight_menu
-#, fuzzy
 msgid "weight"
-msgstr "Poids OK"
+msgstr "Poids"
 
 #. module: impress_quality_logs
 #: model:ir.actions.act_window,name:impress_quality_logs.action_weight_log
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_weight_log_form
-#, fuzzy
 msgid "weight Log"
-msgstr "Poids OK"
+msgstr "Registre Poids"
 
 #. module: impress_quality_logs
 #: model:ir.actions.report,name:impress_quality_logs.action_report_weight_log
-#, fuzzy
 msgid "weight Log PDF"
-msgstr "Registre Métal PDF"
+msgstr "Registre Poids PDF"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_mrp_production__weight_log_ids
-#, fuzzy
 msgid "weight Logs"
-msgstr "Registres Métal"
+msgstr "Registres Poids"
 
 #. module: impress_quality_logs
 #: model:ir.model,name:impress_quality_logs.model_weight_log
-#, fuzzy
 msgid "weight log"
-msgstr "Poids OK"
+msgstr "Registre Poids"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_weight_log_line_form
-#, fuzzy
 msgid "weight_log_line"
-msgstr "ligne_registre_métal"
+msgstr "ligne_registre_poids"
 
 #~ msgid "Loma Log Report"
 #~ msgstr "Rapport registre LOMA"
