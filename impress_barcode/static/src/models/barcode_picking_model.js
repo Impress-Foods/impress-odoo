@@ -81,16 +81,16 @@ patch(BarcodePickingModel.prototype, {
         const groupColorMap = {};
         let colorIndex = 0;
         const colorPalette = [
-            "#E6194B", // Red
-            "#309b3eff", // Green
-            "#4363D8", // Blue
-            "#F58231", // Orange
-            "#911EB4", // Purple
-            "#46F0F0", // Cyan
-            "#F032E6", // Magenta
-            "#BFEF45", // Lime
-            "#008080", // Teal
-            "#9A6324", // Brown
+            "#7db31a",
+            "#4d86a5",
+            "#cf0bf1",
+            "#3e517a",
+            "#fc9f5b",
+            "#8c8fe0",
+            "#84a75f",
+            "#00c7a9",
+            "#d60b2d",
+            "#1298f1",
         ];
         const maxColors = colorPalette.length;
 

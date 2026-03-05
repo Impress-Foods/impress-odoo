@@ -285,12 +285,13 @@ class ClickshipProvider:
         self, order: Picking | SaleOrder, contact: HrEmployeeBase | Partner
     ) -> Origin:
         company = order.company_id
+        phone, email = self._get_contact_info(order, company)
         try:
             origin = Origin(
                 name=company.name,
                 address=self._make_address(company),
-                phone_number=PhoneNumber(number=company.phone),
-                email_addresses=[company.email],
+                phone_number=PhoneNumber(number=phone),
+                email_addresses=[email] if email else None,
                 contact_name=contact.name,
             )
         except PydanticValidationError as e:
@@ -312,25 +313,56 @@ class ClickshipProvider:
             note = None
         return note
 
+    def _get_contact_info(
+        self, order: Picking | SaleOrder, partner: Partner | Company
+    ) -> tuple[str, str]:
+        """Get phone and email with fallback to billing or parent."""
+        phone = getattr(partner, "phone", False) or getattr(partner, "mobile", False)
+        email = getattr(partner, "email", False)
+
+        # If missing, try billing address (partner_invoice_id)
+        if not phone or not email:
+            billing = None
+            if isinstance(order, SaleOrder):
+                billing = order.partner_invoice_id
+            elif isinstance(order, Picking) and order.sale_id:
+                billing = order.sale_id.partner_invoice_id
+
+            if billing and billing != partner:
+                phone = phone or billing.phone or billing.mobile
+                email = email or billing.email
+
+        # If still missing, try parent
+        if (not phone or not email) and getattr(partner, "parent_id", False):
+            phone = phone or partner.parent_id.phone or partner.parent_id.mobile
+            email = email or partner.parent_id.email
+
+        # If still missing, try commercial partner
+        if (not phone or not email) and getattr(
+            partner, "commercial_partner_id", False
+        ):
+            phone = (
+                phone
+                or partner.commercial_partner_id.phone
+                or partner.commercial_partner_id.mobile
+            )
+            email = email or partner.commercial_partner_id.email
+
+        return phone or "", email or ""
+
     def _make_destination(self, order: Picking | SaleOrder) -> Destination:
-        client = order.partner_id
+        if isinstance(order, SaleOrder):
+            client = order.partner_shipping_id
+        else:
+            client = order.partner_id
 
         note = self._get_delivery_note(order)
+        phone, email = self._get_contact_info(order, client)
 
-        parent_contact = client.parent_id if client.parent_id else None
-
-        if client.phone:
-            phone = client.phone
-        elif parent_contact and parent_contact.phone:
-            phone = parent_contact.phone
-        else:
+        if not phone:
             raise ValidationError(_(f"Could not find phone number for {client.name}"))
 
-        if client.email:
-            email = client.email
-        elif parent_contact and parent_contact.email:
-            email = parent_contact.email
-        else:
+        if not email:
             raise ValidationError(_(f"Could not find email for {client.name}"))
 
         try:
@@ -362,12 +394,12 @@ class ClickshipProvider:
 
         try:
             address = Address(
-                address_line_1=record.street,
+                address_line_1=record.street or "",
                 address_line_2=record.street2 or None,
-                city=record.city,
-                region=record.state_id.code,
-                country=record.country_id.code,
-                postal_code=record.zip,
+                city=record.city or "",
+                region=record.state_id.code or "",
+                country=record.country_id.code or "",
+                postal_code=record.zip or "",
             )
         except PydanticValidationError as e:
             raise ValidationError(_(f"Could not make address. \n {e}")) from e

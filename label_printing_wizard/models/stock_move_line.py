@@ -20,7 +20,7 @@ class StockMoveLine(models.Model):
             "context": {
                 "default_picking_id": self.picking_id.id,
                 "default_product_id": self.product_id.id,
-                "default_product_quantity": self.quantity_product_uom,
+                "default_product_qty": self.quantity_product_uom,
             },
         }
         if self.lot_id:

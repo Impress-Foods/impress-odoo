@@ -8,14 +8,19 @@
         owl="1"
     >
         <xpath expr="//div[hasclass('o_barcode_line_details')]" position='before'>
-            <div class="d-flex flex-row flex-nowrap px-4">
+            <div
+                class="d-flex align-items-center me-4"
+                style="width: 128px; height: 128px;"
+            >
                 <img
+                    style="max-height: 100%; width: auto; margin: auto;"
                     t-attf-src="/web/image?model=product.product&amp;id={{props.line.product_id.id}}&amp;field=image_128"
                 />
             </div>
-        </xpath>
 
+        </xpath>
     </t>
+
     <t
         t-name="stock_barcode.lineQuantity_add_total_demand"
         t-inherit="stock_barcode.LineQuantity"
