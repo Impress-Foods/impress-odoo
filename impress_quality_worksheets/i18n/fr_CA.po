@@ -47,16 +47,6 @@ msgstr ""
 "Février 2025. Feuille de contrôle Détecteur de Métal </strong>"
 
 #. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20250203_form_view
-#, fuzzy
-msgid ""
-"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 "
-"Février 2025. Feuille de contrôle Poids </strong>"
-msgstr ""
-"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-" Mars 2025. Feuille de contrôle Codage </strong>"
-
-#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20250303_form_view
 msgid ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Mars "
@@ -83,6 +73,19 @@ msgid ""
 msgstr ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 "
 "Février 2025. Feuille de contrôle Détecteur de Métal </strong>"
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20250203_form_view
+#, fuzzy
+#| msgid ""
+#| "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 "
+#| "Mars 2025. Feuille de contrôle Codage </strong>"
+msgid ""
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 05 mars "
+"2026. Feuille de contrôle Poids </strong>"
+msgstr ""
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
+" Mars 2025. Feuille de contrôle Codage </strong>"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
@@ -526,3 +529,11 @@ msgstr "x_worksheet_large_20251126_id"
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 msgid "À des intervalles de ≤ 2 heures pendant l'exécution de la production."
 msgstr "À des intervalles de ≤ 2 heures pendant l'exécution de la production."
+
+#, fuzzy
+#~ msgid ""
+#~ "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 "
+#~ "Février 2025. Feuille de contrôle Poids </strong>"
+#~ msgstr ""
+#~ "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
+#~ " Mars 2025. Feuille de contrôle Codage </strong>"
