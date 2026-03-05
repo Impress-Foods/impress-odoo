@@ -203,6 +203,11 @@ msgid "<span class=\"o_stat_text\">Metal</span>"
 msgstr ""
 
 #. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_weight_log_line_form
+msgid "<span class=\"o_stat_text\">Weight Log</span>"
+msgstr ""
+
+#. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_coding_log_form
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_form
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_form
@@ -224,11 +229,6 @@ msgstr ""
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_weight_log_form
 msgid "<span class=\"o_stat_text\">weight Lines</span>"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_weight_log_line_form
-msgid "<span class=\"o_stat_text\">weight Log</span>"
 msgstr ""
 
 #. module: impress_quality_logs
@@ -502,6 +502,7 @@ msgstr ""
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__ferrous
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__ferrous_large
 msgid "Ferrous (2.0 mm)"
 msgstr ""
 
@@ -724,11 +725,6 @@ msgid "Logs"
 msgstr ""
 
 #. module: impress_quality_logs
-#: model:ir.model,name:impress_quality_logs.model_report_impress_quality_logs_report_loma_log
-msgid "Loma Log Report"
-msgstr ""
-
-#. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__lot_id
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__lot_id
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__product_lot_id
@@ -921,6 +917,11 @@ msgstr ""
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__non_ferrous
 msgid "Non ferrous (2.5 mm)"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__non_ferrous_large
+msgid "Non ferrous (3.0 mm)"
 msgstr ""
 
 #. module: impress_quality_logs
@@ -1165,6 +1166,7 @@ msgstr ""
 #: model:ir.actions.server,name:impress_quality_logs.action_sign_logs_coding
 #: model:ir.actions.server,name:impress_quality_logs.action_sign_logs_hpp
 #: model:ir.actions.server,name:impress_quality_logs.action_sign_logs_metal
+#: model:ir.actions.server,name:impress_quality_logs.action_sign_logs_weight
 #: model:ir.actions.server,name:impress_quality_logs.action_sign_logs_x_ray
 msgid "Sign logs"
 msgstr ""
@@ -1202,6 +1204,11 @@ msgstr ""
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__stainless
 msgid "Stainless (3.5 mm)"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__stainless_large
+msgid "Stainless (4.0 mm)"
 msgstr ""
 
 #. module: impress_quality_logs
@@ -1328,6 +1335,11 @@ msgid "Weekly Verification"
 msgstr ""
 
 #. module: impress_quality_logs
+#: model:ir.actions.act_window,name:impress_quality_logs.action_weight_log_line
+msgid "Weight Lines"
+msgstr ""
+
+#. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_weight_log_line__weight_log_id
 msgid "Weight Log"
 msgstr ""
@@ -1335,6 +1347,11 @@ msgstr ""
 #. module: impress_quality_logs
 #: model:ir.model,name:impress_quality_logs.model_weight_log_line
 msgid "Weight Log Line"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model,name:impress_quality_logs.model_report_impress_quality_logs_report_weight_log
+msgid "Weight Log Report"
 msgstr ""
 
 #. module: impress_quality_logs
@@ -1350,10 +1367,20 @@ msgid "Weight Ok"
 msgstr ""
 
 #. module: impress_quality_logs
+#: model:ir.ui.menu,name:impress_quality_logs.weight_log_line_menu
+msgid "Weight lines"
+msgstr ""
+
+#. module: impress_quality_logs
 #. odoo-python
 #: code:addons/impress_quality_logs/reports/base_log_report.py:0
 #, python-format
 msgid "Weight log"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.ui.menu,name:impress_quality_logs.weight_log_menu
+msgid "Weight logs"
 msgstr ""
 
 #. module: impress_quality_logs
@@ -1466,11 +1493,6 @@ msgid "weight"
 msgstr ""
 
 #. module: impress_quality_logs
-#: model:ir.actions.act_window,name:impress_quality_logs.action_weight_log_line
-msgid "weight Lines"
-msgstr ""
-
-#. module: impress_quality_logs
 #: model:ir.actions.act_window,name:impress_quality_logs.action_weight_log
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_weight_log_form
 msgid "weight Log"
@@ -1487,18 +1509,8 @@ msgid "weight Logs"
 msgstr ""
 
 #. module: impress_quality_logs
-#: model:ir.ui.menu,name:impress_quality_logs.weight_log_line_menu
-msgid "weight lines"
-msgstr ""
-
-#. module: impress_quality_logs
 #: model:ir.model,name:impress_quality_logs.model_weight_log
 msgid "weight log"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model:ir.ui.menu,name:impress_quality_logs.weight_log_menu
-msgid "weight logs"
 msgstr ""
 
 #. module: impress_quality_logs
