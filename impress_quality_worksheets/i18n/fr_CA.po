@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:06+0000\n"
-"PO-Revision-Date: 2026-01-30 17:52+0000\n"
+"PO-Revision-Date: 2026-03-05 21:26+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
 "impress-odoo-17/impress_quality_worksheets/fr_CA/>\n"
@@ -379,9 +379,8 @@ msgstr "Inoxydable (3.5 mm)"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
-#, fuzzy
 msgid "Stainless (4.0 mm)"
-msgstr "Inoxydable (3.5 mm)"
+msgstr "Inoxydable (4.0 mm)"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
@@ -491,9 +490,8 @@ msgstr "Ligne du registre de détecteur de métal"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_weight_log_id
-#, fuzzy
 msgid "weight Log"
-msgstr "Registre détecteur de métal"
+msgstr "Registre Poids"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_weight_log_lines_id
