@@ -303,12 +303,13 @@ class ClickshipProvider:
         self, order: StockPicking | SaleOrder, contact: HrEmployee | ResPartner
     ) -> Origin:
         company = order.company_id
+        phone, email = self._get_contact_info(order, company)
         try:
             origin = Origin(
                 name=company.name,
                 address=self._make_address(company),
-                phone_number=PhoneNumber(number=company.phone),
-                email_addresses=[company.email],
+                phone_number=PhoneNumber(number=phone),
+                email_addresses=[email] if email else None,
                 contact_name=contact.name,
             )
         except PydanticValidationError as e:
@@ -330,27 +331,55 @@ class ClickshipProvider:
             note = None
         return note
 
+    def _get_contact_info(
+        self, order: StockPicking | SaleOrder, partner: ResPartner | ResCompany
+    ) -> tuple[str, str]:
+        """Get phone and email with fallback to billing or parent."""
+        phone = getattr(partner, "phone", False)
+        email = getattr(partner, "email", False)
+
+        # If missing, try billing address (partner_invoice_id)
+        if not phone or not email:
+            billing = None
+            if isinstance(order, SaleOrder):
+                billing = order.partner_invoice_id
+            elif isinstance(order, StockPicking) and order.sale_id:
+                billing = order.sale_id.partner_invoice_id
+
+            if billing and billing != partner:
+                phone = phone or billing.phone
+                email = email or billing.email
+
+        # If still missing, try parent
+        if (not phone or not email) and getattr(partner, "parent_id", False):
+            phone = phone or partner.parent_id.phone
+            email = email or partner.parent_id.email
+
+        # If still missing, try commercial partner
+        if (not phone or not email) and getattr(
+            partner, "commercial_partner_id", False
+        ):
+            phone = phone or partner.commercial_partner_id.phone
+            email = email or partner.commercial_partner_id.email
+
+        return phone or "", email or ""
+
     def _make_destination(self, order: StockPicking | SaleOrder) -> Destination:
-        client = order.partner_id
+        if isinstance(order, SaleOrder):
+            client = order.partner_shipping_id
+        else:
+            client = order.partner_id
+
+        phone, email = self._get_contact_info(order, client)
 
         note = self._get_delivery_note(order)
 
-        parent_contact = client.parent_id if client.parent_id else None
-
-        if client.phone:
-            phone = client.phone
-        elif parent_contact and parent_contact.phone:
-            phone = parent_contact.phone
-        else:
+        if not phone:
             raise ValidationError(
                 self.env._("Could not find phone number for %s", client.name)
             )
 
-        if client.email:
-            email = client.email
-        elif parent_contact and parent_contact.email:
-            email = parent_contact.email
-        else:
+        if not email:
             raise ValidationError(
                 self.env._("Could not find email for %s", client.name)
             )
