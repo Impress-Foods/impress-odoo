@@ -7,7 +7,7 @@ from odoo import api, fields, models
 _logger = logging.getLogger(__name__)
 
 
-class LogMixin(models.Model):
+class LogMixin(models.AbstractModel):
     _name = "log.mixin"
     _description = "log.mixin"
 
@@ -20,14 +20,14 @@ class LogMixin(models.Model):
         "Production Order",
         related="quality_check_id.production_id",
         store=True,
-        depends=["quality_check_id", "quality_check_id.production_id"],
+        # depends=["quality_check_id", "quality_check_id.production_id"],
     )
     product_id = fields.Many2one(
         "product.product",
         "Product",
         related="production_id.product_id",
         store=True,
-        depends=["production_id", "production_id.product_id"],
+        # depends=["production_id", "production_id.product_id"],
     )
 
     lot_id = fields.Many2one("stock.lot", "Lot", store=True, compute="_compute_lot_id")
@@ -36,7 +36,7 @@ class LogMixin(models.Model):
         "Date",
         related="quality_check_id.control_date",
         store=True,
-        depends=["quality_check_id", "quality_check_id.control_date"],
+        # depends=["quality_check_id", "quality_check_id.control_date"],
     )
     weekly_signature_date = fields.Datetime(
         compute="_compute_weekly_signature_date", store=True

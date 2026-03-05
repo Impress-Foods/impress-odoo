@@ -24,7 +24,7 @@ class HPPLogLine(models.Model):
 
     cycle_number = fields.Integer()
     cycle_time = fields.Selection(
-        selection=[("120sec", "120 seconds"), ("300sec", "300 seconds")],
+        [("120sec", "120 seconds"), ("300sec", "300 seconds")],
     )
     pressure_reached = fields.Integer()
     is_cleaning_cycle = fields.Boolean("Is cleaning cycle?")
@@ -46,14 +46,14 @@ class HPPLogLine(models.Model):
         "is_cleaning_cycle",
     )
     def _compute_total_qty(self):
-        self.ensure_one()
-        self._cleaning_cycle_check()
-        self.total_qty = (
-            self.barrel_1_qty
-            + self.barrel_2_qty
-            + self.barrel_3_qty
-            + self.barrel_4_qty
-        )
+        for record in self:
+            record._cleaning_cycle_check()
+            record.total_qty = (
+                record.barrel_1_qty
+                + record.barrel_2_qty
+                + record.barrel_3_qty
+                + record.barrel_4_qty
+            )
 
     @api.depends("quality_check_id")
     def _compute_hpp_log_id(self):
