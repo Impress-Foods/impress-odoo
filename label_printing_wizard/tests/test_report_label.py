@@ -1,3 +1,4 @@
+import datetime
 import logging
 
 from odoo.exceptions import ValidationError
@@ -257,7 +258,7 @@ class TestReportLabelBase(common.TransactionCase):
 
     def test_barcode_with_expiration_date(self):
         """Test barcode with expiration date (AI 17)"""
-        expiry = datetime.date(2026, 12, 31)  # noqa: F821
+        expiry = datetime.date(2026, 12, 31)
         self.lot_lot.expiration_date = expiry
         barcode = self.report._get_gs1_barcode(
             product_id=self.product_tracking_lot,
