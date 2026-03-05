@@ -71,7 +71,6 @@
                                         required='1'
                                         string="Stainless (4.0 mm)"
                                     />
-                                    <!-- <field name="torque" required='0' /> -->
                                     <field
                                         name="signature"
                                         widget="signature"
