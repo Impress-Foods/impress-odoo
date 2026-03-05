@@ -7,10 +7,10 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-19 13:55+0000\n"
-"PO-Revision-Date: 2026-01-26 16:16+0000\n"
+"PO-Revision-Date: 2026-03-05 21:31+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
-"impress-odoo/label_printing_wizard/fr_CA/>\n"
+"impress-odoo-17/label_printing_wizard/fr_CA/>\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,7 +31,7 @@ msgstr "4x6"
 #. module: label_printing_wizard
 #: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_labelWizard_form
 msgid "<span class=\"ms-1\" invisible=\"not packaging_id\">Cases</span>"
-msgstr ""
+msgstr "<span class=\"ms-1\" invisible=\"not packaging_id\">Caisses</span>"
 
 #. module: label_printing_wizard
 #: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_labelWizard_form
