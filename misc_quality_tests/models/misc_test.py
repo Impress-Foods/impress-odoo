@@ -9,7 +9,7 @@ class MiscTest(models.Model):
     _description = "Test"
     _rec_name = "sequence"
     _order = "sequence"
-    sequence = fields.Char()
+    sequence = fields.Char(copy=False)
 
     tag_ids = fields.Many2many("misc.test.tag")
     product_id = fields.Many2one("product.template")
