@@ -40,26 +40,27 @@ class LoyaltyProgram(models.Model):
             return True
 
         # 2. Collect all emails to check (main, billing, shipping)
+        # Normalize emails (strip whitespace and lowercase) to prevent bypass
         emails = set()
         if partner.email:
-            emails.add(partner.email)
+            emails.add(partner.email.lower().strip())
         if current_order:
             if current_order.partner_invoice_id.email:
-                emails.add(current_order.partner_invoice_id.email)
+                emails.add(current_order.partner_invoice_id.email.lower().strip())
             if current_order.partner_shipping_id.email:
-                emails.add(current_order.partner_shipping_id.email)
+                emails.add(current_order.partner_shipping_id.email.lower().strip())
 
         if emails:
-            emails_list = list(emails)
-            # Find any order where ANY of the involved emails appear
-            # in ANY of the address fields
-            email_domain = domain + [
-                "|",
-                "|",
-                ("partner_id.email", "in", emails_list),
-                ("partner_invoice_id.email", "in", emails_list),
-                ("partner_shipping_id.email", "in", emails_list),
-            ]
+            # Build domain: for each email, check all 3 address fields with OR
+            email_domain = domain
+            for email in emails:
+                email_domain += [
+                    "|",
+                    "|",
+                    ("partner_id.email", "=ilike", email),
+                    ("partner_invoice_id.email", "=ilike", email),
+                    ("partner_shipping_id.email", "=ilike", email),
+                ]
             if self.env["sale.order"].search_count(email_domain) > 0:
                 return True
 
