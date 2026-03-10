@@ -29,22 +29,65 @@ class MrpProduction(models.Model):
         related="billing_sale_order_id.partner_id",
         store=True,
     )
+    billing_product_id = fields.Many2one(related="bom_id.billing_product_id")
 
     invoice_status = fields.Boolean()
+
+    @api.constrains("billing_sale_order_line_id", "product_id", "bom_id")
+    def _check_billing_sale_order_line_id(self):
+        for rec in self:
+            if (
+                rec.billing_sale_order_ref
+                and rec.billing_sale_order_line_id.product_id != rec.billing_product_id
+            ):
+                raise ValidationError(
+                    _(
+                        "Billing product %(bill)s does not match "
+                        "Sale Order Line product %(so)s"
+                        % {
+                            "bill": rec.billing_product_id.display_name,
+                            "so": (
+                                rec.billing_sale_order_line_id.product_id.display_name
+                            ),
+                        }
+                    )
+                )
+
+    @api.constrains("billing_sale_order_id")
+    def _check_billing_sale_order_id(self):
+        for rec in self:
+            valid_lines = rec.billing_sale_order_id.order_line.filtered_domain(
+                [("product_id", "=", rec.billing_product_id.id)]
+            )
+            if len(valid_lines) > 1:
+                raise ValidationError(
+                    _(
+                        "Multiple lines in SO with product %s"
+                        % rec.billing_product_id.display_name
+                    )
+                )
 
     @api.depends("billing_sale_order_ref")
     def _compute_billing_sale_order_id(self):
         for rec in self:
             if rec.billing_sale_order_ref:
                 value = self.env["sale.order"].search(
-                    [("client_order_ref", "=", rec.billing_sale_order_ref)], limit=1
+                    [("client_order_ref", "=", rec.billing_sale_order_ref)]
                 )
+
+                if len(value) > 1:
+                    raise ValidationError(
+                        _(
+                            "Multiple Sale Orders with reference %(ref)s."
+                            % {"ref": rec.billing_sale_order_ref}
+                        )
+                    )
 
                 if not value:
                     raise ValidationError(
                         _(
-                            "No Sale Order found with"
-                            f"reference {rec.billing_sale_order_ref}"
+                            "No Sale Order found with reference %(ref)s."
+                            % {"ref": rec.billing_sale_order_ref}
                         )
                     )
                 else:
@@ -57,16 +100,8 @@ class MrpProduction(models.Model):
         for rec in self:
             # There is a billing SO, we must update the SOL or create it
             if rec.billing_sale_order_id:
-                # There is a SOL and it belongs to the same SO, we must update it.
-                if (
-                    rec.billing_sale_order_line_id
-                    and rec.billing_sale_order_line_id.order_id
-                    == rec.billing_sale_order_id
-                ):
-                    rec._recompute_billing_line_qty()
-
                 # There is a SOL and it belongs to a different SO, we must unlink it
-                elif (
+                if (
                     rec.billing_sale_order_line_id
                     and rec.billing_sale_order_line_id.order_id
                     != rec.billing_sale_order_id
@@ -84,13 +119,12 @@ class MrpProduction(models.Model):
                         )
                     }
 
-                    billing_product = self.bom_id.get_production_billing_product()
+                    billing_product = rec.billing_product_id
 
                     if billing_product in sale_order_line_dict:
                         rec.billing_sale_order_line_id = sale_order_line_dict[
                             billing_product
                         ]
-                        rec._recompute_billing_line_qty()
                     else:
                         raise ValidationError(
                             _(
@@ -105,56 +139,24 @@ class MrpProduction(models.Model):
                     rec._unlink_sale_order_line()
 
     def _create_billing_sale_order_line(self):
+        self.ensure_one()
         new_order_line = self.env["sale.order.line"].create(
             {
                 "order_id": self.billing_sale_order_id.id,
-                "product_id": self.bom_id.get_production_billing_product().id,
+                "product_id": self.bom_id.billing_product_id.id,
                 "product_uom_qty": self.product_uom_qty,
             }
         )
         self.billing_sale_order_line_id = new_order_line
-        self._recompute_billing_line_qty()
 
     def _unlink_sale_order_line(self):
-        if (
-            self.env["mrp.production"].search(
-                [
-                    (
-                        "billing_sale_order_line_id",
-                        "=",
-                        self.billing_sale_order_line_id.id,
-                    )
-                ]
-            )
-            != self
-        ):
-            self._recompute_billing_line_qty()
+        # TODO: Can we just leave the line there?
+        self.ensure_one()
+        if len(self.billing_sale_order_line_id.production_ids) > 1:
             self.billing_sale_order_line_id = None
         else:
-            self._recompute_billing_line_qty()
             if self.billing_sale_order_line_id.order_id.state == "draft":
                 self.billing_sale_order_line_id.unlink()
-
-    def _recompute_billing_line_qty(self):
-        # Optional feature, used to compute the total qty to deliver
-        # based on the MOs linked to the SOL.
-        if self.billing_sale_order_line_id and self.env.context.get(
-            "compute_mo_billing_qty"
-        ):
-            shared_order_line_production = self.env["mrp.production"].search(
-                [
-                    (
-                        "billing_sale_order_line_id",
-                        "=",
-                        self.billing_sale_order_line_id.id,
-                    ),
-                    ("state", "not in", ["cancel"]),
-                ]
-            )
-            total_qty_to_deliver = sum(
-                shared_order_line_production.mapped("product_uom_qty")
-            )
-            self.billing_sale_order_line_id.product_uom_qty = total_qty_to_deliver
 
     def button_mark_done(self):
         res = super().button_mark_done()
@@ -171,14 +173,6 @@ class MrpProduction(models.Model):
         if self.billing_sale_order_id:
             self.billing_sale_order_id = None
             self.billing_sale_order_ref = False
-        return res
-
-    def write(self, vals):
-        res = super().write(vals)
-        if bool(
-            set(["product_qty", "qty_produced", "qty_producing"]).intersection(vals)
-        ):
-            self._recompute_billing_line_qty()
         return res
 
     @api.model_create_multi

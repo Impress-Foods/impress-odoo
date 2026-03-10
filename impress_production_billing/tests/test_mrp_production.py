@@ -1,10 +1,9 @@
 from datetime import datetime
 
 from odoo.exceptions import ValidationError
-from odoo.tests import TransactionCase, tagged
+from odoo.tests import TransactionCase
 
 
-@tagged("standard", "impress")
 class TestMrpProduction(TransactionCase):
     @classmethod
     def setUpClass(cls):
@@ -270,9 +269,9 @@ class TestMrpProduction(TransactionCase):
 
         mo._action_cancel()
 
-        self.assertEqual(mo.billing_sale_order_id, self.so_model)
-        self.assertEqual(mo.billing_sale_order_line_id, self.so_line_model)
-        self.assertEqual(mo.billing_sale_order_ref, False)
+        self.assertFalse(mo.billing_sale_order_id)
+        self.assertFalse(mo.billing_sale_order_line_id)
+        self.assertFalse(mo.billing_sale_order_ref)
 
     def test_change_mo_product_after_so_reference_set(self):
         reference = hash(datetime.now().strftime("%Y%m%d%H%M%S"))
@@ -311,13 +310,8 @@ class TestMrpProduction(TransactionCase):
 
         self.assertEqual(mo.billing_sale_order_line_id, so_line)
 
-        mo.product_id = product_b.id
-
-        self.assertFalse(
-            mo.billing_sale_order_line_id,
-            "MO should be unlinked from SO line when product changes "
-            "and no matching line exists",
-        )
+        with self.assertRaises(ValidationError):
+            mo.product_id = product_b.id
 
     def test_change_so_line_product(self):
         reference = hash(datetime.now().strftime("%Y%m%d%H%M%S"))
@@ -345,12 +339,8 @@ class TestMrpProduction(TransactionCase):
         other_product = self.product_model.create(
             {"name": "Other Product", "type": "service"}
         )
-        so_line.product_id = other_product.id
-
-        self.assertFalse(
-            mo.billing_sale_order_line_id,
-            "MO should be unlinked from SO line when line product changes",
-        )
+        with self.assertRaises(ValidationError):
+            so_line.product_id = other_product.id
 
     def test_multiple_so_lines_same_billing_product(self):
         reference = hash(datetime.now().strftime("%Y%m%d%H%M%S"))
