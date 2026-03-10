@@ -19,30 +19,39 @@
                             <field name="x_quality_check_id" />
                         </group>
                     </group>
-                    <div class="alert alert-warning" role="alert">
-                        <p
-                        >Détecteur métal : Si l'éjection de l'un des témoins de métal est Non-Conforme, appeler le contrôle de la qualité, remplir un registre d'écart, réajuster l'appareil et
-                            repasser tous les produits depuis la dernière vérification conforme. S'il y a un rejet de métal durant la production, aviser le contrôle de la qualité.</p>
-                        <p>Fréquence : <ul>
+                    <div>
+                        <div>
+                            <ul>
                                 <li
-                                >Au début et à la fin du quart de travail/production chaque jour.</li>
+                                >If the ejection of one of the indicators is non-compliant, call quality control, fill in a discrepency log, readjust the machine and test again all products since the last compliant validation.</li>
                                 <li
-                                >À des intervalles de ≤ 2 heures pendant l'exécution de la production.</li>
+                                >If there is a metal reject during production, call quality control.</li>
                                 <li
-                                >Lorsque des changements surviennent dans les lots de production.</li>
-                                <li
-                                >Lorsque des changements surviennent dans les réglages de l'appareil.</li>
-                                <li
-                                >Après le temps d'arrêt à des fins de réparation.</li>
+                                >During the last check (end of production), check that no product is left in the reject bin.</li>
                             </ul>
-                        </p>
-                        <p
-                        > Calibration : Comparer le poids d'une bouteille avec la balance de table et la Loma, si l'écart est de 2g et +, faire une calibration. <br
-                            /> Remplissage : Comparer le
-                            poids moyen des bouteilles vs le poids visé. Si l'écart est de + / - 3g, ajuster l'embouteilleuse. <br
-                            /> Lors de la dernière vérification, vérifier qu'aucune bouteille ne
-                            reste dans les bacs de rejet. <br />
-                        </p>
+                        </div>
+                        <div>
+                            <div style="font-weight: bold;">Frequency: </div>
+                            <ul>
+                                <li
+                                >At the start and end of work shifts/production every day.</li>
+                                <li
+                                >At intervals of ≤2 hours producing continuously.</li>
+                                <li>When changes happen in production lots.</li>
+                                <li>When changes happen after machine adjustments.</li>
+                                <li>After downtime following repairs.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul>
+                                <li
+                                > Calibration : Compare the mass of a bottle with a table scale and the Loma, if the difference is of 2g et +, do a calibration. </li>
+                                <li
+                                > Filling: Compare the average mass of the bottles with the target weight. If the difference is of + / - 3g, adjust the filler. </li>
+                                <li
+                                > During the last verification, make sure that no product is present in the rejects bin</li>
+                            </ul>
+                        </div>
                     </div>
                     <field name="x_metal_log_line_ids" nolabel="1">
                         <form>

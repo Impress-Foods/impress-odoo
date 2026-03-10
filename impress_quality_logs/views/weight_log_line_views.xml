@@ -40,7 +40,7 @@
                             invisible="not weight_log_id"
                         >
                             <div class="o_field_widget o_stat_info">
-                                <span class="o_stat_text">Weight Log</span>
+                                <span class="o_stat_text">weight Log</span>
                             </div>
                         </button>
                     </div>
@@ -94,7 +94,7 @@
 
     <!-- Action weight_log_line -->
     <record id="action_weight_log_line" model="ir.actions.act_window">
-        <field name="name">Weight Lines</field>
+        <field name="name">weight Lines</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">weight.log.line</field>
         <field name="view_mode">tree,form</field>

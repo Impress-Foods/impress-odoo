@@ -50,13 +50,21 @@ class MetalLogLine(models.Model):
             ferrous_check = rec.ferrous > rec.reject_value
             non_ferrous_check = rec.non_ferrous > rec.reject_value
             stainless_check = rec.stainless > rec.reject_value
+            standard_check = all([ferrous_check, non_ferrous_check, stainless_check])
+
+            ferrous_check_large = rec.ferrous_large > rec.reject_value
+            non_ferrous_check_large = rec.non_ferrous_large > rec.reject_value
+            stainless_check_large = rec.stainless_large > rec.reject_value
+            large_check = all(
+                [ferrous_check_large, non_ferrous_check_large, stainless_check_large]
+            )
+
+            indicator_check = any([standard_check, large_check])
             calib_check = rec.calibration == "ok"
             ejection_check = rec.ejection == "ok"
             rec.global_success = all(
                 [
-                    ferrous_check,
-                    non_ferrous_check,
-                    stainless_check,
+                    indicator_check,
                     calib_check,
                     ejection_check,
                 ]
