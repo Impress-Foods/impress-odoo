@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:06+0000\n"
-"PO-Revision-Date: 2026-03-05 21:31+0000\n"
+"PO-Revision-Date: 2026-03-10 16:44+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
 "impress-odoo-17/impress_quality_worksheets/fr_CA/>\n"
@@ -61,28 +61,26 @@ msgid ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Mars "
 "2025. Feuille de contrôle Rayon-X</strong>"
 msgstr ""
-"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-" Mars 2025. Feuille de contrôle Rayon-X </strong>"
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Mars "
+"2025. Feuille de contrôle Rayon-X</strong>"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
-#, fuzzy
 msgid ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Mars "
 "2026. Feuille de contrôle Détecteur de Métal (Gros indicateurs) </strong>"
 msgstr ""
-"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 "
-"Février 2025. Feuille de contrôle Détecteur de Métal </strong>"
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Mars "
+"2026. Feuille de contrôle Détecteur de Métal (Gros indicateurs) </strong>"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20250203_form_view
-#, fuzzy
 msgid ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 05 mars "
 "2026. Feuille de contrôle Poids </strong>"
 msgstr ""
-"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-" Mars 2025. Feuille de contrôle Codage </strong>"
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 05 mars "
+"2026. Feuille de contrôle Poids </strong>"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
@@ -94,35 +92,31 @@ msgstr ""
 "janvier 2026. Feuille de contrôle Rayon-X (Gros témoins)</strong>"
 
 #. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
-msgid "After repairs."
-msgstr "Après réparations."
+msgid "After downtime following repairs."
+msgstr ""
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+msgid "After downtime foloowing repairs."
+msgstr ""
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
-msgid "Après le temps d'arrêt à des fins de réparation."
-msgstr "Après le temps d'arrêt à des fins de réparation."
-
-#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "At intervals of ≤2 hours producing continuously."
 msgstr "À des intervalles de ≤ 2 heures pendant l'exécution de la production."
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "At the start and end of work shifts/production every day."
-msgstr "Au début et à la fin du quart de travail/production chaque jour."
-
-#. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
-msgid "Au début et à la fin du quart de travail/production chaque jour."
 msgstr "Au début et à la fin du quart de travail/production chaque jour."
 
 #. module: impress_quality_worksheets
@@ -136,27 +130,15 @@ msgstr "Seuil moyen"
 msgid ""
 "Aviser le contrôle qualité si le poids est en dessous de la limite visée."
 msgstr ""
+"Aviser le contrôle qualité si le poids est en dessous de la limite visée."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 msgid ""
-"Calibration : Comparer le poids d'une bouteille avec la balance de table et "
-"la Loma, si l'écart est de 2g et +, faire une calibration. <br/> "
-"Remplissage : Comparer le\n"
-"                            poids moyen des bouteilles vs le poids visé. Si "
-"l'écart est de + / - 3g, ajuster l'embouteilleuse. <br/> Lors de la dernière "
-"vérification, vérifier qu'aucune bouteille ne\n"
-"                            reste dans les bacs de rejet. <br/>"
+"Calibration : Compare the mass of a bottle with a table scale and the Loma, "
+"if the difference is of 2g et +, do a calibration."
 msgstr ""
-"Calibration : Comparer le poids d'une bouteille avec la balance de table et "
-"la Loma, si l'écart est de 2g et +, faire une calibration. <br/> "
-"Remplissage : Comparer le\n"
-"                            poids moyen des bouteilles vs le poids visé. Si "
-"l'écart est de + / - 3g, ajuster l'embouteilleuse. <br/> Lors de la dernière "
-"vérification, vérifier qu'aucune bouteille ne\n"
-"                            reste dans les bacs de rejet. <br/>"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_case_check
@@ -181,7 +163,7 @@ msgstr "Seuil de détection de la céramique (4.0 mm)"
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20250303_form_view
 msgid "Check unit code and lot code"
-msgstr ""
+msgstr "Vérifier le code-barre de produit et de lot"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20250203_form_view
@@ -189,6 +171,8 @@ msgid ""
 "Comparer le poids du produit avec le poids visé* pour cette production : si "
 "poids sous la cible ou + de 3g, faire un ajustement."
 msgstr ""
+"Comparer le poids du produit avec le poids visé* pour cette production : si "
+"poids sous la cible ou + de 3g, faire un ajustement."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
@@ -200,6 +184,8 @@ msgstr ""
 "produit n'est présent dans le réceptacle des rejets."
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid ""
 "During the last check (end of production), check that no product is left in "
@@ -211,21 +197,16 @@ msgstr ""
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
+#, fuzzy
+#| msgid ""
+#| "During the last check (end of production), check that no product is left "
+#| "in the reject bin."
 msgid ""
-"Détecteur métal : Si l'éjection de l'un des témoins de métal est Non-"
-"Conforme, appeler le contrôle de la qualité, remplir un registre d'écart, "
-"réajuster l'appareil et\n"
-"                            repasser tous les produits depuis la dernière "
-"vérification conforme. S'il y a un rejet de métal durant la production, "
-"aviser le contrôle de la qualité."
+"During the last verification, make sure that no product is present in the "
+"rejects bin"
 msgstr ""
-"Détecteur métal : Si l'éjection de l'un des témoins de métal est Non-"
-"Conforme, appeler le contrôle de la qualité, remplir un registre d'écart, "
-"réajuster l'appareil et\n"
-"                            repasser tous les produits depuis la dernière "
-"vérification conforme. S'il y a un rejet de métal durant la production, "
-"aviser le contrôle de la qualité."
+"Lors de la dernière vérification (fin de la production), vérifier qu'aucun "
+"produit n'est présent dans le réceptacle des rejets."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
@@ -236,11 +217,10 @@ msgstr "Éjection conforme"
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20250203_form_view
 msgid "Faire la tare (cup + pellicule de plastique ou pochette)."
-msgstr ""
+msgstr "Faire la tare (cup + pellicule de plastique ou pochette)."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 msgid "Ferrous (2.0 mm)"
 msgstr "Ferreux (2.0 mm)"
@@ -248,9 +228,20 @@ msgstr "Ferreux (2.0 mm)"
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
+msgid ""
+"Filling: Compare the average mass of the bottles with the target weight. If "
+"the difference is of + / - 3g, adjust the filler."
+msgstr ""
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
-msgid "Fréquence :"
-msgstr "Fréquence :"
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
+#, fuzzy
+#| msgid "X-Ray Frequency:"
+msgid "Frequency:"
+msgstr "Fréquence Rayon-X:"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
@@ -273,6 +264,26 @@ msgid "HPP Log lines"
 msgstr "Lignes de registre HPP"
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
+msgid ""
+"If the ejection of one of the indicators is non-compliant, call quality "
+"control, fill in a discrepency log, readjust the machine and test again all "
+"products since the last compliant validation."
+msgstr ""
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
+#, fuzzy
+#| msgid ""
+#| "If there is a metal reject during production, inform quality control."
+msgid "If there is a metal reject during production, call quality control."
+msgstr ""
+"Si un reject dû à la présence de métal a lieu pendant la production, aviser "
+"le contrôle qualité."
+
+#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "If there is a metal reject during production, inform quality control."
@@ -293,20 +304,6 @@ msgid "Keep Cold Check"
 msgstr "Vérification mention \"Garder réfrigéré\" ou \"Garder congelé\""
 
 #. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
-msgid "Lorsque des changements surviennent dans les lots de production."
-msgstr "Lorsque des changements surviennent dans les lots de production."
-
-#. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
-msgid "Lorsque des changements surviennent dans les réglages de l'appareil."
-msgstr "Lorsque des changements surviennent dans les réglages de l'appareil."
-
-#. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_lot_id
 msgid "Lot"
 msgstr "Lot"
@@ -323,9 +320,8 @@ msgstr "Non Ferreux (2.5 mm)"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
-#, fuzzy
 msgid "Non ferrous (3.0 mm)"
-msgstr "Non Ferreux (2.5 mm)"
+msgstr "Non Ferreux (3.0 mm)"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_notes
@@ -335,7 +331,7 @@ msgstr "Notes"
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20250203_form_view
 msgid "Prise du poids de 5 produits à toutes les 30 minutes lors du dosage."
-msgstr ""
+msgstr "Prise du poids de 5 produits à toutes les 30 minutes lors du dosage."
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_qty_redone
@@ -355,7 +351,7 @@ msgstr "Quantité pour qualité"
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20250203_form_view
 msgid "S'assurer que la balance est stable sur une table de travail."
-msgstr ""
+msgstr "S'assurer que la balance est stable sur une table de travail."
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_shelf_life
@@ -384,9 +380,8 @@ msgstr "Inoxydable (3.5 mm)"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
-#, fuzzy
 msgid "Stainless (4.0 mm)"
-msgstr "Inoxydable (3.5 mm)"
+msgstr "Inoxydable (4.0 mm)"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
@@ -424,14 +419,20 @@ msgid ""
 "Vérifier que le scellage est conforme (temps et température + les 5 "
 "positions si VC999 utilisé)."
 msgstr ""
+"Vérifier que le scellage est conforme (temps et température + les 5 "
+"positions si VC999 utilisé)."
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "When changes happen after machine adjustments."
 msgstr "Lorsque des changements surviennent dans les réglages de l'appareil."
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "When changes happen in production lots."
@@ -442,7 +443,6 @@ msgstr "Lorsque des changements surviennent dans les lots de production."
 #: model:ir.model.fields,field_description:impress_quality_worksheets.hpp_log_x_worksheet_20250203_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.metal_log_x_worksheet_20250203_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.weight_log_x_worksheet_20250203_id
-#: model:ir.model.fields,field_description:impress_quality_worksheets.weight_log_x_worksheet_20250203_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_ray_log_x_worksheet_20250303_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_ray_log_x_worksheet_large_20251126_id
 msgid "Worksheet 2024-12-02"
@@ -450,15 +450,8 @@ msgstr "FdC 2024-12-02"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.metal_log_x_worksheet_large_20260303_id
-#, fuzzy
 msgid "Worksheet Large 2026-03-03"
-msgstr "FdC 2024-12-02"
-
-#. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
-msgid "X-Ray Frequency:"
-msgstr "Fréquence Rayon-X:"
+msgstr "Worksheet Large 2026-03-03"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_x_ray_log_id
@@ -486,33 +479,28 @@ msgstr "Registre de Codage"
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_metal_log_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_large_20260303_metal_log_id
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_large_20260303_metal_log_id
 msgid "metal Log"
 msgstr "Registre détecteur de métal"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_metal_log_lines_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_large_20260303_metal_log_lines_id
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_large_20260303_metal_log_lines_id
 msgid "metal Log lines"
 msgstr "Ligne du registre de détecteur de métal"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_weight_log_id
-#, fuzzy
 msgid "weight Log"
-msgstr "Registre détecteur de métal"
+msgstr "Registre Poids"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_weight_log_lines_id
-#, fuzzy
 msgid "weight Log lines"
-msgstr "Ligne du registre de détecteur de métal"
+msgstr "Ligne du registre de poids"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.hpp_log_line_x_worksheet_20250203_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.metal_log_line_x_worksheet_20250203_id
-#: model:ir.model.fields,field_description:impress_quality_worksheets.weight_log_line_x_worksheet_20250203_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.weight_log_line_x_worksheet_20250203_id
 msgid "x_worksheet_20250203_id"
 msgstr "x_worksheet_20250203_id"
@@ -529,24 +517,72 @@ msgstr "x_worksheet_large_20251126_id"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.metal_log_line_x_worksheet_large_20260303_id
-#, fuzzy
 msgid "x_worksheet_large_20260303_id"
-msgstr "x_worksheet_large_20251126_id"
+msgstr "x_worksheet_large_20260303_id"
 
-#. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
-msgid "À des intervalles de ≤ 2 heures pendant l'exécution de la production."
-msgstr "À des intervalles de ≤ 2 heures pendant l'exécution de la production."
+#~ msgid "After repairs."
+#~ msgstr "Après réparations."
+
+#~ msgid "Après le temps d'arrêt à des fins de réparation."
+#~ msgstr "Après le temps d'arrêt à des fins de réparation."
+
+#~ msgid "Au début et à la fin du quart de travail/production chaque jour."
+#~ msgstr "Au début et à la fin du quart de travail/production chaque jour."
+
+#~ msgid ""
+#~ "Calibration : Comparer le poids d'une bouteille avec la balance de table "
+#~ "et la Loma, si l'écart est de 2g et +, faire une calibration. <br/> "
+#~ "Remplissage : Comparer le\n"
+#~ "                            poids moyen des bouteilles vs le poids visé. "
+#~ "Si l'écart est de + / - 3g, ajuster l'embouteilleuse. <br/> Lors de la "
+#~ "dernière vérification, vérifier qu'aucune bouteille ne\n"
+#~ "                            reste dans les bacs de rejet. <br/>"
+#~ msgstr ""
+#~ "Calibration : Comparer le poids d'une bouteille avec la balance de table "
+#~ "et la Loma, si l'écart est de 2g et +, faire une calibration. <br/> "
+#~ "Remplissage : Comparer le\n"
+#~ "                            poids moyen des bouteilles vs le poids visé. "
+#~ "Si l'écart est de + / - 3g, ajuster l'embouteilleuse. <br/> Lors de la "
+#~ "dernière vérification, vérifier qu'aucune bouteille ne\n"
+#~ "                            reste dans les bacs de rejet. <br/>"
+
+#~ msgid ""
+#~ "Détecteur métal : Si l'éjection de l'un des témoins de métal est Non-"
+#~ "Conforme, appeler le contrôle de la qualité, remplir un registre d'écart, "
+#~ "réajuster l'appareil et\n"
+#~ "                            repasser tous les produits depuis la dernière "
+#~ "vérification conforme. S'il y a un rejet de métal durant la production, "
+#~ "aviser le contrôle de la qualité."
+#~ msgstr ""
+#~ "Détecteur métal : Si l'éjection de l'un des témoins de métal est Non-"
+#~ "Conforme, appeler le contrôle de la qualité, remplir un registre d'écart, "
+#~ "réajuster l'appareil et\n"
+#~ "                            repasser tous les produits depuis la dernière "
+#~ "vérification conforme. S'il y a un rejet de métal durant la production, "
+#~ "aviser le contrôle de la qualité."
+
+#~ msgid "Fréquence :"
+#~ msgstr "Fréquence :"
+
+#~ msgid "Lorsque des changements surviennent dans les lots de production."
+#~ msgstr "Lorsque des changements surviennent dans les lots de production."
+
+#~ msgid "Lorsque des changements surviennent dans les réglages de l'appareil."
+#~ msgstr ""
+#~ "Lorsque des changements surviennent dans les réglages de l'appareil."
+
+#~ msgid ""
+#~ "À des intervalles de ≤ 2 heures pendant l'exécution de la production."
+#~ msgstr ""
+#~ "À des intervalles de ≤ 2 heures pendant l'exécution de la production."
 
 #, fuzzy
 #~ msgid ""
 #~ "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 "
-#~ "Février 2025. Feuille de contrôle Poids </strong>"
-#~ "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 "
-#~ "Février 2025. Feuille de contrôle Poids </strong>"
+#~ "Février 2025. Feuille de contrôle Poids </strong><strong>Pour "
+#~ "l'utilisation exclusive de Impress Foods. Mis à jour le 03 Février 2025. "
+#~ "Feuille de contrôle Poids </strong>"
 #~ msgstr ""
 #~ "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-#~ " Mars 2025. Feuille de contrôle Codage </strong>"
-#~ " Mars 2025. Feuille de contrôle Codage </strong>"
+#~ " Mars 2025. Feuille de contrôle Codage </strong> Mars 2025. Feuille de "
+#~ "contrôle Codage </strong>"
