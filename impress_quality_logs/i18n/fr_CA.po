@@ -1639,8 +1639,3 @@ msgstr "Signer les registres"
 msgid "weight_log_line"
 msgstr "ligne_registre_métal"
 
-#, python-format
-#~ msgid "Loma log"
-#~ msgstr "Registre LOMA"
-#~ msgid "Loma log"
-#~ msgstr "Registre LOMA"
