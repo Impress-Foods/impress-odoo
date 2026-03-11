@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- View labelWizard form -->
+    <record id="view_labelWizard_form" model="ir.ui.view">
+        <field name="name">view.labelWizard.form</field>
+        <field name="model">label_wizard</field>
+        <field name="arch" type="xml">
+            <form string="Label Printing Wizard">
+                <group>
+                    <field name="product_template_id" invisible="1" />
+                    <field name="picking_id" invisible="1" />
+                    <field name="product_domain" invisible="1" />
+                    <field name="lot_domain" invisible="1" />
+
+                    <group>
+                        <field name="model" widget="radio" />
+                        <field name="label_size" widget="selection_badge" />
+                        <field name="label_qty" />
+                    </group>
+
+
+                    <group>
+                        <field
+                            name="product_id"
+                            domain="product_domain"
+                            required="model == 'product'"
+                        />
+
+                        <field
+                            name="lot_id"
+                            domain="lot_domain"
+                            context="{'default_product_id': product_id}"
+                            required="model == 'lot'"
+                            invisible="model != 'lot'"
+                        />
+
+                        <field
+                            name="packaging_id"
+                            domain="[('product_id', '=', product_id)]"
+                        />
+
+                        <label
+                            for="product_qty"
+                            string="Quantity"
+                            invisible="packaging_id"
+                        />
+                        <div class="o_row g-0 d-flex" invisible="packaging_id">
+                            <field name="product_qty" invisible="packaging_id" />
+                            <field
+                                name="uom_id"
+                                readonly="1"
+                                invisible="packaging_id"
+                            />
+                        </div>
+
+                        <label
+                            for="packaging_qty"
+                            string="Quantity"
+                            invisible="not packaging_id"
+                        />
+                        <div class="o_row g-0 d-flex" invisible="not packaging_id">
+                            <field name="packaging_qty" invisible="not packaging_id" />
+                            <span class="ms-1" invisible="not packaging_id">Cases</span>
+                        </div>
+                    </group>
+                </group>
+
+                <footer>
+                    <button
+                        name="print_label"
+                        type="object"
+                        string="Print Label"
+                        class="oe_highlight"
+                    />
+                    <button special="cancel" string="Cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action labelWizard -->
+    <record id="action_label_wizard" model="ir.actions.act_window">
+        <field name="name">Label Wizard</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">label_wizard</field>
+        <field name="view_mode">form</field>
+        <field name="binding_model_id" ref="label_printing_wizard.model_label_wizard" />
+        <field name="target">new</field>
+    </record>
+
+
+    <menuitem
+        id="label_wizard_menu"
+        name="Label Wizard"
+        sequence="10"
+        action="label_printing_wizard.action_label_wizard"
+        web_icon="label_printing_wizard,static/description/icon.png"
+    />
+</odoo>
