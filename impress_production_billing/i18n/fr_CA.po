@@ -52,6 +52,7 @@ msgstr "Facturation"
 
 #. module: impress_production_billing
 #: model:ir.model.fields,field_description:impress_production_billing.field_mrp_bom__billing_product_id
+#: model:ir.model.fields,field_description:impress_production_billing.field_mrp_production__billing_product_id
 msgid "Billing Product"
 msgstr "Produit de facturation"
 
@@ -69,6 +70,21 @@ msgstr "Ligne de commande de facturation"
 #: model:ir.model.fields,field_description:impress_production_billing.field_mrp_production__billing_sale_order_ref
 msgid "Billing Sale Order Reference"
 msgstr "Référence du bon de commande"
+
+#. module: impress_production_billing
+#. odoo-python
+#: code:addons/impress_production_billing/models/mrp_production.py:0
+#, python-format
+msgid ""
+"Billing product %(bill)s does not match Sale Order Line product %(so)sbill"
+msgstr ""
+
+#. module: impress_production_billing
+#. odoo-python
+#: code:addons/impress_production_billing/models/sale_order_line.py:0
+#, python-format
+msgid "Cannot change the product of a sale order line with linked productions!"
+msgstr ""
 
 #. module: impress_production_billing
 #. odoo-python
@@ -156,6 +172,20 @@ msgstr "Productions"
 
 #. module: impress_production_billing
 #. odoo-python
+#: code:addons/impress_production_billing/models/mrp_production.py:0
+#, python-format
+msgid "Multiple Sale Orders with reference %(ref)s.ref"
+msgstr ""
+
+#. module: impress_production_billing
+#. odoo-python
+#: code:addons/impress_production_billing/models/mrp_production.py:0
+#, python-format
+msgid "Multiple lines in SO with product %s"
+msgstr ""
+
+#. module: impress_production_billing
+#. odoo-python
 #: code:addons/impress_production_billing/controllers/portal.py:0
 #, python-format
 msgid "Name"
@@ -175,10 +205,24 @@ msgstr "Le plus récent"
 
 #. module: impress_production_billing
 #. odoo-python
+#: code:addons/impress_production_billing/models/mrp_production.py:0
+#, python-format
+msgid "No Sale Order found with reference %(ref)s.ref"
+msgstr ""
+
+#. module: impress_production_billing
+#. odoo-python
 #: code:addons/impress_production_billing/controllers/portal.py:0
 #, python-format
 msgid "None"
 msgstr "Aucun"
+
+#. module: impress_production_billing
+#. odoo-python
+#: code:addons/impress_production_billing/models/sale_order_line.py:0
+#, python-format
+msgid "Not all productions match this billing product"
+msgstr ""
 
 #. module: impress_production_billing
 #: model_terms:ir.ui.view,arch_db:impress_production_billing.portal_manufacturings_list
@@ -202,6 +246,13 @@ msgstr "Produit"
 #: model_terms:ir.ui.view,arch_db:impress_production_billing.sale_order_portal_content_inherit
 #, python-format
 msgid "Product"
+msgstr "Produit"
+
+#. module: impress_production_billing
+#: model:ir.model.fields,field_description:impress_production_billing.field_sale_order_line__production_ids
+#, fuzzy
+#| msgid "Product"
+msgid "Production"
 msgstr "Produit"
 
 #. module: impress_production_billing
@@ -230,6 +281,13 @@ msgstr "Quantité"
 #. module: impress_production_billing
 #: model:ir.model,name:impress_production_billing.model_sale_order
 msgid "Sales Order"
+msgstr "Bon de vente"
+
+#. module: impress_production_billing
+#: model:ir.model,name:impress_production_billing.model_sale_order_line
+#, fuzzy
+#| msgid "Sales Order"
+msgid "Sales Order Line"
 msgstr "Bon de vente"
 
 #. module: impress_production_billing
