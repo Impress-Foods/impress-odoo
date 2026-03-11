@@ -6,20 +6,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20260219\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2026-03-11 16:33+0000\n"
+"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
+"impress-odoo-17/replenishment_horizon_fixes/fr_CA/>\n"
+"Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: replenishment_horizon_fixes
 #: model:ir.model,name:replenishment_horizon_fixes.model_stock_warehouse_orderpoint
 msgid "Minimum Inventory Rule"
-msgstr ""
+msgstr "Règle d'inventaire minimal"
 
 #. module: replenishment_horizon_fixes
 #: model:ir.model,name:replenishment_horizon_fixes.model_stock_rule
 msgid "Stock Rule"
-msgstr ""
+msgstr "Règle d'inventaire"
