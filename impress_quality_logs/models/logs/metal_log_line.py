@@ -32,6 +32,11 @@ class MetalLogLine(models.Model):
     ferrous = fields.Integer("Ferrous (2.0 mm)")
     non_ferrous = fields.Integer("Non ferrous (2.5 mm)")
     stainless = fields.Integer("Stainless (3.5 mm)")
+
+    ferrous_large = fields.Integer("Ferrous (2.0 mm)")
+    non_ferrous_large = fields.Integer("Non ferrous (3.0 mm)")
+    stainless_large = fields.Integer("Stainless (4.0 mm)")
+
     torque = fields.Integer()
     mean_weight = fields.Float()
 
@@ -45,13 +50,21 @@ class MetalLogLine(models.Model):
             ferrous_check = rec.ferrous > rec.reject_value
             non_ferrous_check = rec.non_ferrous > rec.reject_value
             stainless_check = rec.stainless > rec.reject_value
+            standard_check = all([ferrous_check, non_ferrous_check, stainless_check])
+
+            ferrous_check_large = rec.ferrous_large > rec.reject_value
+            non_ferrous_check_large = rec.non_ferrous_large > rec.reject_value
+            stainless_check_large = rec.stainless_large > rec.reject_value
+            large_check = all(
+                [ferrous_check_large, non_ferrous_check_large, stainless_check_large]
+            )
+
+            indicator_check = any([standard_check, large_check])
             calib_check = rec.calibration == "ok"
             ejection_check = rec.ejection == "ok"
             rec.global_success = all(
                 [
-                    ferrous_check,
-                    non_ferrous_check,
-                    stainless_check,
+                    indicator_check,
                     calib_check,
                     ejection_check,
                 ]

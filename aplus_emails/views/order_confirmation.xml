@@ -48,7 +48,7 @@
                             <td>
                                 <div>
                                     <h1
-                                        t-attf-style=" color:{{textColor}};"
+                                        t-attf-style="color:{{textColor}};"
                                     >Your order #<t t-out="so.name" /></h1>
                                     <t t-call="aplus_emails.order_summary" />
 

@@ -9,7 +9,9 @@ class MrpProduction(models.Model):
     _inherit = "mrp.production"
 
     hpp_log_ids = fields.One2many("hpp.log", "production_id", string="HPP Logs")
-    loma_log_ids = fields.One2many("loma.log", "production_id", string="LOMA Logs")
+    weight_log_ids = fields.One2many(
+        "weight.log", "production_id", string="weight Logs"
+    )
     metal_log_ids = fields.One2many("metal.log", "production_id")
     coding_log_ids = fields.One2many(
         "coding.log",
@@ -44,7 +46,7 @@ class MrpProduction(models.Model):
         else:
             action.update(
                 {
-                    "name": _(f"HPP Logs for {self.name}"),
+                    "name": _("HPP Logs for %s" % self.name),
                     "domain": [("id", "in", self.hpp_log_ids.ids)],
                     "view_mode": "tree,form",
                 }  # type: ignore
@@ -67,7 +69,7 @@ class MrpProduction(models.Model):
         else:
             action.update(
                 {
-                    "name": _(f"Metal Logs for {self.name}"),
+                    "name": _("Metal Logs for %s" % self.name),
                     "domain": [("id", "in", self.metal_log_ids.ids)],
                     "view_mode": "tree,form",
                 }  # type: ignore
@@ -75,23 +77,23 @@ class MrpProduction(models.Model):
 
         return action
 
-    def action_view_loma_log(self):
+    def action_view_weight_log(self):
         self.ensure_one()
         action = {
-            "res_model": "loma.log",
+            "res_model": "weight.log",
             "type": "ir.actions.act_window",
         }
 
-        if len(self.loma_log_ids) == 1:
+        if len(self.weight_log_ids) == 1:
             action.update(
-                {"view_mode": "form", "res_id": self.loma_log_ids.id}  # type: ignore
+                {"view_mode": "form", "res_id": self.weight_log_ids.id}  # type: ignore
             )
 
         else:
             action.update(
                 {
-                    "name": _(f"LOMA Logs for {self.name}"),
-                    "domain": [("id", "in", self.loma_log_ids.ids)],
+                    "name": _("Weight Logs for %s" % self.name),
+                    "domain": [("id", "in", self.weight_log_ids.ids)],
                     "view_mode": "tree,form",
                 }  # type: ignore
             )
@@ -113,7 +115,7 @@ class MrpProduction(models.Model):
         else:
             action.update(
                 {
-                    "name": _(f"Coding Logs for {self.name}"),
+                    "name": _("Coding Logs for %s" % self.name),
                     "domain": [("id", "in", self.coding_log_ids.ids)],
                     "view_mode": "tree,form",
                 }  # type: ignore
@@ -136,7 +138,7 @@ class MrpProduction(models.Model):
         else:
             action.update(
                 {
-                    "name": _(f"X-Ray Logs for {self.name}"),
+                    "name": _("X-Ray Logs for %s" % self.name),
                     "domain": [("id", "in", self.x_ray_log_ids.ids)],
                     "view_mode": "tree,form",
                 }  # type: ignore

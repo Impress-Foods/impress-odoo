@@ -132,6 +132,19 @@ class TestDeliveryCommon(common.TransactionCase):
             }
         )
 
+        # Ensure company has required fields for tests
+        self.env.company.write(
+            {
+                "phone": "5141234567",
+                "email": "company@test.com",
+                "state_id": self.partner.state_id.id,
+                "country_id": self.partner.country_id.id,
+                "zip": "H1H1H1",
+                "city": "Montreal",
+                "street": "123 Main St",
+            }
+        )
+
     def make_picking(self, n_packages=1, contact=None):
         """Create a test picking with packages"""
         if not contact:

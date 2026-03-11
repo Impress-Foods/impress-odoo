@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:06+0000\n"
-"PO-Revision-Date: 2026-01-30 17:52+0000\n"
+"PO-Revision-Date: 2026-03-10 16:44+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
 "impress-odoo-17/impress_quality_worksheets/fr_CA/>\n"
@@ -38,15 +38,6 @@ msgstr ""
 "                            Février 2025. Feuille de contrôle HPP </strong>"
 
 #. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.LOMAWorksheet_20250203_form_view
-msgid ""
-"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-"                            Février 2025. Feuille de contrôle LOMA </strong>"
-msgstr ""
-"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-"                            Février 2025. Feuille de contrôle LOMA </strong>"
-
-#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 msgid ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 "
@@ -61,8 +52,8 @@ msgid ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Mars "
 "2025. Feuille de contrôle Codage </strong>"
 msgstr ""
-"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-" Mars 2025. Feuille de contrôle Codage </strong>"
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Mars "
+"2025. Feuille de contrôle Codage </strong>"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
@@ -70,8 +61,26 @@ msgid ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Mars "
 "2025. Feuille de contrôle Rayon-X</strong>"
 msgstr ""
-"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-" Mars 2025. Feuille de contrôle Rayon-X </strong>"
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Mars "
+"2025. Feuille de contrôle Rayon-X</strong>"
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
+msgid ""
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Mars "
+"2026. Feuille de contrôle Détecteur de Métal (Gros indicateurs) </strong>"
+msgstr ""
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 Mars "
+"2026. Feuille de contrôle Détecteur de Métal (Gros indicateurs) </strong>"
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20250203_form_view
+msgid ""
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 05 mars "
+"2026. Feuille de contrôle Poids </strong>"
+msgstr ""
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 05 mars "
+"2026. Feuille de contrôle Poids </strong>"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
@@ -90,6 +99,7 @@ msgstr "Après réparations."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 msgid "Après le temps d'arrêt à des fins de réparation."
 msgstr "Après le temps d'arrêt à des fins de réparation."
 
@@ -107,17 +117,20 @@ msgstr "Au début et à la fin du quart de travail/production chaque jour."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 msgid "Au début et à la fin du quart de travail/production chaque jour."
 msgstr "Au début et à la fin du quart de travail/production chaque jour."
 
 #. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_average_threshold
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_large_20251126_average_threshold
-msgid "Average Threshold"
-msgstr "Seuil moyen"
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20250203_form_view
+msgid ""
+"Aviser le contrôle qualité si le poids est en dessous de la limite visée."
+msgstr ""
+"Aviser le contrôle qualité si le poids est en dessous de la limite visée."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 msgid ""
 "Calibration : Comparer le poids d'une bouteille avec la balance de table et "
 "la Loma, si l'écart est de 2g et +, faire une calibration. <br/> "
@@ -136,16 +149,6 @@ msgstr ""
 "                            reste dans les bacs de rejet. <br/>"
 
 #. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_case_check
-msgid "Case Check"
-msgstr "Vérification caisse"
-
-#. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_case_code
-msgid "Case Code"
-msgstr "Code de la caisse"
-
-#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 msgid "Ceramic Detection Threshold (2.381mm)"
 msgstr "Seuil de détection de la céramique (2.381mm)"
@@ -154,6 +157,20 @@ msgstr "Seuil de détection de la céramique (2.381mm)"
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "Ceramic Detection Threshold (4.0 mm)"
 msgstr "Seuil de détection de la céramique (4.0 mm)"
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20250303_form_view
+msgid "Check unit code and lot code"
+msgstr "Vérifier le code-barre de produit et de lot"
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20250203_form_view
+msgid ""
+"Comparer le poids du produit avec le poids visé* pour cette production : si "
+"poids sous la cible ou + de 3g, faire un ajustement."
+msgstr ""
+"Comparer le poids du produit avec le poids visé* pour cette production : si "
+"poids sous la cible ou + de 3g, faire un ajustement."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
@@ -175,6 +192,7 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 msgid ""
 "Détecteur métal : Si l'éjection de l'un des témoins de métal est Non-"
 "Conforme, appeler le contrôle de la qualité, remplir un registre d'écart, "
@@ -197,12 +215,19 @@ msgid "Ejection OK"
 msgstr "Éjection conforme"
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20250203_form_view
+msgid "Faire la tare (cup + pellicule de plastique ou pochette)."
+msgstr "Faire la tare (cup + pellicule de plastique ou pochette)."
+
+#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 msgid "Ferrous (2.0 mm)"
 msgstr "Ferreux (2.0 mm)"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 msgid "Fréquence :"
 msgstr "Fréquence :"
 
@@ -222,11 +247,6 @@ msgid "HPP Log"
 msgstr "Registre HPP"
 
 #. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_hpp_log_lines_id
-msgid "HPP Log lines"
-msgstr "Lignes de registre HPP"
-
-#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "If there is a metal reject during production, inform quality control."
@@ -242,39 +262,16 @@ msgid "Initials"
 msgstr "Initiales"
 
 #. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_keep_cold_check
-msgid "Keep Cold Check"
-msgstr "Vérification mention \"Garder réfrigéré\" ou \"Garder congelé\""
-
-#. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_loma_log_id
-msgid "LOMA Log"
-msgstr "Registre LOMA"
-
-#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 msgid "Lorsque des changements surviennent dans les lots de production."
 msgstr "Lorsque des changements surviennent dans les lots de production."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 msgid "Lorsque des changements surviennent dans les réglages de l'appareil."
 msgstr "Lorsque des changements surviennent dans les réglages de l'appareil."
-
-#. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_lot_id
-msgid "Lot"
-msgstr "Lot"
-
-#. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_lower_limit
-msgid "Lower Limit"
-msgstr "Limite inférieure"
-
-#. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_nominal_weight
-msgid "Nominal Weight"
-msgstr "Poids nominal"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
@@ -282,49 +279,29 @@ msgid "Non ferrous (2.5 mm)"
 msgstr "Non Ferreux (2.5 mm)"
 
 #. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_notes
-msgid "Notes"
-msgstr "Notes"
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
+msgid "Non ferrous (3.0 mm)"
+msgstr "Non Ferreux (3.0 mm)"
 
 #. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_qty_redone
-msgid "Quantity redone"
-msgstr "Quantité retravail"
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20250203_form_view
+msgid "Prise du poids de 5 produits à toutes les 30 minutes lors du dosage."
+msgstr "Prise du poids de 5 produits à toutes les 30 minutes lors du dosage."
 
 #. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_qty_scrapped
-msgid "Quantity scrapped"
-msgstr "Quantité jetée"
-
-#. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_qty_quality
-msgid "Quantity used for quality"
-msgstr "Quantité pour qualité"
-
-#. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_shelf_life
-msgid "Shelf Life"
-msgstr "Durée de vie"
-
-#. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_shelf_life_check
-msgid "Shelf Life Check"
-msgstr "Vérification durée de vie"
-
-#. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_signature
-msgid "Signature"
-msgstr "Signature"
-
-#. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_sleeve_check
-msgid "Sleeve Check"
-msgstr "Vérification étiquette"
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20250203_form_view
+msgid "S'assurer que la balance est stable sur une table de travail."
+msgstr "S'assurer que la balance est stable sur une table de travail."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 msgid "Stainless (3.5 mm)"
 msgstr "Inoxydable (3.5 mm)"
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
+msgid "Stainless (4.0 mm)"
+msgstr "Inoxydable (4.0 mm)"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
@@ -337,29 +314,13 @@ msgid "Stainless Detection Threshold (2.0 mm)"
 msgstr "Seuil de détection Stainless (2.0mm)"
 
 #. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_start_date
-msgid "Start Date"
-msgstr "Date de début"
-
-#. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_subunit_check
-msgid "Subunit Check"
-msgstr "Vérification sous-emballage"
-
-#. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_unit_check
-msgid "Unit Check"
-msgstr "Vérification unité"
-
-#. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_unit_code
-msgid "Unit Code"
-msgstr "Code unité"
-
-#. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_upper_limt
-msgid "Upper Limit"
-msgstr "Limite supérieure"
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20250203_form_view
+msgid ""
+"Vérifier que le scellage est conforme (temps et température + les 5 "
+"positions si VC999 utilisé)."
+msgstr ""
+"Vérifier que le scellage est conforme (temps et température + les 5 "
+"positions si VC999 utilisé)."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
@@ -374,18 +335,9 @@ msgid "When changes happen in production lots."
 msgstr "Lorsque des changements surviennent dans les lots de production."
 
 #. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.coding_log_x_worksheet_20250303_id
-#: model:ir.model.fields,field_description:impress_quality_worksheets.hpp_log_x_worksheet_20250203_id
-#: model:ir.model.fields,field_description:impress_quality_worksheets.loma_log_x_worksheet_20250203_id
-#: model:ir.model.fields,field_description:impress_quality_worksheets.metal_log_x_worksheet_20250203_id
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_ray_log_x_worksheet_20250303_id
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_ray_log_x_worksheet_large_20251126_id
-msgid "Worksheet 2024-12-02"
-msgstr "FdC 2024-12-02"
-
-#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
+#, fuzzy
 msgid "X-Ray Frequency:"
 msgstr "Fréquence Rayon-X:"
 
@@ -394,12 +346,6 @@ msgstr "Fréquence Rayon-X:"
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_large_20251126_x_ray_log_id
 msgid "X-Ray Log"
 msgstr "Registre Rayon-X"
-
-#. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_x_ray_log_lines_id
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_large_20251126_x_ray_log_lines_id
-msgid "X-Ray Log Line"
-msgstr "Ligne de registre Rayon-X"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
@@ -413,122 +359,132 @@ msgid "coding Log"
 msgstr "Registre de Codage"
 
 #. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_loma_log_lines_id
-msgid "loma Log lines"
-msgstr "Lignes de registre LOMA"
-
-#. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_metal_log_id
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_large_20260303_metal_log_id
 msgid "metal Log"
 msgstr "Registre détecteur de métal"
 
 #. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_metal_log_lines_id
-msgid "metal Log lines"
-msgstr "Ligne du registre de détecteur de métal"
-
-#. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.hpp_log_line_x_worksheet_20250203_id
-#: model:ir.model.fields,field_description:impress_quality_worksheets.loma_log_line_x_worksheet_20250203_id
-#: model:ir.model.fields,field_description:impress_quality_worksheets.metal_log_line_x_worksheet_20250203_id
-msgid "x_worksheet_20250203_id"
-msgstr "x_worksheet_20250203_id"
-
-#. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_ray_log_line_x_worksheet_20250303_id
-msgid "x_worksheet_20250303_id"
-msgstr "x_worksheet_20250303_id"
-
-#. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_ray_log_line_x_worksheet_large_20251126_id
-msgid "x_worksheet_large_20251126_id"
-msgstr "x_worksheet_large_20251126_id"
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250203_weight_log_id
+msgid "weight Log"
+msgstr "Registre Poids"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 msgid "À des intervalles de ≤ 2 heures pendant l'exécution de la production."
 msgstr "À des intervalles de ≤ 2 heures pendant l'exécution de la production."
 
+#~ msgid "Average Threshold"
+#~ msgstr "Seuil moyen"
+
+#~ msgid "Case Check"
+#~ msgstr "Vérification caisse"
+
+#~ msgid "Case Code"
+#~ msgstr "Code de la caisse"
+
+#, fuzzy
+#~| msgid ""
+#~| "During the last check (end of production), check that no product is left "
+#~| "in the reject bin."
 #~ msgid ""
-#~ "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-#~ "                            Mars 2025. Feuille de contrôle Rayon-X</"
-#~ "strong>"
-#~ msgstr ""
-#~ "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-#~ "                            Mars 2025. Feuille de contrôle Rayon-X</"
-#~ "strong>"
-
-#~ msgid "At the start of the day."
-#~ msgstr "Au début de la journée."
-
-#~ msgid "Au début de l'embouteillage"
-#~ msgstr "Au début de l'embouteillage"
-
-#~ msgid "Aux 2 heures si aucun changement lors d'une production en continue"
-#~ msgstr "Aux 2 heures si aucun changement lors d'une production en continue"
-
-#~ msgid ""
-#~ "During the last check (end of production), check that no cup is left\n"
-#~ "                                in the reject bin."
+#~ "During the last verification, make sure that no product is present in the "
+#~ "rejects bin"
 #~ msgstr ""
 #~ "Lors de la dernière vérification (fin de la production), vérifier "
-#~ "qu'aucun cup \n"
-#~ "n'est présent dans le réceptacle des rejets."
+#~ "qu'aucun produit n'est présent dans le réceptacle des rejets."
 
-#~ msgid "Every 2 hours if no product change."
-#~ msgstr "Tout les 2 heures si aucun changement de produit."
+#~ msgid "HPP Log lines"
+#~ msgstr "Lignes de registre HPP"
 
-#~ msgid "Every product change (format, recipe, lot)."
-#~ msgstr "À tout changement de produit (format, recette, lot)."
-
-#~ msgid ""
-#~ "If there is a metal reject during production, inform quality\n"
-#~ "                                control."
+#, fuzzy
+#~| msgid ""
+#~| "If there is a metal reject during production, inform quality control."
+#~ msgid "If there is a metal reject during production, call quality control."
 #~ msgstr ""
-#~ "Si un reject dû à la présence de métal a lieu pendant\n"
-#~ " la production, aviser le contrôle qualité."
+#~ "Si un reject dû à la présence de métal a lieu pendant la production, "
+#~ "aviser le contrôle qualité."
 
-#~ msgid "Une fois l'embouteillage terminé"
-#~ msgstr "Une fois l'embouteillage terminé"
+#~ msgid "Keep Cold Check"
+#~ msgstr "Vérification mention \"Garder réfrigéré\" ou \"Garder congelé\""
 
-#~ msgid ""
-#~ "À chaque changement de produit (changement de format, de recette, de lot, "
-#~ "d'étiquette US/CAD ou lors de réglage de l'appareil)"
-#~ msgstr ""
-#~ "À chaque changement de produit (changement de format, de recette, de lot, "
-#~ "d'étiquette US/CAD ou lors de réglage de l'appareil)"
+#~ msgid "Lot"
+#~ msgstr "Lot"
+
+#~ msgid "Nominal Weight"
+#~ msgstr "Poids nominal"
+
+#~ msgid "Notes"
+#~ msgstr "Notes"
+
+#~ msgid "Quantity redone"
+#~ msgstr "Quantité retravail"
+
+#~ msgid "Quantity scrapped"
+#~ msgstr "Quantité jetée"
+
+#~ msgid "Quantity used for quality"
+#~ msgstr "Quantité pour qualité"
+
+#~ msgid "Shelf Life"
+#~ msgstr "Durée de vie"
+
+#~ msgid "Shelf Life Check"
+#~ msgstr "Vérification durée de vie"
+
+#~ msgid "Signature"
+#~ msgstr "Signature"
+
+#~ msgid "Sleeve Check"
+#~ msgstr "Vérification étiquette"
+
+#~ msgid "Start Date"
+#~ msgstr "Date de début"
+
+#~ msgid "Subunit Check"
+#~ msgstr "Vérification sous-emballage"
+
+#~ msgid "Unit Check"
+#~ msgstr "Vérification unité"
+
+#~ msgid "Unit Code"
+#~ msgstr "Code unité"
+
+#~ msgid "Worksheet 2024-12-02"
+#~ msgstr "FdC 2024-12-02"
+
+#~ msgid "Worksheet Large 2026-03-03"
+#~ msgstr "Worksheet Large 2026-03-03"
+
+#~ msgid "X-Ray Log Line"
+#~ msgstr "Ligne de registre Rayon-X"
+
+#~ msgid "metal Log lines"
+#~ msgstr "Ligne du registre de détecteur de métal"
+
+#~ msgid "weight Log lines"
+#~ msgstr "Ligne du registre de poids"
+
+#~ msgid "x_worksheet_20250203_id"
+#~ msgstr "x_worksheet_20250203_id"
+
+#~ msgid "x_worksheet_20250303_id"
+#~ msgstr "x_worksheet_20250303_id"
+
+#~ msgid "x_worksheet_large_20251126_id"
+#~ msgstr "x_worksheet_large_20251126_id"
+
+#~ msgid "x_worksheet_large_20260303_id"
+#~ msgstr "x_worksheet_large_20260303_id"
 
 #, fuzzy
 #~ msgid ""
-#~ "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-#~ "                            Février 2025. Feuille de contrôle Détecteur "
-#~ "de Métal </strong>"
+#~ "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03 "
+#~ "Février 2025. Feuille de contrôle Poids </strong><strong>Pour "
+#~ "l'utilisation exclusive de Impress Foods. Mis à jour le 03 Février 2025. "
+#~ "Feuille de contrôle Poids </strong>"
 #~ msgstr ""
 #~ "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-#~ "                            Février 2025. Feuille de contrôle LOMA </"
-#~ "strong>"
-
-#, fuzzy
-#~ msgid ""
-#~ "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 26\n"
-#~ "                            Novembre 2025. Feuille de contrôle Rayon-X "
-#~ "(Gros témoins)</strong>"
-#~ msgstr ""
-#~ "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03\n"
-#~ "                            Mars 2025. Feuille de contrôle Rayon-X</"
-#~ "strong>"
-
-#, fuzzy
-#~ msgid ""
-#~ "During the last check (end of production), check that no product is left\n"
-#~ "                                in the reject bin."
-#~ msgstr ""
-#~ "Lors de la dernière vérification (fin de la production), vérifier "
-#~ "qu'aucun cup \n"
-#~ "n'est présent dans le réceptacle des rejets."
-
-#~ msgid "Stainless Detection Threshold (1.2 mm)"
-#~ msgstr "Seuil de détection Stainless (1.2 mm)"
-
-#~ msgid "Average at least average threshold"
-#~ msgstr "La moyenne est d'au moins le seuil moyen"
+#~ " Mars 2025. Feuille de contrôle Codage </strong> Mars 2025. Feuille de "
+#~ "contrôle Codage </strong>"

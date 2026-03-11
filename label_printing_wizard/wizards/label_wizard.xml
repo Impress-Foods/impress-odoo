@@ -61,11 +61,7 @@
                         />
                         <div class="o_row g-0 d-flex" invisible="not packaging_id">
                             <field name="packaging_qty" invisible="not packaging_id" />
-                            <field
-                                name="packaging_id"
-                                readonly="1"
-                                invisible="not packaging_id"
-                            />
+                            <span class="ms-1" invisible="not packaging_id">Cases</span>
                         </div>
                     </group>
                 </group>

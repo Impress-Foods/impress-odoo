@@ -9,7 +9,7 @@
         <field name="arch" type="xml">
             <xpath expr="//div[@name='button_box']" position="inside">
                 <field name="hpp_log_ids" invisible="1" />
-                <field name="loma_log_ids" invisible="1" />
+                <field name="weight_log_ids" invisible="1" />
                 <field name="metal_log_ids" invisible="1" />
                 <field name="coding_log_ids" invisible="1" />
                 <field name="x_ray_log_ids" invisible="1" />
@@ -28,14 +28,14 @@
                 </button>
                 <button
                     class="oe_stat_button"
-                    name="action_view_loma_log"
+                    name="action_view_weight_log"
                     type="object"
                     icon="fa-balance-scale"
-                    invisible="not loma_log_ids"
+                    invisible="not weight_log_ids"
                     groups="mrp.group_mrp_user"
                 >
                     <div class="o_field_widget o_stat_info">
-                        <span class="o_stat_text">LOMA</span>
+                        <span class="o_stat_text">weight</span>
                     </div>
                 </button>
                 <button

@@ -78,23 +78,23 @@ class ReportXRayLog(models.AbstractModel):
         return report_values
 
 
-class ReportLomaLog(models.AbstractModel):
-    _name = "report.impress_quality_logs.report_loma_log"
+class ReportweightLog(models.AbstractModel):
+    _name = "report.impress_quality_logs.report_weight_log"
     _inherit = "report.base.log.report"
-    _description = "Loma Log Report"
+    _description = "Weight Log Report"
 
     @api.model
     def _get_report_values(self, docids, data=None):
         # Get the records for the report
-        docs = self.env["loma.log"].browse(docids)
+        docs = self.env["weight.log"].browse(docids)
 
         report_values = super()._get_report_values(docids, data)
 
         report_values.update(
             {
-                "doc_model": "loma.log",
+                "doc_model": "weight.log",
                 "docs": docs,
-                "doc_name": _("Loma log"),
+                "doc_name": _("Weight log"),
             }
         )
 
