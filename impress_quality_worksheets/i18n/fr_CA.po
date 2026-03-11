@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:06+0000\n"
-"PO-Revision-Date: 2026-03-10 16:44+0000\n"
+"PO-Revision-Date: 2026-03-11 14:53+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
 "impress-odoo-17/impress_quality_worksheets/fr_CA/>\n"
@@ -94,14 +94,10 @@ msgstr ""
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "After downtime following repairs."
-msgstr ""
-
-#. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
-msgid "After downtime foloowing repairs."
-msgstr ""
+msgstr "Après le temps d'arrêt à des fins de réparation."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
@@ -139,6 +135,8 @@ msgid ""
 "Calibration : Compare the mass of a bottle with a table scale and the Loma, "
 "if the difference is of 2g et +, do a calibration."
 msgstr ""
+"Calibration : Comparer le poids d'une bouteille avec la balance de table et "
+"la Loma, si l'écart est de 2g et +, faire une calibration."
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_case_check
@@ -197,10 +195,6 @@ msgstr ""
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
-#, fuzzy
-#| msgid ""
-#| "During the last check (end of production), check that no product is left "
-#| "in the reject bin."
 msgid ""
 "During the last verification, make sure that no product is present in the "
 "rejects bin"
@@ -232,15 +226,16 @@ msgid ""
 "Filling: Compare the average mass of the bottles with the target weight. If "
 "the difference is of + / - 3g, adjust the filler."
 msgstr ""
+"Remplissage : Comparer le poids moyen des bouteilles vs le poids visé. Si "
+"l'écart est de + / - 3g, ajuster l'embouteilleuse."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
-#, fuzzy
 msgid "Frequency:"
-msgstr "Fréquence Rayon-X:"
+msgstr "Fréquence:"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
@@ -278,13 +273,13 @@ msgid ""
 "control, fill in a discrepency log, readjust the machine and test again all "
 "products since the last compliant validation."
 msgstr ""
+"Si l'éjection de l'un des témoins est Non-Conforme, appeler le contrôle de "
+"la qualité, remplir un registre d'écart, réajuster l'appareil et repasser "
+"tous les produits depuis la dernière vérification conforme."
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
-#, fuzzy
-#| msgid ""
-#| "If there is a metal reject during production, inform quality control."
 msgid "If there is a metal reject during production, call quality control."
 msgstr ""
 "Si un reject dû à la présence de métal a lieu pendant la production, aviser "
@@ -526,6 +521,9 @@ msgstr "x_worksheet_large_20251126_id"
 #: model:ir.model.fields,field_description:impress_quality_worksheets.metal_log_line_x_worksheet_large_20260303_id
 msgid "x_worksheet_large_20260303_id"
 msgstr "x_worksheet_large_20260303_id"
+
+#~ msgid "After downtime foloowing repairs."
+#~ msgstr "Après le temps d'arrêt à des fins de réparation."
 
 #~ msgid "After repairs."
 #~ msgstr "Après réparations."
