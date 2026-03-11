@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_mrp_production_form_campaign" model="ir.ui.view">
+        <field name="name">mrp.production.form.campaign</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+        <field name="arch" type="xml">
+
+            <!-- Smart button -->
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button
+                    name="action_view_campaign"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-object-group"
+                    invisible="not campaign_id"
+                >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Production</span>
+                        <span class="o_stat_text">Run</span>
+                    </div>
+                    <field name="campaign_id" invisible="1" />
+                </button>
+            </xpath>
+            <xpath
+                expr="//group[@name='group_extra_info']//field[@name='date_finished']"
+                position="before"
+            >
+                <field name="date_deadline" readonly="1" />
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="before">
+                <field name="anchor_product_id" invisible="1" />
+                <field
+                    name="campaign_id"
+                    readonly="state in ['done','cancel']"
+                    domain="['|',('product_id','=', product_id), ('product_id','=', anchor_product_id)]"
+                />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -38,7 +38,6 @@
                             >During the last check (end of production), check that no product is left in the reject bin.</li>
                         </ul>
                     </div>
-
                     <field name="x_x_ray_log_line_ids" nolabel="1">
                         <tree>
                             <field name="sequence" />

@@ -1,0 +1,54 @@
+.demand-card {
+    .demand-header {
+        display: grid;
+        grid-template-columns: 60% 40%;
+        grid-template-rows: 50% 50%;
+        justify-content: space-between;
+        align-items: center;
+        .name {
+            justify-self: start;
+        }
+
+        .badge {
+            justify-self: end;
+        }
+
+        .customer {
+            justify-self: start;
+        }
+
+        .date {
+            justify-self: end;
+        }
+    }
+}
+.demand-bar-container {
+    .progress {
+        border-radius: 10px;
+        overflow: hidden;
+        background-image: linear-gradient(
+            45deg,
+            var(--gray-300) 25%,
+            transparent 25%,
+            transparent 50%,
+            var(--gray-300) 50%,
+            var(--gray-300) 75%,
+            transparent 75%,
+            transparent
+        );
+        background-size: 10px 10px;
+    }
+
+    .bg-secondary {
+        background-color: var(--success) !important; // Muted grey for "already done"
+        border-right: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .bg-danger {
+        background-color: var(--danger) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .bg-primary {
+        background-color: var(--info) !important; // Odoo Purple for "User Choice"
+        transition: width 0.3s ease; // Makes the bar slide smoothly when clicking +/-
+    }
+}

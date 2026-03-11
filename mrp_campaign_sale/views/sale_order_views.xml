@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- View sale.order form -->
+    <record id="view_sale_order_form" model="ir.ui.view">
+        <field name="name">view.sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button
+                    name="action_view_mrp_campaigns"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-object-group"
+                    invisible="mrp_campaign_count == 0"
+                >
+                    <field
+                        name="mrp_campaign_count"
+                        widget="statinfo"
+                        string="Campaigns"
+                    />
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

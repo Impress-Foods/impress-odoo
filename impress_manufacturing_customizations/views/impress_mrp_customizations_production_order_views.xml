@@ -43,4 +43,18 @@
             </xpath>
         </field>
     </record>
+    <record id="view_mrp_production_filter" model="ir.ui.view">
+        <field name="name">mrp.production.select</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.view_mrp_production_filter" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='filter_date_start']" position="after">
+                <filter
+                    string="Today and Before"
+                    name="today_past"
+                    domain="[('date_start', '&lt;=', time.strftime('%Y-%m-%d 23:59:59'))]"
+                />
+            </xpath>
+        </field>
+    </record>
 </odoo>
