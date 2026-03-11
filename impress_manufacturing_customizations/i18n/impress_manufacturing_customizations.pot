@@ -34,6 +34,11 @@ msgid "Today"
 msgstr ""
 
 #. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.view_mrp_production_filter
+msgid "Today and Before"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
 #: model:ir.ui.menu,name:impress_manufacturing_customizations.workorder_dashboard_menu
 msgid "Workorder Dashboard"
 msgstr ""
