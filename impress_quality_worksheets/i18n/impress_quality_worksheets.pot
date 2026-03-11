@@ -228,6 +228,12 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+msgid ""
+"If the ejection of one of the indicators is non-compliant, call quality control, fill in a discrepency log, readjust the machine and test again all products since\n"
+"                                    the last compliant validation."
+msgstr ""
+
+#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 msgid ""
 "If the ejection of one of the indicators is non-compliant, call quality "
@@ -377,12 +383,16 @@ msgid ""
 msgstr ""
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "When changes happen after machine adjustments."
 msgstr ""
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "When changes happen in production lots."
