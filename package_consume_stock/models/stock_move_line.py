@@ -14,8 +14,9 @@ class StockMoveLine(models.Model):
         return res
 
     def _handle_new_package(self):
-        for picking in self:
-            for package in picking.package_ids:
+        for move_line in self:
+            picking = move_line.picking_id
+            for package in move_line.result_package_id:
                 if (
                     not package.material_added
                     and package.package_type_id.has_packaging_material

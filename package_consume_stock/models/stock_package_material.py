@@ -27,7 +27,6 @@ class PackageMaterial(models.Model):
             packaging_move = self.env["stock.move"].create(
                 {
                     "picking_id": picking.id,
-                    "name": f"Packaging: {self.product_id.display_name}",
                     "product_id": self.product_id.id,
                     "product_uom_qty": 0,
                     "product_uom": self.product_id.uom_id.id,
