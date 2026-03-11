@@ -2,7 +2,7 @@ from odoo import api, models
 
 
 class MrpCampaignReport(models.AbstractModel):
-    _name = "report.manufacturing_automation.report_mrp_campaign_document"
+    _name = "report.mrp_campaign.report_mrp_campaign_document"
     _description = "MRP Campaign Report"
 
     @api.model

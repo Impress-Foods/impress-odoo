@@ -221,7 +221,7 @@ class MrpCampaignPartitionWizard(models.TransientModel):
         if set(mapped_proxy.keys()) != set(proxies.exists().ids):
             raise ValidationError(_("Not all proxies could be found in the database."))
 
-        if not all(proxies.mapped(lambda proxy: proxy.campaign_id == self.campaign_id)):
+        if not all(proxy.campaign_id == self.campaign_id for proxy in proxies):
             bad_proxies = [
                 proxy.id for proxy in proxies if proxy.campaign_id != self.campaign_id
             ]
@@ -232,7 +232,6 @@ class MrpCampaignPartitionWizard(models.TransientModel):
                 )
             )
 
-        mapped_data = {}
         mapped_data = {proxy.id: (proxy, mapped_proxy[proxy.id]) for proxy in proxies}
         return mapped_data
 

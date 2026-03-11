@@ -35,7 +35,7 @@ class ProductProductModel(models.Model):
         for rec in self:
             rec.anchor_product_id = self._get_root_anchor(rec)
 
-    def _get_root_anchor(self, product, visited=None):
+    def _get_root_anchor(self, product, visited=None) -> "ProductProductModel":
         if visited is None:
             visited = set()
         if product.id in visited:

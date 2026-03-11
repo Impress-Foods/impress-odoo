@@ -22,7 +22,10 @@ class MrpCampaignDemandProxy(models.Model):
     def _get_partition_wizard_fields(self):
         self.ensure_one()
         values = super()._get_partition_wizard_fields()
-        if self.move_id.group_id.sale_id:
-            order_ref = self.move_id.group_id.sale_id.client_order_ref
-            values["customer_ref"] = order_ref
+
+        group_id = self.move_id.group_id
+        if group_id:
+            if self.move_id.group_id.sale_id:
+                order_ref = group_id.sale_id.client_order_ref
+                values["customer_ref"] = order_ref
         return values

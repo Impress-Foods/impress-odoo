@@ -24,7 +24,7 @@ class ProductionOrder(models.Model):
     created_by_campaign = fields.Boolean()
     campaign_line_id = fields.Many2one("mrp.campaign.line")
 
-    def write(self, vals):
+    def write(self, vals) -> bool:
         res = super().write(vals)
 
         if "lot_producing_id" in vals and not self.env.context.get("syncing_lot"):
@@ -55,7 +55,7 @@ class ProductionOrder(models.Model):
 
         return res
 
-    def action_view_campaign(self):  # pragma: no cover
+    def action_view_campaign(self) -> dict:  # pragma: no cover
         self.ensure_one()
         if not self.campaign_id:
             return

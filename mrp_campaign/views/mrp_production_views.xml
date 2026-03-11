@@ -33,7 +33,7 @@
                 <field name="anchor_product_id" invisible="1" />
                 <field
                     name="campaign_id"
-                    readonly="state in ['done','cancelled']"
+                    readonly="state in ['done','cancel']"
                     domain="['|',('product_id','=', product_id), ('product_id','=', anchor_product_id)]"
                 />
             </xpath>

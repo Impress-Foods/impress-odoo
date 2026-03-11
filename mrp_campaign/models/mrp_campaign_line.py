@@ -68,26 +68,22 @@ class CampaignLine(models.Model):
     productions_created = fields.Boolean()
 
     @api.depends("qty", "producing_qty")
-    def _compute_is_out_of_sync(self):
+    def _compute_is_out_of_sync(self) -> None:
         for rec in self:
             rec.is_out_of_sync = not float_is_zero(
                 rec.qty - rec.producing_qty,
                 precision_rounding=rec.product_id.uom_id.rounding,
             )
 
-    def action_sync_line(self):
-        self.ensure_one()
-        self._adjust_mos(self.qty)
-
     @api.depends("product_id")
-    def _compute_is_batch_produced(self):
+    def _compute_is_batch_produced(self) -> None:
         for rec in self:
             rec.is_batch_produced = rec.product_tmpl_id.mrp_max_batch_size != 0
 
     @api.depends(
         "product_id", "campaign_id.override_batch_size", "campaign_id.batch_size"
     )
-    def _compute_batch_size(self):
+    def _compute_batch_size(self) -> None:
         for rec in self:
             rec.batch_size = (
                 rec.campaign_id.batch_size
@@ -96,7 +92,7 @@ class CampaignLine(models.Model):
             )
 
     @api.depends("is_batch_produced")
-    def _compute_use_buffer(self):
+    def _compute_use_buffer(self) -> None:
         for rec in self:
             rec.use_buffer = rec.is_batch_produced
 
@@ -106,7 +102,7 @@ class CampaignLine(models.Model):
             rec.downstream_product_id = rec._get_downstream_product()
 
     @api.depends("production_ids", "production_ids.qty_produced")
-    def _compute_fulfilled_qty(self):
+    def _compute_fulfilled_qty(self) -> None:
         for rec in self:
             rec.fulfilled_qty = sum(rec.production_ids.mapped("qty_produced"))
 
@@ -116,7 +112,7 @@ class CampaignLine(models.Model):
         "demand_ids",
         "demand_ids.target_qty",
     )
-    def _compute_qty(self):
+    def _compute_qty(self) -> None:
         for rec in self:
             buffer = (1 + rec.buffer_percent) if rec.is_batch_produced else 1
             if rec.upstream_line_ids:
@@ -136,7 +132,7 @@ class CampaignLine(models.Model):
                 rec.qty = 0
 
     @api.depends("production_ids", "production_ids.product_qty", "production_ids.state")
-    def _compute_production_qtys(self):
+    def _compute_production_qtys(self) -> None:
         for rec in self:
             rec.producing_qty = sum(
                 rec.production_ids.filtered_domain(
@@ -158,7 +154,7 @@ class CampaignLine(models.Model):
                 (1 + rec.buffer_percent) if rec.is_batch_produced else 1
             )
 
-    def write(self, vals):
+    def write(self, vals) -> bool:
         res = super().write(vals)
 
         if self.env.context.get("campaign_skip_mo_adjustment"):
@@ -405,7 +401,7 @@ class CampaignLine(models.Model):
 
     def _adjust_batch_mos(
         self, adjustable_mos: MrpProduction, required_from_adjustable_mos: float
-    ):
+    ) -> None:
         self.ensure_one()
         rounding_precision = self.product_id.uom_id.rounding
 
@@ -483,3 +479,7 @@ class CampaignLine(models.Model):
 
         if mo_creation_values:
             self.env["mrp.production"].create(mo_creation_values)
+
+    def action_sync_line(self) -> None:
+        self.ensure_one()
+        self._adjust_mos(self.qty)

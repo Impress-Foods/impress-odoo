@@ -46,9 +46,7 @@ class MrpCampaign(models.Model):
         domain="[('product_tmpl_id.is_campaign_anchor', '=', True)]",
     )
     buffer_percent = fields.Float(
-        compute="_compute_buffer_percent",
-        inverse="_inverse_buffer_percent",
-        store=True,
+        compute="_compute_buffer_percent", store=True, readonly=False
     )
     company_id = fields.Many2one("res.company", default=lambda self: self.env.company)
 
@@ -70,64 +68,61 @@ class MrpCampaign(models.Model):
     is_out_of_sync = fields.Boolean(compute="_compute_is_out_of_sync", store=True)
 
     @api.depends("line_ids.is_out_of_sync")
-    def _compute_is_out_of_sync(self):
+    def _compute_is_out_of_sync(self) -> None:
         for rec in self:
             rec.is_out_of_sync = any(rec.line_ids.mapped("is_out_of_sync"))
 
     @api.depends("backorder_campaign_ids")
-    def _compute_bo_count(self):  # pragma: no coverage
+    def _compute_bo_count(self) -> None:  # pragma: no coverage
         for rec in self:
             rec.bo_count = len(rec.backorder_campaign_ids)
 
     @api.depends("production_ids", "production_ids.state", "production_count")
-    def _compute_state(self):
+    def _compute_state(self) -> None:
         for rec in self:
             if rec.production_count == 0:
                 rec.state = "draft"
             elif any(
-                [prod.state in ["progress", "to_close"] for prod in rec.production_ids]
+                prod.state in ["progress", "to_close"] for prod in rec.production_ids
             ):
                 rec.state = "progress"
-            elif any([prod.state in ["confirmed"] for prod in rec.production_ids]):
+            elif any(prod.state in ["confirmed"] for prod in rec.production_ids):
                 rec.state = "confirm"
-            elif all([prod.state in ["cancel"] for prod in rec.production_ids]):
+            elif all(prod.state in ["cancel"] for prod in rec.production_ids):
                 rec.state = "cancel"
-            elif all([prod.state in ["done", "cancel"] for prod in rec.production_ids]):
+            elif all(prod.state in ["done", "cancel"] for prod in rec.production_ids):
                 rec.state = "done"
             else:
                 rec.state = "plan"
 
     @api.depends("production_ids")
-    def _compute_production_count(self):
+    def _compute_production_count(self) -> None:
         for rec in self:
             rec.production_count = len(rec.production_ids)
 
     @api.depends("product_id")
-    def _compute_buffer_percent(self):
+    def _compute_buffer_percent(self) -> None:
         for rec in self:
             if rec.product_id:
                 rec.buffer_percent = rec.product_id.campaign_buffer_percent
             else:
                 rec.buffer_percent = 0
 
-    def _inverse_buffer_percent(self):
-        return
-
     @api.ondelete(at_uninstall=False)
-    def _unlink_if_campaign_inactive(self):
+    def _unlink_if_campaign_inactive(self) -> None:
         if any(rec.state in ["progress"] for rec in self):
             raise UserError(_("Can't delete a campaign in progress!"))
         if any(rec.state in ["done"] for rec in self):
             raise UserError(_("Can't delete a completed campaign!"))
 
-    def unlink(self):
+    def unlink(self) -> bool:
         mos_to_unlink = self.mapped("production_ids").filtered_domain(
             [("state", "in", ["draft"])]
         )
         mos_to_unlink.unlink()
         return super().unlink()
 
-    def write(self, vals):
+    def write(self, vals) -> bool:
         res = super().write(vals)
 
         if "lot_name" in vals:
@@ -140,7 +135,7 @@ class MrpCampaign(models.Model):
 
     def _sync_mo_start_dates(self) -> None:
         for rec in self:
-            mos_to_sync = self.production_ids.filtered_domain(
+            mos_to_sync = rec.production_ids.filtered_domain(
                 [
                     ("date_start", "!=", rec.date_planned_start),
                     ("state", "in", ["draft", "confirmed"]),
@@ -148,7 +143,7 @@ class MrpCampaign(models.Model):
             )
             mos_to_sync.write({"date_start": rec.date_planned_start})
 
-    def _sync_lot_on_productions(self, lot_name):
+    def _sync_lot_on_productions(self, lot_name) -> None:
         self.ensure_one()
         # Find MOs that need update and are in adjustable states
         productions = self.production_ids.filtered(
@@ -192,7 +187,7 @@ class MrpCampaign(models.Model):
         for lot, prods in prods_to_update_by_lot.items():
             prods.with_context(syncing_lot=True).write({"lot_producing_id": lot.id})
 
-    def construct_tree(self):
+    def construct_tree(self) -> None:
         """
         Main method to initiate the construction of the campaign production tree.
         """
@@ -209,7 +204,7 @@ class MrpCampaign(models.Model):
             for line in created_lines:
                 line._construct_downstream_tree_line(depth=0)
 
-    def action_plan(self):
+    def action_plan(self) -> None:
         for campaign in self.filtered(lambda x: x.state == "draft"):
             if not campaign.demand_line_ids:
                 raise UserError(
@@ -224,7 +219,7 @@ class MrpCampaign(models.Model):
             for line in campaign.line_ids:
                 line.make_production_order()
 
-    def action_confirm(self):
+    def action_confirm(self) -> None:
         for campaign in self.filtered(lambda x: x.state == "plan"):
             end_mos_to_confirm = campaign.production_ids.filtered(
                 lambda mo: mo.state == "draft"
@@ -232,10 +227,10 @@ class MrpCampaign(models.Model):
             if end_mos_to_confirm:
                 end_mos_to_confirm.action_confirm()
 
-    def action_reset(self):
+    def action_reset(self) -> None:
         for campaign in self.filtered(lambda c: c.state in ["plan", "confirm"]):
             # Find and cancel any manufacturing orders created for this campaign
-            productions = self.env["mrp.production"].search(
+            productions = campaign.production_ids.filtered_domain(
                 [
                     "&",
                     ("campaign_id", "=", campaign.id),
@@ -248,7 +243,7 @@ class MrpCampaign(models.Model):
             campaign.line_ids.unlink()
             campaign._compute_state()
 
-    def action_view_mos(self):  # pragma: no coverage
+    def action_view_mos(self) -> dict:  # pragma: no coverage
         self.ensure_one()
         return {
             "type": "ir.actions.act_window",
@@ -259,7 +254,7 @@ class MrpCampaign(models.Model):
             "target": "current",
         }
 
-    def action_view_bos(self):  # pragma: no coverage
+    def action_view_bos(self) -> dict:  # pragma: no coverage
         self.ensure_one()
         if self.bo_count == 1:
             return {
@@ -279,7 +274,7 @@ class MrpCampaign(models.Model):
             "target": "current",
         }
 
-    def action_view_source(self):  # pragma: no coverage
+    def action_view_source(self) -> dict:  # pragma: no coverage
         self.ensure_one()
 
         return {
@@ -291,55 +286,8 @@ class MrpCampaign(models.Model):
             "target": "current",
         }
 
-    def action_open_add_demand_wizard(self):
+    def action_open_add_demand_wizard(self) -> dict:
         self.ensure_one()
-
-        anchor_product = self.product_id
-
-        # 1. Find all products that use this anchor by traversing BoMs upwards
-        all_descendants = self.env["product.product"].browse(anchor_product.id)
-        products_to_check = self.env["product.product"].browse(anchor_product.id)
-        while products_to_check:
-            boms = (
-                self.env["mrp.bom.line"]
-                .search([("product_id", "in", products_to_check.ids)])
-                .mapped("bom_id")
-            )
-            parent_products = boms.mapped("product_id")
-            parent_from_template = boms.mapped("product_tmpl_id").mapped(
-                "product_variant_ids"
-            )
-            all_parents = parent_products | parent_from_template
-            newly_found = all_parents - all_descendants
-            if not newly_found:
-                break
-            all_descendants |= newly_found
-            products_to_check = newly_found
-
-        # 2. Find potential demand moves for these products
-        potential_moves = self.env["stock.move"].search(
-            [
-                ("product_id", "in", all_descendants.ids),
-                ("company_id", "=", self.company_id.id),
-                (
-                    "state",
-                    "in",
-                    ["confirmed", "waiting", "partially_available", "assigned"],
-                ),
-                ("created_production_id", "=", False),
-                ("production_id", "=", False),
-            ]
-        )
-
-        # 3. Find moves already in any campaign to exclude them
-        moves_in_campaigns = (
-            self.env["mrp.campaign.demand.proxy"].search([]).mapped("move_id")
-        )
-
-        # 4. Filter out moves already in other campaigns
-        available_moves = potential_moves - moves_in_campaigns
-
-        # 5. Return action to open the wizard
         return {
             "type": "ir.actions.act_window",
             "name": "Add Demand to Campaign",
@@ -348,14 +296,13 @@ class MrpCampaign(models.Model):
             "target": "new",
             "context": {
                 "default_campaign_id": self.id,
-                "available_move_ids": available_moves.ids,
             },
         }
 
-    def action_open_split_wizard(self):  # pragma: no coverage
+    def action_open_split_wizard(self) -> dict:  # pragma: no coverage
         return self.action_open_partition_wizard(mode="split")
 
-    def action_bo(self):  # pragma: no coverage
+    def action_bo(self) -> dict:  # pragma: no coverage
         return self.action_open_partition_wizard(mode="backorder")
 
     def action_open_partition_wizard(
@@ -392,7 +339,7 @@ class MrpCampaign(models.Model):
         }
 
     @api.model
-    def _get_name_seq(self):  # pragma: no coverage
+    def _get_name_seq(self) -> str:  # pragma: no coverage
         """Generates a sequence number for the campaign name."""
         return self.env["ir.sequence"].next_by_code("mrp.campaign") or _("New")
 
@@ -407,7 +354,7 @@ class MrpCampaign(models.Model):
         for rec in self:
             rec._resync_mos()
 
-    def _resync_mos(self):
+    def _resync_mos(self) -> None:
         self.ensure_one()
         # Force recompute of line quantities by accessing them
         self.line_ids.mapped("qty")

@@ -53,7 +53,7 @@ class MrpCampaignCreator(models.TransientModel):
             "date_planned_start": self.planned_date,
             "product_id": self.product_id.id,
         }
-        campaign_id: MrpCampaign = self.env["mrp.campaign"].create([values])
+        campaign_id: MrpCampaign = self.env["mrp.campaign"].create(values)
 
         products = self.demand_move_ids.mapped("product_id")
         boms_by_product = self.env["mrp.bom"]._bom_find(products=products)

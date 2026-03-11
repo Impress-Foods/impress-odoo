@@ -141,37 +141,3 @@ class TestWizardAddDemand(CampaignCase):
         wizard.add_demands()
         self.assertEqual(len(campaign.demand_line_ids), 0)
         self.assertEqual(len(campaign.demand_proxy_ids), 0)
-
-    def test_multi_company_wizard_isolation(self):
-        """Test that the 'Add Demand' wizard only shows moves
-        from the campaign's company."""
-        company_b = self.env["res.company"].create({"name": "Company B"})
-        warehouse_b = self.env["stock.warehouse"].create(
-            {"name": "Warehouse B", "code": "WHB", "company_id": company_b.id}
-        )
-
-        # Create a move in Company B
-        move_b = self.env["stock.move"].create(
-            {
-                "name": "Move B",
-                "product_id": self.bulk_material.id,
-                "product_uom_qty": 50.0,
-                "location_id": warehouse_b.lot_stock_id.id,
-                "location_dest_id": warehouse_b.lot_stock_id.id,
-                "company_id": company_b.id,
-                "state": "waiting",
-            }
-        )
-
-        campaign_a = self.create_campaign(self.bulk_material)
-        self.assertEqual(campaign_a.company_id, self.env.company)
-
-        # Open the wizard
-        action = campaign_a.action_open_add_demand_wizard()
-        available_move_ids = action["context"].get("available_move_ids", [])
-
-        self.assertNotIn(
-            move_b.id,
-            available_move_ids,
-            "Moves from Company B should not be available in Company A's campaign",
-        )

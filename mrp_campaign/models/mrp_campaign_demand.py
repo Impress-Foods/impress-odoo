@@ -87,7 +87,7 @@ class MrpCampaignDemand(models.Model):
     # Somehow, required to have the fields depending on demand_proxy_ids
     # in stock.move to be recomputed. Without this, the recomputation
     # is not triggered
-    def unlink(self):
+    def unlink(self) -> bool:
         self.demand_proxy_ids.unlink()
         return super().unlink()
 
@@ -107,7 +107,7 @@ class MrpCampaignDemandProxy(models.Model):
     campaign_id = fields.Many2one(related="demand_id.campaign_id", store=True)
     origin = fields.Char(related="move_id.origin")
 
-    def _get_partition_wizard_fields(self):
+    def _get_partition_wizard_fields(self) -> dict:
         self.ensure_one()
         move = self.move_id
         return {
