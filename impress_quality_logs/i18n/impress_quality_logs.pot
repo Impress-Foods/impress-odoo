@@ -203,6 +203,11 @@ msgid "<span class=\"o_stat_text\">Metal</span>"
 msgstr ""
 
 #. module: impress_quality_logs
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_weight_log_line_form
+msgid "<span class=\"o_stat_text\">Weight Log</span>"
+msgstr ""
+
+#. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_coding_log_form
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_form
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_form
@@ -224,11 +229,6 @@ msgstr ""
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_weight_log_form
 msgid "<span class=\"o_stat_text\">weight Lines</span>"
-msgstr ""
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_weight_log_line_form
-msgid "<span class=\"o_stat_text\">weight Log</span>"
 msgstr ""
 
 #. module: impress_quality_logs
@@ -1335,6 +1335,11 @@ msgid "Weekly Verification"
 msgstr ""
 
 #. module: impress_quality_logs
+#: model:ir.actions.act_window,name:impress_quality_logs.action_weight_log_line
+msgid "Weight Lines"
+msgstr ""
+
+#. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_weight_log_line__weight_log_id
 msgid "Weight Log"
 msgstr ""
@@ -1362,10 +1367,35 @@ msgid "Weight Ok"
 msgstr ""
 
 #. module: impress_quality_logs
+#: model:ir.ui.menu,name:impress_quality_logs.weight_log_line_menu
+msgid "Weight lines"
+msgstr ""
+
+#. module: impress_quality_logs
 #. odoo-python
 #: code:addons/impress_quality_logs/reports/base_log_report.py:0
 #, python-format
 msgid "Weight log"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.ui.menu,name:impress_quality_logs.weight_log_menu
+msgid "Weight logs"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__x_worksheet_20250303_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log__x_worksheet_20250203_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__x_worksheet_20250203_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_weight_log__x_worksheet_20250203_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__x_worksheet_20250303_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log__x_worksheet_large_20251126_id
+msgid "Worksheet 2024-12-02"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log__x_worksheet_large_20260303_id
+msgid "Worksheet Large 2026-03-03"
 msgstr ""
 
 #. module: impress_quality_logs
@@ -1478,11 +1508,6 @@ msgid "weight"
 msgstr ""
 
 #. module: impress_quality_logs
-#: model:ir.actions.act_window,name:impress_quality_logs.action_weight_log_line
-msgid "weight Lines"
-msgstr ""
-
-#. module: impress_quality_logs
 #: model:ir.actions.act_window,name:impress_quality_logs.action_weight_log
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_weight_log_form
 msgid "weight Log"
@@ -1499,21 +1524,33 @@ msgid "weight Logs"
 msgstr ""
 
 #. module: impress_quality_logs
-#: model:ir.ui.menu,name:impress_quality_logs.weight_log_line_menu
-msgid "weight lines"
-msgstr ""
-
-#. module: impress_quality_logs
 #: model:ir.model,name:impress_quality_logs.model_weight_log
 msgid "weight log"
 msgstr ""
 
 #. module: impress_quality_logs
-#: model:ir.ui.menu,name:impress_quality_logs.weight_log_menu
-msgid "weight logs"
+#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_weight_log_line_form
+msgid "weight_log_line"
 msgstr ""
 
 #. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_weight_log_line_form
-msgid "weight_log_line"
+#: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__x_worksheet_20250203_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__x_worksheet_20250203_id
+#: model:ir.model.fields,field_description:impress_quality_logs.field_weight_log_line__x_worksheet_20250203_id
+msgid "x_worksheet_20250203_id"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__x_worksheet_20250303_id
+msgid "x_worksheet_20250303_id"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__x_worksheet_large_20251126_id
+msgid "x_worksheet_large_20251126_id"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__x_worksheet_large_20260303_id
+msgid "x_worksheet_large_20260303_id"
 msgstr ""
