@@ -1,0 +1,28 @@
+// Targets the orchestrator when inside a modal
+.o_campaign_orchestrator {
+    // 1. Force the height to fit the Odoo Modal Body
+    // Odoo modals usually have a max-height of 90vh
+    height: 70vh;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+
+    .demand-sidebar-column,
+    .production-tree-column {
+        height: 100%; // Fill the orchestrator height
+        display: flex;
+        flex-direction: column;
+    }
+
+    .scroll-area {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .production-tree-column {
+        flex: 1;
+        overflow: auto; // Tree needs both X and Y potentially
+        background-color: #f8f9fa;
+    }
+}

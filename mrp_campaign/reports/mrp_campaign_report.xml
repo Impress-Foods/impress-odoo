@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_mrp_campaign_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure" />
+                        <div class="row">
+                            <div class="col-8">
+                                <h3>
+                                    <strong>Campaign:</strong>
+                                    <span t-field="doc.name" />
+                                </h3>
+                                <strong>Lot/Batch:</strong>
+                                <span t-field="doc.lot_name" />
+                                <br />
+                            </div>
+                            <div class="col-4 text-right">
+                                <strong>Start Date:</strong>
+                                <span t-field="doc.date_planned_start" />
+                            </div>
+                        </div>
+
+                        <t
+                            t-set="intermediate_mos"
+                            t-value="doc.production_ids.filtered(lambda mo: mo.product_id == doc.product_id)"
+                        />
+                        <t
+                            t-set="end_mos"
+                            t-value="doc.production_ids.filtered(lambda mo: mo.product_id != doc.product_id)"
+                        />
+
+                        <h3 class="mt32">Intermediate Product</h3>
+                        <t t-foreach="intermediate_mos" t-as="mo">
+                            <h4 class="mt32"><span t-field="mo.name" /> - <span
+                                    t-field="mo.product_id.display_name"
+                                />
+                            </h4>
+                            <div class="row">
+                                <div class="col-6">
+                                    <strong>Qty to Produce:</strong>
+                                    <span t-field="mo.product_qty" />
+                                    <span t-field="mo.product_uom_id.name" />
+                                </div>
+                                <div class="col-6">
+                                    <strong>Final Lot:</strong>
+                                    <span
+                                        t-field="mo.lot_producing_id.name"
+                                        t-if="mo.lot_producing_id"
+                                    />
+                                    <span t-else="">__________________</span>
+                                </div>
+                            </div>
+
+                            <t t-foreach="mo.workorder_ids" t-as="workorder">
+                                <div class="mt-4">
+                                    <h5>
+                                        <span t-field="workorder.name" />
+                                    </h5>
+                                    <table class="table table-sm table-bordered mt-2">
+                                        <thead>
+                                            <tr>
+                                                <th
+                                                    class="text-center"
+                                                    style="width: 40%;"
+                                                > Component </th>
+                                                <th
+                                                    class="text-center"
+                                                    style="width: 20%;"
+                                                > To Consume </th>
+                                                <th
+                                                    class="text-center"
+                                                    style="width: 20%;"
+                                                > Consumed Qty </th>
+                                                <th
+                                                    class="text-center"
+                                                    style="width: 20%;"
+                                                > Lot Number </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                t-foreach="workorder.move_raw_ids"
+                                                t-as="move"
+                                            >
+                                                <td>
+                                                    <span
+                                                        t-field="move.product_id.display_name"
+                                                    />
+                                                </td>
+                                                <td class="text-center">
+                                                    <span
+                                                        t-esc="round(move.product_uom_qty, 2)"
+                                                    />
+                                                    <span
+                                                        t-field="move.product_uom.name"
+                                                    />
+                                                </td>
+                                                <td class="text-center" />
+                                                <td class="text-center" />
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </t>
+                        </t>
+
+                        <h3 class="mt32">End Products</h3>
+                        <t t-foreach="end_mos" t-as="mo">
+                            <h4 class="mt32"> MO: <span t-field="mo.name" /> - <span
+                                    t-field="mo.product_id.display_name"
+                                />
+                            </h4>
+                            <div class="row">
+                                <div class="col-6">
+                                    <strong>Qty to Produce:</strong>
+                                    <span t-field="mo.product_qty" />
+                                    <span t-field="mo.product_uom_id.name" />
+                                </div>
+                                <div class="col-6">
+                                    <strong>Final Lot:</strong>
+                                    <span
+                                        t-field="mo.lot_producing_id.name"
+                                        t-if="mo.lot_producing_id"
+                                    />
+                                    <span t-else="">__________________</span>
+                                </div>
+                            </div>
+
+                            <t t-foreach="mo.workorder_ids" t-as="workorder">
+                                <div class="mt-4">
+                                    <h5>
+                                        <span
+                                            t-field="workorder.workcenter_id.name"
+                                        />: <span t-field="workorder.name" />
+                                    </h5>
+                                    <table class="table table-sm table-bordered mt-2">
+                                        <thead>
+                                            <tr>
+                                                <th
+                                                    class="text-center"
+                                                    style="width: 40%;"
+                                                > Component </th>
+                                                <th
+                                                    class="text-center"
+                                                    style="width: 20%;"
+                                                > To Consume </th>
+                                                <th
+                                                    class="text-center"
+                                                    style="width: 20%;"
+                                                > Consumed Qty </th>
+                                                <th
+                                                    class="text-center"
+                                                    style="width: 20%;"
+                                                > Lot Number </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                t-foreach="workorder.move_raw_ids"
+                                                t-as="move"
+                                            >
+                                                <td>
+                                                    <span
+                                                        t-field="move.product_id.display_name"
+                                                    />
+                                                </td>
+                                                <td class="text-center">
+                                                    <span
+                                                        t-esc="round(move.product_uom_qty, 2)"
+                                                    />
+                                                    <span
+                                                        t-field="move.product_uom.name"
+                                                    />
+                                                </td>
+                                                <td class="text-center" />
+                                                <td class="text-center" />
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </t>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_mrp_campaign" model="ir.actions.report">
+        <field name="name">Campaign Tracking Card</field>
+        <field name="model">mrp.campaign</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">mrp_campaign.report_mrp_campaign_document</field>
+        <field name="report_file">mrp_campaign.report_mrp_campaign_document</field>
+        <field name="print_report_name">'Campaign Card - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_mrp_campaign" />
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
