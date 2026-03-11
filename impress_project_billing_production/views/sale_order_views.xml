@@ -1,29 +1,17 @@
 <?xml version='1.0' encoding="utf-8" ?>
 <odoo>
-        <record
-        id="impress_project_billing_production_sale_order_form"
-        model="ir.ui.view"
-    >
-            <field name="name">project_production_billing.sale.order.form</field>
-            <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale.view_order_form" />
-            <field name="priority">16</field>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='state']" position="before">
-                    <button
-                    string="Create project"
-                    name="%(action_create_project)d"
-                    type="action"
-                    invisible="project_id"
-                />
-                </xpath>
-                <xpath
+    <record id="impress_project_billing_production_sale_order_form" model="ir.ui.view">
+        <field name="name">project_production_billing.sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="priority">16</field>
+        <field name="arch" type="xml">
+            <xpath
                 expr="//button[@name='action_view_project_ids']"
                 position="attributes"
             >
-                    <attribute name="invisible">not project_id</attribute>
-                </xpath>
-            </field>
-
-        </record>
+                <attribute name="invisible">not project_id</attribute>
+            </xpath>
+        </field>
+    </record>
 </odoo>
