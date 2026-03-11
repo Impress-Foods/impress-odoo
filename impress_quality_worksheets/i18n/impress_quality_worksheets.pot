@@ -72,13 +72,9 @@ msgstr ""
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "After downtime following repairs."
-msgstr ""
-
-#. module: impress_quality_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
-msgid "After downtime foloowing repairs."
 msgstr ""
 
 #. module: impress_quality_worksheets
