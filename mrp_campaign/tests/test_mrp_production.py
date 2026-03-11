@@ -1,10 +1,6 @@
-import logging
-
 from odoo.addons.mrp.models.mrp_production import MrpProduction
 
 from .test_common import CampaignCase
-
-_logger = logging.getLogger(__name__)
 
 
 class TestMrpProduction(CampaignCase):

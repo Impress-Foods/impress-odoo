@@ -1,9 +1,5 @@
-import logging
-
 from ..models.mrp_campaign import MrpCampaign
 from .test_common import CampaignCase
-
-_logger = logging.getLogger(__name__)
 
 
 class TestMrpCampaignDemand(CampaignCase):

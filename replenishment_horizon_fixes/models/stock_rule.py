@@ -1,9 +1,6 @@
-import logging
 from datetime import timedelta
 
 from odoo import models
-
-_logger = logging.getLogger(__name__)
 
 
 class StockRuleInherit(models.Model):

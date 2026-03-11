@@ -1,13 +1,9 @@
-import logging
-
 from odoo import api, fields, models
 
 from odoo.addons.product.models.product_product import ProductProduct
 from odoo.addons.stock.models.stock_move import StockMove
 
 from ..models.mrp_campaign import MrpCampaign
-
-_logger = logging.getLogger(__name__)
 
 
 class MrpCampaignCreator(models.TransientModel):

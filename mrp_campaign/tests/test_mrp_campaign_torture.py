@@ -1,11 +1,8 @@
 import json
-import logging
 
 from odoo.tools import float_compare
 
 from .test_common import CampaignCase
-
-_logger = logging.getLogger(__name__)
 
 
 class TestMrpCampaignTorture(CampaignCase):

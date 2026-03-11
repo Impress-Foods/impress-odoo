@@ -1,12 +1,9 @@
 import colorsys
-import logging
 import random
 from typing import Literal
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
-
-_logger = logging.getLogger(__name__)
 
 
 class MrpCampaign(models.Model):

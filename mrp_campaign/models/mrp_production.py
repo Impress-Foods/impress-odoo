@@ -1,10 +1,6 @@
-import logging
-
 from odoo import fields, models
 
 from odoo.addons.mrp.models.mrp_production import MrpProduction
-
-_logger = logging.getLogger(__name__)
 
 
 class ProductionOrder(models.Model):

@@ -1,11 +1,7 @@
-import logging
-
 from odoo.exceptions import ValidationError
 from odoo.tools.float_utils import float_compare
 
 from .test_common import CampaignCase
-
-_logger = logging.getLogger(__name__)
 
 
 class TestMrpCampaignLineAdjust(CampaignCase):

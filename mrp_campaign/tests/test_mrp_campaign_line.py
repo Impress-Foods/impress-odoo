@@ -1,12 +1,8 @@
-import logging
-
 from odoo.exceptions import ValidationError
 
 from ..models.mrp_campaign import MrpCampaign
 from ..models.mrp_campaign_line import CampaignLine
 from .test_common import CampaignCase
-
-_logger = logging.getLogger(__name__)
 
 
 class TestMrpCampaignLine(CampaignCase):

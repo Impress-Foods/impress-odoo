@@ -1,5 +1,4 @@
 import json
-import logging
 from typing import Any
 
 from odoo import _, api, fields, models
@@ -7,8 +6,6 @@ from odoo.exceptions import ValidationError
 
 from ..models.mrp_campaign import MrpCampaign
 from ..models.mrp_campaign_line import CampaignLine
-
-_logger = logging.getLogger(__name__)
 
 
 class MrpCampaignPartitionWizard(models.TransientModel):

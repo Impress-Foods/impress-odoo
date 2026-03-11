@@ -1,9 +1,6 @@
-import logging
 from datetime import date
 
 from .test_common import CampaignCase
-
-_logger = logging.getLogger(__name__)
 
 
 class TestMrpCampaignCreator(CampaignCase):

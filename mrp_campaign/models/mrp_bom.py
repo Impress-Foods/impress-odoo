@@ -1,12 +1,8 @@
-import logging
-
 from odoo import _, models
 from odoo.exceptions import ValidationError
 
 from odoo.addons.mrp.models.mrp_bom import MrpBomLine
 from odoo.addons.product.models.product_product import ProductProduct
-
-_logger = logging.getLogger(__name__)
 
 
 class MrpBom(models.Model):
