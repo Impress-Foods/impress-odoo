@@ -7,10 +7,10 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-10 13:51+0000\n"
-"PO-Revision-Date: 2025-11-20 18:14+0000\n"
+"PO-Revision-Date: 2026-03-11 16:13+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
-"Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
-"impress-odoo/impress_production_billing/fr_CA/>\n"
+"Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
+"impress-odoo-17/impress_production_billing/fr_CA/>\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -250,10 +250,8 @@ msgstr "Produit"
 
 #. module: impress_production_billing
 #: model:ir.model.fields,field_description:impress_production_billing.field_sale_order_line__production_ids
-#, fuzzy
-#| msgid "Product"
 msgid "Production"
-msgstr "Produit"
+msgstr "Production"
 
 #. module: impress_production_billing
 #: model:res.groups,name:impress_production_billing.production_billing_manager
@@ -285,10 +283,8 @@ msgstr "Bon de vente"
 
 #. module: impress_production_billing
 #: model:ir.model,name:impress_production_billing.model_sale_order_line
-#, fuzzy
-#| msgid "Sales Order"
 msgid "Sales Order Line"
-msgstr "Bon de vente"
+msgstr "Ligne de bon de vente"
 
 #. module: impress_production_billing
 #: model_terms:ir.ui.view,arch_db:impress_production_billing.portal_manufacturings_list

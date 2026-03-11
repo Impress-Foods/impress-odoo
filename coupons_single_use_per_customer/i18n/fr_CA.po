@@ -6,13 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20260219\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2026-03-11 16:13+0000\n"
+"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
+"impress-odoo-17/coupons_single_use_per_customer/fr_CA/>\n"
+"Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: coupons_single_use_per_customer
 #: model:ir.model.fields,help:coupons_single_use_per_customer.field_loyalty_program__limit_usage_per_customer
@@ -20,32 +23,34 @@ msgid ""
 "If checked, each customer can only use this program once, even if the total "
 "usage is unlimited."
 msgstr ""
+"Si coché, chaque client sera en mesure d'utiliser le programme une seule "
+"fois."
 
 #. module: coupons_single_use_per_customer
 #: model:ir.model.fields,field_description:coupons_single_use_per_customer.field_loyalty_program__limit_usage_per_customer
 msgid "Limit usage per customer"
-msgstr ""
+msgstr "Limiter l'utilisation par client"
 
 #. module: coupons_single_use_per_customer
 #: model:ir.model,name:coupons_single_use_per_customer.model_loyalty_program
 msgid "Loyalty Program"
-msgstr ""
+msgstr "Programme de loyauté"
 
 #. module: coupons_single_use_per_customer
 #: model:ir.model,name:coupons_single_use_per_customer.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Bon de vente"
 
 #. module: coupons_single_use_per_customer
 #. odoo-python
 #: code:addons/coupons_single_use_per_customer/models/sale_order.py:0
 #, python-format
 msgid "This code has already been used by this customer."
-msgstr ""
+msgstr "Ce code a déjà été utilisé pour ce client."
 
 #. module: coupons_single_use_per_customer
 #. odoo-python
 #: code:addons/coupons_single_use_per_customer/models/sale_order.py:0
 #, python-format
 msgid "This program has already been used by this customer."
-msgstr ""
+msgstr "Ce programme a déjà été utilisé par ce client."

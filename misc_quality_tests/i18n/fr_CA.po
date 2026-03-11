@@ -6,10 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-01-26 14:50+0000\n"
+"PO-Revision-Date: 2026-03-11 16:13+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
-"impress-odoo/misc_quality_tests/fr_CA/>\n"
+"impress-odoo-17/misc_quality_tests/fr_CA/>\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +20,7 @@ msgstr ""
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__message_needaction
 msgid "Action Needed"
-msgstr "Action Requise"
+msgstr "Action requise"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__activity_ids
@@ -114,7 +114,7 @@ msgstr "Grouper par"
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__has_message
 msgid "Has Message"
-msgstr "À un message"
+msgstr "A un message"
 
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__id
