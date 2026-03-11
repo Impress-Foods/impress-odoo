@@ -1,0 +1,25 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* replenishment_horizon_fixes
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e-20260219\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr_CA\n"
+
+#. module: replenishment_horizon_fixes
+#: model:ir.model,name:replenishment_horizon_fixes.model_stock_warehouse_orderpoint
+msgid "Minimum Inventory Rule"
+msgstr ""
+
+#. module: replenishment_horizon_fixes
+#: model:ir.model,name:replenishment_horizon_fixes.model_stock_rule
+msgid "Stock Rule"
+msgstr ""
