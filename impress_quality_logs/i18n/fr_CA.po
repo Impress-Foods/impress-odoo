@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-04 17:01+0000\n"
-"PO-Revision-Date: 2026-03-10 16:44+0000\n"
+"PO-Revision-Date: 2026-03-11 14:35+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
 "impress-odoo-17/impress_quality_logs/fr_CA/>\n"
@@ -508,7 +508,6 @@ msgstr "Lignes de registre HPP"
 #: model:ir.actions.report,name:impress_quality_logs.action_report_hpp_log
 msgid "HPP Log PDF"
 msgstr "Registre HPP PDF"
-
 
 #. module: impress_quality_logs
 #: model:ir.model,name:impress_quality_logs.model_report_impress_quality_logs_report_hpp_log
@@ -1088,21 +1087,21 @@ msgstr "There is no examples click here to add new metal.log.line."
 #: code:addons/impress_quality_logs/models/logs/mixin/log_line_mixin.py:0
 #, python-format
 msgid "This record is already locked."
-msgstr "This record is already locked."
+msgstr "Cet enregistrement est déjà verrouillé."
 
 #. module: impress_quality_logs
 #. odoo-python
 #: code:addons/impress_quality_logs/models/logs/mixin/log_line_mixin.py:0
 #, python-format
 msgid "This record is locked and cannot be modified."
-msgstr "This record is locked and cannot be modified."
+msgstr "Cet enregistrement est verrouillé et ne peut pas être modifié."
 
 #. module: impress_quality_logs
 #. odoo-python
 #: code:addons/impress_quality_logs/models/logs/mixin/log_line_mixin.py:0
 #, python-format
 msgid "This record is not locked."
-msgstr "This record is not locked."
+msgstr "Cet enregistrement n'est pas verrouillé."
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__torque
@@ -1141,7 +1140,6 @@ msgstr "Signature de vérification"
 
 #. module: impress_quality_logs
 #: model:ir.ui.menu,name:impress_quality_logs.weight_log_menu
-#, fuzzy
 msgid "Weight logs"
 msgstr "Registre Poids"
 
