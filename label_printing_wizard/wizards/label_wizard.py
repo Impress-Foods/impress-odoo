@@ -1,16 +1,15 @@
 import logging
 
-from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo import api, fields, models
+from odoo.exceptions import UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
 
 
 class LabelWizard(models.TransientModel):
     _name = "label_wizard"
-    _description = _("Label Wizard")
+    _description = "Label Wizard"
 
-    name = fields.Char()
     model = fields.Selection(
         [
             ("product", "Product"),
@@ -23,20 +22,28 @@ class LabelWizard(models.TransientModel):
     product_id = fields.Many2one(
         "product.product",
         store=True,
+        readonly=False,
         compute="_compute_product_id",
-        inverse="_inverse_product_id",
     )
     product_template_id = fields.Many2one("product.template")
-
-    packaging_id = fields.Many2one("product.packaging")
 
     uom_id = fields.Many2one("uom.uom", related="product_id.uom_id")
     lot_id = fields.Many2one("stock.lot")
 
+    product_uom_id = fields.Many2one(
+        "uom.uom",
+        string="Packaging",
+        domain="[('id', 'in', available_uom_ids)]",
+    )
+    available_uom_ids = fields.Many2many(
+        "uom.uom",
+        string="Available UOMs",
+        compute="_compute_available_uom_ids",
+    )
+
     picking_id = fields.Many2one("stock.picking")
 
-    product_qty = fields.Float(string="Quantity")
-    packaging_qty = fields.Float()
+    product_uom_qty = fields.Float(string="Quantity")
 
     label_qty = fields.Integer(default=1, string="Number of Labels")
 
@@ -54,8 +61,10 @@ class LabelWizard(models.TransientModel):
     product_domain = fields.Char(compute="_compute_product_domain")
     lot_domain = fields.Char(compute="_compute_lot_domain")
 
-    def _inverse_product_id(self):
-        pass
+    @api.onchange("product_id")
+    def _onchange_product_id(self):
+        self.ensure_one()
+        self.product_uom_id = False
 
     @api.depends("product_template_id")
     def _compute_product_id(self):
@@ -114,13 +123,27 @@ class LabelWizard(models.TransientModel):
 
             record.label_report = self.env.ref(report_ref) if report_ref else False
 
+    @api.depends("product_id")
+    def _compute_available_uom_ids(self):
+        for record in self:
+            if not record.product_id:
+                record.available_uom_ids = False
+                continue
+            product = record.product_id
+            uoms = product.uom_id | product.product_uom_ids.uom_id
+            uoms |= product.uom_ids
+            record.available_uom_ids = uoms
+            if not record.product_uom_id:
+                record.product_uom_id = product.uom_id
+
     @api.onchange("picking_id", "product_id", "lot_id")
-    def get_product_qty(self) -> None:
+    def get_product_uom_qty(self) -> None:
         for record in self:
             if not record.picking_id or not record.product_id:
                 continue
 
             quantity = 0
+            selected_uom = False
             if record.product_id.tracking in ["lot", "serial"] and record.lot_id:
                 move_lines = record.picking_id.move_line_ids.filtered(
                     lambda ml, record=record: (
@@ -129,40 +152,45 @@ class LabelWizard(models.TransientModel):
                     )
                 )
                 quantity = sum(move_lines.mapped("qty_done"))
+                if move_lines:
+                    selected_uom = move_lines[0].product_uom_id
             else:
                 moves = record.picking_id.move_ids.filtered(
                     lambda m, record=record: m.product_id == record.product_id
                 )
                 quantity = sum(moves.mapped("product_uom_qty"))
+                if moves:
+                    selected_uom = moves[0].product_uom_id
 
-            record.product_qty = quantity
+            record.product_uom_qty = quantity
+            if selected_uom and selected_uom in record.available_uom_ids:
+                record.product_uom_id = selected_uom
 
-    def create(self, vals_list):
-        return super().create(vals_list)
-
-    def print_label(self):
-        report = self.label_report
+    def _make_values(self) -> dict:
+        self.ensure_one()
         res_id = 0
-
-        data = None
-
-        if len(report) == 0:
-            raise UserError(_("Report type not supported"))
-
         match self.model:
             case "product":
                 res_id = self.product_id.id
-
             case "lot":
                 res_id = self.lot_id.id
+            case _:
+                raise ValidationError(self.env._("Invalid model for wizard!"))
 
-        report = report.with_context(label_count=self.label_qty)
-        if self.product_qty != 0:
-            report = report.with_context(label_product_qty=self.product_qty)
-        if self.packaging_id:
-            report = report.with_context(label_packaging_id=self.packaging_id.id)
+        data = {
+            "label_count": self.label_qty,
+            "product_uom_qty": self.product_uom_qty,
+            "product_uom_id": self.product_uom_id.id,
+        }
 
-            if self.packaging_qty != 0:
-                report = report.with_context(label_packaging_qty=self.packaging_qty)
+        return {res_id: data}
 
-        return report.report_action(res_id, data=data)
+    def print_label(self):
+        self.ensure_one()
+
+        report = self.label_report
+        if not report:
+            raise UserError(self.env._("Report type not supported"))
+        data = self._make_values()
+
+        return report.report_action(list(data.keys()), data)

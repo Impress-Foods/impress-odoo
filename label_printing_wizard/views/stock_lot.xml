@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
     <record id="stock_lot_form_view_inherit" model="ir.ui.view">
         <field name="name">stock.lot.form.inherit</field>
         <field name="model">stock.lot</field>

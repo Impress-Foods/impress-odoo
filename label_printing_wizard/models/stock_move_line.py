@@ -1,8 +1,8 @@
 import logging
 from typing import Any
 
-from odoo import _, models
-from odoo.tools import ValidationError
+from odoo import models
+from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
@@ -29,5 +29,7 @@ class StockMoveLine(models.Model):
                 context["default_lot_id"] = self.lot_id.id
                 context["default_model"] = "lot"
             else:
-                raise ValidationError(_(f"Context is not a dict: {action['context']}"))
+                raise ValidationError(
+                    self.env._("Context is not a dict: %s", action["context"])
+                )
         return action

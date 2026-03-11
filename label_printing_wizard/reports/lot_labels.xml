@@ -20,17 +20,15 @@
                     </t>
                     <t t-if="lot['product_qty']" name="product_qty">
                         <t
+                            t-set="product_uom"
+                            t-value="lot.get('product_uom', lot['lot_record'].product_id.uom_id)"
+                        />
+                        <t
                             t-out="'^FO10,130 ^A0N,88,66^FDQTY: ' + str(lot['product_qty']) + ' ' +
-            lot['lot_record'].product_id.uom_id.display_name + '^FS'"
+            product_uom.display_name + '^FS'"
                         />
                     </t>
 
-                    <t t-if="lot['packaging_name']">
-                        <t t-call="label_printing_wizard.packaging_block_2x4">
-                            <t t-set="name" t-value="lot['packaging_name']" />
-                            <t t-set="qty" t-value="lot['packaging_qty']" />
-                        </t>
-                    </t>
                     <t name="barcode">
                         <t t-if="lot['gs1_barcode']">
                             <t
@@ -54,7 +52,6 @@
     <template id="label_lot_zpl_4x6">
         <t t-foreach="docs" t-as="lot">
             <t t-foreach="range(lot['label_count'])" t-as="count">
-
                 <t t-translation="off">
                     <t name="setup">
                         <t t-out="'^XA^CI28'" />
@@ -69,12 +66,6 @@
                         <t
                             t-out="'^FO500,50 ^A0R,88,66^FDLN/SN: ' + lot['name'] + '^FS'"
                         />
-                    </t>
-                    <t t-if="lot['packaging_name']">
-                        <t t-call="label_printing_wizard.packaging_block_4x6">
-                            <t t-set="name" t-value="lot['packaging_name']" />
-                            <t t-set="qty" t-value="lot['packaging_qty']" />
-                        </t>
                     </t>
                     <t name="barcode">
                         <t t-if="lot['gs1_barcode']">
@@ -91,7 +82,11 @@
 
                     <t t-if="lot['product_qty']" name="product_qty">
                         <t
-                            t-out="'^FO400,50 ^A0R,88,66^FDQTY: ' + str(lot['product_qty']) + ' ' + lot['lot_record'].product_id.uom_id.display_name + '^FS'"
+                            t-set="product_uom"
+                            t-value="lot.get('product_uom', lot['lot_record'].product_id.uom_id)"
+                        />
+                        <t
+                            t-out="'^FO400,50 ^A0R,88,66^FDQTY: ' + str(lot['product_qty']) + ' ' + product_uom.display_name + '^FS'"
                         />
                     </t>
                     <t name="footer">
@@ -101,5 +96,4 @@
             </t>
         </t>
     </template>
-
 </odoo>

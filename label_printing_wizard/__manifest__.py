@@ -1,23 +1,19 @@
 {
     "name": "Label Printing Wizard",
-    "version": "17.0.1.0.1",
+    "version": "19.0.1.0.0",
     "summary": """
     Adds different wizards to print custom labels for products and lots
     """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/Impress-Foods/impress-odoo",
+    "website": "https://github.com/impress-foods/impress-odoo",
     "category": "Hidden",
     "depends": [
-        "base",
-        "product",
-        "stock",
         "product_expiry",
         "stock_barcode",
         "barcodes_gs1_nomenclature",
     ],
     "data": [
         "wizards/label_wizard.xml",
-        "reports/datamatrix.xml",
         "reports/common.xml",
         "reports/lot_labels.xml",
         "reports/product_labels.xml",
@@ -30,7 +26,7 @@
     "assets": {
         "web.assets_backend": [
             "label_printing_wizard/static/src/**/*.js",
-            "label_printing_wizard/static/src/**/*.xml",
+            # "label_printing_wizard/static/src/**/*.xml",
         ]
     },
     "application": True,

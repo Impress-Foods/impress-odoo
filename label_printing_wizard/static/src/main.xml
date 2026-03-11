@@ -7,7 +7,6 @@
         t-inherit-mode="extension"
         owl="1"
     >
-
         <xpath expr="//nav[hasclass('navbar-nav')][2]/t/button[1]" position="after">
             <button
                 t-if="env.model.formViewId and resModel === 'stock.picking'"

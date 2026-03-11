@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <!-- View labelWizard form -->
     <record id="view_labelWizard_form" model="ir.ui.view">
         <field name="name">view.labelWizard.form</field>
@@ -19,7 +18,6 @@
                         <field name="label_qty" />
                     </group>
 
-
                     <group>
                         <field
                             name="product_id"
@@ -35,33 +33,13 @@
                             invisible="model != 'lot'"
                         />
 
-                        <field
-                            name="packaging_id"
-                            domain="[('product_id', '=', product_id)]"
-                        />
-
-                        <label
-                            for="product_qty"
-                            string="Quantity"
-                            invisible="packaging_id"
-                        />
-                        <div class="o_row g-0 d-flex" invisible="packaging_id">
-                            <field name="product_qty" invisible="packaging_id" />
+                        <label for="product_uom_qty" string="Quantity" />
+                        <div class="o_row g-0 d-flex">
+                            <field name="product_uom_qty" />
                             <field
-                                name="uom_id"
-                                readonly="1"
-                                invisible="packaging_id"
+                                name="product_uom_id"
+                                options="{'no_quick_create': True}"
                             />
-                        </div>
-
-                        <label
-                            for="packaging_qty"
-                            string="Quantity"
-                            invisible="not packaging_id"
-                        />
-                        <div class="o_row g-0 d-flex" invisible="not packaging_id">
-                            <field name="packaging_qty" invisible="not packaging_id" />
-                            <span class="ms-1" invisible="not packaging_id">Cases</span>
                         </div>
                     </group>
                 </group>
@@ -88,7 +66,6 @@
         <field name="binding_model_id" ref="label_printing_wizard.model_label_wizard" />
         <field name="target">new</field>
     </record>
-
 
     <menuitem
         id="label_wizard_menu"
