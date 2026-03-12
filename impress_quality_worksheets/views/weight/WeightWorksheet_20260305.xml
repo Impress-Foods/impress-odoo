@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <record id='weightWorksheet_20250203_form_view' model='ir.ui.view'>
-        <field name="name">weight.worksheet.20250203.form.view</field>
+    <record id='weightWorksheet_20260305_form_view' model='ir.ui.view'>
+        <field name="name">weight.worksheet.20260305.form.view</field>
         <field
             name="model"
             model="ir.model"
-            eval="obj().env.ref('impress_quality_worksheets.ws_weight_20250203').model_id.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_weight_20260305').model_id.model"
         />
         <field name="priority">1</field>
         <field name="arch" type="xml">

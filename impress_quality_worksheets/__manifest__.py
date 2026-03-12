@@ -1,6 +1,6 @@
 {
     "name": "Impress Quality Worksheets",
-    "version": "17.0.26.01.22",
+    "version": "17.0.26.03.12",
     "summary": """ Worksheets to use in conjunction with Impress Quality Logs """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
@@ -12,8 +12,8 @@
         "quality_control_worksheet",
     ],
     "data": [
-        "data/weight/WeightWorksheet_20250203.xml",
-        "views/weight/WeightWorksheet_20250203.xml",
+        "data/weight/WeightWorksheet_20260305.xml",
+        "views/weight/WeightWorksheet_20260305.xml",
         "data/HPP/HPPWorksheet_20250203.xml",
         "views/HPP/HPPWorksheet_20250203.xml",
         "data/metal/MetalWorksheet_20250203.xml",
