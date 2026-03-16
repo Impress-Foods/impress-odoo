@@ -52,6 +52,41 @@ class TestMrpCampaignCreator(CampaignCase):
         wizard = self.wizard_model.create({})
         self.assertFalse(wizard.available_demand_move_ids)
 
+    def test_available_demand_move_ids_filters_intermediate_moves(self):
+        """Test that available_demand_move_ids excludes intermediate moves
+        (moves that have downstream moves in the chain)."""
+        move_intermediate = self.env["stock.move"].create(
+            {
+                "name": "move intermediate",
+                "product_id": self.int_prod_x_red.id,
+                "product_uom_qty": 10.0,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.stock_location.id,
+            }
+        )
+        move_final = self.env["stock.move"].create(
+            {
+                "name": "move final",
+                "product_id": self.int_prod_x_red.id,
+                "product_uom_qty": 10.0,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.stock_location.id,
+            }
+        )
+
+        move_intermediate.move_dest_ids = move_final
+
+        (move_intermediate | move_final)._action_confirm()
+
+        wizard = self.wizard_model.create(
+            {
+                "product_id": self.bulk_material.id,
+            }
+        )
+
+        self.assertIn(move_final, wizard.available_demand_move_ids)
+        self.assertNotIn(move_intermediate, wizard.available_demand_move_ids)
+
     def test_make_campaign(self):
         """Test the full campaign creation process via the wizard."""
         move_1 = self.env["stock.move"].create(

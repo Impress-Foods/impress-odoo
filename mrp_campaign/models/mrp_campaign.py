@@ -120,6 +120,7 @@ class MrpCampaign(models.Model):
             [("state", "in", ["draft"])]
         )
         mos_to_unlink.unlink()
+        self.mapped("demand_line_ids").unlink()
         return super().unlink()
 
     def write(self, vals) -> bool:
