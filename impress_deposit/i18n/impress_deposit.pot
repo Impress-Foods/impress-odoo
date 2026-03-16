@@ -1,0 +1,118 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* impress_deposit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e-20260219\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: impress_deposit
+#: model:ir.model,name:impress_deposit.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: impress_deposit
+#: model:ir.actions.act_window,name:impress_deposit.res_config_settings_action
+msgid "Configuration"
+msgstr ""
+
+#. module: impress_deposit
+#: model:ir.model,name:impress_deposit.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: impress_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_stock_move_line__container_qty
+msgid "Container Quantity"
+msgstr ""
+
+#. module: impress_deposit
+#. odoo-python
+#: code:addons/impress_deposit/models/sale_order.py:0
+#: model:ir.model.fields,field_description:impress_deposit.field_sale_order__deposit_value
+#: model_terms:ir.ui.view,arch_db:impress_deposit.view_product_template_form_inherit_deposit
+#, python-format
+msgid "Deposit"
+msgstr ""
+
+#. module: impress_deposit
+#: model_terms:ir.ui.view,arch_db:impress_deposit.view_res_config_settings_view_form_inherit_deposit
+msgid "Deposit Product"
+msgstr ""
+
+#. module: impress_deposit
+#: model_terms:ir.ui.view,arch_db:impress_deposit.view_res_config_settings_view_form_inherit_deposit
+msgid "Deposit Settings"
+msgstr ""
+
+#. module: impress_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_sale_order_line__is_deposit_line
+msgid "Is Deposit Line"
+msgstr ""
+
+#. module: impress_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_stock_picking__container_qty
+msgid "Number of containers shipped"
+msgstr ""
+
+#. module: impress_deposit
+#: model:ir.model,name:impress_deposit.model_product_template
+msgid "Product"
+msgstr ""
+
+#. module: impress_deposit
+#: model:ir.model,name:impress_deposit.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: impress_deposit
+#: model:ir.model,name:impress_deposit.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: impress_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_res_config_settings__deposit_product
+msgid "Product used for deposit"
+msgstr ""
+
+#. module: impress_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_product_product__qty_multiple
+#: model:ir.model.fields,field_description:impress_deposit.field_product_template__qty_multiple
+msgid "Quantity per case"
+msgstr ""
+
+#. module: impress_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_product_product__requires_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_product_template__requires_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_res_partner__requires_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_res_users__requires_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_stock_move_line__requires_deposit
+msgid "Requires Deposit"
+msgstr ""
+
+#. module: impress_deposit
+#: model:ir.model,name:impress_deposit.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: impress_deposit
+#: model:ir.model,name:impress_deposit.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: impress_deposit
+#: model_terms:ir.ui.view,arch_db:impress_deposit.view_res_config_settings_view_form_inherit_deposit
+msgid "Select the product for deposits"
+msgstr ""
+
+#. module: impress_deposit
+#: model:ir.model,name:impress_deposit.model_stock_picking
+msgid "Transfer"
+msgstr ""
