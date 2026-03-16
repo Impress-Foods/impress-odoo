@@ -25,6 +25,6 @@ class StockMove(models.Model):
     def _compute_campaign_can_be_added(self) -> None:
         for rec in self:
             value = (rec.campaign_qty_to_supply > 0) and (
-                rec.state not in ["cancel", "done", "draft"]
+                rec.state not in ["cancel", "done", "draft"] and (not rec.move_dest_ids)
             )
             rec.campaign_can_be_added = value

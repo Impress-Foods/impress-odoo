@@ -7,7 +7,11 @@
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
     "depends": ["mrp_campaign", "sale_stock"],
-    "data": ["views/mrp_campaign_views.xml", "views/sale_order_views.xml"],
+    "data": [
+        "views/mrp_campaign_views.xml",
+        "views/sale_order_views.xml",
+        "views/mrp_campaign_creator_views.xml",
+    ],
     "assets": {
         "web.assets_backend": ["mrp_campaign_sale/static/src/**/*"],
     },
