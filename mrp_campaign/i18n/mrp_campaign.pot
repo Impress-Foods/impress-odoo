@@ -1143,7 +1143,9 @@ msgstr ""
 
 #. module: mrp_campaign
 #: model_terms:ir.actions.act_window,help:mrp_campaign.action_mrp_campaign_creator
-msgid "There is no examples click here to add new Mrp Campaign Creator."
+msgid ""
+"There is no examples click here to add new Mrp\n"
+"                Campaign Creator."
 msgstr ""
 
 #. module: mrp_campaign
