@@ -2,17 +2,18 @@ from odoo.tests import TransactionCase
 
 
 class TestCommon(TransactionCase):
-    def setUp(self):
-        super().setUp()
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
 
-        self.so_model = self.env["sale.order"]
-        self.sol_model = self.env["sale.order.line"]
-        self.product_model = self.env["product.product"]
-        self.partner_model = self.env["res.partner"]
+        cls.so_model = cls.env["sale.order"]
+        cls.sol_model = cls.env["sale.order.line"]
+        cls.product_model = cls.env["product.product"]
+        cls.partner_model = cls.env["res.partner"]
 
-        unit_uom = self.env["uom.uom"].search([("name", "=", "Units")])
+        unit_uom = cls.env["uom.uom"].search([("name", "=", "Units")])
 
-        self.deposit_product = self.product_model.create(
+        cls.deposit_product = cls.product_model.create(
             {
                 "name": "Deposit Product",
                 "type": "service",
@@ -21,49 +22,52 @@ class TestCommon(TransactionCase):
             }
         )
 
-        self.config = (
-            self.env["res.config.settings"]
-            .create({"deposit_product": self.deposit_product.id})
+        cls.config = (
+            cls.env["res.config.settings"]
+            .create({"deposit_product": cls.deposit_product.id})
             .execute()
         )
 
-        self.product_w_deposit = self.product_model.create(
+        cls.product_w_deposit = cls.product_model.create(
             {
                 "name": "Product with Deposit",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "requires_deposit": True,
                 "qty_multiple": 1,
             }
         )
-        self.product_wo_deposit = self.product_model.create(
+        cls.product_wo_deposit = cls.product_model.create(
             {
                 "name": "Product without Deposit",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "requires_deposit": False,
                 "qty_multiple": 1,
             }
         )
 
-        self.partner_w_deposit = self.partner_model.create(
+        cls.partner_w_deposit = cls.partner_model.create(
             {"name": "Partner with Deposit", "requires_deposit": True}
         )
-        self.partner_wo_deposit = self.partner_model.create(
+        cls.partner_wo_deposit = cls.partner_model.create(
             {"name": "Partner without Deposit", "requires_deposit": False}
         )
 
-        self.wh = self.env.ref("stock.warehouse0")
+        cls.wh = cls.env.ref("stock.warehouse0")
+        cls.delivery_type = cls.env.ref("stock.picking_type_out")
 
-        self.env["stock.quant"].create(
+        cls.env["stock.quant"].create(
             {
-                "product_id": self.product_w_deposit.id,
-                "location_id": self.wh.lot_stock_id.id,
+                "product_id": cls.product_w_deposit.id,
+                "location_id": cls.wh.lot_stock_id.id,
                 "quantity": 100,
             }
         )
-        self.env["stock.quant"].create(
+        cls.env["stock.quant"].create(
             {
-                "product_id": self.product_wo_deposit.id,
-                "location_id": self.wh.lot_stock_id.id,
+                "product_id": cls.product_wo_deposit.id,
+                "location_id": cls.wh.lot_stock_id.id,
                 "quantity": 100,
             }
         )

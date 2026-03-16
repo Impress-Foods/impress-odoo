@@ -14,5 +14,5 @@ class ResConfigSettings(models.TransientModel):
         ondelete="cascade",
         required=False,
         config_parameter="impress_deposit.deposit_product",
-        domain=[("detailed_type", "=", "service")],
+        domain=[("type", "=", "service")],
     )

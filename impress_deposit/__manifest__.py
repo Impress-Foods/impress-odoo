@@ -1,16 +1,15 @@
 {
     "name": "Impress Deposit",
-    "version": "17.0.0.1.1",
+    "version": "19.0.1.0.0",
     "summary": """ Module to allow the management of deposits for containers """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/Impress-Foods/impress-odoo",
+    "website": "https://github.com/impress-foods/impress-odoo",
     "category": "Stock",
     "depends": ["sale_management", "stock"],
     "data": [
         "views/product_product_views.xml",
         "views/res_config_settings_views.xml",
         "views/res_partner_views.xml",
-        "views/sale_order_views.xml",
         "views/stock_picking_views.xml",
     ],
     "assets": {

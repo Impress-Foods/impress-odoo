@@ -34,11 +34,6 @@ msgid "Contact"
 msgstr "Contact"
 
 #. module: impress_deposit
-#: model:ir.model.fields,field_description:impress_deposit.field_stock_move_line__container_qty
-msgid "Container Quantity"
-msgstr "Quantité de contenants"
-
-#. module: impress_deposit
 #. odoo-python
 #: code:addons/impress_deposit/models/sale_order.py:0
 #: model:ir.model.fields,field_description:impress_deposit.field_sale_order__deposit_value

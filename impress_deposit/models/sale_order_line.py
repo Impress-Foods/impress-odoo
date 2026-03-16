@@ -1,18 +1,17 @@
-import logging
-
-from odoo import fields, models
-
-_logger = logging.getLogger(__name__)
+from odoo import api, fields, models
 
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    is_deposit_line = fields.Boolean(default=False)
+    is_deposit_line = fields.Boolean(compute="_compute_is_deposit_line")
 
-    def get_deposit_container_qty(self) -> int:
-        self.ensure_one()
-        if self.product_id.requires_deposit:
-            return int(self.qty_delivered * self.product_id.qty_multiple)
-        else:
-            return 0
+    @api.depends("product_id")
+    def _compute_is_deposit_line(self) -> None:
+        for line in self:
+            deposit_product_id = int(
+                self.env["ir.config_parameter"]
+                .sudo()
+                .get_param("impress_deposit.deposit_product")
+            )
+            line.is_deposit_line = line.product_id.id == deposit_product_id
