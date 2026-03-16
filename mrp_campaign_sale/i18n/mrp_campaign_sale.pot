@@ -19,6 +19,11 @@ msgid "Campaigns"
 msgstr ""
 
 #. module: mrp_campaign_sale
+#: model:ir.model.fields,field_description:mrp_campaign_sale.field_stock_move__sale_customer_ref
+msgid "Customer Reference"
+msgstr ""
+
+#. module: mrp_campaign_sale
 #: model:ir.model,name:mrp_campaign_sale.model_mrp_campaign
 msgid "Manufacturing Campaign"
 msgstr ""
@@ -67,4 +72,9 @@ msgstr ""
 #. module: mrp_campaign_sale
 #: model:ir.model,name:mrp_campaign_sale.model_sale_order
 msgid "Sales Order"
+msgstr ""
+
+#. module: mrp_campaign_sale
+#: model:ir.model,name:mrp_campaign_sale.model_stock_move
+msgid "Stock Move"
 msgstr ""
