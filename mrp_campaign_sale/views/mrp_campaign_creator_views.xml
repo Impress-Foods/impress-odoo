@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_mrp_campaign_creator_form" model="ir.ui.view">
+        <field name="name">view.mrp.campaign.creator.form.inherit</field>
+        <field name="model">mrp.campaign.creator</field>
+        <field name="inherit_id" ref="mrp_campaign.view_mrp_campaign_creator_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="sale_customer_ref" readonly="1" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
