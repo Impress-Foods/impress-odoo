@@ -36,6 +36,7 @@ class MrpCampaignCreator(models.TransientModel):
                 [
                     ("product_id.anchor_product_id", "=", anchor_product.id),
                     ("campaign_can_be_added", "=", True),
+                    ("move_dest_ids", "=", False),
                 ]
             )
             rec.available_demand_move_ids = available_moves

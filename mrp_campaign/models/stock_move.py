@@ -12,6 +12,19 @@ class StockMove(models.Model):
     campaign_can_be_added = fields.Boolean(
         compute="_compute_campaign_can_be_added", store=True
     )
+    sale_customer_ref = fields.Char(
+        string="Customer Reference",
+        compute="_compute_sale_customer_ref",
+        store=False,
+    )
+
+    def _compute_sale_customer_ref(self) -> None:
+        has_sale_line = "sale_line_id" in self
+        for rec in self:
+            if has_sale_line and rec.sale_line_id and rec.sale_line_id.order_id:
+                rec.sale_customer_ref = rec.sale_line_id.order_id.client_order_ref
+            else:
+                rec.sale_customer_ref = ""
 
     @api.depends(
         "campaign_proxy_ids", "campaign_proxy_ids.promised_qty", "product_uom_qty"
