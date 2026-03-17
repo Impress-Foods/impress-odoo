@@ -347,7 +347,7 @@ class TestMrpProduction(TransactionCase):
         so = self.so_model.create(
             {"partner_id": self.partner.id, "client_order_ref": reference}
         )
-        self.so_line_model.create(
+        line_1 = self.so_line_model.create(
             {
                 "order_id": so.id,
                 "product_id": self.billing_product.id,
@@ -364,20 +364,15 @@ class TestMrpProduction(TransactionCase):
             }
         )
 
-        with self.assertRaises(ValidationError) as ctx:
-            self.mo_model.create(
-                {
-                    "product_id": self.product.id,
-                    "product_uom_qty": 1,
-                    "billing_sale_order_ref": reference,
-                }
-            )
-
-        self.assertIn(
-            "Multiple",
-            str(ctx.exception.args[0]),
-            "Should raise error about multiple matching lines",
+        mo = self.mo_model.create(
+            {
+                "product_id": self.product.id,
+                "product_uom_qty": 1,
+                "billing_sale_order_ref": reference,
+            }
         )
+
+        self.assertEqual(mo.billing_sale_order_line_id, line_1)
 
     def test_change_so_reference_to_different_so(self):
         reference_1 = hash(datetime.now().strftime("%Y%m%d%H%M%S"))
@@ -484,3 +479,61 @@ class TestMrpProduction(TransactionCase):
             mo.billing_sale_order_line_id,
             "MO should be unlinked when SO line is deleted",
         )
+
+    def test_duplicate_so_line(self) -> None:
+        self.alt_billing_product = self.product_model.create(
+            {"name": "Alternate Billing Product", "type": "service"}
+        )
+
+        self.alt_product = self.product_model.create(
+            {
+                "name": "Alternate Test Product",
+                "type": "product",
+            }
+        )
+
+        self.alt_bom = self.bom_model.create(
+            {
+                "product_id": self.alt_product.id,
+                "product_tmpl_id": self.alt_product.product_tmpl_id.id,
+                "billing_product_id": self.alt_billing_product.id,
+            }
+        )
+
+        reference = hash(datetime.now().strftime("%Y%m%d%H%M%S"))
+        so = self.so_model.create(
+            {"partner_id": self.partner.id, "client_order_ref": reference}
+        )
+        self.so_line_model.create(
+            {
+                "order_id": so.id,
+                "product_id": self.alt_billing_product.id,
+                "product_uom_qty": 1,
+                "name": "First line",
+            }
+        )
+        self.so_line_model.create(
+            {
+                "order_id": so.id,
+                "product_id": self.alt_billing_product.id,
+                "product_uom_qty": 2,
+                "name": "Second line",
+            }
+        )
+        line = self.so_line_model.create(
+            {
+                "order_id": so.id,
+                "product_id": self.billing_product.id,
+                "product_uom_qty": 2,
+                "name": "Third line",
+            }
+        )
+
+        mo = self.mo_model.create(
+            {
+                "product_id": self.product.id,
+                "product_uom_qty": 1,
+                "billing_sale_order_ref": reference,
+            }
+        )
+        self.assertEqual(line, mo.billing_sale_order_line_id)

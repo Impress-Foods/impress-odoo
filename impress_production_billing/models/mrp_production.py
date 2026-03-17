@@ -53,20 +53,6 @@ class MrpProduction(models.Model):
                     )
                 )
 
-    @api.constrains("billing_sale_order_id")
-    def _check_billing_sale_order_id(self):
-        for rec in self:
-            valid_lines = rec.billing_sale_order_id.order_line.filtered_domain(
-                [("product_id", "=", rec.billing_product_id.id)]
-            )
-            if len(valid_lines) > 1:
-                raise ValidationError(
-                    _(
-                        "Multiple lines in SO with product %s"
-                        % rec.billing_product_id.display_name
-                    )
-                )
-
     @api.depends("billing_sale_order_ref")
     def _compute_billing_sale_order_id(self):
         for rec in self:
@@ -110,28 +96,21 @@ class MrpProduction(models.Model):
 
                 # No SOL, we must link it
                 if not rec.billing_sale_order_line_id:
-                    sale_order_line_dict = {
-                        product: sale_order_line
-                        for (product, sale_order_line) in zip(
-                            rec.billing_sale_order_id.order_line.mapped("product_id"),
-                            rec.billing_sale_order_id.order_line,
-                            strict=False,
-                        )
-                    }
-
                     billing_product = rec.billing_product_id
+                    valid_lines = rec.billing_sale_order_id.order_line.filtered(
+                        lambda line, rec=rec, billing_product=billing_product: (
+                            line.product_id == billing_product
+                        )
+                    )
 
-                    if billing_product in sale_order_line_dict:
-                        rec.billing_sale_order_line_id = sale_order_line_dict[
-                            billing_product
-                        ]
-                    else:
+                    if len(valid_lines) == 0:
                         raise ValidationError(
                             _(
                                 "No Sale Order Line found in SO. Expected "
                                 f"line with product {billing_product.display_name}"
                             )
                         )
+                    rec.billing_sale_order_line_id = valid_lines[0]
 
             # No Billing sale order, we must unlink the MO from the SOL
             elif not rec.billing_sale_order_id:
