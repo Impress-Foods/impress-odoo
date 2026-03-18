@@ -175,13 +175,6 @@ msgstr ""
 
 #. module: impress_production_billing
 #. odoo-python
-#: code:addons/impress_production_billing/models/mrp_production.py:0
-#, python-format
-msgid "Multiple lines in SO with product %s"
-msgstr ""
-
-#. module: impress_production_billing
-#. odoo-python
 #: code:addons/impress_production_billing/controllers/portal.py:0
 #, python-format
 msgid "Name"
