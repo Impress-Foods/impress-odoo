@@ -1,12 +1,15 @@
 {
     "name": "Documents Archive",
-    "version": "17.0.0.1.0",
+    "version": "19.0.1.0.0",
     "summary": """ Module to allow a "soft" archive feature for documents. """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/Impress-Foods/impress-odoo",
+    "website": "https://github.com/impress-foods/impress-odoo",
     "category": "Hidden",
-    "depends": ["base", "documents", "stock"],
-    "data": ["views/documents_document_views.xml"],
+    "depends": ["documents_product"],
+    "data": [
+        "views/documents_document_views.xml",
+        "views/product_document_views.xml",
+    ],
     "assets": {
         "web.assets_backend": [
             "documents_archive/static/src/**/*.js",
