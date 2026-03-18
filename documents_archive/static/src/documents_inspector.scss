@@ -1,0 +1,15 @@
+////// ============ Inspector ===============
+////// ======================================
+///
+.o_documents_inspector {
+    .o_documents_inspector_info {
+        .o_inspector_button {
+            &.o_soft_archive:not(:disabled):hover {
+                background-color: #eed202;
+            }
+            &.o_soft_unarchive:not(:disabled):hover {
+                background-color: $o-dms-btn-to-activate;
+            }
+        }
+    }
+}
