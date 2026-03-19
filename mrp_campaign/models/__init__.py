@@ -4,5 +4,4 @@ from . import mrp_campaign_line
 from . import mrp_production
 from . import mrp_workorder
 from . import product_template
-from . import stock_move
 from . import mrp_bom

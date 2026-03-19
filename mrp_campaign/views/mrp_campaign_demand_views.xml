@@ -21,13 +21,6 @@
                         <field name="target_qty" />
                     </group>
                 </group>
-                <field name="demand_proxy_ids">
-                    <tree editable="bottom">
-                        <field name="origin" />
-                        <field name="promised_qty" />
-                        <field name="upstream_qty" />
-                    </tree>
-                </field>
             </form>
         </field>
     </record>
@@ -49,11 +42,11 @@
         <field name="view_mode">kanban,tree,form</field>
     </record>
 
-    <record id="action_mrp_campaign_demand_proxies" model="ir.actions.act_window">
+    <!-- <record id="action_mrp_campaign_demand_proxies" model="ir.actions.act_window">
         <field name="name">Manufacturing Campaign Demand Proxies</field>
         <field name="res_model">mrp.campaign.demand.proxy</field>
         <field name="view_mode">kanban,tree,form</field>
-    </record>
+    </record> -->
     <menuitem
         id="menu_mrp_campaign_demand"
         active="false"
@@ -63,7 +56,7 @@
         sequence="2"
         groups="mrp.group_mrp_user"
     />
-    <menuitem
+    <!-- <menuitem
         id="menu_mrp_campaign_demand_proxy"
         active="false"
         name="Campaign Demand Proxies"
@@ -71,5 +64,5 @@
         action="action_mrp_campaign_demand_proxies"
         sequence="3"
         groups="mrp.group_mrp_user"
-    />
+    /> -->
 </odoo>

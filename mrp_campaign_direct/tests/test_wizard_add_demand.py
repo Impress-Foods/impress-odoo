@@ -1,7 +1,7 @@
-from .test_common import CampaignCase
+from odoo.addons.mrp_campaign.tests.test_common import CampaignCase
 
 
-class TestWizardAddDemand(CampaignCase):
+class TestMrpCampaignAddDemand(CampaignCase):
     def test_get_valid_move_ids(self) -> None:
         moves = self.env["stock.move"].create(
             [

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mrp_campaign_demand_proxy_direct,mrp.campaign.demand.proxy,mrp_campaign_direct.model_mrp_campaign_demand_proxy,mrp.group_mrp_user,1,1,1,1
+access_mrp_campaign_creator_direct,mrp.campaign.creator.direct,mrp_campaign_direct.model_mrp_campaign_creator_direct,mrp.group_mrp_user,1,1,1,1
+access_mrp_campaign_add_demand_direct,mrp.campaign.add.demand.direct,mrp_campaign_direct.model_mrp_campaign_add_demand_direct,mrp.group_mrp_user,1,1,1,1
+access_mrp_campaign_partition_wizard_direct,mrp.campaign.partition.wizard.direct,mrp_campaign_direct.model_mrp_campaign_partition_wizard_direct,mrp.group_mrp_user,1,1,1,1

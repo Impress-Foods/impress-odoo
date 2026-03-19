@@ -1,13 +1,13 @@
 from datetime import date
 
-from .test_common import CampaignCase
+from odoo.addons.mrp_campaign.tests.test_common import CampaignCase
 
 
-class TestMrpCampaignCreator(CampaignCase):
+class TestMrpCampaignCreatorDirect(CampaignCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.wizard_model = cls.env["mrp.campaign.creator"]
+        cls.wizard_model = cls.env["mrp.campaign.creator.direct"]
 
     def test_available_demand_move_ids(self):
         """Test that available_demand_move_ids only includes moves whose product's

@@ -383,29 +383,13 @@ class CampaignCase(TransactionCase):
         qty: float = 1.0,
         campaign: MrpCampaign | None = None,
     ) -> MrpCampaignDemand:
-        demand = cls.env["mrp.campaign.demand"].create(
+        return cls.env["mrp.campaign.demand"].create(
             {
                 "product_id": product.id,
                 "campaign_id": campaign.id if campaign else False,
+                "target_qty": qty,
             }
         )
-        move = cls.env["stock.move"].create(
-            {
-                "name": "move",
-                "product_id": product.id,
-                "product_uom_qty": qty,
-                "location_id": cls.stock_location.id,
-                "location_dest_id": cls.stock_location.id,
-            }
-        )
-        cls.env["mrp.campaign.demand.proxy"].create(
-            {
-                "demand_id": demand.id,
-                "move_id": move.id,
-                "promised_qty": qty,
-            }
-        )
-        return demand
 
     @classmethod
     def get_all_values_for_key(

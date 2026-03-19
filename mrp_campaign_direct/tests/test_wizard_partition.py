@@ -1,9 +1,9 @@
 from odoo.exceptions import ValidationError
 
-from .test_common import CampaignCase
+from odoo.addons.mrp_campaign.tests.test_common import CampaignCase
 
 
-class TestMrpCampaignPartitionWizard(CampaignCase):
+class TestMrpCampaignPartition(CampaignCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

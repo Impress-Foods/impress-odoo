@@ -12,6 +12,9 @@ class CampaignLine(models.Model):
     _name = "mrp.campaign.line"
     _description = "Campaign breakdown line"
 
+    # -------------------------------------------------------------------------
+    # FIELDS
+    # -------------------------------------------------------------------------
     campaign_id = fields.Many2one("mrp.campaign", ondelete="cascade")
     production_ids = fields.One2many("mrp.production", "campaign_line_id")
     demand_ids = fields.One2many("mrp.campaign.demand", "campaign_line_id")
@@ -67,6 +70,9 @@ class CampaignLine(models.Model):
 
     productions_created = fields.Boolean()
 
+    # -------------------------------------------------------------------------
+    # COMPUTES
+    # -------------------------------------------------------------------------
     @api.depends("qty", "producing_qty")
     def _compute_is_out_of_sync(self) -> None:
         for rec in self:
@@ -154,19 +160,9 @@ class CampaignLine(models.Model):
                 (1 + rec.buffer_percent) if rec.is_batch_produced else 1
             )
 
-    def write(self, vals) -> bool:
-        res = super().write(vals)
-
-        if self.env.context.get("campaign_skip_mo_adjustment"):
-            return res
-
-        # After the math is written to the DB, sync the physical MOs
-        if "qty" in vals or self.env.is_to_compute("qty", self):
-            for rec in self.filtered("productions_created"):
-                rec._adjust_mos(rec.qty)
-
-        return res
-
+    # -------------------------------------------------------------------------
+    # HELPERS
+    # -------------------------------------------------------------------------
     def _get_downstream_product(self) -> ProductProduct:
         self.ensure_one()
         if not self.bom_id:
@@ -197,6 +193,48 @@ class CampaignLine(models.Model):
             )
         return anchors
 
+    def _get_anchor_factor(self) -> float:
+        self.ensure_one()
+
+        if not self.downstream_product_id:
+            return 1
+        else:
+            own_factor = self._get_downstream_factor()
+            downstream_factor = self.downstream_line_id._get_anchor_factor()
+            return own_factor * downstream_factor
+
+    def _get_downstream_factor(self) -> float:
+        self.ensure_one()
+        return (
+            self.bom_id.get_factor_to_product(self.downstream_product_id)
+            if self.downstream_product_id
+            else 1
+        )
+
+    def is_valid_bom_line_for_product(self, bom_line: MrpBomLine) -> bool:
+        self.ensure_one()
+        if self.product_id.product_tmpl_id != bom_line.bom_id.product_tmpl_id:
+            return False
+        bom_line_variant_ids: Many2many = (
+            bom_line.bom_product_template_attribute_value_ids
+        )
+
+        if not bom_line_variant_ids or not self.product_template_variant_value_ids:
+            return True
+
+        union = self.product_template_variant_value_ids & bom_line_variant_ids
+        return union
+
+    # -------------------------------------------------------------------------
+    # ACTIONS
+    # -------------------------------------------------------------------------
+    def action_sync_line(self) -> None:
+        self.ensure_one()
+        self._adjust_mos(self.qty)
+
+    # -------------------------------------------------------------------------
+    # BUSINESS LOGIC
+    # -------------------------------------------------------------------------
     def _construct_downstream_tree_line(self, depth=0) -> None:
         self.ensure_one()
         self.sequence = depth
@@ -204,8 +242,6 @@ class CampaignLine(models.Model):
         if not self.bom_id:
             return
 
-        # Anchors are the last level of the campaign tree.
-        # We do not manage the production of their components here.
         if self.product_tmpl_id.is_campaign_anchor:
             return
 
@@ -293,46 +329,11 @@ class CampaignLine(models.Model):
 
         return values
 
-    def is_valid_bom_line_for_product(self, bom_line: MrpBomLine) -> bool:
-        self.ensure_one()
-        if self.product_id.product_tmpl_id != bom_line.bom_id.product_tmpl_id:
-            return False
-        bom_line_variant_ids: Many2many = (
-            bom_line.bom_product_template_attribute_value_ids
-        )
-
-        if not bom_line_variant_ids or not self.product_template_variant_value_ids:
-            return True
-
-        union = self.product_template_variant_value_ids & bom_line_variant_ids
-        return union
-
-    def _get_anchor_factor(self) -> float:
-        self.ensure_one()
-
-        if not self.downstream_product_id:
-            return 1
-        else:
-            own_factor = self._get_downstream_factor()
-            downstream_factor = self.downstream_line_id._get_anchor_factor()
-            return own_factor * downstream_factor
-
-    def _get_downstream_factor(self) -> float:
-        self.ensure_one()
-        return (
-            self.bom_id.get_factor_to_product(self.downstream_product_id)
-            if self.downstream_product_id
-            else 1
-        )
-
     def _adjust_mos(self, new_quantity: float) -> None:
         self.ensure_one()
 
         rounding_precision = self.product_id.uom_id.rounding
 
-        # Separate MOs into those that can be adjusted/deleted and
-        # those that are fixed (e.g., done or cancelled)
-        # MOs in 'draft', 'confirmed' states are considered adjustable.
         active_mos = self.production_ids.filtered_domain(
             [("state", "not in", ["cancel"])]
         )
@@ -366,7 +367,7 @@ class CampaignLine(models.Model):
         if self.is_batch_produced and self.batch_size > 0:
             self._adjust_batch_mos(adjustable_mos, required_from_adjustable_mos)
 
-        else:  # Not batch produced or infinite batch size
+        else:
             if not float_is_zero(
                 required_from_adjustable_mos,
                 precision_rounding=rounding_precision,
@@ -386,7 +387,7 @@ class CampaignLine(models.Model):
                             "product_qty": required_from_adjustable_mos,
                         }
                     ).change_prod_qty()
-                else:  # len(adjustable_mos) == 0, create a new one
+                else:
                     self.env["mrp.production"].create(
                         {
                             "product_id": self.product_id.id,
@@ -405,7 +406,6 @@ class CampaignLine(models.Model):
         self.ensure_one()
         rounding_precision = self.product_id.uom_id.rounding
 
-        # 1. Determine the target structure of MOs required
         target_mo_quantities = []
         n_full_batches = int(required_from_adjustable_mos / self.batch_size)
         remaining_qty_for_partial = required_from_adjustable_mos % self.batch_size
@@ -420,12 +420,9 @@ class CampaignLine(models.Model):
 
         unassigned_targets = list(target_mo_quantities)
 
-        # 2. Match existing MOs to target quantities
-        #  (Exact matches first, then closest fit)
         mo_updates = []
         assigned_adjustable_mos = self.env["mrp.production"]
 
-        # Sort MOs to process them consistently
         for current_mo in adjustable_mos.sorted("product_qty", reverse=True):
             best_match_idx = -1
             min_diff = float("inf")
@@ -439,7 +436,6 @@ class CampaignLine(models.Model):
                     min_diff = diff
                     best_match_idx = idx
 
-                # Optimization: take exact match immediately
                 if float_is_zero(diff, precision_rounding=rounding_precision):
                     break
 
@@ -454,7 +450,6 @@ class CampaignLine(models.Model):
                 unassigned_targets[best_match_idx] = None
                 assigned_adjustable_mos |= current_mo
 
-        # 3. Identify MOs to unlink and new values to create
         mo_unlinks = adjustable_mos - assigned_adjustable_mos
         mo_creation_values = [
             {
@@ -468,7 +463,6 @@ class CampaignLine(models.Model):
             if target_qty is not None
         ]
 
-        # 4. Execute database operations
         if mo_unlinks:
             mo_unlinks.unlink()
 
@@ -480,6 +474,17 @@ class CampaignLine(models.Model):
         if mo_creation_values:
             self.env["mrp.production"].create(mo_creation_values)
 
-    def action_sync_line(self) -> None:
-        self.ensure_one()
-        self._adjust_mos(self.qty)
+    # -------------------------------------------------------------------------
+    # CRUD
+    # -------------------------------------------------------------------------
+    def write(self, vals) -> bool:
+        res = super().write(vals)
+
+        if self.env.context.get("campaign_skip_mo_adjustment"):
+            return res
+
+        if "qty" in vals or self.env.is_to_compute("qty", self):
+            for rec in self.filtered("productions_created"):
+                rec._adjust_mos(rec.qty)
+
+        return res

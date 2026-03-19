@@ -4,15 +4,20 @@ from odoo import api, fields, models
 class StockMove(models.Model):
     _inherit = "stock.move"
 
+    # ----------------------------------------------------------------------
+    # FIELDS
+    # ----------------------------------------------------------------------
+    campaign_proxy_ids = fields.One2many("mrp.campaign.demand.proxy", "move_id")
     campaign_qty_to_supply = fields.Float(
         compute="_compute_campaign_qty_to_supply", store=True
     )
-    campaign_proxy_ids = fields.One2many("mrp.campaign.demand.proxy", "move_id")
-
     campaign_can_be_added = fields.Boolean(
         compute="_compute_campaign_can_be_added", store=True
     )
 
+    # ----------------------------------------------------------------------
+    # COMPUTES
+    # ----------------------------------------------------------------------
     @api.depends(
         "campaign_proxy_ids", "campaign_proxy_ids.promised_qty", "product_uom_qty"
     )

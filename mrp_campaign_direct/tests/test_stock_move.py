@@ -1,4 +1,4 @@
-from .test_common import CampaignCase
+from odoo.addons.mrp_campaign.tests.test_common import CampaignCase
 
 
 class TestStockMove(CampaignCase):
