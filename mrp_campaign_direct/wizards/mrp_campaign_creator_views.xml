@@ -26,6 +26,7 @@
                                     readonly="1"
                                 />
                                 <field name="state" readonly="1" />
+                                <field name="sale_customer_ref" readonly="1" />
                             </tree>
                         </field>
                     </page>

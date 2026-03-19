@@ -14,6 +14,9 @@ class StockMove(models.Model):
     campaign_can_be_added = fields.Boolean(
         compute="_compute_campaign_can_be_added", store=True
     )
+    sale_customer_ref = fields.Char(
+        string="Customer Reference", related="sale_line_id.order_id.client_order_ref"
+    )
 
     # ----------------------------------------------------------------------
     # COMPUTES

@@ -2,10 +2,10 @@ import json
 
 from odoo.tools import float_compare
 
-from odoo.addons.mrp_campaign.tests.test_common import CampaignCase
+from .test_common import CampaignDirectCase
 
 
-class TestMrpCampaignTorture(CampaignCase):
+class TestMrpCampaignTorture(CampaignDirectCase):
     def test_campaign_partition_torture_scenario(self):
         """
         Flow: End Product (Demand) -> Sub-Assembly ->
@@ -94,7 +94,24 @@ class TestMrpCampaignTorture(CampaignCase):
         # --- 2. Initial Campaign and Demand ---
         # Demand for 25 units of End Product
         campaign = self.create_campaign(bulk_material)
-        self.create_demand(end_product, qty=25.0, campaign=campaign)
+        demand = self.create_demand(end_product, qty=25.0, campaign=campaign)
+        move = self.env["stock.move"].create(
+            {
+                "name": "test move for end product",
+                "product_id": end_product.id,
+                "product_uom_qty": 25.0,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.stock_location.id,
+                "state": "waiting",
+            }
+        )
+        self.env["mrp.campaign.demand.proxy"].create(
+            {
+                "demand_id": demand.id,
+                "move_id": move.id,
+                "promised_qty": 25.0,
+            }
+        )
         campaign.action_plan()
 
         # Verify initial tree states
@@ -126,7 +143,7 @@ class TestMrpCampaignTorture(CampaignCase):
         # A: End 14.5 -> Sub 14.5 -> Comp 29.0 -> Bulk 29.0 + 10% = 31.9
 
         wizard = (
-            self.env["mrp.campaign.partition.wizard"]
+            self.env["mrp.campaign.partition.wizard.direct"]
             .with_context(
                 **{
                     "active_id": campaign.id,

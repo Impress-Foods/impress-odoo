@@ -1,4 +1,26 @@
-from odoo import fields, models
+from odoo import api, fields, models
+
+
+class MrpCampaignDemand(models.Model):
+    _inherit = "mrp.campaign.demand"
+
+    demand_proxy_ids = fields.One2many(
+        "mrp.campaign.demand.proxy",
+        "demand_id",
+    )
+
+    sale_order_ids = fields.Many2many(
+        "sale.order", compute="_compute_sale_order_ids", store=True
+    )
+
+    @api.depends("demand_proxy_ids", "demand_proxy_ids.sale_order_id")
+    def _compute_sale_order_ids(self):
+        for rec in self:
+            rec.sale_order_ids = rec.demand_proxy_ids.mapped("sale_order_id")
+
+    def unlink(self):
+        self.demand_proxy_ids.unlink()
+        return super().unlink()
 
 
 class MrpCampaignDemandProxy(models.Model):
@@ -15,6 +37,7 @@ class MrpCampaignDemandProxy(models.Model):
     promised_qty = fields.Float()
     campaign_id = fields.Many2one(related="demand_id.campaign_id", store=True)
     origin = fields.Char(related="move_id.origin")
+    sale_order_id = fields.Many2one(related="move_id.sale_line_id.order_id")
 
     # ----------------------------------------------------------------------
     # COMPUTED FIELDS
@@ -29,7 +52,7 @@ class MrpCampaignDemandProxy(models.Model):
     def _get_partition_wizard_fields(self) -> dict:
         self.ensure_one()
         move = self.move_id
-        return {
+        values = {
             "proxy_id": self.id,
             "move_id": move.id,
             "product_id": move.product_id.id,
@@ -43,6 +66,12 @@ class MrpCampaignDemandProxy(models.Model):
             if move.date_deadline
             else False,
         }
+
+        group_id = move.group_id
+        if group_id and group_id.sale_id:
+            values["customer_ref"] = group_id.sale_id.client_order_ref
+
+        return values
 
     def _sync_target_qty(self) -> None:
         """Recompute target_qty on parent demand based on all proxies."""

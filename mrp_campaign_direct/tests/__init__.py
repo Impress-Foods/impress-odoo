@@ -1,3 +1,4 @@
+from .test_common import CampaignDirectCase
 from .test_wizard_campaign_creator import TestMrpCampaignCreatorDirect
 from .test_wizard_add_demand import TestMrpCampaignAddDemand
 from .test_wizard_partition import TestMrpCampaignPartition

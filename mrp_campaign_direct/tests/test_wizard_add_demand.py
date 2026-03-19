@@ -1,7 +1,7 @@
-from odoo.addons.mrp_campaign.tests.test_common import CampaignCase
+from .test_common import CampaignDirectCase
 
 
-class TestMrpCampaignAddDemand(CampaignCase):
+class TestMrpCampaignAddDemand(CampaignDirectCase):
     def test_get_valid_move_ids(self) -> None:
         moves = self.env["stock.move"].create(
             [
@@ -46,7 +46,9 @@ class TestMrpCampaignAddDemand(CampaignCase):
         )
 
         campaign = self.create_campaign(self.bulk_material)
-        move_ids = self.env["mrp.campaign.add.demand"]._get_valid_move_ids(campaign)
+        move_ids = self.env["mrp.campaign.add.demand.direct"]._get_valid_move_ids(
+            campaign
+        )
         self.assertCountEqual(move_ids.ids, moves.ids)
 
     def test_add_demands_valid_no_existing_demand(self) -> None:
@@ -65,8 +67,8 @@ class TestMrpCampaignAddDemand(CampaignCase):
         self.assertEqual(len(campaign.demand_proxy_ids), 0)
 
         wizard = (
-            self.env["mrp.campaign.add.demand"]
-            .with_context(active_id=campaign.id)
+            self.env["mrp.campaign.add.demand.direct"]
+            .with_context(default_campaign_id=campaign.id)
             .create({})
         )
         self.assertIn(move, wizard.valid_move_ids)
@@ -103,8 +105,8 @@ class TestMrpCampaignAddDemand(CampaignCase):
         self.assertEqual(len(campaign.demand_proxy_ids), 1)
 
         wizard = (
-            self.env["mrp.campaign.add.demand"]
-            .with_context(active_id=campaign.id)
+            self.env["mrp.campaign.add.demand.direct"]
+            .with_context(default_campaign_id=campaign.id)
             .create({})
         )
         self.assertIn(move, wizard.valid_move_ids)
@@ -132,8 +134,8 @@ class TestMrpCampaignAddDemand(CampaignCase):
         self.assertEqual(len(campaign.demand_proxy_ids), 0)
 
         wizard = (
-            self.env["mrp.campaign.add.demand"]
-            .with_context(active_id=campaign.id)
+            self.env["mrp.campaign.add.demand.direct"]
+            .with_context(default_campaign_id=campaign.id)
             .create({})
         )
         self.assertIn(move, wizard.valid_move_ids)

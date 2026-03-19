@@ -1,9 +1,9 @@
 from datetime import date
 
-from odoo.addons.mrp_campaign.tests.test_common import CampaignCase
+from .test_common import CampaignDirectCase
 
 
-class TestMrpCampaignCreatorDirect(CampaignCase):
+class TestMrpCampaignCreatorDirect(CampaignDirectCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

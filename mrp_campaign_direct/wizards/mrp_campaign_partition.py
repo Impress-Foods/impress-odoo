@@ -111,6 +111,89 @@ class MrpCampaignPartitionWizardDirect(models.TransientModel):
     # ----------------------------------------------------------------------
     # VALIDATION
     # ----------------------------------------------------------------------
+    def _validate_json_production(self, data: dict[str, Any]) -> dict[int, tuple]:
+        tree = data if "tree" not in data else data.get("tree")
+        if tree is None:
+            raise ValidationError(
+                _("Malformed data: missing 'tree' attribute in JSON.")
+            )
+
+        result = {}
+        line_id = tree.get("line_id")
+        if not line_id:
+            raise ValidationError(_("Malformed data: missing 'line_id' in tree."))
+
+        line = self.env["mrp.campaign.line"].browse(line_id)
+        if not line.exists():
+            raise ValidationError(_("Could not find campaign line with id %s", line_id))
+        if line.campaign_id != self.campaign_id:
+            raise ValidationError(
+                _(
+                    "Line %(line)s does not belong to campaign %(campaign)s",
+                    line=line_id,
+                    campaign=self.campaign_id.name,
+                )
+            )
+
+        tree_data = {k: v for k, v in tree.items() if k != "upstream_branches"}
+        result[line_id] = (line, tree_data)
+
+        for branch in tree.get("upstream_branches", []):
+            result.update(self._validate_json_production(branch))
+
+        return result
+
+    def _get_deltas_production(self, lines: dict[int, tuple]) -> dict[int, tuple]:
+        deltas = {}
+        for line_id, (line, intent) in lines.items():
+            quantities = intent.get("quantities", {})
+            planned = quantities.get("planned", 0)
+            initial_planned = quantities.get("initial_planned", 0)
+            floor = quantities.get("floor", 0)
+            product_id = intent.get("product_id")
+
+            if product_id and product_id != line.product_id.id:
+                raise ValidationError(
+                    _(
+                        "Product mismatch for line %(line_id)s: "
+                        "expected %(expected)s, got %(actual)s",
+                        line_id=line_id,
+                        expected=line.product_id.display_name,
+                        actual=self.env["product.product"]
+                        .browse(product_id)
+                        .display_name,
+                    )
+                )
+
+            if planned < floor:
+                raise ValidationError(
+                    _(
+                        "Cannot plan less of %(product)s than the floor quantity. "
+                        "Floor: %(floor)s, Planned: %(planned)s",
+                        product=line.product_id.display_name,
+                        floor=floor,
+                        planned=planned,
+                    )
+                )
+
+            if planned > initial_planned:
+                raise ValidationError(
+                    _(
+                        "Cannot plan more of %(product)s than the "
+                        "initial planned quantity. "
+                        "Initial: %(initial)s, Planned: %(planned)s",
+                        product=line.product_id.display_name,
+                        initial=initial_planned,
+                        planned=planned,
+                    )
+                )
+
+            delta = initial_planned - planned
+            if delta != 0:
+                deltas[line_id] = (line, delta)
+
+        return deltas
+
     def _validate_json_demand(self, data: dict[str, Any]) -> dict[int, tuple]:
         demand_data = data.get("demand_moves")
         if demand_data is None:
@@ -142,7 +225,7 @@ class MrpCampaignPartitionWizardDirect(models.TransientModel):
     def _get_deltas_demand(self, lines: dict[int, tuple]) -> dict[int, tuple]:
         deltas = {}
         for rec_id, (rec, intent) in lines.items():
-            intended_qty = intent["fulfilled_qty"]
+            intended_qty = intent.get("fulfilled_qty", 0)
 
             if intended_qty < 0:
                 raise ValidationError(
@@ -160,7 +243,6 @@ class MrpCampaignPartitionWizardDirect(models.TransientModel):
                         demand=rec.upstream_qty,
                     )
                 )
-
             delta = rec.promised_qty - intended_qty
             if delta != 0:
                 deltas[rec_id] = (rec, delta)
@@ -168,13 +250,11 @@ class MrpCampaignPartitionWizardDirect(models.TransientModel):
 
     def _compute_demand_split_instructions(self, demand_deltas: dict) -> dict:
         instructions = {}
-        for _proxy_id, (proxy, intent) in demand_deltas.items():
+        for _proxy_id, (proxy, delta) in demand_deltas.items():
             demand = proxy.demand_id
             if demand.id not in instructions:
                 instructions[demand.id] = {"qty": demand.target_qty, "bo_qty": 0.0}
 
-            fulfilled_qty = intent.get("fulfilled_qty", proxy.promised_qty)
-            delta = proxy.promised_qty - fulfilled_qty
             if delta > 0:
                 instructions[demand.id]["qty"] -= delta
                 instructions[demand.id]["bo_qty"] += delta
