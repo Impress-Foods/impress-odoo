@@ -25,11 +25,11 @@ class MrpCampaignDirect(models.Model):
     def _has_demands_to_partition(self) -> bool:
         return bool(self.demand_line_ids.mapped("demand_proxy_ids"))
 
-    def _get_add_demand_wizard_model(self) -> str:
+    def _get_demand_wizard_model(self) -> str:
         self.ensure_one()
         if self.workflow_type == "direct":
-            return "mrp.campaign.add.demand.direct"
-        return super()._get_add_demand_wizard_model()
+            return "mrp.campaign.direct.wizard"
+        return super()._get_demand_wizard_model()
 
     def _get_partition_wizard_model(self) -> str:
         self.ensure_one()
@@ -77,8 +77,8 @@ class MrpCampaignDirect(models.Model):
         self.ensure_one()
         if self.workflow_type == "direct":
             for demand in self.demand_line_ids:
-                demand._sync_proxy_target_qty()
+                demand.demand_proxy_ids._sync_target_qty()
 
             for demand in backorder_campaign.demand_line_ids:
-                demand._sync_proxy_target_qty()
+                demand.demand_proxy_ids._sync_target_qty()
         return super()._after_split(backorder_campaign)

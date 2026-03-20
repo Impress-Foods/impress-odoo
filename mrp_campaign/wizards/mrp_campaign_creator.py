@@ -18,5 +18,5 @@ class MrpCampaignCreator(models.TransientModel):
             "Bridge must implement _create_demands(campaign) to populate demands."
         )
 
-    def make_campaign(self) -> None:
+    def process_wizard(self) -> dict | None:
         pass

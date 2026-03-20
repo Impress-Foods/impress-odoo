@@ -9,8 +9,7 @@
     "depends": ["mrp_campaign", "sale_management"],
     "data": [
         "security/ir.model.access.csv",
-        "wizards/mrp_campaign_creator_views.xml",
-        "wizards/mrp_campaign_add_demand_views.xml",
+        "wizards/mrp_campaign_direct_wizard_views.xml",
         "wizards/mrp_campaign_partition_views.xml",
         "views/mrp_campaign_views.xml",
         "views/sale_order_views.xml",

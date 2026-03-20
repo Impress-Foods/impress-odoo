@@ -125,7 +125,9 @@ class MrpCampaignPartitionWizardDirect(models.TransientModel):
 
         line = self.env["mrp.campaign.line"].browse(line_id)
         if not line.exists():
-            raise ValidationError(_("Could not find campaign line with id %s", line_id))
+            raise ValidationError(
+                _("Could not find campaign line with id %(line)s", line=line_id)
+            )
         if line.campaign_id != self.campaign_id:
             raise ValidationError(
                 _(

@@ -131,7 +131,7 @@ class MrpCampaign(models.Model):
     # -------------------------------------------------------------------------
     # HELPERS
     # -------------------------------------------------------------------------
-    def _get_add_demand_wizard_model(self) -> str:
+    def _get_demand_wizard_model(self) -> str:
         raise ValidationError(_("No wizard is implemented!"))
 
     def _get_partition_wizard_model(self) -> str:
@@ -225,7 +225,7 @@ class MrpCampaign(models.Model):
 
     def action_open_add_demand_wizard(self) -> dict:
         self.ensure_one()
-        wizard_model = self._get_add_demand_wizard_model()
+        wizard_model = self._get_demand_wizard_model()
         return {
             "type": "ir.actions.act_window",
             "name": "Add Demand to Campaign",
