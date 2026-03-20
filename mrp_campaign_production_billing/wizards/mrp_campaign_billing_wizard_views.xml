@@ -1,60 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="view_mrp_campaign_billing_wizard_form" model="ir.ui.view">
         <field name="name">mrp.campaign.billing.wizard.form</field>
         <field name="model">mrp.campaign.billing.wizard</field>
-        <field name="arch" type="xml">
-            <form>
-                <group>
-                    <group>
-                        <field
-                            name="campaign_id"
-                            readonly="1"
-                            invisible="not campaign_id"
-                        />
-                        <field
-                            name="product_id"
-                            invisible="campaign_id"
-                            readonly="campaign_id"
-                        />
-                        <field
-                            name="planned_date"
-                            invisible="campaign_id"
-                            required="True"
-                        />
-                    </group>
-                </group>
-                <field name="selection_line_ids" nolabel="1">
-                    <tree editable="bottom" create="false" delete="false">
-                        <field name="selected" />
-                        <field name="sale_order_id" readonly="1" />
-                        <field name="client_order_ref" readonly="1" />
-                        <field
-                            name="end_product_id"
-                            readonly="1"
-                            string="End Product"
-                        />
-                        <field name="promised_qty" readonly="1" string="Qty" />
-                    </tree>
-                </field>
-                <footer>
-                    <button
-                        name="process_wizard"
-                        string="Confirm"
-                        type="object"
-                        class="btn-primary"
-                        data-hotkey="q"
-                    />
-                    <button
-                        string="Cancel"
-                        class="btn-secondary"
-                        special="cancel"
-                        data-hotkey="z"
-                    />
-                </footer>
-            </form>
-        </field>
+        <field name="inherit_id" ref="mrp_campaign.view_mrp_campaign_creator_form" />
+        <field name="mode">primary</field>
     </record>
 
     <record
@@ -83,5 +33,4 @@
         action="action_mrp_campaign_billing_wizard_create"
         sequence="52"
     />
-
 </odoo>

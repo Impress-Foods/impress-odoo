@@ -1,112 +1,71 @@
+import json
+
 from odoo import api, fields, models
-from odoo.fields import Command
-
-
-class MrpCampaignDirectWizardLine(models.TransientModel):
-    _name = "mrp.campaign.direct.wizard.line"
-    _description = "Direct wizard selection line"
-    _order = "product_id, id"
-
-    wizard_id = fields.Many2one(
-        "mrp.campaign.direct.wizard",
-        required=True,
-        ondelete="cascade",
-    )
-    move_id = fields.Many2one(
-        "stock.move",
-        string="Stock Move",
-        required=True,
-        ondelete="cascade",
-    )
-    product_id = fields.Many2one(
-        "product.product",
-        string="Product",
-        related="move_id.product_id",
-    )
-    promised_qty = fields.Float(
-        string="Quantity",
-        related="move_id.campaign_qty_to_supply",
-    )
-    origin = fields.Char(
-        string="Origin",
-        related="move_id.origin",
-    )
-    date_deadline = fields.Datetime(
-        string="Deadline",
-        related="move_id.date_deadline",
-    )
-    state = fields.Selection(
-        string="State",
-        related="move_id.state",
-    )
-    customer_ref = fields.Char(
-        string="Customer Ref",
-        related="move_id.sale_customer_ref",
-    )
-    selected = fields.Boolean(default=True)
 
 
 class MrpCampaignDirectWizard(models.TransientModel):
     _name = "mrp.campaign.direct.wizard"
     _inherit = "mrp.campaign.creator"
-
     _description = "Wizard for direct production campaigns"
 
     planned_date = fields.Date()
 
-    selection_line_ids = fields.One2many(
-        "mrp.campaign.direct.wizard.line",
-        "wizard_id",
-        string="Stock Moves",
-        compute="_compute_selection_line_ids",
-        readonly=False,
-    )
+    @api.onchange("product_id")
+    def _onchange_product_id(self):
+        self.available_lines = json.dumps(self._get_available_lines(self.product_id.id))
 
-    @api.depends("product_id")
-    def _compute_selection_line_ids(self) -> None:
-        for rec in self:
-            existing = {}
-            for line in rec.selection_line_ids:
-                existing[line.move_id.id] = line.selected
+    def _get_available_lines(self, product_id) -> list[dict]:
+        if not product_id:
+            return []
 
-            anchor_product = rec.product_id or rec.campaign_id.product_id
-            if not anchor_product:
-                rec.selection_line_ids = [(5, 0, 0)]
-                continue
-
-            moves = self.env["stock.move"].search(
-                [
-                    ("product_id.anchor_product_id", "=", anchor_product.id),
-                    ("campaign_can_be_added", "=", True),
-                ]
-            )
-
-            rec.selection_line_ids.unlink()
-            values = [
-                Command.create(
-                    {
-                        "move_id": move.id,
-                        "selected": existing.get(move.id, True),
-                    }
-                )
-                for move in moves
+        moves = self.env["stock.move"].search(
+            [
+                ("product_id.anchor_product_id", "=", product_id),
+                ("campaign_can_be_added", "=", True),
             ]
-            rec.selection_line_ids = values
+        )
+
+        result = []
+        for move in moves:
+            result.append(
+                {
+                    "id": move.id,
+                    "name": f"{move.origin or 'No origin'} "
+                    f"| {move.product_id.display_name}",
+                    "qty": move.campaign_qty_to_supply,
+                    "date": move.date_deadline.isoformat()
+                    if move.date_deadline
+                    else None,
+                    "additional_ref": move.sale_customer_ref or "",
+                }
+            )
+        return result
+
+    def _get_valid_sources(self):
+        if not self.product_id:
+            return self.env["stock.move"]
+
+        return self.env["stock.move"].search(
+            [
+                ("product_id.anchor_product_id", "=", self.product_id.id),
+                ("campaign_can_be_added", "=", True),
+            ]
+        )
 
     def _create_demands(self, campaign) -> None:
-        selected_lines = self.selection_line_ids.filtered("selected")
-        if not selected_lines:
+        selected_moves = self._get_selected_sources()
+        if not selected_moves:
             return
 
         grouped = {}
-        for line in selected_lines:
-            product = line.product_id
+        for move in selected_moves:
+            product = move.product_id
             if product not in grouped:
                 grouped[product] = []
-            grouped[product].append(line)
+            grouped[product].append(move)
 
         proxy_values = []
-        for product, lines in grouped.items():
+        for product, moves in grouped.items():
             bom = (
                 self.env["mrp.bom"]
                 ._bom_find(products=product, company_id=campaign.company_id.id)
@@ -123,19 +82,23 @@ class MrpCampaignDirectWizard(models.TransientModel):
                         "campaign_id": campaign.id,
                         "product_id": product.id,
                         "bom_id": bom.id if bom else False,
-                        "target_qty": sum(line.promised_qty for line in lines),
+                        "target_qty": sum(
+                            move.campaign_qty_to_supply for move in moves
+                        ),
                     }
                 )
             else:
-                demand_line.target_qty += sum(line.promised_qty for line in lines)
+                demand_line.target_qty += sum(
+                    move.campaign_qty_to_supply for move in moves
+                )
 
             proxy_values += [
                 {
                     "demand_id": demand_line.id,
-                    "move_id": line.move_id.id,
-                    "promised_qty": line.promised_qty,
+                    "move_id": move.id,
+                    "promised_qty": move.campaign_qty_to_supply,
                 }
-                for line in lines
+                for move in moves
             ]
 
         self.env["mrp.campaign.demand.proxy"].create(proxy_values)
@@ -144,6 +107,7 @@ class MrpCampaignDirectWizard(models.TransientModel):
         self.ensure_one()
 
         campaign = self.campaign_id
+        result = None
         if not campaign:
             campaign = self.env["mrp.campaign"].create(
                 {
@@ -152,8 +116,7 @@ class MrpCampaignDirectWizard(models.TransientModel):
                     "date_planned_start": self.planned_date,
                 }
             )
-            self._create_demands(campaign)
-            return {
+            result = {
                 "type": "ir.actions.act_window",
                 "res_model": "mrp.campaign",
                 "views": [[False, "form"]],
@@ -162,4 +125,4 @@ class MrpCampaignDirectWizard(models.TransientModel):
             }
 
         self._create_demands(campaign)
-        return None
+        return result

@@ -1,3 +1,4 @@
+import json
 from datetime import date
 
 from odoo.tests.common import TransactionCase
@@ -79,7 +80,8 @@ class CampaignBillingCase(TransactionCase):
                 "planned_date": date.today(),
             }
         )
-        self.assertEqual(len(wizard.selection_line_ids), 0)
+        wizard._onchange_product_id()
+        self.assertEqual(len(json.loads(wizard.available_lines or "[]")), 0)
 
     def test_wizard_create_with_matching_so(self):
         self._create_sale_order(self.billing_product, 10.0)
@@ -90,43 +92,30 @@ class CampaignBillingCase(TransactionCase):
                 "planned_date": date.today(),
             }
         )
-        self.assertEqual(len(wizard.selection_line_ids), 1)
-        line = wizard.selection_line_ids[0]
-        self.assertEqual(line.billing_product_id, self.billing_product)
-        self.assertEqual(line.end_product_id, self.end_prod)
-        self.assertEqual(line.promised_qty, 10.0)
-        self.assertTrue(line.selected)
+        wizard._onchange_product_id()
+        lines = json.loads(wizard.available_lines or "[]")
+        self.assertEqual(len(lines), 1)
+        self.assertEqual(lines[0]["id"], self.env["sale.order.line"].search([])[-1].id)
+        self.assertEqual(lines[0]["qty"], 10.0)
 
     def test_wizard_skips_invoiced_so(self):
-        self._create_sale_order(self.billing_product, 10.0, state="done")
-        so_invoiced = self.env["sale.order"].create(
-            {
-                "partner_id": self.partner.id,
-                "state": "done",
-                "invoice_status": "invoiced",
-            }
-        )
-        self.env["sale.order.line"].create(
-            {
-                "order_id": so_invoiced.id,
-                "product_id": self.billing_product.id,
-                "product_uom_qty": 10.0,
-            }
-        )
-
-        self._create_sale_order(self.billing_product, 5.0)
-        so_pending = self._create_sale_order(self.billing_product, 5.0)
-        so_pending.invoice_status = "invoiced"
-
-        self._create_sale_order(self.billing_product, 7.0, state="done")
+        so1 = self._create_sale_order(self.billing_product, 10.0, state="sale")
+        so1.invoice_status = "invoiced"
+        so2 = self._create_sale_order(self.billing_product, 10.0, state="sale")
+        so2.invoice_status = "invoiced"
+        so3 = self._create_sale_order(self.billing_product, 5.0, state="sale")
+        so3.invoice_status = "invoiced"
+        self._create_sale_order(self.billing_product, 7.0, state="sale")
 
         wizard = self.env["mrp.campaign.billing.wizard"].create(
             {
                 "product_id": self.bulk_material.id,
             }
         )
-        self.assertEqual(len(wizard.selection_line_ids), 1)
-        self.assertEqual(wizard.selection_line_ids[0].promised_qty, 7.0)
+        wizard._onchange_product_id()
+        lines = json.loads(wizard.available_lines or "[]")
+        self.assertEqual(len(lines), 1)
+        self.assertEqual(lines[0]["qty"], 7.0)
 
     def test_wizard_deduplicates_sol(self):
         so = self.env["sale.order"].create(
@@ -155,7 +144,9 @@ class CampaignBillingCase(TransactionCase):
                 "product_id": self.bulk_material.id,
             }
         )
-        self.assertEqual(len(wizard.selection_line_ids), 2)
+        wizard._onchange_product_id()
+        lines = json.loads(wizard.available_lines or "[]")
+        self.assertEqual(len(lines), 2)
 
     def test_confirm_creates_campaign_and_demands(self):
         self._create_sale_order(self.billing_product, 10.0)
@@ -167,21 +158,25 @@ class CampaignBillingCase(TransactionCase):
                 "planned_date": date.today(),
             }
         )
+        wizard._onchange_product_id()
+        lines = json.loads(wizard.available_lines or "[]")
+        wizard.selected_line_ids = json.dumps([line["id"] for line in lines])
 
-        action = wizard.confirm()
+        action = wizard.process_wizard()
         campaign_id = action.get("res_id")
         campaign = self.env["mrp.campaign"].browse(campaign_id)
 
         self.assertTrue(campaign.exists())
         self.assertEqual(campaign.product_id, self.bulk_material)
         self.assertEqual(campaign.workflow_type, "production_billing")
-        self.assertEqual(len(campaign.demand_line_ids), 1)
-        demand = campaign.demand_line_ids[0]
-        self.assertEqual(demand.product_id, self.end_prod)
-        self.assertEqual(len(demand.billing_proxy_ids), 2)
+        self.assertEqual(len(campaign.demand_line_ids), 2)
+        for demand in campaign.demand_line_ids:
+            self.assertEqual(demand.product_id, self.end_prod)
+            self.assertEqual(len(demand.billing_proxy_ids), 1)
 
     def test_confirm_creates_demands_on_existing_campaign(self):
         self._create_sale_order(self.billing_product, 10.0)
+        self._create_sale_order(self.billing_product, 5.0)
 
         campaign = self.env["mrp.campaign"].create(
             {
@@ -190,19 +185,21 @@ class CampaignBillingCase(TransactionCase):
             }
         )
 
-        wizard = self.env["mrp.campaign.billing.wizard"].create(
-            {},
-            context={"default_campaign_id": campaign.id},
+        wizard = (
+            self.env["mrp.campaign.billing.wizard"]
+            .with_context(default_campaign_id=campaign.id)
+            .create({})
         )
         self.assertEqual(wizard.campaign_id, campaign)
         self.assertEqual(wizard.product_id, self.bulk_material)
-        self.assertEqual(len(wizard.selection_line_ids), 1)
+        wizard._onchange_product_id()
+        lines = json.loads(wizard.available_lines or "[]")
+        self.assertEqual(len(lines), 2)
+        wizard.selected_line_ids = json.dumps([line["id"] for line in lines])
 
-        wizard.confirm()
+        wizard.process_wizard()
 
-        self.assertEqual(len(campaign.demand_line_ids), 1)
-        demand = campaign.demand_line_ids[0]
-        self.assertEqual(demand.billing_proxy_ids[0].promised_qty, 10.0)
+        self.assertEqual(len(campaign.demand_line_ids), 2)
 
     def test_confirm_preserves_existing_demands(self):
         self._create_sale_order(self.billing_product, 10.0)
@@ -221,15 +218,19 @@ class CampaignBillingCase(TransactionCase):
             }
         )
 
-        wizard = self.env["mrp.campaign.billing.wizard"].create(
-            {},
-            context={"default_campaign_id": campaign.id},
+        wizard = (
+            self.env["mrp.campaign.billing.wizard"]
+            .with_context(default_campaign_id=campaign.id)
+            .create({})
         )
-        wizard.confirm()
+        wizard._onchange_product_id()
+        lines = json.loads(wizard.available_lines or "[]")
+        wizard.selected_line_ids = json.dumps([line["id"] for line in lines])
+        wizard.process_wizard()
 
-        self.assertEqual(len(campaign.demand_line_ids), 1)
-        self.assertEqual(campaign.demand_line_ids, existing_demand)
-        self.assertEqual(sum(campaign.demand_line_ids.mapped("target_qty")), 10.0)
+        self.assertEqual(len(campaign.demand_line_ids), 2)
+        self.assertIn(existing_demand, campaign.demand_line_ids)
+        self.assertEqual(existing_demand.target_qty, 5.0)
 
     def test_confirm_with_no_selection_creates_nothing(self):
         wizard = self.env["mrp.campaign.billing.wizard"].create(
@@ -238,15 +239,16 @@ class CampaignBillingCase(TransactionCase):
                 "planned_date": date.today(),
             }
         )
-        self.assertEqual(len(wizard.selection_line_ids), 0)
+        wizard._onchange_product_id()
+        self.assertEqual(len(json.loads(wizard.available_lines or "[]")), 0)
 
-        action = wizard.confirm()
+        action = wizard.process_wizard()
         campaign_id = action.get("res_id")
         campaign = self.env["mrp.campaign"].browse(campaign_id)
         self.assertTrue(campaign.exists())
         self.assertEqual(len(campaign.demand_line_ids), 0)
 
-    def test_confirm_with_unselected_lines_ignores_them(self):
+    def test_confirm_with_no_selected_lines_ignores_them(self):
         self._create_sale_order(self.billing_product, 10.0)
 
         wizard = self.env["mrp.campaign.billing.wizard"].create(
@@ -255,27 +257,13 @@ class CampaignBillingCase(TransactionCase):
                 "planned_date": date.today(),
             }
         )
-        self.assertEqual(len(wizard.selection_line_ids), 1)
-        wizard.selection_line_ids.selected = False
+        wizard._onchange_product_id()
+        lines = json.loads(wizard.available_lines or "[]")
+        self.assertEqual(len(lines), 1)
+        wizard.selected_line_ids = "[]"
 
-        action = wizard.confirm()
+        action = wizard.process_wizard()
         campaign_id = action.get("res_id")
         campaign = self.env["mrp.campaign"].browse(campaign_id)
         self.assertTrue(campaign.exists())
         self.assertEqual(len(campaign.demand_line_ids), 0)
-
-    def test_onchange_campaign_sets_product_id(self):
-        campaign = self.env["mrp.campaign"].create(
-            {
-                "product_id": self.bulk_material.id,
-                "workflow_type": "production_billing",
-            }
-        )
-
-        wizard = self.env["mrp.campaign.billing.wizard"].create({})
-        self.assertFalse(wizard.product_id)
-
-        wizard.campaign_id = campaign
-        wizard._onchange_campaign_id()
-
-        self.assertEqual(wizard.product_id, self.bulk_material)

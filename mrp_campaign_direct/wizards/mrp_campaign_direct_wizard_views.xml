@@ -3,58 +3,20 @@
     <record id="view_mrp_campaign_direct_wizard_form" model="ir.ui.view">
         <field name="name">mrp.campaign.direct.wizard.form</field>
         <field name="model">mrp.campaign.direct.wizard</field>
+        <field name="inherit_id" ref="mrp_campaign.view_mrp_campaign_creator_form" />
+        <field name="mode">primary</field>
         <field name="arch" type="xml">
-            <form>
-                <group>
-                    <group>
-                        <field
-                            name="campaign_id"
-                            readonly="1"
-                            invisible="not campaign_id"
-                        />
-                        <field
-                            name="product_id"
-                            invisible="campaign_id"
-                            readonly="campaign_id"
-                        />
-                        <field
-                            name="planned_date"
-                            invisible="campaign_id"
-                            required="True"
-                        />
-                    </group>
-                </group>
-                <field name="selection_line_ids" nolabel="1">
-                    <tree editable="bottom" create="false" delete="false">
-                        <field name="selected" />
-                        <field name="product_id" readonly="1" string="Product" />
-                        <field
-                            name="promised_qty"
-                            readonly="1"
-                            string="Qty to Supply"
-                        />
-                        <field name="origin" readonly="1" />
-                        <field name="date_deadline" readonly="1" widget="date" />
-                        <field name="state" readonly="1" />
-                        <field name="customer_ref" readonly="1" string="Customer Ref" />
-                    </tree>
-                </field>
-                <footer>
-                    <button
-                        name="process_wizard"
-                        string="Confirm"
-                        type="object"
-                        class="btn-primary"
-                        data-hotkey="q"
-                    />
-                    <button
-                        string="Cancel"
-                        class="btn-secondary"
-                        special="cancel"
-                        data-hotkey="z"
-                    />
-                </footer>
-            </form>
+            <xpath expr="//field[@name='product_id']" position="attributes">
+                <attribute name="invisible">campaign_id</attribute>
+                <attribute name="readonly">campaign_id</attribute>
+            </xpath>
+            <xpath expr="//group[1]" position="inside">
+                <field name="campaign_id" invisible="1" readonly="1" />
+                <field name="planned_date" invisible="campaign_id" required="True" />
+            </xpath>
+            <xpath expr="//button[@name='process_wizard']" position="attributes">
+                <attribute name="string">Confirm</attribute>
+            </xpath>
         </field>
     </record>
 
@@ -65,12 +27,11 @@
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
-
-    <record id="action_mrp_campaign_direct_wizard_add" model="ir.actions.act_window">
-        <field name="name">Add Demand (Direct)</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">mrp.campaign.direct.wizard</field>
-        <field name="view_mode">form</field>
-        <field name="target">new</field>
-    </record>
+    <menuitem
+        id="menu_mrp_campaign_direct_wizard"
+        name="Create Campaign (Direct)"
+        parent="mrp_campaign.menu_mrp_campaign"
+        action="action_mrp_campaign_direct_wizard_create"
+        sequence="51"
+    />
 </odoo>

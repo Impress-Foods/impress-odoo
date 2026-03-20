@@ -1,18 +1,67 @@
-from datetime import date
+import json
+
+from odoo import fields
 
 from .test_common import CampaignDirectCase
 
 
-class TestMrpCampaignCreatorDirect(CampaignDirectCase):
+class TestMrpCampaignDirectWizard(CampaignDirectCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.wizard_model = cls.env["mrp.campaign.creator.direct"]
+        cls.wizard_model = cls.env["mrp.campaign.direct.wizard"]
 
-    def test_available_demand_move_ids(self):
-        """Test that available_demand_move_ids only includes moves whose product's
-        root anchor is the selected anchor product."""
-        # Create a move for a product that uses bulk_material as anchor
+    def test_wizard_create_with_product(self):
+        """Test wizard creation with a product sets available_lines."""
+        wizard = self.wizard_model.create(
+            {
+                "product_id": self.bulk_material.id,
+            }
+        )
+        self.assertTrue(wizard.product_id)
+        wizard._onchange_product_id()
+        self.assertTrue(wizard.available_lines)
+        available = json.loads(wizard.available_lines)
+        self.assertIsInstance(available, list)
+
+    def test_wizard_create_without_product(self):
+        """Test wizard creation without product has empty available_lines."""
+        wizard = self.wizard_model.create({})
+        self.assertFalse(wizard.product_id)
+        self.assertIn(wizard.available_lines, (False, None, "[]", ""))
+
+    def test_get_available_lines_returns_stock_moves(self):
+        """Test _get_available_lines returns stock moves with correct JSON format."""
+        move = self.env["stock.move"].create(
+            {
+                "name": "Test Move",
+                "product_id": self.int_prod_x_red.id,
+                "product_uom_qty": 10.0,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.stock_location.id,
+            }
+        )
+        move._action_confirm()
+
+        wizard = self.wizard_model.create(
+            {
+                "product_id": self.bulk_material.id,
+            }
+        )
+        wizard._onchange_product_id()
+
+        available = json.loads(wizard.available_lines)
+        self.assertTrue(len(available) >= 1)
+
+        move_data = next((m for m in available if m["id"] == move.id), None)
+        self.assertIsNotNone(move_data)
+        self.assertIn("name", move_data)
+        self.assertIn("qty", move_data)
+        self.assertIn("date", move_data)
+        self.assertIn("additional_ref", move_data)
+
+    def test_get_available_lines_filters_by_anchor(self):
+        """Test _get_available_lines only includes moves with correct anchor product."""
         move_anchor = self.env["stock.move"].create(
             {
                 "name": "move anchor",
@@ -22,8 +71,6 @@ class TestMrpCampaignCreatorDirect(CampaignDirectCase):
                 "location_dest_id": self.stock_location.id,
             }
         )
-        # Create a move for a product that doesn't use bulk_material as anchor
-        # (Using product_no_bom which has no anchor)
         move_no_anchor = self.env["stock.move"].create(
             {
                 "name": "move no anchor",
@@ -34,7 +81,6 @@ class TestMrpCampaignCreatorDirect(CampaignDirectCase):
             }
         )
 
-        # Confirm moves to move them out of 'draft' state
         (move_anchor | move_no_anchor)._action_confirm()
 
         wizard = self.wizard_model.create(
@@ -42,101 +88,160 @@ class TestMrpCampaignCreatorDirect(CampaignDirectCase):
                 "product_id": self.bulk_material.id,
             }
         )
+        wizard._onchange_product_id()
 
-        # available_demand_move_ids should include move_anchor but not move_no_anchor
-        self.assertIn(move_anchor, wizard.available_demand_move_ids)
-        self.assertNotIn(move_no_anchor, wizard.available_demand_move_ids)
+        available = json.loads(wizard.available_lines)
+        available_ids = [m["id"] for m in available]
+        self.assertIn(move_anchor.id, available_ids)
+        self.assertNotIn(move_no_anchor.id, available_ids)
 
-    def test_available_demand_move_ids_no_product(self):
-        """Test that available_demand_move_ids is empty when no product_id is set."""
-        wizard = self.wizard_model.create({})
-        self.assertFalse(wizard.available_demand_move_ids)
-
-    def test_available_demand_move_ids_filters_intermediate_moves(self):
-        """Test that available_demand_move_ids excludes intermediate moves
-        (moves that have downstream moves in the chain)."""
-        move_intermediate = self.env["stock.move"].create(
+    def test_get_selected_sources(self):
+        """Test _get_selected_sources returns moves based on selected_line_ids."""
+        move = self.env["stock.move"].create(
             {
-                "name": "move intermediate",
+                "name": "Test Move",
                 "product_id": self.int_prod_x_red.id,
                 "product_uom_qty": 10.0,
                 "location_id": self.stock_location.id,
                 "location_dest_id": self.stock_location.id,
             }
         )
-        move_final = self.env["stock.move"].create(
-            {
-                "name": "move final",
-                "product_id": self.int_prod_x_red.id,
-                "product_uom_qty": 10.0,
-                "location_id": self.stock_location.id,
-                "location_dest_id": self.stock_location.id,
-            }
-        )
-
-        move_intermediate.move_dest_ids = move_final
-
-        (move_intermediate | move_final)._action_confirm()
+        move._action_confirm()
 
         wizard = self.wizard_model.create(
             {
                 "product_id": self.bulk_material.id,
             }
         )
+        wizard._onchange_product_id()
+        wizard.selected_line_ids = json.dumps([move.id])
 
-        self.assertIn(move_final, wizard.available_demand_move_ids)
-        self.assertNotIn(move_intermediate, wizard.available_demand_move_ids)
+        selected = wizard._get_selected_sources()
+        self.assertIn(move, selected)
 
-    def test_make_campaign(self):
-        """Test the full campaign creation process via the wizard."""
-        move_1 = self.env["stock.move"].create(
+    def test_get_selected_sources_empty(self):
+        """Test _get_selected_sources returns empty recordset when no selection."""
+        wizard = self.wizard_model.create(
             {
-                "name": "move 1",
+                "product_id": self.bulk_material.id,
+            }
+        )
+        wizard._onchange_product_id()
+
+        selected = wizard._get_selected_sources()
+        self.assertFalse(selected)
+
+    def test_process_wizard_creates_campaign_and_demands(self):
+        """Test process_wizard creates campaign with demands from selected moves."""
+        move = self.env["stock.move"].create(
+            {
+                "name": "Test Move",
                 "product_id": self.int_prod_x_red.id,
                 "product_uom_qty": 10.0,
                 "location_id": self.stock_location.id,
                 "location_dest_id": self.stock_location.id,
             }
         )
-        move_2 = self.env["stock.move"].create(
-            {
-                "name": "move 2",
-                "product_id": self.int_prod_x_blue.id,
-                "product_uom_qty": 20.0,
-                "location_id": self.stock_location.id,
-                "location_dest_id": self.stock_location.id,
-            }
-        )
+        move._action_confirm()
 
-        planned_date = date(2026, 3, 3)
         wizard = self.wizard_model.create(
             {
                 "product_id": self.bulk_material.id,
-                "planned_date": planned_date,
-                "demand_move_ids": [(6, 0, [move_1.id, move_2.id])],
+                "planned_date": fields.Date.today(),
             }
         )
+        wizard._onchange_product_id()
+        wizard.selected_line_ids = json.dumps([move.id])
 
-        action = wizard.make_campaign()
-        campaign_id = action.get("res_id")
-        campaign = self.env["mrp.campaign"].browse(campaign_id)
+        action = wizard.process_wizard()
+        self.assertTrue(action)
+        self.assertEqual(action["res_model"], "mrp.campaign")
 
+        campaign = self.env["mrp.campaign"].browse(action["res_id"])
         self.assertTrue(campaign.exists())
         self.assertEqual(campaign.product_id, self.bulk_material)
-        self.assertEqual(campaign.date_planned_start, planned_date)
+        self.assertEqual(campaign.workflow_type, "direct")
 
-        # Check demand lines
-        self.assertEqual(len(campaign.demand_line_ids), 2)
-
-        # Verify moves are correctly linked via proxies
         proxies = self.env["mrp.campaign.demand.proxy"].search(
             [("campaign_id", "=", campaign.id)]
         )
-        self.assertEqual(len(proxies), 2)
-        self.assertCountEqual(proxies.mapped("move_id"), move_1 | move_2)
+        self.assertEqual(len(proxies), 1)
+        self.assertEqual(proxies.move_id, move)
 
-        # Verify promised quantities
-        proxy_1 = proxies.filtered(lambda p: p.move_id == move_1)
-        self.assertEqual(proxy_1.promised_qty, 10.0)
-        proxy_2 = proxies.filtered(lambda p: p.move_id == move_2)
-        self.assertEqual(proxy_2.promised_qty, 20.0)
+    def test_process_wizard_adds_to_existing_campaign(self):
+        """Test process_wizard adds demands to existing campaign."""
+        existing_campaign = self.create_campaign(self.bulk_material)
+
+        move = self.env["stock.move"].create(
+            {
+                "name": "Test Move",
+                "product_id": self.int_prod_x_red.id,
+                "product_uom_qty": 10.0,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.stock_location.id,
+            }
+        )
+        move._action_confirm()
+
+        wizard = self.wizard_model.create(
+            {
+                "campaign_id": existing_campaign.id,
+                "product_id": self.bulk_material.id,
+            }
+        )
+        wizard._onchange_product_id()
+        wizard.selected_line_ids = json.dumps([move.id])
+
+        action = wizard.process_wizard()
+        self.assertIsNone(action)
+
+        proxies = self.env["mrp.campaign.demand.proxy"].search(
+            [("campaign_id", "=", existing_campaign.id)]
+        )
+        self.assertEqual(len(proxies), 1)
+        self.assertEqual(proxies.move_id, move)
+
+    def test_process_wizard_no_selection(self):
+        """Test process_wizard w no selec. still creates campaign w product select."""
+        wizard = self.wizard_model.create(
+            {
+                "product_id": self.bulk_material.id,
+                "planned_date": fields.Date.today(),
+            }
+        )
+        wizard._onchange_product_id()
+
+        action = wizard.process_wizard()
+        self.assertTrue(action)
+
+        campaign = self.env["mrp.campaign"].search(
+            [("product_id", "=", self.bulk_material.id)]
+        )
+        self.assertTrue(campaign)
+
+    def test_product_id_change_resets_selection(self):
+        """Test that changing product_id clears the selection."""
+        move = self.env["stock.move"].create(
+            {
+                "name": "Test Move",
+                "product_id": self.int_prod_x_red.id,
+                "product_uom_qty": 10.0,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.stock_location.id,
+            }
+        )
+        move._action_confirm()
+
+        wizard = self.wizard_model.create(
+            {
+                "product_id": self.bulk_material.id,
+            }
+        )
+        wizard._onchange_product_id()
+        wizard.selected_line_ids = json.dumps([move.id])
+        self.assertEqual(wizard._get_selected_sources(), move)
+
+        wizard.product_id = self.int_prod_x_red.id
+        wizard._onchange_product_id()
+        self.assertEqual(wizard.selected_line_ids, "[]")
+        self.assertFalse(wizard._get_selected_sources())

@@ -13,7 +13,7 @@ class MrpCampaignProductionBilling(models.Model):
         self.ensure_one()
         if self.workflow_type == "production_billing":
             return "mrp.campaign.billing.wizard"
-        return super()._get_add_demand_wizard_model()
+        return super()._get_demand_wizard_model()
 
     def _get_partition_wizard_model(self) -> str:
         self.ensure_one()

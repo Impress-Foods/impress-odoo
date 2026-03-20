@@ -1,143 +1,107 @@
-import logging
-
 from odoo import api, fields, models
-from odoo.fields import Command
-
-_logger = logging.getLogger(__name__)
-
-
-class MrpCampaignBillingWizardLine(models.TransientModel):
-    _name = "mrp.campaign.billing.wizard.line"
-    _description = "Billing wizard selection line"
-    _order = "sale_order_line_id, id"
-
-    wizard_id = fields.Many2one(
-        "mrp.campaign.billing.wizard",
-        required=True,
-        ondelete="cascade",
-    )
-    sale_order_line_id = fields.Many2one(
-        "sale.order.line",
-        string="SO Line",
-        required=True,
-        ondelete="cascade",
-    )
-    end_product_id = fields.Many2one(
-        "product.product",
-        string="End Product",
-        required=True,
-        ondelete="cascade",
-    )
-    billing_product_id = fields.Many2one(
-        "product.product",
-        string="Billing Product",
-        required=True,
-        ondelete="cascade",
-    )
-    promised_qty = fields.Float(string="Quantity")
-    selected = fields.Boolean(default=True)
-    sale_order_id = fields.Many2one(related="sale_order_line_id.order_id")
-    client_order_ref = fields.Char(related="sale_order_id.client_order_ref")
-
-    def _make_values(self) -> list[dict]:
-        return [
-            {
-                "sale_order_line_id": line.sale_order_line_id.id,
-                "promised_qty": line.promised_qty,
-            }
-            for line in self.filtered("selected")
-        ]
 
 
 class MrpCampaignBillingWizard(models.TransientModel):
     _name = "mrp.campaign.billing.wizard"
     _inherit = "mrp.campaign.creator"
+    _description = "Campaign wizard for production billing"
+
+    _source_model = "sale.order.line"
 
     company_id = fields.Many2one(
         "res.company",
         related="campaign_id.company_id",
     )
 
-    selection_line_ids = fields.One2many(
-        "mrp.campaign.billing.wizard.line",
-        "wizard_id",
-        string="Sale Order Lines",
-        compute="_compute_selection_line_ids",
-        readonly=False,
-    )
-
     @api.model
-    def default_get(self, fields_list) -> None:
-        _logger.warning("Running default get")
+    def default_get(self, fields_list):
         res = super().default_get(fields_list)
-
-        if self.product_id:
-            res["selection_line_ids"] = self._make_selection_lines()
+        campaign_id = self.env.context.get("default_campaign_id")
+        if campaign_id and "product_id" in fields_list:
+            campaign = self.env["mrp.campaign"].browse(campaign_id)
+            if campaign.exists():
+                res["product_id"] = campaign.product_id.id
+                res["campaign_id"] = campaign.id
         return res
 
-    @api.depends("product_id")
-    def _compute_selection_line_ids(self) -> None:
-        for rec in self:
-            existing = {}
-            for line in rec.selection_line_ids:
-                key = (line.end_product_id.id, line.sale_order_line_id.id)
-                existing[key] = line.selected
+    def _get_available_lines(self, product_id) -> list[dict]:
+        if not product_id:
+            return []
 
-            end_products = self.env["product.product"].search(
-                [("anchor_product_id", "=", rec.product_id.id)]
+        result = []
+        end_products = self.env["product.product"].search(
+            [("anchor_product_id", "=", product_id)]
+        )
+
+        for end_product in end_products:
+            bom = end_product.bom_ids[:1]
+            if not bom or not bom.billing_product_id:
+                continue
+            billing_product = bom.billing_product_id
+            sols = self.env["sale.order.line"].search(
+                [
+                    ("product_id", "=", billing_product.id),
+                    ("order_id.invoice_status", "!=", "invoiced"),
+                ]
             )
-
-            rec.selection_line_ids.unlink()
-            values = []
-            for end_product in end_products:
-                bom = end_product.bom_ids[:1]
-                if not bom or not bom.billing_product_id:
-                    continue
-                billing_product = bom.billing_product_id
-                sols = self.env["sale.order.line"].search(
-                    [("product_id", "=", billing_product.id)]
+            for sol in sols:
+                allocated = sum(
+                    self.env["mrp.campaign.demand.billing_proxy"]
+                    .search([("sale_order_line_id", "=", sol.id)])
+                    .mapped("promised_qty")
                 )
-                for sol in sols:
-                    allocated = sum(
-                        self.env["mrp.campaign.demand.billing_proxy"]
-                        .search([("sale_order_line_id", "=", sol.id)])
-                        .mapped("promised_qty")
-                    )
-                    remaining = sol.product_uom_qty - allocated
-                    if remaining <= 0:
-                        continue
+                remaining = sol.product_uom_qty - allocated
+                if remaining <= 0:
+                    continue
 
-                    key = (end_product.id, sol.id)
-                    selected = existing.get(key, True)
-                    values.append(
-                        Command.create(
-                            {
-                                "end_product_id": end_product.id,
-                                "billing_product_id": billing_product.id,
-                                "sale_order_line_id": sol.id,
-                                "promised_qty": remaining,
-                                "selected": selected,
-                                "wizard_id": rec.id,
-                            }
-                        )
-                    )
-            rec.selection_line_ids = values
+                result.append(
+                    {
+                        "id": sol.id,
+                        "name": f"{sol.order_id.name} | "
+                        f"{sol.order_id.client_order_ref or ''}",
+                        "qty": remaining,
+                        "date": sol.order_id.date_order.isoformat()
+                        if sol.order_id.date_order
+                        else None,
+                        "additional_ref": end_product.display_name,
+                    }
+                )
+
+        return result
+
+    def _get_valid_sources(self):
+        if not self.product_id:
+            return self.env["sale.order.line"]
+
+        end_products = self.env["product.product"].search(
+            [("anchor_product_id", "=", self.product_id.id)]
+        )
+        billing_products = end_products.mapped("bom_ids.billing_product_id")
+        return self.env["sale.order.line"].search(
+            [
+                ("product_id", "in", billing_products.ids),
+                ("order_id.invoice_status", "!=", "invoiced"),
+            ]
+        )
 
     def _create_demands(self, campaign) -> None:
-        selected_lines = self.selection_line_ids.filtered("selected")
-        if not selected_lines:
+        selected = self._get_selected_sources()
+        if not selected:
             return
 
         grouped = {}
-        for line in selected_lines:
-            key = (line.end_product_id, line.sale_order_line_id)
+        for sol in selected:
+            end_product = self._get_end_product_for_sol(sol)
+            if not end_product:
+                continue
+            key = (end_product, sol)
             if key not in grouped:
                 grouped[key] = []
-            grouped[key].append(line)
+            grouped[key].append(sol)
 
-        for (end_product, sol), lines in grouped.items():
+        for (end_product, sol), sols in grouped.items():
             bom = end_product.bom_ids[:1]
-            target_qty = sum(line.promised_qty for line in lines)
+            target_qty = sum(s.product_uom_qty for s in sols)
 
             demand = self.env["mrp.campaign.demand"].create(
                 {
@@ -152,12 +116,25 @@ class MrpCampaignBillingWizard(models.TransientModel):
             proxy_values = [
                 {
                     "demand_id": demand.id,
-                    "sale_order_line_id": line.sale_order_line_id.id,
-                    "promised_qty": line.promised_qty,
+                    "sale_order_line_id": s.id,
+                    "promised_qty": s.product_uom_qty,
                 }
-                for line in lines
+                for s in sols
             ]
             self.env["mrp.campaign.demand.billing_proxy"].create(proxy_values)
+
+    def _get_end_product_for_sol(self, sol):
+        if not self.product_id:
+            return False
+
+        end_products = self.env["product.product"].search(
+            [("anchor_product_id", "=", self.product_id.id)]
+        )
+        for ep in end_products:
+            bom = ep.bom_ids[:1]
+            if bom and bom.billing_product_id.id == sol.product_id.id:
+                return ep
+        return False
 
     def process_wizard(self) -> dict | None:
         self.ensure_one()

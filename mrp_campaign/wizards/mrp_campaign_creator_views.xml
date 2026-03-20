@@ -8,14 +8,26 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
-                    <group>
-                        <field name="product_id" />
-                        <field name="planned_date" />
+                    <group invisible="campaign_id">
+                        <group>
+                            <field name="campaign_id" invisible="1" />
+                            <field name="product_id" required="not campaign_id" />
+                        </group>
+                        <group>
+                            <field name="planned_date" required="not campaign_id" />
+                        </group>
                     </group>
+                    <field
+                        name="available_lines"
+                        widget="wizard_selector"
+                        class="field_wizard_selector"
+                        nolabel="1"
+                    />
+                    <field name="selected_line_ids" invisible="1" />
                 </sheet>
                 <footer>
                     <button
-                        name="make_campaign"
+                        name="process_wizard"
                         string="Create Campaign"
                         type="object"
                         class="btn-primary"
