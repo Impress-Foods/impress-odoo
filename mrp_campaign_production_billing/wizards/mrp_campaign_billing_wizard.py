@@ -53,12 +53,6 @@ class MrpCampaignBillingWizard(models.TransientModel):
     _name = "mrp.campaign.billing.wizard"
     _inherit = "mrp.campaign.creator"
 
-    campaign_id = fields.Many2one(
-        "mrp.campaign",
-        string="Campaign",
-        readonly=True,
-    )
-
     company_id = fields.Many2one(
         "res.company",
         related="campaign_id.company_id",
@@ -136,12 +130,12 @@ class MrpCampaignBillingWizard(models.TransientModel):
 
         grouped = {}
         for line in selected_lines:
-            key = line.end_product_id
+            key = (line.end_product_id, line.sale_order_line_id)
             if key not in grouped:
                 grouped[key] = []
             grouped[key].append(line)
 
-        for end_product, lines in grouped.items():
+        for (end_product, sol), lines in grouped.items():
             bom = end_product.bom_ids[:1]
             target_qty = sum(line.promised_qty for line in lines)
 
@@ -151,6 +145,7 @@ class MrpCampaignBillingWizard(models.TransientModel):
                     "product_id": end_product.id,
                     "bom_id": bom.id if bom else False,
                     "target_qty": target_qty,
+                    "sale_order_line_id": sol.id,
                 }
             )
 

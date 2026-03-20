@@ -31,7 +31,7 @@ class MrpCampaignDirectWizardLine(models.TransientModel):
         string="Origin",
         related="move_id.origin",
     )
-    date_deadline = fields.Date(
+    date_deadline = fields.Datetime(
         string="Deadline",
         related="move_id.date_deadline",
     )
@@ -53,10 +53,7 @@ class MrpCampaignDirectWizard(models.TransientModel):
     _description = "Wizard for direct production campaigns"
 
     planned_date = fields.Date()
-    company_id = fields.Many2one(
-        "res.company",
-        related="campaign_id.company_id",
-    )
+
     selection_line_ids = fields.One2many(
         "mrp.campaign.direct.wizard.line",
         "wizard_id",

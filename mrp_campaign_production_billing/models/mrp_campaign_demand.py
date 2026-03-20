@@ -16,6 +16,18 @@ class MrpCampaignDemand(models.Model):
         store=True,
     )
 
+    sale_order_line_id = fields.Many2one(
+        "sale.order.line",
+        string="Billing SOL",
+        compute="_compute_sale_order_line_id",
+        store=True,
+    )
+
+    @api.depends("billing_proxy_ids.sale_order_line_id")
+    def _compute_sale_order_line_id(self):
+        for rec in self:
+            rec.sale_order_line_id = rec.billing_proxy_ids[:1].sale_order_line_id
+
     @api.depends("billing_proxy_ids", "billing_proxy_ids.sale_order_id")
     def _compute_billing_sale_order_ids(self):
         for rec in self:
@@ -24,6 +36,13 @@ class MrpCampaignDemand(models.Model):
     def unlink(self):
         self.billing_proxy_ids.unlink()
         return super().unlink()
+
+    def create_campaign_line(self):
+        res = super().create_campaign_line()
+        for rec in self:
+            if rec.sale_order_line_id and rec.campaign_line_id:
+                rec.campaign_line_id.sale_order_line_id = rec.sale_order_line_id
+        return res
 
 
 class MrpCampaignDemandBillingProxy(models.Model):

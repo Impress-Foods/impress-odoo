@@ -4,7 +4,6 @@ from odoo import fields, models
 class MrpCampaignCreator(models.TransientModel):
     _name = "mrp.campaign.creator"
     _description = "Abstract base wizard - bridges provide concrete implementation"
-    _table = "wizard_mrp_campaign_creator"
 
     product_id = fields.Many2one(
         comodel_name="product.product",
@@ -12,6 +11,7 @@ class MrpCampaignCreator(models.TransientModel):
         string="Anchor Product",
     )
     planned_date = fields.Date()
+    campaign_id = fields.Many2one("mrp.campaign")
 
     def _create_demands(self, campaign) -> None:
         raise NotImplementedError(
