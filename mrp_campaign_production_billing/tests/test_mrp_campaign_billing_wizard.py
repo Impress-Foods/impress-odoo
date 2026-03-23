@@ -84,7 +84,7 @@ class CampaignBillingCase(TransactionCase):
         self.assertEqual(len(json.loads(wizard.available_lines or "[]")), 0)
 
     def test_wizard_create_with_matching_so(self):
-        self._create_sale_order(self.billing_product, 10.0)
+        so = self._create_sale_order(self.billing_product, 10.0)
 
         wizard = self.env["mrp.campaign.billing.wizard"].create(
             {
@@ -95,7 +95,7 @@ class CampaignBillingCase(TransactionCase):
         wizard._onchange_product_id()
         lines = json.loads(wizard.available_lines or "[]")
         self.assertEqual(len(lines), 1)
-        self.assertEqual(lines[0]["id"], self.env["sale.order.line"].search([])[-1].id)
+        self.assertEqual(lines[0]["id"], so.order_line[0].id)
         self.assertEqual(lines[0]["qty"], 10.0)
 
     def test_wizard_skips_invoiced_so(self):
