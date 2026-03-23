@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import api, models
 
 
 class MrpCampaignBillingWizard(models.TransientModel):
@@ -7,11 +7,6 @@ class MrpCampaignBillingWizard(models.TransientModel):
     _description = "Campaign wizard for production billing"
 
     _source_model = "sale.order.line"
-
-    company_id = fields.Many2one(
-        "res.company",
-        related="campaign_id.company_id",
-    )
 
     @api.model
     def default_get(self, fields_list):

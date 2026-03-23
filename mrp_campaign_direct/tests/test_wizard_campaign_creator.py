@@ -51,7 +51,7 @@ class TestMrpCampaignDirectWizard(CampaignDirectCase):
         wizard._onchange_product_id()
 
         available = json.loads(wizard.available_lines)
-        self.assertTrue(len(available) >= 1)
+        self.assertGreaterEqual(len(available), 1)
 
         move_data = next((m for m in available if m["id"] == move.id), None)
         self.assertIsNotNone(move_data)
@@ -245,3 +245,21 @@ class TestMrpCampaignDirectWizard(CampaignDirectCase):
         wizard._onchange_product_id()
         self.assertEqual(wizard.selected_line_ids, "[]")
         self.assertFalse(wizard._get_selected_sources())
+
+    def test_default_get_prefills_from_context(self):
+        """Test default_get pre-fills campaign and product from context."""
+        campaign = self.create_campaign(self.bulk_material)
+
+        wizard = self.wizard_model.with_context(default_campaign_id=campaign.id).create(
+            {}
+        )
+
+        self.assertEqual(wizard.campaign_id, campaign)
+        self.assertEqual(wizard.product_id, self.bulk_material)
+
+    def test_default_get_no_context_no_prefill(self):
+        """Test default_get does not prefill when no campaign in context."""
+        wizard = self.wizard_model.create({})
+
+        self.assertFalse(wizard.campaign_id)
+        self.assertFalse(wizard.product_id)

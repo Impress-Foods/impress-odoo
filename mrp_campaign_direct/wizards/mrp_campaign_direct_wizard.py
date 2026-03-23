@@ -1,6 +1,6 @@
 import json
 
-from odoo import api, fields, models
+from odoo import api, models
 
 
 class MrpCampaignDirectWizard(models.TransientModel):
@@ -8,22 +8,45 @@ class MrpCampaignDirectWizard(models.TransientModel):
     _inherit = "mrp.campaign.creator"
     _description = "Wizard for direct production campaigns"
 
-    planned_date = fields.Date()
+    @api.model
+    def default_get(self, fields_list):
+        res = super().default_get(fields_list)
+        campaign_id = self.env.context.get("default_campaign_id")
+        if campaign_id and "product_id" in fields_list:
+            campaign = self.env["mrp.campaign"].browse(campaign_id)
+            if campaign.exists():
+                res["product_id"] = campaign.product_id.id
+                res["campaign_id"] = campaign.id
+        return res
 
     @api.onchange("product_id")
     def _onchange_product_id(self):
+        self.selected_line_ids = "[]"
         self.available_lines = json.dumps(self._get_available_lines(self.product_id.id))
 
     def _get_available_lines(self, product_id) -> list[dict]:
         if not product_id:
             return []
 
-        moves = self.env["stock.move"].search(
-            [
-                ("product_id.anchor_product_id", "=", product_id),
-                ("campaign_can_be_added", "=", True),
-            ]
-        )
+        try:
+            moves = self.env["stock.move"].search(
+                [
+                    ("product_id.anchor_product_id", "=", product_id),
+                    ("campaign_can_be_added", "=", True),
+                ]
+            )
+        except Exception as e:
+            self.env.cr.logger.error("Failed to search stock moves: %s", e)
+            return []
+
+        if not moves:
+            return []
+
+        moves.mapped("origin")
+        moves.mapped("product_id.display_name")
+        moves.mapped("sale_customer_ref")
+        moves.mapped("date_deadline")
+        moves.mapped("campaign_qty_to_supply")
 
         result = []
         for move in moves:

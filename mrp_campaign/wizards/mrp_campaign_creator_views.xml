@@ -28,7 +28,7 @@
                 <footer>
                     <button
                         name="process_wizard"
-                        string="Create Campaign"
+                        string="Confirm"
                         type="object"
                         class="btn-primary"
                         data-hotkey="q"

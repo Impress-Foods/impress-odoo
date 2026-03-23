@@ -1,6 +1,7 @@
 /** @odoo-module **/
 import {registry} from "@web/core/registry";
 import {Component, useRef, useState, useEffect} from "@odoo/owl";
+import {useDebounced} from "@web/core/utils/timing";
 
 export class WizardSelector extends Component {
     static template = "mrp_campaign.WizardSelector";
@@ -23,6 +24,8 @@ export class WizardSelector extends Component {
 
         this.searchAvailable = useRef("search-available");
         this.searchSelected = useRef("search-selected");
+
+        this.debouncedSave = useDebounced(this._saveSelected.bind(this), 300);
     }
 
     get availableItems() {
@@ -53,21 +56,29 @@ export class WizardSelector extends Component {
         return this._displayedSelected.items;
     }
 
-    getColumnValue(item, column) {
-        if (!item[column] && item[column] !== 0) {
+    formatDate(dateStr) {
+        if (!dateStr) {
             return "";
         }
-        if (column === "date" && item[column]) {
-            const date = new Date(item[column]);
+        try {
+            const date = new Date(dateStr);
             return date.toLocaleDateString();
+        } catch {
+            return dateStr;
         }
-        return item[column];
     }
 
     _loadData(data) {
         if (data) {
             try {
                 const parsed = JSON.parse(data);
+                if (!parsed || !Array.isArray(parsed)) {
+                    this.availableList.items = [];
+                    this._displayedAvailable.items = [];
+                    this.selectedList.items = [];
+                    this._displayedSelected.items = [];
+                    return;
+                }
                 const selectedIds = this._getSelectedIds();
                 const selectedItems = parsed.filter((item) =>
                     selectedIds.includes(item.id)
@@ -115,7 +126,7 @@ export class WizardSelector extends Component {
         this._displayedAvailable.items = [...this.availableList.items];
         this.selectedList.items = [...this.selectedList.items, item];
         this._displayedSelected.items = [...this.selectedList.items];
-        this._saveSelected();
+        this.debouncedSave();
         if (this.searchAvailable.el) {
             this.searchAvailable.el.value = "";
         }
@@ -129,7 +140,7 @@ export class WizardSelector extends Component {
         this.availableList.items = [...this.availableList.items, item];
         this.availableList.items.sort((a, b) => a.name.localeCompare(b.name));
         this._displayedAvailable.items = [...this.availableList.items];
-        this._saveSelected();
+        this.debouncedSave();
         if (this.searchSelected.el) {
             this.searchSelected.el.value = "";
         }
@@ -143,7 +154,7 @@ export class WizardSelector extends Component {
         this._displayedSelected.items = [...this.selectedList.items];
         this.availableList.items = [];
         this._displayedAvailable.items = [];
-        this._saveSelected();
+        this.debouncedSave();
     }
 
     removeAllFromSelected() {
@@ -155,7 +166,7 @@ export class WizardSelector extends Component {
         this._displayedAvailable.items = [...this.availableList.items];
         this.selectedList.items = [];
         this._displayedSelected.items = [];
-        this._saveSelected();
+        this.debouncedSave();
     }
 
     filterAvailable() {

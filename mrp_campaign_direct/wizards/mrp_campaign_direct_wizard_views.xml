@@ -14,9 +14,6 @@
                 <field name="campaign_id" invisible="1" readonly="1" />
                 <field name="planned_date" invisible="campaign_id" required="True" />
             </xpath>
-            <xpath expr="//button[@name='process_wizard']" position="attributes">
-                <attribute name="string">Confirm</attribute>
-            </xpath>
         </field>
     </record>
 

@@ -35,7 +35,7 @@
                                     <span
                                         t-if="item.date"
                                         class="ms-2"
-                                        t-esc="item.date"
+                                        t-esc="this.formatDate(item.date)"
                                     />
                                     <span
                                         t-if="item.additional_ref"
@@ -116,7 +116,7 @@
                                     <span
                                         t-if="item.date"
                                         class="ms-2"
-                                        t-esc="item.date"
+                                        t-esc="this.formatDate(item.date)"
                                     />
                                     <span
                                         t-if="item.additional_ref"
