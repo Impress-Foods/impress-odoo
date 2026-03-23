@@ -1,12 +1,12 @@
 # pragma: no coverage
 {
     "name": "Manufacturing Campaigns",
-    "version": "17.0.1.0.0",
+    "version": "17.0.2.0.0",
     "summary": """ Base module for manufacturing campaigns """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
-    "depends": ["mrp"],
+    "depends": ["mrp_workorder", "sale_management"],
     "data": [
         "data/mrp_campaign_sequence.xml",
         "security/ir.model.access.csv",
@@ -18,6 +18,7 @@
         "views/product_views.xml",
         "reports/mrp_campaign_report.xml",
         "wizards/mrp_campaign_creator_views.xml",
+        "wizards/mrp_campaign_partition_views.xml",
     ],
     "assets": {
         "web.assets_backend": ["mrp_campaign/static/src/**/*"],

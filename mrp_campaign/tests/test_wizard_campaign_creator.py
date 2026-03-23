@@ -1,15 +1,20 @@
 import json
+import logging
 
 from odoo import fields
 
 from .test_common import CampaignDirectCase
 
+_logger = logging.getLogger(__name__)
 
-class TestMrpCampaignDirectWizard(CampaignDirectCase):
+
+class TestMrpCampaignWizard(CampaignDirectCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.wizard_model = cls.env["mrp.campaign.direct.wizard"]
+        cls.wizard_model = cls.env["mrp.campaign.wizard.creator"].with_context(
+            default_workflow_type="direct"
+        )
 
     def test_wizard_create_with_product(self):
         """Test wizard creation with a product sets available_lines."""
@@ -18,7 +23,7 @@ class TestMrpCampaignDirectWizard(CampaignDirectCase):
                 "product_id": self.bulk_material.id,
             }
         )
-        self.assertTrue(wizard.product_id)
+        self.assertEqual(wizard.product_id.id, self.bulk_material.id)
         wizard._onchange_product_id()
         self.assertTrue(wizard.available_lines)
         available = json.loads(wizard.available_lines)
@@ -32,6 +37,9 @@ class TestMrpCampaignDirectWizard(CampaignDirectCase):
 
     def test_get_available_lines_returns_stock_moves(self):
         """Test _get_available_lines returns stock moves with correct JSON format."""
+        picking = self.env["stock.picking"].create(
+            {"picking_type_id": self.env.ref("stock.picking_type_out").id}
+        )
         move = self.env["stock.move"].create(
             {
                 "name": "Test Move",
@@ -39,6 +47,7 @@ class TestMrpCampaignDirectWizard(CampaignDirectCase):
                 "product_uom_qty": 10.0,
                 "location_id": self.stock_location.id,
                 "location_dest_id": self.stock_location.id,
+                "picking_id": picking.id,
             }
         )
         move._action_confirm()
@@ -62,6 +71,11 @@ class TestMrpCampaignDirectWizard(CampaignDirectCase):
 
     def test_get_available_lines_filters_by_anchor(self):
         """Test _get_available_lines only includes moves with correct anchor product."""
+
+        picking = self.env["stock.picking"].create(
+            {"picking_type_id": self.env.ref("stock.picking_type_out").id}
+        )
+
         move_anchor = self.env["stock.move"].create(
             {
                 "name": "move anchor",
@@ -69,6 +83,7 @@ class TestMrpCampaignDirectWizard(CampaignDirectCase):
                 "product_uom_qty": 10.0,
                 "location_id": self.stock_location.id,
                 "location_dest_id": self.stock_location.id,
+                "picking_id": picking.id,
             }
         )
         move_no_anchor = self.env["stock.move"].create(
@@ -78,6 +93,7 @@ class TestMrpCampaignDirectWizard(CampaignDirectCase):
                 "product_uom_qty": 5.0,
                 "location_id": self.stock_location.id,
                 "location_dest_id": self.stock_location.id,
+                "picking_id": picking.id,
             }
         )
 
@@ -97,6 +113,9 @@ class TestMrpCampaignDirectWizard(CampaignDirectCase):
 
     def test_get_selected_sources(self):
         """Test _get_selected_sources returns moves based on selected_line_ids."""
+        picking = self.env["stock.picking"].create(
+            {"picking_type_id": self.env.ref("stock.picking_type_out").id}
+        )
         move = self.env["stock.move"].create(
             {
                 "name": "Test Move",
@@ -104,6 +123,7 @@ class TestMrpCampaignDirectWizard(CampaignDirectCase):
                 "product_uom_qty": 10.0,
                 "location_id": self.stock_location.id,
                 "location_dest_id": self.stock_location.id,
+                "picking_id": picking.id,
             }
         )
         move._action_confirm()
@@ -133,6 +153,9 @@ class TestMrpCampaignDirectWizard(CampaignDirectCase):
 
     def test_process_wizard_creates_campaign_and_demands(self):
         """Test process_wizard creates campaign with demands from selected moves."""
+        picking = self.env["stock.picking"].create(
+            {"picking_type_id": self.env.ref("stock.picking_type_out").id}
+        )
         move = self.env["stock.move"].create(
             {
                 "name": "Test Move",
@@ -140,6 +163,7 @@ class TestMrpCampaignDirectWizard(CampaignDirectCase):
                 "product_uom_qty": 10.0,
                 "location_id": self.stock_location.id,
                 "location_dest_id": self.stock_location.id,
+                "picking_id": picking.id,
             }
         )
         move._action_confirm()
@@ -162,16 +186,18 @@ class TestMrpCampaignDirectWizard(CampaignDirectCase):
         self.assertEqual(campaign.product_id, self.bulk_material)
         self.assertEqual(campaign.workflow_type, "direct")
 
-        proxies = self.env["mrp.campaign.demand.proxy"].search(
+        targets = self.env["mrp.campaign.demand.target"].search(
             [("campaign_id", "=", campaign.id)]
         )
-        self.assertEqual(len(proxies), 1)
-        self.assertEqual(proxies.move_id, move)
+        self.assertEqual(len(targets), 1)
+        self.assertEqual(targets.target_id, move.id)
 
     def test_process_wizard_adds_to_existing_campaign(self):
         """Test process_wizard adds demands to existing campaign."""
         existing_campaign = self.create_campaign(self.bulk_material)
-
+        picking = self.env["stock.picking"].create(
+            {"picking_type_id": self.env.ref("stock.picking_type_out").id}
+        )
         move = self.env["stock.move"].create(
             {
                 "name": "Test Move",
@@ -179,6 +205,7 @@ class TestMrpCampaignDirectWizard(CampaignDirectCase):
                 "product_uom_qty": 10.0,
                 "location_id": self.stock_location.id,
                 "location_dest_id": self.stock_location.id,
+                "picking_id": picking.id,
             }
         )
         move._action_confirm()
@@ -195,11 +222,11 @@ class TestMrpCampaignDirectWizard(CampaignDirectCase):
         action = wizard.process_wizard()
         self.assertIsNone(action)
 
-        proxies = self.env["mrp.campaign.demand.proxy"].search(
+        targets = self.env["mrp.campaign.demand.target"].search(
             [("campaign_id", "=", existing_campaign.id)]
         )
-        self.assertEqual(len(proxies), 1)
-        self.assertEqual(proxies.move_id, move)
+        self.assertEqual(len(targets), 1)
+        self.assertEqual(targets.target_id, move.id)
 
     def test_process_wizard_no_selection(self):
         """Test process_wizard w no selec. still creates campaign w product select."""
@@ -221,6 +248,10 @@ class TestMrpCampaignDirectWizard(CampaignDirectCase):
 
     def test_product_id_change_resets_selection(self):
         """Test that changing product_id clears the selection."""
+
+        picking = self.env["stock.picking"].create(
+            {"picking_type_id": self.env.ref("stock.picking_type_out").id}
+        )
         move = self.env["stock.move"].create(
             {
                 "name": "Test Move",
@@ -228,6 +259,7 @@ class TestMrpCampaignDirectWizard(CampaignDirectCase):
                 "product_uom_qty": 10.0,
                 "location_id": self.stock_location.id,
                 "location_dest_id": self.stock_location.id,
+                "picking_id": picking.id,
             }
         )
         move._action_confirm()

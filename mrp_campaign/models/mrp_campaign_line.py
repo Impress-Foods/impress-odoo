@@ -1,3 +1,5 @@
+import logging
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.fields import Many2many
@@ -6,6 +8,8 @@ from odoo.tools import float_is_zero
 from odoo.addons.mrp.models.mrp_bom import MrpBomLine
 from odoo.addons.mrp.models.mrp_production import MrpProduction
 from odoo.addons.product.models.product_product import ProductProduct
+
+_logger = logging.getLogger(__name__)
 
 
 class CampaignLine(models.Model):
@@ -292,19 +296,20 @@ class CampaignLine(models.Model):
         for rec in self:
             values += rec._make_production_order()
         mos: MrpProduction = self.env["mrp.production"].create(values)
-        self.productions_created = True
+        if len(mos) != 0:
+            self.productions_created = True
         return mos
 
     def _make_production_order(self) -> list[dict]:
         self.ensure_one()
         values = []
+        if self.qty == 0:
+            return values
         if self.is_batch_produced and self.batch_size > 0:
             remaining_qty = self.qty
-
             while not float_is_zero(remaining_qty, self.product_id.uom_id.rounding):
                 qty_to_produce = min(remaining_qty, self.batch_size)
                 remaining_qty -= qty_to_produce
-
                 values.append(
                     {
                         "product_id": self.product_id.id,
@@ -326,12 +331,10 @@ class CampaignLine(models.Model):
                     "date_start": self.campaign_id.date_planned_start,
                 }
             )
-
         return values
 
     def _adjust_mos(self, new_quantity: float) -> None:
         self.ensure_one()
-
         rounding_precision = self.product_id.uom_id.rounding
 
         active_mos = self.production_ids.filtered_domain(

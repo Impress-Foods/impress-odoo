@@ -8,8 +8,7 @@
     "category": "Hidden",
     "depends": ["mrp_campaign", "impress_production_billing"],
     "data": [
-        "security/ir.model.access.csv",
-        "wizards/mrp_campaign_billing_wizard_views.xml",
+        "wizards/mrp_campaign_wizard_views.xml",
     ],
     "installable": True,
     "auto_install": False,

@@ -1,12 +1,13 @@
 from odoo import api, models
 
 
-class MrpCampaignBillingWizard(models.TransientModel):
-    _name = "mrp.campaign.billing.wizard"
-    _inherit = "mrp.campaign.creator"
-    _description = "Campaign wizard for production billing"
+class MrpCampaignCreator(models.Model):
+    _inherit = "mrp.campaign.wizard.creator"
 
-    _source_model = "sale.order.line"
+    def _get_workflow_types(self):
+        res = super()._get_workflow_types()
+        res.append(("production_billing", "Production Billing"))
+        return res
 
     @api.model
     def default_get(self, fields_list):
@@ -19,7 +20,10 @@ class MrpCampaignBillingWizard(models.TransientModel):
                 res["campaign_id"] = campaign.id
         return res
 
-    def _get_available_lines(self, product_id) -> list[dict]:
+    def _get_available_lines_for_type(self, product_id, workflow_type) -> list[dict]:
+        if workflow_type != "production_billing":
+            return super()._get_available_lines_for_type(product_id, workflow_type)
+
         if not product_id:
             return []
 
@@ -41,8 +45,14 @@ class MrpCampaignBillingWizard(models.TransientModel):
             )
             for sol in sols:
                 allocated = sum(
-                    self.env["mrp.campaign.demand.billing_proxy"]
-                    .search([("sale_order_line_id", "=", sol.id)])
+                    self.env["mrp.campaign.demand.target"]
+                    .sudo()
+                    .search(
+                        [
+                            ("target_type", "=", "billing"),
+                            ("source_ref", "=", f"sale.order.line,{sol.id}"),
+                        ]
+                    )
                     .mapped("promised_qty")
                 )
                 remaining = sol.product_uom_qty - allocated
@@ -64,7 +74,10 @@ class MrpCampaignBillingWizard(models.TransientModel):
 
         return result
 
-    def _get_valid_sources(self):
+    def _get_valid_sources_for_type(self, workflow_type):
+        if workflow_type != "production_billing":
+            return super()._get_valid_sources_for_type(workflow_type)
+
         if not self.product_id:
             return self.env["sale.order.line"]
 
@@ -79,7 +92,10 @@ class MrpCampaignBillingWizard(models.TransientModel):
             ]
         )
 
-    def _create_demands(self, campaign) -> None:
+    def _create_demands_for_type(self, campaign, workflow_type) -> None:
+        if workflow_type != "production_billing":
+            return super()._create_demands_for_type(campaign, workflow_type)
+
         selected = self._get_selected_sources()
         if not selected:
             return
@@ -96,27 +112,27 @@ class MrpCampaignBillingWizard(models.TransientModel):
 
         for (end_product, sol), sols in grouped.items():
             bom = end_product.bom_ids[:1]
-            target_qty = sum(s.product_uom_qty for s in sols)
 
             demand = self.env["mrp.campaign.demand"].create(
                 {
                     "campaign_id": campaign.id,
                     "product_id": end_product.id,
                     "bom_id": bom.id if bom else False,
-                    "target_qty": target_qty,
                     "sale_order_line_id": sol.id,
                 }
             )
 
-            proxy_values = [
+            target_values = [
                 {
                     "demand_id": demand.id,
-                    "sale_order_line_id": s.id,
+                    "target_type": "billing",
+                    "source_ref": f"sale.order.line,{s.id}",
                     "promised_qty": s.product_uom_qty,
+                    "needed_qty": s.product_uom_qty,
                 }
                 for s in sols
             ]
-            self.env["mrp.campaign.demand.billing_proxy"].create(proxy_values)
+            self.env["mrp.campaign.demand.target"].create(target_values)
 
     def _get_end_product_for_sol(self, sol):
         if not self.product_id:
@@ -140,7 +156,7 @@ class MrpCampaignBillingWizard(models.TransientModel):
             campaign = self.env["mrp.campaign"].create(
                 {
                     "product_id": self.product_id.id,
-                    "workflow_type": "production_billing",
+                    "workflow_type": self.workflow_type,
                     "date_planned_start": self.planned_date,
                 }
             )

@@ -4,13 +4,14 @@
     <!-- View mrp.campaign.creator form -->
     <record id="view_mrp_campaign_creator_form" model="ir.ui.view">
         <field name="name">view.mrp.campaign.creator.form</field>
-        <field name="model">mrp.campaign.creator</field>
+        <field name="model">mrp.campaign.wizard.creator</field>
         <field name="arch" type="xml">
             <form>
                 <sheet>
-                    <group invisible="campaign_id">
+                    <group>
                         <group>
                             <field name="campaign_id" invisible="1" />
+                            <field name="workflow_type" invisible="1" />
                             <field name="product_id" required="not campaign_id" />
                         </group>
                         <group>
@@ -43,5 +44,19 @@
             </form>
         </field>
     </record>
-
+    <record id="action_mrp_campaign_direct_wizard_create" model="ir.actions.act_window">
+        <field name="name">Create Campaign (Direct)</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mrp.campaign.wizard.creator</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_workflow_type': 'direct'}</field>
+    </record>
+    <menuitem
+        id="menu_mrp_campaign_direct_wizard"
+        name="Create Campaign (Direct)"
+        parent="mrp_campaign.menu_mrp_campaign"
+        action="action_mrp_campaign_direct_wizard_create"
+        sequence="51"
+    />
 </odoo>

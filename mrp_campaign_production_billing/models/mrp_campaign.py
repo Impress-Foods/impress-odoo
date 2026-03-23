@@ -12,11 +12,18 @@ class MrpCampaignProductionBilling(models.Model):
     def _get_demand_wizard_model(self) -> str:
         self.ensure_one()
         if self.workflow_type == "production_billing":
-            return "mrp.campaign.billing.wizard"
+            return "mrp.campaign.wizard.creator"
         return super()._get_demand_wizard_model()
 
-    def _get_partition_wizard_model(self) -> str:
+    def _recreate_targets(self, source_demand, new_demand, bo_qty) -> None:
         self.ensure_one()
-        if self.workflow_type == "production_billing":
-            return "mrp.campaign.partition.wizard.production_billing"
-        return super()._get_partition_wizard_model()
+        for target in source_demand.target_ids.filtered(
+            lambda t: t.target_type == "billing"
+        ):
+            target.copy(
+                {
+                    "demand_id": new_demand.id,
+                    "promised_qty": 0.0,
+                    "fulfilled_qty": 0.0,
+                }
+            )

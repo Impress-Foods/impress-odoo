@@ -1,17 +1,17 @@
 import json
+import logging
 from typing import Any
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
+_logger = logging.getLogger(__name__)
 
-class MrpCampaignPartitionWizardDirect(models.TransientModel):
-    _name = "mrp.campaign.partition.wizard.direct"
-    _description = "Wizard to Partition an MRP Campaign (Direct)"
 
-    # ----------------------------------------------------------------------
-    # FIELDS
-    # ----------------------------------------------------------------------
+class MrpCampaignPartition(models.TransientModel):
+    _name = "mrp.campaign.wizard.partition"
+    _description = "Base Wizard to Partition an MRP Campaign"
+
     campaign_id = fields.Many2one(
         "mrp.campaign",
         string="Original Campaign",
@@ -19,6 +19,7 @@ class MrpCampaignPartitionWizardDirect(models.TransientModel):
         readonly=True,
         default=lambda self: self.env.context.get("active_id"),
     )
+
     partition_mode = fields.Selection(
         [
             ("split", "Split into two new campaigns"),
@@ -27,11 +28,18 @@ class MrpCampaignPartitionWizardDirect(models.TransientModel):
         required=True,
         default="split",
     )
-    partition_data_json = fields.Text(string="Demand Allocation Data")
 
-    # ----------------------------------------------------------------------
-    # DEFAULTS
-    # ----------------------------------------------------------------------
+    partition_data_json = fields.Text(string="Demand Allocation Data")
+    workflow_type = fields.Selection([("direct", "Direct")])
+
+    @api.depends("campaign_id")
+    def _compute_workflow_type(self):
+        for rec in self:
+            if rec.campaign_id:
+                rec.workflow_type = rec.campaign_id.workflow_type
+            else:
+                rec.workflow_type = rec._context.get("default_workflow_type", "direct")
+
     @api.model
     def default_get(self, fields_list):
         res = super().default_get(fields_list)
@@ -40,13 +48,10 @@ class MrpCampaignPartitionWizardDirect(models.TransientModel):
             campaign = self.env["mrp.campaign"].browse(active_id)
             res["campaign_id"] = campaign.id
             res["partition_data_json"] = json.dumps(self._make_partition_json(campaign))
+            res["workflow_type"] = campaign.workflow_type
         return res
 
-    # ----------------------------------------------------------------------
-    # DATA BUILDING
-    # ----------------------------------------------------------------------
     def _make_partition_json(self, campaign) -> dict:
-        """Prepares the JSON data structure for the custom allocation widget."""
         campaign.ensure_one()
         root_line = campaign.line_ids.filtered(
             lambda line, campaign=campaign: line.product_id.id == campaign.product_id.id
@@ -94,23 +99,29 @@ class MrpCampaignPartitionWizardDirect(models.TransientModel):
             ],
         }
 
-    def _format_demand(self, campaign) -> list[dict[str, Any]]:
-        """Aggregates demand from SOs/Deliveries linked to the campaign lines."""
-        moves = []
-        for demand in campaign.demand_line_ids:
-            sorted_proxies = demand.demand_proxy_ids.sorted(
-                key=lambda proxy: (
-                    proxy.move_id.priority,
-                    proxy.move_id.date_deadline or proxy.move_id.date,
+    def _format_demand(self, campaign) -> list[dict]:
+        if campaign.workflow_type == "direct":
+            moves = []
+            for demand in campaign.demand_line_ids:
+                targets = demand.target_ids.filtered(
+                    lambda t: t.workflow_type == "direct" and t.id
                 )
-            )
-            for proxy in sorted_proxies:
-                moves.append(proxy._get_partition_wizard_fields())
-        return moves
+                sorted_targets = targets.sorted(
+                    key=lambda target: (
+                        target._get_target().priority,
+                        target._get_target().date_deadline or target._get_target().date,
+                    )
+                )
+                for target in sorted_targets:
+                    moves.append(target._get_partition_wizard_fields())
+            return moves
 
-    # ----------------------------------------------------------------------
-    # VALIDATION
-    # ----------------------------------------------------------------------
+    def _get_target_model(self) -> str:
+        return
+
+    def _get_demand_targets(self, demand):
+        return demand.target_ids
+
     def _validate_json_production(self, data: dict[str, Any]) -> dict[int, tuple]:
         tree = data if "tree" not in data else data.get("tree")
         if tree is None:
@@ -196,84 +207,62 @@ class MrpCampaignPartitionWizardDirect(models.TransientModel):
 
         return deltas
 
-    def _validate_json_demand(self, data: dict[str, Any]) -> dict[int, tuple]:
+    def _parse_demand_data(self, data: dict[str, Any]) -> dict[int, float]:
+        """Parse and validate target quantities from wizard JSON.
+
+        Validates:
+        - JSON structure (demand_moves present)
+        - Target records exist and belong to campaign
+        - Quantity constraints (non-negative, not exceeding upstream_qty)
+
+        Returns:
+            Flat dict {target_id: final_promised_qty}
+        """
         demand_data = data.get("demand_moves")
         if demand_data is None:
             raise ValidationError(
                 _("Malformed data: missing 'demand_moves' attribute in JSON.")
             )
-        mapped_proxy = {v["proxy_id"]: v for v in demand_data}
-        proxies = self.env["mrp.campaign.demand.proxy"].browse(mapped_proxy.keys())
 
-        if set(mapped_proxy.keys()) != set(proxies.exists().ids):
-            raise ValidationError(_("Not all proxies could be found in the database."))
+        target_qtys = {}
+        for item in demand_data:
+            target_id = item.get("target_id")
+            if not target_id:
+                continue
 
-        bad_proxies = [
-            proxy for proxy in proxies if proxy.campaign_id != self.campaign_id
-        ]
-        if bad_proxies:
-            raise ValidationError(
-                _(
-                    "Proxies %s are not associated with the current campaign",
-                    bad_proxies,
+            target = self.env["mrp.campaign.demand.target"].browse(target_id)
+            if not target.exists():
+                raise ValidationError(_("Target %s not found in database.", target_id))
+            if target.campaign_id != self.campaign_id:
+                raise ValidationError(
+                    _("Target %s does not belong to this campaign.", target_id)
                 )
-            )
 
-        return {proxy.id: (proxy, mapped_proxy[proxy.id]) for proxy in proxies}
-
-    # ----------------------------------------------------------------------
-    # DELTAS
-    # ----------------------------------------------------------------------
-    def _get_deltas_demand(self, lines: dict[int, tuple]) -> dict[int, tuple]:
-        deltas = {}
-        for rec_id, (rec, intent) in lines.items():
-            intended_qty = intent.get("fulfilled_qty", 0)
-
-            if intended_qty < 0:
+            promised_qty = item.get("promised_qty", 0)
+            if promised_qty < 0:
+                raise ValidationError(
+                    _("Cannot assign negative quantity to target %s.", target_id)
+                )
+            if promised_qty > target.upstream_qty:
                 raise ValidationError(
                     _(
-                        "Trying to assign a negative quantity (%(qty)d) to a SO.",
-                        qty=intended_qty,
+                        "Quantity %(qty)d exceeds upstream demand "
+                        "%(max)d for target %(id)s.",
+                        qty=promised_qty,
+                        max=target.upstream_qty,
+                        id=target_id,
                     )
                 )
-            if intended_qty > rec.upstream_qty:
-                raise ValidationError(
-                    _(
-                        "Trying to assign a larger quantity "
-                        "than required (%(assigned)d > %(demand)d).",
-                        assigned=intended_qty,
-                        demand=rec.upstream_qty,
-                    )
-                )
-            delta = rec.promised_qty - intended_qty
-            if delta != 0:
-                deltas[rec_id] = (rec, delta)
-        return deltas
 
-    def _compute_demand_split_instructions(self, demand_deltas: dict) -> dict:
-        instructions = {}
-        for _proxy_id, (proxy, delta) in demand_deltas.items():
-            demand = proxy.demand_id
-            if demand.id not in instructions:
-                instructions[demand.id] = {"qty": demand.target_qty, "bo_qty": 0.0}
+            target_qtys[target_id] = promised_qty
 
-            if delta > 0:
-                instructions[demand.id]["qty"] -= delta
-                instructions[demand.id]["bo_qty"] += delta
-        return instructions
+        return target_qtys
 
-    # ----------------------------------------------------------------------
-    # ACTIONS
-    # ----------------------------------------------------------------------
     def action_partition_campaign(self):
         self.ensure_one()
-        data = json.loads(self.partition_data_json)
-        demand_lines = self._validate_json_demand(data)
-        demand_deltas = self._get_deltas_demand(demand_lines)
-        demand_split_instructions = self._compute_demand_split_instructions(
-            demand_deltas
-        )
+        data = json.loads(self.partition_data_json or "{}")
+        target_qtys = self._parse_demand_data(data)
 
-        self.campaign_id._split(demand_split_instructions)
+        self.campaign_id._split(target_qtys)
 
         return {"type": "ir.actions.act_window_close"}

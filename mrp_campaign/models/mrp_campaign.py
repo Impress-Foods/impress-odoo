@@ -1,8 +1,11 @@
 import colorsys
+import logging
 import random
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
+
+_logger = logging.getLogger(__name__)
 
 
 class MrpCampaign(models.Model):
@@ -37,7 +40,7 @@ class MrpCampaign(models.Model):
     )
     campaign_color = fields.Char(default=lambda self: self._generate_color())
 
-    workflow_type = fields.Selection([], copy=True, index=True)
+    workflow_type = fields.Selection([("direct", "Direct")], copy=True, index=True)
 
     date_planned_start = fields.Date(
         string="Scheduled Date", required=True, default=fields.Date.today
@@ -131,12 +134,6 @@ class MrpCampaign(models.Model):
     # -------------------------------------------------------------------------
     # HELPERS
     # -------------------------------------------------------------------------
-    def _get_demand_wizard_model(self) -> str:
-        raise ValidationError(_("No wizard is implemented!"))
-
-    def _get_partition_wizard_model(self) -> str:
-        raise ValidationError(_("No partition wizard is implemented!"))
-
     def _has_demands_to_partition(self) -> bool:
         return False
 
@@ -153,8 +150,7 @@ class MrpCampaign(models.Model):
                     )
                 )
 
-            campaign._construct_tree_from_demand()
-
+            campaign.construct_tree()
             for line in campaign.line_ids:
                 line.make_production_order()
 
@@ -225,11 +221,10 @@ class MrpCampaign(models.Model):
 
     def action_open_add_demand_wizard(self) -> dict:
         self.ensure_one()
-        wizard_model = self._get_demand_wizard_model()
         return {
             "type": "ir.actions.act_window",
             "name": "Add Demand to Campaign",
-            "res_model": wizard_model,
+            "res_model": "mrp.campaign.wizard.creator",
             "view_mode": "form",
             "target": "new",
             "context": {
@@ -245,7 +240,6 @@ class MrpCampaign(models.Model):
 
     def action_open_partition_wizard(self, mode: str = "split") -> dict:
         self.ensure_one()
-        wizard_model = self._get_partition_wizard_model()
         if mode == "split":
             if self.state not in ["draft", "plan"]:
                 raise ValidationError(
@@ -260,7 +254,7 @@ class MrpCampaign(models.Model):
         return {
             "type": "ir.actions.act_window",
             "name": name,
-            "res_model": wizard_model,
+            "res_model": "mrp.campaign.wizard.partition",
             "view_mode": "form",
             "target": "new",
             "context": {
@@ -350,56 +344,88 @@ class MrpCampaign(models.Model):
             if line.productions_created:
                 line._adjust_mos(line.qty)
 
-    def _split(self, demand_split_instructions) -> "MrpCampaign":
-        """
-        Execute the split based on bridge-provided instructions.
+    def _split(self, target_qtys: dict) -> "MrpCampaign":
+        """Execute the split based on target quantity instructions.
 
         Args:
-            demand_split_instructions: {
-                demand_id: {
-                    'qty': float,      # New qty for this campaign
-                    'bo_qty': float,   # Qty for backorder campaign
-                }
-            }
+            target_qtys: flat dict {target_id: final_promised_qty}
+                - Targets in this dict with qty > 0 stay on original campaign
+                - Targets NOT in this dict go to backorder
+                - Targets with qty = 0 go to backorder
 
         Returns:
             Newly created backorder campaign
         """
         self.ensure_one()
 
-        demand_ids = list(demand_split_instructions.keys())
-        demands = self.env["mrp.campaign.demand"].browse(demand_ids)
-        demands_not_in_campaign = demands.filtered_domain(
-            [("id", "in", demand_ids), ("campaign_id", "!=", self.id)]
+        targets = self.env["mrp.campaign.demand.target"].browse(
+            list(target_qtys.keys())
         )
-        if demands_not_in_campaign:
+        invalid_targets = targets.filtered_domain([("campaign_id", "!=", self.id)])
+        if invalid_targets:
             raise ValidationError(
-                _(
-                    "All demands must belong to this campaign: %s",
-                    demands_not_in_campaign,
-                )
+                _("Targets %s do not belong to this campaign.", invalid_targets)
             )
 
-        bo_campaign = self.copy(default={"bo_source_id": self.id})
+        demands = targets.mapped("demand_id")
 
-        for demand_id, instructions in demand_split_instructions.items():
-            demand = demands.browse(demand_id)
-            qty = instructions.get("qty", 0)
-            bo_qty = instructions.get("bo_qty", 0)
+        # We BO targets that:
+        # - Have a target_qty == 0
+        # - have a target_qty < promised_qty
+        # - absent (since that means a target_qty == 0)
 
-            demand.write({"target_qty": qty})
+        absent_targets = targets.filtered(lambda target: target.id not in target_qtys)
+        zero_targets = targets.filtered(lambda target: target_qtys[target.id] == 0)
+        under_targets = targets.filtered(
+            lambda target: target_qtys[target.id] < target.promised_qty
+        )
 
-            if bo_qty > 0:
-                demand.with_context(campaign_skip_line=True).copy(
-                    default={
-                        "campaign_id": bo_campaign.id,
-                        "campaign_line_id": False,
-                        "target_qty": bo_qty,
-                    }
+        targets_to_bo = absent_targets | zero_targets | under_targets
+
+        if not targets_to_bo:
+            # _logger.warning("No backorders!")
+            # for target in targets:
+            #     target.promised_qty = target_qtys.get(target.id, 0)
+            # self._resync_mos()
+            return self.env["mrp.campaign"]
+
+        bo_campaign = self.copy(
+            default={"bo_source_id": self.id, "demand_line_ids": [], "line_ids": []}
+        )
+
+        for demand in demands:
+            if demand.target_ids <= (zero_targets | absent_targets):
+                demand.campaign_line_id.unlink()
+                demand.campaign_id = bo_campaign
+
+            else:
+                bo_demand = (
+                    self.env["mrp.campaign.demand"]
+                    .with_context(campaign_skip_line=True)
+                    .create(
+                        {
+                            "campaign_id": bo_campaign.id,
+                            "product_id": demand.product_id.id,
+                            "bom_id": demand.bom_id.id,
+                        }
+                    )
+                )
+                targets_to_bo_for_demand = targets_to_bo.filtered_domain(
+                    [("demand_id", "=", demand.id)]
                 )
 
-        bo_campaign._construct_tree_from_demand()
-        bo_campaign.action_plan()
+                for target in targets_to_bo_for_demand:
+                    if target in absent_targets | zero_targets:
+                        target.demand_id = bo_demand
+                    else:
+                        target_qty = target_qtys[target.id]
+                        diff = target.promised_qty - target_qty
+                        target.promised_qty = target_qty
+                        target.copy({"promised_qty": diff, "demand_id": bo_demand.id})
+
+        if bo_campaign.demand_line_ids:
+            bo_campaign._construct_tree_from_demand()
+            bo_campaign.action_plan()
 
         self._resync_mos()
         self._after_split(bo_campaign)
@@ -408,6 +434,10 @@ class MrpCampaign(models.Model):
 
     def _after_split(self, backorder_campaign) -> None:
         """Hook for bridges to handle post-split operations."""
+        pass
+
+    def _recreate_targets(self, source_demand, new_demand, bo_qty) -> None:
+        """Recreate targets for a demand copied to backorder campaign."""
         pass
 
     # -------------------------------------------------------------------------

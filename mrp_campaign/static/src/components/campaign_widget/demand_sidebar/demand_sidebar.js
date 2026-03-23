@@ -10,29 +10,23 @@ export class DemandSidebar extends Component {
         minimumQtys: {type: Object},
     };
 
-    setup() {
-        onWillStart(async () => {
-            //console.log(this.props);
-        });
-    }
-
     _onInputChange(moveId, ev) {
         const val = parseFloat(ev.target.value) || 0;
-        const clamped = this.clamp(val, 0, this.getMove(moveId).target_qty);
+        const clamped = this.clamp(val, 0, this.getMove(moveId).upstream_qty);
         this.props.onUpdateMove(moveId, clamped);
     }
 
     _onBtnClick(moveId, currentQty, delta) {
         const value = currentQty + delta;
-        const clamped = this.clamp(value, 0, this.getMove(moveId).target_qty);
+        const clamped = this.clamp(value, 0, this.getMove(moveId).upstream_qty);
         this.props.onUpdateMove(moveId, clamped);
     }
     /**
      * Helper for the template to calculate move progress
      */
     getPercent(move) {
-        if (!move.target_qty) return 0;
-        return Math.min(100, Math.round((move.fulfilled_qty / move.target_qty) * 100));
+        if (!move.upstream_qty) return 0;
+        return Math.min(100, Math.round((move.promised_qty / move.upstream_qty) * 100));
     }
 
     /**
@@ -56,8 +50,8 @@ export class DemandSidebar extends Component {
         return Math.max(min_value, Math.min(x, max_value));
     }
 
-    getMove(moveId) {
-        return this.props.moves.find((m) => m.move_id === moveId);
+    getMove(proxyId) {
+        return this.props.moves.find((m) => m.target_id === proxyId);
     }
 
     formatDate(date) {
@@ -66,7 +60,7 @@ export class DemandSidebar extends Component {
 
     _setMoveFull(moveId) {
         const move = this.getMove(moveId);
-        const value = move.target_qty;
+        const value = move.upstream_qty;
         this.props.onUpdateMove(moveId, value);
     }
     _setMoveEmpty(moveId) {
@@ -75,7 +69,7 @@ export class DemandSidebar extends Component {
 
     getFulfilledQty(productId) {
         const moves = this.props.moves.filter((m) => m.product_id === productId);
-        return moves.reduce((sum, m) => sum + m.fulfilled_qty, 0);
+        return moves.reduce((sum, m) => sum + m.promised_qty, 0);
     }
 
     isAboveFloor(productId) {
@@ -95,7 +89,7 @@ export class DemandSidebar extends Component {
     getPercentFulfilled(productId) {
         const moves = this.props.moves.filter((m) => m.product_id === productId);
         const fulfilled = this.getFulfilledQty(productId);
-        const needed = moves.reduce((sum, m) => sum + (m.target_qty || 0), 0);
+        const needed = moves.reduce((sum, m) => sum + (m.upstream_qty || 0), 0);
         if (!needed) return 0;
         return (fulfilled / needed) * 100;
     }

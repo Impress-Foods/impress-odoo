@@ -74,7 +74,7 @@ class CampaignBillingCase(TransactionCase):
         return so
 
     def test_wizard_create_with_no_matching_sos(self):
-        wizard = self.env["mrp.campaign.billing.wizard"].create(
+        wizard = self.env["mrp.campaign.wizard.creator"].create(
             {
                 "product_id": self.bulk_material.id,
                 "planned_date": date.today(),
@@ -86,7 +86,7 @@ class CampaignBillingCase(TransactionCase):
     def test_wizard_create_with_matching_so(self):
         so = self._create_sale_order(self.billing_product, 10.0)
 
-        wizard = self.env["mrp.campaign.billing.wizard"].create(
+        wizard = self.env["mrp.campaign.wizard.creator"].create(
             {
                 "product_id": self.bulk_material.id,
                 "planned_date": date.today(),
@@ -107,7 +107,7 @@ class CampaignBillingCase(TransactionCase):
         so3.invoice_status = "invoiced"
         self._create_sale_order(self.billing_product, 7.0, state="sale")
 
-        wizard = self.env["mrp.campaign.billing.wizard"].create(
+        wizard = self.env["mrp.campaign.wizard.creator"].create(
             {
                 "product_id": self.bulk_material.id,
             }
@@ -139,7 +139,7 @@ class CampaignBillingCase(TransactionCase):
             ]
         )
 
-        wizard = self.env["mrp.campaign.billing.wizard"].create(
+        wizard = self.env["mrp.campaign.wizard.creator"].create(
             {
                 "product_id": self.bulk_material.id,
             }
@@ -152,7 +152,7 @@ class CampaignBillingCase(TransactionCase):
         self._create_sale_order(self.billing_product, 10.0)
         self._create_sale_order(self.billing_product, 5.0)
 
-        wizard = self.env["mrp.campaign.billing.wizard"].create(
+        wizard = self.env["mrp.campaign.wizard.creator"].create(
             {
                 "product_id": self.bulk_material.id,
                 "planned_date": date.today(),
@@ -172,7 +172,10 @@ class CampaignBillingCase(TransactionCase):
         self.assertEqual(len(campaign.demand_line_ids), 2)
         for demand in campaign.demand_line_ids:
             self.assertEqual(demand.product_id, self.end_prod)
-            self.assertEqual(len(demand.billing_proxy_ids), 1)
+            billing_targets = self.env["mrp.campaign.demand.target"].search(
+                [("demand_id", "=", demand.id), ("target_type", "=", "billing")]
+            )
+            self.assertEqual(len(billing_targets), 1)
 
     def test_confirm_creates_demands_on_existing_campaign(self):
         self._create_sale_order(self.billing_product, 10.0)
@@ -186,7 +189,7 @@ class CampaignBillingCase(TransactionCase):
         )
 
         wizard = (
-            self.env["mrp.campaign.billing.wizard"]
+            self.env["mrp.campaign.wizard.creator"]
             .with_context(default_campaign_id=campaign.id)
             .create({})
         )
@@ -219,7 +222,7 @@ class CampaignBillingCase(TransactionCase):
         )
 
         wizard = (
-            self.env["mrp.campaign.billing.wizard"]
+            self.env["mrp.campaign.wizard.creator"]
             .with_context(default_campaign_id=campaign.id)
             .create({})
         )
@@ -233,7 +236,7 @@ class CampaignBillingCase(TransactionCase):
         self.assertEqual(existing_demand.target_qty, 5.0)
 
     def test_confirm_with_no_selection_creates_nothing(self):
-        wizard = self.env["mrp.campaign.billing.wizard"].create(
+        wizard = self.env["mrp.campaign.wizard.creator"].create(
             {
                 "product_id": self.bulk_material.id,
                 "planned_date": date.today(),
@@ -251,7 +254,7 @@ class CampaignBillingCase(TransactionCase):
     def test_confirm_with_no_selected_lines_ignores_them(self):
         self._create_sale_order(self.billing_product, 10.0)
 
-        wizard = self.env["mrp.campaign.billing.wizard"].create(
+        wizard = self.env["mrp.campaign.wizard.creator"].create(
             {
                 "product_id": self.bulk_material.id,
                 "planned_date": date.today(),

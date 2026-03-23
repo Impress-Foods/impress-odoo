@@ -94,24 +94,8 @@ class TestMrpCampaignTorture(CampaignDirectCase):
         # --- 2. Initial Campaign and Demand ---
         # Demand for 25 units of End Product
         campaign = self.create_campaign(bulk_material)
-        demand = self.create_demand(end_product, qty=25.0, campaign=campaign)
-        move = self.env["stock.move"].create(
-            {
-                "name": "test move for end product",
-                "product_id": end_product.id,
-                "product_uom_qty": 25.0,
-                "location_id": self.stock_location.id,
-                "location_dest_id": self.stock_location.id,
-                "state": "waiting",
-            }
-        )
-        self.env["mrp.campaign.demand.proxy"].create(
-            {
-                "demand_id": demand.id,
-                "move_id": move.id,
-                "promised_qty": 25.0,
-            }
-        )
+        self.create_demand(end_product, qty=25.0, campaign=campaign)
+
         campaign.action_plan()
 
         # Verify initial tree states
@@ -143,7 +127,7 @@ class TestMrpCampaignTorture(CampaignDirectCase):
         # A: End 14.5 -> Sub 14.5 -> Comp 29.0 -> Bulk 29.0 + 10% = 31.9
 
         wizard = (
-            self.env["mrp.campaign.partition.wizard.direct"]
+            self.env["mrp.campaign.wizard.partition"]
             .with_context(
                 **{
                     "active_id": campaign.id,
@@ -155,7 +139,7 @@ class TestMrpCampaignTorture(CampaignDirectCase):
         )
 
         data = json.loads(wizard.partition_data_json)
-        data["demand_moves"][0]["fulfilled_qty"] = 14.5
+        data["demand_moves"][0]["promised_qty"] = 14.5
 
         def update_node(node, planned_qty):
             line_id = node["line_id"]
