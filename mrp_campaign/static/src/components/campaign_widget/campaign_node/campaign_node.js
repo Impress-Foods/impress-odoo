@@ -9,10 +9,6 @@ export class CampaignNode extends Component {
         isRoot: {type: Boolean, optional: true},
     };
 
-    setup() {
-        onWillStart(async () => {});
-    }
-
     formatQty(val) {
         return Math.round(val * 100) / 100;
     }

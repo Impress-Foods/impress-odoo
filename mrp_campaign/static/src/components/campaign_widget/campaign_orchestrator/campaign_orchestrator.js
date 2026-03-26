@@ -18,23 +18,28 @@ export class CampaignOrchestrator extends Component {
         onWillStart(async () => {
             const field_value = this.props.record.data[this.props.name];
             if (field_value) {
-                this.state.data = JSON.parse(field_value);
-                this.state.loading = false;
+                try {
+                    this.state.data = JSON.parse(field_value);
+                } catch (e) {
+                    console.error("Failed to parse partition data:", e);
+                }
             }
+            this.state.loading = false;
+            console.log(field_value);
         });
     }
 
-    updateMoveQty(moveId, newQty) {
+    updateMoveQty(proxyId, newQty) {
         const data = this.state.data;
 
-        const move = data.demand_moves.find((m) => m.move_id === moveId);
+        const move = data.demand_moves.find((m) => m.target_id === proxyId);
         if (!move) return;
 
-        move.fulfilled_qty = Math.max(0, newQty);
+        move.promised_qty = Math.max(0, newQty);
 
         const totalForProduct = data.demand_moves
             .filter((m) => m.product_id === move.product_id)
-            .reduce((sum, m) => sum + m.fulfilled_qty, 0);
+            .reduce((sum, m) => sum + m.promised_qty, 0);
 
         const leaf = this._findLeafByProductId(data.tree, move.product_id);
         if (leaf) {
@@ -53,7 +58,7 @@ export class CampaignOrchestrator extends Component {
 
         const totalForProduct = (data.demand_moves || [])
             .filter((m) => m.product_id === productId)
-            .reduce((sum, m) => sum + (m.fulfilled_qty || 0), 0);
+            .reduce((sum, m) => sum + (m.promised_qty || 0), 0);
 
         const leaf = this._findLeafByProductId(data.tree, productId);
         if (leaf) {

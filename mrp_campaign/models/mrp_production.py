@@ -6,6 +6,9 @@ from odoo.addons.mrp.models.mrp_production import MrpProduction
 class ProductionOrder(models.Model):
     _inherit = "mrp.production"
 
+    # -------------------------------------------------------------------------
+    # FIELDS
+    # -------------------------------------------------------------------------
     anchor_product_id = fields.Many2one(related="product_id.anchor_product_id")
 
     campaign_id = fields.Many2one(related="campaign_line_id.campaign_id")
@@ -24,20 +27,38 @@ class ProductionOrder(models.Model):
     created_by_campaign = fields.Boolean()
     campaign_line_id = fields.Many2one("mrp.campaign.line")
 
-    def write(self, vals) -> bool:
-        res = super().write(vals)
+    source_model = fields.Char("Source Document Model", index=True)
+    source_id = fields.Integer("Source Document ID", index=True)
 
-        if "lot_producing_id" in vals and not self.env.context.get("syncing_lot"):
-            lot_id = vals.get("lot_producing_id")
-            if lot_id:
-                lot = self.env["stock.lot"].browse(lot_id)
-                campaigns = self.mapped("campaign_id")
-                for campaign in campaigns:
-                    if campaign.lot_name != lot.name:
-                        campaign.write({"lot_name": lot.name})
+    # -------------------------------------------------------------------------
+    # ACTIONS
+    # -------------------------------------------------------------------------
+    def action_view_campaign(self) -> dict:
+        self.ensure_one()
+        if not self.campaign_id:
+            return {}
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "mrp.campaign",
+            "res_id": self.campaign_id.id,
+            "view_mode": "form",
+            "target": "current",
+        }
 
-        return res
+    def action_view_source(self) -> dict:
+        if self.source_model and self.source_id:
+            return {
+                "type": "ir.actions.act_window",
+                "res_model": self.source_model,
+                "res_id": self.source_id,
+                "view_mode": "form",
+                "target": "new",
+            }
+        return {}
 
+    # -------------------------------------------------------------------------
+    # BUSINESS LOGIC
+    # -------------------------------------------------------------------------
     def _split_productions(
         self, amounts=False, cancel_remaining_qty=False, set_consumed_qty=False
     ) -> MrpProduction:
@@ -55,14 +76,19 @@ class ProductionOrder(models.Model):
 
         return res
 
-    def action_view_campaign(self) -> dict:  # pragma: no cover
-        self.ensure_one()
-        if not self.campaign_id:
-            return
-        return {
-            "type": "ir.actions.act_window",
-            "res_model": "mrp.campaign",
-            "res_id": self.campaign_id.id,
-            "view_mode": "form",
-            "target": "current",
-        }
+    # -------------------------------------------------------------------------
+    # CRUD
+    # -------------------------------------------------------------------------
+    def write(self, vals) -> bool:
+        res = super().write(vals)
+
+        if "lot_producing_id" in vals and not self.env.context.get("syncing_lot"):
+            lot_id = vals.get("lot_producing_id")
+            if lot_id:
+                lot = self.env["stock.lot"].browse(lot_id)
+                campaigns = self.mapped("campaign_id")
+                for campaign in campaigns:
+                    if campaign.lot_name != lot.name:
+                        campaign.write({"lot_name": lot.name})
+
+        return res

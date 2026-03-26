@@ -1,8 +1,4 @@
-import logging
-
 from odoo import api, fields, models
-
-_logger = logging.getLogger(__name__)
 
 
 class ProductTemplate(models.Model):
@@ -62,9 +58,7 @@ class ProductProductModel(models.Model):
             return list(anchors_found)[0]
 
         elif len(anchors_found) > 1:
-            _logger.debug("Multiple anchors found")
             return self.env["product.product"]
 
         # 6. Default: No anchor found in any lineage
-        _logger.debug("No anchors found")
         return self.env["product.product"]

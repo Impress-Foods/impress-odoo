@@ -1,0 +1,8 @@
+/* wizard_selector widget - full width in forms */
+.o_form_view .o_field_widget.field_wizard_selector {
+    width: 100%;
+}
+
+.o_form_view .o_field_widget.field_wizard_selector .wizard_selector {
+    width: 100%;
+}

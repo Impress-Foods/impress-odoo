@@ -2,8 +2,8 @@
 <odoo>
 
     <record id="view_mrp_campaign_partition_wizard_form" model="ir.ui.view">
-        <field name="name">mrp.campaign.partition.wizard.form</field>
-        <field name="model">mrp.campaign.partition.wizard</field>
+        <field name="name">mrp.campaign.wizard.partition.form</field>
+        <field name="model">mrp.campaign.wizard.partition</field>
         <field name="arch" type="xml">
             <form string="Partition Campaign">
                 <sheet>
@@ -12,8 +12,8 @@
                     </group>
                     <field
                         name="partition_data_json"
-                        widget="campaign_orchestrator"
                         nolabel="1"
+                        widget="campaign_orchestrator"
                         style="--fieldWidget-display: inline;"
                     />
 
@@ -35,16 +35,6 @@
                 </footer>
             </form>
         </field>
-    </record>
-
-    <!-- Action for Mrp Campaign Partition Wizard (to be used from mrp.campaign actions) -->
-    <record id="action_mrp_campaign_partition_wizard" model="ir.actions.act_window">
-        <field name="name">Partition Manufacturing Campaign</field>
-        <field name="res_model">mrp.campaign.partition.wizard</field>
-        <field name="view_mode">form</field>
-        <field name="target">new</field>
-        <field name="binding_model_id" ref="mrp_campaign.model_mrp_campaign" />
-        <field name="binding_view_types">form</field>
     </record>
 
 </odoo>
