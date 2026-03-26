@@ -12,7 +12,7 @@ class LogMixin(models.Model):
     _description = "log.mixin"
 
     name = fields.Char()
-    signature = fields.Binary()
+    signature = fields.Binary(string="Daily Signature")
 
     quality_check_id = fields.Many2one("quality.check")
     production_id = fields.Many2one(
@@ -44,10 +44,12 @@ class LogMixin(models.Model):
         store=True,
         depends=["quality_check_id", "quality_check_id.control_date"],
     )
+
     weekly_signature_date = fields.Datetime(
         compute="_compute_weekly_signature_date",
         inverse="_inverse_weekly_signature_date",
         store=True,
+        string="Daily Signature Date",
     )
 
     quality_notes = fields.Text()
