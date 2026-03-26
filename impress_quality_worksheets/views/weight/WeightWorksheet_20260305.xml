@@ -28,7 +28,7 @@
                             <li
                             >Prise du poids de 5 produits à toutes les 30 minutes lors du dosage.</li>
                             <li
-                            >Comparer le poids du produit avec le poids visé* pour cette production : si poids sous la cible ou + de 3g, faire un ajustement.</li>
+                            >Comparer le poids du produit avec le poids visé pour cette production : si poids sous la cible ou + de 3g, faire un ajustement.</li>
                             <li
                             >Vérifier que le scellage est conforme (temps et température + les 5 positions si VC999 utilisé).</li>
                             <li
@@ -37,7 +37,7 @@
                     </div>
                     <group>
                         <group>
-                            <field name="x_nominal_weight" readonly='0' />
+                            <field name="x_nominal_weight" />
                         </group>
 
                     </group>

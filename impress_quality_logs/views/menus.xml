@@ -50,19 +50,15 @@
         sequence='12'
         name="Coding"
     />
-    <!--
-    <menuitem parent="coding_menu" id="coding_log_menu" action='action_coding_log' sequence='10' name="Coding Logs"/>
 
-    <menuitem parent="coding_menu" id="coding_log_line_menu" action='action_coding_log_line' sequence='11' name="Coding Lines"/>
--->
-    <menuitem id="weight_menu" parent="logs_menu" sequence='13' name="weight" />
+    <menuitem id="weight_menu" parent="logs_menu" sequence='13' name="Weight" />
 
     <menuitem
         parent="weight_menu"
         id="weight_log_menu"
         action='action_weight_log'
         sequence='10'
-        name="weight logs"
+        name="Weight logs"
     />
 
     <menuitem
@@ -70,7 +66,7 @@
         id="weight_log_line_menu"
         action='action_weight_log_line'
         sequence='11'
-        name="weight lines"
+        name="Weight lines"
     />
 
     <menuitem id="x_ray_menu" parent="logs_menu" sequence='14' name="X-Ray" />
