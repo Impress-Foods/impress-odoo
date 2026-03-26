@@ -228,6 +228,81 @@ class TestMrpCampaignWizard(CampaignDirectCase):
         self.assertEqual(len(targets), 1)
         self.assertEqual(targets.target_id, move.id)
 
+    def test_process_wizard_reuses_existing_demand_for_same_product(self):
+        """Test reuse existing demand when adding target for same product."""
+        existing_campaign = self.create_campaign(self.bulk_material)
+        existing_campaign.workflow_type = "direct"
+
+        existing_demand = self.env["mrp.campaign.demand"].create(
+            {
+                "campaign_id": existing_campaign.id,
+                "product_id": self.int_prod_x_red.id,
+            }
+        )
+
+        picking_1 = self.env["stock.picking"].create(
+            {"picking_type_id": self.env.ref("stock.picking_type_out").id}
+        )
+        move_1 = self.env["stock.move"].create(
+            {
+                "name": "Existing Move",
+                "product_id": self.int_prod_x_red.id,
+                "product_uom_qty": 5.0,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.stock_location.id,
+                "picking_id": picking_1.id,
+            }
+        )
+        move_1._action_confirm()
+
+        self.env["mrp.campaign.demand.target"].create(
+            {
+                "demand_id": existing_demand.id,
+                "workflow_type": "direct",
+                "target_id": move_1.id,
+                "promised_qty": 5.0,
+            }
+        )
+
+        picking_2 = self.env["stock.picking"].create(
+            {"picking_type_id": self.env.ref("stock.picking_type_out").id}
+        )
+        move_2 = self.env["stock.move"].create(
+            {
+                "name": "New Move",
+                "product_id": self.int_prod_x_red.id,
+                "product_uom_qty": 10.0,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.stock_location.id,
+                "picking_id": picking_2.id,
+            }
+        )
+        move_2._action_confirm()
+
+        wizard = self.wizard_model.create(
+            {
+                "campaign_id": existing_campaign.id,
+                "product_id": self.bulk_material.id,
+            }
+        )
+        wizard._onchange_product_id()
+        wizard.selected_line_ids = json.dumps([move_2.id])
+
+        wizard.process_wizard()
+
+        demands = self.env["mrp.campaign.demand"].search(
+            [("campaign_id", "=", existing_campaign.id)]
+        )
+        self.assertEqual(
+            len(demands), 1, "Should reuse existing demand, not create new one"
+        )
+
+        targets = self.env["mrp.campaign.demand.target"].search(
+            [("campaign_id", "=", existing_campaign.id), ("target_id", "=", move_2.id)]
+        )
+        self.assertEqual(len(targets), 1)
+        self.assertEqual(targets.demand_id, existing_demand)
+
     def test_process_wizard_no_selection(self):
         """Test process_wizard w no selec. still creates campaign w product select."""
         wizard = self.wizard_model.create(

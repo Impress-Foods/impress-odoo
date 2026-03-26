@@ -37,6 +37,7 @@ class TestMrpCampaignDemand(CampaignCase):
         self.assertEqual(len(campaign.line_ids), 2)
 
     def test_create_campaign_line_existing(self) -> None:
+        """Ensure that mappings between demands and lines are 1:1"""
         QTY = 100
         campaign: MrpCampaign = self.create_campaign(self.bulk_material)
         demand_line_1 = self.create_demand(self.end_prod_a_blue, QTY, campaign)
@@ -45,9 +46,10 @@ class TestMrpCampaignDemand(CampaignCase):
         campaign_line_1 = demand_line_1.create_campaign_line()
         campaign_line_2 = demand_line_2.create_campaign_line()
 
-        self.assertEqual(campaign_line_1.id, campaign_line_2.id)
-        self.assertEqual(campaign_line_1.qty, 2 * QTY)
-        self.assertEqual(len(campaign.line_ids), 1)
+        self.assertNotEqual(campaign_line_1.id, campaign_line_2.id)
+        self.assertEqual(campaign_line_1.qty, QTY)
+        self.assertEqual(campaign_line_2.qty, QTY)
+        self.assertEqual(len(campaign.line_ids), 2)
 
     def test_create_demand_multiple_targets(self) -> None:
         QTY = 50.0
