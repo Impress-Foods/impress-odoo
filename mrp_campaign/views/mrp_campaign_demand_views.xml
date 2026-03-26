@@ -61,6 +61,7 @@
                     </group>
                     <group>
                         <field name="promised_qty" />
+                        <field name="upstream_qty" />
                         <field name="is_fully_planned" />
                     </group>
                 </group>

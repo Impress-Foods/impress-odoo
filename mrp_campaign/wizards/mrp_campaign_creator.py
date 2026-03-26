@@ -135,24 +135,24 @@ class MrpCampaignCreator(models.Model):
         self.env["mrp.campaign.demand.target"].create(target_values)
 
     def process_wizard(self) -> dict | None:
-        if self.workflow_type == "direct":
-            campaign = self.campaign_id
-            result = None
-            if not campaign:
-                campaign = self.env["mrp.campaign"].create(
-                    {
-                        "product_id": self.product_id.id,
-                        "workflow_type": self.workflow_type,
-                        "date_planned_start": self.planned_date,
-                    }
-                )
-                result = {
-                    "type": "ir.actions.act_window",
-                    "res_model": "mrp.campaign",
-                    "views": [[False, "form"]],
-                    "res_id": campaign.id,
-                    "target": "current",
+        campaign = self.campaign_id
+        result = None
+        if not campaign:
+            campaign = self.env["mrp.campaign"].create(
+                {
+                    "product_id": self.product_id.id,
+                    "workflow_type": self.workflow_type,
+                    "date_planned_start": self.planned_date,
                 }
+            )
+            result = {
+                "type": "ir.actions.act_window",
+                "res_model": "mrp.campaign",
+                "views": [[False, "form"]],
+                "res_id": campaign.id,
+                "target": "current",
+            }
 
-            self._create_demands(campaign)
-            return result
+        self._create_demands(campaign)
+
+        return result

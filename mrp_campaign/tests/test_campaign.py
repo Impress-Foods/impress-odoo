@@ -220,17 +220,22 @@ class TestCampaign(CampaignCase):
         campaign.date_planned_start = fields.Date.today()
         demand1 = self.create_demand(self.end_prod_a_red, 100.0, campaign)
         demand2 = self.create_demand(self.end_prod_a_blue, 50.0, campaign)
+        demand3 = self.create_demand(self.end_prod_a_blue, 200.0, campaign)
+
         campaign.action_plan()
 
         bo_campaign = campaign._split(
             {
                 demand1.target_ids[0].id: 80.0,
                 demand2.target_ids[0].id: 30.0,
+                demand3.target_ids[0].id: 200.0,
             }
         )
 
         self.assertEqual(demand1.target_qty, 80.0)
         self.assertEqual(demand2.target_qty, 30.0)
+        self.assertEqual(demand3.target_qty, 200.0)
+        self.assertEqual(len(campaign.demand_line_ids), 3)
         self.assertEqual(len(bo_campaign.demand_line_ids), 2)
         bo_demand_by_product = {d.product_id: d for d in bo_campaign.demand_line_ids}
         self.assertEqual(bo_demand_by_product[self.end_prod_a_red].target_qty, 20.0)

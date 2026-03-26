@@ -28,7 +28,6 @@ class MrpCampaignDemandTarget(models.Model):
     upstream_qty = fields.Float(
         string="Upstream Demand",
         compute="_compute_upstream_qty",
-        store=True,
     )
 
     is_fully_planned = fields.Boolean(
@@ -38,7 +37,6 @@ class MrpCampaignDemandTarget(models.Model):
 
     def _get_target(self) -> models.Model:
         model = self.mapped("target_model")
-
         if len(set(model)) != 1:
             raise ValidationError(_("Multiple target models in recordset"))
         else:
@@ -51,12 +49,12 @@ class MrpCampaignDemandTarget(models.Model):
                 rec.target_model = "stock.move"
 
     @api.depends("promised_qty", "upstream_qty")
-    def _compute_is_fully_planned(self):
+    def _compute_is_fully_planned(self) -> None:
         for rec in self:
             rec.is_fully_planned = rec.promised_qty >= rec.upstream_qty
 
     @api.depends("workflow_type", "target_id")
-    def _compute_upstream_qty(self):
+    def _compute_upstream_qty(self) -> None:
         for rec in self:
             if not rec.target_id or not rec.target_model:
                 rec.upstream_qty = 0.0
@@ -89,7 +87,7 @@ class MrpCampaignDemandTarget(models.Model):
             "target_id": self.id,
             "product_id": self.demand_id.product_id.id,
             "product_name": self.demand_id.product_id.display_name,
-            "promised_qty": 0,
+            "promised_qty": 0,  # Intentional, clean slate for widget, will be filled
             "fulfilled_qty": fulfilled_qty,
             "upstream_qty": self.upstream_qty,
             "is_fully_planned": self.is_fully_planned,
@@ -112,14 +110,6 @@ class MrpCampaignDemandTarget(models.Model):
             if group_id and group_id.sale_id:
                 res["customer_ref"] = group_id.sale_id.client_order_ref
         return res
-
-    def _duplicate_for(self, new_demand):
-        return self.copy(
-            {
-                "demand_id": new_demand.id,
-                "promised_qty": 0.0,
-            }
-        )
 
 
 class MrpCampaignDemand(models.Model):
@@ -165,6 +155,10 @@ class MrpCampaignDemand(models.Model):
         self.ensure_one()
         return self.campaign_line_id._get_anchor_factor()
 
+    def unlink(self):
+        self.target_ids.unlink()
+        return super().unlink()
+
     def create_campaign_line(self):
         created_lines = self.env["mrp.campaign.line"]
         for rec in self:
@@ -172,26 +166,14 @@ class MrpCampaignDemand(models.Model):
                 products=rec.product_id, company_id=rec.campaign_id.company_id.id
             ).get(rec.product_id)
 
-            existing_line = rec.campaign_id.line_ids.filtered(
-                lambda line, rec=rec, bom=bom: (
-                    line.product_id == rec.product_id and line.bom_id == bom
-                )
+            new_line = self.env["mrp.campaign.line"].create(
+                {
+                    "campaign_id": rec.campaign_id.id,
+                    "product_id": rec.product_id.id,
+                    "bom_id": bom.id if bom else False,
+                }
             )
-            new_line = self.env["mrp.campaign.line"]
-
-            if existing_line:
-                created_lines |= existing_line
-            else:
-                new_line = new_line.create(
-                    {
-                        "campaign_id": rec.campaign_id.id,
-                        "product_id": rec.product_id.id,
-                        "bom_id": bom.id if bom else False,
-                        "qty": rec.target_qty,
-                    }
-                )
-                created_lines |= new_line
-
-            rec.campaign_line_id = new_line or existing_line
+            created_lines |= new_line
+            rec.campaign_line_id = new_line
 
         return created_lines

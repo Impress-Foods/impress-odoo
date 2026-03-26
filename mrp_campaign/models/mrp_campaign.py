@@ -339,7 +339,6 @@ class MrpCampaign(models.Model):
 
     def _resync_mos(self) -> None:
         self.ensure_one()
-        self.line_ids.mapped("qty")
         for line in self.line_ids.sorted("sequence"):
             if line.productions_created:
                 line._adjust_mos(line.qty)
@@ -383,10 +382,6 @@ class MrpCampaign(models.Model):
         targets_to_bo = absent_targets | zero_targets | under_targets
 
         if not targets_to_bo:
-            # _logger.warning("No backorders!")
-            # for target in targets:
-            #     target.promised_qty = target_qtys.get(target.id, 0)
-            # self._resync_mos()
             return self.env["mrp.campaign"]
 
         bo_campaign = self.copy(
@@ -399,6 +394,11 @@ class MrpCampaign(models.Model):
                 demand.campaign_id = bo_campaign
 
             else:
+                targets_to_bo_for_demand = targets_to_bo.filtered_domain(
+                    [("demand_id", "=", demand.id)]
+                )
+                if not targets_to_bo_for_demand:
+                    continue
                 bo_demand = (
                     self.env["mrp.campaign.demand"]
                     .with_context(campaign_skip_line=True)
@@ -409,9 +409,6 @@ class MrpCampaign(models.Model):
                             "bom_id": demand.bom_id.id,
                         }
                     )
-                )
-                targets_to_bo_for_demand = targets_to_bo.filtered_domain(
-                    [("demand_id", "=", demand.id)]
                 )
 
                 for target in targets_to_bo_for_demand:
