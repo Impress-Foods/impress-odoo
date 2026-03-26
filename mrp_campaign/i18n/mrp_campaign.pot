@@ -81,26 +81,20 @@ msgid "Add Demand"
 msgstr ""
 
 #. module: mrp_campaign
-#: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_add_demand_form
-msgid "Add Demands"
-msgstr ""
-
-#. module: mrp_campaign
-#. odoo-python
-#: code:addons/mrp_campaign/models/mrp_campaign.py:0
+#. odoo-javascript
+#: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
 #, python-format
-msgid "All BO'd demands are not in campaign: %s"
+msgid "Add all"
 msgstr ""
 
 #. module: mrp_campaign
-#. odoo-python
-#: code:addons/mrp_campaign/models/mrp_campaign.py:0
+#. odoo-javascript
+#: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
 #, python-format
-msgid "All BO'd lines are not in campaign: %s"
+msgid "Add to selection"
 msgstr ""
 
 #. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_creator__product_id
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_production__anchor_product_id
 #: model:ir.model.fields,field_description:mrp_campaign.field_product_product__anchor_product_id
 msgid "Anchor Product"
@@ -112,8 +106,11 @@ msgid "Attachment Count"
 msgstr ""
 
 #. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_creator__available_demand_move_ids
-msgid "Available Demand Move"
+#. odoo-javascript
+#: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_creator__available_lines
+#, python-format
+msgid "Available Lines"
 msgstr ""
 
 #. module: mrp_campaign
@@ -135,8 +132,13 @@ msgid "Backorder Campaign: %s"
 msgstr ""
 
 #. module: mrp_campaign
-#: model:ir.model.fields.selection,name:mrp_campaign.selection__mrp_campaign_partition_wizard__partition_mode__backorder
+#: model:ir.model.fields.selection,name:mrp_campaign.selection__mrp_campaign_wizard_partition__partition_mode__backorder
 msgid "Backorder remaining demand"
+msgstr ""
+
+#. module: mrp_campaign
+#: model:ir.model,name:mrp_campaign.model_mrp_campaign_wizard_partition
+msgid "Base Wizard to Partition an MRP Campaign"
 msgstr ""
 
 #. module: mrp_campaign
@@ -198,10 +200,10 @@ msgid "Buffer Percent"
 msgstr ""
 
 #. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_add_demand__campaign_id
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand__campaign_id
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_proxy__campaign_id
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_target__campaign_id
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_line__campaign_id
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_creator__campaign_id
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_production__campaign_id
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_workorder__campaign_id
 msgid "Campaign"
@@ -214,25 +216,10 @@ msgid "Campaign Buffer Percent"
 msgstr ""
 
 #. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_stock_move__campaign_can_be_added
-msgid "Campaign Can Be Added"
-msgstr ""
-
-#. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__campaign_color
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_production__campaign_color
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_workorder__campaign_color
 msgid "Campaign Color"
-msgstr ""
-
-#. module: mrp_campaign
-#: model:ir.ui.menu,name:mrp_campaign.menu_mrp_campaign_creator
-msgid "Campaign Creator"
-msgstr ""
-
-#. module: mrp_campaign
-#: model:ir.ui.menu,name:mrp_campaign.menu_mrp_campaign_demand_proxy
-msgid "Campaign Demand Proxies"
 msgstr ""
 
 #. module: mrp_campaign
@@ -244,16 +231,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand__campaign_line_id
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_production__campaign_line_id
 msgid "Campaign Line"
-msgstr ""
-
-#. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_stock_move__campaign_proxy_ids
-msgid "Campaign Proxy"
-msgstr ""
-
-#. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_stock_move__campaign_qty_to_supply
-msgid "Campaign Qty To Supply"
 msgstr ""
 
 #. module: mrp_campaign
@@ -298,7 +275,6 @@ msgid "Can't delete a completed campaign!"
 msgstr ""
 
 #. module: mrp_campaign
-#: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_add_demand_form
 #: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_creator_form
 #: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_partition_wizard_form
 msgid "Cancel"
@@ -321,6 +297,13 @@ msgstr ""
 
 #. module: mrp_campaign
 #. odoo-python
+#: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
+#, python-format
+msgid "Cannot assign negative quantity to target %s."
+msgstr ""
+
+#. module: mrp_campaign
+#. odoo-python
 #: code:addons/mrp_campaign/models/mrp_campaign.py:0
 #, python-format
 msgid "Cannot confirm campaign %s without any demand."
@@ -331,8 +314,17 @@ msgstr ""
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
 #, python-format
 msgid ""
-"Cannot plan less of %(product)s than currently produced quantity (%(plan)f <"
-" %(actual)f) "
+"Cannot plan less of %(product)s than the floor quantity. Floor: %(floor)s, "
+"Planned: %(planned)s"
+msgstr ""
+
+#. module: mrp_campaign
+#. odoo-python
+#: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
+#, python-format
+msgid ""
+"Cannot plan more of %(product)s than the initial planned quantity. Initial: "
+"%(initial)s, Planned: %(planned)s"
 msgstr ""
 
 #. module: mrp_campaign
@@ -365,6 +357,7 @@ msgid "Component"
 msgstr ""
 
 #. module: mrp_campaign
+#: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_creator_form
 #: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_form
 #: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_tree
 msgid "Confirm"
@@ -387,6 +380,13 @@ msgstr ""
 
 #. module: mrp_campaign
 #. odoo-python
+#: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
+#, python-format
+msgid "Could not find campaign line with id %(line)s"
+msgstr ""
+
+#. module: mrp_campaign
+#. odoo-python
 #: code:addons/mrp_campaign/models/mrp_campaign_line.py:0
 #, python-format
 msgid ""
@@ -394,8 +394,9 @@ msgid ""
 msgstr ""
 
 #. module: mrp_campaign
-#: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_creator_form
-msgid "Create Campaign"
+#: model:ir.actions.act_window,name:mrp_campaign.action_mrp_campaign_direct_wizard_create
+#: model:ir.ui.menu,name:mrp_campaign.menu_mrp_campaign_direct_wizard
+msgid "Create Campaign (Direct)"
 msgstr ""
 
 #. module: mrp_campaign
@@ -405,24 +406,27 @@ msgstr ""
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__create_uid
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_add_demand__create_uid
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_creator__create_uid
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand__create_uid
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_proxy__create_uid
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_target__create_uid
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_line__create_uid
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_partition_wizard__create_uid
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_creator__create_uid
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_partition__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__create_date
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_add_demand__create_date
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_creator__create_date
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand__create_date
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_proxy__create_date
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_target__create_date
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_line__create_date
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_partition_wizard__create_date
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_creator__create_date
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_partition__create_date
 msgid "Created on"
+msgstr ""
+
+#. module: mrp_campaign
+#: model:ir.model.fields,field_description:mrp_campaign.field_stock_move__sale_customer_ref
+msgid "Customer Reference"
 msgstr ""
 
 #. module: mrp_campaign
@@ -436,14 +440,14 @@ msgid "Default unit of measure used for all stock operations."
 msgstr ""
 
 #. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_proxy__demand_id
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_target__demand_id
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_line__demand_ids
 #: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_form
 msgid "Demand"
 msgstr ""
 
 #. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_partition_wizard__partition_data_json
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_partition__partition_data_json
 msgid "Demand Allocation Data"
 msgstr ""
 
@@ -453,39 +457,24 @@ msgid "Demand Line"
 msgstr ""
 
 #. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_creator__demand_move_ids
-msgid "Demand Move"
+#: model:ir.model,name:mrp_campaign.model_mrp_campaign_demand_target
+msgid "Demand target - maps demand to external source"
 msgstr ""
 
 #. module: mrp_campaign
-#: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_creator_form
-msgid "Demand Moves"
-msgstr ""
-
-#. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__demand_proxy_ids
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand__demand_proxy_ids
-msgid "Demand Proxy"
-msgstr ""
-
-#. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_add_demand__demand_move_ids
-msgid "Demands to Add"
-msgstr ""
-
-#. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand__move_ids
-msgid "Destination Moves"
+#: model:ir.model.fields.selection,name:mrp_campaign.selection__mrp_campaign__workflow_type__direct
+#: model:ir.model.fields.selection,name:mrp_campaign.selection__mrp_campaign_wizard_creator__workflow_type__direct
+#: model:ir.model.fields.selection,name:mrp_campaign.selection__mrp_campaign_wizard_partition__workflow_type__direct
+msgid "Direct"
 msgstr ""
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__display_name
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_add_demand__display_name
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_creator__display_name
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand__display_name
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_proxy__display_name
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_target__display_name
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_line__display_name
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_partition_wizard__display_name
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_creator__display_name
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_partition__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -542,11 +531,6 @@ msgid "Fulfilled Qty"
 msgstr ""
 
 #. module: mrp_campaign
-#: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_creator_search
-msgid "Group By"
-msgstr ""
-
-#. module: mrp_campaign
 #: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_search
 msgid "Group By..."
 msgstr ""
@@ -558,12 +542,11 @@ msgstr ""
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__id
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_add_demand__id
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_creator__id
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand__id
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_proxy__id
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_target__id
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_line__id
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_partition_wizard__id
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_creator__id
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_partition__id
 msgid "ID"
 msgstr ""
 
@@ -623,9 +606,25 @@ msgid "Is Follower"
 msgstr ""
 
 #. module: mrp_campaign
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_target__is_fully_planned
+msgid "Is Fully Planned"
+msgstr ""
+
+#. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__is_out_of_sync
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_line__is_out_of_sync
 msgid "Is Out Of Sync"
+msgstr ""
+
+#. module: mrp_campaign
+#: model:ir.model.fields,help:mrp_campaign.field_mrp_campaign_wizard_creator__available_lines
+msgid ""
+"JSON array of demand lines. Fields: id, name, qty, date, additional_ref"
+msgstr ""
+
+#. module: mrp_campaign
+#: model:ir.model.fields,help:mrp_campaign.field_mrp_campaign_wizard_creator__selected_line_ids
+msgid "JSON array of selected line IDs"
 msgstr ""
 
 #. module: mrp_campaign
@@ -646,23 +645,21 @@ msgstr ""
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__write_uid
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_add_demand__write_uid
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_creator__write_uid
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand__write_uid
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_proxy__write_uid
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_target__write_uid
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_line__write_uid
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_partition_wizard__write_uid
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_creator__write_uid
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_partition__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__write_date
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_add_demand__write_date
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_creator__write_date
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand__write_date
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_proxy__write_date
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_target__write_date
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_line__write_date
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_partition_wizard__write_date
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_creator__write_date
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_partition__write_date
 msgid "Last Updated on"
 msgstr ""
 
@@ -675,7 +672,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
 #, python-format
-msgid "Line product and intent product do not match"
+msgid "Line %(line)s does not belong to campaign %(campaign)s"
 msgstr ""
 
 #. module: mrp_campaign
@@ -707,14 +704,21 @@ msgstr ""
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
 #, python-format
-msgid "Malformed Data: missing 'tree' attribute in JSON."
+msgid "Malformed data: missing 'demand_moves' attribute in JSON."
 msgstr ""
 
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
 #, python-format
-msgid "Malformed data: missing 'demand_moves' attribute in JSON."
+msgid "Malformed data: missing 'line_id' in tree."
+msgstr ""
+
+#. module: mrp_campaign
+#. odoo-python
+#: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
+#, python-format
+msgid "Malformed data: missing 'tree' attribute in JSON."
 msgstr ""
 
 #. module: mrp_campaign
@@ -729,8 +733,8 @@ msgid "Manufacturing Campaign Demand Line"
 msgstr ""
 
 #. module: mrp_campaign
-#: model:ir.actions.act_window,name:mrp_campaign.action_mrp_campaign_demand_proxies
-msgid "Manufacturing Campaign Demand Proxies"
+#: model:ir.actions.act_window,name:mrp_campaign.action_mrp_campaign_demand_target
+msgid "Manufacturing Campaign Demand Targets"
 msgstr ""
 
 #. module: mrp_campaign
@@ -758,21 +762,6 @@ msgstr ""
 #: code:addons/mrp_campaign/static/src/components/campaign_widget/campaign_node/campaign_node.xml:0
 #, python-format
 msgid "Min"
-msgstr ""
-
-#. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_proxy__move_id
-msgid "Move"
-msgstr ""
-
-#. module: mrp_campaign
-#: model:ir.model.fields,help:mrp_campaign.field_mrp_campaign_demand__move_ids
-msgid "Moves that this production will fulfill."
-msgstr ""
-
-#. module: mrp_campaign
-#: model:ir.actions.act_window,name:mrp_campaign.action_mrp_campaign_creator
-msgid "Mrp Campaign Creator"
 msgstr ""
 
 #. module: mrp_campaign
@@ -814,31 +803,24 @@ msgid "Next Activity Type"
 msgstr ""
 
 #. module: mrp_campaign
+#. odoo-javascript
+#: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
+#, python-format
+msgid "No available lines"
+msgstr ""
+
+#. module: mrp_campaign
+#. odoo-javascript
+#: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
+#, python-format
+msgid "No selected lines"
+msgstr ""
+
+#. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_campaign_line.py:0
 #, python-format
 msgid "Non-batch produced line should only have one Manufacturing Order."
-msgstr ""
-
-#. module: mrp_campaign
-#. odoo-python
-#: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, python-format
-msgid "Not all campaign line exists"
-msgstr ""
-
-#. module: mrp_campaign
-#. odoo-python
-#: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, python-format
-msgid "Not all campaign_line belong to the current campaign"
-msgstr ""
-
-#. module: mrp_campaign
-#. odoo-python
-#: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, python-format
-msgid "Not all proxies could be found in the database."
 msgstr ""
 
 #. module: mrp_campaign
@@ -869,7 +851,7 @@ msgid "Only campaigns in 'Draft' or 'Planned' state can be split"
 msgstr ""
 
 #. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_partition_wizard__campaign_id
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_partition__campaign_id
 msgid "Original Campaign"
 msgstr ""
 
@@ -884,12 +866,7 @@ msgid "Partition Campaign"
 msgstr ""
 
 #. module: mrp_campaign
-#: model:ir.actions.act_window,name:mrp_campaign.action_mrp_campaign_partition_wizard
-msgid "Partition Manufacturing Campaign"
-msgstr ""
-
-#. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_partition_wizard__partition_mode
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_partition__partition_mode
 msgid "Partition Mode"
 msgstr ""
 
@@ -905,7 +882,7 @@ msgid "Planned"
 msgstr ""
 
 #. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_creator__planned_date
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_creator__planned_date
 msgid "Planned Date"
 msgstr ""
 
@@ -923,6 +900,7 @@ msgstr ""
 #: model:ir.model,name:mrp_campaign.model_product_template
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand__product_id
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_line__product_id
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_creator__product_id
 msgid "Product"
 msgstr ""
 
@@ -935,6 +913,14 @@ msgstr ""
 #. module: mrp_campaign
 #: model:ir.model,name:mrp_campaign.model_product_product
 msgid "Product Variant"
+msgstr ""
+
+#. module: mrp_campaign
+#. odoo-python
+#: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
+#, python-format
+msgid ""
+"Product mismatch for line %(line_id)s: expected %(expected)s, got %(actual)s"
 msgstr ""
 
 #. module: mrp_campaign
@@ -964,25 +950,21 @@ msgid "Productions Created"
 msgstr ""
 
 #. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_proxy__promised_qty
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_target__promised_qty
 msgid "Promised Qty"
+msgstr ""
+
+#. module: mrp_campaign
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_line__qty
+msgid "Qty"
 msgstr ""
 
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
 #, python-format
-msgid "Proxies %s are not associated with the current campaign"
-msgstr ""
-
-#. module: mrp_campaign
-#: model:ir.model,name:mrp_campaign.model_mrp_campaign_demand_proxy
-msgid "Proxy between mrp.campaign.demand and stock.move"
-msgstr ""
-
-#. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_line__qty
-msgid "Qty"
+msgid ""
+"Quantity %(qty).2f exceeds upstream demand %(max).2f for target %(id)s."
 msgstr ""
 
 #. module: mrp_campaign
@@ -1001,6 +983,11 @@ msgid "Quantity committed by MOs (in progress and done)"
 msgstr ""
 
 #. module: mrp_campaign
+#: model:ir.model.fields,help:mrp_campaign.field_mrp_campaign_demand__target_qty
+msgid "Quantity to produce for this demand (sum of promised quantities)."
+msgstr ""
+
+#. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__rating_ids
 msgid "Ratings"
 msgstr ""
@@ -1010,6 +997,20 @@ msgstr ""
 #: code:addons/mrp_campaign/static/src/components/campaign_widget/campaign_node/campaign_node.xml:0
 #, python-format
 msgid "Ratio:"
+msgstr ""
+
+#. module: mrp_campaign
+#. odoo-javascript
+#: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
+#, python-format
+msgid "Remove all"
+msgstr ""
+
+#. module: mrp_campaign
+#. odoo-javascript
+#: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
+#, python-format
+msgid "Remove from selection"
 msgstr ""
 
 #. module: mrp_campaign
@@ -1050,8 +1051,23 @@ msgid "Seach Campaigns"
 msgstr ""
 
 #. module: mrp_campaign
-#: model:ir.model.fields,help:mrp_campaign.field_mrp_campaign_add_demand__demand_move_ids
-msgid "Select the demand moves you want to add to this campaign."
+#. odoo-javascript
+#: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
+#: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
+#, python-format
+msgid "Search..."
+msgstr ""
+
+#. module: mrp_campaign
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_creator__selected_line_ids
+msgid "Selected Line"
+msgstr ""
+
+#. module: mrp_campaign
+#. odoo-javascript
+#: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
+#, python-format
+msgid "Selected Lines"
 msgstr ""
 
 #. module: mrp_campaign
@@ -1072,8 +1088,13 @@ msgid "Source"
 msgstr ""
 
 #. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_proxy__origin
-msgid "Source Document"
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_production__source_id
+msgid "Source Document ID"
+msgstr ""
+
+#. module: mrp_campaign
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_production__source_model
+msgid "Source Document Model"
 msgstr ""
 
 #. module: mrp_campaign
@@ -1089,7 +1110,7 @@ msgid "Split Campaign: %s"
 msgstr ""
 
 #. module: mrp_campaign
-#: model:ir.model.fields.selection,name:mrp_campaign.selection__mrp_campaign_partition_wizard__partition_mode__split
+#: model:ir.model.fields.selection,name:mrp_campaign.selection__mrp_campaign_wizard_partition__partition_mode__split
 msgid "Split into two new campaigns"
 msgstr ""
 
@@ -1123,6 +1144,31 @@ msgid "Synchronize MOs"
 msgstr ""
 
 #. module: mrp_campaign
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand__target_ids
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_target__target_id
+msgid "Target"
+msgstr ""
+
+#. module: mrp_campaign
+#. odoo-python
+#: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
+#, python-format
+msgid "Target %s does not belong to this campaign."
+msgstr ""
+
+#. module: mrp_campaign
+#. odoo-python
+#: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
+#, python-format
+msgid "Target %s not found in database."
+msgstr ""
+
+#. module: mrp_campaign
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_target__target_model
+msgid "Target Model"
+msgstr ""
+
+#. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand__target_qty
 msgid "Target Quantity"
 msgstr ""
@@ -1136,36 +1182,21 @@ msgid "Target:"
 msgstr ""
 
 #. module: mrp_campaign
+#. odoo-python
+#: code:addons/mrp_campaign/models/mrp_campaign.py:0
+#, python-format
+msgid "Targets %s do not belong to this campaign."
+msgstr ""
+
+#. module: mrp_campaign
 #: model:ir.model.fields,help:mrp_campaign.field_mrp_campaign_demand__bom_id
 msgid ""
 "The specific BoM to be used for manufacturing the product on this line."
 msgstr ""
 
 #. module: mrp_campaign
-#: model_terms:ir.actions.act_window,help:mrp_campaign.action_mrp_campaign_creator
-msgid ""
-"There is no examples click here to add new Mrp\n"
-"                Campaign Creator."
-msgstr ""
-
-#. module: mrp_campaign
 #: model_terms:ir.actions.act_window,help:mrp_campaign.action_mrp_campaign_line
 msgid "There is no examples click here to add new Mrp Campaign Line."
-msgstr ""
-
-#. module: mrp_campaign
-#. odoo-python
-#: code:addons/mrp_campaign/models/mrp_campaign.py:0
-#, python-format
-msgid "This campaign has no demand moves to partition"
-msgstr ""
-
-#. module: mrp_campaign
-#: model:ir.model.fields,help:mrp_campaign.field_mrp_campaign_demand_proxy__upstream_qty
-msgid ""
-"This is the quantity of product that is planned to be moved.Lowering this "
-"quantity does not generate a backorder.Changing this quantity on assigned "
-"moves affects the product reservation, and should be done with care."
 msgstr ""
 
 #. module: mrp_campaign
@@ -1195,22 +1226,6 @@ msgid "Total quantity planned"
 msgstr ""
 
 #. module: mrp_campaign
-#. odoo-python
-#: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, python-format
-msgid ""
-"Trying to assign a larger quantity than required (%(assigned)d > "
-"%(demand)d).assigned"
-msgstr ""
-
-#. module: mrp_campaign
-#. odoo-python
-#: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, python-format
-msgid "Trying to assign a negative quantity (%(qty)d) to a SO.qty"
-msgstr ""
-
-#. module: mrp_campaign
 #: model:ir.model.fields,help:mrp_campaign.field_mrp_campaign__activity_exception_decoration
 msgid "Type of the exception activity on record."
 msgstr ""
@@ -1221,7 +1236,7 @@ msgid "Unit of Measure"
 msgstr ""
 
 #. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_proxy__upstream_qty
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_target__upstream_qty
 msgid "Upstream Demand"
 msgstr ""
 
@@ -1233,11 +1248,6 @@ msgstr ""
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_line__use_buffer
 msgid "Use Buffer"
-msgstr ""
-
-#. module: mrp_campaign
-#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_add_demand__valid_move_ids
-msgid "Valid Move"
 msgstr ""
 
 #. module: mrp_campaign
@@ -1256,23 +1266,21 @@ msgid "Website communication history"
 msgstr ""
 
 #. module: mrp_campaign
-#: model:ir.model,name:mrp_campaign.model_mrp_campaign_add_demand
-msgid "Wizard to Add Demand to an existing MRP Campaign"
-msgstr ""
-
-#. module: mrp_campaign
-#: model:ir.model,name:mrp_campaign.model_mrp_campaign_partition_wizard
-msgid "Wizard to Partition an MRP Campaign (Split or Backorder)"
-msgstr ""
-
-#. module: mrp_campaign
-#: model:ir.model,name:mrp_campaign.model_mrp_campaign_creator
-msgid "Wizard to help the creation of MRP Campaigns"
+#: model:ir.model,name:mrp_campaign.model_mrp_campaign_wizard_creator
+msgid "Wizard for campaign creation"
 msgstr ""
 
 #. module: mrp_campaign
 #: model:ir.model,name:mrp_campaign.model_mrp_workorder
 msgid "Work Order"
+msgstr ""
+
+#. module: mrp_campaign
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__workflow_type
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_target__workflow_type
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_creator__workflow_type
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_partition__workflow_type
+msgid "Workflow Type"
 msgstr ""
 
 #. module: mrp_campaign
