@@ -4,13 +4,10 @@ from typing import Any
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from ..models.mrp_campaign import MrpCampaign
-from ..models.mrp_campaign_line import CampaignLine
 
-
-class MrpCampaignPartitionWizard(models.TransientModel):
-    _name = "mrp.campaign.partition.wizard"
-    _description = "Wizard to Partition an MRP Campaign (Split or Backorder)"
+class MrpCampaignPartition(models.TransientModel):
+    _name = "mrp.campaign.wizard.partition"
+    _description = "Base Wizard to Partition an MRP Campaign"
 
     campaign_id = fields.Many2one(
         "mrp.campaign",
@@ -30,23 +27,20 @@ class MrpCampaignPartitionWizard(models.TransientModel):
     )
 
     partition_data_json = fields.Text(string="Demand Allocation Data")
+    workflow_type = fields.Selection([("direct", "Direct")])
 
     @api.model
-    def default_get(self, fields_list):  # pragma: no coverage
+    def default_get(self, fields_list):
         res = super().default_get(fields_list)
         active_id = self.env.context.get("active_id")
         if self.env.context.get("active_model") == "mrp.campaign" and active_id:
             campaign = self.env["mrp.campaign"].browse(active_id)
             res["campaign_id"] = campaign.id
             res["partition_data_json"] = json.dumps(self._make_partition_json(campaign))
+            res["workflow_type"] = campaign.workflow_type
         return res
 
-    @api.model
-    def _make_partition_json(self, campaign: MrpCampaign) -> dict:
-        """
-        Prepares the JSON data structure for the custom allocation widget.
-        It includes all demand lines and their current target_qty.
-        """
+    def _make_partition_json(self, campaign) -> dict:
         campaign.ensure_one()
         root_line = campaign.line_ids.filtered(
             lambda line, campaign=campaign: line.product_id.id == campaign.product_id.id
@@ -59,7 +53,8 @@ class MrpCampaignPartitionWizard(models.TransientModel):
             raise ValidationError(
                 _("Cannot produce JSON for campaign with multiple root lines")
             )
-        data = {
+
+        return {
             "meta": {
                 "campaign_id": campaign.id,
                 "campaign_name": campaign.name,
@@ -68,205 +63,190 @@ class MrpCampaignPartitionWizard(models.TransientModel):
             "tree": self._build_tree_recursive(root_line[0]),
             "demand_moves": self._format_demand(campaign),
         }
-        # _logger.warning(json.dumps(data))
-        return data
 
-    @api.model
-    def _build_tree_recursive(self, line: CampaignLine) -> dict[str, Any]:
+    def _build_tree_recursive(self, line) -> dict[str, Any]:
         mos = line.production_ids
         planned = line.pre_buffer_qty
         done = sum(mos.mapped("qty_produced"))
         wip = line.committed_qty
 
-        quantities = {
-            "planned": 0,
-            "done": done,
-            "wip": wip,
-            "floor": wip,
-            "initial_planned": planned,
-        }
-
-        data = {
+        return {
             "line_id": line.id,
             "product_name": line.product_id.display_name,
             "product_id": line.product_id.id,
             "uom": line.product_id.uom_id.display_name,
-            "quantities": quantities,
+            "quantities": {
+                "planned": 0,
+                "done": done,
+                "wip": wip,
+                "floor": wip,
+                "initial_planned": planned,
+            },
             "ratio": line._get_downstream_factor(),
             "upstream_branches": [
                 self._build_tree_recursive(parent) for parent in line.upstream_line_ids
             ],
         }
 
-        return data
+    def _format_demand(self, campaign) -> list[dict]:
+        if campaign.workflow_type == "direct":
+            moves = []
+            for demand in campaign.demand_line_ids:
+                targets = demand.target_ids.filtered(
+                    lambda t: t.workflow_type == "direct" and t.id
+                )
+                sorted_targets = targets.sorted(
+                    key=lambda target: (
+                        target._get_target().priority,
+                        target._get_target().date_deadline or target._get_target().date,
+                    )
+                )
+                for target in sorted_targets:
+                    moves.append(target._get_partition_wizard_fields())
+            return moves
+        return []
 
-    @api.model
-    def _format_demand(self, campaign: MrpCampaign) -> list[dict[str, Any]]:
-        """Aggregates demand from SOs/Deliveries linked to the campaign lines"""
-        moves: list[dict[str, Any]] = []
-        for demand in campaign.demand_line_ids:
-            sorted_proxies = demand.demand_proxy_ids.sorted(
-                key=lambda proxy: (
-                    proxy.move_id.priority,
-                    proxy.move_id.date_deadline or proxy.move_id.date,
+    def _validate_json_production(self, data: dict[str, Any]) -> dict[int, tuple]:
+        tree = data if "tree" not in data else data.get("tree")
+        if tree is None:
+            raise ValidationError(
+                _("Malformed data: missing 'tree' attribute in JSON.")
+            )
+
+        result = {}
+        line_id = tree.get("line_id")
+        if not line_id:
+            raise ValidationError(_("Malformed data: missing 'line_id' in tree."))
+
+        line = self.env["mrp.campaign.line"].browse(line_id)
+        if not line.exists():
+            raise ValidationError(
+                _("Could not find campaign line with id %(line)s", line=line_id)
+            )
+        if line.campaign_id != self.campaign_id:
+            raise ValidationError(
+                _(
+                    "Line %(line)s does not belong to campaign %(campaign)s",
+                    line=line_id,
+                    campaign=self.campaign_id.name,
                 )
             )
 
-            for proxy in sorted_proxies:
-                values = proxy._get_partition_wizard_fields()
-                moves.append(values)
+        tree_data = {k: v for k, v in tree.items() if k != "upstream_branches"}
+        result[line_id] = (line, tree_data)
 
-        return moves
+        for branch in tree.get("upstream_branches", []):
+            result.update(self._validate_json_production(branch))
 
-    def action_partition_campaign(self):  # pragma: no coverage
-        self.ensure_one()
-        data = json.loads(self.partition_data_json)
-        prod_lines = self._validate_json_production(data)
-        demand_lines = self._validate_json_demand(data)
-
-        # Deltas represent the difference between the initial campaign
-        # and the input by the user.
-        # as such, they are the quantities to backorder.
-        prod_deltas = self._get_deltas_production(prod_lines)
-        demand_deltas = self._get_deltas_demand(demand_lines)
-
-        dest_campaign = self.with_context(
-            campaign_skip_mo_adjustment=True
-        ).campaign_id._split(prod_deltas, demand_deltas)
-
-        # Trigger re-synchronization of MOs for the original campaign
-        self.campaign_id._resync_mos()
-
-        # For the destination campaign, we need to build its tree and create initial MOs
-        if dest_campaign:
-            dest_campaign.action_plan()
-
-        return {"type": "ir.actions.act_window_close"}
-
-    def _validate_json_production(self, data: dict[str, Any]) -> dict[int, tuple]:
-        tree: dict = data.get("tree", None)
-        if not tree:
-            raise ValidationError(
-                _("Malformed Data: missing 'tree' attribute in JSON.")
-            )
-
-        def get_all_lines(root: dict, result: dict | None = None) -> dict[int, dict]:
-            if result is None:
-                result = {}
-
-            node_data = {k: v for k, v in root.items() if k != "upstream_branches"}
-            result[node_data["line_id"]] = node_data
-            branches = root.get("upstream_branches", [])
-            for branch in branches:
-                get_all_lines(branch, result)
-
-            return result
-
-        campaign_lines: dict[int, dict] = get_all_lines(tree)
-        records = self.env["mrp.campaign.line"].browse(campaign_lines.keys())
-
-        if set(campaign_lines.keys()) != set(records.exists().mapped("id")):
-            if len(set(campaign_lines.keys())) != len(
-                set(records.exists().mapped("id"))
-            ):
-                raise ValidationError(_("Not all campaign line exists"))
-
-        if not all([record.campaign_id == self.campaign_id for record in records]):
-            raise ValidationError(
-                _("Not all campaign_line belong to the current campaign")
-            )
-
-        mapped_data = {}
-        for record in records:
-            mapped_data[record.id] = (record, campaign_lines[record.id])
-        return mapped_data
+        return result
 
     def _get_deltas_production(self, lines: dict[int, tuple]) -> dict[int, tuple]:
         deltas = {}
-        for rec_id, data in lines.items():
-            line = data[0]
-            intent = data[1]
-            quantities = intent["quantities"]
+        for line_id, (line, intent) in lines.items():
+            quantities = intent.get("quantities", {})
+            planned = quantities.get("planned", 0)
+            initial_planned = quantities.get("initial_planned", 0)
+            floor = quantities.get("floor", 0)
+            product_id = intent.get("product_id")
 
-            if line.product_id.id != intent["product_id"]:
-                raise ValidationError(_("Line product and intent product do not match"))
-            if quantities["planned"] < line.committed_qty:
-                values = {
-                    "product": intent["product_name"],
-                    "plan": quantities["planned"],
-                    "actual": line.committed_qty,
-                }
+            if product_id and product_id != line.product_id.id:
                 raise ValidationError(
                     _(
-                        "Cannot plan less of %(product)s than currently "
-                        "produced quantity (%(plan)f < %(actual)f) " % values
+                        "Product mismatch for line %(line_id)s: "
+                        "expected %(expected)s, got %(actual)s",
+                        line_id=line_id,
+                        expected=line.product_id.display_name,
+                        actual=self.env["product.product"]
+                        .browse(product_id)
+                        .display_name,
                     )
                 )
-            delta = line.pre_buffer_qty - quantities["planned"]
-            if delta == 0:
-                continue
-            deltas[rec_id] = (line, delta)
+
+            if planned < floor:
+                raise ValidationError(
+                    _(
+                        "Cannot plan less of %(product)s than the floor quantity. "
+                        "Floor: %(floor)s, Planned: %(planned)s",
+                        product=line.product_id.display_name,
+                        floor=floor,
+                        planned=planned,
+                    )
+                )
+
+            if planned > initial_planned:
+                raise ValidationError(
+                    _(
+                        "Cannot plan more of %(product)s than the "
+                        "initial planned quantity. "
+                        "Initial: %(initial)s, Planned: %(planned)s",
+                        product=line.product_id.display_name,
+                        initial=initial_planned,
+                        planned=planned,
+                    )
+                )
+
+            delta = initial_planned - planned
+            if delta != 0:
+                deltas[line_id] = (line, delta)
 
         return deltas
 
-    def _validate_json_demand(self, data: dict[str, Any]) -> dict[int, tuple]:
-        demand_data = data.get("demand_moves", None)
+    def _parse_demand_data(self, data: dict[str, Any]) -> dict[int, float]:
+        """Parse and validate target quantities from wizard JSON.
+
+        Validates:
+        - JSON structure (demand_moves present)
+        - Target records exist and belong to campaign
+        - Quantity constraints (non-negative, not exceeding upstream_qty)
+
+        Returns:
+            Flat dict {target_id: final_promised_qty}
+        """
+        demand_data = data.get("demand_moves")
         if demand_data is None:
             raise ValidationError(
                 _("Malformed data: missing 'demand_moves' attribute in JSON.")
             )
-        mapped_proxy = {v["proxy_id"]: v for v in demand_data}
-        proxies = self.env["mrp.campaign.demand.proxy"].browse(mapped_proxy.keys())
 
-        if set(mapped_proxy.keys()) != set(proxies.exists().ids):
-            raise ValidationError(_("Not all proxies could be found in the database."))
-
-        if not all(proxy.campaign_id == self.campaign_id for proxy in proxies):
-            bad_proxies = [
-                proxy.id for proxy in proxies if proxy.campaign_id != self.campaign_id
-            ]
-            raise ValidationError(
-                _(
-                    "Proxies %s are not associated with the current campaign",
-                    bad_proxies,
-                )
-            )
-
-        mapped_data = {proxy.id: (proxy, mapped_proxy[proxy.id]) for proxy in proxies}
-        return mapped_data
-
-    def _get_deltas_demand(self, lines: dict[int, tuple]) -> dict[int, tuple]:
-        deltas = {}
-        for rec_id, data in lines.items():
-            rec = data[0]
-            intent = data[1]
-            current_promised_qty = rec.promised_qty
-            intended_promised_qty = intent["fulfilled_qty"]
-
-            if intended_promised_qty < 0:
-                raise ValidationError(
-                    _(
-                        "Trying to assign a negative quantity (%(qty)d) to a SO."
-                        % {"qty": intended_promised_qty}
-                    )
-                )
-
-            if intended_promised_qty > rec.upstream_qty:
-                raise ValidationError(
-                    _(
-                        "Trying to assign a larger quantity "
-                        "than required (%(assigned)d > %(demand)d)."
-                        % {
-                            "assigned": intended_promised_qty,
-                            "demand": rec.upstream_qty,
-                        }
-                    )
-                )
-
-            delta = current_promised_qty - intended_promised_qty
-
-            if delta == 0:
+        target_qtys = {}
+        for item in demand_data:
+            target_id = item.get("target_id")
+            if not target_id:
                 continue
 
-            deltas[rec_id] = (rec, delta)
-        return deltas
+            target = self.env["mrp.campaign.demand.target"].browse(target_id)
+            if not target.exists():
+                raise ValidationError(_("Target %s not found in database.", target_id))
+            if target.campaign_id != self.campaign_id:
+                raise ValidationError(
+                    _("Target %s does not belong to this campaign.", target_id)
+                )
+
+            promised_qty = item.get("promised_qty", 0)
+            if promised_qty < 0:
+                raise ValidationError(
+                    _("Cannot assign negative quantity to target %s.", target_id)
+                )
+            if promised_qty > target.upstream_qty:
+                raise ValidationError(
+                    _(
+                        "Quantity %(qty).2f exceeds upstream demand "
+                        "%(max).2f for target %(id)s.",
+                        qty=promised_qty,
+                        max=target.upstream_qty,
+                        id=target_id,
+                    )
+                )
+
+            target_qtys[target_id] = promised_qty
+
+        return target_qtys
+
+    def action_partition_campaign(self):
+        self.ensure_one()
+        data = json.loads(self.partition_data_json or "{}")
+        target_qtys = self._parse_demand_data(data)
+
+        self.campaign_id._split(target_qtys)
+
+        return {"type": "ir.actions.act_window_close"}

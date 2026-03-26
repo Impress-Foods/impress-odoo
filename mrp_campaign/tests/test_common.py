@@ -363,8 +363,12 @@ class CampaignCase(TransactionCase):
         )
 
     @classmethod
-    def create_campaign(cls, product: ProductProduct) -> MrpCampaign:
-        return cls.env["mrp.campaign"].create({"product_id": product.id})
+    def create_campaign(
+        cls, product: ProductProduct, workflow_type: str = "direct"
+    ) -> MrpCampaign:
+        return cls.env["mrp.campaign"].create(
+            {"product_id": product.id, "workflow_type": workflow_type}
+        )
 
     @classmethod
     def create_line(
@@ -389,22 +393,26 @@ class CampaignCase(TransactionCase):
                 "campaign_id": campaign.id if campaign else False,
             }
         )
+
         move = cls.env["stock.move"].create(
             {
-                "name": "move",
+                "name": f"test move for {product.display_name}",
                 "product_id": product.id,
                 "product_uom_qty": qty,
                 "location_id": cls.stock_location.id,
                 "location_dest_id": cls.stock_location.id,
+                "state": "waiting",
             }
         )
-        cls.env["mrp.campaign.demand.proxy"].create(
+
+        cls.env["mrp.campaign.demand.target"].create(
             {
                 "demand_id": demand.id,
-                "move_id": move.id,
                 "promised_qty": qty,
+                "target_id": move.id,
             }
         )
+
         return demand
 
     @classmethod
@@ -424,3 +432,26 @@ class CampaignCase(TransactionCase):
                     cls.get_all_values_for_key(item, target_key, result)
 
         return result
+
+
+class CampaignDirectCase(CampaignCase):
+    @classmethod
+    def create_full_campaign(cls, product, qty):
+        """Creates campaign, demand, move, and target for testing."""
+        campaign = cls.create_campaign(cls.bulk_material)
+        campaign.workflow_type = "direct"
+        demand = cls.create_demand(product, qty, campaign)
+        target = demand.target_ids[0]
+        move = target._get_target()
+        return campaign, demand, move, target
+
+    @classmethod
+    def create_target(cls, demand, move, promised_qty):
+        """Creates a single target."""
+        return cls.env["mrp.campaign.demand.target"].create(
+            {
+                "demand_id": demand.id,
+                "workflow_type": "direct",
+                "promised_qty": promised_qty,
+            }
+        )

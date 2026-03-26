@@ -19,6 +19,7 @@ class MrpProduction(models.Model):
         "sale.order.line",
         string="Billing Sale Order Line",
         compute="_compute_billing_sale_order_line_id",
+        inverse="_inverse_billing_sale_order_line_id",
         store=True,
     )
     billing_sale_order_ref = fields.Char(
@@ -116,6 +117,14 @@ class MrpProduction(models.Model):
             elif not rec.billing_sale_order_id:
                 if rec.billing_sale_order_line_id:
                     rec._unlink_sale_order_line()
+
+    def _inverse_billing_sale_order_line_id(self):
+        for rec in self:
+            if rec.billing_sale_order_line_id:
+                sol = rec.billing_sale_order_line_id
+                rec.billing_sale_order_ref = sol.order_id.client_order_ref
+            else:
+                rec.billing_sale_order_ref = False
 
     def _create_billing_sale_order_line(self):
         self.ensure_one()

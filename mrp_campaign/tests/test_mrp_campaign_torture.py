@@ -2,10 +2,10 @@ import json
 
 from odoo.tools import float_compare
 
-from .test_common import CampaignCase
+from .test_common import CampaignDirectCase
 
 
-class TestMrpCampaignTorture(CampaignCase):
+class TestMrpCampaignTorture(CampaignDirectCase):
     def test_campaign_partition_torture_scenario(self):
         """
         Flow: End Product (Demand) -> Sub-Assembly ->
@@ -95,6 +95,7 @@ class TestMrpCampaignTorture(CampaignCase):
         # Demand for 25 units of End Product
         campaign = self.create_campaign(bulk_material)
         self.create_demand(end_product, qty=25.0, campaign=campaign)
+
         campaign.action_plan()
 
         # Verify initial tree states
@@ -126,7 +127,7 @@ class TestMrpCampaignTorture(CampaignCase):
         # A: End 14.5 -> Sub 14.5 -> Comp 29.0 -> Bulk 29.0 + 10% = 31.9
 
         wizard = (
-            self.env["mrp.campaign.partition.wizard"]
+            self.env["mrp.campaign.wizard.partition"]
             .with_context(
                 **{
                     "active_id": campaign.id,
@@ -138,7 +139,7 @@ class TestMrpCampaignTorture(CampaignCase):
         )
 
         data = json.loads(wizard.partition_data_json)
-        data["demand_moves"][0]["fulfilled_qty"] = 14.5
+        data["demand_moves"][0]["promised_qty"] = 14.5
 
         def update_node(node, planned_qty):
             line_id = node["line_id"]

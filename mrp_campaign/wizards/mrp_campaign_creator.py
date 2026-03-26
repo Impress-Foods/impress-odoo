@@ -1,89 +1,155 @@
+import json
+
 from odoo import api, fields, models
 
-from odoo.addons.product.models.product_product import ProductProduct
-from odoo.addons.stock.models.stock_move import StockMove
 
-from ..models.mrp_campaign import MrpCampaign
-
-
-class MrpCampaignCreator(models.TransientModel):
-    _name = "mrp.campaign.creator"
-    _description = "Wizard to help the creation of MRP Campaigns"
+class MrpCampaignCreator(models.Model):
+    _name = "mrp.campaign.wizard.creator"
+    _description = "Wizard for campaign creation"
 
     product_id = fields.Many2one(
         comodel_name="product.product",
         domain="[('product_tmpl_id.is_campaign_anchor', '=', True)]",
-        string="Anchor Product",
     )
     planned_date = fields.Date()
+    campaign_id = fields.Many2one("mrp.campaign")
 
-    demand_move_ids = fields.Many2many("stock.move")
-    available_demand_move_ids = fields.Many2many(
-        comodel_name="stock.move",
-        compute="_compute_available_demand_move_ids",
-        store=False,
+    workflow_type = fields.Selection([("direct", "Direct")])
+
+    available_lines = fields.Char(
+        help="JSON array of demand lines. Fields: id, name, qty, date, additional_ref",
+    )
+    selected_line_ids = fields.Char(
+        help="JSON array of selected line IDs",
     )
 
-    @api.depends("product_id")
-    def _compute_available_demand_move_ids(self):
-        for rec in self:
-            if not rec.product_id:
-                rec.available_demand_move_ids = []
-                continue
-
-            anchor_product = rec.product_id
-            available_moves = self.env["stock.move"].search(
-                [
-                    ("product_id.anchor_product_id", "=", anchor_product.id),
-                    ("campaign_can_be_added", "=", True),
-                ]
+    @api.model
+    def default_get(self, fields_list):
+        res = super().default_get(fields_list)
+        if res.get("campaign_id"):
+            res["product_id"] = (
+                self.env["mrp.campaign"].browse(res["campaign_id"]).product_id.id
             )
-            rec.available_demand_move_ids = available_moves
+        return res
 
     @api.onchange("product_id")
     def _onchange_product_id(self):
-        # Clear existing selection when product changes,
-        #  as filter might make it invalid.
-        if self.product_id:
-            self.demand_move_ids = False
-
-    def make_campaign(self):
         self.ensure_one()
-        values = {
-            "date_planned_start": self.planned_date,
-            "product_id": self.product_id.id,
-        }
-        campaign_id: MrpCampaign = self.env["mrp.campaign"].create(values)
+        self.available_lines = json.dumps(self._get_available_lines())
+        self.selected_line_ids = "[]"
 
-        products = self.demand_move_ids.mapped("product_id")
-        boms_by_product = self.env["mrp.bom"]._bom_find(products=products)
+    def _get_available_lines(self) -> list[dict]:
+        self.ensure_one()
+        if self.workflow_type == "direct":
+            result = []
+            moves = self._get_valid_sources()
+            for move in moves:
+                result.append(
+                    {
+                        "id": move.id,
+                        "name": f"{move.origin or 'No origin'} "
+                        f"| {move.product_id.display_name}",
+                        "qty": move._get_qty_to_fulfill(),
+                        "date": move.date_deadline.isoformat()
+                        if move.date_deadline
+                        else None,
+                        "additional_ref": move.sale_customer_ref or "",
+                    }
+                )
+            return result
+        return []
 
-        grouped_demand: dict[ProductProduct, StockMove] = self.demand_move_ids.grouped(
-            "product_id"
-        )
-        for product, moves in grouped_demand.items():
-            bom = boms_by_product.get(product)
-            demand_line = self.env["mrp.campaign.demand"].create(
+    def _get_valid_sources(self):
+        self.ensure_one()
+        if self.workflow_type == "direct":
+            if not self.product_id:
+                return self.env["stock.move"]
+            return self.env["stock.move"].search(
+                [
+                    ("product_id.anchor_product_id", "=", self.product_id.id),
+                    ("state", "not in", ["draft", "done", "cancelled"]),
+                    ("picking_id.picking_type_code", "=", "outgoing"),
+                ]
+            )
+
+        return []
+
+    def _get_selected_sources(self):
+        selected_ids = json.loads(self.selected_line_ids or "[]")
+        valid_sources = self._get_valid_sources()
+        if valid_sources:
+            return valid_sources.filtered(lambda r: r.id in selected_ids)
+        else:
+            return []
+
+    def _create_demands(self, campaign) -> None:
+        if self.workflow_type == "direct":
+            self._create_demands_direct(campaign)
+
+    def _create_demands_direct(self, campaign) -> None:
+        selected_moves = self._get_selected_sources()
+        if not selected_moves:
+            return
+
+        grouped = {}
+        for move in selected_moves:
+            product = move.product_id
+            if product not in grouped:
+                grouped[product] = []
+            grouped[product].append(move)
+
+        target_values = []
+        for product, moves in grouped.items():
+            bom = (
+                self.env["mrp.bom"]
+                ._bom_find(products=product, company_id=campaign.company_id.id)
+                .get(product)
+            )
+
+            demand_line = campaign.demand_line_ids.filtered(
+                lambda d, p=product: d.product_id == p
+            )
+
+            if not demand_line:
+                demand_line = self.env["mrp.campaign.demand"].create(
+                    {
+                        "campaign_id": campaign.id,
+                        "product_id": product.id,
+                        "bom_id": bom.id if bom else False,
+                    }
+                )
+
+            for move in moves:
+                target_values.append(
+                    {
+                        "demand_id": demand_line.id,
+                        "workflow_type": "direct",
+                        "target_id": move.id,
+                        "promised_qty": move._get_qty_to_fulfill(),
+                    }
+                )
+
+        self.env["mrp.campaign.demand.target"].create(target_values)
+
+    def process_wizard(self) -> dict | None:
+        campaign = self.campaign_id
+        result = None
+        if not campaign:
+            campaign = self.env["mrp.campaign"].create(
                 {
-                    "campaign_id": campaign_id.id,
-                    "product_id": product.id,
-                    "bom_id": bom.id if bom else False,
+                    "product_id": self.product_id.id,
+                    "workflow_type": self.workflow_type,
+                    "date_planned_start": self.planned_date,
                 }
             )
-            proxy_vals = [
-                {
-                    "demand_id": demand_line.id,
-                    "move_id": move.id,
-                    "promised_qty": move.product_uom_qty,
-                }
-                for move in moves
-            ]
-            self.env["mrp.campaign.demand.proxy"].create(proxy_vals)
+            result = {
+                "type": "ir.actions.act_window",
+                "res_model": "mrp.campaign",
+                "views": [[False, "form"]],
+                "res_id": campaign.id,
+                "target": "current",
+            }
 
-        return {
-            "type": "ir.actions.act_window",
-            "res_model": "mrp.campaign",
-            "views": [[False, "form"]],
-            "res_id": campaign_id.id,
-            "target": "current",
-        }
+        self._create_demands(campaign)
+
+        return result

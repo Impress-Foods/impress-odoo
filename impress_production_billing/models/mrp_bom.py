@@ -13,3 +13,11 @@ class MrpBom(models.Model):
         string="Billing Product",
         domain=[("type", "=", "service")],
     )
+
+    _sql_constraints = [
+        (
+            "unique_billing_product",
+            "UNIQUE (billing_product_id)",
+            "A billing product can only be assigned to one end product's BOM.",
+        ),
+    ]
