@@ -1,11 +1,8 @@
 import colorsys
-import logging
 import random
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
-
-_logger = logging.getLogger(__name__)
 
 
 class MrpCampaign(models.Model):
@@ -233,9 +230,11 @@ class MrpCampaign(models.Model):
         }
 
     def action_open_split_wizard(self) -> dict:
+        self.ensure_one()
         return self.action_open_partition_wizard(mode="split")
 
     def action_bo(self) -> dict:
+        self.ensure_one()
         return self.action_open_partition_wizard(mode="backorder")
 
     def action_open_partition_wizard(self, mode: str = "split") -> dict:
@@ -360,20 +359,23 @@ class MrpCampaign(models.Model):
         targets = self.env["mrp.campaign.demand.target"].browse(
             list(target_qtys.keys())
         )
-        invalid_targets = targets.filtered_domain([("campaign_id", "!=", self.id)])
+        campaign_targets = self.env["mrp.campaign.demand.target"].search(
+            [("campaign_id", "=", self.id)]
+        )
+        invalid_targets = targets - campaign_targets
         if invalid_targets:
             raise ValidationError(
                 _("Targets %s do not belong to this campaign.", invalid_targets)
             )
 
-        demands = targets.mapped("demand_id")
+        demands = self.demand_line_ids
 
         # We BO targets that:
         # - Have a target_qty == 0
         # - have a target_qty < promised_qty
         # - absent (since that means a target_qty == 0)
 
-        absent_targets = targets.filtered(lambda target: target.id not in target_qtys)
+        absent_targets = campaign_targets - targets
         zero_targets = targets.filtered(lambda target: target_qtys[target.id] == 0)
         under_targets = targets.filtered(
             lambda target: target_qtys[target.id] < target.promised_qty
@@ -390,6 +392,8 @@ class MrpCampaign(models.Model):
 
         for demand in demands:
             if demand.target_ids <= (zero_targets | absent_targets):
+                if demand.campaign_line_id.productions_created:
+                    demand.campaign_line_id._adjust_mos(0)
                 demand.campaign_line_id.unlink()
                 demand.campaign_id = bo_campaign
 
@@ -431,10 +435,6 @@ class MrpCampaign(models.Model):
 
     def _after_split(self, backorder_campaign) -> None:
         """Hook for bridges to handle post-split operations."""
-        pass
-
-    def _recreate_targets(self, source_demand, new_demand, bo_qty) -> None:
-        """Recreate targets for a demand copied to backorder campaign."""
         pass
 
     # -------------------------------------------------------------------------

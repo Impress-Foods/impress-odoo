@@ -263,7 +263,8 @@ class TestCampaign(CampaignCase):
         )
         self.assertEqual(updated_line.qty, original_line_qty)
 
-    def test_split_empty_dict_returns_empty_recordset(self) -> None:
+    def test_split_empty_dict_fully_backorders(self) -> None:
+        """An empty dict means all targets have final qty 0, so full BO."""
         campaign = self.create_campaign(self.bulk_material)
         campaign.date_planned_start = fields.Date.today()
         demand = self.create_demand(self.end_prod_a_red, 100.0, campaign)
@@ -271,9 +272,12 @@ class TestCampaign(CampaignCase):
 
         bo_campaign = campaign._split({})
 
-        self.assertFalse(bo_campaign)
-        self.assertEqual(len(bo_campaign), 0)
-        self.assertEqual(demand.target_ids[0].promised_qty, 100.0)
+        self.assertTrue(bo_campaign)
+        self.assertEqual(bo_campaign.bo_source_id, campaign)
+        self.assertEqual(len(bo_campaign.demand_line_ids), 1)
+        self.assertEqual(bo_campaign.demand_line_ids.target_qty, 100.0)
+        self.assertEqual(demand.campaign_id.id, bo_campaign.id)
+        self.assertEqual(len(campaign.demand_line_ids), 0)
 
     def test_split_demand_not_in_campaign_raises(self) -> None:
         campaign = self.create_campaign(self.bulk_material)
@@ -318,3 +322,19 @@ class TestCampaign(CampaignCase):
                 lambda line: line.product_id == self.end_prod_a_red
             )
         )
+
+    def test_split_full_demand_to_backorder_cleans_mos(self) -> None:
+        QTY = 100.0
+        campaign = self.create_campaign(self.bulk_material)
+        campaign.date_planned_start = fields.Date.today()
+        demand = self.create_demand(self.end_prod_a_red, QTY, campaign)
+        campaign.action_plan()
+
+        original_mos = campaign.production_ids
+        self.assertTrue(original_mos)
+
+        target = demand.target_ids[0]
+        bo_campaign = campaign._split({target.id: 0})
+
+        self.assertFalse(campaign.production_ids)
+        self.assertTrue(bo_campaign.production_ids)

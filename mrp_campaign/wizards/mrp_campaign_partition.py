@@ -1,11 +1,8 @@
 import json
-import logging
 from typing import Any
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-
-_logger = logging.getLogger(__name__)
 
 
 class MrpCampaignPartition(models.TransientModel):
@@ -31,14 +28,6 @@ class MrpCampaignPartition(models.TransientModel):
 
     partition_data_json = fields.Text(string="Demand Allocation Data")
     workflow_type = fields.Selection([("direct", "Direct")])
-
-    @api.depends("campaign_id")
-    def _compute_workflow_type(self):
-        for rec in self:
-            if rec.campaign_id:
-                rec.workflow_type = rec.campaign_id.workflow_type
-            else:
-                rec.workflow_type = rec._context.get("default_workflow_type", "direct")
 
     @api.model
     def default_get(self, fields_list):
@@ -115,12 +104,7 @@ class MrpCampaignPartition(models.TransientModel):
                 for target in sorted_targets:
                     moves.append(target._get_partition_wizard_fields())
             return moves
-
-    def _get_target_model(self) -> str:
-        return
-
-    def _get_demand_targets(self, demand):
-        return demand.target_ids
+        return []
 
     def _validate_json_production(self, data: dict[str, Any]) -> dict[int, tuple]:
         tree = data if "tree" not in data else data.get("tree")
@@ -246,8 +230,8 @@ class MrpCampaignPartition(models.TransientModel):
             if promised_qty > target.upstream_qty:
                 raise ValidationError(
                     _(
-                        "Quantity %(qty)d exceeds upstream demand "
-                        "%(max)d for target %(id)s.",
+                        "Quantity %(qty).2f exceeds upstream demand "
+                        "%(max).2f for target %(id)s.",
                         qty=promised_qty,
                         max=target.upstream_qty,
                         id=target_id,

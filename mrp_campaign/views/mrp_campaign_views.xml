@@ -68,14 +68,14 @@
                         type="object"
                         string="Split Campaign"
                         class="btn-secondary"
-                        invisible="state not in ['plan', 'confirm']"
+                        invisible="state not in ['plan']"
                     />
                     <button
                         name="action_bo"
                         type="object"
                         string="Backorder Campaign"
                         class="btn-secondary"
-                        invisible="state not in ['progress']"
+                        invisible="state not in ['confirm','progress']"
                     />
                     <button
                         name="action_sync_mos"

@@ -1,11 +1,8 @@
 import json
-import logging
 
 from odoo import fields
 
 from .test_common import CampaignDirectCase
-
-_logger = logging.getLogger(__name__)
 
 
 class TestMrpCampaignWizard(CampaignDirectCase):

@@ -1,5 +1,3 @@
-import logging
-
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.fields import Many2many
@@ -8,8 +6,6 @@ from odoo.tools import float_is_zero
 from odoo.addons.mrp.models.mrp_bom import MrpBomLine
 from odoo.addons.mrp.models.mrp_production import MrpProduction
 from odoo.addons.product.models.product_product import ProductProduct
-
-_logger = logging.getLogger(__name__)
 
 
 class CampaignLine(models.Model):

@@ -1,10 +1,6 @@
-import logging
-
 from odoo.exceptions import ValidationError
 
 from .test_common import CampaignDirectCase
-
-_logger = logging.getLogger(__name__)
 
 
 class TestMrpCampaignPartition(CampaignDirectCase):

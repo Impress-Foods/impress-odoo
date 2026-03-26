@@ -1,9 +1,4 @@
-import logging
-
-from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
-
-_logger = logging.getLogger(__name__)
+from odoo import api, fields, models
 
 
 class MrpCampaignDemandTarget(models.Model):
@@ -36,11 +31,9 @@ class MrpCampaignDemandTarget(models.Model):
     )
 
     def _get_target(self) -> models.Model:
-        model = self.mapped("target_model")
-        if len(set(model)) != 1:
-            raise ValidationError(_("Multiple target models in recordset"))
-        else:
-            return self.env[model[0]].browse(self.mapped("target_id"))
+        self.ensure_one()
+        model = self.target_model
+        return self.env[model].browse(self.mapped("target_id"))
 
     @api.depends("workflow_type")
     def _compute_target_model(self) -> None:
