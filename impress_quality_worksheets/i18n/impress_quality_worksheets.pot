@@ -141,7 +141,7 @@ msgstr ""
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20260305_form_view
 msgid ""
-"Comparer le poids du produit avec le poids visé* pour cette production : si "
+"Comparer le poids du produit avec le poids visé pour cette production : si "
 "poids sous la cible ou + de 3g, faire un ajustement."
 msgstr ""
 
