@@ -618,3 +618,123 @@ class TestMrpCampaignLine(CampaignCase):
             ValidationError, "Could not resolve downstream product"
         ):
             line._get_downstream_product()
+
+    def test_construct_downstream_tree_variant_only_bom(self) -> None:
+        """Products with only a variant-specific BoM must still appear in tree."""
+        color_attr = self.env["product.attribute"].create({"name": "Color"})
+        color_red = self.env["product.attribute.value"].create(
+            {"name": "Red", "attribute_id": color_attr.id}
+        )
+        color_blue = self.env["product.attribute.value"].create(
+            {"name": "Blue", "attribute_id": color_attr.id}
+        )
+
+        # Intermediate with variant-specific BoM (product_id set, no template BoM)
+        int_tmpl = self.env["product.template"].create(
+            {
+                "name": "Variant Only Intermediate",
+                "type": "product",
+                "attribute_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "attribute_id": color_attr.id,
+                            "value_ids": [(6, 0, [color_red.id, color_blue.id])],
+                        },
+                    ),
+                ],
+            }
+        )
+        int_red = int_tmpl.product_variant_ids.filtered(
+            lambda p: (
+                color_red
+                in p.product_template_variant_value_ids.product_attribute_value_id
+            )
+        )
+
+        # Variant-specific BoM only (product_id set) pointing to anchor
+        self.env["mrp.bom"].create(
+            {
+                "product_id": int_red.id,
+                "product_tmpl_id": int_tmpl.id,
+                "product_qty": 1.0,
+                "type": "normal",
+                "bom_line_ids": [
+                    (
+                        0,
+                        0,
+                        {"product_id": self.bulk_material.id, "product_qty": 1.0},
+                    ),
+                ],
+            }
+        )
+
+        campaign = self.create_campaign(self.bulk_material)
+        line = self.create_line(int_red, campaign)
+        line._construct_downstream_tree_line()
+
+        # Variant-only BoM must be found: intermediate + anchor = 2 lines
+        self.assertEqual(len(campaign.line_ids), 2)
+        anchor_line = campaign.line_ids.filtered_domain(
+            [("product_id", "=", self.bulk_material.id)]
+        )
+        self.assertEqual(len(anchor_line), 1)
+        self.assertEqual(line.downstream_line_id, anchor_line)
+
+    def test_anchor_product_computed_with_variant_bom(self) -> None:
+        """anchor_product_id must be invalidated when variant_bom_ids change."""
+        color_attr = self.env["product.attribute"].create({"name": "Color"})
+        color_red = self.env["product.attribute.value"].create(
+            {"name": "Red", "attribute_id": color_attr.id}
+        )
+        color_blue = self.env["product.attribute.value"].create(
+            {"name": "Blue", "attribute_id": color_attr.id}
+        )
+
+        # End product with variants but NO BoM yet
+        end_tmpl = self.env["product.template"].create(
+            {
+                "name": "Variant Anchor Test",
+                "type": "product",
+                "attribute_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "attribute_id": color_attr.id,
+                            "value_ids": [(6, 0, [color_red.id, color_blue.id])],
+                        },
+                    ),
+                ],
+            }
+        )
+        variant_red = end_tmpl.product_variant_ids.filtered(
+            lambda p: (
+                color_red
+                in p.product_template_variant_value_ids.product_attribute_value_id
+            )
+        )
+
+        # No BoM -> no anchor
+        self.assertFalse(variant_red.anchor_product_id)
+
+        # Add variant-specific BoM with bom_line pointing to anchor
+        self.env["mrp.bom"].create(
+            {
+                "product_id": variant_red.id,
+                "product_tmpl_id": end_tmpl.id,
+                "product_qty": 1.0,
+                "type": "normal",
+                "bom_line_ids": [
+                    (
+                        0,
+                        0,
+                        {"product_id": self.bulk_material.id, "product_qty": 1.0},
+                    ),
+                ],
+            }
+        )
+
+        # anchor_product_id must be recomputed (variant_bom_ids in depends)
+        self.assertEqual(variant_red.anchor_product_id, self.bulk_material)

@@ -376,7 +376,8 @@ class CampaignCase(TransactionCase):
     ) -> CampaignLine:
         values = {}
         values["product_id"] = product.id
-        values["bom_id"] = product.bom_ids[0].id if product.bom_ids else False
+        bom = cls.env["mrp.bom"]._bom_find(product).get(product)
+        values["bom_id"] = bom.id if bom else False
         values["campaign_id"] = campaign.id if campaign else False
         return cls.env["mrp.campaign.line"].create(values)
 
