@@ -34,6 +34,11 @@ msgid "<span> - </span>"
 msgstr "<span> - </span>"
 
 #. module: impress_production_billing
+#: model:ir.model.constraint,message:impress_production_billing.constraint_mrp_bom_unique_billing_product
+msgid "A billing product can only be assigned to one end product's BOM."
+msgstr ""
+
+#. module: impress_production_billing
 #. odoo-python
 #: code:addons/impress_production_billing/controllers/portal.py:0
 #, python-format

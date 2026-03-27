@@ -6,10 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-22 16:33+0000\n"
+"PO-Revision-Date: 2026-03-27 13:10+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
-"Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
-"impress-odoo/maintenance_quality/fr_CA/>\n"
+"Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
+"impress-odoo-17/maintenance_quality/fr_CA/>\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -126,7 +126,7 @@ msgstr "Nombre d'alertes qualité"
 #. module: maintenance_quality
 #: model:ir.model,name:maintenance_quality.model_quality_check
 msgid "Quality Check"
-msgstr "Contrôle qualité"
+msgstr "Contrôle Qualité"
 
 #. module: maintenance_quality
 #: model:ir.model.fields,field_description:maintenance_quality.field_maintenance_request__quality_check_fail_count

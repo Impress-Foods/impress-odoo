@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:06+0000\n"
-"PO-Revision-Date: 2026-03-11 16:33+0000\n"
+"PO-Revision-Date: 2026-03-27 13:10+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
 "impress-odoo-17/impress_quality_worksheets/fr_CA/>\n"
@@ -165,15 +165,11 @@ msgstr "Vérifier le code-barre de produit et de lot"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20260305_form_view
-#, fuzzy
-#| msgid ""
-#| "Comparer le poids du produit avec le poids visé* pour cette production : "
-#| "si poids sous la cible ou + de 3g, faire un ajustement."
 msgid ""
 "Comparer le poids du produit avec le poids visé pour cette production : si "
 "poids sous la cible ou + de 3g, faire un ajustement."
 msgstr ""
-"Comparer le poids du produit avec le poids visé* pour cette production : si "
+"Comparer le poids du produit avec le poids visé pour cette production : si "
 "poids sous la cible ou + de 3g, faire un ajustement."
 
 #. module: impress_quality_worksheets
@@ -520,10 +516,8 @@ msgstr "x_worksheet_20250303_id"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.weight_log_line_x_worksheet_20260305_id
-#, fuzzy
-#| msgid "x_worksheet_20250303_id"
 msgid "x_worksheet_20260305_id"
-msgstr "x_worksheet_20250303_id"
+msgstr "x_worksheet_20260305_id"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_ray_log_line_x_worksheet_large_20251126_id
