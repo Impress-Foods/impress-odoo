@@ -92,16 +92,14 @@ class MrpCampaignPartition(models.TransientModel):
         if campaign.workflow_type == "direct":
             moves = []
             for demand in campaign.demand_line_ids:
-                targets = demand.target_ids.filtered(
-                    lambda t: t.workflow_type == "direct" and t.id
+                targets = demand.target_ids.filtered_domain(
+                    [("workflow_type", "=", "direct")]
                 )
-                sorted_targets = targets.sorted(
-                    key=lambda target: (
-                        target._get_target().priority,
-                        target._get_target().date_deadline or target._get_target().date,
-                    )
+                target_data = [(t, t._get_target()) for t in targets]
+                target_data.sort(
+                    key=lambda tm: (tm[1].priority, tm[1].date_deadline or tm[1].date)
                 )
-                for target in sorted_targets:
+                for target, _move in target_data:
                     moves.append(target._get_partition_wizard_fields())
             return moves
         return []
