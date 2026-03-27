@@ -15,7 +15,7 @@ class MrpCampaignPartition(models.TransientModel):
         moves = []
         for demand in campaign.demand_line_ids:
             billing_targets = demand.target_ids.filtered(
-                lambda t: t.workflow_type == "production_billing" and t.id
+                lambda t: t.workflow_type == "production_billing"
             )
             for target in billing_targets:
                 moves.append(target._get_partition_wizard_fields())
