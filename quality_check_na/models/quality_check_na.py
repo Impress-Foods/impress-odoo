@@ -1,0 +1,46 @@
+from datetime import datetime
+
+from odoo import api, fields, models
+
+
+class QualityCheckNA(models.Model):
+    _inherit = ["quality.check"]
+
+    quality_state = fields.Selection(
+        selection_add=[
+            ("na", "Not Applicable"),
+        ],
+    )
+
+    can_be_na = fields.Boolean()
+
+    @api.depends("quality_state")
+    def _compute_is_na(self):
+        for record in self:
+            record.is_na = record.quality_state == "na"
+
+    def do_na(self):
+        self.ensure_one()
+        self.write(
+            {
+                "quality_state": "na",
+                "user_id": self.env.user.id,
+                "control_date": datetime.now(),
+            }
+        )
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            vals["can_be_na"] = (
+                self.env["quality.point"].browse(vals["point_id"]).allow_na
+            )
+        return super().create(vals_list)
+
+    @api.depends("quality_state")
+    def _compute_measure_success(self):
+        res = super()._compute_measure_success()
+        for rec in self:
+            if rec.quality_state == "na":
+                rec.measure_success = "pass"
+        return res
