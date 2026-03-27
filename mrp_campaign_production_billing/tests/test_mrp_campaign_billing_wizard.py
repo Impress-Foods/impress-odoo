@@ -244,3 +244,352 @@ class CampaignBillingCase(TransactionCase):
         campaign = self.env["mrp.campaign"].browse(campaign_id)
         self.assertTrue(campaign.exists())
         self.assertEqual(len(campaign.demand_line_ids), 0)
+
+    def test_available_lines_deduplicates_shared_bom_variants(self):
+        """Two variants sharing the same BoM must not produce duplicate SOL IDs."""
+        color_attr = self.env["product.attribute"].create({"name": "Color"})
+        color_red = self.env["product.attribute.value"].create(
+            {"name": "Red", "attribute_id": color_attr.id}
+        )
+        color_blue = self.env["product.attribute.value"].create(
+            {"name": "Blue", "attribute_id": color_attr.id}
+        )
+
+        # New anchor product for this test
+        anchor = self.env["product.product"].create(
+            {
+                "name": "Test Anchor",
+                "type": "product",
+                "uom_id": self.uom_unit.id,
+                "uom_po_id": self.uom_unit.id,
+            }
+        )
+        anchor.product_tmpl_id.is_campaign_anchor = True
+
+        # Intermediate product with BoM -> anchor
+        intermediate = self.env["product.product"].create(
+            {
+                "name": "Test Intermediate",
+                "type": "product",
+                "uom_id": self.uom_unit.id,
+                "uom_po_id": self.uom_unit.id,
+            }
+        )
+        self.env["mrp.bom"].create(
+            {
+                "product_tmpl_id": intermediate.product_tmpl_id.id,
+                "product_qty": 1.0,
+                "type": "normal",
+                "bom_line_ids": [
+                    (0, 0, {"product_id": anchor.id, "product_qty": 1.0}),
+                ],
+            }
+        )
+
+        # End product template with two variants (created with attributes)
+        end_tmpl = self.env["product.template"].create(
+            {
+                "name": "Test Multi Variant End",
+                "type": "product",
+                "attribute_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "attribute_id": color_attr.id,
+                            "value_ids": [(6, 0, [color_red.id, color_blue.id])],
+                        },
+                    ),
+                ],
+            }
+        )
+        self.assertEqual(len(end_tmpl.product_variant_ids), 2)
+
+        # Shared BoM for the template with a new billing product
+        billing_2 = self.env["product.product"].create(
+            {
+                "name": "Billing Service 2",
+                "type": "service",
+                "uom_id": self.uom_unit.id,
+            }
+        )
+        self.env["mrp.bom"].create(
+            {
+                "product_tmpl_id": end_tmpl.id,
+                "product_qty": 1.0,
+                "type": "normal",
+                "billing_product_id": billing_2.id,
+                "bom_line_ids": [
+                    (0, 0, {"product_id": intermediate.id, "product_qty": 1.0}),
+                ],
+            }
+        )
+
+        so = self._create_sale_order(billing_2, 10.0)
+
+        wizard = self.create_wizard.create(
+            {
+                "product_id": anchor.id,
+            }
+        )
+        wizard._onchange_product_id()
+        lines = json.loads(wizard.available_lines or "[]")
+
+        # Should be 1 entry (one SOL), not 2 (one per variant sharing the BoM)
+        self.assertEqual(len(lines), 1)
+        self.assertEqual(lines[0]["id"], so.order_line[0].id)
+
+    def test_available_lines_shows_both_variant_billing_products(self):
+        """Each variant with its own BoM must surface its own billing product."""
+        color_attr = self.env["product.attribute"].create({"name": "Color"})
+        color_red = self.env["product.attribute.value"].create(
+            {"name": "Red", "attribute_id": color_attr.id}
+        )
+        color_blue = self.env["product.attribute.value"].create(
+            {"name": "Blue", "attribute_id": color_attr.id}
+        )
+
+        anchor = self.env["product.product"].create(
+            {
+                "name": "Test Anchor 2",
+                "type": "product",
+                "uom_id": self.uom_unit.id,
+                "uom_po_id": self.uom_unit.id,
+            }
+        )
+        anchor.product_tmpl_id.is_campaign_anchor = True
+
+        intermediate = self.env["product.product"].create(
+            {
+                "name": "Test Intermediate 2",
+                "type": "product",
+                "uom_id": self.uom_unit.id,
+                "uom_po_id": self.uom_unit.id,
+            }
+        )
+        self.env["mrp.bom"].create(
+            {
+                "product_tmpl_id": intermediate.product_tmpl_id.id,
+                "product_qty": 1.0,
+                "type": "normal",
+                "bom_line_ids": [
+                    (0, 0, {"product_id": anchor.id, "product_qty": 1.0}),
+                ],
+            }
+        )
+
+        end_tmpl = self.env["product.template"].create(
+            {
+                "name": "Test Variant Specific End",
+                "type": "product",
+                "attribute_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "attribute_id": color_attr.id,
+                            "value_ids": [(6, 0, [color_red.id, color_blue.id])],
+                        },
+                    ),
+                ],
+            }
+        )
+        variant_red = end_tmpl.product_variant_ids.filtered(
+            lambda p: (
+                color_red
+                in p.product_template_variant_value_ids.product_attribute_value_id
+            )
+        )
+        variant_blue = end_tmpl.product_variant_ids.filtered(
+            lambda p: (
+                color_blue
+                in p.product_template_variant_value_ids.product_attribute_value_id
+            )
+        )
+        self.assertEqual(len(end_tmpl.product_variant_ids), 2)
+
+        billing_a = self.env["product.product"].create(
+            {"name": "Billing A", "type": "service", "uom_id": self.uom_unit.id}
+        )
+        billing_b = self.env["product.product"].create(
+            {"name": "Billing B", "type": "service", "uom_id": self.uom_unit.id}
+        )
+
+        # Variant-specific BoMs (product_id set, not just product_tmpl_id)
+        self.env["mrp.bom"].create(
+            {
+                "product_id": variant_red.id,
+                "product_tmpl_id": end_tmpl.id,
+                "product_qty": 1.0,
+                "type": "normal",
+                "billing_product_id": billing_a.id,
+                "bom_line_ids": [
+                    (0, 0, {"product_id": intermediate.id, "product_qty": 1.0}),
+                ],
+            }
+        )
+        self.env["mrp.bom"].create(
+            {
+                "product_id": variant_blue.id,
+                "product_tmpl_id": end_tmpl.id,
+                "product_qty": 1.0,
+                "type": "normal",
+                "billing_product_id": billing_b.id,
+                "bom_line_ids": [
+                    (0, 0, {"product_id": intermediate.id, "product_qty": 1.0}),
+                ],
+            }
+        )
+
+        so = self.env["sale.order"].create(
+            {"partner_id": self.partner.id, "state": "sale"}
+        )
+        self.env["sale.order.line"].create(
+            [
+                {
+                    "order_id": so.id,
+                    "product_id": billing_a.id,
+                    "product_uom_qty": 10.0,
+                },
+                {
+                    "order_id": so.id,
+                    "product_id": billing_b.id,
+                    "product_uom_qty": 20.0,
+                },
+            ]
+        )
+
+        wizard = self.create_wizard.create({"product_id": anchor.id})
+        wizard._onchange_product_id()
+        lines = json.loads(wizard.available_lines or "[]")
+
+        # Both billing products must appear (one per variant's own BoM)
+        self.assertEqual(len(lines), 2)
+        line_ids = {line["id"] for line in lines}
+        self.assertEqual(line_ids, {so.order_line[0].id, so.order_line[1].id})
+
+    def test_valid_sources_includes_variant_billing_products(self):
+        """_get_valid_sources must return SOLs for all variant-specific billing prod."""
+        color_attr = self.env["product.attribute"].create({"name": "Color"})
+        color_red = self.env["product.attribute.value"].create(
+            {"name": "Red", "attribute_id": color_attr.id}
+        )
+        color_blue = self.env["product.attribute.value"].create(
+            {"name": "Blue", "attribute_id": color_attr.id}
+        )
+
+        anchor = self.env["product.product"].create(
+            {
+                "name": "Test Anchor 3",
+                "type": "product",
+                "uom_id": self.uom_unit.id,
+                "uom_po_id": self.uom_unit.id,
+            }
+        )
+        anchor.product_tmpl_id.is_campaign_anchor = True
+
+        intermediate = self.env["product.product"].create(
+            {
+                "name": "Test Intermediate 3",
+                "type": "product",
+                "uom_id": self.uom_unit.id,
+                "uom_po_id": self.uom_unit.id,
+            }
+        )
+        self.env["mrp.bom"].create(
+            {
+                "product_tmpl_id": intermediate.product_tmpl_id.id,
+                "product_qty": 1.0,
+                "type": "normal",
+                "bom_line_ids": [
+                    (0, 0, {"product_id": anchor.id, "product_qty": 1.0}),
+                ],
+            }
+        )
+
+        end_tmpl = self.env["product.template"].create(
+            {
+                "name": "Test Valid Sources End",
+                "type": "product",
+                "attribute_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "attribute_id": color_attr.id,
+                            "value_ids": [(6, 0, [color_red.id, color_blue.id])],
+                        },
+                    ),
+                ],
+            }
+        )
+        variant_red = end_tmpl.product_variant_ids.filtered(
+            lambda p: (
+                color_red
+                in p.product_template_variant_value_ids.product_attribute_value_id
+            )
+        )
+        variant_blue = end_tmpl.product_variant_ids.filtered(
+            lambda p: (
+                color_blue
+                in p.product_template_variant_value_ids.product_attribute_value_id
+            )
+        )
+
+        billing_x = self.env["product.product"].create(
+            {"name": "Billing X", "type": "service", "uom_id": self.uom_unit.id}
+        )
+        billing_y = self.env["product.product"].create(
+            {"name": "Billing Y", "type": "service", "uom_id": self.uom_unit.id}
+        )
+
+        self.env["mrp.bom"].create(
+            {
+                "product_id": variant_red.id,
+                "product_tmpl_id": end_tmpl.id,
+                "product_qty": 1.0,
+                "type": "normal",
+                "billing_product_id": billing_x.id,
+                "bom_line_ids": [
+                    (0, 0, {"product_id": intermediate.id, "product_qty": 1.0}),
+                ],
+            }
+        )
+        self.env["mrp.bom"].create(
+            {
+                "product_id": variant_blue.id,
+                "product_tmpl_id": end_tmpl.id,
+                "product_qty": 1.0,
+                "type": "normal",
+                "billing_product_id": billing_y.id,
+                "bom_line_ids": [
+                    (0, 0, {"product_id": intermediate.id, "product_qty": 1.0}),
+                ],
+            }
+        )
+
+        so = self.env["sale.order"].create(
+            {"partner_id": self.partner.id, "state": "sale"}
+        )
+        self.env["sale.order.line"].create(
+            [
+                {
+                    "order_id": so.id,
+                    "product_id": billing_x.id,
+                    "product_uom_qty": 5.0,
+                },
+                {
+                    "order_id": so.id,
+                    "product_id": billing_y.id,
+                    "product_uom_qty": 8.0,
+                },
+            ]
+        )
+
+        wizard = self.create_wizard.create({"product_id": anchor.id})
+        valid = wizard._get_valid_sources()
+        valid_products = set(valid.mapped("product_id").ids)
+
+        # Both billing products must be in valid sources
+        self.assertIn(billing_x.id, valid_products)
+        self.assertIn(billing_y.id, valid_products)

@@ -11,7 +11,7 @@ class MrpCampaignCreator(models.Model):
         comodel_name="product.product",
         domain="[('product_tmpl_id.is_campaign_anchor', '=', True)]",
     )
-    planned_date = fields.Date()
+    planned_date = fields.Date(default=lambda self: fields.Date.today())
     campaign_id = fields.Many2one("mrp.campaign")
 
     workflow_type = fields.Selection([("direct", "Direct")])
@@ -26,6 +26,7 @@ class MrpCampaignCreator(models.Model):
     @api.model
     def default_get(self, fields_list):
         res = super().default_get(fields_list)
+
         if res.get("campaign_id"):
             res["product_id"] = (
                 self.env["mrp.campaign"].browse(res["campaign_id"]).product_id.id

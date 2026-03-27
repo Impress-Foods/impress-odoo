@@ -246,7 +246,10 @@ class CampaignLine(models.Model):
             return
 
         for bom_line in self.bom_id.bom_line_ids.filtered(
-            lambda x: self.is_valid_bom_line_for_product(x) and x.product_id.bom_ids
+            lambda x: (
+                self.is_valid_bom_line_for_product(x)
+                and self.env["mrp.bom"]._bom_find(x.product_id).get(x.product_id)
+            )
         ):
             downstream_product = bom_line.product_id
             downstream_bom = self.env["mrp.bom"]._bom_find(
