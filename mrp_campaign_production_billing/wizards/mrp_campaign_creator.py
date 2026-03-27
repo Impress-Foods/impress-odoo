@@ -17,12 +17,13 @@ class MrpCampaignCreator(models.Model):
             return []
 
         result = []
+        seen_sol_ids: set[int] = set()
         end_products = self.env["product.product"].search(
             [("anchor_product_id", "=", self.product_id.id)]
         )
 
         for end_product in end_products:
-            bom = end_product.bom_ids[:1]
+            bom = self.env["mrp.bom"]._bom_find(end_product).get(end_product)
             if not bom or not bom.billing_product_id:
                 continue
             billing_product = bom.billing_product_id
@@ -33,6 +34,10 @@ class MrpCampaignCreator(models.Model):
                 ]
             )
             for sol in sols:
+                if sol.id in seen_sol_ids:
+                    continue
+                seen_sol_ids.add(sol.id)
+
                 allocated = sum(
                     self.env["mrp.campaign.demand.target"]
                     .sudo()
@@ -73,7 +78,11 @@ class MrpCampaignCreator(models.Model):
         end_products = self.env["product.product"].search(
             [("anchor_product_id", "=", self.product_id.id)]
         )
-        billing_products = end_products.mapped("bom_ids.billing_product_id")
+        billing_products = self.env["product.product"]
+        for ep in end_products:
+            bom = self.env["mrp.bom"]._bom_find(ep).get(ep)
+            if bom and bom.billing_product_id:
+                billing_products |= bom.billing_product_id
         return self.env["sale.order.line"].search(
             [
                 ("product_id", "in", billing_products.ids),
@@ -103,7 +112,7 @@ class MrpCampaignCreator(models.Model):
 
         for (end_product, _order_id), sols in grouped.items():
             sol = sols[0]
-            bom = end_product.bom_ids[:1]
+            bom = self.env["mrp.bom"]._bom_find(end_product).get(end_product)
 
             demand = campaign.demand_line_ids.filtered(
                 lambda d, ep=end_product, so_id=sol.order_id.id: (
@@ -154,7 +163,7 @@ class MrpCampaignCreator(models.Model):
             [("anchor_product_id", "=", self.product_id.id)]
         )
         for ep in end_products:
-            bom = ep.bom_ids[:1]
+            bom = self.env["mrp.bom"]._bom_find(ep).get(ep)
             if bom and bom.billing_product_id.id == sol.product_id.id:
                 return ep
         return False

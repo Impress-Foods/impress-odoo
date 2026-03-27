@@ -26,6 +26,10 @@ class ProductProductModel(models.Model):
         "bom_ids.bom_line_ids",
         "bom_ids.bom_line_ids.product_id",
         "bom_ids.bom_line_ids.product_id.anchor_product_id",
+        "variant_bom_ids",
+        "variant_bom_ids.bom_line_ids",
+        "variant_bom_ids.bom_line_ids.product_id",
+        "variant_bom_ids.bom_line_ids.product_id.anchor_product_id",
     )
     def _compute_anchor_product(self):
         for rec in self:
