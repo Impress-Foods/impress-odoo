@@ -34,8 +34,10 @@ class ProductProductModel(models.Model):
     def _get_root_anchor(self, product, visited=None) -> "ProductProductModel":
         if visited is None:
             visited = set()
+
         if product.id in visited:
             return self.env["product.product"]
+
         visited.add(product.id)
 
         if product.is_campaign_anchor:
@@ -51,7 +53,7 @@ class ProductProductModel(models.Model):
 
         anchors_found = self.env["product.product"]
         for line in bom.bom_line_ids:
-            anchor = self._get_root_anchor(line.product_id, visited.copy())
+            anchor = self._get_root_anchor(line.product_id, visited)
             anchors_found |= anchor
 
         if len(anchors_found) == 1:
