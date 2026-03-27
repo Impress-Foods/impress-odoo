@@ -7,10 +7,10 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-31 13:56+0000\n"
-"PO-Revision-Date: 2025-08-22 16:33+0000\n"
+"PO-Revision-Date: 2026-03-27 13:54+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
-"Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
-"impress-odoo/warehouse_billing/fr_CA/>\n"
+"Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
+"impress-odoo-17/warehouse_billing/fr_CA/>\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -522,7 +522,7 @@ msgstr "Données de stock"
 #. module: warehouse_billing
 #: model:res.groups,comment:warehouse_billing.warehouse_billing_manager
 msgid "The user will be able to manage warehouse billing."
-msgstr ""
+msgstr "L'utilisateur sera en mesure de gérer la facturation d'entreposage."
 
 #. module: warehouse_billing
 #: model_terms:ir.actions.act_window,help:warehouse_billing.action_quant_history
@@ -565,10 +565,8 @@ msgstr "Configuration de facturation"
 
 #. module: warehouse_billing
 #: model:res.groups,name:warehouse_billing.warehouse_billing_manager
-#, fuzzy
-#| msgid "Warehouse Billing"
 msgid "Warehouse Billing Manager"
-msgstr "Facturation d'entreposage"
+msgstr "Gestionnaire de Facturation d'entreposage"
 
 #. module: warehouse_billing
 #. odoo-python

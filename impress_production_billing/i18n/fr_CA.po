@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-10 13:51+0000\n"
-"PO-Revision-Date: 2026-03-26 19:00+0000\n"
+"PO-Revision-Date: 2026-03-27 13:54+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
 "impress-odoo-17/impress_production_billing/fr_CA/>\n"
@@ -37,6 +37,7 @@ msgstr "<span> - </span>"
 #: model:ir.model.constraint,message:impress_production_billing.constraint_mrp_bom_unique_billing_product
 msgid "A billing product can only be assigned to one end product's BOM."
 msgstr ""
+"Un produit de facturation peut être associé qu'à une seule nomenclature."
 
 #. module: impress_production_billing
 #. odoo-python
