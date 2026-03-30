@@ -4,7 +4,7 @@
     "summary": """ Implements many quality logs used by
     Impress Foods for quality control """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/impress-foods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Manufacturing",
     "depends": [
         "mrp_workorder",

@@ -3,7 +3,7 @@
     "version": "19.0.1.0.0",
     "summary": """ Delivery_auto_select_carrier Summary """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/impress-foods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
     "depends": ["sale_management", "stock_delivery"],
     "data": [

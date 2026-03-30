@@ -3,7 +3,7 @@
     "version": "19.0.1.0.0",
     "summary": """ Module to allow a "soft" archive feature for documents. """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/impress-foods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
     "depends": ["documents_product"],
     "data": [

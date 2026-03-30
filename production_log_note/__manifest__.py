@@ -3,7 +3,7 @@
     "version": "19.0.1.0.2",
     "summary": """Makes note on shop floor read-only""",
     "author": "Cédric Paradis",
-    "website": "https://github.com/impress-foods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
     "depends": ["base", "web", "mrp_workorder"],
     "data": [],
