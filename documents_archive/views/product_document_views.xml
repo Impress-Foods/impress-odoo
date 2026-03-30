@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="product_document_kanban_inherit_archive" model="ir.ui.view">
+        <field name="name">product.document.kanban.inherit.archive</field>
+        <field name="model">product.document</field>
+        <field name="inherit_id" ref="product.product_document_kanban" />
+        <field name="arch" type="xml">
+            <xpath expr="//t[@t-name='menu']" position="inside">
+                <a
+                    t-if="record.active.raw_value"
+                    type="object"
+                    name="action_soft_archive"
+                    class="dropdown-item"
+                >Archive</a>
+                <a
+                    t-if="!record.active.raw_value"
+                    type="object"
+                    name="action_soft_unarchive"
+                    class="dropdown-item"
+                >Unarchive</a>
+            </xpath>
+        </field>
+    </record>
+</odoo>

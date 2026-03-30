@@ -4,7 +4,7 @@
     "depends": ["product_expiry", "base_automation"],
     "author": "Cédric Paradis",
     "category": "Inventory",
-    "website": "https://github.com/impress-foods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "summary": """
     Module that allows to automatically calculate to correct dates for a lot's expiry,
     """,

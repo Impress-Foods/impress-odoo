@@ -1,5 +1,5 @@
 # Do NOT update manually; changes here will be overwritten by Copier
-_commit: v1.36
+_commit: v1.39
 _src_path: https://github.com/OCA/oca-addons-repo-template.git
 additional_ruff_rules: []
 ci: GitHub
@@ -21,7 +21,7 @@ rebel_module_groups: []
 repo_description: Odoo modules for Impress Foods
 repo_name: Impress Odoo
 repo_slug: impress-odoo
-repo_website: https://github.com/impress-foods/impress-odoo
+repo_website: https://github.com/Impress-Foods/impress-odoo
 use_pyproject_toml: true
 use_ruff: true
 

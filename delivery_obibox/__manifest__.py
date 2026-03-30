@@ -3,7 +3,7 @@
     "version": "19.0.1.0.0",
     "summary": """ Obibox Delivery Connector """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/impress-foods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Inventory/Delivery",
     "depends": ["stock_delivery", "mail", "delivery_common"],
     "external_dependencies": {
