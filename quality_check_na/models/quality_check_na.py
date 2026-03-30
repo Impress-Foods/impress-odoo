@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 class QualityCheckNA(models.Model):
@@ -14,20 +15,18 @@ class QualityCheckNA(models.Model):
 
     can_be_na = fields.Boolean()
 
-    @api.depends("quality_state")
-    def _compute_is_na(self):
-        for record in self:
-            record.is_na = record.quality_state == "na"
-
     def do_na(self):
         self.ensure_one()
-        self.write(
-            {
-                "quality_state": "na",
-                "user_id": self.env.user.id,
-                "control_date": datetime.now(),
-            }
-        )
+        if self.can_be_na:
+            self.write(
+                {
+                    "quality_state": "na",
+                    "user_id": self.env.user.id,
+                    "control_date": datetime.now(),
+                }
+            )
+        else:
+            raise UserError(_("This Quality Check cannot be set to N/A"))
 
     @api.model_create_multi
     def create(self, vals_list):
