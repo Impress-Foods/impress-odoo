@@ -1,0 +1,32 @@
+.wave-transition-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    margin-bottom: -2px;
+
+    .wave-transition {
+        position: relative;
+        width: 100%;
+        height: 29%;
+        animation-name: wave-animation;
+        animation-timing-function: cubic-bezier(0.18, 0.01, 0.9, 1);
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+        animation-duration: 10s;
+
+        @keyframes wave-animation {
+            0% {
+                transform: translateX(-10%);
+            }
+            100% {
+                transform: translateX(-1%);
+            }
+        }
+        svg.wave-transition-svg {
+            position: relative;
+            display: block;
+            width: 150%;
+        }
+    }
+}

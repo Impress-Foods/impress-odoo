@@ -1,0 +1,4 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_nutrition_fact_entry_public,nutrition_fact_entry_public,model_nutrition_fact_entry,base.group_public,1,0,0,0
+access_nutrition_fact_entry_internal,nutrition_fact_entry_internal,model_nutrition_fact_entry,base.group_user,1,1,1,1
+access_nutrition_fact_entry_portal,nutrition_fact_entry_internal,model_nutrition_fact_entry,base.group_portal,1,0,0,1

@@ -1,0 +1,78 @@
+@use "./aplus_colors.scss";
+@use "./fonts";
+
+// Navigation Styles
+.o_navlink_background {
+    background: transparent;
+
+    &:hover {
+        background: transparent;
+    }
+}
+
+.heading-outline {
+    -webkit-text-stroke-color: red;
+    -webkit-text-stroke-width: 1px;
+
+    align-content: center;
+    height: 100%;
+
+    text-transform: uppercase;
+
+    h1 {
+        font-size: 5rem;
+    }
+    h2 {
+        font-size: 2.5rem;
+        font-style: italic;
+    }
+}
+
+// Transform Utilities
+.reversed {
+    scale: -1 1;
+}
+
+// Animation Utilities
+.shake-on-hover:hover {
+    animation: bob 0.6s infinite alternate;
+}
+
+@keyframes bob {
+    from {
+        transform: translateY(0) rotate(0deg);
+    }
+    to {
+        transform: translateY(-4px) rotate(-1deg);
+    }
+}
+
+.align-middle {
+    vertical-align: baseline !important;
+}
+.input-group {
+    border: solid 1px var(--light);
+    border-radius: 8px;
+    .search-query.oe_search_box {
+        background-color: var(--o-cc1-bg) !important;
+    }
+}
+
+.o_illustration_aplus_03.o_active {
+    opacity: 1;
+}
+
+.o_illustration_aplus_03 {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+@media (max-width: 991px) {
+    header {
+        .navbar {
+            .navbar-brand {
+                padding-left: 1rem;
+            }
+        }
+    }
+}

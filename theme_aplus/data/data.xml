@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="dynamic_filter_template_product_product_alternative_templates"
+        name="Product Templates"
+    >
+        <t t-set="templates_done" t-value="[]" />
+        <t
+            t-foreach="records"
+            t-as="data"
+            data-arrow-position="bottom"
+            data-thumb="/website_sale/static/src/img/snippets_options/product_centered.svg"
+        >
+            <t t-set="record" t-value="data['_record']" />
+            <t t-if="record.product_tmpl_id.id not in templates_done">
+                <t
+                    t-set="templates_done"
+                    t-value="templates_done + [record.product_tmpl_id.id]"
+                />
+                <t t-set="product" t-value="record" />
+                <div class="product-card">
+                    <div
+                        class="product-info ap-product-card-minimalist"
+                        t-attf-id="{{ product.name }}"
+                    >
+                        <!-- Product Links and Settings -->
+                        <t t-set="image_type" t-value="image_512" />
+                        <t t-set="image_holder" t-value="product" />
+
+
+                        <t t-call="theme_aplus.minimalist_product_card_carousel">
+                            <t t-set="product_name" t-value="product.name" />
+                            <t t-set="product_record" t-value="product" />
+                            <t
+                                t-set="product_description"
+                                t-value="product.description_sale"
+                            />
+                            <t t-set="product_image" t-value="image_holder" />
+                        </t>
+                    </div>
+                </div>
+            </t>
+            <t t-else="" />
+        </t>
+    </template>
+</odoo>
