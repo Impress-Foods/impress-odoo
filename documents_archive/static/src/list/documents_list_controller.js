@@ -7,8 +7,6 @@ patch(DocumentsListController.prototype, {
     getStaticActionMenuItems() {
         const canArchive = this.targetRecords.some((r) => !r.data.archived);
         const canUnarchive = this.targetRecords.some((r) => r.data.archived);
-        console.log(canArchive);
-        console.log(canUnarchive);
         const actionItems = {
             ...super.getStaticActionMenuItems(),
             archive: {
