@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- View product.template form -->
+    <record id="view_product_template_form_inherit_deposit" model="ir.ui.view">
+        <field name="name">view.product.template.form.inherit.deposit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="priority">16</field>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales']/group[2]" position="after">
+                <group
+                    string="Deposit"
+                    name="deposit"
+                    invisible="product_variant_count &gt; 1"
+                >
+                    <field name="requires_deposit" />
+                    <field name="qty_multiple" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- View product.product form -->
+    <record id="view_product_product_form_inherit_deposit" model="ir.ui.view">
+        <field name="name">view.product.product.form.inherit.deposit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="priority">17</field>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='deposit']" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,118 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* impress_deposit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e-20240710\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-12 18:00+0000\n"
+"PO-Revision-Date: 2025-11-20 16:42+0000\n"
+"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
+"impress-odoo/impress_deposit/fr_CA/>\n"
+"Language: fr_CA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: impress_deposit
+#: model:ir.model,name:impress_deposit.model_res_config_settings
+msgid "Config Settings"
+msgstr "Configurations"
+
+#. module: impress_deposit
+#: model:ir.actions.act_window,name:impress_deposit.res_config_settings_action
+msgid "Configuration"
+msgstr "Configuration"
+
+#. module: impress_deposit
+#: model:ir.model,name:impress_deposit.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: impress_deposit
+#. odoo-python
+#: code:addons/impress_deposit/models/sale_order.py:0
+#: model:ir.model.fields,field_description:impress_deposit.field_sale_order__deposit_value
+#: model_terms:ir.ui.view,arch_db:impress_deposit.view_product_template_form_inherit_deposit
+#, python-format
+msgid "Deposit"
+msgstr "Consigne"
+
+#. module: impress_deposit
+#: model_terms:ir.ui.view,arch_db:impress_deposit.view_res_config_settings_view_form_inherit_deposit
+msgid "Deposit Product"
+msgstr "Produit pour la consigne"
+
+#. module: impress_deposit
+#: model_terms:ir.ui.view,arch_db:impress_deposit.view_res_config_settings_view_form_inherit_deposit
+msgid "Deposit Settings"
+msgstr "Réglages de la consigne"
+
+#. module: impress_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_sale_order_line__is_deposit_line
+msgid "Is Deposit Line"
+msgstr "Est ligne de dépôt"
+
+#. module: impress_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_stock_picking__container_qty
+msgid "Number of containers shipped"
+msgstr "Nombre de contenants expédiés"
+
+#. module: impress_deposit
+#: model:ir.model,name:impress_deposit.model_product_template
+msgid "Product"
+msgstr "Produit"
+
+#. module: impress_deposit
+#: model:ir.model,name:impress_deposit.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movements de stock (Stock Move Line)"
+
+#. module: impress_deposit
+#: model:ir.model,name:impress_deposit.model_product_product
+msgid "Product Variant"
+msgstr "Variante de produit"
+
+#. module: impress_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_res_config_settings__deposit_product
+msgid "Product used for deposit"
+msgstr "Produit utilisé pour la consigne"
+
+#. module: impress_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_product_product__qty_multiple
+#: model:ir.model.fields,field_description:impress_deposit.field_product_template__qty_multiple
+msgid "Quantity per case"
+msgstr "Quantité par caisse"
+
+#. module: impress_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_product_product__requires_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_product_template__requires_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_res_partner__requires_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_res_users__requires_deposit
+#: model:ir.model.fields,field_description:impress_deposit.field_stock_move_line__requires_deposit
+msgid "Requires Deposit"
+msgstr "Consigne requise"
+
+#. module: impress_deposit
+#: model:ir.model,name:impress_deposit.model_sale_order
+msgid "Sales Order"
+msgstr "Bon de vente"
+
+#. module: impress_deposit
+#: model:ir.model,name:impress_deposit.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Ligne de bon de vente"
+
+#. module: impress_deposit
+#: model_terms:ir.ui.view,arch_db:impress_deposit.view_res_config_settings_view_form_inherit_deposit
+msgid "Select the product for deposits"
+msgstr "Sélectionner le produit pour la consigne"
+
+#. module: impress_deposit
+#: model:ir.model,name:impress_deposit.model_stock_picking
+msgid "Transfer"
+msgstr "Transfert"
