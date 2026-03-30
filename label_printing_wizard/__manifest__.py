@@ -5,7 +5,7 @@
     Adds different wizards to print custom labels for products and lots
     """,
     "author": "Cédric Paradis",
-    "website": "https://github.com/impress-foods/impress-odoo",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
     "depends": [
         "product_expiry",
