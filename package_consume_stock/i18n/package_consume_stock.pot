@@ -14,17 +14,49 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: package_consume_stock
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_material__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: package_consume_stock
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_material__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: package_consume_stock
 #: model:ir.model.fields,field_description:package_consume_stock.field_stock_move_line__display_name
 #: model:ir.model.fields,field_description:package_consume_stock.field_stock_package__display_name
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_material__display_name
 #: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_type__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: package_consume_stock
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_type__has_packaging_material
+msgid "Has Packaging Material"
+msgstr ""
+
+#. module: package_consume_stock
 #: model:ir.model.fields,field_description:package_consume_stock.field_stock_move_line__id
 #: model:ir.model.fields,field_description:package_consume_stock.field_stock_package__id
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_material__id
 #: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_type__id
 msgid "ID"
+msgstr ""
+
+#. module: package_consume_stock
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_material__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: package_consume_stock
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_material__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: package_consume_stock
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_material__location_id
+msgid "Location"
 msgstr ""
 
 #. module: package_consume_stock
@@ -33,13 +65,23 @@ msgid "Material Added"
 msgstr ""
 
 #. module: package_consume_stock
+#: model:ir.model,name:package_consume_stock.model_stock_package_material
+msgid "Material to be added to a package"
+msgstr ""
+
+#. module: package_consume_stock
 #: model:ir.model,name:package_consume_stock.model_stock_package
 msgid "Package"
 msgstr ""
 
 #. module: package_consume_stock
-#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_type__packaging_material_id
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_type__packaging_material_ids
 msgid "Packaging Material"
+msgstr ""
+
+#. module: package_consume_stock
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_material__product_id
+msgid "Product"
 msgstr ""
 
 #. module: package_consume_stock
@@ -48,8 +90,8 @@ msgid "Product Moves (Stock Move Line)"
 msgstr ""
 
 #. module: package_consume_stock
-#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_type__source_location_id
-msgid "Source Location"
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_material__quantity
+msgid "Quantity"
 msgstr ""
 
 #. module: package_consume_stock
