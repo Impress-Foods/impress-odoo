@@ -15,7 +15,6 @@
                     class="reversed"
                 />
             </div>
-
         </xpath>
     </template>
 
@@ -35,7 +34,6 @@
             <attribute name="t-value">'dropdown-aplus'</attribute>
         </xpath>
     </template>
-
 
     <template
         id="alternative_products"

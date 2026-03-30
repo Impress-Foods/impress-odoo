@@ -9,7 +9,9 @@ _logger = logging.getLogger(__name__)
 
 
 class ThemeAPlus(http.Controller):
-    @http.route("/theme_aplus/get_products", type="jsonrpc", auth="public", website=True)
+    @http.route(
+        "/theme_aplus/get_products", type="jsonrpc", auth="public", website=True
+    )
     def get_products(self, filter_id, search_domain=None):
         dynamic_filter = (
             request.env["website.snippet.filter"]

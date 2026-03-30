@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
     <template id="snippets" inherit_id="website.snippets" name="A+ - Snippets">
         <xpath expr="//div[@id='snippet_structure']/div[2]" position="inside">
-
             <t t-snippet="theme_aplus.s_wave_transition_snippet">
                 <keywords>Transition</keywords>
             </t>
@@ -11,9 +9,7 @@
             <t t-snippet="theme_aplus.s_scrolling_text_banner">
                 <keywords>Banner</keywords>
             </t>
-            <t t-snippet="theme_aplus.s_image_marquee">
-
-            </t>
+            <t t-snippet="theme_aplus.s_image_marquee" />
         </xpath>
 
         <xpath expr="//div[@id='snippet_effect']/div[2]" position="inside">
@@ -55,6 +51,4 @@
             />
         </xpath>
     </template>
-
-
 </odoo>

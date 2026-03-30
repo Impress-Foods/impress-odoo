@@ -27,7 +27,6 @@
                         <t t-set="image_type" t-value="image_512" />
                         <t t-set="image_holder" t-value="product" />
 
-
                         <t t-call="theme_aplus.minimalist_product_card_carousel">
                             <t t-set="product_name" t-value="product.name" />
                             <t t-set="product_record" t-value="product" />

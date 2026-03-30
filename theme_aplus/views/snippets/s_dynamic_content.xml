@@ -11,9 +11,7 @@
                     <t t-set="product_href" t-value="product.website_url" />
                     <t t-set="image_type" t-value="image_512" />
 
-
                     <t t-set="image_holder" t-value="product" />
-
 
                     <t t-call="theme_aplus.wavy_product_card_carousel">
                         <t t-set="product_name" t-value="product.name" />
@@ -41,7 +39,6 @@
     </template>
 
     <template id="dynamic_filter_template_product_product_wavy_card" name="Wavy Card">
-
         <t t-foreach="records" t-as="data">
             <t t-set="record" t-value="data['_record']" />
             <div class="product-card">
@@ -136,7 +133,6 @@
                         >
                             <t t-esc="product_name" />
                         </div>
-
                     </h6>
 
                     <!-- Product Description with Fixed Height -->
@@ -148,16 +144,13 @@
                             t-options="{'max_length': 60}"
                         />
                     </div>
-
                 </div>
                 <div
                     class="o_wsale_product_sub justify-content-between align-items-end gap-2
                                 flex-wrap pt-1 pb-1 col-xs-6"
                 >
-
                     <div class="o_wsale_product_btn" />
                 </div>
-
             </div>
 
             <div
@@ -192,7 +185,6 @@
                     <!-- Product Links and Settings -->
                     <t t-set="image_type" t-value="image_512" />
                     <t t-set="image_holder" t-value="product" />
-
 
                     <t t-call="theme_aplus.minimalist_product_card_carousel">
                         <t t-set="product_name" t-value="product.name" />

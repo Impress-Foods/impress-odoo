@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <?xml-model href="../../import_xml.rng" type="application/xml"?>
 <odoo>
-
     <record id="dynamic_snippet_newest_product_templates_filter" model="ir.filters">
         <field name="name">Product Templates</field>
         <field name="model_id">product.template</field>
@@ -52,9 +51,4 @@
         <field name="limit" eval="16" />
         <field name="name">Minimalist Card Filter</field>
     </record>
-
-
-
-
-
 </odoo>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
-
     <template id="wavy_product_card" name="Wave Product Card">
         <t
             t-set="description_activated"
@@ -48,7 +46,6 @@
                     t-attf-src="/web/image/product.template/{{product.id}}/card_image"
                     t-attf-alt="product_name"
                 />
-
             </div>
         </div>
 
@@ -76,7 +73,6 @@
                     >
                         Unpublished
                     </a>
-
                 </h6>
 
                 <!-- Product Description with Fixed Height -->
@@ -91,17 +87,13 @@
                         t-options="{'max_length': 60}"
                     />
                 </div>
-
             </div>
             <div
                 class="o_wsale_product_sub justify-content-between align-items-end gap-2
                                 flex-wrap pt-1 pb-1 col-xs-6"
             >
-
                 <div class="o_wsale_product_btn" />
-
             </div>
-
         </div>
 
         <div
@@ -151,7 +143,6 @@
                     <t t-set="s_color" t-value="product.card_secondary_color" />
                     <t t-set="t_color" t-value="product.card_text_color" />
                     <t t-set="product" t-value="product" />
-
                 </t>
                 <div>
                     <t
@@ -171,5 +162,5 @@
                 </div>
             </a>
         </form>
-</template>
+    </template>
 </odoo>

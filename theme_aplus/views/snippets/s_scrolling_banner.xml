@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
     <!-- Infinite Ticker Block Template -->
     <template id="s_scrolling_text_banner" name="Infinite Ticker Block">
         <section
@@ -13,13 +12,10 @@
                     class="ticker-text ticker-text-editor"
                     contenteditable="true"
                 >Infinite Ticker</span>
-                <div class="ticker-stripe">
-                </div>
+                <div class="ticker-stripe" />
             </div>
-
         </section>
     </template>
-
 
     <!-- Snippet Options -->
     <template
@@ -29,7 +25,6 @@
     >
         <xpath expr="." position="inside">
             <div data-js="TickerBlock" data-selector=".s_scrolling_text_banner">
-
                 <we-button-group string="Speed" data-dependencies="speedMultiplier_opt">
                     <we-button
                         title="Slower"
@@ -61,5 +56,4 @@
             </div>
         </xpath>
     </template>
-
 </odoo>

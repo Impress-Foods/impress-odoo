@@ -104,7 +104,8 @@
         .ap_buy_button {
             opacity: 1;
             transform: translateY(-10px);
-            transition: opacity var(--ap-transition-timing),
+            transition:
+                opacity var(--ap-transition-timing),
                 transform var(--ap-transition-timing);
         }
         .product_price {
@@ -244,7 +245,8 @@
         display: block;
         width: 120px;
         opacity: 0;
-        transition: opacity var(--ap-transition-timing),
+        transition:
+            opacity var(--ap-transition-timing),
             transform var(--ap-transition-timing);
         position: absolute;
         bottom: 0.5rem; /* Positioned at bottom of card */

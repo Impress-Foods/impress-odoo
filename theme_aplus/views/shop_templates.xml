@@ -26,7 +26,6 @@
                     data-reload="/"
                 />
             </we-row>
-
         </xpath>
         <xpath
             expr="//we-button[@data-select-class='o_wsale_design_grid']"
@@ -71,7 +70,6 @@
                     data-no-preview="true"
                     data-reload="/"
                 />
-
             </we-row>
             <we-row
                 id="show_nutrition_table"
@@ -147,7 +145,6 @@
         inherit_id="website_sale.products"
         priority="99"
     >
-
         <xpath expr="//div[@id='wrap']" position="before">
             <t
                 id="group_by_category_switch"
@@ -202,7 +199,6 @@
                                 </td>
                             </t>
                             <td t-else="" />
-
                         </t>
                     </tr>
                 </tbody>
@@ -241,7 +237,6 @@
                             t-as="tr_product"
                             class="product_row"
                         >
-
                             <t t-foreach="tr_product" t-as="td_product">
                                 <t
                                     t-set="product_categories"
@@ -255,7 +250,6 @@
                                         t-att-data-ribbon-id="td_product['ribbon'].id"
                                         t-att-data-name="product_block_name"
                                     >
-
                                         <div
                                             t-attf-class="o_wsale_product_grid_wrapper position-relative h-100
                                 o_wsale_product_grid_wrapper_#{td_product['x']}_#{td_product['y']}"
@@ -273,14 +267,12 @@
                                     </td>
                                 </t>
                                 <t t-else="" />
-
                             </t>
                         </tr>
                     </t>
                 </tbody>
             </table>
         </xpath>
-
 
         <xpath expr="//tbody/tr/t/t/td/div/t" position="attributes">
             <attribute
@@ -318,7 +310,6 @@
     </template>
 
     <template id="product" inherit_id="website_sale.product">
-
         <xpath expr="//div[@id='product_detail_main']/div[1]" position="after">
             <div
                 id="left-column"
@@ -339,9 +330,7 @@
             </div>
             <div id="ingredients-block" />
             <div id="learn-more-block-mobile" class="d-block d-lg-none" />
-
         </xpath>
-
     </template>
 
     <template
@@ -369,7 +358,6 @@
                 </div>
             </t>
         </xpath>
-
     </template>
 
     <template id="product_show_adq" active="False" inherit_id="website_sale.product">
@@ -390,7 +378,6 @@
         inherit_id="website_sale.product"
     >
         <xpath expr="//div[@id='vectors-block']" position="inside">
-
             <t
                 t-if="is_view_active('theme_aplus.product_highlight_color')"
                 t-set="style"
@@ -460,12 +447,10 @@
                                 t-out="rel_product.name"
                             />
                         </div>
-
                     </t>
                 </div>
             </div>
         </xpath>
-
     </template>
 
     <template
@@ -497,7 +482,6 @@
                     id="{{prefix}}-Tab"
                     role="tablist"
                 >
-
                     <li
                         t-if="product.tab_1_title"
                         class="nav-item custom-tab-item"
@@ -578,8 +562,7 @@
                         t-attf-id="{{prefix}}-tvn"
                         role="tabpanel"
                         t-attf-aria-labelledby="{{prefix}}-tvn-tab"
-                    >
-                    </div>
+                    />
                 </div>
             </div>
         </div>
@@ -590,16 +573,16 @@
         active="False"
         inherit_id="theme_aplus.product_tabbed_information"
         priority="99"
-    > </template>
+    />
 
     <template id="tvn">
         <div class="d-flex flex-column align-items-center">
             <div class="nutrition-table justify-center w-100" id="nutrition_table">
                 <table class="table caption-top">
                     <caption t-if="product_variant.nutrition_facts_size">
-                    <span>Nutritional Values ( for </span>
-                    <span t-out="product_variant.nutrition_facts_size" />
-                    <span>)</span>
+                        <span>Nutritional Values ( for </span>
+                        <span t-out="product_variant.nutrition_facts_size" />
+                        <span>)</span>
                     </caption>
                     <thead>
                         <tr>
@@ -645,7 +628,6 @@
                 t-attf-class="css_quantity input-group {{'d-none' if combination_info['prevent_zero_price_sale'] else 'd-inline-flex'}} me-2 mb-2 align-middle"
                 contenteditable="false"
             >
-
                 <a
                     t-attf-href="#"
                     class="btn btn-link js_add_cart_json"
@@ -671,8 +653,6 @@
                     <i class="fa fa-plus" />
                 </a>
             </div>
-
         </xpath>
     </template>
-
 </odoo>

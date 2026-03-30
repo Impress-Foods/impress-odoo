@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <template id="s_image_marquee" name="Image Marquee">
         <section class="s_image_marquee" style="overflow: hidden;">
             <div class="marquee_header">
@@ -84,7 +83,6 @@
             </div>
         </xpath>
     </template>
-
 
     <record id="s_image_marquee_000_js" model="ir.asset">
         <field name="name">Image Marquee 000 JS</field>

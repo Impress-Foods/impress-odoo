@@ -68,6 +68,8 @@
         font-weight: bold;
         border-radius: 20px; /* Rounded pill shape */
         border-width: 1px;
-        transition: background-color 0.3s, color 0.3s;
+        transition:
+            background-color 0.3s,
+            color 0.3s;
     }
 }

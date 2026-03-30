@@ -171,14 +171,20 @@
             font-size: 0.8em;
             font-weight: bold;
 
-            -webkit-transition: background-color 0.5s ease-in-out,
-                border-color 0.5s ease-in-out, color 0.5s ease-in-out;
-            transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out,
+            -webkit-transition:
+                background-color 0.5s ease-in-out,
+                border-color 0.5s ease-in-out,
+                color 0.5s ease-in-out;
+            transition:
+                background-color 0.5s ease-in-out,
+                border-color 0.5s ease-in-out,
                 color 0.5s ease-in-out;
 
             &:hover {
-                transition: background-color 0.3s ease-in-out,
-                    border-color 0.3s ease-in-out, color 0.5s ease-in-out;
+                transition:
+                    background-color 0.3s ease-in-out,
+                    border-color 0.3s ease-in-out,
+                    color 0.5s ease-in-out;
             }
         }
     }

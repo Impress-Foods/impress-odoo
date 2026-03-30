@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
     <template id="s_window_carousel" name="Window Carousel">
         <section
             data-snippet="s_window_carousel"
@@ -12,7 +11,6 @@
         >
             <div class="container">
                 <div class="row o_grid_mode" data-row-count="13">
-
                     <div
                         class="carousel_container o_grid_item g-height-* g-col-lg-* w-auto  o_colored_level g-col-lg-3 g-height-8 col-lg-*"
                         style="grid-area: 3 / 1 / 11 / 4;"
@@ -43,7 +41,7 @@
     <template
         id="dynamic_filter_template_product_template_window"
         name="Product Template - Window"
-    > </template>
+    />
     <template id="s_window_carousel_options" inherit_id="website.snippet_options">
         <xpath expr="." position="inside">
             <div
@@ -56,13 +54,13 @@
                     data-name="filter_opt"
                     data-attribute-name="filterId"
                     data-no-preview="true"
-                > </we-select>
+                />
                 <we-select
                     string="Template"
                     data-name="template_opt"
                     data-attribute-name="templateKey"
                     data-no-preview="true"
-                > </we-select>
+                />
                 <we-select
                     string="Fetched elements"
                     data-name="number_of_records_opt"
@@ -111,7 +109,6 @@
             </div>
         </xpath>
     </template>
-
 
     <record id="s_window_carousel_000_js" model="ir.asset">
         <field name="name"> Window Carousel 000 js</field>

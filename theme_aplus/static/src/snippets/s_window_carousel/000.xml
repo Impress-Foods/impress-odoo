@@ -24,7 +24,6 @@
     <t t-name="theme_aplus.window_carousel_window">
         <div class="carousel-inner h-100">
             <t t-foreach="data" t-as="product_key" t-key="product_index">
-
                 <t t-set="product" t-value="data[product_key]" />
                 <t t-if="product_key_first">
                     <div t-attf-class="carousel-item active">
@@ -40,27 +39,26 @@
                         </div>
                     </div>
                 </t>
-
             </t>
         </div>
     </t>
 
 
     <t t-name="theme_aplus.window_carousel_image">
-            <div class="product-image">
-                <t t-if="product.hero_image">
-                    <a href="/shop">
-                        <img
+        <div class="product-image">
+            <t t-if="product.hero_image">
+                <a href="/shop">
+                    <img
                         loading="lazy"
                         t-att-src="product.hero_image"
                         t-att-alt="product.display_name"
                     />
-                    </a>
-                </t>
-                <t t-else="">
-                    <span>No image available</span>
-                </t>
-            </div>
+                </a>
+            </t>
+            <t t-else="">
+                <span>No image available</span>
+            </t>
+        </div>
     </t>
     <!-- Carousel Slide -->
     <t t-name="theme_aplus.window_carousel_slide">
@@ -73,7 +71,6 @@
                     stroke="transparent"
                 />
                 <text class="title-text" t-att-fill="product.primary_color">
-
                     <textPath href="#curve" text-anchor="middle" startOffset="50%">
                         <t t-out="product.display_name" />
                     </textPath>
