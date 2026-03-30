@@ -60,11 +60,11 @@
                 <group string="nutrition facts">
                     <field name="nutrition_facts_size" />
                     <field name="nutrition_entry_ids">
-                        <tree>
+                        <list>
                             <field name="sequence" widget="handle" />
                             <field name="name" />
                             <field name="value" />
-                        </tree>
+                        </list>
                     </field>
                 </group>
             </xpath>
@@ -79,11 +79,11 @@
                 <group string="nutrition facts">
                     <field name="nutrition_facts_size" />
                     <field name="nutrition_entry_ids">
-                        <tree>
+                        <list>
                             <field name="sequence" widget="handle" />
                             <field name="name" />
                             <field name="value" />
-                        </tree>
+                        </list>
                     </field>
                 </group>
             </xpath>
