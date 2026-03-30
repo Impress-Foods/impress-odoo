@@ -52,3 +52,10 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality_check_na.field_quality_check__quality_state
 msgid "Status"
 msgstr ""
+
+#. module: quality_check_na
+#. odoo-python
+#: code:addons/quality_check_na/models/quality_check_na.py:0
+#, python-format
+msgid "This Quality Check cannot be set to N/A"
+msgstr ""
