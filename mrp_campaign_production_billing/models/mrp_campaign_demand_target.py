@@ -27,8 +27,9 @@ class MrpCampaignDemandTarget(models.Model):
             so = sol.order_id
             res.update(
                 {
+                    "origin": so.client_order_ref,
                     "customer": so.partner_id.name,
-                    "customer_ref": so.client_order_ref,
+                    "uom": sol.product_uom.display_name,
                 }
             )
         return res
