@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e-20260219\n"
+"Project-Id-Version: Odoo Server 17.0+e-20260330\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -149,7 +149,7 @@ msgstr ""
 
 #. module: mrp_campaign
 #. odoo-javascript
-#: code:addons/mrp_campaign/static/src/components/campaign_widget/campaign_node/campaign_node.xml:0
+#: code:addons/mrp_campaign/static/src/components/campaign_partition/campaign_node/campaign_node.xml:0
 #, python-format
 msgid "Below floor:"
 msgstr ""
@@ -505,7 +505,7 @@ msgstr ""
 
 #. module: mrp_campaign
 #. odoo-javascript
-#: code:addons/mrp_campaign/static/src/components/campaign_widget/campaign_node/campaign_node.xml:0
+#: code:addons/mrp_campaign/static/src/components/campaign_partition/campaign_node/campaign_node.xml:0
 #, python-format
 msgid "Exceeds capacity"
 msgstr ""
@@ -759,7 +759,7 @@ msgstr ""
 
 #. module: mrp_campaign
 #. odoo-javascript
-#: code:addons/mrp_campaign/static/src/components/campaign_widget/campaign_node/campaign_node.xml:0
+#: code:addons/mrp_campaign/static/src/components/campaign_partition/campaign_node/campaign_node.xml:0
 #, python-format
 msgid "Min"
 msgstr ""
@@ -994,7 +994,7 @@ msgstr ""
 
 #. module: mrp_campaign
 #. odoo-javascript
-#: code:addons/mrp_campaign/static/src/components/campaign_widget/campaign_node/campaign_node.xml:0
+#: code:addons/mrp_campaign/static/src/components/campaign_partition/campaign_node/campaign_node.xml:0
 #, python-format
 msgid "Ratio:"
 msgstr ""
@@ -1030,7 +1030,7 @@ msgstr ""
 
 #. module: mrp_campaign
 #. odoo-javascript
-#: code:addons/mrp_campaign/static/src/components/campaign_widget/demand_sidebar/demand_sidebar.xml:0
+#: code:addons/mrp_campaign/static/src/components/campaign_partition/demand_sidebar/demand_sidebar.xml:0
 #, python-format
 msgid "SALES ORDERS"
 msgstr ""
@@ -1175,8 +1175,8 @@ msgstr ""
 
 #. module: mrp_campaign
 #. odoo-javascript
-#: code:addons/mrp_campaign/static/src/components/campaign_widget/campaign_node/campaign_node.xml:0
-#: code:addons/mrp_campaign/static/src/components/campaign_widget/demand_sidebar/demand_sidebar.xml:0
+#: code:addons/mrp_campaign/static/src/components/campaign_partition/campaign_node/campaign_node.xml:0
+#: code:addons/mrp_campaign/static/src/components/campaign_partition/demand_sidebar/demand_sidebar.xml:0
 #, python-format
 msgid "Target:"
 msgstr ""
@@ -1290,7 +1290,7 @@ msgstr ""
 
 #. module: mrp_campaign
 #. odoo-javascript
-#: code:addons/mrp_campaign/static/src/components/campaign_widget/campaign_node/campaign_node.xml:0
+#: code:addons/mrp_campaign/static/src/components/campaign_partition/campaign_node/campaign_node.xml:0
 #, python-format
 msgid "min."
 msgstr ""
