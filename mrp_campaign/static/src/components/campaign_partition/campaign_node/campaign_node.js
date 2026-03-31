@@ -1,6 +1,6 @@
 /** @odoo-module **/
 
-import {Component, onWillStart} from "@odoo/owl";
+import {Component} from "@odoo/owl";
 
 export class CampaignNode extends Component {
     static template = "mrp_campaign.CampaignNode";

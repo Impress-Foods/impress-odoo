@@ -367,3 +367,77 @@ class TestMrpCampaignWizard(CampaignDirectCase):
 
         self.assertFalse(wizard.campaign_id)
         self.assertFalse(wizard.product_id)
+
+    def test_default_get_populates_available_lines(self):
+        """Test default_get pop. available_lines when campaign has workflow_type."""
+        existing_campaign = self.create_campaign(self.bulk_material)
+        existing_campaign.workflow_type = "direct"
+
+        # Create two outgoing moves for the same product
+        picking_1 = self.env["stock.picking"].create(
+            {"picking_type_id": self.env.ref("stock.picking_type_out").id}
+        )
+        move1 = self.env["stock.move"].create(
+            {
+                "name": "Move 1",
+                "product_id": self.int_prod_x_red.id,
+                "product_uom_qty": 5.0,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.stock_location.id,
+                "picking_id": picking_1.id,
+            }
+        )
+        picking_2 = self.env["stock.picking"].create(
+            {"picking_type_id": self.env.ref("stock.picking_type_out").id}
+        )
+        move2 = self.env["stock.move"].create(
+            {
+                "name": "Move 2",
+                "product_id": self.int_prod_x_red.id,
+                "product_uom_qty": 10.0,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.stock_location.id,
+                "picking_id": picking_2.id,
+            }
+        )
+
+        (move1 | move2)._action_confirm()
+        self.assertEqual(len(picking_1.move_ids), 1)
+        self.assertEqual(len(picking_2.move_ids), 1)
+
+        # Add move1 to campaign (fully allocated)
+        demand = self.env["mrp.campaign.demand"].create(
+            {
+                "campaign_id": existing_campaign.id,
+                "product_id": self.int_prod_x_red.id,
+            }
+        )
+        self.env["mrp.campaign.demand.target"].create(
+            {
+                "demand_id": demand.id,
+                "workflow_type": "direct",
+                "target_id": move1.id,
+                "promised_qty": 5.0,
+            }
+        )
+
+        # Open wizard with campaign_id (simulating UI)
+        wizard = self.wizard_model.with_context(
+            default_campaign_id=existing_campaign.id
+        ).create({})
+
+        # Check that workflow_type and product_id are set
+        self.assertEqual(wizard.workflow_type, "direct")
+        self.assertEqual(wizard.product_id, self.bulk_material)
+        # Check that available_lines is populated (should contain both moves)
+        self.assertTrue(wizard.available_lines)
+        available = json.loads(wizard.available_lines)
+        available_ids = [item["id"] for item in available]
+
+        self.assertIn(move2.id, available_ids)
+        self.assertNotIn(move1.id, available_ids)
+
+        # Find qty for each move
+        for item in available:
+            if item["id"] == move2.id:
+                self.assertEqual(item["qty"], 10.0)

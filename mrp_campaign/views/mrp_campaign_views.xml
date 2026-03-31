@@ -133,8 +133,8 @@
                     <group>
                         <group>
                             <field name="name" />
-                            <field name="lot_name" />
-                            <field name="product_id" />
+                            <field name="lot_name" readonly="1" />
+                            <field name="product_id" readonly="1" />
                             <field
                                 name="company_id"
                                 groups="base.group_multi_company"
@@ -145,7 +145,7 @@
                             />
                         </group>
                         <group>
-                            <field name="workflow_type" />
+                            <field name="workflow_type" readonly="1" />
                             <field name="campaign_color" widget="color" />
                             <field
                                 name="override_batch_size"
