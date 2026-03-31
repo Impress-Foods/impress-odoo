@@ -28,9 +28,21 @@ class MrpCampaignCreator(models.Model):
         res = super().default_get(fields_list)
 
         if res.get("campaign_id"):
-            res["product_id"] = (
-                self.env["mrp.campaign"].browse(res["campaign_id"]).product_id.id
+            campaign = self.env["mrp.campaign"].browse(res["campaign_id"])
+            res["product_id"] = campaign.product_id.id
+            res["workflow_type"] = campaign.workflow_type
+
+        # Compute available_lines if product_id and workflow_type are set
+        if res.get("product_id") and res.get("workflow_type"):
+            temp_wizard = self.new(
+                {
+                    "product_id": res["product_id"],
+                    "workflow_type": res["workflow_type"],
+                }
             )
+            available_lines = temp_wizard._get_available_lines()
+            res["available_lines"] = json.dumps(available_lines)
+
         return res
 
     @api.onchange("product_id")
@@ -65,12 +77,16 @@ class MrpCampaignCreator(models.Model):
         if self.workflow_type == "direct":
             if not self.product_id:
                 return self.env["stock.move"]
-            return self.env["stock.move"].search(
-                [
-                    ("product_id.anchor_product_id", "=", self.product_id.id),
-                    ("state", "not in", ["draft", "done", "cancelled"]),
-                    ("picking_id.picking_type_code", "=", "outgoing"),
-                ]
+            return (
+                self.env["stock.move"]
+                .search(
+                    [
+                        ("product_id.anchor_product_id", "=", self.product_id.id),
+                        ("state", "not in", ["draft", "done", "cancelled"]),
+                        ("picking_id.picking_type_code", "=", "outgoing"),
+                    ]
+                )
+                .filtered(lambda line: line._get_qty_to_fulfill() > 0)
             )
 
         return []

@@ -1,5 +1,5 @@
 /** @odoo-module **/
-import {Component, onWillStart} from "@odoo/owl";
+import {Component} from "@odoo/owl";
 import {formatDate, deserializeDate} from "@web/core/l10n/dates";
 
 export class DemandSidebar extends Component {
@@ -9,6 +9,13 @@ export class DemandSidebar extends Component {
         onUpdateMove: {type: Function},
         minimumQtys: {type: Object},
     };
+
+    sortedMoves() {
+        const moves = this.props.moves;
+        return moves.toSorted((a, b) =>
+            a.product_id < b.product_id ? -1 : a.product_id > b.product_id ? 1 : 0
+        );
+    }
 
     _onInputChange(moveId, ev) {
         const val = parseFloat(ev.target.value) || 0;
@@ -29,16 +36,6 @@ export class DemandSidebar extends Component {
         return Math.min(100, Math.round((move.promised_qty / move.upstream_qty) * 100));
     }
 
-    /**
-     * Determine badge and progress bar color
-     */
-    getStatusClass(move) {
-        const pct = this.getPercent(move);
-        if (pct >= 100) return "bg-success";
-        if (pct > 0) return "bg-primary";
-        return "bg-secondary";
-    }
-
     getBadgeStatusClass(move) {
         const pct = this.getPercent(move);
         if (pct >= 100) return "bg-success";
@@ -50,8 +47,8 @@ export class DemandSidebar extends Component {
         return Math.max(min_value, Math.min(x, max_value));
     }
 
-    getMove(proxyId) {
-        return this.props.moves.find((m) => m.target_id === proxyId);
+    getMove(targetId) {
+        return this.props.moves.find((m) => m.target_id === targetId);
     }
 
     formatDate(date) {
