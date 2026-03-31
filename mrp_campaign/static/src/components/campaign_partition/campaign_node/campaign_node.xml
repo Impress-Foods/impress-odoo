@@ -27,20 +27,28 @@
                         </div>
                     </div>
                 </div>
-
+                <t t-set="initial" t-value="props.node.quantities.initial_planned" />
                 <div class="production-bar-container mt-4 position-relative">
                     <div class="progress" style="height: 12px;">
+                        <t
+                            t-set="percentage"
+                            t-value="initial ? (props.node.quantities.planned / initial) : 0"
+                        />
                         <div
                             t-attf-class="progress-bar #{barColor}"
                             role="progressbar"
-                            t-attf-style="width: #{ ((props.node.quantities.planned) / props.node.quantities.initial_planned) * 100 }%;"
+                            t-attf-style="width: #{ percentage * 100 }%;"
                         > </div>
                     </div>
+                    <t
+                        t-set="floor"
+                        t-value="initial ? (props.node.quantities.floor / initial) : 0"
+                    />
 
                     <div
                         class="floor-marker"
                         t-if="props.node.quantities.floor != 0"
-                        t-attf-style="left: #{ (props.node.quantities.floor / props.node.quantities.initial_planned) * 100 }%;"
+                        t-attf-style="left: #{ floor * 100 }%;"
                     >
                         <span class="floor-label">Min</span>
                     </div>
@@ -64,7 +72,7 @@
         </div>
 
         <div
-            t-if="props.node.upstream_branches.length"
+            t-if="props.node.upstream_branches and props.node.upstream_branches.length"
             class="ms-4 mt-3 ps-3 border-start"
         >
             <t

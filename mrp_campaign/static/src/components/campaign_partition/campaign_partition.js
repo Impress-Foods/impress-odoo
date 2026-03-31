@@ -7,4 +7,4 @@ export const CampaignWidgetField = {
     supportTypes: ["char"],
 };
 
-registry.category("fields").add("campaign_orchestrator", CampaignWidgetField);
+registry.category("fields").add("campaign_partition", CampaignWidgetField);

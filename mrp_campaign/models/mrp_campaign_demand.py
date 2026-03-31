@@ -84,6 +84,7 @@ class MrpCampaignDemandTarget(models.Model):
             "fulfilled_qty": fulfilled_qty,
             "upstream_qty": self.upstream_qty,
             "is_fully_planned": self.is_fully_planned,
+            "campaign_line_id": self.demand_id.campaign_line_id.id,
         }
         if self.workflow_type == "direct":
             move = self._get_target()

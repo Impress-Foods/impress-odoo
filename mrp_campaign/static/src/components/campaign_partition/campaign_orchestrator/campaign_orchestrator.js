@@ -25,23 +25,22 @@ export class CampaignOrchestrator extends Component {
                 }
             }
             this.state.loading = false;
-            console.log(field_value);
         });
     }
 
-    updateMoveQty(proxyId, newQty) {
+    updateMoveQty(targetId, newQty) {
         const data = this.state.data;
 
-        const move = data.demand_moves.find((m) => m.target_id === proxyId);
+        const move = data.demand_moves.find((m) => m.target_id === targetId);
         if (!move) return;
 
         move.promised_qty = Math.max(0, newQty);
 
         const totalForProduct = data.demand_moves
-            .filter((m) => m.product_id === move.product_id)
+            .filter((m) => m.campaign_line_id === move.campaign_line_id)
             .reduce((sum, m) => sum + m.promised_qty, 0);
 
-        const leaf = this._findLeafByProductId(data.tree, move.product_id);
+        const leaf = this._findLeafByCampaignLineId(data.tree, move.campaign_line_id);
         if (leaf) {
             leaf.quantities.planned = totalForProduct;
             this._recalculateDownstream(data.tree);
@@ -53,34 +52,33 @@ export class CampaignOrchestrator extends Component {
         this.state.data = {...data};
     }
 
-    _syncTreeWithDemand(productId) {
-        const data = this.state.data;
-
-        const totalForProduct = (data.demand_moves || [])
-            .filter((m) => m.product_id === productId)
-            .reduce((sum, m) => sum + (m.promised_qty || 0), 0);
-
-        const leaf = this._findLeafByProductId(data.tree, productId);
-        if (leaf) {
-            leaf.quantities.planned = totalForProduct;
-            this._recalculateDownstream(data.tree);
-        }
-    }
-
-    _findLeafByProductId(node, productId) {
-        if (
-            node.product_id === productId &&
-            (!node.upstream_branches || node.upstream_branches.length === 0)
-        ) {
+    _findLeafByCampaignLineId(node, campaignLineId) {
+        if (node.line_id === campaignLineId) {
             return node;
         }
         if (node.upstream_branches) {
             for (const branch of node.upstream_branches) {
-                const found = this._findLeafByProductId(branch, productId);
+                const found = this._findLeafByCampaignLineId(branch, campaignLineId);
                 if (found) return found;
             }
         }
         return null;
+    }
+
+    _getFloorForProduct(node, productId) {
+        if (
+            node.product_id === productId &&
+            (!node.upstream_branches || node.upstream_branches.length === 0)
+        ) {
+            return node.quantities.floor || 0;
+        }
+        let total = 0;
+        if (node.upstream_branches) {
+            for (const branch of node.upstream_branches) {
+                total += this._getFloorForProduct(branch, productId);
+            }
+        }
+        return total;
     }
 
     /**
@@ -107,9 +105,7 @@ export class CampaignOrchestrator extends Component {
         ];
         return Object.fromEntries(
             product_ids.map((id) => {
-                const leaf = this._findLeafByProductId(this.state.data.tree, id);
-                // Ensure we handle cases where a leaf might not be found or floor is missing
-                const floorQty = leaf?.quantities?.floor || 0;
+                const floorQty = this._getFloorForProduct(this.state.data.tree, id);
                 return [id, floorQty];
             })
         );

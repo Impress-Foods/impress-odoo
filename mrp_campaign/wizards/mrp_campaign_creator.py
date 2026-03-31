@@ -28,9 +28,21 @@ class MrpCampaignCreator(models.Model):
         res = super().default_get(fields_list)
 
         if res.get("campaign_id"):
-            res["product_id"] = (
-                self.env["mrp.campaign"].browse(res["campaign_id"]).product_id.id
+            campaign = self.env["mrp.campaign"].browse(res["campaign_id"])
+            res["product_id"] = campaign.product_id.id
+            res["workflow_type"] = campaign.workflow_type
+
+        # Compute available_lines if product_id and workflow_type are set
+        if res.get("product_id") and res.get("workflow_type"):
+            temp_wizard = self.new(
+                {
+                    "product_id": res["product_id"],
+                    "workflow_type": res["workflow_type"],
+                }
             )
+            available_lines = temp_wizard._get_available_lines()
+            res["available_lines"] = json.dumps(available_lines)
+
         return res
 
     @api.onchange("product_id")
@@ -44,13 +56,17 @@ class MrpCampaignCreator(models.Model):
         if self.workflow_type == "direct":
             result = []
             moves = self._get_valid_sources()
+            qty_by_move = self.env["stock.move"]._get_qty_to_fulfill_by_moves(moves)
             for move in moves:
+                qty = qty_by_move[move.id]
+                if qty <= 0:
+                    continue
                 result.append(
                     {
                         "id": move.id,
                         "name": f"{move.origin or 'No origin'} "
                         f"| {move.product_id.display_name}",
-                        "qty": move._get_qty_to_fulfill(),
+                        "qty": qty,
                         "date": move.date_deadline.isoformat()
                         if move.date_deadline
                         else None,
@@ -73,7 +89,7 @@ class MrpCampaignCreator(models.Model):
                 ]
             )
 
-        return []
+        return self.env["stock.move"]
 
     def _get_selected_sources(self):
         selected_ids = json.loads(self.selected_line_ids or "[]")
@@ -91,6 +107,10 @@ class MrpCampaignCreator(models.Model):
         selected_moves = self._get_selected_sources()
         if not selected_moves:
             return
+
+        qty_by_move = self.env["stock.move"]._get_qty_to_fulfill_by_moves(
+            selected_moves
+        )
 
         grouped = {}
         for move in selected_moves:
@@ -126,7 +146,7 @@ class MrpCampaignCreator(models.Model):
                         "demand_id": demand_line.id,
                         "workflow_type": "direct",
                         "target_id": move.id,
-                        "promised_qty": move._get_qty_to_fulfill(),
+                        "promised_qty": qty_by_move[move.id],
                     }
                 )
 
