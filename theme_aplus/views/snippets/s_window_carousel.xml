@@ -42,7 +42,7 @@
         id="dynamic_filter_template_product_template_window"
         name="Product Template - Window"
     />
-    <template id="s_window_carousel_options" inherit_id="website.snippet_options">
+    <!-- <template id="s_window_carousel_options" inherit_id="website.snippet_options">
         <xpath expr="." position="inside">
             <div
                 data-js="s_window_carousel"
@@ -108,7 +108,7 @@
                 <t t-out="0" />
             </div>
         </xpath>
-    </template>
+    </template> -->
 
     <record id="s_window_carousel_000_js" model="ir.asset">
         <field name="name"> Window Carousel 000 js</field>

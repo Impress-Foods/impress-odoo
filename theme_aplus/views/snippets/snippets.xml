@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <template id="snippets" inherit_id="website.snippets" name="A+ - Snippets">
-        <xpath expr="//div[@id='snippet_structure']/div[2]" position="inside">
-            <t t-snippet="theme_aplus.s_wave_transition_snippet">
+        <xpath expr="//snippets[@id='snippet_groups']/*[1]" position='before'>
+            <t snippet-group="a_plus" t-snippet="website.s_snippet_group" string="A+" />
+        </xpath>
+        <xpath expr="//snippets[@id='snippet_structure']/*[1]" position="before">
+            <t
+                t-snippet="theme_aplus.s_wave_transition_snippet"
+                string="Wave Transition"
+                group="a_plus"
+            >
                 <keywords>Transition</keywords>
             </t>
 
-            <t t-snippet="theme_aplus.s_scrolling_text_banner">
-                <keywords>Banner</keywords>
-            </t>
-            <t t-snippet="theme_aplus.s_image_marquee" />
+            <!-- <t t-snippet="theme_aplus.s_image_marquee" /> -->
         </xpath>
 
-        <xpath expr="//div[@id='snippet_effect']/div[2]" position="inside">
-            <t
-                t-snippet="theme_aplus.s_dynamic_snippet_product_templates"
-                string="Product Templates"
-            >
-                <keywords>Dynamic</keywords>
-            </t>
+        <!-- <xpath expr="//div[@id='snippet_effect']/div[2]" position="inside">
             <t t-snippet="theme_aplus.s_window_carousel" string="Window Carousel">
                 <keywords>Dynamic</keywords>
             </t>
-        </xpath>
+        </xpath> -->
     </template>
 
-    <template
+    <!-- <template
         id="snippet_options_background_options"
         inherit_id="website.snippet_options_background_options"
         name="Shapes"
@@ -50,5 +48,5 @@
                 data-animated="true"
             />
         </xpath>
-    </template>
+    </template> -->
 </odoo>

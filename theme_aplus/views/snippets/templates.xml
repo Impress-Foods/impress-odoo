@@ -18,7 +18,7 @@
         </xpath>
     </template>
 
-    <template
+    <!-- <template
         id="template_header_default"
         inherit_id="website.layout"
         name="Template Header Default"
@@ -33,7 +33,7 @@
         <xpath expr="//t[@t-call='portal.user_dropdown']/t[2]" position="attributes">
             <attribute name="t-value">'dropdown-aplus'</attribute>
         </xpath>
-    </template>
+    </template> -->
 
     <template
         id="alternative_products"

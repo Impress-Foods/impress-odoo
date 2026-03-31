@@ -19,29 +19,4 @@
             </div>
         </section>
     </template>
-
-    <template
-        id="s_wave_transition_snippet_options"
-        inherit_id="website.snippet_options"
-        name="A+ - Wave Transition Options"
-    >
-        <xpath expr="." position="inside">
-            <div data-selector=".wave-transition-container">
-                <we-colorpicker
-                    string="Wave Color"
-                    data-name="wave_transition_colorpicking"
-                    data-select-style="true"
-                    data-css-property="fill"
-                    data-target="svg"
-                />
-                <we-colorpicker
-                    string="Background Color"
-                    data-name="wave_transition_colorpicking_bg"
-                    data-select-style="true"
-                    data-css-property="background-color"
-                    data-target=".wave-transition"
-                />
-            </div>
-        </xpath>
-    </template>
 </odoo>

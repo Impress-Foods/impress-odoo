@@ -1,0 +1,7 @@
+<templates xml:space="preserve">
+    <t t-name="theme_aplus.WaveTransitionSnippetOption">
+        <BuilderRow label.translate="Wave Color">
+            <BuilderColorPicker styleAction="'fill'" enabledTabs="['custom']" />
+        </BuilderRow>
+    </t>
+</templates>

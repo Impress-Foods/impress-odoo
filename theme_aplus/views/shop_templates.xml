@@ -2,7 +2,7 @@
 <?xml-model href="../../import_xml.rng" type="application/xml"?>
 <odoo>
     <!-- options -->
-    <template
+    <!-- <template
         id="snippet_options_ecom"
         inherit_id="website.snippet_options"
         name="e-commerce snippet options"
@@ -134,7 +134,7 @@
                 />
             </we-row>
         </xpath>
-    </template>
+    </template> -->
 
     <!-- All products page + category page-->
     <template id="group_by_categories" name="Group By Categories" active="False" />
@@ -153,7 +153,7 @@
             />
         </xpath>
 
-        <xpath expr="//table" position="replace">
+        <!-- <xpath expr="//table" position="replace">
             <table
                 class="table table-borderless h-100 m-0"
                 t-att-data-ppg="ppg"
@@ -161,9 +161,9 @@
                 t-att-data-default-sort="website.shop_default_sort"
                 t-att-data-name="grid_block_name"
             >
-                <colgroup t-ignore="true">
-                    <!-- Force the number of columns (useful when only one row of (x < ppr) products) -->
-                    <col t-foreach="ppr" t-as="p" />
+                <colgroup t-ignore="true"> -->
+        <!-- Force the number of columns (useful when only one row of (x < ppr) products) -->
+        <!-- <col t-foreach="ppr" t-as="p" />
                 </colgroup>
                 <t
                     t-set="flat_list"
@@ -272,8 +272,8 @@
                     </t>
                 </tbody>
             </table>
-        </xpath>
-
+        </xpath> -->
+        <!--
         <xpath expr="//tbody/tr/t/t/td/div/t" position="attributes">
             <attribute
                 name="t-if"
@@ -286,7 +286,7 @@
             >
                 <t t-set="product" t-value="td_product['product']" />
             </t>
-        </xpath>
+        </xpath> -->
     </template>
 
     <template
