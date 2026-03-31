@@ -63,10 +63,54 @@ class TestStockMove(CampaignCase):
         self.assertEqual(target.target_model, "stock.move")
 
         self.assertEqual(move._get_qty_to_fulfill(), 0)
-        target.promised_qty = QTY / 2
-        self.assertEqual(move._get_qty_to_fulfill(), QTY / 2)
 
-    def test_get_qty_to_fulfill_multiple(self) -> None:
+    def test_get_qty_to_fulfill_batch(self) -> None:
+        QTY = 100.0
+        move_a = self.env["stock.move"].create(
+            {
+                "name": f"test move A for {self.bulk_material.display_name}",
+                "product_id": self.bulk_material.id,
+                "product_uom_qty": QTY,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.stock_location.id,
+                "state": "waiting",
+            }
+        )
+        move_b = self.env["stock.move"].create(
+            {
+                "name": f"test move B for {self.bulk_material.display_name}",
+                "product_id": self.bulk_material.id,
+                "product_uom_qty": QTY,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.stock_location.id,
+                "state": "waiting",
+            }
+        )
+
+        campaign = self.create_campaign(self.bulk_material)
+        demand = self.env["mrp.campaign.demand"].create(
+            {"product_id": self.bulk_material.id, "campaign_id": campaign.id}
+        )
+
+        # move_a gets partial promise, move_b gets full promise
+        self.env["mrp.campaign.demand.target"].create(
+            {"demand_id": demand.id, "promised_qty": QTY / 2, "target_id": move_a.id}
+        )
+        self.env["mrp.campaign.demand.target"].create(
+            {"demand_id": demand.id, "promised_qty": QTY, "target_id": move_b.id}
+        )
+
+        both_moves = move_a | move_b
+        result = self.env["stock.move"]._get_qty_to_fulfill_by_moves(both_moves)
+
+        self.assertEqual(result[move_a.id], QTY / 2)
+        self.assertEqual(result[move_b.id], 0)
+
+        # Empty recordset returns empty dict
+        self.assertEqual(
+            self.env["stock.move"]._get_qty_to_fulfill_by_moves(self.env["stock.move"]),
+            {},
+        )
         QTY = 100.0
         move = self.env["stock.move"].create(
             {
