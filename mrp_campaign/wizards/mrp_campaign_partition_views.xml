@@ -13,7 +13,7 @@
                     <field
                         name="partition_data_json"
                         nolabel="1"
-                        widget="campaign_orchestrator"
+                        widget="campaign_partition"
                         style="--fieldWidget-display: inline;"
                     />
 
