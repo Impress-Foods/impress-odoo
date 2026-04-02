@@ -1,153 +1,99 @@
-/** @odoo-module **/
+import {Interaction} from "@web/public/interaction";
+import {registry} from "@web/core/registry";
+import {rpc} from "@web/core/network/rpc";
 
-//import publicWidget from "@web/legacy/js/public/public_widget";
-// import DynamicSnippetProductTemplates from "@theme_aplus/snippets/s_dynamic_snippet_product_templates/000";
+export class WindowCarousel extends Interaction {
+    static selector = ".s_window_carousel";
 
-// const WindowCarousel = DynamicSnippetProductTemplates.extend({
-//     selector: ".s_window_carousel",
+    dynamicContent = {
+        ".carousel": {
+            "t-on-slide.bs.carousel": this.onSlide,
+        },
+    };
 
-//     /**
-//      * @override
-//      */
-//     init() {
-//         this._super.apply(this, arguments);
-//         this.template_key = "theme_aplus.window_carousel";
-//         this.current_index = 0;
-//         this.next_index = 1;
-//         this.bg = document.getElementsByClassName("hero-background")[0];
-//         this.sticker = document.getElementsByClassName("hero-sticker")[0];
-//         this.buttonHover = false;
-//     },
+    setup() {
+        this.products = [];
+    }
 
-//     /**
-//      * Gets the tag search domain
-//      * @override
-//      * @private
-//      */
-//     _getTagSearchDomain() {
-//         const searchDomain = [];
-//         let productTagIds = this.$el.get(0).dataset.productTagIds;
-//         productTagIds = productTagIds ? JSON.parse(productTagIds) : [];
-//         if (productTagIds.length) {
-//             searchDomain.push([
-//                 "product_tag_ids",
-//                 "in",
-//                 productTagIds.map((productTag) => productTag.id),
-//             ]);
-//         }
-//         return searchDomain;
-//     },
-//     /**
-//      * @override
-//      * @private
-//      */
-//     async _fetchData() {
-//         if (this._isConfigComplete()) {
-//             const nodeData = this.el.dataset;
-//             const filter_id = parseInt(nodeData.filterId);
-//             const response = await this.rpc(
-//                 "/theme_aplus/get_products",
-//                 Object.assign({
-//                     filter_id: filter_id,
-//                     search_domain: this._getSearchDomain(),
-//                 }),
-//                 this._getRpcParameters()
-//             );
+    async willStart() {
+        const params = {
+            limit: parseInt(this.el.dataset.numberOfRecords) || 16,
+        };
+        const tagIds = this.el.dataset.productTagIds;
+        if (tagIds) {
+            params.tag_ids = tagIds;
+        }
+        this.products = await rpc("/window_carousel/products", params);
+    }
 
-//             this.data = response;
-//             if (this.wave) {
-//                 this.preloadImages();
-//             }
-//         } else {
-//             this.data = [];
-//         }
-//     },
+    start() {
+        if (!this.products.length) {
+            return;
+        }
+        const target = this.el.querySelector(".dynamic_snippet_template");
+        if (!target) {
+            return;
+        }
+        this.renderAt(
+            "theme_aplus.window_carousel",
+            {
+                products: this.products,
+                interval: parseInt(this.el.dataset.bsInterval) || 5000,
+            },
+            target
+        );
+        this.updateContent();
+        this._updateHero();
+    }
 
-//     _onSlide(event) {
-//         this.current_index = event.to;
-//         this.next_index = (this.current_index + 1) % Object.keys(this.data).length;
-//         this.changeColors(this.data[this.current_index]);
-//     },
+    onSlide(ev) {
+        const items = this.el.querySelectorAll(".carousel-item");
+        const targetItem = items[ev.to];
+        if (!targetItem) {
+            return;
+        }
+        this._updateHeroFromItem(targetItem);
+    }
 
-//     changeColors(product, first = false) {
-//         if (this.buttonHover) {
-//             this.setHoverShopButton(this.shop_button, product);
-//         } else {
-//             this.setNormalShopButton(this.shop_button, product);
-//         }
+    _updateHero() {
+        const activeItem = this.el.querySelector(".carousel-item.active");
+        if (activeItem) {
+            this._updateHeroFromItem(activeItem);
+        }
+    }
 
-//         Array.from(this.hero_texts).forEach((element) => {
-//             element.style.setProperty("color", product.hero_text_color);
-//         });
-//         this.bg.style.setProperty("background-color", product.hero_background_color);
-//         if (!first) {
-//             this.sticker.style.setProperty("opacity", 0);
-//         }
-//         setTimeout(this.swapImage.bind(this), 250);
-//     },
+    _updateHeroFromItem(itemEl) {
+        const bgColor = itemEl.dataset.bgColor || "#f7f9fc";
+        const textColor = itemEl.dataset.textColor || "#000000";
+        const productUrl = itemEl.dataset.productUrl || "/shop";
+        const stickerUrl = itemEl.dataset.stickerUrl || "";
 
-//     swapImage: function () {
-//         this.sticker.src = this.data[this.current_index].hero_sticker;
-//         this.sticker.style.setProperty("opacity", 1);
-//     },
+        const bgEl = this.el.closest(".hero-background") || this.el;
+        bgEl.style.setProperty("background-color", bgColor);
 
-//     setNormalShopButton: function (element, product) {
-//         element.style.setProperty("background-color", product.hero_text_color);
-//         element.style.setProperty("border-color", product.hero_text_color);
-//         element.style.setProperty("color", product.hero_background_color);
-//     },
-//     setHoverShopButton: function (element, product) {
-//         element.style.setProperty("background-color", product.hero_background_color);
-//         element.style.setProperty("border-color", product.hero_text_color);
-//         element.style.setProperty("color", product.hero_text_color);
-//     },
+        for (const textEl of this.el.querySelectorAll(".hero-text")) {
+            textEl.style.setProperty("color", textColor);
+        }
 
-//     shopButtonMouseOver: function (event) {
-//         this.buttonHover = true;
-//         const product = this.data[this.current_index];
-//         const button = event.target;
-//         this.setHoverShopButton(button, product);
-//     },
-//     shopButtonMouseOut: function (event) {
-//         const product = this.data[this.current_index];
-//         const button = event.target;
-//         this.setNormalShopButton(button, product);
-//         this.buttonHover = false;
-//     },
-//     /**
-//      * @override
-//      * @private
-//      */
-//     _render() {
-//         this._super.apply(this, arguments);
-//         this.$el.removeClass("o_dynamic_empty");
-//         this._prepareContent();
-//         this._renderContent();
-//         this.trigger_up("widgets_start_request", {
-//             $target: this.$el.children("dynamic_snippet_template"),
-//             options: {parent: this},
-//             editableMode: this.editableMode,
-//         });
-//         this.carousel_element = document.getElementsByClassName("aplus_carousel")[0];
-//         this.carousel_element.addEventListener(
-//             "slide.bs.carousel",
-//             this._onSlide.bind(this)
-//         );
-//         this.hero_texts = this.el.querySelectorAll(".hero-text");
-//         this.shop_button = document.getElementsByClassName("shop-now-button")[0];
-//         this.shop_button.addEventListener(
-//             "mouseover",
-//             this.shopButtonMouseOver.bind(this)
-//         );
-//         this.shop_button.addEventListener(
-//             "mouseleave",
-//             this.shopButtonMouseOut.bind(this)
-//         );
-//         this.sticker.style.setProperty("background-color", "#ffffff00");
-//         this.sticker.src = this.data[0].hero_sticker;
-//         this.changeColors(this.data[0], true);
-//     },
-// });
+        const stickerEl = this.el.querySelector(".hero-sticker");
+        if (stickerEl && stickerUrl) {
+            stickerEl.src = stickerUrl;
+            stickerEl.style.removeProperty("opacity");
+        } else if (stickerEl) {
+            stickerEl.style.setProperty("opacity", "0");
+        }
 
-// publicWidget.registry.s_window_carousel = WindowCarousel;
-// export default WindowCarousel;
+        const shopBtn = this.el.querySelector(".shop-now-button");
+        if (shopBtn) {
+            shopBtn.href = productUrl;
+            shopBtn.dataset.url = productUrl;
+            shopBtn.style.setProperty("background-color", textColor);
+            shopBtn.style.setProperty("border-color", textColor);
+            shopBtn.style.setProperty("color", bgColor);
+        }
+    }
+}
+
+registry
+    .category("public.interactions")
+    .add("theme_aplus.window_carousel", WindowCarousel);

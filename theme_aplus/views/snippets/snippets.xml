@@ -12,15 +12,16 @@
             >
                 <keywords>Transition</keywords>
             </t>
+            <t
+                t-snippet="theme_aplus.s_window_carousel"
+                string="Window Carousel"
+                group="a_plus"
+            >
+                <keywords>Dynamic</keywords>
+            </t>
 
             <!-- <t t-snippet="theme_aplus.s_image_marquee" /> -->
         </xpath>
-
-        <!-- <xpath expr="//div[@id='snippet_effect']/div[2]" position="inside">
-            <t t-snippet="theme_aplus.s_window_carousel" string="Window Carousel">
-                <keywords>Dynamic</keywords>
-            </t>
-        </xpath> -->
     </template>
 
     <!-- <template

@@ -4,79 +4,41 @@
         <div class="d-flex flex-column">
             <div class="carousel_container">
                 <div
-                    t-att-id="unique_id"
                     class="carousel slide aplus_carousel"
-                    data-bs-ride="ride"
+                    data-bs-ride="carousel"
                     t-att-data-bs-interval="interval"
                 >
-                    <t t-call="theme_aplus.window_carousel_window" />
+                    <div class="carousel-inner h-100">
+                        <t t-foreach="products" t-as="product" t-key="product['id']">
+                            <div
+                                class="carousel-item"
+                                t-att-class="{ active: product_index === 0 }"
+                                t-att-data-product-id="product['id']"
+                                t-att-data-bg-color="product['hero_background_color']"
+                                t-att-data-text-color="product['hero_text_color']"
+                                t-att-data-product-url="product['product_url']"
+                                t-att-data-sticker-url="product['hero_sticker']"
+                            >
+                                <div class="carousel-content">
+                                    <div class="product-image">
+                                        <a t-att-href="product['product_url']">
+                                            <img
+                                                loading="lazy"
+                                                t-att-src="product['hero_image']"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
                 </div>
             </div>
             <div class="shop-now">
-                <a href="/shop" class="shop-now-button">
+                <a href="/shop" class="shop-now-button" data-url="/shop">
                     Shop Now
                 </a>
             </div>
-        </div>
-    </t>
-
-
-    <t t-name="theme_aplus.window_carousel_window">
-        <div class="carousel-inner h-100">
-            <t t-foreach="data" t-as="product_key" t-key="product_index">
-                <t t-set="product" t-value="data[product_key]" />
-                <t t-if="product_key_first">
-                    <div t-attf-class="carousel-item active">
-                        <div class="carousel-content">
-                            <t t-call="theme_aplus.window_carousel_image" />
-                        </div>
-                    </div>
-                </t>
-                <t t-else="">
-                    <div t-attf-class="carousel-item">
-                        <div class="carousel-content">
-                            <t t-call="theme_aplus.window_carousel_image" />
-                        </div>
-                    </div>
-                </t>
-            </t>
-        </div>
-    </t>
-
-
-    <t t-name="theme_aplus.window_carousel_image">
-        <div class="product-image">
-            <t t-if="product.hero_image">
-                <a href="/shop">
-                    <img
-                        loading="lazy"
-                        t-att-src="product.hero_image"
-                        t-att-alt="product.display_name"
-                    />
-                </a>
-            </t>
-            <t t-else="">
-                <span>No image available</span>
-            </t>
-        </div>
-    </t>
-    <!-- Carousel Slide -->
-    <t t-name="theme_aplus.window_carousel_slide">
-        <div class="carousel-content">
-            <svg viewbox="0 0 300 200" class="arc-text">
-                <path
-                    id="curve"
-                    d="M10,200 A 130 150 180 0 1 290 200"
-                    fill="transparent"
-                    stroke="transparent"
-                />
-                <text class="title-text" t-att-fill="product.primary_color">
-                    <textPath href="#curve" text-anchor="middle" startOffset="50%">
-                        <t t-out="product.display_name" />
-                    </textPath>
-                </text>
-            </svg>
-            <t t-call="theme_aplus.window_carousel_image" />
         </div>
     </t>
 </templates>

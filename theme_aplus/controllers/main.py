@@ -1,78 +1,51 @@
+import json
 import logging
 
 from odoo import http
+from odoo.fields import Domain
 from odoo.http import request
+
+from odoo.addons.portal.controllers.web import Home
 
 _logger = logging.getLogger(__name__)
 
 
-class ThemeAPlus(http.Controller):
+class ThemeAPlus(Home):
     @http.route(
-        "/theme_aplus/get_products", type="jsonrpc", auth="public", website=True
+        "/window_carousel/products",
+        type="jsonrpc",
+        auth="public",
+        website=True,
+        readonly=True,
     )
-    def get_products(self, filter_id, search_domain=None):
-        dynamic_filter = (
-            request.env["website.snippet.filter"]
+    def get_window_carousel_products(self, limit=16, tag_ids=None, **kwargs):
+        Website = request.env["website"]
+        domain = Website.get_current_website().website_domain()
+        domain &= Domain("hero_image", "!=", False)
+        domain &= Domain("is_published", "=", True)
+        if tag_ids:
+            if isinstance(tag_ids, str):
+                tag_ids = [t["id"] for t in json.loads(tag_ids)]
+            if tag_ids:
+                domain &= Domain("product_tag_ids", "in", tag_ids)
+        products = (
+            request.env["product.template"]
             .sudo()
-            .search([("id", "=", filter_id)] + request.website.website_domain())
+            .search(domain, order="carousel_order asc", limit=limit)
         )
-        raw_values_list = dynamic_filter._prepare_values(search_domain=search_domain)
-        if isinstance(raw_values_list, list):
-            raw_values_list.sort(key=lambda x: x.get("carousel_order", 0))
-            values_list = {i: values for i, values in enumerate(raw_values_list)}
-
-            return values_list
-        raise ValueError("Invalid filter")
-
-
-# class VariantAplus(WebsiteSaleVariantController):
-#     @http.route(
-#         "/website_sale/get_combination_info",
-#         type="jsonrpc",
-#         auth="public",
-#         methods=["POST"],
-#         website=True,
-#     )
-#     def get_combination_info_website(
-#         self,
-#         product_template_id,
-#         product_id,
-#         combination,
-#         add_qty,
-#         parent_combination=None,
-#         **kwargs,
-#     ):
-#         res = super().get_combination_info_website(
-#             product_template_id,
-#             product_id,
-#             combination,
-#             add_qty,
-#             parent_combination,
-#             **kwargs,
-#         )
-#         product_template = request.env["product.template"].browse(
-#             product_template_id and int(product_template_id)
-#         )
-
-#         combination_info = product_template._get_combination_info(
-#             combination=request.env["product.template.attribute.value"].browse(
-#                 combination
-#             ),
-#             product_id=product_id and int(product_id),
-#             add_qty=add_qty and float(add_qty) or 1.0,
-#             parent_combination=request.env["product.template.attribute.value"].browse(
-#                 parent_combination
-#             ),
-#         )
-
-#         res["tvn"] = request.env["ir.ui.view"]._render_template(
-#             "theme_aplus.tvn",
-#             values={
-#                 "product": product_template,
-#                 "product_variant": request.env["product.product"].browse(
-#                     combination_info["product_id"]
-#                 ),
-#                 "website": request.env["website"].get_current_website(),
-#             },
-#         )
-#         return res
+        result = []
+        for p in products:
+            result.append(
+                {
+                    "id": p.id,
+                    "display_name": p.display_name,
+                    "hero_image": Website.image_url(p, "hero_image"),
+                    "hero_background_color": p.hero_background_color or "#f7f9fc",
+                    "hero_text_color": p.hero_text_color or "#000000",
+                    "hero_sticker": Website.image_url(p, "hero_sticker")
+                    if p.hero_sticker
+                    else "",
+                    "product_url": p.website_url or f"/shop/product/{p.id}",
+                }
+            )
+        return result

@@ -1,7 +1,4 @@
 .hero-background {
-    -webkit-transition: opacity 0.5s ease-in-out;
-    transition: opacity 0.5s ease-in-out;
-    -webkit-transition: background-color 0.5s ease-in-out;
     transition: background-color 0.5s ease-in-out;
     background-color: bisque;
 }
@@ -11,12 +8,10 @@
     min-height: 50vh;
 
     .hero-sticker {
-        -webkit-transition: background-color 0.5s ease-in-out;
-        transition: background-color 0.5s ease-in-out;
         transition: opacity 0.5s ease-in-out;
         max-width: 256px;
         max-height: 256px;
-        background-color: #ffffff00;
+        background-color: transparent;
     }
 
     .dynamic_snippet_template {
@@ -42,20 +37,17 @@
             );
             overflow-x: hidden;
             margin: auto;
-            vertical-align: center;
             display: flex;
             flex-direction: column;
 
             background-color: #f7f9fc;
 
-            // Carousel Inner
             .carousel-inner {
                 width: 100%;
 
                 .carousel-item {
                     text-align: center;
                     position: relative;
-                    //align-items: end;
                     height: 100%;
 
                     .carousel-content {
@@ -66,25 +58,7 @@
                         justify-content: center;
                         align-items: center;
 
-                        .arc-text {
-                            padding-left: 10px;
-                            padding-right: 10px;
-                            position: absolute;
-                            top: -10px;
-                            width: 100%;
-
-                            .title-text {
-                                font-size: 1.8rem;
-                                font-weight: 800;
-                                text-transform: uppercase;
-                                letter-spacing: 3px;
-                                -webkit-text-stroke-color: black;
-                                -webkit-text-stroke-width: 2px;
-                            }
-                        }
-
                         .product-image {
-                            //margin-bottom: -2.5rem;
                             &:hover {
                                 transform: scale(1.02);
                             }
@@ -119,24 +93,14 @@
         }
     }
 
-    .active {
-        opacity: 100%;
-    }
-
-    .inactive {
-        opacity: 0%;
-    }
-
     .hero-text-container {
         .hero-text {
-            padding: 0px;
-            margin: 0px;
-            color: #ff00ff;
+            padding: 0;
+            margin: 0;
+            color: inherit;
             font-size: 10rem;
             font-weight: bold;
             text-wrap: wrap;
-            //line-height: 1;
-            -webkit-transition: color 0.5s ease-in-out;
             transition: color 0.5s ease-in-out;
             &.mobile {
                 display: none;
@@ -148,7 +112,7 @@
     }
 
     .container-fluid {
-        padding: 0px !important;
+        padding: 0 !important;
     }
 
     .shop-now {
@@ -157,13 +121,12 @@
         order: 2;
         margin-top: 1rem;
 
-        -webkit-transition: color 0.5s ease-in-out;
         transition: color 0.5s ease-in-out;
 
         .shop-now-button {
             padding: 10px 20px;
             border: 2px solid black;
-            border-radius: 20px; /* Rounded pill shape */
+            border-radius: 20px;
             display: block;
             height: 100%;
             text-decoration: none;
@@ -171,10 +134,6 @@
             font-size: 0.8em;
             font-weight: bold;
 
-            -webkit-transition:
-                background-color 0.5s ease-in-out,
-                border-color 0.5s ease-in-out,
-                color 0.5s ease-in-out;
             transition:
                 background-color 0.5s ease-in-out,
                 border-color 0.5s ease-in-out,
@@ -189,26 +148,10 @@
         }
     }
 
-    @media (max-width: 1920px) {
-        .hero-text-container {
-            .hero-text {
-                font-size: 10rem;
-            }
-        }
-
-        .hero-sticker {
-            max-width: 256px;
-            max-height: 256px;
-        }
-    }
-
     @media (max-width: 1400px) {
-        .hero-text-container {
-            .hero-text {
-                font-size: 8rem;
-            }
+        .hero-text-container .hero-text {
+            font-size: 8rem;
         }
-
         .hero-sticker {
             max-width: 224px;
             max-height: 224px;
@@ -216,16 +159,8 @@
     }
 
     @media (max-width: 1200px) {
-        .hero-text-container {
-            .hero-text {
-                // padding-top: 2rem;
-                font-size: 6rem;
-            }
-        }
-
-        .hero-sticker {
-            max-width: 224px;
-            max-height: 224px;
+        .hero-text-container .hero-text {
+            font-size: 6rem;
         }
     }
 
@@ -242,15 +177,12 @@
             }
         }
     }
+
     @media (max-width: 540px) {
-        .hero-text-container {
-            .hero-text {
-                //line-height: 1;
-                font-size: 5rem;
-            }
+        .hero-text-container .hero-text {
+            font-size: 5rem;
         }
     }
-    // Cutoff at 992px for row <-> grid
 
     @media (max-width: 992px) {
         .row {

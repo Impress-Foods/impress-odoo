@@ -45,9 +45,8 @@
         "website.website_builder_assets": [
             "theme_aplus/static/src/website_builder/wave_transition_option.js",
             "theme_aplus/static/src/website_builder/wave_transition_option.xml",
-            "theme_aplus/static/src/scss/aplus_style.scss",
-            "theme_aplus/static/src/scss/ecom.scss",
-            "theme_aplus/static/src/snippets/s_window_carousel/options.js",
+            "theme_aplus/static/src/website_builder/window_carousel_option.js",
+            "theme_aplus/static/src/website_builder/window_carousel_option.xml",
             "theme_aplus/static/src/snippets/s_image_marquee/options.js",
         ],
     },
