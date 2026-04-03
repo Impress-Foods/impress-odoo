@@ -7,11 +7,12 @@
         />
 
         <!-- Background Image -->
-
-        <img
-            t-attf-src="/web/image/product.template/{{product.id}}/card_background_image"
-            class="d-flex h-100 w-100 position-absolute"
+        <span
+            t-field="product.card_background_image"
+            t-options="{'widget': 'image', 'class': 'o_wsale_product_image'}"
+            class="d-flex"
         />
+
         <!-- Color Block with Wave -->
         <div
             class="color-block"
@@ -37,16 +38,18 @@
                 t-att-value="request.csrf_token()"
                 t-nocache="The csrf token must always be up to date."
             />
-            <div
-                class="ap_product_image_link d-block position-relative"
+            <a
+                t-att-href="product_href"
+                class="ap_product_image_link d-block h-100 position-relative"
+                itemprop="url"
                 contenteditable="false"
+                aria-label="View product details"
             >
-                <img
-                    loading="lazy"
-                    t-attf-src="/web/image/product.template/{{product.id}}/card_image"
-                    t-attf-alt="product_name"
+                <span
+                    t-field="product.image_512"
+                    t-options="{'widget': 'image', 'class': 'h-100 w-100'}"
                 />
-            </div>
+            </a>
         </div>
 
         <!-- Product info + buttons -->
@@ -59,7 +62,7 @@
                         class="ap_product_name"
                         t-attf-style="color: {{t_color}};"
                         itemprop="name"
-                        t-att-content="product_name"
+                        t-att-content="product.name"
                     >
                         <t t-out="product.name" />
                     </div>
@@ -114,18 +117,9 @@
             t-set="product_href"
             t-value="keep(product.website_url, page=(pager['page']['num'] if pager['page']['num']>1 else None))"
         />
-        <t
-            t-set="image_type"
-            t-value="product._get_suitable_image_size(ppr, td_product['x'], td_product['y'])"
-        />
 
         <t t-set="template_price_vals" t-value="get_product_prices(product)" />
 
-        <t
-            t-set="image_holder"
-            t-value="product._get_image_holder() if product._name == 'product.template' else
-            product.product_tmpl_id._get_image_holder()"
-        />
         <form
             action="/shop/cart/update"
             method="post"
@@ -143,21 +137,17 @@
                     <t t-set="s_color" t-value="product.card_secondary_color" />
                     <t t-set="t_color" t-value="product.card_text_color" />
                     <t t-set="product" t-value="product" />
+                    <t t-set="product_href" t-value="product_href" />
                 </t>
-                <div>
-                    <t
-                        t-set="bg_color"
-                        t-value="td_product['ribbon']['bg_color'] or ''"
-                    />
-                    <t
-                        t-set="text_color"
-                        t-value="td_product['ribbon']['text_color']"
-                    />
-                    <t t-set="bg_class" t-value="td_product['ribbon']['html_class']" />
+                <div t-if="td_product['ribbon']">
+                    <t t-set="ribbon" t-value="td_product['ribbon']" />
+                    <t t-set="bg_color" t-value="ribbon.bg_color or ''" />
+                    <t t-set="text_color" t-value="ribbon.text_color" />
+                    <t t-set="bg_class" t-value="ribbon._get_css_classes()" />
                     <span
                         t-attf-class="o_ribbon o_not_editable #{bg_class}"
                         t-attf-style="#{text_color and ('color: %s; ' % text_color)}#{bg_color and 'background-color:' + bg_color}"
-                        t-out="td_product['ribbon']['html'] or ''"
+                        t-out="ribbon.name or ''"
                     />
                 </div>
             </a>

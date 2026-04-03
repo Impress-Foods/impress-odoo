@@ -153,56 +153,57 @@
             />
         </xpath>
 
-        <!-- <xpath expr="//table" position="replace">
-            <table
-                class="table table-borderless h-100 m-0"
-                t-att-data-ppg="ppg"
-                t-att-data-ppr="ppr"
-                t-att-data-default-sort="website.shop_default_sort"
-                t-att-data-name="grid_block_name"
+        <xpath expr="//section[@id='o_wsale_products_grid']" position="replace">
+            <section
+                id="o_wsale_products_grid"
+                t-attf-class="o_wsale_products_grid_table grid {{website.shop_opt_products_design_classes}}"
+                t-attf-style="--o-wsale-ppr: {{ppr}}; --o-wsale-ppg: {{ppg}}; --o-wsale-products-grid-gap: {{gap}};"
             >
-                <colgroup t-ignore="true"> -->
-        <!-- Force the number of columns (useful when only one row of (x < ppr) products) -->
-        <!-- <col t-foreach="ppr" t-as="p" />
-                </colgroup>
-                <t
-                    t-set="flat_list"
-                    t-value="[item for sublist in bins for item in sublist]"
-                />
-                <t
-                    t-set="categories"
-                    t-value="list(set([i['product'].public_categ_ids for i in flat_list]))"
-                />
-
-                <tbody t-if="not groupByCategory">
-                    <tr t-foreach="bins" t-as="tr_product">
+                <t t-if="not groupByCategory">
+                    <t t-foreach="bins" t-as="tr_product">
                         <t t-foreach="tr_product" t-as="td_product">
                             <t t-if="td_product">
-                                <td
-                                    t-att-colspan="td_product['x'] != 1 and td_product['x']"
-                                    t-att-rowspan="td_product['y'] != 1 and td_product['y']"
-                                    t-attf-class="oe_product"
+                                <t t-set="col_height" t-value="td_product['y']" />
+                                <t
+                                    t-set="col_width"
+                                    t-value="12 // ppr * td_product['x']"
+                                />
+                                <t t-set="col_class" t-valuef="g-col-6" />
+                                <t
+                                    t-set="col_class_lg"
+                                    t-value="'g-col-lg-' + str(col_width)"
+                                />
+                                <div
+                                    t-attf-class="oe_product {{col_class}} {{col_class_md}} {{col_class_lg}}"
                                     t-att-data-ribbon-id="td_product['ribbon'].id"
                                     t-att-data-name="product_block_name"
+                                    t-attf-style="{{col_height > 1 and ('grid-row: span ' + str(col_height) + ';') or ''}}"
                                 >
                                     <div
                                         t-attf-class="o_wsale_product_grid_wrapper position-relative h-100
                                 o_wsale_product_grid_wrapper_#{td_product['x']}_#{td_product['y']}"
                                     >
-                                        <t t-call="website_sale.products_item">
+                                        <t t-call="theme_aplus.products_item">
                                             <t
                                                 t-set="product"
                                                 t-value="td_product['product']"
                                             />
                                         </t>
                                     </div>
-                                </td>
+                                </div>
                             </t>
-                            <td t-else="" />
                         </t>
-                    </tr>
-                </tbody>
-                <tbody t-else="groupByCategory">
+                    </t>
+                </t>
+                <t t-else="groupByCategory">
+                    <t
+                        t-set="flat_list"
+                        t-value="[item for sublist in bins for item in sublist if item]"
+                    />
+                    <t
+                        t-set="categories"
+                        t-value="list(set([cat for i in flat_list for cat in i['product'].public_categ_ids]))"
+                    />
                     <t
                         t-set="categories_sorted"
                         t-value="sorted(categories, key=lambda x: x.sequence)"
@@ -210,90 +211,51 @@
                     <t t-foreach="categories_sorted" t-as="category">
                         <t
                             t-set="filtered_list"
-                            t-value="[i for i in flat_list if (category in i['product'].public_categ_ids)]"
+                            t-value="[i for i in flat_list if category in i['product'].public_categ_ids]"
                         />
-                        <tr t-if="len(categories) > 1 and len(filtered_list) != 0">
-                            <td t-att-colspan="ppr" class="category-header">
+                        <t t-if="len(categories) &gt; 1 and len(filtered_list) != 0">
+                            <div class="g-col-12 category-header">
                                 <div class="o_ws_category_separator">
                                     <t t-out="category.name" />
                                 </div>
-                            </td>
-                        </tr>
-
-                        <t t-set="filtered_list_len" t-value="len(filtered_list)" />
-                        <t t-set="rebinned_bins" t-value="[]" />
-
-                        <t t-foreach="range(0, filtered_list_len, ppr)" t-as="i">
-                            <t t-set="current_bin" t-value="filtered_list[i:i + ppr]" />
-
-                            <t
-                                t-set="rebinned_bins"
-                                t-value="rebinned_bins + [current_bin]"
-                            />
+                            </div>
                         </t>
 
-                        <tr
-                            t-foreach="rebinned_bins"
-                            t-as="tr_product"
-                            class="product_row"
-                        >
-                            <t t-foreach="tr_product" t-as="td_product">
-                                <t
-                                    t-set="product_categories"
-                                    t-value="td_product['product'].public_categ_ids"
-                                />
-                                <t t-if="td_product">
-                                    <td
-                                        t-att-colspan="td_product['x'] != 1 and td_product['x']"
-                                        t-att-rowspan="td_product['y'] != 1 and td_product['y']"
-                                        t-attf-class="oe_product"
-                                        t-att-data-ribbon-id="td_product['ribbon'].id"
-                                        t-att-data-name="product_block_name"
-                                    >
-                                        <div
-                                            t-attf-class="o_wsale_product_grid_wrapper position-relative h-100
+                        <t t-foreach="filtered_list" t-as="td_product">
+                            <t t-set="col_height" t-value="td_product['y']" />
+                            <t
+                                t-set="col_width"
+                                t-value="12 // ppr * td_product['x']"
+                            />
+                            <t t-set="col_class" t-valuef="g-col-6" />
+                            <t
+                                t-set="col_class_lg"
+                                t-value="'g-col-lg-' + str(col_width)"
+                            />
+                            <div
+                                t-attf-class="oe_product {{col_class}} {{col_class_md}} {{col_class_lg}}"
+                                t-att-data-ribbon-id="td_product['ribbon'].id"
+                                t-att-data-name="product_block_name"
+                                t-attf-style="{{col_height > 1 and ('grid-row: span ' + str(col_height) + ';') or ''}}"
+                            >
+                                <div
+                                    t-attf-class="o_wsale_product_grid_wrapper position-relative h-100
                                 o_wsale_product_grid_wrapper_#{td_product['x']}_#{td_product['y']}"
-                                        >
-                                            <t
-                                                t-if="is_view_active('theme_aplus.products_design_wavy_cards')"
-                                                t-call="theme_aplus.products_item"
-                                            >
-                                                <t
-                                                    t-set="product"
-                                                    t-value="td_product['product']"
-                                                />
-                                            </t>
-                                        </div>
-                                    </td>
-                                </t>
-                                <t t-else="" />
-                            </t>
-                        </tr>
+                                >
+                                    <t t-call="theme_aplus.products_item">
+                                        <t
+                                            t-set="product"
+                                            t-value="td_product['product']"
+                                        />
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
                     </t>
-                </tbody>
-            </table>
-        </xpath> -->
-        <!--
-        <xpath expr="//tbody/tr/t/t/td/div/t" position="attributes">
-            <attribute
-                name="t-if"
-            >not is_view_active('theme_aplus.products_design_wavy_cards')</attribute>
+                </t>
+            </section>
         </xpath>
-        <xpath expr="//tbody/tr/t/t/td/div/t" position="after">
-            <t
-                t-if="is_view_active('theme_aplus.products_design_wavy_cards')"
-                t-call="theme_aplus.products_item"
-            >
-                <t t-set="product" t-value="td_product['product']" />
-            </t>
-        </xpath> -->
     </template>
-
-    <template
-        id="products_design_wavy_cards"
-        active="False"
-        name="Wavy Cards Product Design"
-    />
 
     <!-- Product Page -->
     <template
