@@ -1,70 +1,74 @@
-// /** @odoo-module **/
+import {registry} from "@web/core/registry";
+import {Interaction} from "@web/public/interaction";
 
-// import publicWidget from "@web/legacy/js/public/public_widget";
+export class ImageMarquee extends Interaction {
+    static selector = ".s_image_marquee";
 
-// const ImageMarqueeWidget = publicWidget.Widget.extend({
-//     selector: ".s_image_marquee",
+    dynamicContent = {
+        ".marquee-inner": {
+            "t-att-style": () => ({
+                "--marquee-duration": `${this.animationDuration}s`,
+            }),
+        },
+        _window: {
+            "t-on-resize": this.debounced(this.onResize, 150, {
+                leading: false,
+                trailing: true,
+            }),
+        },
+    };
 
-//     /**
-//      * @override
-//      */
-//     start() {
-//         this._super.apply(this, arguments);
-//         this.editorActive = $("body").hasClass("editor_enable");
-//         this.$inner = this.$target.find(".marquee-inner").first();
-//         this.$holder = this.$target.find(".marquee").first();
-//         this.animationDuration = this.$holder[0].dataset.speed;
-//         this.$holder[0].style.setProperty(
-//             "--marquee-duration",
-//             `${this.animationDuration}s`
-//         );
-//         if (this.$inner && this.$holder && !this.editorActive) {
-//             this.setupMarquee();
-//             this._attachResizeListener();
-//         }
-//     },
+    setup() {
+        this.innerEl = this.el.querySelector(".marquee-inner");
+        this.holderEl = this.el.querySelector(".marquee");
+        this.animationDuration = parseFloat(this.holderEl?.dataset.speed) || 10;
+        this.editorActive = document.body.classList.contains("editor_enable");
+    }
 
-//     setupMarquee: function () {
-//         this._clearClones();
-//         this._cloneContent();
-//     },
+    start() {
+        if (!this.editorActive && this.innerEl && this.holderEl) {
+            this.setupMarquee();
+        }
+    }
 
-//     _cloneContent: function () {
-//         this.$inner.find(".marquee-clone").remove();
-//         const $contentToClone = this.$inner.children().not(".marquee-clone");
+    destroy() {
+        this.clearClones();
+    }
 
-//         if ($contentToClone.length === 0) {
-//             return;
-//         }
-//         const $clonedContent = $contentToClone.clone(true);
-//         $clonedContent.addClass("marquee-clone");
-//         this.$inner.append($clonedContent);
-//         this.$holder.scrollLeft(0);
-//     },
-//     /**
-//      * Clears all existing cloned elements before recalculating and cloning again.
-//      */
-//     _clearClones() {
-//         this.$holder.find(".marquee-clone").remove();
-//     },
+    onResize() {
+        if (!document.body.classList.contains("editor_enable")) {
+            this.setupMarquee();
+        }
+    }
 
-//     _attachResizeListener() {
-//         let resizeTimer;
+    setupMarquee() {
+        this.clearClones();
+        this.cloneContent();
+    }
 
-//         const handleResize = () => {
-//             const editorActive = $("body").hasClass("editor_enable");
-//             if (!editorActive) {
-//                 this.setupMarquee();
-//             }
-//         };
+    cloneContent() {
+        const children = [...this.innerEl.children].filter(
+            (el) => !el.classList.contains("marquee-clone") && !el.dataset.oePlaceholder
+        );
+        if (children.length === 0) {
+            return;
+        }
+        const clonedContent = children.map((el) => {
+            const clone = el.cloneNode(true);
+            clone.classList.add("marquee-clone");
+            return clone;
+        });
+        this.innerEl.append(...clonedContent);
+        this.holderEl.scrollLeft = 0;
+    }
 
-//         $(window).on("resize.ImageMarqueeWidget", () => {
-//             clearTimeout(resizeTimer);
-//             resizeTimer = setTimeout(handleResize, 150);
-//         });
-//     },
-// });
+    clearClones() {
+        if (this.innerEl) {
+            this.innerEl
+                .querySelectorAll(".marquee-clone")
+                .forEach((el) => el.remove());
+        }
+    }
+}
 
-// publicWidget.registry.marquee = ImageMarqueeWidget;
-
-// export default {ImageMarqueeWidget: ImageMarqueeWidget};
+registry.category("public.interactions").add("theme_aplus.image_marquee", ImageMarquee);

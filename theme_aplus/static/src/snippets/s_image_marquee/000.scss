@@ -112,3 +112,9 @@
         transform: translateX(0) !important;
     }
 }
+
+.s_marquee_hover_pause .marquee-inner {
+    &:hover {
+        animation-play-state: paused;
+    }
+}

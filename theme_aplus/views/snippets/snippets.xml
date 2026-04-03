@@ -19,6 +19,11 @@
             >
                 <keywords>Dynamic</keywords>
             </t>
+            <t
+                t-snippet="theme_aplus.s_image_marquee"
+                string="Image Marquee"
+                group="a_plus"
+            />
 
             <!-- <t t-snippet="theme_aplus.s_image_marquee" /> -->
         </xpath>

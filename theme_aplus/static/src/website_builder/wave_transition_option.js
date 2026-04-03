@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import {BaseOptionComponent} from "@html_builder/core/utils";
 import {Plugin} from "@html_editor/plugin";
 import {registry} from "@web/core/registry";
