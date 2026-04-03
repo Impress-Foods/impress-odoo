@@ -10,6 +10,7 @@
         </BuilderRow>
         <BuilderRow label.translate="Learn More Tabs">
             <BuilderCheckbox
+                id="'o_wsale_learn_more_tabs'"
                 action="'websiteConfig'"
                 actionParam="{ views: ['theme_aplus.product_tabbed_information'] }"
             />

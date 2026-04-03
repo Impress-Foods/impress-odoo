@@ -8,7 +8,7 @@
     "depends": ["web", "website", "website_sale"],
     "data": [
         "data/data.xml",
-        "views/filters.xml",
+        # "views/filters.xml",
         "views/vectors.xml",
         "security/ir.model.access.csv",
         "views/snippets/s_dynamic_content.xml",

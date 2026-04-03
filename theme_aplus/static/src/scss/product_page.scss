@@ -1,4 +1,16 @@
 .oe_website_sale {
+    .o_wsale_product_images {
+        contain: layout;
+        aspect-ratio: 1 / 1;
+        max-height: 600px;
+
+        > *:first-child {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+
     .extra-icons {
         padding-bottom: 2rem;
         flex-wrap: wrap;

@@ -50,6 +50,31 @@ class ProductTemplate(models.Model):
                     break
             record.has_tvn = has_tvn
 
+    def _get_combination_info(
+        self,
+        combination=False,
+        product_id=False,
+        add_qty=1.0,
+        uom_id=False,
+        only_template=False,
+        **kwargs,
+    ):
+        combination_info = super()._get_combination_info(
+            combination=combination,
+            product_id=product_id,
+            add_qty=add_qty,
+            uom_id=uom_id,
+            only_template=only_template,
+        )
+        variant = self.env["product.product"].browse(combination_info["product_id"])
+        if variant and variant.nutrition_entry_ids:
+            tvn_html = self.env["ir.qweb"]._render(
+                "theme_aplus.tvn",
+                {"product_variant": variant, "product": self},
+            )
+            combination_info["tvn"] = tvn_html
+        return combination_info
+
 
 class ProductVariant(models.Model):
     _inherit = "product.product"

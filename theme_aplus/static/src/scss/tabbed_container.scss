@@ -105,6 +105,10 @@ $promo-color: #e25822;
         border-radius: 8px;
         margin-top: -1px; // Overlap with active tab border
 
+        .tvn-holder {
+            min-height: 300px;
+        }
+
         p {
             font-size: 16px;
             line-height: 1.6;

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <!-- Wave Cards -->
-    <template
-        id="dynamic_filter_template_product_template_wavy_card"
-        name="Wavy Card"
-        data-number-of-elements="4"
-        data-number-of-elements-sm="2"
-    >
-        <t t-foreach="records" t-as="data">
+    <template id="dynamic_filter_template_product_template_wavy_card" name="Wavy Card">
+        <t
+            t-foreach="records"
+            t-as="data"
+            data-number-of-elements="4"
+            data-number-of-elements-sm="2"
+        >
             <t t-set="record" t-value="data['_record']" />
             <div class="product-card">
                 <t t-set="product" t-value="record" />
@@ -37,13 +37,13 @@
         </t>
     </template>
 
-    <template
-        id="dynamic_filter_template_product_product_wavy_card"
-        name="Wavy Card"
-        data-number-of-elements="4"
-        data-number-of-elements-sm="2"
-    >
-        <t t-foreach="records" t-as="data">
+    <template id="dynamic_filter_template_product_product_wavy_card" name="Wavy Card">
+        <t
+            t-foreach="records"
+            t-as="data"
+            data-number-of-elements="4"
+            data-number-of-elements-sm="2"
+        >
             <t t-set="record" t-value="data['_record']" />
             <div class="product-card">
                 <t t-set="product" t-value="record" />
@@ -173,10 +173,13 @@
     <template
         id="dynamic_filter_template_product_template_minimalist_card"
         name="Minimalist Card"
-        data-number-of-elements="4"
-        data-number-of-elements-sm="2"
     >
-        <t t-foreach="records" t-as="data">
+        <t
+            t-foreach="records"
+            t-as="data"
+            data-number-of-elements="4"
+            data-number-of-elements-sm="2"
+        >
             <t t-set="record" t-value="data['_record']" />
             <div class="product-card">
                 <t t-set="product" t-value="record" />
