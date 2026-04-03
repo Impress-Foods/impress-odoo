@@ -7,7 +7,7 @@
             type="base64"
             file="theme_aplus/static/shapes/aplus/01.svg"
         />
-        <field name="url">/web_editor/shape/illustration/aplus/01.svg</field>
+        <field name="url">/html_editor/shape/theme_aplus/aplus/01.svg</field>
         <field name="public" eval="True" />
     </record>
     <record id="shape_aplus_02" model="ir.attachment">
@@ -17,7 +17,7 @@
             type="base64"
             file="theme_aplus/static/shapes/aplus/02.svg"
         />
-        <field name="url">/web_editor/shape/illustration/aplus/02.svg</field>
+        <field name="url">/html_editor/shape/theme_aplus/aplus/02.svg</field>
         <field name="public" eval="True" />
     </record>
     <record id="shape_aplus_03" model="ir.attachment">
@@ -27,7 +27,7 @@
             type="base64"
             file="theme_aplus/static/shapes/aplus/03.svg"
         />
-        <field name="url">/web_editor/shape/illustration/aplus/03.svg</field>
+        <field name="url">/html_editor/shape/theme_aplus/aplus/03.svg</field>
         <field name="public" eval="True" />
     </record>
 </odoo>

@@ -16,8 +16,8 @@ $o-theme-font-configs: map-merge(
 $o-bg-shapes: map-merge(
     $o-bg-shapes,
     (
-        "illustration": map-merge(
-                map-get($o-bg-shapes, "illustration") or (),
+        "theme_aplus": map-merge(
+                map-get($o-bg-shapes, "theme_aplus") or (),
                 (
                     "aplus/01": (
                         "position": top,
