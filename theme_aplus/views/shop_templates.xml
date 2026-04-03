@@ -457,7 +457,7 @@
     >
         <xpath expr="//div[@id='add_to_cart_wrap']" position="before">
             <div
-                t-attf-class="css_quantity input-group {{'d-none' if combination_info['prevent_zero_price_sale'] else 'd-inline-flex'}} me-2 mb-2 align-middle"
+                t-attf-class="input-group {{'d-none' if combination_info['has_discounted_price'] else 'd-inline-flex'}} me-2 mb-2 align-middle"
                 contenteditable="false"
             >
                 <a
@@ -478,7 +478,7 @@
 
                 <a
                     t-attf-href="#"
-                    class="btn btn-link float_left js_add_cart_json"
+                    class="btn btn-link js_add_cart_json"
                     aria-label="Add one"
                     title="Add one"
                 >

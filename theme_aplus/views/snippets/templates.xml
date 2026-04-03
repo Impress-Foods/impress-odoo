@@ -18,23 +18,6 @@
         </xpath>
     </template>
 
-    <!-- <template
-        id="template_header_default"
-        inherit_id="website.layout"
-        name="Template Header Default"
-        priority="99"
-    >
-        <xpath
-            expr="//t[@t-call='portal.placeholder_user_sign_in']/t"
-            position="replace"
-        >
-            <t t-set="_link_class" t-value="'btn btn-outline-primary'" />
-        </xpath>
-        <xpath expr="//t[@t-call='portal.user_dropdown']/t[2]" position="attributes">
-            <attribute name="t-value">'dropdown-aplus'</attribute>
-        </xpath>
-    </template> -->
-
     <template
         id="alternative_products"
         inherit_id="website_sale.alternative_products"
