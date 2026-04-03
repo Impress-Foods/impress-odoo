@@ -49,6 +49,8 @@
             "theme_aplus/static/src/website_builder/window_carousel_option.xml",
             "theme_aplus/static/src/website_builder/image_marquee_option.js",
             "theme_aplus/static/src/website_builder/image_marquee_option.xml",
+            "theme_aplus/static/src/website_builder/product_page_option.js",
+            "theme_aplus/static/src/website_builder/product_page_option.xml",
         ],
     },
     "application": False,

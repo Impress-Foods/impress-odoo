@@ -399,9 +399,10 @@
                                 class="related-product"
                                 t-attf-href="{{rel_product.website_url}}"
                             >
-                                <image
+                                <img
                                     class="related-flavor-image"
                                     t-attf-src="/web/image/product.template/{{rel_product.id}}/image_512"
+                                    t-attf-alt="{{rel_product.name}}"
                                 />
                             </a>
                             <span
@@ -455,7 +456,7 @@
                             data-bs-toggle="tab"
                             t-att-data-bs-target="'#'+prefix+'-1'"
                             type="button"
-                            role="y"
+                            role="tab"
                             t-attf-aria-controls="{{prefix}}-1"
                             aria-selected="false"
                             t-out="product.tab_1_title"
@@ -556,7 +557,12 @@
                         <t
                             t-foreach="product_variant.nutrition_entry_ids.sorted('sequence')"
                             t-as="entry"
+                            t-index="entry_index"
                         >
+                            <t
+                                t-set="entry_parity"
+                                t-value="'even' if entry_index % 2 == 0 else 'odd'"
+                            />
                             <tr
                                 t-attf-style="background:{{product.product_page_text_color if entry_parity =='even' else ''}};"
                             >
