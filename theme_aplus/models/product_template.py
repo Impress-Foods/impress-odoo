@@ -55,3 +55,13 @@ class ProductVariant(models.Model):
     _inherit = "product.product"
     nutrition_entry_ids = fields.One2many("nutrition.fact.entry", "product_id")
     nutrition_facts_size = fields.Char()
+    card_primary_color = fields.Char(related="product_tmpl_id.card_primary_color")
+    card_secondary_color = fields.Char(related="product_tmpl_id.card_secondary_color")
+    card_text_color = fields.Char(related="product_tmpl_id.card_text_color")
+    card_background_image = fields.Binary(
+        related="product_tmpl_id.card_background_image"
+    )
+    card_image = fields.Binary(related="product_tmpl_id.card_image")
+    minimalist_card_image = fields.Binary(
+        related="product_tmpl_id.minimalist_card_image"
+    )

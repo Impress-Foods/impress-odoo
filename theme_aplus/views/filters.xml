@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <?xml-model href="../../import_xml.rng" type="application/xml"?>
 <odoo>
-    <!-- <record id="dynamic_filter_window_carousel_filter" model="website.snippet.filter">
+    <record id="dynamic_filter_window_carousel_filter" model="website.snippet.filter">
         <field
             name="filter_id"
             ref="theme_aplus.dynamic_snippet_newest_product_templates_filter"
@@ -38,5 +38,5 @@
         />
         <field name="limit" eval="16" />
         <field name="name">Minimalist Card Filter</field>
-    </record> -->
+    </record>
 </odoo>

@@ -26,7 +26,6 @@
 
     .image-container {
         width: 100%;
-        // height: 100%;
         transition: transform 0.5s ease-in-out;
 
         &:hover {
@@ -66,10 +65,17 @@
         text-transform: uppercase;
         font-size: 0.8em;
         font-weight: bold;
-        border-radius: 20px; /* Rounded pill shape */
+        border-radius: 20px;
         border-width: 1px;
         transition:
             background-color 0.3s,
-            color 0.3s;
+            color 0.3s,
+            border-color 0.3s;
+
+        &:hover {
+            background-color: var(--minimalist-secondary-color, transparent);
+            border-color: var(--minimalist-secondary-color, currentColor);
+            color: #fff;
+        }
     }
 }

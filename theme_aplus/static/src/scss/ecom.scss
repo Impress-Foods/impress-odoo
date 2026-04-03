@@ -74,10 +74,43 @@
     overflow: hidden;
     gap: 0.5rem;
 
-    // &:focus-within {
-    //     outline: 2px solid currentColor;
-    //     outline-offset: 2px;
-    // }
+    /* Background image */
+    .o_wsale_product_image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+    }
+
+    /* Color block with wave */
+    .color-block {
+        background-color: orange;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        bottom: -1px;
+        left: 0%;
+        z-index: 1;
+        /* Asymmetric transitions - faster on hover in, slower on hover out */
+        transition: height 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    .wave {
+        top: -10px;
+        position: absolute;
+        fill: orange;
+        transform: translateX(-20%);
+        transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        animation-name: wave-animation-slide;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-duration: 5s;
+        animation-direction: alternate;
+        width: 150%;
+    }
 
     /* Hover effects */
     &:hover {
@@ -119,43 +152,19 @@
         transition: transform 0.1s ease;
     }
 
-    /* Color block with wave */
-    .color-block {
-        background-color: orange;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        bottom: -1px;
-        left: 0%;
-        /* Asymmetric transitions - faster on hover in, slower on hover out */
-        transition: height 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-    }
-
-    .wave {
-        top: -10px; /* Adjusted to raise the wave slightly */
-        position: absolute;
-        fill: orange;
-        transform: translateX(-20%);
-        /* Adding transition properties for the wave itself */
-        transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-        animation-name: wave-animation-slide;
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
-        animation-duration: 5s;
-        animation-direction: alternate;
-        width: 150%;
-    }
-
     /* Product image */
     .ap_product_image {
         transition: opacity var(--ap-transition-timing);
-
+        position: relative;
+        z-index: 2;
         justify-content: center;
+        min-height: 200px;
 
         .ap_product_image_link {
             justify-content: center;
 
-            img {
+            img,
+            .o_wsale_product_image {
                 object-fit: scale-down;
                 width: 90%;
                 margin-left: auto;
@@ -168,15 +177,14 @@
     /* Product text container */
     .ap_product_text_container {
         text-align: center;
-        justify-content: flex-start; /* Changed from center to allow content to flow naturally */
+        justify-content: flex-start;
         transition: transform var(--ap-transition-timing);
         display: flex;
         flex-direction: column;
-        height: 5rem; /* Increased height to accommodate taller product name */
-        //padding: 0.5rem 1rem 2.5rem; /* Increased bottom padding to make room for buy button */
-        margin-top: 0.25rem; /* Reduced top margin */
+        height: 5rem;
+        margin-top: 0.25rem;
         position: relative;
-        z-index: 2; /* Ensure it's above the color block in default state */
+        z-index: 3;
         pointer-events: none;
 
         .ap_product_short_description_wrapper {
@@ -249,11 +257,12 @@
             opacity var(--ap-transition-timing),
             transform var(--ap-transition-timing);
         position: absolute;
-        bottom: 0.5rem; /* Positioned at bottom of card */
+        bottom: 0.5rem;
         left: calc(50% - 60px);
         text-align: center;
         border-radius: var(--ap-border-radius-sm);
-        //padding: 0.4rem 0; /* Slightly reduced padding */
+        z-index: 4;
+        pointer-events: auto;
         box-shadow: var(--ap-shadow-sm);
 
         a {
