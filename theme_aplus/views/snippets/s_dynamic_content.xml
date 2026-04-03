@@ -171,7 +171,7 @@
     <!-- Minimalist Cards -->
 
     <template
-        id="dynamic_filter_template_product_template_minimalist_card"
+        id="dynamic_filter_template_product_product_minimalist_card"
         name="Minimalist Card"
     >
         <t
@@ -187,7 +187,14 @@
                     class="product-info ap-product-card-minimalist"
                     t-attf-id="{{ product.name }}"
                 >
-                    <t t-set="image_url" t-value="data.get('image_512')" />
+                    <t
+                        t-set="tmpl_id"
+                        t-value="product.product_tmpl_id.id if product._name == 'product.product' else product.id"
+                    />
+                    <t
+                        t-set="image_url"
+                        t-value="'/web/image/product.template/%s/minimalist_card_image' % tmpl_id if product.minimalist_card_image else data.get('image_512')"
+                    />
                     <t t-call="theme_aplus.minimalist_product_card_carousel">
                         <t t-set="product_name" t-value="data.get('display_name')" />
                         <t t-set="product_record" t-value="product" />
@@ -213,7 +220,7 @@
         <div class="image-container">
             <img
                 t-attf-src="{{ card_image_url }}"
-                t-attf-alt="{{ product.name }}"
+                t-attf-alt="{{ product_name }}"
                 class="product-image"
             />
         </div>
@@ -223,15 +230,15 @@
             t-attf-style="color:{{ primary_color }};"
             t-out="product_name"
         />
-        <div class="subtitle-container" t-if="product.public_categ_ids">
+        <div class="subtitle-container" t-if="product_record.public_categ_ids">
             <p
                 class="subtitle"
                 t-attf-style="color:{{ primary_color }};"
-                t-out="product.public_categ_ids[0].display_name"
+                t-out="product_record.public_categ_ids[0].display_name"
             />
         </div>
         <a
-            t-attf-href="{{ product.website_url }}"
+            t-attf-href="{{ product_record.website_url }}"
             class="add-to-cart"
             t-attf-style="color:{{ primary_color }};border: 1px solid {{ primary_color }};"
         >Add to cart</a>

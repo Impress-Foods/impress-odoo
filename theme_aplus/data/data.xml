@@ -23,18 +23,25 @@
                         class="product-info ap-product-card-minimalist"
                         t-attf-id="{{ product.name }}"
                     >
-                        <!-- Product Links and Settings -->
-                        <t t-set="image_type" t-value="image_512" />
-                        <t t-set="image_holder" t-value="product" />
-
                         <t t-call="theme_aplus.minimalist_product_card_carousel">
-                            <t t-set="product_name" t-value="product.name" />
+                            <t
+                                t-set="product_name"
+                                t-value="data.get('display_name')"
+                            />
                             <t t-set="product_record" t-value="product" />
                             <t
                                 t-set="product_description"
                                 t-value="product.description_sale"
                             />
-                            <t t-set="product_image" t-value="image_holder" />
+                            <t
+                                t-set="primary_color"
+                                t-value="data.get('card_primary_color')"
+                            />
+                            <t
+                                t-set="secondary_color"
+                                t-value="data.get('card_secondary_color')"
+                            />
+                            <t t-set="card_image_url" t-value="data.get('image_512')" />
                         </t>
                     </div>
                 </div>
