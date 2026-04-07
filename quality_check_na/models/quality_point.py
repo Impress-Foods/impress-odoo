@@ -1,8 +1,8 @@
 from odoo import fields, models
 
 
-class QualityPointNA(models.Model):
-    _inherit = ["quality.point"]
+class QualityPoint(models.Model):
+    _inherit = "quality.point"
 
     allow_na = fields.Boolean(
         string="Allow Not Applicable",

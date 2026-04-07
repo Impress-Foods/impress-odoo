@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e-20260219\n"
+"Project-Id-Version: Odoo Server 17.0+e-20260330\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -20,11 +20,13 @@ msgstr ""
 
 #. module: quality_check_na
 #: model:ir.model.fields,field_description:quality_check_na.field_quality_check__can_be_na
+#: model:ir.model.fields,field_description:quality_check_na.field_quality_check_wizard__can_be_na
 msgid "Can Be Na"
 msgstr ""
 
 #. module: quality_check_na
 #: model_terms:ir.ui.view,arch_db:quality_check_na.quality_check_view_form_na
+#: model_terms:ir.ui.view,arch_db:quality_check_na.view_quality_check_wizard
 msgid "N/A"
 msgstr ""
 
@@ -55,7 +57,12 @@ msgstr ""
 
 #. module: quality_check_na
 #. odoo-python
-#: code:addons/quality_check_na/models/quality_check_na.py:0
+#: code:addons/quality_check_na/models/quality_check.py:0
 #, python-format
 msgid "This Quality Check cannot be set to N/A"
+msgstr ""
+
+#. module: quality_check_na
+#: model:ir.model,name:quality_check_na.model_quality_check_wizard
+msgid "Wizard for Quality Check Pop Up"
 msgstr ""

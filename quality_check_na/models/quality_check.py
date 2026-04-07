@@ -4,8 +4,8 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
-class QualityCheckNA(models.Model):
-    _inherit = ["quality.check"]
+class QualityCheck(models.Model):
+    _inherit = "quality.check"
 
     quality_state = fields.Selection(
         selection_add=[
