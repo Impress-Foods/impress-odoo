@@ -6,7 +6,6 @@
         <field name="inherit_id" ref="quality_control.quality_check_view_form" />
         <field name="arch" type="xml">
             <xpath expr="(//button[@name='do_fail'])[1]" position="after">
-                <field name="can_be_na" invisible="1" />
                 <button
                     name="do_na"
                     type="object"
@@ -15,7 +14,6 @@
                     string="N/A"
                     data-hotkey="e"
                 />
-
             </xpath>
             <xpath expr="//button[@name='do_pass'][2]" position="attributes">
                 <attribute name="invisible">quality_state in ['none','pass']</attribute>

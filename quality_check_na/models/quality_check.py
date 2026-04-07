@@ -1,11 +1,11 @@
 from datetime import datetime
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
-class QualityCheckNA(models.Model):
-    _inherit = ["quality.check"]
+class QualityCheck(models.Model):
+    _inherit = "quality.check"
 
     quality_state = fields.Selection(
         selection_add=[
@@ -26,7 +26,7 @@ class QualityCheckNA(models.Model):
                 }
             )
         else:
-            raise UserError(_("This Quality Check cannot be set to N/A"))
+            raise UserError(self.env._("This Quality Check cannot be set to N/A"))
 
     @api.model_create_multi
     def create(self, vals_list):
