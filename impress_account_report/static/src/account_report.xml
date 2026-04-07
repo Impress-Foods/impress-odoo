@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t
+        t-name="impress_account_report.AccountReportLineCellCustomizable"
+        t-inherit="account_reports.AccountReportLineCellCustomizable"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//td/div/t/div" position="replace">
+            <div class="content">
+                <t t-if="props.cell.auditable">
+                    <a t-on-click="() => this.audit()">
+                        <t
+                            t-component="env.component('AccountReportEllipsis')"
+                            t-props="{
+                            name: props.cell.name?.toString(),
+                            no_format: props.cell.no_format,
+                            type: props.cell.figure_type,
+                            maxCharacters: 80,
+                        }"
+                        />
+                    </a>
+                </t>
+                <t t-else="">
+                    <t
+                        t-component="env.component('AccountReportEllipsis')"
+                        t-props="{
+                        name: props.cell.name?.toString(),
+                        no_format: props.cell.no_format,
+                        type: props.cell.figure_type,
+                        maxCharacters: 80,
+                    }"
+                    />
+                </t>
+            </div>
+        </xpath>
+    </t>
+</templates>
