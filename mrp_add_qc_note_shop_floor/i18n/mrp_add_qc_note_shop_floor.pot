@@ -1,0 +1,28 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mrp_add_qc_note_shop_floor
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e-20260330\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mrp_add_qc_note_shop_floor
+#. odoo-javascript
+#: code:addons/mrp_add_qc_note_shop_floor/static/src/mrp_display/dialog/mrp_quality_check_confirmation_dialog.xml:0
+#, python-format
+msgid "Additional Note:"
+msgstr ""
+
+#. module: mrp_add_qc_note_shop_floor
+#. odoo-javascript
+#: code:addons/mrp_add_qc_note_shop_floor/static/src/mrp_display/dialog/mrp_quality_check_confirmation_dialog.xml:0
+#, python-format
+msgid "Save and Close"
+msgstr ""
