@@ -18,6 +18,9 @@
                 />
             </div>
         </xpath>
+        <xpath expr="//div[hasclass('o_barcode_line')]" position="attributes">
+            <attribute name="t-att-style">style</attribute>
+        </xpath>
     </t>
 
     <t

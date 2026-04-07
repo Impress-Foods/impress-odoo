@@ -214,12 +214,27 @@ patch(BarcodePickingModel.prototype, {
     get groupedLines() {
         const res = super.groupedLines;
         res.sort((a, b) => {
-            const nameA = a.description_bom_line
-                ? a.description_bom_line.toUpperCase()
-                : "zzz";
-            const nameB = b.description_bom_line
-                ? b.description_bom_line.toUpperCase()
-                : "zzz";
+            // Get description from line or from move
+            let nameA = a.description_picking;
+            if (!nameA && a.move_id) {
+                try {
+                    const moveA = this.cache.getRecord("stock.move", a.move_id);
+                    nameA = moveA?.description_picking;
+                } catch (e) {
+                    /* ignore */
+                }
+            }
+            let nameB = b.description_picking;
+            if (!nameB && b.move_id) {
+                try {
+                    const moveB = this.cache.getRecord("stock.move", b.move_id);
+                    nameB = moveB?.description_picking;
+                } catch (e) {
+                    /* ignore */
+                }
+            }
+            nameA = nameA ? nameA.toUpperCase() : "zzz";
+            nameB = nameB ? nameB.toUpperCase() : "zzz";
             if (nameA < nameB) {
                 return -1;
             }
@@ -254,14 +269,21 @@ patch(BarcodePickingModel.prototype, {
         const maxColors = colorPalette.length;
 
         data.forEach((item) => {
-            const groupKey = item.description_bom_line;
+            let groupKey = item.description_picking;
+
+            if (!groupKey && item.move_id) {
+                try {
+                    const move = this.cache.getRecord("stock.move", item.move_id);
+                    groupKey = move?.description_picking;
+                } catch (e) {
+                    // Ignore errors
+                }
+            }
 
             if (groupKey) {
                 let key = "";
-                if (item.description_bom_line.indexOf(" - ")) {
-                    key = String(groupKey)
-                        .slice(0, item.description_bom_line.indexOf(" - "))
-                        .trim();
+                if (groupKey.indexOf(" - ")) {
+                    key = String(groupKey).slice(0, groupKey.indexOf(" - ")).trim();
                 } else {
                     key = String(groupKey).trim();
                 }

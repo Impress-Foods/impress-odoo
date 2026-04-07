@@ -145,3 +145,29 @@
 .o_barcode_line_title {
     position: relative;
 }
+
+// Kit color classes - dynamically applied based on color assignment
+[class^="o_kit_color_"],
+[class*=" o_kit_color_"] {
+    border-left: 4px solid;
+}
+
+// Generate border color from class name (e.g., o_kit_color_7db31a -> border-color: #7db31a)
+@each $color
+    in (
+        "7db31a",
+        "4d86a5",
+        "cf0bf1",
+        "3e517a",
+        "fc9f5b",
+        "8c8fe0",
+        "84a75f",
+        "00c7a9",
+        "d60b2d",
+        "1298f1"
+    )
+{
+    .o_kit_color_#{$color} {
+        border-left-color: #{$color} !important;
+    }
+}

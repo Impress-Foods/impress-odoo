@@ -62,4 +62,28 @@ patch(LineComponent.prototype, {
     get isUnreservedLine() {
         return this.line.isUnreservedLine === true;
     },
+
+    // Add kit color class to component classes
+    get componentClasses() {
+        const classes = [];
+
+        // Base classes from original
+        classes.push(this.isComplete ? "o_line_completed" : "o_line_not_completed");
+        classes.push(this.env.model.lineIsFaulty(this.line) ? "o_faulty" : "");
+        classes.push(this.isSelected ? "o_selected o_highlight" : "");
+
+        // Add kit color class
+        if (this.line.color) {
+            classes.push("o_kit_color");
+        }
+
+        return classes.join(" ");
+    },
+
+    get style() {
+        if (this.line.color) {
+            return "border-left: 4px solid " + this.line.color + " !important;";
+        }
+        return "";
+    },
 });
