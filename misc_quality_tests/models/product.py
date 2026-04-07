@@ -13,7 +13,7 @@ class ProductTemplate(models.Model):
     @api.depends("misc_test_ids", "misc_test_target_ids")
     def _compute_misc_test_count(self) -> None:
         for rec in self:
-            rec.misc_test_count = len(rec.misc_test_ids) + len(rec.misc_test_target_ids)
+            rec.misc_test_count = len(set(rec.misc_test_ids + rec.misc_test_target_ids))
 
     def action_open_misc_tests(self) -> dict:
         self.ensure_one()
