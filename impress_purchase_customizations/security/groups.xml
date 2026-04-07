@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="can_bypass_po_locks" model="res.groups">
+        <field name="name">Can Bypass PO locks</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+        <field name="comment">This user will be able to bypass PO locks.</field>
+    </record>
+</odoo>
