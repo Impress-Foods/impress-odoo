@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="quality_point_view_form_na" model="ir.ui.view">
+        <field name="name">quality.point.view.form.na</field>
+        <field name="model">quality.point</field>
+        <field
+            name="inherit_id"
+            ref="quality_control.quality_point_view_form_inherit_quality_control"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='failure_location_ids']" position="after">
+                <field name="allow_na" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
