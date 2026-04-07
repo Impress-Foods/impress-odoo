@@ -395,13 +395,25 @@ msgid "When changes happen in production lots."
 msgstr ""
 
 #. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.coding_log_x_worksheet_20250303_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.hpp_log_x_worksheet_20250203_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.metal_log_x_worksheet_20250203_id
-#: model:ir.model.fields,field_description:impress_quality_worksheets.weight_log_x_worksheet_20260305_id
+msgid "Worksheet 2025-02-03"
+msgstr ""
+
+#. module: impress_quality_worksheets
+#: model:ir.model.fields,field_description:impress_quality_worksheets.coding_log_x_worksheet_20250303_id
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_ray_log_x_worksheet_20250303_id
+msgid "Worksheet 2025-03-03"
+msgstr ""
+
+#. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_ray_log_x_worksheet_large_20251126_id
-msgid "Worksheet 2024-12-02"
+msgid "Worksheet 2025-11-26"
+msgstr ""
+
+#. module: impress_quality_worksheets
+#: model:ir.model.fields,field_description:impress_quality_worksheets.weight_log_x_worksheet_20260305_id
+msgid "Worksheet 2026-03-05"
 msgstr ""
 
 #. module: impress_quality_worksheets
