@@ -6,7 +6,6 @@ import LineComponent from "@stock_barcode/components/line";
 patch(LineComponent.prototype, {
     get totalDemand() {
         if (this.line.ids) {
-            // We need to calculate the full quantity for grouped lines
             const move_ids = this.line.lines
                 .map((x) => x.move_id)
                 .filter((e, i, self) => i === self.indexOf(e));
@@ -28,5 +27,39 @@ patch(LineComponent.prototype, {
         const product = this.line.product_id.id;
         const total = this.env.model.totalSupply(product);
         return total;
+    },
+
+    // Reservation data for display
+    get reservationData() {
+        return this.env.model._getReservationData(this.line);
+    },
+
+    get plannedQty() {
+        return this.reservationData.planned;
+    },
+
+    get reservedQty() {
+        return this.reservationData.reserved;
+    },
+
+    get doneQty() {
+        return this.reservationData.done;
+    },
+
+    get availableQty() {
+        return this.reservationData.available;
+    },
+
+    get reservationStatus() {
+        return this.reservationData.status;
+    },
+
+    get hasGap() {
+        return this.availableQty > 0 || this.reservationStatus === "unreserved";
+    },
+
+    // For unreserved lines, hide lot and quantity info
+    get isUnreservedLine() {
+        return this.line.isUnreservedLine === true;
     },
 });

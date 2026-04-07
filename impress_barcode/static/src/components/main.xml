@@ -11,19 +11,24 @@
             expr="//div[hasclass('o_barcode_lines')]/div[hasclass('alert')]"
             position="after"
         >
-            <t t-if="unreservedMoves.length != 0">
-                <div class="o_barcode_line list-group-item d-flex flex-row flex-nowrap">
-                    <div class="justify-content-center">
-                        <i class="fa fa-exclamation-triangle" />
-                        <span> MISSING PRODUCT(S) </span>
-                        <i class="fa fa-exclamation-triangle" />
-                    </div>
+            <t t-if="env.model.unreservedLines.length != 0">
+                <div class="o_impress_missing_header">
+                    <i class="fa fa-exclamation-triangle" />
+                    <span>MISSING PRODUCT(S) - <t
+                        t-esc="env.model.unreservedLines.length"
+                    /> product(s) not reserved</span>
                 </div>
 
-                <t t-set="index" t-value="1" />
-                <t t-foreach="unreservedMoves" t-as="move" t-key="index">
-                    <MoveComponent move="move" />
-                    <t t-set="index" t-value="index+1" />
+                <t
+                    t-foreach="env.model.unreservedLines"
+                    t-as="line"
+                    t-key="line.virtual_id"
+                >
+                    <LineComponent
+                        line="line"
+                        displayUOM="groups.group_uom"
+                        editLine.bind="onOpenProductPage"
+                    />
                 </t>
             </t>
         </xpath>

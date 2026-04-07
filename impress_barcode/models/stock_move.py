@@ -15,6 +15,9 @@ class StockMove(models.Model):
                 "lot_ids",
                 "quantity",
                 "product_qty",
+                "product_uom_qty",
+                "bom_line_id",
+                "description_picking",
             ]
         )
         return res

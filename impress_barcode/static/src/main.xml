@@ -26,7 +26,7 @@
         t-inherit-mode="extension"
         owl="1"
     >
-        <xpath expr="//button[@t-on-click='toggleInformation']" position="before">
+        <xpath expr="//button[hasclass('o_stock_mobile_barcode')][1]" position="before">
             <button
                 t-if="env.model.formViewId"
                 t-on-click="doReservation"

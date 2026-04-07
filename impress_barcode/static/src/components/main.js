@@ -1,7 +1,6 @@
 /** @odoo-module **/
 import MainComponent from "@stock_barcode/components/main";
 import {patch} from "@web/core/utils/patch";
-import MoveComponent from "./move";
 import HeaderComponent from "@stock_barcode_mrp/components/header";
 
 patch(MainComponent.prototype, {
@@ -24,5 +23,4 @@ patch(MainComponent.prototype, {
     },
 });
 
-MainComponent.components.MoveComponent = MoveComponent;
 MainComponent.components.Header = HeaderComponent;

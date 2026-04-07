@@ -22,6 +22,7 @@
         "web.assets_backend": [
             "impress_barcode/static/src/**/*.js",
             "impress_barcode/static/src/**/*.xml",
+            "impress_barcode/static/src/**/*.scss",
         ],
     },
 }
