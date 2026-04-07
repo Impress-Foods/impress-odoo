@@ -6,7 +6,6 @@ import {SaleCalendarRenderer} from "@impress_sales_customizations/sale_calendar_
 
 export const SaleCalendarView = {
     ...calendarView,
-    type: "sale_calendar",
     Renderer: SaleCalendarRenderer,
 };
 

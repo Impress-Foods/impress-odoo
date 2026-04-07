@@ -50,7 +50,6 @@
         </field>
     </record>
 
-
     <record id="view_sale_order_calendar" model="ir.ui.view">
         <field name="inherit_id" ref="sale.view_sale_order_calendar" />
         <field name="name">sale.order.calendar</field>
@@ -92,7 +91,7 @@
     </record>
 
     <record id="sale_order_tree" model="ir.ui.view">
-        <field name="name">sale.order.tree</field>
+        <field name="name">sale.order.list</field>
         <field name="inherit_id" ref="sale.sale_order_tree" />
         <field name="model">sale.order</field>
         <field name="arch" type="xml">
@@ -107,7 +106,7 @@
         <field name="res_model">sale.order</field>
         <field
             name="view_mode"
-        >tree,kanban,form,calendar,pivot,graph,activity,gantt</field>
+        >list,kanban,form,calendar,pivot,graph,activity,gantt</field>
     </record>
 
     <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
@@ -115,6 +114,6 @@
         <field name="res_model">sale.order</field>
         <field
             name="view_mode"
-        >gantt,tree,kanban,form,calendar,pivot,graph,activity</field>
+        >gantt,list,kanban,form,calendar,pivot,graph,activity</field>
     </record>
 </odoo>

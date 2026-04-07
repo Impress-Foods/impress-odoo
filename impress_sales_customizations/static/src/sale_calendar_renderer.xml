@@ -6,12 +6,12 @@
         t-inherit-mode="primary"
         owl="1"
     >
-        <xpath expr="//div[1]/div[1]" position="replace">
+        <xpath expr="//div[1]" position="replace">
             <div class="o_event_title text-truncate">
                 <t t-out="title" />
                 <span t-if="rawRecord.client_order_ref"> - <t
-                        t-out="rawRecord.client_order_ref"
-                    /></span>
+                    t-out="rawRecord.client_order_ref"
+                /></span>
             </div>
         </xpath>
     </t>
