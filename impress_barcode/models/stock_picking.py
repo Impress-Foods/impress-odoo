@@ -20,7 +20,7 @@ class StockPicking(models.Model):
 
         # Add all stock.move from picking to the cache
         data["records"]["stock.move"] = moves.read(
-            moves._get_fields_stock_barcode(), load="None"
+            moves._get_fields_stock_barcode(), load=False
         )
 
         # To allow for further overrides, do not overwrite the records sent to cache.
@@ -29,9 +29,7 @@ class StockPicking(models.Model):
         data["records"]["product.product"].extend(
             [
                 i
-                for i in products.read(
-                    products._get_fields_stock_barcode(), load="None"
-                )
+                for i in products.read(products._get_fields_stock_barcode(), load=False)
                 if i["id"] not in [j["id"] for j in data["records"]["product.product"]]
             ]
         )

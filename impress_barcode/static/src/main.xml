@@ -7,19 +7,16 @@
         t-inherit-mode="extension"
         owl="1"
     >
-
-        <xpath expr="//span[@class='o_title navbar-text']" position="replace">
-
+        <xpath
+            expr="//button[@class='o_title btn text-start p-0']/div[1]"
+            position="replace"
+        >
             <t t-if="env.model.origin">
-                <span
-                    class="o_title navbar-text"
-                    t-esc="env.model.name + ' - ' + env.model.origin"
-                />
+                <span t-esc="env.model.name + ' - ' + env.model.origin" />
             </t>
             <t t-else="">
-                <span class="o_title navbar-text" t-esc="env.model.name" />
+                <span t-esc="env.model.name" />
             </t>
-
         </xpath>
     </t>
 
@@ -29,7 +26,6 @@
         t-inherit-mode="extension"
         owl="1"
     >
-
         <xpath expr="//button[@t-on-click='toggleInformation']" position="before">
             <button
                 t-if="env.model.formViewId"

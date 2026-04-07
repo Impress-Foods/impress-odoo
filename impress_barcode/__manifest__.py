@@ -20,15 +20,8 @@
     ],
     "assets": {
         "web.assets_backend": [
-            "impress_barcode/static/src/components/move.xml",
-            "impress_barcode/static/src/components/move.js",
-            "impress_barcode/static/src/components/line.xml",
-            "impress_barcode/static/src/components/main.js",
-            "impress_barcode/static/src/components/main.xml",
-            "impress_barcode/static/src/widgets/digipad.js",
-            "impress_barcode/static/src/widgets/digipad.xml",
-            "impress_barcode/static/src/main.xml",
             "impress_barcode/static/src/**/*.js",
+            "impress_barcode/static/src/**/*.xml",
         ],
     },
 }
