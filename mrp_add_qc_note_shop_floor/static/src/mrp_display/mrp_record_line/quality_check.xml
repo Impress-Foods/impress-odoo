@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t
+        t-name="mrp_workorder.QualityCheck"
+        t-inherit="mrp_workorder.QualityCheck"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath
+            expr="//button[@t-att-barcode_trigger='isActive ? barcode : false']"
+            position="after"
+        >
+            <button
+                t-on-click.stop="_onClickAdditionalNote"
+                class="o_btn_icon btn btn-outline-secondary"
+            >
+                <i class="fa fa-sticky-note-o" role="img" title="Additional Note" />
+            </button>
+        </xpath>
+    </t>
+</templates>

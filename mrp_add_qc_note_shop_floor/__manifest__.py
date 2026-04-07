@@ -1,7 +1,7 @@
 {
     "name": "Add QC Note to shop floor",
-    "version": "17.0.0.1.0",
-    "summary": """ Mrp_add_qc_note_shop_floor Summary """,
+    "version": "19.0.1.0.1",
+    "summary": """ Allows users in the shop floor app to add notes to quality checks""",
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
