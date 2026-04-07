@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- View misc.test View Tree -->
+    <record id="view_misc_test_tree" model="ir.ui.view">
+        <field name="name">view.misc.test.list</field>
+        <field name="model">misc.test</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" />
+                <field name="date" />
+                <field name="product_id" />
+                <field name="lot_id" />
+                <field
+                    name="tag_ids"
+                    widget="many2many_tags"
+                    options="{'no_create': True, 'color_field': 'color'}"
+                />
+            </list>
+        </field>
+    </record>
+
+    <!-- View misc.test form -->
+    <record id="view_misc_test_form" model="ir.ui.view">
+        <field name="name">view.misc.test.form</field>
+        <field name="model">misc.test</field>
+        <field name="arch" type="xml">
+            <form string="Misc Test">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            class="oe_stat_button"
+                            name="action_open_affected_products"
+                            type="object"
+                            icon="fa-cubes"
+                            invisible="not affected_product_ids"
+                        >
+                            <field
+                                string="Products"
+                                name="affected_product_count"
+                                widget="statinfo"
+                            />
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="sequence" />
+                        <h1>
+                            <field name="sequence" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="product_id" />
+                            <field
+                                name="lot_id"
+                                domain="[('product_id.product_tmpl_id', '=', product_id)]"
+                            />
+                            <field
+                                name="affected_product_ids"
+                                widget="many2many_tags"
+                                options="{'no_create': True, 'color_field': 'color'}"
+                            />
+                        </group>
+                        <group>
+                            <field name="date" />
+                            <field name="tag_ids" widget="many2many_tags" />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" />
+                    </group>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <!-- View misc.test search -->
+    <record id="view_misc_test_search" model="ir.ui.view">
+        <field name="name">view.misc.test.search</field>
+        <field name="model">misc.test</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="sequence" string="Sequence" />
+                <field name="product_id" string="Product" />
+                <field name="tag_ids" string="Tag" />
+                <field name="affected_product_ids" string="Affected Products" />
+                <group />
+            </search>
+        </field>
+    </record>
+
+    <!-- Action misc.test -->
+    <record id="action_misc_test" model="ir.actions.act_window">
+        <field name="name">Misc Test</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">misc.test</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p
+                class="oe_view_nocontent_create"
+            > There is no examples click here to add new Misc Test. </p>
+        </field>
+    </record>
+</odoo>

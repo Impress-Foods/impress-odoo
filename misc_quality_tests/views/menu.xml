@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="menu_misc_test"
+        name="Misc Test"
+        action="action_misc_test"
+        parent="quality_control.menu_quality_root"
+        sequence="12"
+    />
+
+    <menuitem
+        id="menu_misc_test_tags"
+        name="Misc Test Tags"
+        action="action_misc_test_tag"
+        parent="quality_control.menu_quality_configuration"
+        sequence="12"
+    />
+</odoo>
