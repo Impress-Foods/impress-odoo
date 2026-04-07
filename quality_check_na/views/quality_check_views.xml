@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="quality_check_view_form_na" model="ir.ui.view">
+        <field name="name">quality.check.view.form.na</field>
+        <field name="model">quality.check</field>
+        <field name="inherit_id" ref="quality_control.quality_check_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="(//button[@name='do_fail'])[1]" position="after">
+                <button
+                    name="do_na"
+                    type="object"
+                    class="btn-primary"
+                    invisible="quality_state != 'none' or not can_be_na"
+                    string="N/A"
+                    data-hotkey="e"
+                />
+            </xpath>
+            <xpath expr="//button[@name='do_pass'][2]" position="attributes">
+                <attribute name="invisible">quality_state in ['none','pass']</attribute>
+            </xpath>
+            <xpath expr="//button[@name='do_fail'][2]" position="attributes">
+                <attribute name="invisible">quality_state in ['none','fail']</attribute>
+            </xpath>
+            <xpath expr="//button[@name='do_fail'][2]" position="after">
+                <button
+                    name="do_na"
+                    type="object"
+                    class="btn-secondary"
+                    invisible="quality_state in ['na', 'none'] or not can_be_na"
+                    string="N/A"
+                    data-hotkey="e"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="quality_check_view_tree_na" model="ir.ui.view">
+        <field name="name">quality.check.view.list.na</field>
+        <field name="model">quality.check</field>
+        <field name="inherit_id" ref="quality_control.quality_check_view_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='quality_state']" position="attributes">
+                <attribute
+                    name="decoration-success"
+                >quality_state in ('pass', 'na')</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="quality_check_view_kanban_na" model="ir.ui.view">
+        <field name="name">quality.check.view.kanban.na</field>
+        <field name="model">quality.check</field>
+        <field name="inherit_id" ref="quality_control.quality_check_view_kanban" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='quality_state']" position="attributes">
+                <attribute
+                    name="decoration-success"
+                >quality_state in ('pass', 'na')</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
