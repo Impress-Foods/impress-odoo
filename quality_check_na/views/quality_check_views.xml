@@ -37,7 +37,7 @@
     </record>
 
     <record id="quality_check_view_tree_na" model="ir.ui.view">
-        <field name="name">quality.check.view.tree.na</field>
+        <field name="name">quality.check.view.list.na</field>
         <field name="model">quality.check</field>
         <field name="inherit_id" ref="quality_control.quality_check_view_tree" />
         <field name="arch" type="xml">

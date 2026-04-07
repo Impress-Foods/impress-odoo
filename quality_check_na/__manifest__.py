@@ -1,7 +1,7 @@
 {
     "name": "Quality Check Not Applicable",
     "summary": "Add Not Applicable option to quality checks",
-    "version": "17.0.1.0.0",
+    "version": "19.0.1.0.0",
     "category": "Quality",
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
