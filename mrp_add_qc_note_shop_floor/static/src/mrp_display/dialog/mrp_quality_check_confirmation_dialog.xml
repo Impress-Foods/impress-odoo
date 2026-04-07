@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="mrp_add_qc_note_shop_floor.MrpQualityCheckConfirmationDialog"
+        t-inherit="mrp_workorder.MrpQualityCheckConfirmationDialog"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//div[hasclass('o_tablet_instruction_note')]" position="after">
+            <div class="o_note_field row no-gutters mt-3">
+                <label class="col-1" for="additional_note">Additional Note:</label>
+                <span class="o_field_widget o_field_text_are col-4 ">
+                    <TextField
+                        name="'additional_note'"
+                        record="props.record"
+                        rowCount='1'
+                        lineBreaks="false"
+                    />
+                </span>
+            </div>
+        </xpath>
+
+        <xpath expr="//div/Dialog/div[1]/div[2]" position="replace" />
+        <xpath expr="//Dialog/t[4]/div/div[2]/button[2]" position="after">
+            <button
+                t-on-click="saveAndClose"
+                class="btn btn-secondary"
+            >Save and Close</button>
+        </xpath>
+    </t>
+
+</templates>
