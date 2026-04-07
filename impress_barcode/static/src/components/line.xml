@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="impress_barcode.add_image"
+        t-inherit="stock_barcode.LineComponent"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//div[hasclass('o_barcode_line_details')]" position='before'>
+            <div
+                class="d-flex align-items-center me-4"
+                style="width: 128px; height: 128px;"
+            >
+                <img
+                    style="max-height: 100%; width: auto; margin: auto;"
+                    t-attf-src="/web/image?model=product.product&amp;id={{props.line.product_id.id}}&amp;field=image_128"
+                />
+            </div>
+
+        </xpath>
+    </t>
+
+    <t
+        t-name="stock_barcode.lineQuantity_add_total_demand"
+        t-inherit="stock_barcode.LineQuantity"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//div[1]" position="after">
+            <t t-if="env.model.lineModel != 'stock.quant'">
+                <t t-if="!props.subline and totalDemand != 0">
+                    <t t-set="tsupply" t-value="totalSupply" />
+                    <t t-set="tdemand" t-value="totalDemand" />
+                    <t t-if="tsupply == tdemand">
+                        <i class="fa fa-fw fa-cubes text-muted" />
+                        <span
+                            style="color: green"
+                            t-if="tsupply"
+                            t-esc="' Total: ' + tdemand"
+                        />
+                    </t>
+                    <t t-else="">
+                        <i class="fa fa-fw fa-cubes text-muted" />
+                        <span style="color: red" t-esc="' Total: ' + tdemand" />
+                    </t>
+                </t>
+            </t>
+        </xpath>
+        <xpath expr="//div[@name='kits']" position="attributes">
+            <attribute name="t-attf-style">color:{{props.line.color}};</attribute>
+        </xpath>
+    </t>
+
+
+</templates>

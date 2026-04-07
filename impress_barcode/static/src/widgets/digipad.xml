@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t
+        t-name="DigipadTemplate"
+        t-inherit="stock_barcode.DigipadTemplate"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//div[hasclass('o_digipad_special_buttons')]" position="inside">
+                <div
+                t-foreach="state.packageButtons"
+                t-as="button"
+                t-key="button.id"
+                t-att-data-qty="button.qty"
+                t-on-click="() => this._increment(-1*button.qty)"
+                class="o_packaging_button btn btn-secondary border w-100 py-2"
+            >
+                    <div class="text-capitalize">
+                        <span t-out="'-' + button.qty" />
+                        <span
+                        t-if="displayUOM"
+                        class="small-text ms-1"
+                        t-out="button.product_uom_id[1]"
+                    />
+                    </div>
+                    <div name="packaging_name" class="small-text" t-out="button.name" />
+                </div>
+        </xpath>
+    </t>
+</templates>

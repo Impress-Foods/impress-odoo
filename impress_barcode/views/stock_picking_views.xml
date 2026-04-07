@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_picking_view_kanban_inherit_add_origin" model="ir.ui.view">
+        <field name="name">stock.picking.view.kanban.inherit.add.origin</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.stock_picking_kanban" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='picking_properties']" position="after">
+                <t t-if="record.origin">
+                    <field name="origin" />
+                </t>
+                <t t-else="">
+                    <br />
+                </t>
+            </xpath>
+        </field>
+    </record>
+    <record
+        id="stock_picking_view_kanban_inherit_add_availability_button"
+        model="ir.ui.view"
+    >
+        <field name="name">stock.picking.view.kanban.inherit.add.origin</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.stock_picking_kanban" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('o_kanban_record_headings')]" position="after">
+                <button
+                    class="btn btn-link fa fa-check"
+                    name="action_assign"
+                    type="object"
+                    title="Availability"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
