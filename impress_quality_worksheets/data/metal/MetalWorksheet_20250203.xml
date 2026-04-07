@@ -48,7 +48,7 @@
     <!-- log: x_ws_xx_id - One2Many - x_metal_log_id -->
     <record id='metal_log_x_worksheet_20250203_id' model='ir.model.fields'>
         <field name="name">x_worksheet_20250203_id</field>
-        <field name="field_description">Worksheet 2024-12-02</field>
+        <field name="field_description">Worksheet 2025-02-03</field>
         <field
             name="model_id"
             model="ir.model"
