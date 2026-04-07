@@ -1,8 +1,10 @@
-from odoo import models
+from odoo import fields, models
 
 
 class QualityCheckWizard(models.TransientModel):
     _inherit = "quality.check.wizard"
+
+    can_be_na = fields.Boolean(related="current_check_id.can_be_na")
 
     def do_na(self):
         self.ensure_one()
