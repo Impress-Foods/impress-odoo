@@ -1,6 +1,6 @@
 {
     "name": "Impress-purchase-customizations",
-    "version": "17.0.1.0.0",
+    "version": "19.0.1.0.0",
     "summary": """ Impress Foods specific purchase customizations """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
