@@ -1,0 +1,22 @@
+{
+    "name": "Miscellaneous Quality Tests",
+    "version": "17.0.0.0.0",
+    "summary": """ Misc_quality_tests Summary """,
+    "author": "Cédric Paradis",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
+    "category": "Hidden",
+    "depends": ["base", "stock", "quality_control"],
+    "data": [
+        "data/ir_sequence.xml",
+        "security/ir.model.access.csv",
+        "views/misc_test_tag_views.xml",
+        "views/misc_test_views.xml",
+        "views/product_template_views.xml",
+        "views/stock_lot_views.xml",
+        "views/menu.xml",
+    ],
+    "application": False,
+    "installable": True,
+    "auto_install": False,
+    "license": "GPL-2",
+}
