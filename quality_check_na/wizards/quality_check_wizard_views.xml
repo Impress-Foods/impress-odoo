@@ -6,7 +6,14 @@
         <field name="inherit_id" ref="quality_control.view_quality_check_wizard" />
         <field name="arch" type="xml">
             <xpath expr="//button[@name='do_fail']" position="after">
-                <button name="do_na" type="object" class="btn-muted" string="N/A" />
+                <field name="can_be_na" invisible="1" />
+                <button
+                    name="do_na"
+                    type="object"
+                    class="btn-muted"
+                    string="N/A"
+                    invisible="not can_be_na"
+                />
             </xpath>
         </field>
     </record>

@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -26,7 +26,7 @@ class QualityCheck(models.Model):
                 }
             )
         else:
-            raise UserError(self.env._("This Quality Check cannot be set to N/A"))
+            raise UserError(_("This Quality Check cannot be set to N/A"))
 
     @api.model_create_multi
     def create(self, vals_list):
