@@ -1,4 +1,4 @@
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class ProductTemplate(models.Model):
@@ -24,7 +24,7 @@ class ProductTemplate(models.Model):
                 else self.misc_test_target_ids[0]
             )
             action = {
-                "name": _("Tests"),
+                "name": self.env._("Tests"),
                 "type": "ir.actions.act_window",
                 "view_mode": "form",
                 "res_model": "misc.test",
@@ -33,9 +33,9 @@ class ProductTemplate(models.Model):
 
         else:
             action = {
-                "name": _("Tests"),
+                "name": self.env._("Tests"),
                 "type": "ir.actions.act_window",
-                "view_mode": "tree,form",
+                "view_mode": "list,form",
                 "res_model": "misc.test",
                 "domain": [
                     (

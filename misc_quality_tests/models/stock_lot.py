@@ -1,4 +1,4 @@
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class StockLot(models.Model):
@@ -21,7 +21,7 @@ class StockLot(models.Model):
         self.ensure_one()
         if self.misc_test_count == 1:
             action = {
-                "name": _("Tests"),
+                "name": self.env._("Tests"),
                 "type": "ir.actions.act_window",
                 "view_mode": "form",
                 "res_model": "misc.test",
@@ -29,9 +29,9 @@ class StockLot(models.Model):
             }
         else:
             action = {
-                "name": _("Tests"),
+                "name": self.env._("Tests"),
                 "type": "ir.actions.act_window",
-                "view_mode": "tree,form",
+                "view_mode": "list,form",
                 "res_model": "misc.test",
                 "domain": [("id", "in", self.misc_test_ids.ids)],
             }

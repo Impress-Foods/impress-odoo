@@ -1,6 +1,6 @@
 from typing_extensions import Self
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class MiscTest(models.Model):
@@ -37,7 +37,7 @@ class MiscTest(models.Model):
         self.ensure_one()
         if self.affected_product_count == 1:
             action = {
-                "name": _("Products"),
+                "name": self.env._("Products"),
                 "type": "ir.actions.act_window",
                 "view_mode": "form",
                 "res_model": "product.template",
@@ -45,9 +45,9 @@ class MiscTest(models.Model):
             }
         else:
             action = {
-                "name": _("Products"),
+                "name": self.env._("Products"),
                 "type": "ir.actions.act_window",
-                "view_mode": "tree,form",
+                "view_mode": "list,form",
                 "res_model": "product.template",
                 "domain": [("id", "in", self.affected_product_ids.ids)],
             }
