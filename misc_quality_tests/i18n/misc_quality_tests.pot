@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e-20260219\n"
+"Project-Id-Version: Odoo Server 19.0+e-20260330\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -88,6 +88,8 @@ msgstr ""
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__display_name
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test_tag__display_name
+#: model:ir.model.fields,field_description:misc_quality_tests.field_product_template__display_name
+#: model:ir.model.fields,field_description:misc_quality_tests.field_stock_lot__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -107,12 +109,6 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr ""
 
 #. module: misc_quality_tests
-#: model_terms:ir.ui.view,arch_db:misc_quality_tests.view_misc_test_search
-#: model_terms:ir.ui.view,arch_db:misc_quality_tests.view_misc_test_tag_search
-msgid "Group By"
-msgstr ""
-
-#. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__has_message
 msgid "Has Message"
 msgstr ""
@@ -120,6 +116,8 @@ msgstr ""
 #. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__id
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test_tag__id
+#: model:ir.model.fields,field_description:misc_quality_tests.field_product_template__id
+#: model:ir.model.fields,field_description:misc_quality_tests.field_stock_lot__id
 msgid "ID"
 msgstr ""
 
@@ -275,15 +273,8 @@ msgstr ""
 #. module: misc_quality_tests
 #. odoo-python
 #: code:addons/misc_quality_tests/models/misc_test.py:0
-#: code:addons/misc_quality_tests/models/misc_test.py:0
 #: model_terms:ir.ui.view,arch_db:misc_quality_tests.view_misc_test_form
-#, python-format
 msgid "Products"
-msgstr ""
-
-#. module: misc_quality_tests
-#: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__rating_ids
-msgid "Ratings"
 msgstr ""
 
 #. module: misc_quality_tests
@@ -331,12 +322,9 @@ msgstr ""
 #. module: misc_quality_tests
 #. odoo-python
 #: code:addons/misc_quality_tests/models/product.py:0
-#: code:addons/misc_quality_tests/models/product.py:0
-#: code:addons/misc_quality_tests/models/stock_lot.py:0
 #: code:addons/misc_quality_tests/models/stock_lot.py:0
 #: model_terms:ir.ui.view,arch_db:misc_quality_tests.view_product_template_form
 #: model_terms:ir.ui.view,arch_db:misc_quality_tests.view_stock_lot_form
-#, python-format
 msgid "Tests"
 msgstr ""
 
@@ -368,4 +356,12 @@ msgstr ""
 #. module: misc_quality_tests
 #: model:ir.model.fields,help:misc_quality_tests.field_misc_test__website_message_ids
 msgid "Website communication history"
+msgstr ""
+
+#. module: misc_quality_tests
+#. odoo-python
+#: code:addons/misc_quality_tests/models/misc_test.py:0
+#: code:addons/misc_quality_tests/models/product.py:0
+#: code:addons/misc_quality_tests/models/stock_lot.py:0
+msgid "id"
 msgstr ""
