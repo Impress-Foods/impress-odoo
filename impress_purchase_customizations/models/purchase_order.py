@@ -1,9 +1,5 @@
-import logging
-
-from odoo import _, models
+from odoo import models
 from odoo.exceptions import ValidationError
-
-_logger = logging.getLogger(__name__)
 
 
 class PurchaseOrder(models.Model):
@@ -18,4 +14,4 @@ class PurchaseOrder(models.Model):
         ):
             return super().button_unlock()
         else:
-            raise ValidationError(_("You cannot unlock another user's PO!"))
+            raise ValidationError(self.env._("You cannot unlock another user's PO!"))

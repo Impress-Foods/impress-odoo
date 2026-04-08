@@ -16,15 +16,12 @@
         <field name="binding_type">report</field>
     </record>
 
-
     <template
         id="report_purchaseorder_internal_document"
         inherit_id="purchase.report_purchaseorder_document"
         primary="True"
         priority="99"
     >
-
-
         <!-- Add needed columns for internal reports -->
         <xpath expr="//th[@name='th_quantity']" positon='after'>
             <th name="th_qty_received" class="text-end">
@@ -33,24 +30,39 @@
             <th name="th_qty_invoiced" class="text-end">
                 <strong>Qty Invoiced</strong>
             </th>
-
         </xpath>
-        <xpath expr="//td[@name='td_total_qty']" position="before">
+        <xpath expr="//tbody[1]//tr[1]/t/td[2]" position="after">
             <td name="td_received_qty" class='text-end'>
-                <span t-out="line.qty_received" />
+                <span t-field="line.qty_received" />
+                <span t-field="line.product_uom_id.name" groups="uom.group_uom" />
+                <span
+                    t-if="line.product_uom_id != line.product_id.uom_id"
+                    class="text-muted small"
+                >
+                    <br />
+                    <span
+                        t-field="line.received_uom_qty"
+                        t-options="{'widget': 'float', 'decimal_precision': 'Product Unit'}"
+                    />
+                    <span t-field="line.product_id.uom_id" />
+                </span>
             </td>
             <td name="td_invoiced_qty" class="text-end">
-                <span t-out="line.qty_invoiced" />
+                <span t-field="line.qty_invoiced" />
+                <span t-field="line.product_uom_id.name" groups="uom.group_uom" />
+                <span
+                    t-if="line.product_uom_id != line.product_id.uom_id"
+                    class="text-muted small"
+                >
+                    <br />
+                    <span
+                        t-field="line.invoiced_uom_qty"
+                        t-options="{'widget': 'float', 'decimal_precision': 'Product Unit'}"
+                    />
+                    <span t-field="line.product_id.uom_id" />
+                </span>
             </td>
         </xpath>
-
-        <!-- Remove columns added in impress_purchase_customizations.report_purchaseorder_document -->
-        <xpath expr="//th[@name='th_uom']" position="replace" />
-        <xpath expr="//th[@name='th_total_qty']" position="replace" />
-        <xpath expr="//td[@name='td_uom']" position="replace" />
-        <xpath expr="//td[@name='td_total_qty']" position="replace" />
-
-
     </template>
 
     <template id="report_purchaseorder_internal">
@@ -63,5 +75,4 @@
             </t>
         </t>
     </template>
-
 </odoo>
