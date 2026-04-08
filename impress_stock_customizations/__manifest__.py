@@ -14,8 +14,14 @@
         "reports/impress_stock_customizations_stock_delivery_document_views.xml",
         "reports/impress_stock_customizations_labels.xml",
         "reports/online_sale_labels.xml",
-        "views/stock_lot_views.xml",
         "reports/stock_picking_document_views.xml",
-        "reports/online_sale_labels.xml",
+        "reports/report_templates.xml",
+        "views/stock_lot_views.xml",
+        "views/res_partner_views.xml",
     ],
+    "assets": {
+        "web.report_assets_common": [
+            "impress_stock_customizations/static/src/**/*.scss"
+        ]
+    },
 }

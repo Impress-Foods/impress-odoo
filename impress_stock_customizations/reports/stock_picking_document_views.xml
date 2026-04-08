@@ -6,29 +6,33 @@
         <field name="inherit_id" ref="stock.report_picking" />
         <field name="priority">20</field>
         <field name="arch" type="xml">
+            <xpath expr="//div[1]" position="after" />
             <xpath
-                expr="//th[@name='th_serial_number']"
-                position="after"
-                t-if="has_serial_number"
+                expr="//div[hasclass('o_report_stockpicking_operations')][1]"
+                position="before"
             >
+                <t
+                    t-set="has_shelf_life"
+                    t-value="any(o.mapped('move_ids.move_line_ids.lot_id.expiration_date'))"
+                />
+            </xpath>
+            <xpath expr="//th[@name='th_barcode']" position="before">
                 <th
                     name="th_shelflife_remaining"
                     class="text-center"
-                    t-if="has_serial_number"
+                    t-if="has_shelf_life"
                 >
                     <strong>Shelf life remaining</strong>
                 </th>
             </xpath>
-            <xpath expr="//tbody/tr/td[5]" position="after">
+            <xpath expr="//tbody/t/t[3]/tr/td[4]" position="after">
                 <td
                     name="shelflife_remaining"
-                    t-if="has_serial_number"
+                    t-if="has_shelf_life"
                     class="text-center h6"
                 >
-                    <div
-                        t-if="has_serial_number and ml.lot_id and ml.lot_id.use_expiration_date"
-                    >
-                        <span t-out="ml.lot_id.life_remaining">
+                    <div t-if="has_shelf_life">
+                        <span t-out="line.lot_id.life_remaining">
                             0
                         </span>
                         <span> days</span>
