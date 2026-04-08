@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <template id="report_online_sale_label">
         <t
             t-foreach="docs"
             t-as="transfer"
         > ^XA^CI28 ^FO100,50 ^A0N,44,33^FDCommande: <t
-                t-out="transfer.origin"
-            /> ^FS ^FO100,100 ^A0N,44,33^FDClient: <t
-                t-out="transfer.partner_id.display_name"
-            /> ^FS ^FO425,150^BY3 ^BXN,8,200 ^FD<t
-                t-out="transfer.origin"
-            /> ^FS ^XZ </t>
+            t-out="transfer.origin"
+        /> ^FS ^FO100,100 ^A0N,44,33^FDClient: <t
+            t-out="transfer.partner_id.display_name"
+        /> ^FS ^FO425,150^BY3 ^BXN,8,200 ^FD<t t-out="transfer.origin" /> ^FS ^XZ </t>
     </template>
-
 
     <record id="action_report_online_sale_label" model="ir.actions.report">
         <field name="name">Online Sale Label</field>
@@ -32,7 +28,6 @@
         <field name="binding_type">report</field>
     </record>
 
-
     <template id="zpl_online_sales_content_view">
         <t t-translate="off">
             <t name="start_label">
@@ -45,10 +40,10 @@
 
             <t name="order_package_info">
                 <t t-out="'^FO50,50^A0N,30,30^FD'" /> Order: <t
-                    t-out="picking.origin"
-                /> / <t t-out="str(package_index+1)" /> of <t
-                    t-out="str(package_total)"
-                /> <t t-out="'^FS'" />
+                t-out="picking.origin"
+            /> / <t t-out="str(package_index+1)" /> of <t
+                t-out="str(package_total)"
+            /> <t t-out="'^FS'" />
             </t>
 
             <t name="separator_line_1">
@@ -58,14 +53,14 @@
             <t name="content_header">
                 <t t-set="header_y" t-value="120" />
                 <t t-out="'^FO50,' + str(header_y) + '^A0N,30,30^FD'" />Product<t
-                    t-out="'^FS'"
-                />
+                t-out="'^FS'"
+            />
                 <t t-out="'^FO400,' + str(header_y) + '^A0N,30,30^FD'" />Lot<t
-                    t-out="'^FS'"
-                />
+                t-out="'^FS'"
+            />
                 <t t-out="'^FO650,' + str(header_y) + '^A0N,30,30^FD'" />Qty<t
-                    t-out="'^FS'"
-                />
+                t-out="'^FS'"
+            />
             </t>
 
             <t name="separator_line_2">
