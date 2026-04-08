@@ -17,14 +17,14 @@ patch(BarcodePickingModel.prototype, {
     },
 
     _getMoveData(id) {
-        const smData = this.cache.getRecord("stock.move", id);
+        const smData = structuredClone(this.cache.getRecord("stock.move", id));
         smData.product_id = this.cache.getRecord("product.product", smData.product_id);
         return smData;
     },
 
     get unreservedMoves() {
-        const move_ids = this.moveIds;
-        const lines = this.pageLines;
+        const move_ids = structuredClone(this.moveIds);
+        const lines = structuredClone(this.pageLines);
         for (const line of lines) {
             const move_id = line.move_id;
             const index = move_ids.indexOf(move_id);
@@ -281,12 +281,9 @@ patch(BarcodePickingModel.prototype, {
             }
 
             if (groupKey) {
-                let key = "";
-                if (groupKey.indexOf(" - ")) {
-                    key = String(groupKey).slice(0, groupKey.indexOf(" - ")).trim();
-                } else {
-                    key = String(groupKey).trim();
-                }
+                const sep = groupKey.indexOf(" - ");
+                const key =
+                    sep !== -1 ? groupKey.slice(0, sep).trim() : groupKey.trim();
                 if (groupColorMap[key]) {
                     item.color = groupColorMap[key];
                 } else {
