@@ -6,9 +6,9 @@
         <field name="inherit_id" ref="stock_barcode.stock_picking_view_kanban" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
-                <t t-if="record.origin">
-                    <field name="origin" />
-                </t>
+                <span class="ps-2">
+                    <field name="origin" invisible="not origin" />
+                </span>
             </xpath>
         </field>
     </record>

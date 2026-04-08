@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t
+        t-name="impress_sales_customizations.SaleCalendarCommonRenderer.event"
+        t-inherit="web.CalendarCommonRenderer.event"
+        t-inherit-mode="primary"
+        owl="1"
+    >
+        <xpath expr="//div[1]" position="replace">
+            <div class="o_event_title text-truncate">
+                <t t-out="title" />
+                <span t-if="rawRecord.client_order_ref"> - <t
+                    t-out="rawRecord.client_order_ref"
+                /></span>
+            </div>
+        </xpath>
+    </t>
+</templates>

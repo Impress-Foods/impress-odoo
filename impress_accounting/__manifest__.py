@@ -1,19 +1,19 @@
 {
-    "name": "impress account report customizations",
+    "name": "Impress_accounting",
     "version": "19.0.1.0.0",
-    "depends": ["account_accountant", "account_reports"],
+    "summary": """ Impress_accounting Summary """,
     "author": "Cédric Paradis",
-    "category": "Accounting",
     "website": "https://github.com/Impress-Foods/impress-odoo",
-    "summary": """
-    Module to customize the accounting reports
-    """,
-    # data files always loaded at installation
+    "category": "Hidden",
+    "depends": ["base", "account", "account_reports"],
+    "data": ["views/res_partner_views.xml"],
     "assets": {
         "web.assets_backend": [
             "impress_account_report/static/src/account_report.xml",
         ],
     },
-    "license": "GPL-2",
+    "application": False,
     "installable": True,
+    "auto_install": False,
+    "license": "LGPL-3",
 }
