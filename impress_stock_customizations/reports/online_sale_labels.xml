@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="report_online_sale_label">
+        <t
+            t-foreach="docs"
+            t-as="transfer"
+        > ^XA^CI28 ^FO100,50 ^A0N,44,33^FDCommande: <t
+                t-out="transfer.origin"
+            /> ^FS ^FO100,100 ^A0N,44,33^FDClient: <t
+                t-out="transfer.partner_id.display_name"
+            /> ^FS ^FO425,150^BY3 ^BXN,8,200 ^FD<t
+                t-out="transfer.origin"
+            /> ^FS ^XZ </t>
+    </template>
+
+
+    <record id="action_report_online_sale_label" model="ir.actions.report">
+        <field name="name">Online Sale Label</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-text</field>
+        <field
+            name="report_name"
+        >impress_stock_customizations.report_online_sale_label</field>
+        <field
+            name="report_file"
+        >impress_stock_customizations.report_online_sale_label</field>
+        <field
+            name="print_report_name"
+        >'Online Sale Label - %s - %s' % (object.partner_id.name or '', object.origin)</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">report</field>
+    </record>
+
+
+    <template id="zpl_online_sales_content_view">
+        <t t-translate="off">
+            <t name="start_label">
+                <t t-out="'^XA'" />
+                <t t-out="'^MMT'" />
+                <t t-out="'^PW800'" />
+                <t t-out="'^LL1200'" />
+                <t t-out="'^LS0'" />
+            </t>
+
+            <t name="order_package_info">
+                <t t-out="'^FO50,50^A0N,30,30^FD'" /> Order: <t
+                    t-out="picking.origin"
+                /> / <t t-out="str(package_index+1)" /> of <t
+                    t-out="str(package_total)"
+                /> <t t-out="'^FS'" />
+            </t>
+
+            <t name="separator_line_1">
+                <t t-out="'^FO40,100^GB720,2,2^FS'" />
+            </t>
+
+            <t name="content_header">
+                <t t-set="header_y" t-value="120" />
+                <t t-out="'^FO50,' + str(header_y) + '^A0N,30,30^FD'" />Product<t
+                    t-out="'^FS'"
+                />
+                <t t-out="'^FO400,' + str(header_y) + '^A0N,30,30^FD'" />Lot<t
+                    t-out="'^FS'"
+                />
+                <t t-out="'^FO650,' + str(header_y) + '^A0N,30,30^FD'" />Qty<t
+                    t-out="'^FS'"
+                />
+            </t>
+
+            <t name="separator_line_2">
+                <t t-out="'^FO40,160^GB720,2,2^FS'" />
+            </t>
+
+            <t name="package_content_details">
+                <t t-set="current_y" t-value="180" />
+                <t t-foreach="package.quant_ids" t-as="quant">
+                    <t
+                        t-out="'^FO50,' + str(current_y) + '^A0N,25,25^FD' + quant.product_id.display_name + '^FS'"
+                    />
+                    <t t-if="quant.lot_id">
+                        <t
+                            t-out="'^FO400,' + str(current_y) + '^A0N,25,25^FD' + quant.lot_id.name + '^FS'"
+                        />
+                    </t>
+                    <t
+                        t-out="'^FO650,' + str(current_y) + '^A0N,25,25^FD' + str(quant.quantity) + '^FS'"
+                    />
+                    <t t-set="current_y" t-value="current_y + 35" />
+                </t>
+            </t>
+
+            <t name="separator_line_3">
+                <t t-out="'^FO40,' + str(current_y + 10) + '^GB720,2,2^FS'" />
+            </t>
+
+            <t name="end_label">
+                <t t-out="'^XZ'" />
+            </t>
+        </t>
+    </template>
+
+    <template id="zpl_online_sales_content">
+        <t t-foreach="docs" t-as="o">
+            <t t-set="current_picking" t-value="o" />
+            <t t-foreach="o.move_line_ids.mapped('result_package_id')" t-as="package">
+                <t
+                    t-call="impress_stock_customizations.zpl_online_sales_content_view"
+                    t-lang="o._get_report_lang()"
+                >
+                    <t t-set="picking" t-value="current_picking" />
+                    <t t-set="package_index" t-value="package_index" />
+                    <t t-set="package_total" t-value="package_size" />
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_zpl_online_sales_content" model="ir.actions.report">
+        <field name="name">ZPL Online Sales Content</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-text</field>
+        <field
+            name="report_name"
+        >impress_stock_customizations.zpl_online_sales_content</field>
+        <field
+            name="report_file"
+        >impress_stock_customizations.zpl_online_sales_content</field>
+        <field
+            name="print_report_name"
+        >'ZPL Online Sales Content - %s - %s' % (object.partner_id.name or '', object.origin)</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

@@ -1,0 +1,263 @@
+<?xml version='1.0' encoding="utf-8" ?>
+<?xml-model href="../../import_xml.rng" type="application/xml"?>
+<odoo>
+    <record
+        id="impress_stock_report_delivery_document_add_total_quantity"
+        model="ir.ui.view"
+    >
+        <field
+            name="name"
+        >stock.report_delivery_document.impress.add_total_quantity</field>
+        <field name="inherit_id" ref="stock.report_delivery_document" />
+        <field name="priority">50</field>
+        <field name="arch" type="xml">
+            <xpath
+                expr="//table[@name='stock_move_table']/tbody"
+                position="after"
+            > </xpath>
+        </field>
+    </record>
+
+    <record
+        id="impress_stock_report_delivery_document_add_column_sums"
+        model="ir.ui.view"
+    >
+        <field
+            name="name"
+        > stock.report_delivery_document.impress.add_column_sums</field>
+        <field name="inherit_id" ref="stock.report_delivery_document" />
+        <field name="priority">51</field>
+        <field name="arch" type="xml">
+            <!-- Sums for transfer in process -->
+            <xpath expr="//table[1]/tbody/tr" position="before">
+                <t t-set="total_ordered" t-value="0" />
+                <t t-set="total_delivered" t-value="0" />
+            </xpath>
+            <xpath expr="//table[1]/tbody/tr/td[1]" position="before">
+                <t
+                    t-set="total_ordered"
+                    t-value="total_ordered + move.product_uom_qty"
+                />
+                <t t-set="total_delivered" t-value="total_delivered + move.quantity" />
+            </xpath>
+            <xpath expr="//table[1]/tbody" position="after">
+                <tfoot>
+                    <td />
+                    <td>
+                        <t t-out="total_ordered" />
+                    </td>
+                    <td>
+                        <t t-out="total_delivered" />
+                    </td>
+                </tfoot>
+            </xpath>
+
+            <!-- sums for completed transfers -->
+
+            <xpath
+                expr="//table[@name='stock_move_line_table']/tbody"
+                position="before"
+            >
+                <t t-set="total_ordered" t-value="0" />
+                <t t-set="total_delivered" t-value="0" />
+            </xpath>
+            <xpath
+                expr="//table[@name='stock_move_line_table']/tbody/t"
+                position="before"
+            >
+                <t t-foreach="o.move_ids" t-as="move">
+                    <t
+                        t-set="total_ordered"
+                        t-value="total_ordered + move.product_uom_qty"
+                    />
+                    <t
+                        t-set="total_delivered"
+                        t-value="total_delivered + move.quantity"
+                    />
+                </t>
+            </xpath>
+
+            <!-- Footer -->
+            <xpath expr="//table[@name='stock_move_line_table']/tbody" position="after">
+                <tfoot>
+                    <tr>
+                        <td />
+                        <td />
+                        <td />
+                        <td class="text-center">
+                            <t t-if="not has_serial_number" t-out="total_ordered" />
+                        </td>
+                        <td class="text-center">
+                            <t t-out="total_delivered" />
+                        </td>
+                    </tr>
+                </tfoot>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record
+        id="impress_stock_report_delivery_document_add_minimum_shelf_life"
+        model="ir.ui.view"
+    >
+        <field
+            name="name"
+        > stock.report_delivery_document.impress.add_minimum_shelf_life</field>
+        <field name="inherit_id" ref="stock.report_delivery_document" />
+        <field name="priority">51</field>
+        <field name="arch" type="xml">
+            <xpath expr="//*[@name='div_sched_date']" position="after">
+                <div
+                    class="col-auto"
+                    name="minimum_shelf_life"
+                    t-if="o.fields_get().get('x_minimum_shelf_life', False)"
+                >
+                    <strong>Minimum shelf life:</strong>
+                    <br />
+                    <p>
+                        <!-- <span t-field="o.x_minimum_shelf_life">0</span> --> days </p>
+                </div>
+
+            </xpath>
+        </field>
+    </record>
+
+    <record
+        id="impress_stock_report_delivery_document_remove_header"
+        model="ir.ui.view"
+    >
+        <field name="name">stock.report_delivery_document.impress.remove_header</field>
+        <field name="inherit_id" ref="stock.report_delivery_document" />
+        <field name="priority">52</field>
+        <field name="arch" type="xml">
+            <xpath expr="//t[@t-call='web.external_layout']" position="attributes">
+                <attribute name="t-call">web.internal_layout</attribute>
+            </xpath>
+
+            <xpath expr="//div[hasclass('page')][1]" position="before">
+                <t t-set="o" t-value="o.with_context(lang=o._get_report_lang())" />
+                <t
+                    t-set="partner"
+                    t-value="o.partner_id or (o.move_ids and o.move_ids[0].partner_id) or False"
+                />
+                <t t-set="address">
+                    <div name="div_outgoing_address">
+                        <div
+                            name="outgoing_delivery_address"
+                            t-if="o.should_print_delivery_address()"
+                        >
+                            <span>
+                                <strong>Delivery Address:</strong>
+                            </span>
+                            <div
+                                t-field="o.move_ids[0].partner_id"
+                                t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"
+                            />
+                        </div>
+                        <div
+                            name="outgoing_warehouse_address"
+                            t-elif="o.picking_type_id.code != 'internal' and o.picking_type_id.warehouse_id.partner_id"
+                        >
+                            <span>
+                                <strong>Warehouse Address:</strong>
+                            </span>
+                            <div
+                                t-field="o.picking_type_id.warehouse_id.partner_id"
+                                t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"
+                            />
+                        </div>
+                    </div>
+                </t>
+                <t t-set="information_block">
+                    <div class="row">
+                        <div class="col-7" name="div_incoming_address">
+                            <t t-set="show_partner" t-value="False" />
+                            <div
+                                name="vendor_address"
+                                t-if="o.picking_type_id.code=='incoming' and partner"
+                            >
+                                <span>
+                                    <strong>Vendor Address:</strong>
+                                </span>
+                                <t t-set="show_partner" t-value="True" />
+                            </div>
+                            <div
+                                name="customer_address"
+                                t-if="o.picking_type_id.code=='outgoing' and partner and partner != partner.commercial_partner_id"
+                            >
+                                <span>
+                                    <strong>Customer Address:</strong>
+                                </span>
+                                <t t-set="show_partner" t-value="True" />
+                            </div>
+                            <div t-if="show_partner" name="partner_header">
+                                <div
+                                    t-field="partner.commercial_partner_id"
+                                    t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;, &quot;vat&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </t>
+                <div class="row"> </div>
+                <div class="pt-5">
+                    <!-- This div ensures that the address is not cropped by the
+                    header. -->
+                    <t t-call="web.address_layout" />
+                </div>
+                <t t-out="0" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="impress_stock_report_delivery_document_add_barcode" model="ir.ui.view">
+        <field name="name">stock.report_delivery_document.impress.add_barcode</field>
+        <field name="inherit_id" ref="stock.report_delivery_document" />
+        <field name="priority">53</field>
+        <field name="arch" type="xml">
+            <xpath
+                expr="//div[hasclass('page')][1]/h2[1]"
+                position="after"
+                class="d-flex flex-row-reverse"
+            >
+                <div
+                    t-field="o.name"
+                    t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:300px;height:50px;'}"
+                >
+                    <div
+                        class="bg-light border-1 rounded d-flex flex-column align-items-center justify-content-center p-3 opacity-75 text-muted text-center"
+                    > (document barcode) </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="report_delivery_document_add_shelf_life" model="ir.ui.view">
+        <field name="name">stock.report_delivery_document.impress.add_shelf_lift</field>
+        <field name="inherit_id" ref="stock.report_delivery_document" />
+        <field name="priority">53</field>
+        <field name="arch" type="xml">
+            <!-- For state == done -->
+            <xpath expr="//th[@name='lot_serial']" position="after">
+                <th
+                    name="shelf_life_remaining"
+                    t-if="has_serial_number"
+                > Shelf life remaining </th>
+            </xpath>
+        </field>
+    </record>
+
+    <template
+        id="stock_report_delivery_has_serial_move_line"
+        inherit_id="stock.stock_report_delivery_has_serial_move_line"
+    >
+        <xpath expr="//t[@name='move_line_lot']" position="after">
+            <t t-if="has_serial_number" name="shelf_life_remaining">
+                <td>
+                    <span t-field="move_line.lot_id.life_remaining" />
+                </td>
+            </t>
+        </xpath>
+    </template>
+</odoo>
