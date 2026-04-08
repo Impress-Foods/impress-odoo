@@ -23,7 +23,7 @@
         priority="99"
     >
         <!-- Add needed columns for internal reports -->
-        <xpath expr="//th[@name='th_quantity']" positon='after'>
+        <xpath expr="//th[@name='th_quantity']" position='after'>
             <th name="th_qty_received" class="text-end">
                 <strong>Qty Received</strong>
             </th>
