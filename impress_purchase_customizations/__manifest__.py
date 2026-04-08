@@ -7,7 +7,6 @@
     "category": "Hidden",
     "depends": ["base", "purchase"],
     "data": [
-        "report/purchase_order_report_inherit.xml",
         "report/purchase_order_report.xml",
         "security/groups.xml",
     ],
