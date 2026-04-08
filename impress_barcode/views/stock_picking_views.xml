@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_picking_view_kanban_inherit" model="ir.ui.view">
+        <field name="name">stock.picking.view.kanban.barcode.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_barcode.stock_picking_view_kanban" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <span class="ps-2">
+                    <field name="origin" invisible="not origin" />
+                </span>
+            </xpath>
+        </field>
+    </record>
+</odoo>

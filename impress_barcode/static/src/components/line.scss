@@ -1,0 +1,173 @@
+.o_impress_reservation_status {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 8px 12px;
+    margin-top: 8px;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    font-size: 0.875rem;
+
+    .o_reservation_row {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        .o_label {
+            font-weight: 600;
+            color: #6c757d;
+            font-size: 0.75rem;
+        }
+
+        .o_value {
+            font-weight: 700;
+            color: #212529;
+        }
+    }
+
+    .o_available {
+        .o_warning {
+            color: #fd7e14;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+    }
+
+    .o_unreserved_flag {
+        .o_warning {
+            color: #dc3545;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+    }
+
+    // Status-based styling
+    &.o_status_complete {
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+
+        .o_reservation_row .o_value {
+            color: #155724;
+        }
+    }
+
+    &.o_status_partial {
+        background-color: #fff3cd;
+        border-color: #ffeeba;
+
+        .o_reservation_row .o_value {
+            color: #856404;
+        }
+    }
+
+    &.o_status_unreserved {
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+
+        .o_reservation_row .o_value {
+            color: #721c24;
+        }
+    }
+
+    &.o_status_over {
+        background-color: #e2e3e5;
+        border-color: #d6d8db;
+
+        .o_reservation_row .o_value {
+            color: #383d41;
+        }
+    }
+}
+
+// Missing products header section
+.o_impress_missing_header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    color: #721c24;
+    font-weight: 600;
+
+    i {
+        font-size: 1.1rem;
+    }
+}
+
+// Unreserved line notice
+.o_impress_unreserved_notice {
+    display: flex;
+    justify-content: center;
+    padding: 4px 8px;
+    margin-top: 4px;
+    background-color: #f8d7da;
+    border-radius: 4px;
+
+    .o_warning {
+        color: #dc3545;
+        font-weight: 700;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+    }
+}
+
+// Kit product badge
+.o_impress_kit_notice {
+    display: flex;
+    justify-content: center;
+    padding: 4px 8px;
+    margin-top: 4px;
+
+    .o_kit_badge {
+        background-color: #6c757d;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+}
+
+// Unreserved line - checkmark in top right
+.o_impress_upper_buttons {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+}
+
+// Line title container positioning
+.o_barcode_line_title {
+    position: relative;
+}
+
+// Kit color classes - dynamically applied based on color assignment
+[class^="o_kit_color_"],
+[class*=" o_kit_color_"] {
+    border-left: 4px solid;
+}
+
+// Generate border color from class name (e.g., o_kit_color_7db31a -> border-color: #7db31a)
+@each $color
+    in (
+        "7db31a",
+        "4d86a5",
+        "cf0bf1",
+        "3e517a",
+        "fc9f5b",
+        "8c8fe0",
+        "84a75f",
+        "00c7a9",
+        "d60b2d",
+        "1298f1"
+    )
+{
+    .o_kit_color_#{$color} {
+        border-left-color: #{$color} !important;
+    }
+}

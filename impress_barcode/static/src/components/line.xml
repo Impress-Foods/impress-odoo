@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="impress_barcode.add_image"
+        t-inherit="stock_barcode.LineComponent"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//div[hasclass('o_barcode_line_details')]" position='before'>
+            <div
+                class="d-flex align-items-center me-4"
+                style="width: 128px; height: 128px;"
+            >
+                <img
+                    style="max-height: 100%; width: auto; margin: auto;"
+                    t-attf-src="/web/image?model=product.product&amp;id={{props.line.product_id.id}}&amp;field=image_128"
+                />
+            </div>
+        </xpath>
+        <xpath expr="//div[hasclass('o_barcode_line')]" position="attributes">
+            <attribute name="t-att-style">style</attribute>
+        </xpath>
+    </t>
+
+    <t
+        t-name="impress_barcode.LineReservationStatus"
+        t-inherit="stock_barcode.LineComponent"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//div[hasclass('o_barcode_line_details')]" position="inside">
+            <div
+                t-if="env.model.lineModel == 'stock.move.line' &amp;&amp; plannedQty !== reservedQty"
+                t-att-class="'o_impress_reservation_status o_status_' + reservationStatus"
+            >
+                <div class="o_reservation_row">
+                    <span class="o_label">RESERVED:</span>
+                    <span class="o_value" t-esc="reservedQty" />
+                </div>
+                <div class="o_reservation_row">
+                    <span class="o_label">DONE:</span>
+                    <span class="o_value" t-esc="doneQty" />
+                </div>
+                <div class="o_reservation_row">
+                    <span class="o_label">PLANNED:</span>
+                    <span class="o_value" t-esc="plannedQty" />
+                </div>
+                <div t-if="availableQty > 0" class="o_reservation_row o_available">
+                    <span class="o_warning">+<t t-esc="availableQty" /> required</span>
+                </div>
+            </div>
+        </xpath>
+    </t>
+
+    <t
+        t-name="impress_barcode.HideUnreservedDeleteButton"
+        t-inherit="stock_barcode.LineLowerButtons"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//button[hasclass('o_delete_line')]" position="attributes">
+            <attribute name="t-if">!props.line.isUnreservedLine</attribute>
+        </xpath>
+    </t>
+
+</templates>

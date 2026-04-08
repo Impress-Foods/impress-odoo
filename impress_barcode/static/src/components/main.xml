@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="stock_barcode_main_inherit_add_move_line"
+        t-inherit="stock_barcode.MainComponent"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath
+            expr="//div[hasclass('o_barcode_lines')]/div[hasclass('alert')]"
+            position="after"
+        >
+            <t t-if="env.model.unreservedLines.length != 0">
+                <div class="o_impress_missing_header">
+                    <i class="fa fa-exclamation-triangle" />
+                    <span>MISSING PRODUCT(S) - <t
+                        t-esc="env.model.unreservedLines.length"
+                    /> product(s) not reserved</span>
+                </div>
+
+                <t
+                    t-foreach="env.model.unreservedLines"
+                    t-as="line"
+                    t-key="line.virtual_id"
+                >
+                    <LineComponent
+                        line="line"
+                        displayUOM="groups.group_uom"
+                        editLine.bind="onOpenProductPage"
+                    />
+                </t>
+            </t>
+        </xpath>
+    </t>
+
+</templates>
