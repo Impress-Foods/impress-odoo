@@ -7,6 +7,11 @@
     "category": "Hidden",
     "depends": ["base", "account"],
     "data": ["views/res_partner_views.xml"],
+    "assets": {
+        "web.assets_backend": [
+            "impress_account_report/static/src/account_report.xml",
+        ],
+    },
     "application": False,
     "installable": True,
     "auto_install": False,
