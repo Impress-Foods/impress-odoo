@@ -278,6 +278,11 @@ msgid "Products"
 msgstr ""
 
 #. module: misc_quality_tests
+#: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: misc_quality_tests
 #: model:ir.model.fields,field_description:misc_quality_tests.field_misc_test__activity_user_id
 msgid "Responsible User"
 msgstr ""
