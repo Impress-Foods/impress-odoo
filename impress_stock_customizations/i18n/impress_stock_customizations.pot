@@ -61,6 +61,11 @@ msgid "Contact"
 msgstr ""
 
 #. module: impress_stock_customizations
+#: model:ir.model,website_form_label:impress_stock_customizations.model_res_partner
+msgid "Create a Customer"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model:ir.model.fields,help:impress_stock_customizations.field_stock_lot__alert_date
 msgid ""
 "Date to determine the expired lots and serial numbers using the filter "
