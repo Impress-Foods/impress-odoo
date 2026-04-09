@@ -1,6 +1,6 @@
 {
     "name": "Emails Templates - A+",
-    "version": "17.0.1.0.4",
+    "version": "19.0.1.0.0",
     "summary": """ Email templates for A+ """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
