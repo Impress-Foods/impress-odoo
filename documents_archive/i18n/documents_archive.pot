@@ -44,6 +44,11 @@ msgid "Contact"
 msgstr ""
 
 #. module: documents_archive
+#: model:ir.model,website_form_label:documents_archive.model_res_partner
+msgid "Create a Customer"
+msgstr ""
+
+#. module: documents_archive
 #: model:ir.model.fields,field_description:documents_archive.field_documents_document__display_name
 #: model:ir.model.fields,field_description:documents_archive.field_product_document__display_name
 #: model:ir.model.fields,field_description:documents_archive.field_res_partner__display_name
