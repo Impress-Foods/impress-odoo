@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="email_template_invoice_aplus" model="mail.template">
         <field name="name">A+: Invoice</field>
         <field name="model_id" ref="account.model_account_move" />
@@ -24,17 +23,14 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
-                            </td>
+                            <td />
                         </tr>
                         <tr>
-                            <td t-attf-style="color: {{textColor}};">
-                            </td>
+                            <td t-attf-style="color: {{textColor}};" />
                         </tr>
 
                         <tr>
-                            <td t-attf-style="color: {{textColor}};">
-                            </td>
+                            <td t-attf-style="color: {{textColor}};" />
                         </tr>
 
                         <tr>
@@ -47,5 +43,4 @@
             </div>
         </field>
     </record>
-
 </odoo>

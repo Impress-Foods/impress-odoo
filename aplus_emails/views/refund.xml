@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="email_template_refund_aplus" model="mail.template">
         <field name="name">A+: Refund confirmation</field>
         <field name="model_id" ref="sale.model_sale_order" />
@@ -44,14 +43,13 @@
                                 <p>Hi <t t-out="object.partner_id.name" />,</p>
                                 <p
                                 > Your A+ Superfruit order has been refunded. There are more details below for your reference: </p>
-
                             </td>
                         </tr>
                         <tr t-attf-style=" color:{{textColor}};">
                             <td t-attf-style=" color:{{textColor}};">
                                 <h2 t-attf-style=" color:{{textColor}};"> Order # <t
-                                        t-out="object.name"
-                                    /> (<t t-out="object.date_order.date()" />)
+                                    t-out="object.name"
+                                /> (<t t-out="object.date_order.date()" />)
                                 </h2>
                             </td>
                         </tr>
@@ -73,8 +71,6 @@
                     </tbody>
                 </table>
             </div>
-
         </field>
     </record>
-
 </odoo>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="email_template_cart_recovery_aplus" model="mail.template">
         <field name="name">A+: Cart Recovery</field>
         <field name="model_id" ref="sale.model_sale_order" />
@@ -83,7 +82,6 @@
                                     >Did something interrupt you? No worries, your A+ Superfruit selection is still waiting for you. Our fresh, natural, and
                                         delicious juices are ready whenever your are.</p>
                                 </div>
-
                             </td>
                         </tr>
                         <tr>
@@ -201,5 +199,4 @@
             </div>
         </field>
     </record>
-
 </odoo>

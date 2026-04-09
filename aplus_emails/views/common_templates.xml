@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <template id="aplus_emails.order_summary" name="order summary">
-
         <t
             t-set="product_lines"
             t-value="[line for line in so.order_line if (not line.is_delivery and not line.is_deposit_line)]"
@@ -106,13 +104,12 @@
                         <td>
                             <div t-attf-style="{{tar}}">
                                 <t
-                                    t-out="'{:.2f}'.format(line.price_subtotal or 0.0)"
-                                />$ </div>
+                                t-out="'{:.2f}'.format(line.price_subtotal or 0.0)"
+                            />$ </div>
                         </td>
                     </td>
                 </tr>
             </tbody>
-
         </table>
         <table
             t-attf-style="{{table_style}} color: {{textColor}}; padding-left:{{table_spacing}}; padding-right:{{table_spacing}}; "
@@ -131,8 +128,8 @@
                     <td>
                         <span t-attf-style="{{tar}}">
                             <t
-                                t-out="'{:.2f}'.format(sum([l.price_total for l in deposit_lines]) or 0.0)"
-                            />$</span>
+                            t-out="'{:.2f}'.format(sum([l.price_total for l in deposit_lines]) or 0.0)"
+                        />$</span>
                     </td>
                 </tr>
                 <tr>
@@ -141,8 +138,8 @@
                     </td>
                     <td>
                         <span t-attf-style="{{tar}}"><t
-                                t-out="'{:.2f}'.format(sum([l.price_total for l in shipping_lines]) or 0.0)"
-                            />$</span>
+                            t-out="'{:.2f}'.format(sum([l.price_total for l in shipping_lines]) or 0.0)"
+                        />$</span>
                     </td>
                 </tr>
                 <tr>
@@ -151,8 +148,8 @@
                     </td>
                     <td>
                         <span t-attf-style="{{tar}}"><t
-                                t-out="'{:.2f}'.format(so.amount_tax or 0.0) "
-                            />$</span>
+                            t-out="'{:.2f}'.format(so.amount_tax or 0.0) "
+                        />$</span>
                     </td>
                 </tr>
                 <tr>
@@ -161,8 +158,8 @@
                     </td>
                     <td>
                         <span t-attf-style="{{tar}} font-weight: 600; "><t
-                                t-out="'{:.2f}'.format(so.amount_total or 0.0)"
-                            />$</span>
+                            t-out="'{:.2f}'.format(so.amount_total or 0.0)"
+                        />$</span>
                     </td>
                 </tr>
             </tfoot>

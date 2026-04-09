@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <?xml-model href="../../import_xml.rng" type="application/xml"?>
 <odoo>
-
     <record id="email_template_order_confirmation_aplus" model="mail.template">
         <field name="name">A+: Order confirmation</field>
         <field name="model_id" ref="sale.model_sale_order" />
@@ -51,7 +50,6 @@
                                         t-attf-style="color:{{textColor}};"
                                     >Your order #<t t-out="so.name" /></h1>
                                     <t t-call="aplus_emails.order_summary" />
-
                                 </div>
                             </td>
                         </tr>
@@ -65,5 +63,4 @@
             </div>
         </field>
     </record>
-
 </odoo>

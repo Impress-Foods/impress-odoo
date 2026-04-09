@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="email_template_tracking_aplus" model="mail.template">
         <field name="name">A+: Shipment tracking</field>
         <field name="model_id" ref="stock.model_stock_picking" />
@@ -37,9 +36,9 @@
 
                         <tr>
                             <td>
-                                <p>Great news, your order <b><t
-                                            t-out="so.name"
-                                        /></b> has been shipped and is now heading your way. You can track its progress using the button below. </p>
+                                <p>Great news, your order <b>
+                                    <t t-out="so.name" />
+                                </b> has been shipped and is now heading your way. You can track its progress using the button below. </p>
                             </td>
                         </tr>
 
@@ -78,10 +77,10 @@
                         <tr>
                             <td>
                                 <p>Your order was shipped using <t
-                                        t-out="object.carrier_id.name"
-                                    />. Your tracking number is <b><t
-                                            t-out="object.carrier_tracking_ref"
-                                        /></b>.</p>
+                                    t-out="object.carrier_id.name"
+                                />. Your tracking number is <b>
+                                    <t t-out="object.carrier_tracking_ref" />
+                                </b>.</p>
                             </td>
                         </tr>
                         <tr>
@@ -131,10 +130,10 @@
                         <tr>
                             <td>
                                 <p>Great news, we've received your order <b>
-                                        <t t-out="so.name" />
-                                    </b> and are currently preparing it with care. You can track its progress using the button below. Our
+                                    <t t-out="so.name" />
+                                </b> and are currently preparing it with care. You can track its progress using the button below. Our
                                     delivery driver picks up orders every <b
-                                    > Wednesday</b>, so yours will be delivered within 48 hours after pickup.</p>
+                                > Wednesday</b>, so yours will be delivered within 48 hours after pickup.</p>
                             </td>
                         </tr>
 
@@ -173,10 +172,10 @@
                         <tr>
                             <td>
                                 <p>Your order was shipped using <t
-                                        t-out="object.carrier_id.name"
-                                    />. Your tracking number is <b>
-                                        <t t-out="object.carrier_tracking_ref" />
-                                    </b>.</p>
+                                    t-out="object.carrier_id.name"
+                                />. Your tracking number is <b>
+                                    <t t-out="object.carrier_tracking_ref" />
+                                </b>.</p>
                             </td>
                         </tr>
                         <tr>
@@ -225,9 +224,9 @@
                         <tr>
                             <td>
                                 <p> You can stop by <b
-                                    >1910 Avenue du Sanctuaire</b> between <b
-                                    >9:00 a.m. and 4:30 p.m.</b>, Monday to Friday. Please head to the reception on the <b
-                                    >2<sup>nd</sup>
+                                >1910 Avenue du Sanctuaire</b> between <b
+                                >9:00 a.m. and 4:30 p.m.</b>, Monday to Friday. Please head to the reception on the <b
+                                >2<sup>nd</sup>
                                     floor</b> and we'll give you your order. </p>
                                 <p> Have a great day &amp; see you soon! 🍓 </p>
                             </td>
@@ -238,8 +237,8 @@
                                 <h1
                                     t-attf-style="color: {{textColor}}; padding-top: 1rem;"
                                 >Order #<t t-out="so.name" /> (<t
-                                        t-out="so.date_order.date()"
-                                    />) </h1>
+                                    t-out="so.date_order.date()"
+                                />) </h1>
                                 <t t-call="aplus_emails.order_summary" />
                             </td>
                         </tr>
