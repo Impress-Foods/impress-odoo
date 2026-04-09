@@ -36,7 +36,7 @@ class LoyaltyProgram(models.Model):
         partner_domain = domain + [
             ("partner_id.commercial_partner_id", "=", partner.commercial_partner_id.id)
         ]
-        if self.env["sale.order"].search_count(partner_domain) > 0:
+        if self.env["sale.order"].search(partner_domain, limit=1):
             return True
 
         # 2. Collect all emails to check (main, billing, shipping)
@@ -61,7 +61,7 @@ class LoyaltyProgram(models.Model):
                     ("partner_invoice_id.email", "=ilike", email),
                     ("partner_shipping_id.email", "=ilike", email),
                 ]
-            if self.env["sale.order"].search_count(email_domain) > 0:
+            if self.env["sale.order"].search(email_domain, limit=1):
                 return True
 
         return False
