@@ -1,4 +1,4 @@
-from odoo import _, models
+from odoo import models
 
 
 class SaleOrder(models.Model):
@@ -19,7 +19,9 @@ class SaleOrder(models.Model):
                 and program._is_used_by_partner(self.partner_id, current_order=self)
             ):
                 result[program] = {
-                    "error": _("This program has already been used by this customer.")
+                    "error": self.env._(
+                        "This program has already been used by this customer."
+                    )
                 }
         return result
 
@@ -54,6 +56,8 @@ class SaleOrder(models.Model):
             and self.partner_id
             and program._is_used_by_partner(self.partner_id, current_order=self)
         ):
-            return {"error": _("This code has already been used by this customer.")}
+            return {
+                "error": self.env._("This code has already been used by this customer.")
+            }
 
         return super()._try_apply_code(code)
