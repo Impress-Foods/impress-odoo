@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="email_template_invoice_aplus" model="mail.template">
+        <field name="name">A+: Invoice</field>
+        <field name="model_id" ref="account.model_account_move" />
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True" />
+        <field name="subject"> A+ Superfruit Invoice </field>
+        <field name="email_to">info@aplussuperfruit.com</field>
+        <field name="body_html" type="html">
+            <t t-set="textColor" t-value="'#f65834'" />
+            <t t-set="bgColor" t-value="'#f7eae4'" />
+            <t t-set="fonts" t-value="'font-family: \'Gooper\', Garamond, serif;'" />
+            <t t-call="aplus_emails.font_gooper" />
+            <div
+                t-attf-style="background-color: {{bgColor}}; {{fonts}}; color: {{textColor}}; align: center;"
+            >
+                <table style="width: 80%; margin: auto;">
+                    <tbody>
+                        <tr>
+                            <td style="padding-top: 2rem; padding-bottom: 2rem;">
+                                <t t-call="aplus_emails.logo_header" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td />
+                        </tr>
+                        <tr>
+                            <td t-attf-style="color: {{textColor}};" />
+                        </tr>
+
+                        <tr>
+                            <td t-attf-style="color: {{textColor}};" />
+                        </tr>
+
+                        <tr>
+                            <td t-attf-style="color: {{textColor}};">
+                                <t t-call="aplus_emails.social_footer" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </field>
+    </record>
+</odoo>

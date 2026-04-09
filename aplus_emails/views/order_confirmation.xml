@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-model href="../../import_xml.rng" type="application/xml"?>
+<odoo>
+    <record id="email_template_order_confirmation_aplus" model="mail.template">
+        <field name="name">A+: Order confirmation</field>
+        <field name="model_id" ref="sale.model_sale_order" />
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True" />
+        <field name="subject"> Your order has been received!</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="body_html" type="html">
+            <t t-set="textColor" t-value="'#f65834'" />
+            <t t-set="bgColor" t-value="'#f7eae4'" />
+            <t t-set="fonts" t-value="'font-family: \'Gooper\', Garamond, serif;'" />
+            <t t-call="aplus_emails.font_gooper" />
+
+            <t t-set="so" t-value="object" />
+            <div
+                t-attf-style="background-color: {{bgColor}}; {{fonts}}; color: {{textColor}}; align: center;"
+            >
+                <table style="width: 80%; margin: auto;">
+                    <tbody style="">
+                        <tr>
+                            <td>
+                                <t t-call="aplus_emails.image_header">
+                                    <t t-set="image" t-value="'delivery-1.jpg'" />
+                                    <t
+                                        t-set="alt_text"
+                                        t-value="'Picture of a child with A+ juice'"
+                                    />
+                                </t>
+                            </td>
+                        </tr>
+                        <tr t-attf-style=" color:{{textColor}};">
+                            <td t-attf-style=" color:{{textColor}};">
+                                <div>
+                                    <h1
+                                        t-attf-style="color:{{textColor}}; {{fonts}}"
+                                    >Thank you for shopping with us!</h1>
+                                    <p
+                                    >We have received your order and will provide you with a tracking number as soon as it leaves our facility. You can find your full order details below.</p>
+                                    <p>We hope our juices can bring you joy :)</p>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr t-attf-style=" color:{{textColor}};">
+                            <td>
+                                <div>
+                                    <h1
+                                        t-attf-style="color:{{textColor}};"
+                                    >Your order #<t t-out="so.name" /></h1>
+                                    <t t-call="aplus_emails.order_summary" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <t t-call="aplus_emails.social_footer" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="aplus_emails.instagram" name="instagram_svg">
+        <a t-attf-href="{{link}}">
+            <img src="/aplus_emails/static/img/socials/instagram.png" alt="Instagram" />
+        </a>
+    </template>
+
+    <template id="aplus_emails.facebook" name="facebook_svg">
+        <a t-attf-href="{{link}}">
+            <img src="/aplus_emails/static/img/socials/facebook.png" alt="Facebook" />
+        </a>
+    </template>
+    <template id="aplus_emails.tiktok" name="tiktok_svg">
+        <a t-attf-href="{{link}}">
+            <img src="/aplus_emails/static/img/socials/tiktok.png" alt="Tiktok" />
+        </a>
+    </template>
+    <template id="aplus_emails.social_footer" name="social_footer">
+        <table style="width: 80%; margin: auto; padding-top: 2rem;">
+            <tbody>
+                <tr>
+                    <td style="text-align:right;">
+                        <t t-call="aplus_emails.facebook">
+                            <t
+                                t-set="link"
+                                t-value="'https://www.facebook.com/aplus.superfruit'"
+                            />
+                        </t>
+                    </td>
+                    <td style="text-align:center;">
+                        <t t-call="aplus_emails.instagram">
+                            <t
+                                t-set="link"
+                                t-value="'https://www.instagram.com/aplus.superfruit/'"
+                            />
+                        </t>
+                    </td>
+                    <td style="text-align:left;">
+                        <t t-call="aplus_emails.tiktok">
+                            <t
+                                t-set="link"
+                                t-value="'https://www.tiktok.com/@aplus.superfruit'"
+                            />
+                        </t>
+                    </td>
+                </tr>
+                <tr>
+                    <td
+                        colspan="3"
+                        t-attf-style="text-align:center; color:{{textColor}}"
+                    >
+                        <span>@aplus.superfruit</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td
+                        colspan="3"
+                        t-attf-style="text-align:center; color:{{textColor}}"
+                    >
+                        <a href="www.aplussuperfruit.com">www.aplussuperfruit.com</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td
+                        colspan="3"
+                        t-attf-style="text-align:center; color:{{textColor}}"
+                    >
+                        <span>1910 Av. du Sanctuaire, Québec, QC, G1E 3L2</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </template>
+</odoo>
