@@ -35,9 +35,14 @@ jobs:
       matrix:
         include:
           - container: ghcr.io/impress-foods/odoo-ci/py3.10-odoo19.0:latest
+            include: coupons_single_use_per_customer
+            name: test all modules
+            makepot: "true"
+            
+          - container: ghcr.io/impress-foods/odoo-ci/py3.10-odoo19.0:latest
             exclude:
               impress_quality_customizations, impress_project_billing_production,
-              impress_lot_lab
+              impress_lot_lab, coupons_single_use_per_customer
             name: test all modules
             makepot: "true"
     services:
