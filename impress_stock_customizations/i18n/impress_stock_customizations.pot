@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e-20260330\n"
+"Project-Id-Version: Odoo Server 19.0+e-20260330\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -28,44 +28,8 @@ msgid ""
 msgstr ""
 
 #. module: impress_stock_customizations
-#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.impress_stock_report_delivery_document_add_barcode
-msgid "(document barcode)"
-msgstr ""
-
-#. module: impress_stock_customizations
-#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.impress_stock_report_delivery_document_remove_header
-msgid ""
-"<span>\n"
-"                                    <strong>Customer Address:</strong>\n"
-"                                </span>"
-msgstr ""
-
-#. module: impress_stock_customizations
-#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.impress_stock_report_delivery_document_remove_header
-msgid ""
-"<span>\n"
-"                                    <strong>Vendor Address:</strong>\n"
-"                                </span>"
-msgstr ""
-
-#. module: impress_stock_customizations
-#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.impress_stock_report_delivery_document_remove_header
-msgid ""
-"<span>\n"
-"                                <strong>Delivery Address:</strong>\n"
-"                            </span>"
-msgstr ""
-
-#. module: impress_stock_customizations
-#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.impress_stock_report_delivery_document_remove_header
-msgid ""
-"<span>\n"
-"                                <strong>Warehouse Address:</strong>\n"
-"                            </span>"
-msgstr ""
-
-#. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.stock_report_delivery_has_serial_move_line
 msgid "<span> days</span>"
 msgstr ""
 
@@ -92,6 +56,11 @@ msgid "Best before Date"
 msgstr ""
 
 #. module: impress_stock_customizations
+#: model:ir.model,name:impress_stock_customizations.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model:ir.model.fields,help:impress_stock_customizations.field_stock_lot__alert_date
 msgid ""
 "Date to determine the expired lots and serial numbers using the filter "
@@ -99,8 +68,22 @@ msgid ""
 msgstr ""
 
 #. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_res_partner__display_name
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__display_name
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_picking__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__expiration_date
 msgid "Expiration Date"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_res_partner__id
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__id
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_picking__id
+msgid "ID"
 msgstr ""
 
 #. module: impress_stock_customizations
@@ -116,6 +99,13 @@ msgstr ""
 #. module: impress_stock_customizations
 #: model:ir.model,name:impress_stock_customizations.model_stock_lot
 msgid "Lot/Serial"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_res_partner__minimum_shelf_life
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_res_users__minimum_shelf_life
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_picking__minimum_shelf_life
+msgid "Minimum Shelf Life"
 msgstr ""
 
 #. module: impress_stock_customizations
@@ -159,7 +149,8 @@ msgstr ""
 #: model:ir.model.fields,help:impress_stock_customizations.field_stock_lot__removal_date
 msgid ""
 "This is the date on which the goods with this Serial Number should be "
-"removed from the stock. This date will be used in FEFO removal strategy."
+"removed from the stock and not be counted in the Fresh On Hand Stock "
+"anymore. This date will be used in FEFO removal strategy."
 msgstr ""
 
 #. module: impress_stock_customizations
@@ -167,6 +158,11 @@ msgstr ""
 msgid ""
 "This is the date on which the goods with this Serial Number start "
 "deteriorating, without being dangerous yet."
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.model,name:impress_stock_customizations.model_stock_picking
+msgid "Transfer"
 msgstr ""
 
 #. module: impress_stock_customizations
@@ -214,8 +210,9 @@ msgstr ""
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
 msgid ""
-"^FS ^FO518,273\n"
-"                        ^A0N,26,26^FB500,1^FDPro: 12345 ^FS ^FO518,303 ^A0N,26,26^FB500,1^FDB/L: 123456789 ^FS ^FX Product Field ^FO20,439 ^A0N,40,40^FB500,1^FDPO:"
+"^FS ^FO518,273 ^A0N,26,26^FB500,1^FDPro: 12345 ^FS ^FO518,303 "
+"^A0N,26,26^FB500,1^FDB/L: 123456789 ^FS ^FX Product Field ^FO20,439 "
+"^A0N,40,40^FB500,1^FDPO:"
 msgstr ""
 
 #. module: impress_stock_customizations
@@ -240,8 +237,8 @@ msgstr ""
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
 msgid ""
-"^FS ^FX Postal code field ^FO10,213 ^A0N,26,26^FB500,1^FDShip to\n"
-"                        Postal Code: ^FS ^FO15,243 ^A0N,26,26^FB500,1^FD(420)"
+"^FS ^FX Postal code field ^FO10,213 ^A0N,26,26^FB500,1^FDShip to Postal "
+"Code: ^FS ^FO15,243 ^A0N,26,26^FB500,1^FD(420)"
 msgstr ""
 
 #. module: impress_stock_customizations
