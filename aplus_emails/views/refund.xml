@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="email_template_refund_aplus" model="mail.template">
+        <field name="name">A+: Refund confirmation</field>
+        <field name="model_id" ref="sale.model_sale_order" />
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True" />
+        <field name="subject"> Your order was refunded! </field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="body_html" type="html">
+            <t t-set="textColor" t-value="'#f65834'" />
+            <t t-set="bgColor" t-value="'#f7eae4'" />
+            <t t-set="flexColumn" t-value="'display: flex; flex-direction: column; '" />
+            <t t-set="fonts" t-value="'font-family: \'Gooper\', Garamond, serif;'" />
+            <t t-set="so" t-value="object" />
+            <t t-call="aplus_emails.font_gooper" />
+            <div
+                t-attf-style="background-color: {{bgColor}}; {{fonts}}; color: {{textColor}}; align: center;"
+            >
+                <table style="width: 80%; margin: auto;">
+                    <tbody style="">
+                        <tr>
+                            <td>
+                                <t t-call="aplus_emails.image_header">
+                                    <t t-set="image" t-value="'delivery-1.jpg'" />
+                                    <t
+                                        t-set="alt_text"
+                                        t-value="'Picture of a child with A+ juice'"
+                                    />
+                                </t>
+                            </td>
+                        </tr>
+
+                        <tr t-attf-style=" color:{{textColor}};">
+                            <td>
+                                <h1
+                                    t-attf-style="color:{{textColor}}; {{fonts}} font-weight:bold;"
+                                > Refunded </h1>
+                            </td>
+                        </tr>
+                        <tr t-attf-style=" color:{{textColor}};">
+                            <td>
+                                <p>Hi <t t-out="object.partner_id.name" />,</p>
+                                <p
+                                > Your A+ Superfruit order has been refunded. There are more details below for your reference: </p>
+
+                            </td>
+                        </tr>
+                        <tr t-attf-style=" color:{{textColor}};">
+                            <td t-attf-style=" color:{{textColor}};">
+                                <h2 t-attf-style=" color:{{textColor}};"> Order # <t
+                                        t-out="object.name"
+                                    /> (<t t-out="object.date_order.date()" />)
+                                </h2>
+                            </td>
+                        </tr>
+                        <tr t-attf-style=" color:{{textColor}};">
+                            <td>
+                                <div
+                                    style="max-width: 100%; min-width:30%;width:100%; align-self: start;"
+                                    id="order_summary"
+                                >
+                                    <t t-call="aplus_emails.order_summary" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <t t-call="aplus_emails.social_footer" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </field>
+    </record>
+
+</odoo>

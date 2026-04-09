@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="email_template_cart_recovery_aplus" model="mail.template">
+        <field name="name">A+: Cart Recovery</field>
+        <field name="model_id" ref="sale.model_sale_order" />
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="True" />
+        <field name="subject">Cart Recovery</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="body_html" type="html">
+            <t t-set="textColor" t-value="'#f65834'" />
+            <t t-set="bgColor" t-value="'#f7eae4'" />
+            <t t-set="fonts" t-value="'font-family: \'Gooper\', Garamond, serif;'" />
+            <t t-call="aplus_emails.font_gooper" />
+            <div
+                t-attf-style="background-color: {{bgColor}}; {{fonts}}; color: {{textColor}}; align: center; overflow: hidden;"
+            >
+                <table t-attf-style="width:100%; color: {{textColor}};" align="center">
+                    <tbody>
+                        <tr>
+                            <td style="text-align:center;">
+                                <img
+                                    style="width:20%; margin:auto; height: auto; padding-bottom:2rem;padding-top:2rem;"
+                                    src="/aplus_emails/static/img/logo_orange.png"
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table
+                                    style="width: 90%; margin:auto; text-align:center; font-size:x-large;padding-top:1rem;"
+                                >
+                                    <tr>
+                                        <td style="text-align:center;">
+                                            <a
+                                                t-attf-style="color:{{textColor}};text-decoration:none;"
+                                                href="https://aplussuperfruit.com/shop/category/drinkable-fruit-1"
+                                            >Juice</a>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <a
+                                                t-attf-style="color:{{textColor}};text-decoration:none;"
+                                                href="https://aplussuperfruit.com/shop/category/juice-shot-3"
+                                            >Shots</a>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <a
+                                                t-attf-style="color:{{textColor}};text-decoration:none;"
+                                                href="https://aplussuperfruit.com/shop/category/boxes-2"
+                                            >Boxes</a>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <a
+                                                t-attf-style="color:{{textColor}};text-decoration:none;"
+                                                href="https://aplussuperfruit.com/locator"
+                                            >Locator</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div
+                                    style="position: relative; width: 90%; margin: auto; text-align: center;"
+                                >
+                                    <img
+                                        style="width:100%; height:auto; border-radius: 10px;"
+                                        src="/aplus_emails/static/img/cart-recovery-1.jpg"
+                                    />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="width:90%; margin: auto;">
+                                    <h1
+                                        t-attf-style="color:{{textColor}};"
+                                    >Your cart is waiting for you</h1>
+                                    <p
+                                        t-attf-style="color:{{textColor}};"
+                                    >Did something interrupt you? No worries, your A+ Superfruit selection is still waiting for you. Our fresh, natural, and
+                                        delicious juices are ready whenever your are.</p>
+                                </div>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td
+                                align="center"
+                                style="text-align: center; padding-top: 2rem; padding-bottom: 2rem;"
+                            >
+                                <t
+                                    t-set="button_style"
+                                    t-value="'border-radius: 20px; background-color:' + textColor +'; color:#ffffff; font-weight: bold; padding: 10px 30px; border: 1px solid ' + textColor + '; display: inline-block;'"
+                                />
+
+                                <table
+                                    align="center"
+                                    border="0"
+                                    cellpadding="0"
+                                    cellspacing="0"
+                                    role="presentation"
+                                    style="margin: auto;"
+                                >
+                                    <tbody>
+                                        <tr>
+                                            <td align="center" style="padding: 0;">
+                                                <a
+                                                    t-attf-href="https://aplussuperfruit.com/shop/cart"
+                                                    t-attf-style="text-decoration: none; {{button_style}}"
+                                                > View your cart </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr t-attf-style="background-color: {{textColor}};">
+                            <td>
+                                <table style="width:90%; margin: auto;">
+                                    <colgroup>
+                                        <col style="width:80%;" />
+                                        <col style="width:20%;" />
+                                    </colgroup>
+                                    <tr>
+                                        <td>
+                                            <h1
+                                                t-attf-style="{{fonts}} color: {{bgColor}};"
+                                            >Feast on the fruit of life</h1>
+                                            <p
+                                                t-attf-style="{{fonts}} color: {{bgColor}}; margin-bottom:0px; text-align: bottom;"
+                                            > Our juices are made with three simple ingredients: fruit, water, and a touch of maple syrup. We use the whole
+                                                fruit to ensure they're packed with fiber and antioxidants, setting our product apart from the rest. </p>
+                                        </td>
+                                        <td>
+                                            <img
+                                                style="width:100%; height:auto; transform: rotate(15deg) translateY(-35%);"
+                                                src="/aplus_emails/static/img/nuage.png"
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            t-attf-style="background-color: {{textColor}};"
+                                            colspan="2"
+                                        >
+                                            <div
+                                                style="width: 60%;  margin: auto; padding-top:2rem; padding-bottom: 2rem;"
+                                            >
+                                                <img
+                                                    style="width:100%; height:auto; border-radius:10px;"
+                                                    src="/aplus_emails/static/img/cart-recovery-2.jpg"
+                                                />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td
+                                align="center"
+                                style="text-align: center; padding-top: 2rem; padding-bottom: 2rem;"
+                            >
+                                <t
+                                    t-set="button_style"
+                                    t-value="'border-radius: 20px; background-color:' + textColor +'; color:#ffffff; font-weight: bold; padding: 10px 40px; border: 1px solid ' + textColor + '; display: inline-block;'"
+                                />
+
+                                <table
+                                    align="center"
+                                    border="0"
+                                    cellpadding="0"
+                                    cellspacing="0"
+                                    role="presentation"
+                                    style="margin: auto;"
+                                >
+                                    <tbody>
+                                        <tr>
+                                            <td align="center" style="padding: 0;">
+                                                <a
+                                                    t-attf-href="https://aplussuperfruit.com"
+                                                    t-attf-style="text-decoration: none; {{button_style}}"
+                                                > Shop now </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <t t-call="aplus_emails.social_footer" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </field>
+    </record>
+
+</odoo>
