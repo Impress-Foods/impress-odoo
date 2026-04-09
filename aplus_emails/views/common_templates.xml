@@ -7,7 +7,7 @@
         />
         <t
             t-set="shipping_lines"
-            t-value="[line for line in so.order_line if line.is_delivery ]"
+            t-value="[line for line in so.order_line if line.is_delivery]"
         />
         <t
             t-set="deposit_lines"
