@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding="utf-8" ?>
+<?xml-model href="../../import_xml.rng" type="application/xml"?>
+<odoo>
+    <record
+        id="impress_stock_report_delivery_document_add_column_sums"
+        model="ir.ui.view"
+    >
+        <field
+            name="name"
+        > stock.report_delivery_document.impress.add_column_sums</field>
+        <field name="inherit_id" ref="stock.report_delivery_document" />
+        <field name="priority">51</field>
+        <field name="arch" type="xml">
+            <xpath expr="//div[1]" position="after" />
+
+            <!-- Sums for transfer in process -->
+            <xpath expr="//table[1]/tbody/tr" position="before">
+                <t t-set="total_ordered" t-value="0" />
+                <t t-set="total_delivered" t-value="0" />
+            </xpath>
+            <xpath expr="//table[1]/tbody/tr/td[1]" position="before">
+                <t
+                    t-set="total_ordered"
+                    t-value="total_ordered + move.product_uom_qty"
+                />
+                <t t-set="total_delivered" t-value="total_delivered + move.quantity" />
+            </xpath>
+
+            <xpath expr="//table[1]/tbody" position="after">
+                <tfoot>
+                    <td />
+                    <td class="text-end">
+                        <t t-out="total_ordered" />
+                    </td>
+                    <td class="text-end">
+                        <t t-out="total_delivered" />
+                    </td>
+                </tfoot>
+            </xpath>
+
+            <!-- sums for completed transfers -->
+
+            <xpath
+                expr="//table[@name='stock_move_line_table']/tbody"
+                position="before"
+            >
+                <t t-set="total_ordered" t-value="0" />
+                <t t-set="total_delivered" t-value="0" />
+            </xpath>
+            <xpath
+                expr="//table[@name='stock_move_line_table']/tbody/t"
+                position="before"
+            >
+                <t t-foreach="o.move_ids" t-as="move">
+                    <t
+                        t-set="total_ordered"
+                        t-value="total_ordered + move.product_uom_qty"
+                    />
+                    <t
+                        t-set="total_delivered"
+                        t-value="total_delivered + move.quantity"
+                    />
+                </t>
+            </xpath>
+
+            <!-- Footer -->
+            <xpath expr="//table[@name='stock_move_line_table']/tbody" position="after">
+                <t
+                    t-set="has_shelf_life"
+                    t-value="has_serial_number and any(o.mapped('move_ids.move_line_ids.lot_id.expiration_date'))"
+                />
+                <tfoot>
+                    <tr>
+                        <td t-if="has_shelf_life" />
+                        <td t-if="has_shelf_life" />
+                        <td />
+                        <td class="text-center">
+                            <t t-if="not has_serial_number" t-out="total_ordered" />
+                        </td>
+                        <td class="text-end">
+                            <t t-out="total_delivered" />
+                        </td>
+                    </tr>
+                </tfoot>
+            </xpath>
+        </field>
+    </record>
+
+    <record
+        id="impress_stock_report_delivery_document_add_minimum_shelf_life"
+        model="ir.ui.view"
+    >
+        <field
+            name="name"
+        > stock.report_delivery_document.impress.add_minimum_shelf_life</field>
+        <field name="inherit_id" ref="stock.report_delivery_document" />
+        <field name="priority">51</field>
+        <field name="arch" type="xml">
+            <xpath expr="//div[1]" position="after" />
+
+            <xpath expr="//*[@name='div_sched_date']" position="after">
+                <div
+                    class="col-auto"
+                    name="minimum_shelf_life"
+                    t-if="o.minimum_shelf_life"
+                >
+                    <strong>Minimum shelf life:</strong>
+                    <br />
+                    <p>
+                        <span t-field="o.minimum_shelf_life">0</span> days </p>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="impress_stock_report_delivery_document_add_barcode" model="ir.ui.view">
+        <field name="name">stock.report_delivery_document.impress.add_barcode</field>
+        <field name="inherit_id" ref="stock.report_delivery_document" />
+        <field name="priority">53</field>
+        <field name="arch" type="xml">
+            <xpath expr="//h2[1]" position="before">
+                <div
+                    name="title_holder"
+                    class="d-flex flex-row justify-content-between"
+                />
+            </xpath>
+
+            <xpath expr="//div[@name='title_holder']" position="inside">
+                <xpath expr="//h2[1]" position="move" />
+            </xpath>
+
+            <xpath expr="//div[@name='title_holder']" position="inside">
+                <span
+                    t-field="o.name"
+                    t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:300px;height:50px;'}"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="report_delivery_document_add_shelf_life" model="ir.ui.view">
+        <field name="name">stock.report_delivery_document.impress.add_shelf_life</field>
+        <field name="inherit_id" ref="stock.report_delivery_document" />
+        <field name="priority">53</field>
+        <field name="arch" type="xml">
+            <!-- For state == done -->
+            <xpath expr="//div[1]" position="after" />
+            <xpath expr="//th[@name='lot_serial']" position="after">
+                <th
+                    name="shelf_life_remaining"
+                    t-if="has_serial_number"
+                    class="text-end"
+                > Shelf life remaining </th>
+            </xpath>
+        </field>
+    </record>
+
+    <template
+        id="stock_report_delivery_has_serial_move_line"
+        inherit_id="stock.stock_report_delivery_has_serial_move_line"
+    >
+        <xpath expr="//span[1]" position="after" />
+        <xpath expr="//t[@name='move_line_lot']" position="after">
+            <t t-if="has_serial_number" name="shelf_life_remaining">
+                <td class="text-end">
+                    <t t-if="move_line.lot_id.life_remaining">
+                        <span t-field="move_line.lot_id.life_remaining" />
+                        <span> days</span>
+                    </t>
+                </td>
+            </t>
+        </xpath>
+    </template>
+</odoo>

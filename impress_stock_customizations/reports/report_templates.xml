@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="external_layout_boxed" inherit_id="web.external_layout_boxed">
+        <xpath expr="//div[1]/div[1]/div[1]" position="attributes">
+            <attribute name="t-if">o._name != 'stock.picking'</attribute>
+        </xpath>
+    </template>
+
+    <template id="external_layout_bold" inherit_id="web.external_layout_bold">
+        <xpath expr="//div[1]/div[1]/div[1]" position="attributes">
+            <attribute name="t-if">o._name != 'stock.picking'</attribute>
+        </xpath>
+    </template>
+
+    <template id="external_layout_striped" inherit_id="web.external_layout_striped">
+        <xpath expr="//div[1]/div[1]/div[1]" position="attributes">
+            <attribute name="t-if">o._name != 'stock.picking'</attribute>
+        </xpath>
+    </template>
+
+    <template id="external_layout_standard" inherit_id="web.external_layout_standard">
+        <xpath expr="//div[1]/div[1]/div[1]" position="attributes">
+            <attribute name="t-if">o._name != 'stock.picking'</attribute>
+        </xpath>
+    </template>
+
+    <template id="external_layout_folder" inherit_id="web.external_layout_folder">
+        <xpath expr="//div[1]/div[1]/div[1]" position="attributes">
+            <attribute name="t-if">o._name != 'stock.picking'</attribute>
+        </xpath>
+    </template>
+
+    <template id="external_layout_wave" inherit_id="web.external_layout_wave">
+        <xpath expr="//div[1]/div[1]/div[1]" position="attributes">
+            <attribute name="t-if">o._name != 'stock.picking'</attribute>
+        </xpath>
+    </template>
+
+    <template id="external_layout_bubble" inherit_id="web.external_layout_bubble">
+        <xpath expr="//img[hasclass('o_company_logo')][1]" position="attributes">
+            <attribute
+                name="t-if"
+            >o._name != 'stock.picking' &amp;&amp; company.logo</attribute>
+        </xpath>
+    </template>
+</odoo>
