@@ -27,8 +27,6 @@
                         <div class="demand-header mb-2">
                             <div class="name" name="name">
                                 <span class="fw-bold" t-esc="move.origin" />
-
-
                             </div>
                             <span
                                 t-attf-class="badge text-white #{getBadgeStatusClass(move)} "
@@ -81,8 +79,8 @@
                             </button>
                         </div>
                         <div class=" small text-muted text-end"> Target: <span
-                                t-esc=" move.upstream_qty"
-                            /> <span t-esc=" move.uom or ''" />
+                            t-esc=" move.upstream_qty"
+                        /> <span t-esc=" move.uom or ''" />
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="view_mrp_campaign_tree" model="ir.ui.view">
         <field name="name">mrp.campaign.tree</field>
         <field name="model">mrp.campaign</field>
@@ -285,7 +284,6 @@
         <field name="context">{'search_default_date': 1}</field>
     </record>
 
-
     <menuitem
         id="menu_mrp_campaign"
         name="Campaigns"
@@ -301,5 +299,4 @@
         sequence="1"
         groups="mrp.group_mrp_user"
     />
-
 </odoo>

@@ -34,8 +34,8 @@
                         <h3 class="mt32">Intermediate Product</h3>
                         <t t-foreach="intermediate_mos" t-as="mo">
                             <h4 class="mt32"><span t-field="mo.name" /> - <span
-                                    t-field="mo.product_id.display_name"
-                                />
+                                t-field="mo.product_id.display_name"
+                            />
                             </h4>
                             <div class="row">
                                 <div class="col-6">
@@ -109,8 +109,8 @@
                         <h3 class="mt32">End Products</h3>
                         <t t-foreach="end_mos" t-as="mo">
                             <h4 class="mt32"> MO: <span t-field="mo.name" /> - <span
-                                    t-field="mo.product_id.display_name"
-                                />
+                                t-field="mo.product_id.display_name"
+                            />
                             </h4>
                             <div class="row">
                                 <div class="col-6">
@@ -132,8 +132,8 @@
                                 <div class="mt-4">
                                     <h5>
                                         <span
-                                            t-field="workorder.workcenter_id.name"
-                                        />: <span t-field="workorder.name" />
+                                        t-field="workorder.workcenter_id.name"
+                                    />: <span t-field="workorder.name" />
                                     </h5>
                                     <table class="table table-sm table-bordered mt-2">
                                         <thead>
