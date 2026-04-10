@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="view_mrp_campaign_tree" model="ir.ui.view">
-        <field name="name">mrp.campaign.tree</field>
+        <field name="name">mrp.campaign.list</field>
         <field name="model">mrp.campaign</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <header>
                     <button
                         name="action_plan"
@@ -23,7 +23,7 @@
                 <field name="name" />
                 <field name="product_id" />
                 <field name="state" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -33,7 +33,6 @@
         <field name="arch" type="xml">
             <form string="Manufacturing Campaign">
                 <header>
-                    <field name="is_out_of_sync" invisible="1" />
                     <button
                         name="action_plan"
                         type="object"
@@ -91,8 +90,6 @@
                 </header>
 
                 <sheet>
-                    <field name="bo_count" invisible="1" />
-                    <field name="production_count" invisible="1" />
                     <div class="oe_button_box" name="button_box">
                         <button
                             name="action_view_mos"
@@ -120,7 +117,6 @@
                                 string="Back Orders"
                             />
                         </button>
-                        <field name="bo_source_id" invisible="1" />
                         <button
                             name="action_view_source"
                             type="object"
@@ -176,11 +172,7 @@
                         </page>
                     </notebook>
                 </sheet>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids" />
-                    <field name="activity_ids" />
-                    <field name="message_ids" />
-                </div>
+                <chatter />
             </form>
         </field>
     </record>
@@ -191,22 +183,15 @@
         <field name="arch" type="xml">
             <kanban>
                 <field name="campaign_color" />
-                <field name="lot_name" invisible="1" />
-                <field
-                    name="state"
-                    invisible="1"
-                    readonly="1"
-                    on_change="1"
-                    field_id="state_0"
-                />
+
                 <field name="date_planned_start" />
                 <progressbar
                     field="state"
-                    colors='{"draft": "muted", "confirm": "info", "done": "success", "cancel": "danger"}'
+                    colors="{&quot;draft&quot;: &quot;muted&quot;, &quot;confirm&quot;: &quot;info&quot;, &quot;done&quot;: &quot;success&quot;, &quot;cancel&quot;: &quot;danger&quot;}"
                 />
 
                 <templates>
-                    <t t-name="kanban-box">
+                    <t t-name="card">
                         <div
                             t-attf-class="oe_kanban_card oe_kanban_global_click"
                             t-attf-style="border-left: 4px solid {{record.campaign_color.raw_value}};"
@@ -218,7 +203,7 @@
                                     </strong>
                                 </div>
                                 <div class="float-end text-end">
-                                    <field name='sequence' widget="handle" />
+                                    <field name="sequence" widget="handle" />
                                 </div>
                             </div>
 
@@ -231,14 +216,7 @@
                             </div>
                             <div class="o_kanban_record_bottom">
                                 <div
-                                    t-attf-class="oe_kanban_bottom_left
-                                    #{record.state.raw_value === 'draft' ? 'oe_kanban_status_grey' : ''}
-                                    #{record.state.raw_value === 'plan' ? 'oe_kanban_status_orange' : ''}
-                                    #{record.state.raw_value === 'confirm' ? 'oe_kanban_status_green' : ''}
-                                    #{record.state.raw_value === 'progress' ? 'oe_kanban_status_blue' : ''}
-                                    #{record.state.raw_value === 'done' ? 'oe_kanban_status_green' : ''}
-                                    #{record.state.raw_value === 'cancel' ? 'oe_kanban_status_red' : ''}
-                                    "
+                                    t-attf-class="oe_kanban_bottom_left                                     #{record.state.raw_value === 'draft' ? 'oe_kanban_status_grey' : ''}                                     #{record.state.raw_value === 'plan' ? 'oe_kanban_status_orange' : ''}                                     #{record.state.raw_value === 'confirm' ? 'oe_kanban_status_green' : ''}                                     #{record.state.raw_value === 'progress' ? 'oe_kanban_status_blue' : ''}                                     #{record.state.raw_value === 'done' ? 'oe_kanban_status_green' : ''}                                     #{record.state.raw_value === 'cancel' ? 'oe_kanban_status_red' : ''}                                     "
                                 >
                                     <field name="state" />
                                 </div>
@@ -258,13 +236,10 @@
                 <filter
                     name="today"
                     string="Today"
-                    domain="[
-                    ('date_planned_start', '&gt;=', (context_today()).strftime('%Y-%m-%d')),
-                    ('date_planned_start', '&lt;=',  (context_today()).strftime('%Y-%m-%d'))
-                ]"
+                    domain="[('date_planned_start', '&gt;=', (context_today()).strftime('%Y-%m-%d')),('date_planned_start', '&lt;=',  (context_today()).strftime('%Y-%m-%d'))]"
                 />
 
-                <group expand="0" string="Group By...">
+                <group>
                     <filter
                         string="Date"
                         name="date"
@@ -280,7 +255,7 @@
     <record id="action_mrp_campaign" model="ir.actions.act_window">
         <field name="name">Manufacturing Campaigns</field>
         <field name="res_model">mrp.campaign</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,list,form</field>
         <field name="context">{'search_default_date': 1}</field>
     </record>
 

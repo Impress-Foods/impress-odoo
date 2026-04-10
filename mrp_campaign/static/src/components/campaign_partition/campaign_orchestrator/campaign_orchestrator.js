@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import {Component, useState, onWillStart} from "@odoo/owl";
 import {CampaignNode} from "../campaign_node/campaign_node";
 import {DemandSidebar} from "../demand_sidebar/demand_sidebar";

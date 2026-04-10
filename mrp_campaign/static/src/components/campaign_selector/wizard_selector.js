@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import {registry} from "@web/core/registry";
 import {Component, useRef, useState, useEffect} from "@odoo/owl";
 import {useDebounced} from "@web/core/utils/timing";
@@ -203,7 +202,7 @@ export class WizardSelector extends Component {
 
 export const wizardSelectorField = {
     component: WizardSelector,
-    supportTypes: ["char"],
+    supportedTypes: ["char"],
 };
 
 registry.category("fields").add("wizard_selector", wizardSelectorField);

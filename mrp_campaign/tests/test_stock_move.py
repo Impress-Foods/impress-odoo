@@ -7,7 +7,6 @@ class TestStockMove(CampaignCase):
         client_order_ref from sale order."""
         move = self.env["stock.move"].create(
             {
-                "name": "move",
                 "product_id": self.end_prod_a_red.id,
                 "product_uom_qty": 10.0,
                 "location_id": self.stock_location.id,
@@ -39,7 +38,6 @@ class TestStockMove(CampaignCase):
         QTY = 100.0
         move = self.env["stock.move"].create(
             {
-                "name": f"test move for {self.bulk_material.display_name}",
                 "product_id": self.bulk_material.id,
                 "product_uom_qty": QTY,
                 "location_id": self.stock_location.id,
@@ -68,7 +66,6 @@ class TestStockMove(CampaignCase):
         QTY = 100.0
         move_a = self.env["stock.move"].create(
             {
-                "name": f"test move A for {self.bulk_material.display_name}",
                 "product_id": self.bulk_material.id,
                 "product_uom_qty": QTY,
                 "location_id": self.stock_location.id,
@@ -78,7 +75,6 @@ class TestStockMove(CampaignCase):
         )
         move_b = self.env["stock.move"].create(
             {
-                "name": f"test move B for {self.bulk_material.display_name}",
                 "product_id": self.bulk_material.id,
                 "product_uom_qty": QTY,
                 "location_id": self.stock_location.id,
@@ -114,7 +110,6 @@ class TestStockMove(CampaignCase):
         QTY = 100.0
         move = self.env["stock.move"].create(
             {
-                "name": f"test move for {self.bulk_material.display_name}",
                 "product_id": self.bulk_material.id,
                 "product_uom_qty": QTY,
                 "location_id": self.stock_location.id,

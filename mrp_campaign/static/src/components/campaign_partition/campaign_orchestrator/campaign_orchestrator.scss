@@ -22,7 +22,6 @@
 
     .production-tree-column {
         flex: 1;
-        overflow: auto; // Tree needs both X and Y potentially
-        background-color: #f8f9fa;
+        overflow: auto;
     }
 }

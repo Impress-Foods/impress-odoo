@@ -2,6 +2,7 @@ from datetime import date, timedelta
 
 from odoo import fields
 from odoo.exceptions import UserError, ValidationError
+from odoo.fields import Command
 
 from .test_common import CampaignCase
 
@@ -116,15 +117,18 @@ class TestCampaign(CampaignCase):
         campaign.action_confirm()
 
         source_mo = campaign.production_ids[0]
-        source_mo._set_lot_producing()
-        seed_lot = source_mo.lot_producing_id
+        source_mo.lot_producing_ids = [
+            Command.create(source_mo._prepare_stock_lot_values())
+        ]
+        seed_lot = source_mo.lot_producing_ids[:1]
         lot_name = seed_lot.name
         self.assertEqual(campaign.lot_name, lot_name)
         self.assertTrue(
             all(
                 [
                     lot.name == lot_name
-                    for lot in campaign.production_ids.mapped("lot_producing_id")
+                    for lot in campaign.production_ids.mapped("lot_producing_ids")
+                    if lot
                 ]
             )
         )
@@ -142,7 +146,8 @@ class TestCampaign(CampaignCase):
             all(
                 [
                     lot.name == lot_name
-                    for lot in campaign.production_ids.mapped("lot_producing_id")
+                    for lot in campaign.production_ids.mapped("lot_producing_ids")
+                    if lot
                 ]
             )
         )
@@ -155,8 +160,10 @@ class TestCampaign(CampaignCase):
 
         # Mark one MO as done with a specific lot
         mo_done = campaign.production_ids[0]
-        mo_done._set_lot_producing()
-        initial_lot_name = mo_done.lot_producing_id.name
+        mo_done.lot_producing_ids = [
+            Command.create(mo_done._prepare_stock_lot_values())
+        ]
+        initial_lot_name = mo_done.lot_producing_ids[:1].name
         mo_done.button_mark_done()
         self.assertEqual(mo_done.state, "done")
 
@@ -165,11 +172,11 @@ class TestCampaign(CampaignCase):
         # This should ideally not crash and should skip the done MO
         campaign.write({"lot_name": new_lot_name})
 
-        self.assertEqual(mo_done.lot_producing_id.name, initial_lot_name)
+        self.assertEqual(mo_done.lot_producing_ids[:1].name, initial_lot_name)
         self.assertTrue(
             all(
                 [
-                    mo.lot_producing_id.name == new_lot_name
+                    mo.lot_producing_ids[:1].name == new_lot_name
                     for mo in (campaign.production_ids - mo_done)
                 ]
             )

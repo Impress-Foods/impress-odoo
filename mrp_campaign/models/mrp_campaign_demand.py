@@ -100,9 +100,13 @@ class MrpCampaignDemandTarget(models.Model):
                     else False,
                 }
             )
-            group_id = move.group_id
-            if group_id and group_id.sale_id:
-                res["customer_ref"] = group_id.sale_id.client_order_ref
+            for ref in move.reference_ids.sorted(key=lambda r: r.create_date):
+                for sale in ref.sale_ids.sorted(key=lambda s: s.date_order):
+                    if sale.client_order_ref:
+                        res["customer_ref"] = sale.client_order_ref
+                        break
+                if res.get("customer_ref"):
+                    break
         return res
 
 

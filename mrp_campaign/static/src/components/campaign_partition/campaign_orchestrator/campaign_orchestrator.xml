@@ -1,6 +1,6 @@
 <t t-name="mrp_campaign.CampaignOrchestrator">
     <div class="o_campaign_orchestrator">
-        <div class="demand-sidebar-column border-end bg-white">
+        <div class="demand-sidebar-column border-end">
             <div class="scroll-area p-2">
                 <DemandSidebar
                     moves="state.data.demand_moves"

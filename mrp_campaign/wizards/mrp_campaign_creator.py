@@ -1,6 +1,7 @@
 import json
 
 from odoo import api, fields, models
+from odoo.fields import Domain
 
 
 class MrpCampaignCreator(models.Model):
@@ -82,11 +83,9 @@ class MrpCampaignCreator(models.Model):
             if not self.product_id:
                 return self.env["stock.move"]
             return self.env["stock.move"].search(
-                [
-                    ("product_id.anchor_product_id", "=", self.product_id.id),
-                    ("state", "not in", ["draft", "done", "cancelled"]),
-                    ("picking_id.picking_type_code", "=", "outgoing"),
-                ]
+                Domain("product_id.anchor_product_id", "=", self.product_id.id)
+                & Domain("state", "not in", ["draft", "done", "cancelled"])
+                & Domain("picking_id.picking_type_code", "=", "outgoing")
             )
 
         return self.env["stock.move"]

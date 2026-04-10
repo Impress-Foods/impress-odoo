@@ -39,7 +39,6 @@ class TestMrpCampaignWizard(CampaignDirectCase):
         )
         move = self.env["stock.move"].create(
             {
-                "name": "Test Move",
                 "product_id": self.int_prod_x_red.id,
                 "product_uom_qty": 10.0,
                 "location_id": self.stock_location.id,
@@ -75,7 +74,6 @@ class TestMrpCampaignWizard(CampaignDirectCase):
 
         move_anchor = self.env["stock.move"].create(
             {
-                "name": "move anchor",
                 "product_id": self.int_prod_x_red.id,
                 "product_uom_qty": 10.0,
                 "location_id": self.stock_location.id,
@@ -85,7 +83,6 @@ class TestMrpCampaignWizard(CampaignDirectCase):
         )
         move_no_anchor = self.env["stock.move"].create(
             {
-                "name": "move no anchor",
                 "product_id": self.product_no_bom.id,
                 "product_uom_qty": 5.0,
                 "location_id": self.stock_location.id,
@@ -115,7 +112,6 @@ class TestMrpCampaignWizard(CampaignDirectCase):
         )
         move = self.env["stock.move"].create(
             {
-                "name": "Test Move",
                 "product_id": self.int_prod_x_red.id,
                 "product_uom_qty": 10.0,
                 "location_id": self.stock_location.id,
@@ -155,7 +151,6 @@ class TestMrpCampaignWizard(CampaignDirectCase):
         )
         move = self.env["stock.move"].create(
             {
-                "name": "Test Move",
                 "product_id": self.int_prod_x_red.id,
                 "product_uom_qty": 10.0,
                 "location_id": self.stock_location.id,
@@ -197,7 +192,6 @@ class TestMrpCampaignWizard(CampaignDirectCase):
         )
         move = self.env["stock.move"].create(
             {
-                "name": "Test Move",
                 "product_id": self.int_prod_x_red.id,
                 "product_uom_qty": 10.0,
                 "location_id": self.stock_location.id,
@@ -242,7 +236,6 @@ class TestMrpCampaignWizard(CampaignDirectCase):
         )
         move_1 = self.env["stock.move"].create(
             {
-                "name": "Existing Move",
                 "product_id": self.int_prod_x_red.id,
                 "product_uom_qty": 5.0,
                 "location_id": self.stock_location.id,
@@ -266,7 +259,6 @@ class TestMrpCampaignWizard(CampaignDirectCase):
         )
         move_2 = self.env["stock.move"].create(
             {
-                "name": "New Move",
                 "product_id": self.int_prod_x_red.id,
                 "product_uom_qty": 10.0,
                 "location_id": self.stock_location.id,
@@ -326,7 +318,6 @@ class TestMrpCampaignWizard(CampaignDirectCase):
         )
         move = self.env["stock.move"].create(
             {
-                "name": "Test Move",
                 "product_id": self.int_prod_x_red.id,
                 "product_uom_qty": 10.0,
                 "location_id": self.stock_location.id,
@@ -379,7 +370,6 @@ class TestMrpCampaignWizard(CampaignDirectCase):
         )
         move1 = self.env["stock.move"].create(
             {
-                "name": "Move 1",
                 "product_id": self.int_prod_x_red.id,
                 "product_uom_qty": 5.0,
                 "location_id": self.stock_location.id,
@@ -392,7 +382,6 @@ class TestMrpCampaignWizard(CampaignDirectCase):
         )
         move2 = self.env["stock.move"].create(
             {
-                "name": "Move 2",
                 "product_id": self.int_prod_x_red.id,
                 "product_uom_qty": 10.0,
                 "location_id": self.stock_location.id,

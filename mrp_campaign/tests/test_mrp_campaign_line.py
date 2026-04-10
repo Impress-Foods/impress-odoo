@@ -42,7 +42,8 @@ class TestMrpCampaignLine(CampaignCase):
         alt_bulk = self.env["product.product"].create(
             {
                 "name": "Bulk Material Alt",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "mrp_max_batch_size": 1000.0,
                 "campaign_buffer_percent": 0.05,
             }
@@ -50,7 +51,11 @@ class TestMrpCampaignLine(CampaignCase):
         alt_bulk.product_tmpl_id.is_campaign_anchor = True
 
         int_prod = self.env["product.product"].create(
-            {"name": "Intermediate Product Alt", "type": "product"}
+            {
+                "name": "Intermediate Product Alt",
+                "type": "consu",
+                "is_storable": True,
+            }
         )
 
         self.env["mrp.bom"].create(
@@ -74,10 +79,10 @@ class TestMrpCampaignLine(CampaignCase):
 
     def test_get_downstream_product_no_anchor_in_tree(self) -> None:
         component = self.env["product.product"].create(
-            {"name": "Component Product", "type": "product"}
+            {"name": "Component Product", "type": "consu", "is_storable": True}
         )
         anchorless_prod = self.env["product.product"].create(
-            {"name": "Anchor-less Product", "type": "product"}
+            {"name": "Anchor-less Product", "type": "consu", "is_storable": True}
         )
 
         self.env["mrp.bom"].create(
@@ -99,7 +104,8 @@ class TestMrpCampaignLine(CampaignCase):
         int_tmpl = self.env["product.template"].create(
             {
                 "name": "Intermediate Product Alt",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "attribute_line_ids": [
                     (
                         0,
@@ -516,10 +522,20 @@ class TestMrpCampaignLine(CampaignCase):
         uom_gram = self.env.ref("uom.product_uom_gram")
 
         product_parent = self.env["product.product"].create(
-            {"name": "Product Parent", "type": "product", "uom_id": uom_unit.id}
+            {
+                "name": "Product Parent",
+                "type": "consu",
+                "is_storable": True,
+                "uom_id": uom_unit.id,
+            }
         )
         product_component = self.env["product.product"].create(
-            {"name": "Product Component", "type": "product", "uom_id": uom_kg.id}
+            {
+                "name": "Product Component",
+                "type": "consu",
+                "is_storable": True,
+                "uom_id": uom_kg.id,
+            }
         )
 
         # BoM for 1 Unit of Product Parent, uses 500 grams of Product Component
@@ -549,11 +565,19 @@ class TestMrpCampaignLine(CampaignCase):
 
     def test_kit_bom_guard(self) -> None:
         parent_product = self.env["product.product"].create(
-            {"name": "Kit Product", "type": "product"}
+            {
+                "name": "Kit Product",
+                "type": "consu",
+                "is_storable": True,
+            }
         )
 
         kit_product = self.env["product.product"].create(
-            {"name": "Kit Product", "type": "product"}
+            {
+                "name": "Kit Product",
+                "type": "consu",
+                "is_storable": True,
+            }
         )
         self.env["mrp.bom"].create(
             {
@@ -595,10 +619,18 @@ class TestMrpCampaignLine(CampaignCase):
     def test_zero_anchor_error(self) -> None:
         # Product with BoM but no anchor in its lineage
         component = self.env["product.product"].create(
-            {"name": "Component", "type": "product"}
+            {
+                "name": "Component",
+                "type": "consu",
+                "is_storable": True,
+            }
         )
         product_no_anchor = self.env["product.product"].create(
-            {"name": "No Anchor Product", "type": "product"}
+            {
+                "name": "No Anchor Product",
+                "type": "consu",
+                "is_storable": True,
+            }
         )
         self.env["mrp.bom"].create(
             {
@@ -633,7 +665,8 @@ class TestMrpCampaignLine(CampaignCase):
         int_tmpl = self.env["product.template"].create(
             {
                 "name": "Variant Only Intermediate",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "attribute_line_ids": [
                     (
                         0,
@@ -696,7 +729,8 @@ class TestMrpCampaignLine(CampaignCase):
         end_tmpl = self.env["product.template"].create(
             {
                 "name": "Variant Anchor Test",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "attribute_line_ids": [
                     (
                         0,

@@ -1,4 +1,6 @@
-from odoo import fields, models
+from odoo import api, fields, models
+from odoo.exceptions import ValidationError
+from odoo.fields import Command
 
 from odoo.addons.mrp.models.mrp_production import MrpProduction
 
@@ -67,14 +69,22 @@ class ProductionOrder(models.Model):
             cancel_remaining_qty=cancel_remaining_qty,
             set_consumed_qty=set_consumed_qty,
         )
-        if self.lot_producing_id:
+        if self.lot_producing_ids:
             res.with_context(syncing_lot=True).write(
-                {"lot_producing_id": self.lot_producing_id.id}
+                {"lot_producing_ids": [Command.link(self.lot_producing_ids[:1].id)]}
             )
         if self.campaign_line_id:
             res.write({"campaign_line_id": self.campaign_line_id.id})
 
         return res
+
+    @api.constrains("lot_producing_ids")
+    def _check_single_lot_for_campaign(self):
+        for mo in self.filtered("campaign_id"):
+            if len(mo.lot_producing_ids) > 1:
+                raise ValidationError(
+                    self.env._("Campaign MOs cannot have multiple lots.")
+                )
 
     # -------------------------------------------------------------------------
     # CRUD
@@ -82,13 +92,12 @@ class ProductionOrder(models.Model):
     def write(self, vals) -> bool:
         res = super().write(vals)
 
-        if "lot_producing_id" in vals and not self.env.context.get("syncing_lot"):
-            lot_id = vals.get("lot_producing_id")
-            if lot_id:
-                lot = self.env["stock.lot"].browse(lot_id)
+        if "lot_producing_ids" in vals and not self.env.context.get("syncing_lot"):
+            lots = self.lot_producing_ids[:1]
+            if lots:
                 campaigns = self.mapped("campaign_id")
                 for campaign in campaigns:
-                    if campaign.lot_name != lot.name:
-                        campaign.write({"lot_name": lot.name})
+                    if campaign.lot_name != lots.name:
+                        campaign.write({"lot_name": lots.name})
 
         return res

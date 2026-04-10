@@ -58,7 +58,7 @@
                         </div>
                     </t>
                     <t t-if="displayedAvailable.length === 0">
-                        <div class="list-group-item text-center text-muted py-3">
+                        <div class="list-group-item text-center py-3 text-muted">
                             <em>No available lines</em>
                         </div>
                     </t>
@@ -139,7 +139,7 @@
                         </div>
                     </t>
                     <t t-if="displayedSelected.length === 0">
-                        <div class="list-group-item text-center text-muted py-3">
+                        <div class="list-group-item text-center py-3 text-muted">
                             <em>No selected lines</em>
                         </div>
                     </t>

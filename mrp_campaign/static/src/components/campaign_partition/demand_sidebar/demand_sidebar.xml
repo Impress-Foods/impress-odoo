@@ -1,6 +1,6 @@
 <t t-name="mrp_campaign.DemandSidebar">
-    <div class="demand-sidebar h-100 bg-light d-flex flex-column">
-        <div class="p-3 border-bottom bg-white fw-bold">SALES ORDERS</div>
+    <div class="demand-sidebar h-100 d-flex flex-column bg-body">
+        <div class="p-3 border-bottom fw-bold">SALES ORDERS</div>
         <t t-set="sorted_moves" t-value="sortedMoves()" />
         <div class="flex-grow-1 overflow-auto p-3">
             <t t-foreach="sorted_moves" t-as="move" t-key="move.target_id">
@@ -10,7 +10,7 @@
                 />
                 <div
                     t-if="isNewGroup"
-                    class="demand-bar-container mt-3 mb-2 small fw-bold text-muted text-uppercase border-bottom pb-1"
+                    class="mt-3 mb-2 small fw-bold text-uppercase border-bottom pb-1"
                 >
                     <span t-esc="move.product_name" />
                     <div class="progress">
@@ -29,7 +29,7 @@
                                 <span class="fw-bold" t-esc="move.origin" />
                             </div>
                             <span
-                                t-attf-class="badge text-white #{getBadgeStatusClass(move)} "
+                                t-attf-class="badge text-white #{getBadgeStatusClass(move)}"
                             ><t t-esc="getPercent(move)" />%</span>
 
                             <span
@@ -78,10 +78,9 @@
                                 <i class="fa fa-angle-double-up" />
                             </button>
                         </div>
-                        <div class=" small text-muted text-end"> Target: <span
-                            t-esc=" move.upstream_qty"
-                        /> <span t-esc=" move.uom or ''" />
-                        </div>
+                        <div class="small text-end"> Target: <t
+                            t-esc="move.upstream_qty"
+                        /> <t t-esc="move.uom or ''" /></div>
                     </div>
                 </div>
             </t>

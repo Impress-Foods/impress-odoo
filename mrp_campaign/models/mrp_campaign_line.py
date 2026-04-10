@@ -1,11 +1,15 @@
-from odoo import _, api, fields, models
+import logging
+
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.fields import Many2many
+from odoo.fields import Domain, Many2many
 from odoo.tools import float_is_zero
 
 from odoo.addons.mrp.models.mrp_bom import MrpBomLine
 from odoo.addons.mrp.models.mrp_production import MrpProduction
 from odoo.addons.product.models.product_product import ProductProduct
+
+_logger = logging.getLogger(__name__)
 
 
 class CampaignLine(models.Model):
@@ -142,18 +146,16 @@ class CampaignLine(models.Model):
         for rec in self:
             rec.producing_qty = sum(
                 rec.production_ids.filtered_domain(
-                    [
-                        (
-                            "state",
-                            "!=",
-                            "cancel",
-                        )
-                    ]
+                    Domain(
+                        "state",
+                        "!=",
+                        "cancel",
+                    )
                 ).mapped("product_qty")
             )
             committed_qty = sum(
                 rec.production_ids.filtered_domain(
-                    [("state", "not in", ["draft", "cancel", "confirmed"])]
+                    Domain("state", "not in", ["draft", "cancel", "confirmed"])
                 ).mapped("product_qty")
             )
             rec.committed_qty = committed_qty / (
@@ -172,7 +174,9 @@ class CampaignLine(models.Model):
 
         if self.bom_id.type == "phantom":
             raise ValidationError(
-                _("Kits (Phantom BoMs) are not supported in manufacturing campaigns.")
+                self.env._(
+                    "Kits (Phantom BoMs) are not supported in manufacturing campaigns."
+                )
             )
 
         anchors: ProductProduct = (
@@ -182,13 +186,11 @@ class CampaignLine(models.Model):
         )
         if len(anchors) != 1:
             raise ValidationError(
-                _(
+                self.env._(
                     "Could not resolve downstream product "
-                    "for %(product)s with BoM %(bom)s"
-                    % {
-                        "product": self.product_id.display_name,
-                        "bom": self.bom_id.code,
-                    },
+                    "for %(product)s with BoM %(bom)s",
+                    product=self.product_id.display_name,
+                    bom=self.bom_id.code,
                 )
             )
         return anchors
@@ -261,7 +263,7 @@ class CampaignLine(models.Model):
 
             if downstream_bom.type == "phantom":
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "Kits (Phantom BoMs) are not supported in "
                         "manufacturing campaigns. "
                         "Found kit: %s",
@@ -306,7 +308,9 @@ class CampaignLine(models.Model):
             return values
         if self.is_batch_produced and self.batch_size > 0:
             remaining_qty = self.qty
-            while not float_is_zero(remaining_qty, self.product_id.uom_id.rounding):
+            while not float_is_zero(
+                remaining_qty, precision_rounding=self.product_id.uom_id.rounding
+            ):
                 qty_to_produce = min(remaining_qty, self.batch_size)
                 remaining_qty -= qty_to_produce
                 values.append(
@@ -337,7 +341,7 @@ class CampaignLine(models.Model):
         rounding_precision = self.product_id.uom_id.rounding
 
         active_mos = self.production_ids.filtered_domain(
-            [("state", "not in", ["cancel"])]
+            Domain("state", "not in", ["cancel"])
         )
         adjustable_mos = active_mos.filtered(
             lambda mo: mo.state in ["draft", "confirmed"]
@@ -349,17 +353,15 @@ class CampaignLine(models.Model):
 
         if required_from_adjustable_mos < 0:
             raise ValidationError(
-                _(
+                self.env._(
                     "Cannot adjust to a quantity less than what has already "
                     "been produced by existing Manufacturing Orders "
                     "that are in 'Done' or 'Cancelled' states. "
                     "(Requested: %(new_quantity)s, "
-                    "Fixed Produced: %(fixed_qty_produced)s)"
-                )
-                % {
-                    "new_quantity": new_quantity,
-                    "fixed_qty_produced": fixed_qty_produced,
-                }
+                    "Fixed Produced: %(fixed_qty_produced)s)",
+                    new_quantity=new_quantity,
+                    fixed_qty_produced=fixed_qty_produced,
+                ),
             )
 
         if float_is_zero(new_quantity, precision_rounding=rounding_precision):
@@ -376,7 +378,7 @@ class CampaignLine(models.Model):
             ):
                 if len(adjustable_mos) > 1:
                     raise ValidationError(
-                        _(
+                        self.env._(
                             "Non-batch produced line should only "
                             "have one Manufacturing Order."
                         )

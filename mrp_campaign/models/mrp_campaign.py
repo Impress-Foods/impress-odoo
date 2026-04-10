@@ -1,8 +1,9 @@
 import colorsys
 import random
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
+from odoo.fields import Command, Domain
 
 
 class MrpCampaign(models.Model):
@@ -119,7 +120,7 @@ class MrpCampaign(models.Model):
     # -------------------------------------------------------------------------
     @api.model
     def _get_name_seq(self) -> str:  # pragma: no coverage
-        return self.env["ir.sequence"].next_by_code("mrp.campaign") or _("New")
+        return self.env["ir.sequence"].next_by_code("mrp.campaign") or self.env._("New")
 
     @api.model
     def _generate_color(self) -> str:  # pragma: no coverage
@@ -141,7 +142,7 @@ class MrpCampaign(models.Model):
         for campaign in self.filtered(lambda x: x.state == "draft"):
             if not campaign.demand_line_ids:
                 raise UserError(
-                    _(
+                    self.env._(
                         "Cannot confirm campaign %s without any demand.",
                         campaign.name,
                     )
@@ -162,11 +163,8 @@ class MrpCampaign(models.Model):
     def action_reset(self) -> None:
         for campaign in self.filtered(lambda c: c.state in ["plan", "confirm"]):
             productions = campaign.production_ids.filtered_domain(
-                [
-                    "&",
-                    ("campaign_id", "=", campaign.id),
-                    ("created_by_campaign", "=", True),
-                ]
+                Domain("campaign_id", "=", campaign.id)
+                & Domain("created_by_campaign", "=", True)
             )
             if productions:
                 productions.action_cancel()
@@ -180,8 +178,8 @@ class MrpCampaign(models.Model):
             "type": "ir.actions.act_window",
             "name": "Production orders for %s" % self.name,
             "res_model": "mrp.production",
-            "domain": [("id", "in", self.production_ids.ids)],
-            "view_mode": "tree,form",
+            "domain": Domain("id", "in", self.production_ids.ids),
+            "view_mode": "list,form",
             "target": "current",
         }
 
@@ -200,8 +198,8 @@ class MrpCampaign(models.Model):
             "type": "ir.actions.act_window",
             "name": "Backorders for %s" % self.name,
             "res_model": "mrp.campaign",
-            "domain": [("id", "in", self.backorder_campaign_ids.ids)],
-            "view_mode": "tree,form",
+            "domain": Domain("id", "in", self.backorder_campaign_ids.ids),
+            "view_mode": "list,form",
             "target": "current",
         }
 
@@ -242,13 +240,15 @@ class MrpCampaign(models.Model):
         if mode == "split":
             if self.state not in ["draft", "plan"]:
                 raise ValidationError(
-                    _("Only campaigns in 'Draft' or 'Planned' state can be split")
+                    self.env._(
+                        "Only campaigns in 'Draft' or 'Planned' state can be split"
+                    )
                 )
-            name = _("Split Campaign: %s", self.name)
+            name = self.env._("Split Campaign: %s", self.name)
         elif mode == "backorder":
-            name = _("Backorder Campaign: %s", self.name)
+            name = self.env._("Backorder Campaign: %s", self.name)
         else:
-            raise ValueError(_("Invalid partition mode"))
+            raise ValueError(self.env._("Invalid partition mode"))
 
         return {
             "type": "ir.actions.act_window",
@@ -288,10 +288,8 @@ class MrpCampaign(models.Model):
     def _sync_mo_start_dates(self) -> None:
         for rec in self:
             mos_to_sync = rec.production_ids.filtered_domain(
-                [
-                    ("date_start", "!=", rec.date_planned_start),
-                    ("state", "in", ["draft", "confirmed"]),
-                ]
+                Domain("date_start", "!=", rec.date_planned_start)
+                & Domain("state", "in", ["draft", "confirmed"])
             )
             mos_to_sync.write({"date_start": rec.date_planned_start})
 
@@ -300,7 +298,9 @@ class MrpCampaign(models.Model):
         productions = self.production_ids.filtered(
             lambda p: (
                 p.state not in ["done", "cancel"]
-                and (not p.lot_producing_id or p.lot_producing_id.name != lot_name)
+                and (
+                    not p.lot_producing_ids or p.lot_producing_ids[:1].name != lot_name
+                )
             )
         )
         if not productions:
@@ -309,9 +309,9 @@ class MrpCampaign(models.Model):
         products = productions.mapped("product_id")
         existing_lots = self.env["stock.lot"].search(
             [
-                ("name", "=", lot_name),
-                ("product_id", "in", products.ids),
-                ("company_id", "=", self.company_id.id),
+                Domain("name", "=", lot_name)
+                & Domain("product_id", "in", products.ids)
+                & Domain("company_id", "=", self.company_id.id)
             ]
         )
         lots_by_product = {lot.product_id.id: lot for lot in existing_lots}
@@ -334,7 +334,9 @@ class MrpCampaign(models.Model):
             prods_to_update_by_lot[lot] |= production
 
         for lot, prods in prods_to_update_by_lot.items():
-            prods.with_context(syncing_lot=True).write({"lot_producing_id": lot.id})
+            prods.with_context(syncing_lot=True).write(
+                {"lot_producing_ids": [Command.clear(), Command.link(lot.id)]}
+            )
 
     def _resync_mos(self) -> None:
         self.ensure_one()
@@ -360,12 +362,14 @@ class MrpCampaign(models.Model):
             list(target_qtys.keys())
         )
         campaign_targets = self.env["mrp.campaign.demand.target"].search(
-            [("campaign_id", "=", self.id)]
+            Domain("campaign_id", "=", self.id)
         )
         invalid_targets = targets - campaign_targets
         if invalid_targets:
             raise ValidationError(
-                _("Targets %s do not belong to this campaign.", invalid_targets)
+                self.env._(
+                    "Targets %s do not belong to this campaign.", invalid_targets
+                )
             )
 
         demands = self.demand_line_ids
@@ -399,7 +403,7 @@ class MrpCampaign(models.Model):
 
             else:
                 targets_to_bo_for_demand = targets_to_bo.filtered_domain(
-                    [("demand_id", "=", demand.id)]
+                    Domain("demand_id", "=", demand.id)
                 )
                 if not targets_to_bo_for_demand:
                     continue
@@ -443,13 +447,13 @@ class MrpCampaign(models.Model):
     @api.ondelete(at_uninstall=False)
     def _unlink_if_campaign_inactive(self) -> None:
         if any(rec.state in ["progress"] for rec in self):
-            raise UserError(_("Can't delete a campaign in progress!"))
+            raise UserError(self.env._("Can't delete a campaign in progress!"))
         if any(rec.state in ["done"] for rec in self):
-            raise UserError(_("Can't delete a completed campaign!"))
+            raise UserError(self.env._("Can't delete a completed campaign!"))
 
     def unlink(self) -> bool:
         mos_to_unlink = self.mapped("production_ids").filtered_domain(
-            [("state", "in", ["draft"])]
+            Domain("state", "in", ["draft"])
         )
         mos_to_unlink.unlink()
         self.mapped("demand_line_ids").unlink()

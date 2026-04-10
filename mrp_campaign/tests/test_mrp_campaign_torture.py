@@ -23,7 +23,8 @@ class TestMrpCampaignTorture(CampaignDirectCase):
         bulk_material = self.env["product.product"].create(
             {
                 "name": "Torture Bulk Anchor",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "mrp_max_batch_size": 10.0,
                 "campaign_buffer_percent": 0.10,
             }
@@ -42,7 +43,8 @@ class TestMrpCampaignTorture(CampaignDirectCase):
         component = self.env["product.product"].create(
             {
                 "name": "Torture Component",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
             }
         )
         self.env["mrp.bom"].create(
@@ -59,7 +61,8 @@ class TestMrpCampaignTorture(CampaignDirectCase):
         sub_assembly = self.env["product.product"].create(
             {
                 "name": "Torture Sub-Assembly",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
             }
         )
         self.env["mrp.bom"].create(
@@ -76,7 +79,8 @@ class TestMrpCampaignTorture(CampaignDirectCase):
         end_product = self.env["product.product"].create(
             {
                 "name": "Torture End Product",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
             }
         )
         self.env["mrp.bom"].create(

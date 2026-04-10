@@ -57,7 +57,6 @@ class TestMrpCampaignDemand(CampaignCase):
 
         move_1 = self.env["stock.move"].create(
             {
-                "name": f"test move for {PRODUCT.display_name}",
                 "product_id": PRODUCT.id,
                 "product_uom_qty": QTY,
                 "location_id": self.stock_location.id,
@@ -67,7 +66,6 @@ class TestMrpCampaignDemand(CampaignCase):
         )
         move_2 = self.env["stock.move"].create(
             {
-                "name": f"test move for {PRODUCT.display_name}",
                 "product_id": PRODUCT.id,
                 "product_uom_qty": QTY,
                 "location_id": self.stock_location.id,

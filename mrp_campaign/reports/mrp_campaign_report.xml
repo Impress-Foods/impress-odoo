@@ -5,7 +5,6 @@
             <t t-foreach="docs" t-as="doc">
                 <t t-call="web.external_layout">
                     <div class="page">
-                        <div class="oe_structure" />
                         <div class="row">
                             <div class="col-8">
                                 <h3>
@@ -46,8 +45,8 @@
                                 <div class="col-6">
                                     <strong>Final Lot:</strong>
                                     <span
-                                        t-field="mo.lot_producing_id.name"
-                                        t-if="mo.lot_producing_id"
+                                        t-field="mo.lot_producing_ids[0].name"
+                                        t-if="mo.lot_producing_ids"
                                     />
                                     <span t-else="">__________________</span>
                                 </div>
@@ -121,8 +120,8 @@
                                 <div class="col-6">
                                     <strong>Final Lot:</strong>
                                     <span
-                                        t-field="mo.lot_producing_id.name"
-                                        t-if="mo.lot_producing_id"
+                                        t-field="mo.lot_producing_ids[0].name"
+                                        t-if="mo.lot_producing_ids"
                                     />
                                     <span t-else="">__________________</span>
                                 </div>

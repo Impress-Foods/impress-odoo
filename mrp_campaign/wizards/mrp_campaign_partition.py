@@ -1,8 +1,9 @@
 import json
 from typing import Any
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.fields import Domain
 
 
 class MrpCampaignPartition(models.TransientModel):
@@ -47,11 +48,11 @@ class MrpCampaignPartition(models.TransientModel):
         )
         if len(root_line) == 0:
             raise ValidationError(
-                _("Cannot produce JSON for campaign without root line")
+                self.env._("Cannot produce JSON for campaign without root line")
             )
         if len(root_line) > 1:
             raise ValidationError(
-                _("Cannot produce JSON for campaign with multiple root lines")
+                self.env._("Cannot produce JSON for campaign with multiple root lines")
             )
 
         return {
@@ -93,7 +94,7 @@ class MrpCampaignPartition(models.TransientModel):
             moves = []
             for demand in campaign.demand_line_ids:
                 targets = demand.target_ids.filtered_domain(
-                    [("workflow_type", "=", "direct")]
+                    Domain("workflow_type", "=", "direct")
                 )
                 target_data = [(t, t._get_target()) for t in targets]
                 target_data.sort(
@@ -108,22 +109,26 @@ class MrpCampaignPartition(models.TransientModel):
         tree = data if "tree" not in data else data.get("tree")
         if tree is None:
             raise ValidationError(
-                _("Malformed data: missing 'tree' attribute in JSON.")
+                self.env._("Malformed data: missing 'tree' attribute in JSON.")
             )
 
         result = {}
         line_id = tree.get("line_id")
         if not line_id:
-            raise ValidationError(_("Malformed data: missing 'line_id' in tree."))
+            raise ValidationError(
+                self.env._("Malformed data: missing 'line_id' in tree.")
+            )
 
         line = self.env["mrp.campaign.line"].browse(line_id)
         if not line.exists():
             raise ValidationError(
-                _("Could not find campaign line with id %(line)s", line=line_id)
+                self.env._(
+                    "Could not find campaign line with id %(line)s", line=line_id
+                )
             )
         if line.campaign_id != self.campaign_id:
             raise ValidationError(
-                _(
+                self.env._(
                     "Line %(line)s does not belong to campaign %(campaign)s",
                     line=line_id,
                     campaign=self.campaign_id.name,
@@ -149,7 +154,7 @@ class MrpCampaignPartition(models.TransientModel):
 
             if product_id and product_id != line.product_id.id:
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "Product mismatch for line %(line_id)s: "
                         "expected %(expected)s, got %(actual)s",
                         line_id=line_id,
@@ -162,7 +167,7 @@ class MrpCampaignPartition(models.TransientModel):
 
             if planned < floor:
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "Cannot plan less of %(product)s than the floor quantity. "
                         "Floor: %(floor)s, Planned: %(planned)s",
                         product=line.product_id.display_name,
@@ -173,7 +178,7 @@ class MrpCampaignPartition(models.TransientModel):
 
             if planned > initial_planned:
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "Cannot plan more of %(product)s than the "
                         "initial planned quantity. "
                         "Initial: %(initial)s, Planned: %(planned)s",
@@ -203,7 +208,7 @@ class MrpCampaignPartition(models.TransientModel):
         demand_data = data.get("demand_moves")
         if demand_data is None:
             raise ValidationError(
-                _("Malformed data: missing 'demand_moves' attribute in JSON.")
+                self.env._("Malformed data: missing 'demand_moves' attribute in JSON.")
             )
 
         target_qtys = {}
@@ -214,20 +219,24 @@ class MrpCampaignPartition(models.TransientModel):
 
             target = self.env["mrp.campaign.demand.target"].browse(target_id)
             if not target.exists():
-                raise ValidationError(_("Target %s not found in database.", target_id))
+                raise ValidationError(
+                    self.env._("Target %s not found in database.", target_id)
+                )
             if target.campaign_id != self.campaign_id:
                 raise ValidationError(
-                    _("Target %s does not belong to this campaign.", target_id)
+                    self.env._("Target %s does not belong to this campaign.", target_id)
                 )
 
             promised_qty = item.get("promised_qty", 0)
             if promised_qty < 0:
                 raise ValidationError(
-                    _("Cannot assign negative quantity to target %s.", target_id)
+                    self.env._(
+                        "Cannot assign negative quantity to target %s.", target_id
+                    )
                 )
             if promised_qty > target.upstream_qty:
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "Quantity %(qty).2f exceeds upstream demand "
                         "%(max).2f for target %(id)s.",
                         qty=promised_qty,

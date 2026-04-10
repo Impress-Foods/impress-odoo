@@ -16,10 +16,10 @@ class CampaignCase(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.env.user.groups_id |= cls.env.ref("base.group_user")
-        cls.env.user.groups_id |= cls.env.ref("base.group_partner_manager")
-        cls.env.user.groups_id |= cls.env.ref("mrp.group_mrp_manager")
-        cls.env.user.groups_id |= cls.env.ref("stock.group_stock_manager")
+        cls.env.user.group_ids |= cls.env.ref("base.group_user")
+        cls.env.user.group_ids |= cls.env.ref("base.group_partner_manager")
+        cls.env.user.group_ids |= cls.env.ref("mrp.group_mrp_manager")
+        cls.env.user.group_ids |= cls.env.ref("stock.group_stock_manager")
 
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
         cls.company = cls.env.ref("base.main_company")
@@ -61,9 +61,9 @@ class CampaignCase(TransactionCase):
         cls.bulk_material = product_model.create(
             {
                 "name": "Bulk Material M",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "uom_id": uom_unit.id,
-                "uom_po_id": uom_unit.id,
                 "mrp_max_batch_size": 1000.0,
                 "campaign_buffer_percent": 0.05,
             }
@@ -82,7 +82,8 @@ class CampaignCase(TransactionCase):
         cls.int_prod_x_tmpl = product_template_model.create(
             {
                 "name": "Intermediate Product X",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "attribute_line_ids": [
                     (
                         0,
@@ -113,7 +114,8 @@ class CampaignCase(TransactionCase):
         cls.int_prod_y_tmpl = product_template_model.create(
             {
                 "name": "Intermediate Product Y",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "attribute_line_ids": [
                     (
                         0,
@@ -145,7 +147,8 @@ class CampaignCase(TransactionCase):
         cls.end_prod_a_tmpl = product_template_model.create(
             {
                 "name": "End Product A",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "is_campaign_anchor": False,
                 "attribute_line_ids": [
                     (
@@ -177,7 +180,8 @@ class CampaignCase(TransactionCase):
         cls.end_prod_b_tmpl = product_template_model.create(
             {
                 "name": "End Product B",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "attribute_line_ids": [
                     (
                         0,
@@ -356,9 +360,9 @@ class CampaignCase(TransactionCase):
         cls.product_no_bom = product_model.create(
             {
                 "name": "Product Without BOM",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "uom_id": uom_unit.id,
-                "uom_po_id": uom_unit.id,
             }
         )
 
@@ -397,7 +401,6 @@ class CampaignCase(TransactionCase):
 
         move = cls.env["stock.move"].create(
             {
-                "name": f"test move for {product.display_name}",
                 "product_id": product.id,
                 "product_uom_qty": qty,
                 "location_id": cls.stock_location.id,

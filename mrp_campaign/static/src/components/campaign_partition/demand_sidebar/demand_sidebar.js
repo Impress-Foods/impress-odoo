@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import {Component} from "@odoo/owl";
 import {formatDate, deserializeDate} from "@web/core/l10n/dates";
 
@@ -77,7 +76,7 @@ export class DemandSidebar extends Component {
 
     getProgressBarClass(productId) {
         if (this.isAboveFloor(productId)) {
-            return "bg-secondary";
+            return "bg-success";
         } else {
             return "bg-danger";
         }

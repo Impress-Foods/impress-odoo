@@ -18,17 +18,15 @@
                         <span class="o_stat_text">Production</span>
                         <span class="o_stat_text">Run</span>
                     </div>
-                    <field name="campaign_id" invisible="1" />
                 </button>
             </xpath>
             <xpath
-                expr="//group[@name='group_extra_info']//field[@name='date_finished']"
+                expr="//group[@name='group_extra_info']//label[@name='scheduled_date']"
                 position="before"
             >
                 <field name="date_deadline" readonly="1" />
             </xpath>
             <xpath expr="//field[@name='user_id']" position="before">
-                <field name="anchor_product_id" invisible="1" />
                 <field
                     name="campaign_id"
                     readonly="state in ['done','cancel']"
