@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_mrp_campaign_tree" model="ir.ui.view">
+        <field name="name">mrp.campaign.list</field>
+        <field name="model">mrp.campaign</field>
+        <field name="arch" type="xml">
+            <list>
+                <header>
+                    <button
+                        name="action_plan"
+                        type="object"
+                        string="Plan"
+                        class="oe_highlight"
+                    />
+                    <button
+                        name="action_confirm"
+                        type="object"
+                        string="Confirm"
+                        class="oe_highlight"
+                    />
+                    <button name="action_reset" type="object" string="Reset" class="" />
+                </header>
+                <field name="name" />
+                <field name="product_id" />
+                <field name="state" />
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mrp_campaign_form" model="ir.ui.view">
+        <field name="name">mrp.campaign.form</field>
+        <field name="model">mrp.campaign</field>
+        <field name="arch" type="xml">
+            <form string="Manufacturing Campaign">
+                <header>
+                    <button
+                        name="action_plan"
+                        type="object"
+                        string="Plan"
+                        class="btn-primary"
+                        invisible="state not in ['draft']"
+                    />
+                    <button
+                        name="action_confirm"
+                        type="object"
+                        string="Confirm"
+                        class="btn-primary"
+                        invisible="state not in ['plan']"
+                    />
+                    <button
+                        name="action_reset"
+                        type="object"
+                        string="Reset Campaign"
+                        class="btn-secondary"
+                        invisible="state in ['draft']"
+                    />
+                    <button
+                        name="action_open_add_demand_wizard"
+                        type="object"
+                        string="Add Demand"
+                        class="btn-secondary"
+                        invisible="state not in ['draft']"
+                    />
+                    <button
+                        name="action_open_split_wizard"
+                        type="object"
+                        string="Split Campaign"
+                        class="btn-secondary"
+                        invisible="state not in ['plan']"
+                    />
+                    <button
+                        name="action_bo"
+                        type="object"
+                        string="Backorder Campaign"
+                        class="btn-secondary"
+                        invisible="state not in ['confirm','progress']"
+                    />
+                    <button
+                        name="action_sync_mos"
+                        type="object"
+                        string="Synchronize MOs"
+                        class="btn-secondary"
+                        invisible="not is_out_of_sync"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,plan,confirm,done"
+                    />
+                </header>
+
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            name="action_view_mos"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-flask"
+                            invisible="production_count == 0"
+                        >
+                            <field
+                                name="production_count"
+                                widget="statinfo"
+                                string="Productions"
+                            />
+                        </button>
+                        <button
+                            name="action_view_bos"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-share"
+                            invisible="bo_count == 0"
+                        >
+                            <field
+                                name="bo_count"
+                                widget="statinfo"
+                                string="Back Orders"
+                            />
+                        </button>
+                        <button
+                            name="action_view_source"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-reply"
+                            invisible="not bo_source_id"
+                        > Source </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="lot_name" readonly="1" />
+                            <field name="product_id" readonly="1" />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                            />
+                            <field
+                                name="date_planned_start"
+                                readonly="state not in ['draft', 'plan', 'confirm']"
+                            />
+                        </group>
+                        <group>
+                            <field name="workflow_type" readonly="1" />
+                            <field name="campaign_color" widget="color" />
+                            <field
+                                name="override_batch_size"
+                                widget="boolean_toggle"
+                                readonly="state not in ['draft']"
+                            />
+                            <field
+                                name="batch_size"
+                                required="override_batch_size"
+                                invisible="not override_batch_size"
+                                readonly="state not in ['draft']"
+                            />
+                            <field
+                                name="buffer_percent"
+                                widget="percentage"
+                                readonly="state not in ['draft']"
+                            />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Demand">
+                            <field
+                                name="demand_line_ids"
+                                readonly="state not in ['draft']"
+                            />
+                        </page>
+                        <page string="Lines">
+                            <field name="line_ids" readonly="1" />
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mrp_campaign_kanban" model="ir.ui.view">
+        <field name="name">mrp.campaign.kanban</field>
+        <field name="model">mrp.campaign</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="campaign_color" />
+
+                <field name="date_planned_start" />
+                <progressbar
+                    field="state"
+                    colors="{&quot;draft&quot;: &quot;muted&quot;, &quot;confirm&quot;: &quot;info&quot;, &quot;done&quot;: &quot;success&quot;, &quot;cancel&quot;: &quot;danger&quot;}"
+                />
+
+                <templates>
+                    <t t-name="card">
+                        <div
+                            t-attf-class="oe_kanban_card oe_kanban_global_click"
+                            t-attf-style="border-left: 4px solid {{record.campaign_color.raw_value}};"
+                        >
+                            <div class="o_kanban_record_top">
+                                <div class="o_kanban_record_headings ms-1">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name" />
+                                    </strong>
+                                </div>
+                                <div class="float-end text-end">
+                                    <field name="sequence" widget="handle" />
+                                </div>
+                            </div>
+
+                            <div class="o_kanban_record_body">
+                                <field name="product_id" />
+                                <span t-if="record.lot_name.value">
+                                    <field name="lot_name" />
+                                </span>
+                                <br t-else="" />
+                            </div>
+                            <div class="o_kanban_record_bottom">
+                                <div
+                                    t-attf-class="oe_kanban_bottom_left                                     #{record.state.raw_value === 'draft' ? 'oe_kanban_status_grey' : ''}                                     #{record.state.raw_value === 'plan' ? 'oe_kanban_status_orange' : ''}                                     #{record.state.raw_value === 'confirm' ? 'oe_kanban_status_green' : ''}                                     #{record.state.raw_value === 'progress' ? 'oe_kanban_status_blue' : ''}                                     #{record.state.raw_value === 'done' ? 'oe_kanban_status_green' : ''}                                     #{record.state.raw_value === 'cancel' ? 'oe_kanban_status_red' : ''}                                     "
+                                >
+                                    <field name="state" />
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_mrp_campaign_search" model="ir.ui.view">
+        <field name="name">mrp.campaign.search</field>
+        <field name="model">mrp.campaign</field>
+        <field name="arch" type="xml">
+            <search string="Seach Campaigns">
+                <filter
+                    name="today"
+                    string="Today"
+                    domain="[('date_planned_start', '&gt;=', (context_today()).strftime('%Y-%m-%d')),('date_planned_start', '&lt;=',  (context_today()).strftime('%Y-%m-%d'))]"
+                />
+
+                <group>
+                    <filter
+                        string="Date"
+                        name="date"
+                        domain="[]"
+                        context="{'group_by': 'date_planned_start:day'}"
+                        help="Date"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mrp_campaign" model="ir.actions.act_window">
+        <field name="name">Manufacturing Campaigns</field>
+        <field name="res_model">mrp.campaign</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{'search_default_date': 1}</field>
+    </record>
+
+    <menuitem
+        id="menu_mrp_campaign"
+        name="Campaigns"
+        parent="mrp.menu_mrp_root"
+        sequence="50"
+        groups="mrp.group_mrp_user"
+    />
+    <menuitem
+        id="menu_mrp_campaign_campaign"
+        name="Campaigns"
+        parent="mrp_campaign.menu_mrp_campaign"
+        action="action_mrp_campaign"
+        sequence="1"
+        groups="mrp.group_mrp_user"
+    />
+</odoo>

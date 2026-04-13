@@ -1,0 +1,89 @@
+<t t-name="mrp_campaign.DemandSidebar">
+    <div class="demand-sidebar h-100 d-flex flex-column bg-body">
+        <div class="p-3 border-bottom fw-bold">SALES ORDERS</div>
+        <t t-set="sorted_moves" t-value="sortedMoves()" />
+        <div class="flex-grow-1 overflow-auto p-3">
+            <t t-foreach="sorted_moves" t-as="move" t-key="move.target_id">
+                <t
+                    t-set="isNewGroup"
+                    t-value="move_index === 0 or sorted_moves[move_index - 1].product_id !== move.product_id"
+                />
+                <div
+                    t-if="isNewGroup"
+                    class="mt-3 mb-2 small fw-bold text-uppercase border-bottom pb-1"
+                >
+                    <span t-esc="move.product_name" />
+                    <div class="progress">
+                        <div
+                            t-attf-class="progress-bar #{getProgressBarClass(move.product_id)}"
+                            role="progressbar"
+                            t-attf-style="width: #{getPercentFulfilled(move.product_id)}%;"
+                        />
+                    </div>
+                </div>
+
+                <div class="card demand-card mb-2 border-0 shadow-sm">
+                    <div class="card-body p-3">
+                        <div class="demand-header mb-2">
+                            <div class="name" name="name">
+                                <span class="fw-bold" t-esc="move.origin" />
+                            </div>
+                            <span
+                                t-attf-class="badge text-white #{getBadgeStatusClass(move)}"
+                            ><t t-esc="getPercent(move)" />%</span>
+
+                            <span
+                                t-if="move.customer"
+                                class="customer"
+                                t-esc="move.customer"
+                            />
+                            <small
+                                class="date"
+                                t-if="move.deadline"
+                                t-esc="formatDate(move.deadline)"
+                            />
+                        </div>
+
+                        <div class="input-group input-group-sm mb-2">
+                            <button
+                                class="btn btn-outline-secondary"
+                                t-on-click="() => this._setMoveEmpty(move.target_id)"
+                            >
+                                <i class="fa fa-angle-double-down" />
+                            </button>
+                            <button
+                                class="btn btn-outline-secondary"
+                                t-on-click="() => this._onBtnClick(move.target_id, move.promised_qty, -1)"
+                            >
+                                <i class="fa fa-angle-down" />
+                            </button>
+                            <input
+                                type="number"
+                                class="form-control text-center"
+                                t-att-value="move.promised_qty"
+                                t-on-change="(ev) => this._onInputChange(move.target_id, ev)"
+                                min="0"
+                                t-att-max="move.upstream_qty"
+                            />
+                            <button
+                                class="btn btn-outline-secondary"
+                                t-on-click="() => this._onBtnClick(move.target_id, move.promised_qty, 1)"
+                            >
+                                <i class="fa fa-angle-up" />
+                            </button>
+                            <button
+                                class="btn btn-outline-secondary"
+                                t-on-click="() => this._setMoveFull(move.target_id)"
+                            >
+                                <i class="fa fa-angle-double-up" />
+                            </button>
+                        </div>
+                        <div class="small text-end"> Target: <t
+                            t-esc="move.upstream_qty"
+                        /> <t t-esc="move.uom or ''" /></div>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </div>
+</t>

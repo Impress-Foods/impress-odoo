@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- View mrp.campaign.creator form -->
+    <record id="view_mrp_campaign_creator_form" model="ir.ui.view">
+        <field name="name">view.mrp.campaign.creator.form</field>
+        <field name="model">mrp.campaign.wizard.creator</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="campaign_id" invisible="1" />
+                            <field name="workflow_type" invisible="1" />
+                            <field name="product_id" required="not campaign_id" />
+                        </group>
+                        <group>
+                            <field name="planned_date" required="not campaign_id" />
+                        </group>
+                    </group>
+                    <field
+                        name="available_lines"
+                        widget="wizard_selector"
+                        class="field_wizard_selector"
+                        nolabel="1"
+                    />
+                    <field name="selected_line_ids" invisible="1" />
+                </sheet>
+                <footer>
+                    <button
+                        name="process_wizard"
+                        string="Confirm"
+                        type="object"
+                        class="btn-primary"
+                        data-hotkey="q"
+                    />
+                    <button
+                        string="Cancel"
+                        class="btn-secondary"
+                        special="cancel"
+                        data-hotkey="z"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_mrp_campaign_direct_wizard_create" model="ir.actions.act_window">
+        <field name="name">Create Campaign (Direct)</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mrp.campaign.wizard.creator</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_workflow_type': 'direct'}</field>
+    </record>
+    <menuitem
+        id="menu_mrp_campaign_direct_wizard"
+        name="Create Campaign (Direct)"
+        parent="mrp_campaign.menu_mrp_campaign"
+        action="action_mrp_campaign_direct_wizard_create"
+        sequence="51"
+    />
+</odoo>

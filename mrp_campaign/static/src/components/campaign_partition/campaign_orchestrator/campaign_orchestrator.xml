@@ -1,0 +1,19 @@
+<t t-name="mrp_campaign.CampaignOrchestrator">
+    <div class="o_campaign_orchestrator">
+        <div class="demand-sidebar-column border-end">
+            <div class="scroll-area p-2">
+                <DemandSidebar
+                    moves="state.data.demand_moves"
+                    onUpdateMove="(id, val) => this.updateMoveQty(id, val)"
+                    minimumQtys="getMinimumQtys()"
+                />
+            </div>
+        </div>
+
+        <div class="production-tree-column">
+            <div class="p-3">
+                <CampaignNode node="state.data.tree" isRoot="true" />
+            </div>
+        </div>
+    </div>
+</t>

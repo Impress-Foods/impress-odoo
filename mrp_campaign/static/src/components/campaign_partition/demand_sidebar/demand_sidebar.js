@@ -1,0 +1,92 @@
+import {Component} from "@odoo/owl";
+import {formatDate, deserializeDate} from "@web/core/l10n/dates";
+
+export class DemandSidebar extends Component {
+    static template = "mrp_campaign.DemandSidebar";
+    static props = {
+        moves: {type: Array},
+        onUpdateMove: {type: Function},
+        minimumQtys: {type: Object},
+    };
+
+    sortedMoves() {
+        const moves = this.props.moves;
+        return moves.toSorted((a, b) =>
+            a.product_id < b.product_id ? -1 : a.product_id > b.product_id ? 1 : 0
+        );
+    }
+
+    _onInputChange(moveId, ev) {
+        const val = parseFloat(ev.target.value) || 0;
+        const clamped = this.clamp(val, 0, this.getMove(moveId).upstream_qty);
+        this.props.onUpdateMove(moveId, clamped);
+    }
+
+    _onBtnClick(moveId, currentQty, delta) {
+        const value = currentQty + delta;
+        const clamped = this.clamp(value, 0, this.getMove(moveId).upstream_qty);
+        this.props.onUpdateMove(moveId, clamped);
+    }
+    /**
+     * Helper for the template to calculate move progress
+     */
+    getPercent(move) {
+        if (!move.upstream_qty) return 0;
+        return Math.min(100, Math.round((move.promised_qty / move.upstream_qty) * 100));
+    }
+
+    getBadgeStatusClass(move) {
+        const pct = this.getPercent(move);
+        if (pct >= 100) return "bg-success";
+        if (pct > 0) return "bg-info";
+        return "bg-danger";
+    }
+
+    clamp(x, min_value, max_value) {
+        return Math.max(min_value, Math.min(x, max_value));
+    }
+
+    getMove(targetId) {
+        return this.props.moves.find((m) => m.target_id === targetId);
+    }
+
+    formatDate(date) {
+        return formatDate(deserializeDate(date));
+    }
+
+    _setMoveFull(moveId) {
+        const move = this.getMove(moveId);
+        const value = move.upstream_qty;
+        this.props.onUpdateMove(moveId, value);
+    }
+    _setMoveEmpty(moveId) {
+        this.props.onUpdateMove(moveId, 0);
+    }
+
+    getFulfilledQty(productId) {
+        const moves = this.props.moves.filter((m) => m.product_id === productId);
+        return moves.reduce((sum, m) => sum + m.promised_qty, 0);
+    }
+
+    isAboveFloor(productId) {
+        const fulfilled = this.getFulfilledQty(productId);
+        const floor = this.props.minimumQtys[productId];
+        return fulfilled >= floor;
+    }
+
+    getProgressBarClass(productId) {
+        if (this.isAboveFloor(productId)) {
+            return "bg-success";
+        } else {
+            return "bg-danger";
+        }
+    }
+
+    getPercentFulfilled(productId) {
+        const moves = this.props.moves.filter((m) => m.product_id === productId);
+        const fulfilled = this.getFulfilledQty(productId);
+        const needed = moves.reduce((sum, m) => sum + (m.upstream_qty || 0), 0);
+        if (!needed) return 0;
+        return (fulfilled / needed) * 100;
+    }
+}

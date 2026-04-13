@@ -1,0 +1,40 @@
+.production-bar-container {
+    position: relative;
+    padding-top: 15px;
+
+    .progress {
+        overflow: hidden;
+        border-radius: 4px;
+    }
+
+    .floor-marker {
+        position: absolute;
+        top: 15px;
+        margin-top: -4px;
+        height: 20px;
+        width: 2px;
+        background-color: var(--danger);
+        z-index: 3;
+        pointer-events: none;
+
+        &::before {
+            content: "";
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background: inherit;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+        }
+    }
+
+    .floor-label {
+        position: absolute;
+        top: -18px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--danger);
+    }
+}

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates xml:space="preserve">
+    <t
+        t-name="MrpDisplayRecordCampaign"
+        t-inherit="mrp_workorder.MrpDisplayRecord"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//div[1]" position="attributes">
+            <attribute
+                name="t-attf-style"
+            >box-shadow: 0 0 0 2px {{props.record.data.campaign_color}}; border: 1px solid {{props.record.data.campaign_color}} </attribute>
+        </xpath>
+        <xpath expr="//div[1]/div[1]" position="attributes">
+            <attribute
+                name="t-attf-style"
+            >background-color: color-mix(in oklch, {{props.record.data.campaign_color}}, transparent 70%);</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('card-title')]" position="after">
+            <t
+                t-if="props.record.resModel=='mrp.production'"
+                t-call="mrp_campaign.MrpDisplayProductionCampaign"
+            />
+            <t
+                t-if="props.record.resModel=='mrp.workorder'"
+                t-call="mrp_campaign.MrpDisplayWorkorderCampaign"
+            />
+        </xpath>
+    </t>
+
+
+    <t t-name="mrp_campaign.MrpDisplayProductionCampaign">
+        <div class="d-flex justify-content-between">
+            <span
+                class="h5 mb-0"
+                t-if="record.date_start"
+                t-esc="record.date_start.toISODate()"
+            />
+            <span
+                class="h5 mb-0"
+                t-if="record.campaign_id"
+                t-esc="record.campaign_id[1]"
+            />
+        </div>
+    </t>
+
+    <t t-name="mrp_campaign.MrpDisplayWorkorderCampaign">
+        <div class="d-flex justify-content-between w-60">
+            <span
+                class="h5"
+                t-if="record.production_date"
+                t-esc="record.production_date.toISODate()"
+            />
+            <span class="h5" t-if="record.campaign_id" t-esc="record.campaign_id[1]" />
+        </div>
+    </t>
+</templates>

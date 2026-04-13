@@ -1,0 +1,27 @@
+.demand-card {
+    .demand-header {
+        display: grid;
+        grid-template-columns: 60% 40%;
+        grid-template-rows: 50% 50%;
+        justify-content: space-between;
+        align-items: center;
+        .name {
+            justify-self: start;
+        }
+        .badge {
+            justify-self: end;
+        }
+        .customer {
+            justify-self: start;
+        }
+        .date {
+            justify-self: end;
+        }
+    }
+}
+.demand-sidebar {
+    .progress {
+        overflow: hidden;
+        border-radius: 4px;
+    }
+}

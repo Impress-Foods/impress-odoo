@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_mrp_campaign_partition_wizard_form" model="ir.ui.view">
+        <field name="name">mrp.campaign.wizard.partition.form</field>
+        <field name="model">mrp.campaign.wizard.partition</field>
+        <field name="arch" type="xml">
+            <form string="Partition Campaign">
+                <sheet>
+                    <group>
+                        <field name="campaign_id" readonly="1" />
+                    </group>
+                    <field
+                        name="partition_data_json"
+                        nolabel="1"
+                        widget="campaign_partition"
+                        style="--fieldWidget-display: inline;"
+                    />
+                </sheet>
+                <footer>
+                    <button
+                        name="action_partition_campaign"
+                        string="Confirm Partition"
+                        type="object"
+                        class="btn-primary"
+                        data-hotkey="q"
+                    />
+                    <button
+                        string="Cancel"
+                        class="btn-secondary"
+                        special="cancel"
+                        data-hotkey="z"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
