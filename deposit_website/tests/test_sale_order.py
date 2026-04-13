@@ -1,3 +1,5 @@
+from odoo.fields import Command
+
 from odoo.addons.impress_deposit.tests.test_common import TestCommon
 
 
@@ -8,13 +10,15 @@ class TestSaleOrder(TestCommon):
                 "partner_id": self.partner_wo_deposit.id,
                 # SO created with a website ID to simulate an ecom order
                 "website_id": 1,
+            }
+        )
+        so.update(
+            {
                 "order_line": [
-                    (
-                        0,
-                        0,
-                        {"product_id": self.product_w_deposit.id, "product_uom_qty": 1},
+                    Command.create(
+                        {"product_id": self.product_w_deposit.id, "product_uom_qty": 1}
                     )
-                ],
+                ]
             }
         )
 

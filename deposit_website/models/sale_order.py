@@ -12,5 +12,5 @@ class SaleOrder(models.Model):
         self.ensure_one()
         res = super()._deposit_needed()
         if self.website_id:
-            res = True
+            res = any(self.order_line.mapped(lambda x: x.product_id.requires_deposit))
         return res

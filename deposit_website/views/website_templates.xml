@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <?xml-model href="../../import_xml.rng" type="application/xml"?>
 <odoo>
-
     <template id="total" inherit_id="website_sale.total">
-
-        <xpath expr="//tr[@id='order_total_taxes']" position="before">
+        <xpath expr="//div[1]" position="after" />
+        <xpath expr="//tr[@name='o_order_total_taxes']" position="before">
             <tr id="order_total_deposit">
                 <td
                     colspan="2"
@@ -21,5 +20,4 @@
             </tr>
         </xpath>
     </template>
-
 </odoo>
