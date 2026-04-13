@@ -19,7 +19,14 @@ class SaleOrder(models.Model):
         string="Deposit",
         compute="_compute_deposit_value",
         store=True,
-        depends=["deposit_line_id", "deposit_line_id.price_total", "state"],
+        depends=[
+            "order_line",
+            "order_line.product_uom_qty",
+            "order_line.is_deposit_line",
+            "deposit_line_id",
+            "deposit_line_id.price_total",
+            "state",
+        ],
     )
 
     @api.depends("order_line", "order_line.is_deposit_line")
@@ -39,11 +46,35 @@ class SaleOrder(models.Model):
                     self.env._("Only one deposit line is allowed per sale order.")
                 )
 
-    @api.depends("deposit_line_id", "deposit_line_id.price_total", "state")
+    @api.depends(
+        "order_line",
+        "order_line.product_uom_qty",
+        "order_line.is_deposit_line",
+        "deposit_line_id",
+        "deposit_line_id.price_total",
+        "state",
+    )
     def _compute_deposit_value(self) -> None:
         for record in self:
-            if record._deposit_needed() and record.deposit_line_id:
-                record.deposit_value = record.deposit_line_id.price_total
+            if record._deposit_needed():
+                if not record.deposit_line_id:
+                    record._create_deposit_line()
+                if record.deposit_line_id:
+                    container_qty = sum(
+                        record.order_line.filtered(
+                            lambda line: line.product_id.requires_deposit
+                        ).mapped(
+                            lambda line: (
+                                line.product_uom_qty * line.product_id.qty_multiple
+                            )
+                        )
+                    )
+                    record.deposit_line_id.update(
+                        {
+                            "product_uom_qty": container_qty,
+                        }
+                    )
+                    record.deposit_value = record.deposit_line_id.price_total
             else:
                 record.deposit_value = 0.0
 
