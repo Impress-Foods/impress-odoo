@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record
+        id="action_mrp_campaign_billing_wizard_create"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Create Campaign (Billing)</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mrp.campaign.wizard.creator</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_workflow_type': 'production_billing'}</field>
+    </record>
+
+    <menuitem
+        id="menu_mrp_campaign_billing_wizard"
+        name="Create Campaign (Billing)"
+        parent="mrp_campaign.menu_mrp_campaign"
+        action="action_mrp_campaign_billing_wizard_create"
+        sequence="52"
+    />
+</odoo>

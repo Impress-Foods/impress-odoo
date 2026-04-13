@@ -1,0 +1,86 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* mrp_campaign_production_billing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e-20260219\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-03-27 13:51+0000\n"
+"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
+"impress-odoo-17/mrp_campaign_production_billing/fr_CA/>\n"
+"Language: fr_CA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: mrp_campaign_production_billing
+#: model:ir.model,name:mrp_campaign_production_billing.model_mrp_campaign_wizard_partition
+msgid "Base Wizard to Partition an MRP Campaign"
+msgstr "Assistant pour partitionner une campagne"
+
+#. module: mrp_campaign_production_billing
+#: model:ir.model.fields,field_description:mrp_campaign_production_billing.field_mrp_campaign_demand__sale_order_line_id
+#: model:ir.model.fields,field_description:mrp_campaign_production_billing.field_mrp_campaign_line__sale_order_line_id
+msgid "Billing SOL"
+msgstr "Ligne de bon de commande de facturation"
+
+#. module: mrp_campaign_production_billing
+#: model:ir.model,name:mrp_campaign_production_billing.model_mrp_campaign_line
+msgid "Campaign breakdown line"
+msgstr "Détaillé de la ligne de campagne"
+
+#. module: mrp_campaign_production_billing
+#: model:ir.actions.act_window,name:mrp_campaign_production_billing.action_mrp_campaign_billing_wizard_create
+#: model:ir.ui.menu,name:mrp_campaign_production_billing.menu_mrp_campaign_billing_wizard
+msgid "Create Campaign (Billing)"
+msgstr "Créer Campagne (Facturation)"
+
+#. module: mrp_campaign_production_billing
+#: model:ir.model,name:mrp_campaign_production_billing.model_mrp_campaign_demand_target
+msgid "Demand target - maps demand to external source"
+msgstr "Cible de demande - relie les demandes à une source externe"
+
+#. module: mrp_campaign_production_billing
+#: model:ir.model,name:mrp_campaign_production_billing.model_mrp_campaign
+msgid "Manufacturing Campaign"
+msgstr "Campagne de production"
+
+#. module: mrp_campaign_production_billing
+#: model:ir.model,name:mrp_campaign_production_billing.model_mrp_campaign_demand
+msgid "Manufacturing Campaign Demand Line"
+msgstr "Ligne de demande de campagne"
+
+#. module: mrp_campaign_production_billing
+#. odoo-python
+#: code:addons/mrp_campaign_production_billing/models/mrp_campaign_demand.py:0
+#, python-format
+msgid "Multiple Sale Order Line for a single demand"
+msgstr "Plusieurs ligne de bon de commande pour une seule demande"
+
+#. module: mrp_campaign_production_billing
+#: model:ir.model.fields,field_description:mrp_campaign_production_billing.field_mrp_campaign_demand__billing_sale_order_id
+msgid "Order Reference"
+msgstr "Référence de commande"
+
+#. module: mrp_campaign_production_billing
+#: model:ir.model.fields.selection,name:mrp_campaign_production_billing.selection__mrp_campaign__workflow_type__production_billing
+#: model:ir.model.fields.selection,name:mrp_campaign_production_billing.selection__mrp_campaign_wizard_creator__workflow_type__production_billing
+#: model:ir.model.fields.selection,name:mrp_campaign_production_billing.selection__mrp_campaign_wizard_partition__workflow_type__production_billing
+msgid "Production Billing"
+msgstr "Facturation de production"
+
+#. module: mrp_campaign_production_billing
+#: model:ir.model,name:mrp_campaign_production_billing.model_mrp_campaign_wizard_creator
+msgid "Wizard for campaign creation"
+msgstr "Assistant de création de campagne"
+
+#. module: mrp_campaign_production_billing
+#: model:ir.model.fields,field_description:mrp_campaign_production_billing.field_mrp_campaign__workflow_type
+#: model:ir.model.fields,field_description:mrp_campaign_production_billing.field_mrp_campaign_wizard_creator__workflow_type
+#: model:ir.model.fields,field_description:mrp_campaign_production_billing.field_mrp_campaign_wizard_partition__workflow_type
+msgid "Workflow Type"
+msgstr "Type de processus"
