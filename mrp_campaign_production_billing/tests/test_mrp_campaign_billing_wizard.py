@@ -9,10 +9,10 @@ class CampaignBillingCase(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.env.user.groups_id |= cls.env.ref("base.group_user")
-        cls.env.user.groups_id |= cls.env.ref("stock.group_stock_manager")
-        cls.env.user.groups_id |= cls.env.ref("mrp.group_mrp_manager")
-        cls.env.user.groups_id |= cls.env.ref("sales_team.group_sale_salesman")
+        cls.env.user.group_ids |= cls.env.ref("base.group_user")
+        cls.env.user.group_ids |= cls.env.ref("stock.group_stock_manager")
+        cls.env.user.group_ids |= cls.env.ref("mrp.group_mrp_manager")
+        cls.env.user.group_ids |= cls.env.ref("sales_team.group_sale_salesman")
 
         cls.stock_location = cls.env.ref("stock.stock_location_stock")
         cls.uom_unit = cls.env.ref("uom.product_uom_unit")
@@ -21,9 +21,9 @@ class CampaignBillingCase(TransactionCase):
         cls.bulk_material = cls.env["product.product"].create(
             {
                 "name": "Bulk Material M",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "uom_id": cls.uom_unit.id,
-                "uom_po_id": cls.uom_unit.id,
             }
         )
         cls.bulk_material.product_tmpl_id.is_campaign_anchor = True
@@ -39,9 +39,9 @@ class CampaignBillingCase(TransactionCase):
         cls.end_prod = cls.env["product.product"].create(
             {
                 "name": "End Product",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "uom_id": cls.uom_unit.id,
-                "uom_po_id": cls.uom_unit.id,
             }
         )
 
@@ -259,9 +259,9 @@ class CampaignBillingCase(TransactionCase):
         anchor = self.env["product.product"].create(
             {
                 "name": "Test Anchor",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "uom_id": self.uom_unit.id,
-                "uom_po_id": self.uom_unit.id,
             }
         )
         anchor.product_tmpl_id.is_campaign_anchor = True
@@ -270,9 +270,9 @@ class CampaignBillingCase(TransactionCase):
         intermediate = self.env["product.product"].create(
             {
                 "name": "Test Intermediate",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "uom_id": self.uom_unit.id,
-                "uom_po_id": self.uom_unit.id,
             }
         )
         self.env["mrp.bom"].create(
@@ -290,7 +290,8 @@ class CampaignBillingCase(TransactionCase):
         end_tmpl = self.env["product.template"].create(
             {
                 "name": "Test Multi Variant End",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "attribute_line_ids": [
                     (
                         0,
@@ -352,9 +353,9 @@ class CampaignBillingCase(TransactionCase):
         anchor = self.env["product.product"].create(
             {
                 "name": "Test Anchor 2",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "uom_id": self.uom_unit.id,
-                "uom_po_id": self.uom_unit.id,
             }
         )
         anchor.product_tmpl_id.is_campaign_anchor = True
@@ -362,9 +363,9 @@ class CampaignBillingCase(TransactionCase):
         intermediate = self.env["product.product"].create(
             {
                 "name": "Test Intermediate 2",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "uom_id": self.uom_unit.id,
-                "uom_po_id": self.uom_unit.id,
             }
         )
         self.env["mrp.bom"].create(
@@ -381,7 +382,8 @@ class CampaignBillingCase(TransactionCase):
         end_tmpl = self.env["product.template"].create(
             {
                 "name": "Test Variant Specific End",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "attribute_line_ids": [
                     (
                         0,
@@ -481,9 +483,9 @@ class CampaignBillingCase(TransactionCase):
         anchor = self.env["product.product"].create(
             {
                 "name": "Test Anchor 3",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "uom_id": self.uom_unit.id,
-                "uom_po_id": self.uom_unit.id,
             }
         )
         anchor.product_tmpl_id.is_campaign_anchor = True
@@ -491,9 +493,9 @@ class CampaignBillingCase(TransactionCase):
         intermediate = self.env["product.product"].create(
             {
                 "name": "Test Intermediate 3",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "uom_id": self.uom_unit.id,
-                "uom_po_id": self.uom_unit.id,
             }
         )
         self.env["mrp.bom"].create(
@@ -510,7 +512,8 @@ class CampaignBillingCase(TransactionCase):
         end_tmpl = self.env["product.template"].create(
             {
                 "name": "Test Valid Sources End",
-                "type": "product",
+                "type": "consu",
+                "is_storable": True,
                 "attribute_line_ids": [
                     (
                         0,

@@ -1,4 +1,4 @@
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -23,7 +23,9 @@ class MrpCampaignDemand(models.Model):
 
             sol_id = list(set(rec.target_ids.mapped("target_id")))
             if len(sol_id) > 1:
-                raise ValidationError(_("Multiple Sale Order Line for a single demand"))
+                raise ValidationError(
+                    self.env._("Multiple Sale Order Line for a single demand")
+                )
             if len(sol_id) == 0:
                 rec.sale_order_line_id = False
             rec.sale_order_line_id = rec.env["sale.order.line"].browse(sol_id)
