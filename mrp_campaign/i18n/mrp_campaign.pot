@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e-20260330\n"
+"Project-Id-Version: Odoo Server 19.0+e-20260330\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -83,14 +83,12 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
-#, python-format
 msgid "Add all"
 msgstr ""
 
 #. module: mrp_campaign
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
-#, python-format
 msgid "Add to selection"
 msgstr ""
 
@@ -109,7 +107,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_creator__available_lines
-#, python-format
 msgid "Available Lines"
 msgstr ""
 
@@ -127,7 +124,6 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_campaign.py:0
-#, python-format
 msgid "Backorder Campaign: %s"
 msgstr ""
 
@@ -150,7 +146,6 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_partition/campaign_node/campaign_node.xml:0
-#, python-format
 msgid "Below floor:"
 msgstr ""
 
@@ -182,14 +177,12 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_bom.py:0
-#, python-format
 msgid "Bom has more than one line with target product"
 msgstr ""
 
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_bom.py:0
-#, python-format
 msgid "Bom has no line with target product"
 msgstr ""
 
@@ -234,6 +227,12 @@ msgid "Campaign Line"
 msgstr ""
 
 #. module: mrp_campaign
+#. odoo-python
+#: code:addons/mrp_campaign/models/mrp_production.py:0
+msgid "Campaign MOs cannot have multiple lots."
+msgstr ""
+
+#. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__name
 msgid "Campaign Reference"
 msgstr ""
@@ -263,14 +262,12 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_campaign.py:0
-#, python-format
 msgid "Can't delete a campaign in progress!"
 msgstr ""
 
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_campaign.py:0
-#, python-format
 msgid "Can't delete a completed campaign!"
 msgstr ""
 
@@ -288,7 +285,6 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_campaign_line.py:0
-#, python-format
 msgid ""
 "Cannot adjust to a quantity less than what has already been produced by "
 "existing Manufacturing Orders that are in 'Done' or 'Cancelled' states. "
@@ -298,21 +294,18 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, python-format
 msgid "Cannot assign negative quantity to target %s."
 msgstr ""
 
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_campaign.py:0
-#, python-format
 msgid "Cannot confirm campaign %s without any demand."
 msgstr ""
 
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, python-format
 msgid ""
 "Cannot plan less of %(product)s than the floor quantity. Floor: %(floor)s, "
 "Planned: %(planned)s"
@@ -321,7 +314,6 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, python-format
 msgid ""
 "Cannot plan more of %(product)s than the initial planned quantity. Initial: "
 "%(initial)s, Planned: %(planned)s"
@@ -330,14 +322,12 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, python-format
 msgid "Cannot produce JSON for campaign with multiple root lines"
 msgstr ""
 
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, python-format
 msgid "Cannot produce JSON for campaign without root line"
 msgstr ""
 
@@ -381,16 +371,13 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, python-format
 msgid "Could not find campaign line with id %(line)s"
 msgstr ""
 
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_campaign_line.py:0
-#, python-format
-msgid ""
-"Could not resolve downstream product for %(product)s with BoM %(bom)sproduct"
+msgid "Could not resolve downstream product for %(product)s with BoM %(bom)s"
 msgstr ""
 
 #. module: mrp_campaign
@@ -469,12 +456,19 @@ msgid "Direct"
 msgstr ""
 
 #. module: mrp_campaign
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_bom__display_name
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__display_name
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand__display_name
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_target__display_name
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_line__display_name
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_creator__display_name
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_partition__display_name
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_workorder__display_name
+#: model:ir.model.fields,field_description:mrp_campaign.field_product_product__display_name
+#: model:ir.model.fields,field_description:mrp_campaign.field_product_template__display_name
+#: model:ir.model.fields,field_description:mrp_campaign.field_report_mrp_campaign_report_mrp_campaign_document__display_name
+#: model:ir.model.fields,field_description:mrp_campaign.field_stock_move__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -506,7 +500,6 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_partition/campaign_node/campaign_node.xml:0
-#, python-format
 msgid "Exceeds capacity"
 msgstr ""
 
@@ -531,22 +524,24 @@ msgid "Fulfilled Qty"
 msgstr ""
 
 #. module: mrp_campaign
-#: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_search
-msgid "Group By..."
-msgstr ""
-
-#. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__has_message
 msgid "Has Message"
 msgstr ""
 
 #. module: mrp_campaign
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_bom__id
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__id
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand__id
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_target__id
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_line__id
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_creator__id
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_partition__id
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_production__id
+#: model:ir.model.fields,field_description:mrp_campaign.field_mrp_workorder__id
+#: model:ir.model.fields,field_description:mrp_campaign.field_product_product__id
+#: model:ir.model.fields,field_description:mrp_campaign.field_product_template__id
+#: model:ir.model.fields,field_description:mrp_campaign.field_report_mrp_campaign_report_mrp_campaign_document__id
+#: model:ir.model.fields,field_description:mrp_campaign.field_stock_move__id
 msgid "ID"
 msgstr ""
 
@@ -585,7 +580,6 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_campaign.py:0
-#, python-format
 msgid "Invalid partition mode"
 msgstr ""
 
@@ -630,14 +624,12 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_campaign_line.py:0
-#, python-format
 msgid "Kits (Phantom BoMs) are not supported in manufacturing campaigns."
 msgstr ""
 
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_campaign_line.py:0
-#, python-format
 msgid ""
 "Kits (Phantom BoMs) are not supported in manufacturing campaigns. Found kit:"
 " %s"
@@ -671,7 +663,6 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, python-format
 msgid "Line %(line)s does not belong to campaign %(campaign)s"
 msgstr ""
 
@@ -703,21 +694,18 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, python-format
 msgid "Malformed data: missing 'demand_moves' attribute in JSON."
 msgstr ""
 
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, python-format
 msgid "Malformed data: missing 'line_id' in tree."
 msgstr ""
 
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, python-format
 msgid "Malformed data: missing 'tree' attribute in JSON."
 msgstr ""
 
@@ -748,6 +736,11 @@ msgid "Manufacturing Campaigns"
 msgstr ""
 
 #. module: mrp_campaign
+#: model:ir.model,name:mrp_campaign.model_mrp_production
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__message_has_error
 msgid "Message Delivery error"
 msgstr ""
@@ -760,7 +753,6 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_partition/campaign_node/campaign_node.xml:0
-#, python-format
 msgid "Min"
 msgstr ""
 
@@ -783,7 +775,6 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_campaign.py:0
-#, python-format
 msgid "New"
 msgstr ""
 
@@ -805,21 +796,18 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
-#, python-format
 msgid "No available lines"
 msgstr ""
 
 #. module: mrp_campaign
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
-#, python-format
 msgid "No selected lines"
 msgstr ""
 
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_campaign_line.py:0
-#, python-format
 msgid "Non-batch produced line should only have one Manufacturing Order."
 msgstr ""
 
@@ -846,7 +834,6 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_campaign.py:0
-#, python-format
 msgid "Only campaigns in 'Draft' or 'Planned' state can be split"
 msgstr ""
 
@@ -918,7 +905,6 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, python-format
 msgid ""
 "Product mismatch for line %(line_id)s: expected %(expected)s, got %(actual)s"
 msgstr ""
@@ -932,11 +918,6 @@ msgstr ""
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__production_count
 msgid "Production Count"
-msgstr ""
-
-#. module: mrp_campaign
-#: model:ir.model,name:mrp_campaign.model_mrp_production
-msgid "Production Order"
 msgstr ""
 
 #. module: mrp_campaign
@@ -962,7 +943,6 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, python-format
 msgid ""
 "Quantity %(qty).2f exceeds upstream demand %(max).2f for target %(id)s."
 msgstr ""
@@ -995,21 +975,18 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_partition/campaign_node/campaign_node.xml:0
-#, python-format
 msgid "Ratio:"
 msgstr ""
 
 #. module: mrp_campaign
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
-#, python-format
 msgid "Remove all"
 msgstr ""
 
 #. module: mrp_campaign
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
-#, python-format
 msgid "Remove from selection"
 msgstr ""
 
@@ -1031,7 +1008,6 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_partition/demand_sidebar/demand_sidebar.xml:0
-#, python-format
 msgid "SALES ORDERS"
 msgstr ""
 
@@ -1053,8 +1029,6 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
-#: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
-#, python-format
 msgid "Search..."
 msgstr ""
 
@@ -1066,7 +1040,6 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
-#, python-format
 msgid "Selected Lines"
 msgstr ""
 
@@ -1105,7 +1078,6 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_campaign.py:0
-#, python-format
 msgid "Split Campaign: %s"
 msgstr ""
 
@@ -1152,14 +1124,12 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, python-format
 msgid "Target %s does not belong to this campaign."
 msgstr ""
 
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, python-format
 msgid "Target %s not found in database."
 msgstr ""
 
@@ -1177,14 +1147,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_partition/campaign_node/campaign_node.xml:0
 #: code:addons/mrp_campaign/static/src/components/campaign_partition/demand_sidebar/demand_sidebar.xml:0
-#, python-format
 msgid "Target:"
 msgstr ""
 
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_campaign.py:0
-#, python-format
 msgid "Targets %s do not belong to this campaign."
 msgstr ""
 
@@ -1291,6 +1259,5 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_partition/campaign_node/campaign_node.xml:0
-#, python-format
 msgid "min."
 msgstr ""
