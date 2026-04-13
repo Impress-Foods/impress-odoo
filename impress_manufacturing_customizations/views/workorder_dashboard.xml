@@ -10,36 +10,23 @@
                 sample="1"
                 default_order="state"
             >
-
-                <field name="name" field_id="name_0" />
-                <field name="production_id" on_change="1" field_id="production_id_0" />
-                <field name="state" readonly="1" on_change="1" field_id="state_0" />
-                <field name="is_user_working" field_id="is_user_working_0" />
-                <field name="working_user_ids" field_id="working_user_ids_0" />
-                <field name="last_working_user_id" field_id="last_working_user_id_0" />
-                <field name="working_state" field_id="working_state_0" />
-                <field name="workcenter_id" on_change="1" field_id="workcenter_id_0" />
-                <field name="product_id" field_id="product_id_0" />
-                <field name="qty_remaining" field_id="qty_remaining_0" />
-                <field
-                    name="qty_production"
-                    on_change="1"
-                    field_id="qty_production_0"
-                />
-                <field name="date_start" on_change="1" field_id="date_start_0" />
-                <field name="production_date" field_id="production_date_0" />
-                <field
-                    name="product_uom_id"
-                    force_save="1"
-                    field_id="product_uom_id_0"
-                />
-                <field
-                    name="finished_lot_id"
-                    on_change="1"
-                    field_id="finished_lot_id_0"
-                />
-                <field name="operation_id" on_change="1" field_id="operation_id_0" />
-                <field name="production_date" field_id="production_date_1" />
+                <field name="name" />
+                <field name="production_id" on_change="1" />
+                <field name="state" readonly="1" on_change="1" />
+                <field name="is_user_working" />
+                <field name="working_user_ids" />
+                <field name="last_working_user_id" />
+                <field name="working_state" />
+                <field name="workcenter_id" on_change="1" />
+                <field name="product_id" />
+                <field name="qty_remaining" />
+                <field name="qty_production" on_change="1" />
+                <field name="date_start" on_change="1" />
+                <field name="production_date" />
+                <field name="product_uom_id" force_save="1" />
+                <field name="finished_lot_ids" on_change="1" />
+                <field name="operation_id" on_change="1" />
+                <field name="production_date" />
                 <progressbar
                     field="state"
                     colors='{
@@ -52,17 +39,16 @@
                     }'
                 />
                 <templates>
-                    <t t-name="kanban-box">
+                    <t t-name="card">
                         <div class="oe_kanban_global_click">
                             <div class="o_kanban_card_header o_kanban_record_top">
                                 <div class="o_kanban_workorder_title">
                                     <h4 class="o_primary">
                                         <span>
-                                            <t t-out="record.production_id.value" />
-                                        </span>
-                                        - <span>
-                                            <t t-out="record.name.value" />
-                                        </span>
+                                        <t t-out="record.production_id.value" />
+                                    </span> - <span>
+                                        <t t-out="record.name.value" />
+                                    </span>
                                     </h4>
                                 </div>
                                 <div class="o_kanban_workorder_date">
@@ -94,18 +80,16 @@
                                 <div class="row justify-content-between">
                                     <h5 class="col-4">
                                         <span>
-                                            <t
-                                                t-out="record.qty_production.value"
-                                            /> &#160; <t
-                                                t-out="record.product_uom_id.value"
-                                            />
+                                            <t t-out="record.qty_production.value" />
+                                            &#160;
+                                            <t t-out="record.product_uom_id.value" />
                                         </span>
                                     </h5>
                                     <h5 class="col-4">
-                                        <span
-                                            t-if="record.finished_lot_id.value"
-                                            t-out="record.finished_lot_id.value"
-                                        />
+                                        <!-- <span
+                                            t-if="record.finished_lot_ids.value"
+                                            t-out="record.finished_lot_ids.value"
+                                        /> -->
                                     </h5>
                                 </div>
                             </div>
@@ -146,7 +130,6 @@
             ref="impress_manufacturing_customizations.workorder_view_dashboard"
         />
     </record>
-
 
     <menuitem
         id="workorder_dashboard_menu"

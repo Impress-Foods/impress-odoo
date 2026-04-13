@@ -1,19 +1,14 @@
 {
-    "name": "impress_manufacturing_customizations",
-    "version": "17.0.0.1.1",
-    "depends": ["base", "mrp"],
+    "name": "Impressmanufacturing Customizations",
+    "version": "19.0.1.0.0",
+    "depends": ["base", "mrp", "mrp_workorder"],
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Manufacturing",
-    "summary": """"
-    Customizations for the manufacturing module
-    """,
+    "summary": """Customizations for the manufacturing module""",
     "license": "GPL-2",
-    # data files always loaded at installation
     "data": [
-        "views/impress_mrp_customizations_production_order_views.xml",
+        "views/mrp_production_views.xml",
         "views/workorder_dashboard.xml",
     ],
-    # data files containing optionally loaded demonstration data
-    "demo": [],
 }

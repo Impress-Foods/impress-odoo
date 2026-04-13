@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding="utf-8" ?>
+<odoo>
+    <record id="mrp_production_kanban_view" model="ir.ui.view">
+        <field name="name">mrp.production.kanban.view</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_kanban_view" />
+        <field name="priority">101</field>
+        <field name="arch" type="xml">
+            <xpath expr="//div[1]" position="attributes">
+                <attribute name="class" add="justify-content-between" separator=" " />
+            </xpath>
+            <xpath expr="//div[1]" position="inside">
+                <div id="title_container" class="d-flex" />
+            </xpath>
+
+            <xpath expr="//div[@id='title_container']">
+                <xpath expr="//field[@name='priority']" position="move" />
+                <xpath expr="//field[@name='product_id']" position="move" />
+            </xpath>
+
+            <xpath expr="//div[@id='title_container']" position="after">
+                <div class="text-end">
+                    <field name='sequence' widget="handle" />
+                </div>
+            </xpath>
+            <xpath expr="//footer//field[@name='date_start']" position="attributes">
+                <attribute name="options" />
+            </xpath>
+
+            <xpath expr="//div[1]" position="after">
+                <div id="body_container" class="d-flex justify-content-between">
+                    <div id="name_container" />
+                    <div id="qty_container">
+                        <field name="qty_producing" invisible="1" />
+                        <span t-if="record.state.raw_value=='done'">
+                            <t
+                            t-esc="record.qty_producing.value"
+                        /> &#160; / &#160; </span>
+                    </div>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[@id='name_container']" position="inside">
+                <xpath expr="//field[@name='name']" position="move" />
+            </xpath>
+
+            <xpath expr="//div[@id='qty_container']" position="inside">
+                <xpath expr="//field[@name='product_qty']" position="move" />
+                <xpath expr="//field[@name='product_uom_id']" position="move" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_mrp_production_filter" model="ir.ui.view">
+        <field name="name">mrp.production.select</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.view_mrp_production_filter" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='filter_date_start']" position="after">
+                <filter
+                    string="Today and Before"
+                    name="today_past"
+                    domain="[('date_start', '&lt;=', '+0d')]"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="mrp_production_form_view" model="ir.ui.view">
+        <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+        <field name="name">mrp.production.form.inherit</field>
+        <field name="priority">99</field>
+        <field name="model">mrp.production</field>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='date_start']" position="after">
+                <field name="date_finished" invisible="state != 'done'" />
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
