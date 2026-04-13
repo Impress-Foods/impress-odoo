@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding="utf-8" ?>
+<odoo>
+    <record id="mrp_production_kanban_view" model="ir.ui.view">
+        <field name="name">mrp.production.kanban.view</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_kanban_view" />
+        <field name="priority">101</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='activity_state']" position="after">
+                <field name='qty_producing' />
+            </xpath>
+            <xpath expr="//div[hasclass('o_kanban_record_top')]" position="after">
+                <div class="o_kanban_record_body d-flex justify-content-between">
+                    <h5 t-esc="record.name.value" />
+
+                    <span t-if="record.state.raw_value !='done'">
+                        <t t-esc="record.product_qty.value" /> &#160; <small
+                            t-esc="record.product_uom_id.value"
+                        />
+
+                    </span>
+                    <span t-if="record.state.raw_value=='done'">
+                        <t t-esc="record.qty_producing.value" /> &#160; / &#160; <t
+                            t-esc="record.product_qty.value"
+                        /> &#160;<small t-esc="record.product_uom_id.value" />
+                    </span>
+                </div>
+            </xpath>
+            <xpath
+                expr="//div[hasclass('o_kanban_record_top')]/span[1]"
+                position="replace"
+            >
+                <div class="float-end text-end">
+                    <field name='sequence' widget="handle" />
+                </div>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_kanban_bottom_left')]" position="replace">
+                <div class="oe_kanban_bottom_left text-muted">
+                    <span>
+                        <t t-esc="record.date_start.value" />
+                    </span>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_mrp_production_filter" model="ir.ui.view">
+        <field name="name">mrp.production.select</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.view_mrp_production_filter" />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='filter_date_start']" position="after">
+                <filter
+                    string="Today and Before"
+                    name="today_past"
+                    domain="[('date_start', '&lt;=', time.strftime('%Y-%m-%d 23:59:59'))]"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
