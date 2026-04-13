@@ -128,32 +128,58 @@ class MrpCampaignCreator(models.Model):
                         "sale_order_line_id": sol.id,
                     }
                 )
-                target_values = [
-                    {
-                        "demand_id": demand.id,
-                        "workflow_type": "production_billing",
-                        "target_id": s.id,
-                        "promised_qty": s.product_uom_qty,
-                    }
-                    for s in sols
-                ]
-                self.env["mrp.campaign.demand.target"].create(target_values)
+                target_values = []
+                for s in sols:
+                    allocated = self._compute_allocated_qty(s)
+                    promised_qty = max(s.product_uom_qty - allocated, 0.0)
+                    if promised_qty <= 0:
+                        continue
+                    target_values.append(
+                        {
+                            "demand_id": demand.id,
+                            "workflow_type": "production_billing",
+                            "target_id": s.id,
+                            "promised_qty": promised_qty,
+                        }
+                    )
+                if target_values:
+                    self.env["mrp.campaign.demand.target"].create(target_values)
             else:
                 existing_target_sol_ids = set(demand.target_ids.mapped("target_id").ids)
                 new_sols = sols.filtered(
                     lambda s, existing=existing_target_sol_ids: s.id not in existing
                 )
                 if new_sols:
-                    target_values = [
-                        {
-                            "demand_id": demand.id,
-                            "workflow_type": "production_billing",
-                            "target_id": s.id,
-                            "promised_qty": s.product_uom_qty,
-                        }
-                        for s in new_sols
-                    ]
-                    self.env["mrp.campaign.demand.target"].create(target_values)
+                    target_values = []
+                    for s in new_sols:
+                        allocated = self._compute_allocated_qty(s)
+                        promised_qty = max(s.product_uom_qty - allocated, 0.0)
+                        if promised_qty <= 0:
+                            continue
+                        target_values.append(
+                            {
+                                "demand_id": demand.id,
+                                "workflow_type": "production_billing",
+                                "target_id": s.id,
+                                "promised_qty": promised_qty,
+                            }
+                        )
+                    if target_values:
+                        self.env["mrp.campaign.demand.target"].create(target_values)
+
+    def _compute_allocated_qty(self, sol):
+        """Compute already allocated qty for SOL in production_billing workflow."""
+        return sum(
+            self.env["mrp.campaign.demand.target"]
+            .sudo()
+            .search(
+                [
+                    ("workflow_type", "=", "production_billing"),
+                    ("target_id", "=", sol.id),
+                ]
+            )
+            .mapped("promised_qty")
+        )
 
     def _get_end_product_for_sol(self, sol):
         if not self.product_id:

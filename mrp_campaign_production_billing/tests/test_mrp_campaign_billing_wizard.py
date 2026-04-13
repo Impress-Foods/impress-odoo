@@ -596,3 +596,59 @@ class CampaignBillingCase(TransactionCase):
         # Both billing products must be in valid sources
         self.assertIn(billing_x.id, valid_products)
         self.assertIn(billing_y.id, valid_products)
+
+    def test_wizard_honors_allocated_qty(self):
+        """Backend must create targets with remaining qty, not full SOL qty."""
+        self._create_sale_order(self.billing_product, 10.0)
+
+        wizard = self.create_wizard.create(
+            {
+                "product_id": self.bulk_material.id,
+                "planned_date": date.today(),
+            }
+        )
+        wizard._onchange_product_id()
+        lines = json.loads(wizard.available_lines or "[]")
+
+        self.assertEqual(len(lines), 1)
+        self.assertEqual(lines[0]["qty"], 10.0)
+
+        wizard.selected_line_ids = json.dumps([lines[0]["id"]])
+        action = wizard.process_wizard()
+        campaign = self.env["mrp.campaign"].browse(action["res_id"])
+
+        target = campaign.demand_line_ids[0].target_ids[0]
+        self.assertEqual(target.promised_qty, 10.0)
+
+        wizard2 = self.create_wizard.create({"product_id": self.bulk_material.id})
+        wizard2._onchange_product_id()
+        lines2 = json.loads(wizard2.available_lines or "[]")
+
+        self.assertEqual(len(lines2), 0)
+
+    def test_wizard_partial_allocation_consistent(self):
+        """Wizard display and backend must agree on remaining qty."""
+        so1 = self._create_sale_order(self.billing_product, 10.0)
+        self._create_sale_order(self.billing_product, 5.0)
+
+        wizard = self.create_wizard.create({"product_id": self.bulk_material.id})
+        wizard._onchange_product_id()
+        lines = json.loads(wizard.available_lines or "[]")
+
+        total_displayed = sum(line["qty"] for line in lines)
+        self.assertEqual(total_displayed, 15.0)
+
+        sol1_line_id = so1.order_line[0].id
+        target_line = next(line for line in lines if line["id"] == sol1_line_id)
+        self.assertEqual(target_line["qty"], 10.0)
+
+        wizard.selected_line_ids = json.dumps([sol1_line_id])
+        wizard.process_wizard()
+
+        allocated = sum(
+            self.env["mrp.campaign.demand.target"]
+            .sudo()
+            .search([("target_id", "=", sol1_line_id)])
+            .mapped("promised_qty")
+        )
+        self.assertEqual(allocated, 10.0)
