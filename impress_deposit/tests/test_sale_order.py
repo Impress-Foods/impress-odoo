@@ -129,3 +129,97 @@ class TestSaleOrder(test_common.TestCommon):
                     ],
                 }
             )
+
+    def test_deposit_quantity_updates_without_confirmation(self) -> None:
+        so: SaleOrder = self.so_model.create(
+            {
+                "partner_id": self.partner_w_deposit.id,
+            }
+        )
+
+        self.sol_model.create(
+            {
+                "order_id": so.id,
+                "product_id": self.product_w_deposit.id,
+                "product_uom_qty": 1.0,
+            }
+        )
+
+        so.action_confirm()
+        deposit_line: SaleOrderLine = so.order_line.filtered(
+            lambda x: x.is_deposit_line
+        )
+        self.assertEqual(len(deposit_line), 1, "Deposit line not created")
+        self.assertEqual(
+            deposit_line.product_uom_qty, 1.0, "Initial deposit quantity incorrect"
+        )
+
+        self.sol_model.create(
+            {
+                "order_id": so.id,
+                "product_id": self.product_w_deposit.id,
+                "product_uom_qty": 3.0,
+            }
+        )
+
+        _ = so.deposit_value
+
+        deposit_line.invalidate_recordset()
+        deposit_line = so.order_line.filtered(lambda x: x.is_deposit_line)
+        self.assertEqual(
+            deposit_line.product_uom_qty,
+            4.0,
+            "Deposit quantity not updated after adding more products",
+        )
+
+    def test_deposit_quantity_updates_multiple_products(self) -> None:
+        product_w_deposit_2 = self.product_model.create(
+            {
+                "name": "Product with Deposit 2",
+                "type": "consu",
+                "is_storable": True,
+                "requires_deposit": True,
+                "qty_multiple": 2,
+            }
+        )
+
+        so: SaleOrder = self.so_model.create(
+            {
+                "partner_id": self.partner_w_deposit.id,
+            }
+        )
+
+        self.sol_model.create(
+            {
+                "order_id": so.id,
+                "product_id": self.product_w_deposit.id,
+                "product_uom_qty": 2.0,
+            }
+        )
+
+        so.action_confirm()
+        deposit_line: SaleOrderLine = so.order_line.filtered(
+            lambda x: x.is_deposit_line
+        )
+        self.assertEqual(len(deposit_line), 1, "Deposit line not created")
+        self.assertEqual(
+            deposit_line.product_uom_qty, 2.0, "Initial deposit quantity incorrect"
+        )
+
+        self.sol_model.create(
+            {
+                "order_id": so.id,
+                "product_id": product_w_deposit_2.id,
+                "product_uom_qty": 3.0,
+            }
+        )
+
+        _ = so.deposit_value
+
+        deposit_line.invalidate_recordset()
+        deposit_line = so.order_line.filtered(lambda x: x.is_deposit_line)
+        self.assertEqual(
+            deposit_line.product_uom_qty,
+            8.0,
+            "Deposit quantity incorrect with multiple products",
+        )

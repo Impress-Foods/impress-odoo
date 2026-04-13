@@ -12,11 +12,6 @@
         "views/res_partner_views.xml",
         "views/stock_picking_views.xml",
     ],
-    "assets": {
-        # 'web.assets_backend': [
-        #    'impress_deposit/static/src/**/*'
-        # ],
-    },
     "installable": True,
     "license": "GPL-2",
 }
