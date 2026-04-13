@@ -9,6 +9,7 @@ class QualityCheck(models.Model):
     _inherit = "quality.check"
 
     signature = fields.Binary()
+    is_ccp = fields.Boolean(related="point_id.is_ccp")
 
     def action_view_production(self):
         self.ensure_one()
