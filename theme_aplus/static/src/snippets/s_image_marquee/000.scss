@@ -1,0 +1,120 @@
+@use "../../scss/aplus_colors";
+
+.s_image_marquee {
+    .marquee_header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        padding-bottom: 1rem;
+        padding-top: 1rem;
+
+        h1 {
+            color: var(--o-color-1);
+            vertical-align: bottom;
+        }
+        a {
+            height: 100%;
+            font-size: 32pt;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-direction: row;
+            color: var(--o-color-1);
+            border: 3px solid var(--o-color-1);
+            border-radius: 12px;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            transition:
+                color 0.25s ease-in-out,
+                border-color 0.25s ease-in-out,
+                background-color 0.25s ease-in-out;
+
+            i {
+                height: 100%;
+                color: var(--o-color-1);
+                transition:
+                    color 0.25s ease-in-out,
+                    border-color 0.25s ease-in-out,
+                    background-color 0.25s ease-in-out;
+            }
+            &:hover {
+                text-decoration: none;
+                color: var(--o-color-3);
+                background-color: var(--o-color-1);
+                border-color: var(--o-color-1);
+
+                i {
+                    color: var(--o-color-3);
+                }
+            }
+        }
+    }
+    @media (max-width: 767.98px) {
+        .marquee_header {
+            padding-bottom: 1rem;
+            flex-direction: column;
+
+            h1 {
+                text-align: center;
+            }
+        }
+    }
+    .marquee {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        //display: flex; /* Crucial: Lays the two inner blocks side-by-side */
+
+        .marquee-inner {
+            //flex-shrink: 0;
+            white-space: nowrap;
+            width: max-content;
+
+            height: 100%;
+            display: flex;
+
+            animation: translateMarquee var(--marquee-duration) linear infinite;
+            gap: 20px;
+
+            img {
+                max-width: 100%;
+                height: auto;
+                display: block;
+                border-radius: 1.25rem;
+
+                //flex-shrink: 0;
+                //margin-right: 15px;
+                //transform: translateZ(0);
+            }
+        }
+    }
+    @keyframes translateMarquee {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            /* This is correct for the two-block setup */
+            transform: translateX(-50%);
+        }
+    }
+}
+
+.marquee-inner,
+.marquee-clone {
+    body.editor_enable & {
+        /* Set animation play state to paused to stop the scroll */
+        animation-play-state: paused;
+
+        /* Reset transform to ensure it doesn't start halfway through */
+        transform: translateX(0) !important;
+    }
+}
+
+.s_marquee_hover_pause .marquee-inner {
+    &:hover {
+        animation-play-state: paused;
+    }
+}

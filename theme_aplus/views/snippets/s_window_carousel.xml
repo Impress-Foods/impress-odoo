@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="s_window_carousel" name="Window Carousel">
+        <section
+            data-snippet="s_window_carousel"
+            class="s_window_carousel pb0 pt0 hero-background"
+            data-name="Window Carousel"
+            data-bs-interval="5000"
+            data-number-of-records="16"
+        >
+            <div class="container s_dynamic_snippet_container">
+                <div class="row o_grid_mode" data-row-count="13">
+                    <div
+                        class="carousel_container o_grid_item g-height-* g-col-lg-* w-auto o_colored_level g-col-lg-3 g-height-8 col-lg-*"
+                        style="grid-area: 3 / 1 / 11 / 4;"
+                    >
+                        <div class="d-flex flex-column s_dynamic_snippet_content">
+                            <div class="dynamic_snippet_template" />
+                        </div>
+                    </div>
+                    <div
+                        class="hero-text-container o_grid_item g-height-* g-col-lg-* o_colored_level g-height-8 g-col-lg-8 col-lg-*"
+                        style="grid-area: 4 / -1 / 10 / -9;"
+                    >
+                        <h1 class="hero-text desktop">Drink</h1>
+                        <h1 class="hero-text desktop">your fruit!</h1>
+                        <h1 class="hero-text mobile">Drink your fruit!</h1>
+                    </div>
+                    <div
+                        class="hero-sticker-container o_grid_item g-height-* g-col-lg-* o_colored_level g-height-6 g-col-lg-3 col-lg-*"
+                        style="grid-area: 1 / -1 / 6 / -4;"
+                    >
+                        <img class="hero-sticker" src="/" />
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>

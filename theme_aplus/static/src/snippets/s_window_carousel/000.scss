@@ -1,0 +1,214 @@
+.hero-background {
+    transition: background-color 0.5s ease-in-out;
+    background-color: bisque;
+}
+
+.s_window_carousel {
+    overflow: hidden;
+    min-height: 50vh;
+
+    .hero-sticker {
+        transition: opacity 0.5s ease-in-out;
+        max-width: 256px;
+        max-height: 256px;
+        background-color: transparent;
+    }
+
+    .dynamic_snippet_template {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .carousel_container {
+        justify-content: center;
+        width: 300px;
+        min-height: 300px;
+        order: 1;
+        display: flex;
+
+        .aplus_carousel {
+            position: relative;
+            flex-grow: 1;
+            width: 100%;
+            height: 100%;
+            border-width: 1px;
+            clip-path: path(
+                "M 291.6747 135.1963 C 291.3372 92.3901 270.896 60.6801 237.1797 37.1305 C 198.7685 10.303 154.9647 6.6055 109.8972 12.2905 C 88.331 14.998 67.5297 20.7467 48.6335 32.0155 C 47.2797 33.1143 45.9672 34.2768 44.5535 35.3118 C 34.5973 42.7555 26.2048 51.6543 19.5635 62.1805 C 5.9098 83.8068 0.9185 107.8855 0.0972 132.958 C -0.6453 155.9343 2.951 178.4492 9.4198 200.4992 C 11.2347 205.7642 13.076 211.0255 14.9135 216.268 C 20.6435 227.1768 26.0772 238.2767 34.0235 247.8505 C 43.7285 258.0843 54.6147 266.878 67.5297 272.608 C 90.596 282.7968 114.8435 287.7655 140.0847 288.103 C 151.5185 288.2492 162.8285 286.8992 174.161 285.883 C 182.9772 283.8318 191.771 281.7805 200.5834 279.7293 C 201.7048 279.2643 202.7848 278.6755 203.9472 278.3568 C 221.006 273.7068 234.8735 263.833 246.986 251.4655 C 258.296 239.9268 266.8797 226.3105 274.4698 212.1055 C 274.871 210.943 275.186 209.758 275.696 208.6368 C 286.3273 185.3193 291.8659 161.0117 291.6747 135.1968"
+            );
+            overflow-x: hidden;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+
+            background-color: #f7f9fc;
+
+            .carousel-inner {
+                width: 100%;
+
+                .carousel-item {
+                    text-align: center;
+                    position: relative;
+                    height: 100%;
+
+                    .carousel-content {
+                        display: flex;
+                        flex-direction: column;
+                        flex-grow: 1;
+                        height: 100%;
+                        justify-content: center;
+                        align-items: center;
+
+                        .product-image {
+                            &:hover {
+                                transform: scale(1.02);
+                            }
+                            @keyframes wiggle {
+                                0% {
+                                    transform: rotate(20deg);
+                                }
+
+                                50% {
+                                    transform: rotate(-20deg);
+                                }
+
+                                100% {
+                                    transform: rotate(20deg);
+                                }
+                            }
+
+                            img {
+                                max-height: 300px;
+                                width: auto;
+                                border-radius: 8px;
+                                animation: wiggle 3s infinite !important;
+                            }
+                        }
+
+                        & > * {
+                            max-width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .hero-text-container {
+        .hero-text {
+            padding: 0;
+            margin: 0;
+            color: inherit;
+            font-size: 10rem;
+            font-weight: bold;
+            text-wrap: wrap;
+            transition: color 0.5s ease-in-out;
+            &.mobile {
+                display: none;
+            }
+            &.desktop {
+                display: block;
+            }
+        }
+    }
+
+    .container-fluid {
+        padding: 0 !important;
+    }
+
+    .shop-now {
+        margin-left: auto;
+        margin-right: auto;
+        order: 2;
+        margin-top: 1rem;
+
+        transition: color 0.5s ease-in-out;
+
+        .shop-now-button {
+            padding: 10px 20px;
+            border: 2px solid black;
+            border-radius: 20px;
+            display: block;
+            height: 100%;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.8em;
+            font-weight: bold;
+
+            transition:
+                background-color 0.5s ease-in-out,
+                border-color 0.5s ease-in-out,
+                color 0.5s ease-in-out;
+
+            &:hover {
+                transition:
+                    background-color 0.3s ease-in-out,
+                    border-color 0.3s ease-in-out,
+                    color 0.5s ease-in-out;
+            }
+        }
+    }
+
+    @media (max-width: 1400px) {
+        .hero-text-container .hero-text {
+            font-size: 8rem;
+        }
+        .hero-sticker {
+            max-width: 224px;
+            max-height: 224px;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .hero-text-container .hero-text {
+            font-size: 6rem;
+        }
+    }
+
+    @media (max-width: 787px) {
+        .hero-text-container {
+            .hero-text {
+                font-size: 6rem;
+                &.mobile {
+                    display: block;
+                }
+                &.desktop {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 540px) {
+        .hero-text-container .hero-text {
+            font-size: 5rem;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .row {
+            justify-content: center;
+            padding-bottom: 2rem;
+
+            .o_grid_item {
+                align-items: center;
+                justify-content: center;
+            }
+        }
+        .hero-text-container {
+            order: 1;
+
+            .hero-text {
+                text-align: center;
+            }
+        }
+        .carousel_container {
+            order: 2;
+            .aplus_carousel {
+                align-self: center;
+            }
+        }
+        .hero-sticker-container {
+            display: none;
+        }
+    }
+}

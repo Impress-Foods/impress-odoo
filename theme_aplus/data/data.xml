@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="dynamic_filter_template_product_product_alternative_templates"
+        name="Product Templates"
+    >
+        <t t-set="templates_done" t-value="[]" />
+        <t
+            t-foreach="records"
+            t-as="data"
+            data-arrow-position="bottom"
+            data-thumb="/website_sale/static/src/img/snippets_options/product_centered.svg"
+        >
+            <t t-set="record" t-value="data['_record']" />
+            <t t-if="record.product_tmpl_id.id not in templates_done">
+                <t
+                    t-set="templates_done"
+                    t-value="templates_done + [record.product_tmpl_id.id]"
+                />
+                <t t-set="product" t-value="record" />
+                <div class="product-card">
+                    <div
+                        class="product-info ap-product-card-minimalist"
+                        t-attf-id="{{ product.name }}"
+                    >
+                        <t t-call="theme_aplus.minimalist_product_card_carousel">
+                            <t
+                                t-set="product_name"
+                                t-value="data.get('display_name')"
+                            />
+                            <t t-set="product_record" t-value="product" />
+                            <t
+                                t-set="product_description"
+                                t-value="product.description_sale"
+                            />
+                            <t
+                                t-set="primary_color"
+                                t-value="data.get('card_primary_color')"
+                            />
+                            <t
+                                t-set="secondary_color"
+                                t-value="data.get('card_secondary_color')"
+                            />
+                            <t t-set="card_image_url" t-value="data.get('image_512')" />
+                        </t>
+                    </div>
+                </div>
+            </t>
+            <t t-else="" />
+        </t>
+    </template>
+</odoo>

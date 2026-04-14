@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="theme_aplus.WindowCarouselOption">
+        <BuilderRow label.translate="Speed">
+            <BuilderNumberInput
+                dataAttributeAction="'bsInterval'"
+                default="5000"
+                unit="'ms'"
+                step="500"
+                min="0"
+                preview="false"
+            />
+        </BuilderRow>
+        <BuilderRow label.translate="Product Tags" preview="false">
+            <BuilderMany2Many
+                model="'product.tag'"
+                limit="10"
+                dataAttributeAction="'productTagIds'"
+            />
+        </BuilderRow>
+    </t>
+</templates>

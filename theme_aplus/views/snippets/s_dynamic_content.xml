@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Wave Cards -->
+    <template id="dynamic_filter_template_product_template_wavy_card" name="Wavy Card">
+        <t
+            t-foreach="records"
+            t-as="data"
+            data-number-of-elements="4"
+            data-number-of-elements-sm="2"
+        >
+            <t t-set="record" t-value="data['_record']" />
+            <div class="product-card">
+                <t t-set="product" t-value="record" />
+                <div class="product-info ap_product_cart_wavy">
+                    <t t-set="product_href" t-value="product.website_url" />
+                    <t t-call="theme_aplus.wavy_product_card_carousel">
+                        <t t-set="product_name" t-value="data.get('display_name')" />
+                        <t t-set="product_record" t-value="product" />
+                        <t
+                            t-set="product_description"
+                            t-value="product.description_sale"
+                        />
+                        <t t-set="product_href" t-value="product_href" />
+                        <t
+                            t-set="primary_color"
+                            t-value="data.get('card_primary_color')"
+                        />
+                        <t
+                            t-set="secondary_color"
+                            t-value="data.get('card_secondary_color')"
+                        />
+                        <t t-set="text_color" t-value="data.get('card_text_color')" />
+                        <t t-set="data" t-value="data" />
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="dynamic_filter_template_product_product_wavy_card" name="Wavy Card">
+        <t
+            t-foreach="records"
+            t-as="data"
+            data-number-of-elements="4"
+            data-number-of-elements-sm="2"
+        >
+            <t t-set="record" t-value="data['_record']" />
+            <div class="product-card">
+                <t t-set="product" t-value="record" />
+                <t t-set="secondary_color" t-value="data.get('card_secondary_color')" />
+                <t t-set="product_href" t-value="product.website_url" />
+                <t t-call="theme_aplus.wavy_product_card_carousel">
+                    <t t-set="product_name" t-value="data.get('display_name')" />
+                    <t t-set="product_record" t-value="product" />
+                    <t t-set="product_description" t-value="product.description_sale" />
+                    <t t-set="product_href" t-value="product_href" />
+                    <t t-set="primary_color" t-value="data.get('card_primary_color')" />
+                    <t
+                        t-set="secondary_color"
+                        t-value="data.get('card_secondary_color')"
+                    />
+                    <t t-set="text_color" t-value="data.get('card_text_color')" />
+                    <t t-set="data" t-value="data" />
+                </t>
+            </div>
+        </t>
+    </template>
+
+    <template id="wavy_product_card_carousel" name="Wave Product Card">
+        <div
+            class="product-info ap_product_cart"
+            t-attf-id="{{ product.name }}"
+            t-attf-style="background-color: {{ secondary_color }};"
+        >
+            <!-- Background Image -->
+            <span
+                t-field="product_record.card_background_image"
+                t-options="{'widget': 'image', 'class': 'o_wsale_product_image'}"
+                class="d-flex"
+            />
+
+            <!-- Color Block with Wave -->
+            <div
+                class="color-block"
+                t-attf-style="background-color: {{ primary_color }}; box-shadow: 0px -2px 2px 1px {{ primary_color }};"
+            >
+                <svg
+                    class="wave"
+                    t-attf-style="fill: {{ primary_color }};"
+                    viewBox="0 0 740 200"
+                    preserveAspectRatio="none"
+                >
+                    <path
+                        d="M440.2 4.9133C446.4 5.6133 452.2 6.3133 457.8 7.1133 469.4 8.6133 480.8 10.1133 494.6 11.0133L495.4 11.1133C500.4 11.4133 504.8 11.7133 508.6 12.0133 513 12.3133 517.4 12.5133 521.2 12.6133 526.2 12.7133 530.6 12.8133 534.6 12.8133 538.6 12.8133 542.8 12.7133 548 12.6133 551.8 12.5133 556.2 12.3133 560.6 12.0133 564.6 11.8133 568.8 11.5133 573.8 11.1133L574.6 11.0133C588.2 10.0133 599.8 8.6133 611.4 7.1133 621 5.9133 630.8 4.6133 642 3.6133 644.4 3.4133 646.6 3.2133 648.8 3.0133 656.6 2.3133 662.4 1.7133 671.6 1.4133 685.6.8133 693.4.9133 707.4 1.4133 718 1.8133 724 2.2133 734.6 3.0133 742.2 3.6133 748.2 4.3133 754 5.1133L754 30.0133H2L2 5.2133C7.8 4.4133 14.2 3.7133 21.8 3.1133 32.4 2.2133 38.4 1.8133 49 1.5133 63 1.0133 71 .9133 84.8 1.5133 94 1.9133 99.8 2.4133 107.6 3.1133L107.6 3.1133C109.6 3.3133 111.8 3.5133 114.4 3.7133 125.6 4.7133 135.4 6.0133 145 7.2133 156.6 8.7133 168 10.2133 181.8 11.1133L182.6 11.2133C187.6 11.5133 192 11.8133 195.8 12.1133 200.2 12.4133 204.6 12.6133 208.4 12.7133 213.4 12.8133 217.8 12.9133 221.8 12.9133 225.8 12.9133 230 12.8133 235.2 12.7133 239 12.6133 243.4 12.4133 247.8 12.1133 251.8 11.9133 256 11.6133 261 11.2133L261.8 11.1133C275.4 10.1133 287 8.7133 298.6 7.2133 304.4 6.5133 310.2 5.7133 316.2 5.0133 321.6 4.3133 327.4 3.6133 334.6 3.1133 338.8 2.8133 342.2 2.5133 345.6 2.3133 349.6 2.0133 353.6 1.7133 358.8 1.5133 366.4 1.2133 372.2 1.1133 378.2 1.1133 384.2 1.1133 390 1.2133 397.6 1.5133 402.8 1.7133 406.8 2.0133 410.8 2.3133 414.2 2.5133 417.6 2.8133 421.8 3.1133 428.8 3.7133 434.6 4.3133 440.2 4.9133Z"
+                    />
+                </svg>
+            </div>
+
+            <!-- Product Image Container -->
+            <div class="ap_product_image position-relative flex-grow-0 overflow-hidden">
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    t-att-value="request.csrf_token()"
+                    t-nocache="The csrf token must always be up to date."
+                />
+                <a
+                    t-att-href="product_href"
+                    class="ap_product_image_link d-block h-100 position-relative"
+                    itemprop="url"
+                    contenteditable="false"
+                    aria-label="View product details"
+                >
+                    <img
+                        loading="lazy"
+                        t-att-src="data.get('image_512')"
+                        class="h-100 w-100"
+                    />
+                </a>
+            </div>
+
+            <!-- Product info + buttons -->
+            <div
+                class="ap_product_text_container position-relative justify-content-center d-flex flex-column flex-grow-1 flex-shrink-1"
+            >
+                <div class="o_wsale_product_information_text flex-grow-1">
+                    <h6 class="o_wsale_products_item_title mb-2">
+                        <div
+                            class="ap_product_name"
+                            t-attf-style="color: {{ text_color }};"
+                            itemprop="name"
+                            t-att-content="product_name"
+                        >
+                            <t t-esc="product_name" />
+                        </div>
+                    </h6>
+
+                    <!-- Product Description with Fixed Height -->
+                    <div class="ap_product_short_description_wrapper">
+                        <p
+                            class="ap_product_short_description small mb-1"
+                            t-attf-style="color: {{ text_color }};"
+                            t-field="product.description_sale"
+                            t-options="{'max_length': 60}"
+                        />
+                    </div>
+                </div>
+                <div
+                    class="o_wsale_product_sub justify-content-between align-items-end gap-2
+                                flex-wrap pt-1 pb-1 col-xs-6"
+                >
+                    <div class="o_wsale_product_btn" />
+                </div>
+            </div>
+
+            <div
+                class="ap_buy_button"
+                t-attf-style="background-color: {{ secondary_color }}; color: {{ text_color }};"
+                role="button"
+                aria-label="Buy Now"
+                tabindex="0"
+            >
+                <a
+                    t-attf-style="color: {{ text_color }};"
+                    t-attf-href="{{ product_href }}"
+                > Buy Now </a>
+            </div>
+        </div>
+    </template>
+
+    <!-- Minimalist Cards -->
+
+    <template
+        id="dynamic_filter_template_product_product_minimalist_card"
+        name="Minimalist Card"
+    >
+        <t
+            t-foreach="records"
+            t-as="data"
+            data-number-of-elements="4"
+            data-number-of-elements-sm="2"
+        >
+            <t t-set="record" t-value="data['_record']" />
+            <div class="product-card">
+                <t t-set="product" t-value="record" />
+                <div
+                    class="product-info ap-product-card-minimalist"
+                    t-attf-id="{{ product.name }}"
+                >
+                    <t
+                        t-set="tmpl_id"
+                        t-value="product.product_tmpl_id.id if product._name == 'product.product' else product.id"
+                    />
+                    <t
+                        t-set="image_url"
+                        t-value="'/web/image/product.template/%s/minimalist_card_image' % tmpl_id if product.minimalist_card_image else data.get('image_512')"
+                    />
+                    <t t-call="theme_aplus.minimalist_product_card_carousel">
+                        <t t-set="product_name" t-value="data.get('display_name')" />
+                        <t t-set="product_record" t-value="product" />
+                        <t
+                            t-set="product_description"
+                            t-value="product.description_sale"
+                        />
+                        <t
+                            t-set="primary_color"
+                            t-value="data.get('card_primary_color')"
+                        />
+                        <t
+                            t-set="secondary_color"
+                            t-value="data.get('card_secondary_color')"
+                        />
+                        <t t-set="card_image_url" t-value="image_url" />
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="minimalist_product_card_carousel" name="Minimalist Product Card">
+        <div class="image-container">
+            <img
+                t-attf-src="{{ card_image_url }}"
+                t-attf-alt="{{ product_name }}"
+                class="product-image"
+            />
+        </div>
+
+        <h2
+            class="title"
+            t-attf-style="color:{{ primary_color }};"
+            t-out="product_name"
+        />
+        <div class="subtitle-container" t-if="product_record.public_categ_ids">
+            <p
+                class="subtitle"
+                t-attf-style="color:{{ primary_color }};"
+                t-out="product_record.public_categ_ids[0].display_name"
+            />
+        </div>
+        <a
+            t-attf-href="{{ product_record.website_url }}"
+            class="add-to-cart"
+            t-attf-style="color:{{ primary_color }};border: 1px solid {{ primary_color }};"
+        >Add to cart</a>
+    </template>
+</odoo>

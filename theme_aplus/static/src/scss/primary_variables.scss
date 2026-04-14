@@ -1,0 +1,195 @@
+@use "./aplus_colors";
+@use "./fonts";
+
+$o-theme-font-configs: map-merge(
+    $o-theme-font-configs,
+    (
+        "Gooper": (
+            "family": (
+                "Gooper",
+                sans-serif,
+            ),
+        ),
+    )
+);
+
+$o-bg-shapes: map-merge(
+    $o-bg-shapes,
+    (
+        "theme_aplus": map-merge(
+                map-get($o-bg-shapes, "theme_aplus") or (),
+                (
+                    "aplus/01": (
+                        "position": top,
+                        "size": 100% auto,
+                        "colors": (
+                            2,
+                            3,
+                        ),
+                    ),
+                    "aplus/02": (
+                        "position": top,
+                        "size": 100% auto,
+                        "colors": (
+                            2,
+                            3,
+                        ),
+                    ),
+                    "aplus/03": (
+                        "position": top,
+                        "size": 100% auto,
+                        "colors": (
+                            1,
+                            2,
+                        ),
+                    ),
+                )
+            ),
+    )
+);
+
+// Palette variables
+/*
+X [1-5]
+o-color-X
+o-body
+*/
+
+// Preset variables
+/*
+o-ccX-text
+o-ccX-headings
+o-ccX-hY [2-6]
+o-ccX-link
+o-ccX-btn-primary
+o-ccX-btn-primary-text
+o-ccX-btn-primary-border
+o-ccX-btn-secondary
+o-ccX-btn-secondary-text
+o-ccX-btn-secondary-border
+o-ccX-bg
+*/
+
+// Presets
+/*
+"o-cc1-text": $aplus-black,
+"o-cc1-headings": $aplus-pale-magenta,
+"o-cc1-h2": $aplus-red,
+"o-cc1-h3": $aplus-red,
+"o-cc1-h4": $aplus-red,
+"o-cc1-h5": $aplus-red,
+"o-cc1-h6": $aplus-red,
+"o-cc1-link": $aplus-red,
+"o-cc1-btn-primary": $aplus-red,
+"o-cc1-btn-primary-text": $aplus-red,
+"o-cc1-btn-primary-border": $aplus-red,
+"o-cc1-btn-secondary": $aplus-red,
+"o-cc1-btn-secondary-text": $aplus-red,
+"o-cc1-btn-secondary-border": $aplus-red,
+"o-cc1-bg": $aplus-white,
+"o-cc2-text": $aplus-blue-purple,
+"o-cc2-headings": $aplus-blue-purple,
+"o-cc2-h2": $aplus-blue-purple,
+"o-cc2-h3": $aplus-blue-purple,
+"o-cc2-h4": $aplus-blue-purple,
+"o-cc2-h5": $aplus-blue-purple,
+"o-cc2-h6": $aplus-blue-purple,
+"o-cc2-link": $aplus-orange,
+"o-cc2-btn-primary": $aplus-blue,
+"o-cc2-btn-primary-text": $aplus-blue-purple,
+"o-cc2-btn-primary-border": $aplus-blue,
+"o-cc2-btn-secondary": $aplus-blue,
+"o-cc2-btn-secondary-text": $aplus-blue-purple,
+"o-cc2-btn-secondary-border": $aplus-blue,
+"o-cc2-bg": $aplus-blue,
+"o-cc3-text": $aplus-white,
+"o-cc3-headings": $aplus-white,
+"o-cc3-h2": $aplus-white,
+"o-cc3-h3": $aplus-white,
+"o-cc3-h4": $aplus-white,
+"o-cc3-h5": $aplus-white,
+"o-cc3-h6": $aplus-white,
+"o-cc3-link": $aplus-orange,
+"o-cc3-btn-primary": $aplus-pale-magenta,
+"o-cc3-btn-primary-text": $aplus-white,
+"o-cc3-btn-primary-border": $aplus-pale-magenta,
+"o-cc3-btn-secondary": $aplus-white,
+"o-cc3-btn-secondary-text": $aplus-pale-magenta,
+"o-cc3-btn-secondary-border": $aplus-pale-magenta,
+"o-cc3-bg": $aplus-red,
+"o-cc4-text": $aplus-peach-orange,
+"o-cc4-headings": $aplus-peach-orange,
+"o-cc4-h2": $aplus-peach-orange,
+"o-cc4-h3": $aplus-peach-orange,
+"o-cc4-h4": $aplus-peach-orange,
+"o-cc4-h5": $aplus-peach-orange,
+"o-cc4-h6": $aplus-peach-orange,
+"o-cc4-link": $aplus-peach-orange,
+"o-cc4-btn-primary": $aplus-orange,
+"o-cc4-btn-primary-text": $aplus-peach-orange,
+"o-cc4-btn-primary-border": $aplus-orange,
+"o-cc4-btn-secondary": $aplus-orange,
+"o-cc4-btn-secondary-text": $aplus-peach-orange,
+"o-cc4-btn-secondary-border": $aplus-orange,
+"o-cc4-bg": $aplus-orange,
+"o-cc5-text": $aplus-white,
+"o-cc5-headings": $aplus-white,
+"o-cc5-h2": $aplus-white,
+"o-cc5-h3": $aplus-white,
+"o-cc5-h4": $aplus-white,
+"o-cc5-h5": $aplus-white,
+"o-cc5-h6": $aplus-white,
+"o-cc5-link": $aplus-white,
+"o-cc5-btn-primary": $aplus-red,
+"o-cc5-btn-primary-text": $aplus-white,
+"o-cc5-btn-primary-border": $aplus-red,
+"o-cc5-btn-secondary": $aplus-red,
+"o-cc5-btn-secondary-text": $aplus-white,
+"o-cc5-btn-secondary-border": $aplus-pale-magenta,
+"o-cc5-bg": $aplus-pale-magenta,*/
+
+$o-color-palettes: map-merge(
+    $o-color-palettes,
+    (
+        "aplus": (
+            //"o-color-1": $aplus-red,
+            "o-color-1": $aplus-orange,
+            "o-color-2": $aplus-red,
+            "o-color-3": $aplus-white,
+            "o-color-4": $aplus-blue,
+            "o-color-5": $aplus-black,
+            "o-body": $aplus-green,
+        ),
+        "aplus-alt": (
+            //"o-color-1": $aplus-red,
+            "o-color-1": $aplus-blue-purple,
+            "o-color-2": $aplus-columbia-blue,
+            "o-color-3": $aplus-white,
+            "o-color-4": $aplus-orange,
+            "o-color-5": $aplus-red,
+            "o-body": $aplus-black,
+        ),
+    )
+);
+
+$o-selected-color-palettes-names: append($o-selected-color-palettes-names, "aplus");
+$o-selected-color-palettes-names: append($o-selected-color-palettes-names, "aplus-alt");
+// prettier-ignore
+$o-website-values-palettes: (
+    (
+        "color-palettes-name": "aplus",
+        "font": "Gooper",
+        "headings-font": "Gooper",
+        "navbar-font": "Gooper",
+        "buttons-font": "Gooper",
+        "footer-template": "minimalist",
+    ),
+    (
+        "color-palettes-name": "aplus-alt",
+        "font": "Gooper",
+        "headings-font": "Gooper",
+        "navbar-font": "Gooper",
+        "buttons-font": "Gooper",
+        "footer-template": "minimalist",
+    ),
+);

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="theme_aplus.ImageMarqueeImagesOption">
+        <BuilderRow label.translate="Images">
+            <BuilderButton
+                type="'success'"
+                className="'flex-grow-1'"
+                preview="false"
+                title.translate="Add Image"
+                action="'addMarqueeImage'"
+            > Add </BuilderButton>
+            <BuilderButton
+                type="'danger'"
+                className="'flex-grow-1'"
+                preview="false"
+                title.translate="Remove all images"
+                action="'removeAllMarqueeImages'"
+            > Remove all </BuilderButton>
+        </BuilderRow>
+        <BuilderRow label.translate="Speed">
+            <BuilderNumberInput
+                action="'setMarqueeSpeed'"
+                default="10"
+                unit="'s'"
+                step="0.5"
+                min="1"
+                preview="false"
+            />
+        </BuilderRow>
+        <BuilderRow label.translate="Hover Effect">
+            <BuilderButton
+                classAction="'s_marquee_hover_pause'"
+                title.translate="Pause on hover"
+                icon="'fa-pause'"
+            >
+                Pause on hover
+            </BuilderButton>
+        </BuilderRow>
+    </t>
+
+    <t t-name="theme_aplus.ImageMarqueeItemOption">
+        <BuilderRow
+            label.translate="Re-order"
+            disabled="!state.hasMultiItems"
+            preview="false"
+        >
+            <BuilderButtonGroup action="'setMarqueeImagePosition'">
+                <BuilderButton
+                    icon="'fa-angle-double-left'"
+                    title.translate="Move to first"
+                    actionValue="'first'"
+                    className="!state.hasMultiItems || state.isFirstItem ? 'disabled': ''"
+                />
+                <BuilderButton
+                    icon="'fa-angle-left'"
+                    title.translate="Move to previous"
+                    actionValue="'prev'"
+                    className="!state.hasMultiItems ? 'disabled': ''"
+                />
+                <BuilderButton
+                    icon="'fa-angle-right'"
+                    title.translate="Move to next"
+                    actionValue="'next'"
+                    className="!state.hasMultiItems ? 'disabled': ''"
+                />
+                <BuilderButton
+                    icon="'fa-angle-double-right'"
+                    title.translate="Move to last"
+                    actionValue="'last'"
+                    className="!state.hasMultiItems || state.isLastItem ? 'disabled': ''"
+                />
+            </BuilderButtonGroup>
+        </BuilderRow>
+    </t>
+
+</templates>

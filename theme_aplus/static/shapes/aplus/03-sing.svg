@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg viewBox="0 0 1400 1400" version="1.1" id="svg1"
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:svg="http://www.w3.org/2000/svg">
+	<style type="text/css" id="style1">
+		@keyframes wave {
+		0%, 100% {transform: scale(1, 1);}
+		50% {transform: scale(1, 1.15);}
+		}
+
+
+		g {
+		transform-origin: center top;
+
+		animation: wave 10s cubic-bezier(.445, .05, .55, .95) infinite;
+		}
+
+		path {
+		transform-origin: center;
+		}
+
+
+	</style>
+	<rect width="1400" height="87.046898" fill="#7c6576" id="rect1" x="0" y="0" style="stroke-width:0.754771" />
+	<g id="g1">
+		<path style="fill:#f6f6f6;stroke-width:0.745941" class="st0"
+			d="M0 27L19.5 24.3C39 21.7 78 16.3 116.8 14.8C155.7 13.3 194.3 15.7 233.2 18.3C272 21 311 24 350 21.8C389 19.7 428 12.3 466.8 13C505.7 13.7 544.3 22.3 583.2 25C622 27.7 661 24.3 700 21.7C739 19 778 17 816.8 17.8C855.7 18.7 894.3 22.3 933.2 21.2C972 20 1011 14 1050 13C1089 12 1128 16 1166.8 18.3C1205.7 20.7 1244.3 21.3 1283.2 20.8C1322 20.3 1361 18.7 1380.5 17.8L1400 17L1400 0L1380.5 0C1361 0 1322 0 1283.2 0C1244.3 0 1205.7 0 1166.8 0C1128 0 1089 0 1050 0C1011 0 972 0 933.2 0C894.3 0 855.7 0 816.8 0C778 0 739 0 700 0C661 0 622 0 583.2 0C544.3 0 505.7 0 466.8 0C428 0 389 0 350 0C311 0 272 0 233.2 0C194.3 0 155.7 0 116.8 0C78 0 39 0 19.5 0L0 0Z"
+			id="path1" />
+	</g>
+</svg>

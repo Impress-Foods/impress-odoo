@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="snippets" inherit_id="website.snippets" name="A+ - Snippets">
+        <xpath expr="//snippets[@id='snippet_groups']/*[1]" position='before'>
+            <t snippet-group="a_plus" t-snippet="website.s_snippet_group" string="A+" />
+        </xpath>
+        <xpath expr="//snippets[@id='snippet_structure']/*[1]" position="before">
+            <t
+                t-snippet="theme_aplus.s_wave_transition_snippet"
+                string="Wave Transition"
+                group="a_plus"
+            >
+                <keywords>Transition</keywords>
+            </t>
+            <t
+                t-snippet="theme_aplus.s_window_carousel"
+                string="Window Carousel"
+                group="a_plus"
+            >
+                <keywords>Dynamic</keywords>
+            </t>
+            <t
+                t-snippet="theme_aplus.s_image_marquee"
+                string="Image Marquee"
+                group="a_plus"
+            />
+        </xpath>
+    </template>
+</odoo>

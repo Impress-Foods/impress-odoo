@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+<t t-name="theme_aplus.AplusProductPageOption">
+        <BuilderRow label.translate="Ingredients">
+            <BuilderCheckbox
+                action="'websiteConfig'"
+                actionParam="{ views: ['theme_aplus.product_show_ingredients'] }"
+            />
+        </BuilderRow>
+        <BuilderRow label.translate="Learn More Tabs">
+            <BuilderCheckbox
+                id="'o_wsale_learn_more_tabs'"
+                action="'websiteConfig'"
+                actionParam="{ views: ['theme_aplus.product_tabbed_information'] }"
+            />
+        </BuilderRow>
+        <BuilderRow
+            label.translate="Nutrition Table"
+            t-if="this.isActiveItem('o_wsale_learn_more_tabs')"
+        >
+            <BuilderCheckbox
+                action="'websiteConfig'"
+                actionParam="{ views: ['theme_aplus.product_nutrition_table'] }"
+            />
+        </BuilderRow>
+        <BuilderRow label.translate="Fruit/Water/Maple Icons">
+            <BuilderCheckbox
+                action="'websiteConfig'"
+                actionParam="{ views: ['theme_aplus.product_show_vectors'] }"
+            />
+        </BuilderRow>
+        <BuilderRow label.translate="Aliments du Québec Badge">
+            <BuilderCheckbox
+                action="'websiteConfig'"
+                actionParam="{ views: ['theme_aplus.product_show_adq'] }"
+            />
+        </BuilderRow>
+        <BuilderRow label.translate="Related Flavors">
+            <BuilderCheckbox
+                action="'websiteConfig'"
+                actionParam="{ views: ['theme_aplus.product_related_flavors'] }"
+            />
+        </BuilderRow>
+        <BuilderRow label.translate="Color Highlights">
+            <BuilderCheckbox
+                action="'websiteConfig'"
+                actionParam="{ views: ['theme_aplus.product_color_highlight'] }"
+            />
+        </BuilderRow>
+    </t>
+
+</templates>
