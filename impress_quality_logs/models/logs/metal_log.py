@@ -2,6 +2,7 @@ import logging
 from datetime import datetime
 
 from odoo import api, fields, models
+from odoo.fields import Domain
 
 _logger = logging.getLogger(__name__)
 
@@ -31,6 +32,6 @@ class MetalLog(models.Model):
             "res_model": "metal.log.line",
             "type": "ir.actions.act_window",
             "view_mode": "list,form",
-            "domain": [("metal_log_id", "=", self.id)],
+            "domain": Domain("metal_log_id", "=", self.id),
         }
         return action

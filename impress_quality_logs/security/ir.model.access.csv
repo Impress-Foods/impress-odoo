@@ -17,3 +17,5 @@ access_loma_log_manager,loma_log_manager,model_loma_log,quality.group_quality_ma
 access_metal_log_manager,metal_log_manager,model_metal_log,quality.group_quality_manager,1,1,1,1
 access_coding_log_manager,coding_log_manager,model_coding_log,quality.group_quality_manager,1,1,1,1
 access_x_ray_log_manager,x_ray_log_manager,model_x_ray_log,quality.group_quality_manager,1,1,1,1
+access_worksheet_log_type_user,worksheet_log_type_user,model_worksheet_log_type,quality.group_quality_user,1,1,0,0
+access_worksheet_log_type_manager,worksheet_log_type_manager,model_worksheet_log_type,quality.group_quality_manager,1,1,1,1

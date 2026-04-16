@@ -11,6 +11,8 @@
         "sign",
         "quality_mrp_workorder_worksheet",
         "product_expiry",
+        "quality_control_worksheet",
+        "mail",
     ],
     "data": [
         "security/ir.model.access.csv",
@@ -28,6 +30,8 @@
         "views/x_ray_log_views.xml",
         "views/x_ray_log_line_views.xml",
         "views/menus.xml",
+        "views/worksheet_log_type_views.xml",
+        "views/quality_point_views.xml",
     ],
     "installable": True,
     "application": True,

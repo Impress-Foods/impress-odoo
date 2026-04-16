@@ -3,6 +3,7 @@ from datetime import datetime
 from math import floor
 
 from odoo import api, fields, models
+from odoo.fields import Domain
 
 _logger = logging.getLogger(__name__)
 
@@ -73,6 +74,6 @@ class HppLog(models.Model):
             "res_model": "hpp.log.line",
             "type": "ir.actions.act_window",
             "view_mode": "list,form",
-            "domain": [("hpp_log_id", "=", self.id)],
+            "domain": Domain("hpp_log_id", "=", self.id),
         }
         return action

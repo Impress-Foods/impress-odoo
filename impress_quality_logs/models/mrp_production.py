@@ -1,6 +1,7 @@
 import logging
 
 from odoo import api, fields, models
+from odoo.fields import Domain
 
 _logger = logging.getLogger(__name__)
 
@@ -43,7 +44,7 @@ class MrpProduction(models.Model):
             action.update(
                 {
                     "name": self.env._("HPP Logs for %s", self.name),
-                    "domain": [("id", "in", self.hpp_log_ids.ids)],
+                    "domain": Domain("id", "in", self.hpp_log_ids.ids),
                     "view_mode": "list,form",
                 }
             )
@@ -64,7 +65,7 @@ class MrpProduction(models.Model):
             action.update(
                 {
                     "name": self.env._("Metal Logs for %s", self.name),
-                    "domain": [("id", "in", self.metal_log_ids.ids)],
+                    "domain": Domain("id", "in", self.metal_log_ids.ids),
                     "view_mode": "list,form",
                 }
             )
@@ -85,7 +86,7 @@ class MrpProduction(models.Model):
             action.update(
                 {
                     "name": self.env._("LOMA Logs for %s", self.name),
-                    "domain": [("id", "in", self.loma_log_ids.ids)],
+                    "domain": Domain("id", "in", self.loma_log_ids.ids),
                     "view_mode": "list,form",
                 }
             )
@@ -106,7 +107,7 @@ class MrpProduction(models.Model):
             action.update(
                 {
                     "name": self.env._("Coding Logs for %s", self.name),
-                    "domain": [("id", "in", self.coding_log_ids.ids)],
+                    "domain": Domain("id", "in", self.coding_log_ids.ids),
                     "view_mode": "list,form",
                 }
             )
@@ -127,7 +128,7 @@ class MrpProduction(models.Model):
             action.update(
                 {
                     "name": self.env._("X-Ray Logs for %s", self.name),
-                    "domain": [("id", "in", self.x_ray_log_ids.ids)],
+                    "domain": Domain("id", "in", self.x_ray_log_ids.ids),
                     "view_mode": "list,form",
                 }
             )

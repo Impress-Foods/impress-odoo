@@ -1,6 +1,7 @@
 import logging
 
 from odoo import fields, models
+from odoo.fields import Domain
 
 _logger = logging.getLogger(__name__)
 
@@ -24,6 +25,6 @@ class LomaLog(models.Model):
             "res_model": "loma.log.line",
             "type": "ir.actions.act_window",
             "view_mode": "list,form",
-            "domain": [("loma_log_id", "=", self.id)],
+            "domain": Domain("loma_log_id", "=", self.id),
         }
         return action
