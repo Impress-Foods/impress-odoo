@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="worksheet_template_view_list_inherit" model="ir.ui.view">
+        <field name="name">worksheet.template.list.inherit</field>
+        <field name="model">worksheet.template</field>
+        <field name="inherit_id" ref="worksheet.worksheet_template_view_list" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="effective_date" />
+            </field>
+        </field>
+    </record>
+</odoo>

@@ -32,6 +32,7 @@
         "views/menus.xml",
         "views/worksheet_log_type_views.xml",
         "views/quality_point_views.xml",
+        "views/worksheet_template_views.xml",
     ],
     "installable": True,
     "application": True,
