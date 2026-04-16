@@ -267,13 +267,13 @@ msgid "Lot"
 msgstr ""
 
 #. module: impress_quality_worksheets
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_10_field_x_name
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_11_field_x_name
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_12_field_x_name
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_13_field_x_name
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_14_field_x_name
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_15_field_x_name
-#: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_9_field_x_name
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_16_field_x_name
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_17_field_x_name
 msgid "Name"
 msgstr ""
 
