@@ -4,6 +4,7 @@
     <!-- Create a new Worksheet Template -->
     <record id="ws_coding_20250303" model="worksheet.template">
         <field name="name">Worksheet coding 2025-03-03</field>
+        <field name="color">3</field>
         <field name="res_model">quality.check</field>
     </record>
 
@@ -45,7 +46,7 @@
     <!-- log: x_ws_xx_id - One2Many - x_coding_log_id -->
     <record id='coding_log_x_worksheet_20250303_id' model='ir.model.fields'>
         <field name="name">x_worksheet_20250303_id</field>
-        <field name="field_description">Worksheet 2024-12-02</field>
+        <field name="field_description">Worksheet 2025-03-03</field>
         <field
             name="model_id"
             model="ir.model"
@@ -100,6 +101,19 @@
         <field name="related">x_coding_log_id.shelf_life</field>
         <field name="ttype">integer</field>
     </record>
+    <record id='x_worksheet_20250303_lot_id' model='ir.model.fields'>
+        <field name="name">x_lot_id</field>
+        <field name="field_description">Lot</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_coding_20250303').model_id.id"
+        />
+        <field name="related">x_coding_log_id.lot_id</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">stock.lot</field>
+        <field name="on_delete">cascade</field>
+    </record>
 
     <record id='x_worksheet_20250303_unit_check' model='ir.model.fields'>
         <field name="name">x_unit_check</field>
@@ -112,6 +126,7 @@
         <field name="related">x_coding_log_id.unit_check</field>
         <field name="ttype">selection</field>
         <field name="selection">[('ok', 'Ok'), ('not_ok', 'Not Ok')]</field>
+        <field name="translate">True</field>
     </record>
 
     <record id='x_worksheet_20250303_sleeve_check' model='ir.model.fields'>
@@ -125,6 +140,7 @@
         <field name="related">x_coding_log_id.sleeve_check</field>
         <field name="ttype">selection</field>
         <field name="selection">[('ok', 'Ok'), ('not_ok', 'Not Ok')]</field>
+        <field name="translate">True</field>
     </record>
 
     <record id='x_worksheet_20250303_case_check' model='ir.model.fields'>
@@ -138,6 +154,7 @@
         <field name="related">x_coding_log_id.case_check</field>
         <field name="ttype">selection</field>
         <field name="selection">[('ok', 'Ok'), ('not_ok', 'Not Ok')]</field>
+        <field name="translate">True</field>
     </record>
 
     <record id='x_worksheet_20250303_subunit_check' model='ir.model.fields'>
@@ -153,6 +170,7 @@
         <field
             name="selection"
         >[('ok', 'Ok'), ('not_ok', 'Not Ok'), ("na", "N/A")]</field>
+        <field name="translate">True</field>
     </record>
 
     <record id='x_worksheet_20250303_shelf_life_check' model='ir.model.fields'>
@@ -166,6 +184,7 @@
         <field name="related">x_coding_log_id.shelf_life_check</field>
         <field name="ttype">selection</field>
         <field name="selection">[('ok', 'Ok'), ('not_ok', 'Not Ok')]</field>
+        <field name="translate">True</field>
     </record>
 
     <record id='x_worksheet_20250303_keep_cold_check' model='ir.model.fields'>
@@ -179,6 +198,7 @@
         <field name="related">x_coding_log_id.keep_cold_check</field>
         <field name="ttype">selection</field>
         <field name="selection">[('ok', 'Ok'), ('not_ok', 'Not Ok')]</field>
+        <field name="translate">True</field>
     </record>
 
     <record id='x_worksheet_20250303_signature' model='ir.model.fields'>
@@ -189,7 +209,7 @@
             model="ir.model"
             eval="obj().env.ref('impress_quality_worksheets.ws_coding_20250303').model_id.id"
         />
-        <field name="related">x_coding_log_id.signature</field>
+        <field name="related">x_coding_log_id.operator_signature</field>
         <field name="ttype">binary</field>
     </record>
 
@@ -216,31 +236,4 @@
         <field name="related">x_coding_log_id.start_date</field>
         <field name="ttype">datetime</field>
     </record>
-    <!-- log_line: x_ws_xx_id - Many2One - x_coding_log_line_ids -->
-    <!--
-    <record id='coding_log_line_x_worksheet_20250303_id' model='ir.model.fields'>
-        <field name="name">x_worksheet_20250303_id</field>
-        <field name="field_description">x_worksheet_20250303_id</field>
-        <field name="model_id" model="ir.model"
-            eval="obj().env.ref('impress_quality_logs.model_coding_log_line').id" />
-        <field name="relation" model="ir.model"
-            eval="obj().env.ref('impress_quality_worksheets.ws_coding_20250303').model_id.model" />
-        <field name="ttype">many2one</field>
-    </record>
-    -->
-    <!--ws:
-    x_coding_log_line_ids - One2Many -->
-    <!--
-    <record id='x_worksheet_20250303_coding_log_lines_id' model='ir.model.fields'>
-        <field name="name">x_coding_log_line_ids</field>
-        <field name="field_description">coding Log lines</field>
-        <field name="model_id" model="ir.model"
-            eval="obj().env.ref('impress_quality_worksheets.ws_coding_20250303').model_id.id" />
-        <field name="relation" model="ir.model" eval="'coding.log.line'" />
-        <field name="relation_field" model="ir.model.fields"
-            eval="obj().env.ref('impress_quality_worksheets.coding_log_line_x_worksheet_20250303_id').name" />
-        <field name="ttype">one2many</field>
-        <field name="on_delete">cascade</field>
-    </record>
-    -->
 </odoo>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record id='LOMAWorksheet_20250203_form_view' model='ir.ui.view'>
-        <field name="name">LOMA.worksheet.20250203.form.view</field>
+    <record id='weightWorksheet_20260305_form_view' model='ir.ui.view'>
+        <field name="name">weight.worksheet.20260305.form.view</field>
         <field
             name="model"
             model="ir.model"
-            eval="obj().env.ref('impress_quality_worksheets.ws_loma_20250203').model_id.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_weight_20260305').model_id.model"
         />
         <field name="priority">1</field>
         <field name="arch" type="xml">
@@ -18,22 +18,33 @@
                             <field name="x_quality_check_id" />
                         </group>
                     </group>
-
+                    <div name="instructions">
+                        <ol>
+                            <li
+                            >S'assurer que la balance est stable sur une table de travail.</li>
+                            <li
+                            >Faire la tare (cup + pellicule de plastique ou pochette).</li>
+                            <li
+                            >Prise du poids de 5 produits à toutes les 30 minutes lors du dosage.</li>
+                            <li
+                            >Comparer le poids du produit avec le poids visé pour cette production : si poids sous la cible ou + de 3g, faire un ajustement.</li>
+                            <li
+                            >Vérifier que le scellage est conforme (temps et température + les 5 positions si VC999 utilisé).</li>
+                            <li
+                            >Aviser le contrôle qualité si le poids est en dessous de la limite visée.</li>
+                        </ol>
+                    </div>
                     <group>
                         <group>
-                            <field name="x_nominal_weight" readonly='0' />
-                            <field name="x_upper_limit" readonly='0' />
-                            <field name="x_lower_limit" readonly='0' />
+                            <field name="x_nominal_weight" />
                         </group>
                     </group>
 
-                    <field name="x_loma_log_line_ids" nolabel="1">
+                    <field name="x_weight_log_line_ids" nolabel="1">
                         <form>
                             <group>
                                 <group>
                                     <field name="nominal_weight" required='1' />
-                                    <field name="lower_limit" required='1' />
-                                    <field name="upper_limit" required='1' />
                                     <field name="is_seal_ok" required='1' />
                                     <field name="is_weight_ok" required='1' />
                                     <field name="start_date" required='1' />
@@ -58,8 +69,7 @@
 
                     <div class="text-center">
                         <strong
-                        >Pour l'utilisation exclusive de Impress Foods. Mis à jour le 03
-                            Février 2025. Feuille de contrôle LOMA </strong>
+                        >Pour l'utilisation exclusive de Impress Foods. Mis à jour le 05 mars 2026. Feuille de contrôle Poids </strong>
                     </div>
                 </sheet>
             </form>
