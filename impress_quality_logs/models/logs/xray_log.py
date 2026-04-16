@@ -2,6 +2,7 @@ import logging
 from datetime import datetime
 
 from odoo import api, fields, models
+from odoo.fields import Domain
 
 _logger = logging.getLogger(__name__)
 
@@ -34,6 +35,6 @@ class Xray_log(models.Model):
             "res_model": "x_ray.log.line",
             "type": "ir.actions.act_window",
             "view_mode": "list,form",
-            "domain": [("x_ray_log_id", "=", self.id)],
+            "domain": Domain("x_ray_log_id", "=", self.id),
         }
         return action

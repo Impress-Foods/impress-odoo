@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="action_worksheet_log_type" model="ir.actions.act_window">
+        <field name="name">Worksheet Log Types</field>
+        <field name="res_model">worksheet.log.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        id="menu_worksheet_log_type"
+        name="Worksheet Log Types"
+        parent="quality_control.menu_quality_configuration"
+        action="action_worksheet_log_type"
+        sequence="10"
+    />
+
+    <record id="worksheet_log_type_view_list" model="ir.ui.view">
+        <field name="name">worksheet.log.type.list</field>
+        <field name="model">worksheet.log.type</field>
+        <field name="arch" type="xml">
+            <list string="Worksheet Log Types">
+                <field name="name" />
+                <field name="active_template_id" />
+                <field name="sequence" />
+            </list>
+        </field>
+    </record>
+
+    <record id="worksheet_log_type_view_form" model="ir.ui.view">
+        <field name="name">worksheet.log.type.form</field>
+        <field name="model">worksheet.log.type</field>
+        <field name="arch" type="xml">
+            <form string="Worksheet Log Type">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="active_template_id" />
+                        </group>
+                        <group>
+                            <field name="sequence" />
+                        </group>
+                    </group>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+</odoo>

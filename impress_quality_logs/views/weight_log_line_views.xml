@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- View weight_log_line View Tree -->
+    <record id="view_weight_log_line_tree" model="ir.ui.view">
+        <field name="name">view.weight_log_line.tree</field>
+        <field name="model">weight.log.line</field>
+        <field name="arch" type="xml">
+            <list default_order='id desc'>
+                <field name="sequence" />
+                <field name="start_date" />
+                <field name="measure_1" />
+                <field name="measure_2" />
+                <field name="measure_3" />
+                <field name="measure_4" />
+                <field name="measure_5" />
+                <field name="nominal_weight" />
+                <field name="is_seal_ok" />
+                <field name="is_weight_ok" />
+            </list>
+        </field>
+    </record>
+
+    <!-- View weight_log_line form -->
+    <record id="view_weight_log_line_form" model="ir.ui.view">
+        <field name="name">view.weight_log_line.form</field>
+        <field name="model">weight.log.line</field>
+        <field name="arch" type="xml">
+            <form string="weight_log_line">
+                <sheet>
+                    <field name="weight_log_id" invisible="1" />
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            class="oe_stat_button"
+                            name="action_view_log"
+                            type="object"
+                            icon="fa-balance-scale"
+                            groups="mrp.group_mrp_user"
+                            invisible="not weight_log_id"
+                        >
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">weight Log</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="sequence" />
+                        <h1>
+                            <field name="sequence" placeholder="Name..." />
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="nominal_weight" />
+                                <field name="is_seal_ok" />
+                                <field name="is_weight_ok" />
+                                <field name="signature" widget="signature" />
+                                <field name="notes" />
+                            </group>
+                            <group>
+                                <field name="measure_1" />
+                                <field name="measure_2" />
+                                <field name="measure_3" />
+                                <field name="measure_4" />
+                                <field name="measure_5" />
+                            </group>
+                        </group>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View weight_log_line search -->
+    <record id="view_weight_log_line_search" model="ir.ui.view">
+        <field name="name">view.weight_log_line.search</field>
+        <field name="model">weight.log.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="sequence" string="Sequence" />
+                <field name="product_lot_id" string="Sequence" />
+                <field name="product_id" string="Product" />
+
+                <group>
+                    <filter
+                        string="Name"
+                        name="sequence"
+                        domain="[]"
+                        context="{'group_by':'sequence'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action weight_log_line -->
+    <record id="action_weight_log_line" model="ir.actions.act_window">
+        <field name="name">weight Lines</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">weight.log.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p
+                class="oe_view_nocontent_create"
+            > There is no examples click here to add new weight_log_line. </p>
+        </field>
+    </record>
+</odoo>

@@ -27,25 +27,6 @@
         <field name="model">metal.log.line</field>
         <field name="arch" type="xml">
             <form string="metal.log.line">
-                <header>
-                    <field name="is_locked" invisible="1" />
-                    <field name="create_date" invisible="1" />
-                    <!-- <button
-                        name="action_lock"
-                        type="object"
-                        string="Lock"
-                        class="btn-primary"
-                        invisible="is_locked or not create_date"
-                    />
-                    <button
-                        name="action_unlock"
-                        type="object"
-                        string="Unlock"
-                        class="btn-secondary"
-                        invisible="not is_locked or not create_date"
-                        groups="quality.group_quality_manager"
-                    /> -->
-                </header>
                 <sheet>
                     <field name="metal_log_id" invisible="1" />
                     <div class="oe_button_box" name="button_box">
@@ -65,26 +46,33 @@
                     <div class="oe_title">
                         <label for="sequence" />
                         <h1>
-                            <field
-                                name="sequence"
-                                placeholder="0000"
-                                readonly='is_locked'
-                            />
+                            <field name="sequence" placeholder="0000" />
                         </h1>
                         <group>
                             <group>
-                                <field name="calibration" readonly='is_locked' />
-                                <field name="ejection" readonly='is_locked' />
-                                <field name="reject_value" readonly='is_locked' />
-                                <field name='mean_weight' readonly='is_locked' />
-                                <field name="notes" readonly='is_locked' />
+                                <field name="calibration" />
+                                <field name="ejection" />
+                                <field name="reject_value" />
+                                <field name='mean_weight' />
+                                <field name="notes" />
                             </group>
                             <group>
-                                <field name="ferrous" readonly='is_locked' />
-                                <field name="non_ferrous" readonly='is_locked' />
-                                <field name='stainless' readonly='is_locked' />
-                                <field name="torque" readonly='is_locked' />
-                                <field name="start_date" readonly='is_locked' />
+                                <field name="ferrous" invisible="not ferrous" />
+                                <field name="non_ferrous" invisible="not non_ferrous" />
+                                <field name='stainless' invisible="not stainless" />
+                                <field
+                                    name="ferrous_large"
+                                    invisible="not ferrous_large"
+                                />
+                                <field
+                                    name="non_ferrous_large"
+                                    invisible="not non_ferrous_large"
+                                />
+                                <field
+                                    name='stainless_large'
+                                    invisible="not stainless_large"
+                                />
+                                <field name="start_date" />
                                 <field
                                     name="signature"
                                     widget="signature"
@@ -128,9 +116,9 @@
         <field name="domain">[]</field>
         <field name="context">{}</field>
         <field name="help" type="html">
-            <p class="oe_view_nocontent_create">
-                There is no examples click here to add new metal.log.line.
-            </p>
+            <p
+                class="oe_view_nocontent_create"
+            > There is no examples click here to add new metal.log.line. </p>
         </field>
     </record>
 </odoo>

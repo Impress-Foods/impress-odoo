@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <!-- View loma.log View Tree -->
-    <record id="view_loma_log_tree" model="ir.ui.view">
-        <field name="name">view.loma.log.tree</field>
-        <field name="model">loma.log</field>
+    <!-- View weight.log View Tree -->
+    <record id="view_weight_log_tree" model="ir.ui.view">
+        <field name="name">view.weight.log.tree</field>
+        <field name="model">weight.log</field>
         <field name="arch" type="xml">
-            <list default_order='date desc'>
+            <list default_order='date desc' decoration-success="signature">
                 <field name="name" />
                 <field name="product_id" />
                 <field name="lot_id" />
                 <field name="production_id" />
                 <field name="date" />
+                <field name="signature" widget="signature" optional="true" />
             </list>
         </field>
     </record>
 
-    <!-- View loma.log form -->
-    <record id="view_loma_log_form" model="ir.ui.view">
-        <field name="name">view.loma.log.form</field>
-        <field name="model">loma.log</field>
+    <!-- View weight.log form -->
+    <record id="view_weight_log_form" model="ir.ui.view">
+        <field name="name">view.weight.log.form</field>
+        <field name="model">weight.log</field>
         <field name="arch" type="xml">
-            <form string="Loma Log">
+            <form string="weight Log">
                 <sheet>
                     <field name="production_id" invisible="1" />
                     <field name="quality_check_id" invisible="1" />
@@ -39,14 +40,14 @@
                         </button>
                         <button
                             class="oe_stat_button"
-                            name="action_view_loma_lines"
+                            name="action_view_weight_lines"
                             type="object"
                             icon="fa-balance-scale"
                             groups="mrp.group_mrp_user"
                             invisible="not log_line_ids"
                         >
                             <div class="o_field_widget o_stat_info">
-                                <span class="o_stat_text">LOMA Lines</span>
+                                <span class="o_stat_text">Weight Lines</span>
                             </div>
                         </button>
                         <button
@@ -69,6 +70,11 @@
                             <field name="name" placeholder="Name..." />
                         </h1>
                     </div>
+                    <group>
+                        <group>
+                            <field name="nominal_weight" />
+                        </group>
+                    </group>
                     <field name="log_line_ids" nolabel='1' readonly='1' />
                     <group>
                         <group>
@@ -77,20 +83,21 @@
                                 widget="signature"
                                 options="{'size':[0,90]}"
                             />
+                            <field name="weekly_signature_date" readonly="1" />
                         </group>
-                        <group>
-                            <field name="weekly_signature_date" />
-                        </group>
+                    </group>
+                    <group>
+                        <field name="quality_notes" />
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
 
-    <!-- View loma.log search -->
-    <record id="view_loma_log_search" model="ir.ui.view">
-        <field name="name">view.loma.log.search</field>
-        <field name="model">loma.log</field>
+    <!-- View weight.log search -->
+    <record id="view_weight_log_search" model="ir.ui.view">
+        <field name="name">view.weight.log.search</field>
+        <field name="model">weight.log</field>
         <field name="arch" type="xml">
             <search>
                 <field name="name" string="Name" />
@@ -108,18 +115,18 @@
         </field>
     </record>
 
-    <!-- Action loma.log -->
-    <record id="action_loma_log" model="ir.actions.act_window">
-        <field name="name">Loma Log</field>
+    <!-- Action weight.log -->
+    <record id="action_weight_log" model="ir.actions.act_window">
+        <field name="name">Weight Log</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">loma.log</field>
-        <field name="view_mode">list,form</field>
+        <field name="res_model">weight.log</field>
+        <field name="view_mode">tree,form</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
         <field name="help" type="html">
-            <p class="oe_view_nocontent_create">
-                There is no examples click here to add new Loma Log.
-            </p>
+            <p
+                class="oe_view_nocontent_create"
+            > There is no examples click here to add new weight Log. </p>
         </field>
     </record>
 </odoo>

@@ -25,27 +25,46 @@
                             <field name="sequence" placeholder="Name..." />
                         </h1>
                     </div>
-                    <field name="is_locked" invisible='1' />
 
                     <group>
                         <group>
-                            <field name="reject_value" readonly='is_locked' />
+                            <field name="reject_value" />
                             <field
                                 name="stainless_detection_value"
-                                readonly='is_locked'
+                                invisible="not stainless_detection_value"
                             />
                             <field
                                 name="ceramic_detection_value"
-                                readonly='is_locked'
+                                invisible="not ceramic_detection_value"
                             />
-                            <field name="glass_detection_value" readonly='is_locked' />
+                            <field
+                                name="glass_detection_value"
+                                invisible="not glass_detection_value"
+                            />
+                            <field
+                                name="stainless_detection_large_value"
+                                invisible="not stainless_detection_large_value"
+                            />
+                            <field
+                                name="ceramic_detection_large_value"
+                                invisible="not ceramic_detection_large_value"
+                            />
+                            <field
+                                name="glass_detection_large_value"
+                                invisible="not glass_detection_large_value"
+                            />
                         </group>
                         <group>
-                            <field name="start_date" readonly='is_locked' />
-                            <field name="last_check_for_product" readonly='is_locked' />
-                            <field name="total_qty" readonly='is_locked' />
-                            <field name="reject_qty" readonly='is_locked' />
-                            <field name="average" readonly='is_locked' />
+                            <field name="start_date" />
+                            <field name="last_check_for_product" />
+                            <field name="total_qty" />
+                            <field name="reject_qty" />
+                            <field name="average" />
+                            <field
+                                name="signature"
+                                widget="signature"
+                                options="{'size':[0,90]}"
+                            />
                         </group>
                     </group>
                 </sheet>
@@ -83,9 +102,9 @@
         <field name="domain">[]</field>
         <field name="context">{}</field>
         <field name="help" type="html">
-            <p class="oe_view_nocontent_create">
-                There is no examples click here to add new X_ray Log Line.
-            </p>
+            <p
+                class="oe_view_nocontent_create"
+            > There is no examples click here to add new X_ray Log Line. </p>
         </field>
     </record>
 </odoo>

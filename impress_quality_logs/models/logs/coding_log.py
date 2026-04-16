@@ -33,7 +33,7 @@ class CodingLog(models.Model):
         compute="_compute_global_success_check",
     )
 
-    verification_signature = fields.Binary()
+    operator_signature = fields.Binary()
 
     @api.depends(
         "unit_check",
@@ -61,8 +61,13 @@ class CodingLog(models.Model):
             and self.keep_cold_check == "ok"
         )
 
-    @api.depends("verification_signature")
+    @api.depends("signature")
     def _compute_weekly_signature_date(self):
         for rec in self:
-            if rec.verification_signature:
+            if rec.signature:
                 rec.weekly_signature_date = datetime.now()
+
+    def action_sign_log(self):
+        for rec in self:
+            if not rec.signature:
+                rec.signature = rec.env.user.sign_initials

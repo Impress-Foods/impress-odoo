@@ -31,6 +31,7 @@ class LogLineMixin(models.AbstractModel):
         "stock.lot", "Lot", store=True, compute="_compute_product_lot_id"
     )
 
+    quality_check_id = fields.Many2one("quality.check", "Quality Check")
     active_worksheet_field = fields.Char(
         compute="_compute_active_worksheet_field", store=True
     )
