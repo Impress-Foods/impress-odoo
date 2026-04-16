@@ -20,41 +20,55 @@ class LogMixin(models.AbstractModel):
         "Production Order",
         related="quality_check_id.production_id",
         store=True,
-        # depends=["quality_check_id", "quality_check_id.production_id"],
+        depends=["quality_check_id", "quality_check_id.production_id"],
     )
     product_id = fields.Many2one(
         "product.product",
         "Product",
         related="production_id.product_id",
         store=True,
-        # depends=["production_id", "production_id.product_id"],
+        depends=["production_id", "production_id.product_id"],
     )
 
-    lot_id = fields.Many2one("stock.lot", "Lot", store=True, compute="_compute_lot_id")
+    lot_id = fields.Many2one(
+        "stock.lot",
+        "Lot",
+        compute="_compute_lot_id",
+        store=True,
+    )
 
     date = fields.Datetime(
         "Date",
         related="quality_check_id.control_date",
         store=True,
-        # depends=["quality_check_id", "quality_check_id.control_date"],
+        depends=["quality_check_id", "quality_check_id.control_date"],
     )
     weekly_signature_date = fields.Datetime(
-        compute="_compute_weekly_signature_date", store=True
+        compute="_compute_weekly_signature_date",
+        inverse="_inverse_weekly_signature_date",
+        store=True,
+        string="Daily Signature Date",
     )
 
-    @api.depends("production_id", "production_id.lot_producing_ids")
-    def _compute_lot_id(self):
-        for record in self:
-            if len(record.production_id.lot_producing_ids) != 0:
-                record.lot_id = record.production_id.lot_producing_ids[0]
-            else:
-                record.lot_id = False
+    quality_notes = fields.Text()
 
     @api.depends("signature")
     def _compute_weekly_signature_date(self):
         for rec in self:
             if rec.signature:
                 rec.weekly_signature_date = datetime.now()
+
+    def _inverse_weekly_signature_date(self):
+        return
+
+    @api.depends("production_id", "production_id.lot_producing_ids")
+    def _compute_lot_id(self):
+        for rec in self:
+            rec.lot_id = (
+                rec.production_id.lot_producing_ids[0]
+                if rec.production_id.lot_producing_ids
+                else False
+            )
 
     def action_sign_log(self):
         for rec in self:

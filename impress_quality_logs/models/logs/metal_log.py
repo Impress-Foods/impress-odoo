@@ -17,7 +17,9 @@ class MetalLog(models.Model):
     )
     monthly_signature = fields.Binary()
     monthly_signature_date = fields.Datetime(
-        compute="_compute_monthly_signature_date", store=True
+        compute="_compute_monthly_signature_date",
+        inverse="_inverse_monthly_signature_date",
+        store=True,
     )
 
     @api.depends("monthly_signature")
@@ -25,6 +27,9 @@ class MetalLog(models.Model):
         for rec in self:
             if rec.monthly_signature:
                 rec.monthly_signature_date = datetime.now()
+
+    def _inverse_monthly_signature_date(self):
+        return
 
     def action_view_metal_lines(self):
         self.ensure_one()

@@ -3,8 +3,7 @@
 <odoo>
     <!-- Create a new Worksheet Template -->
     <record id="ws_x_ray_large_20251126" model="worksheet.template">
-        <field name="name">Worksheet x_ray (Large) 2025-11-26</field>
-        <field name="color">3</field>
+        <field name="name">Worksheet X-Ray (Large) 2025-11-26</field>
         <field name="res_model">quality.check</field>
         <field name="xray_indicator_size">large</field>
     </record>

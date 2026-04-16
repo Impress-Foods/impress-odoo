@@ -4,7 +4,6 @@
     <!-- Create a new Worksheet Template -->
     <record id="ws_coding_20250303" model="worksheet.template">
         <field name="name">Worksheet coding 2025-03-03</field>
-        <field name="color">3</field>
         <field name="res_model">quality.check</field>
     </record>
 
@@ -126,7 +125,6 @@
         <field name="related">x_coding_log_id.unit_check</field>
         <field name="ttype">selection</field>
         <field name="selection">[('ok', 'Ok'), ('not_ok', 'Not Ok')]</field>
-        <field name="translate">True</field>
     </record>
 
     <record id='x_worksheet_20250303_sleeve_check' model='ir.model.fields'>
@@ -140,7 +138,6 @@
         <field name="related">x_coding_log_id.sleeve_check</field>
         <field name="ttype">selection</field>
         <field name="selection">[('ok', 'Ok'), ('not_ok', 'Not Ok')]</field>
-        <field name="translate">True</field>
     </record>
 
     <record id='x_worksheet_20250303_case_check' model='ir.model.fields'>
@@ -154,7 +151,6 @@
         <field name="related">x_coding_log_id.case_check</field>
         <field name="ttype">selection</field>
         <field name="selection">[('ok', 'Ok'), ('not_ok', 'Not Ok')]</field>
-        <field name="translate">True</field>
     </record>
 
     <record id='x_worksheet_20250303_subunit_check' model='ir.model.fields'>
@@ -170,7 +166,6 @@
         <field
             name="selection"
         >[('ok', 'Ok'), ('not_ok', 'Not Ok'), ("na", "N/A")]</field>
-        <field name="translate">True</field>
     </record>
 
     <record id='x_worksheet_20250303_shelf_life_check' model='ir.model.fields'>
@@ -184,7 +179,6 @@
         <field name="related">x_coding_log_id.shelf_life_check</field>
         <field name="ttype">selection</field>
         <field name="selection">[('ok', 'Ok'), ('not_ok', 'Not Ok')]</field>
-        <field name="translate">True</field>
     </record>
 
     <record id='x_worksheet_20250303_keep_cold_check' model='ir.model.fields'>
@@ -198,7 +192,6 @@
         <field name="related">x_coding_log_id.keep_cold_check</field>
         <field name="ttype">selection</field>
         <field name="selection">[('ok', 'Ok'), ('not_ok', 'Not Ok')]</field>
-        <field name="translate">True</field>
     </record>
 
     <record id='x_worksheet_20250303_signature' model='ir.model.fields'>

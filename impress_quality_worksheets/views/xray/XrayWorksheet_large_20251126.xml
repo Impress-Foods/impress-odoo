@@ -38,12 +38,12 @@
                         </ul>
                     </div>
                     <field name="x_x_ray_log_line_ids" nolabel="1">
-                        <tree>
+                        <list>
                             <field name="sequence" />
                             <field name="start_date" />
                             <field name="total_qty" />
                             <field name="last_check_for_product" />
-                        </tree>
+                        </list>
                         <form>
                             <group>
                                 <group>

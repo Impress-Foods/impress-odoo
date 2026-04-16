@@ -10,7 +10,9 @@ class MrpProduction(models.Model):
     _inherit = "mrp.production"
 
     hpp_log_ids = fields.One2many("hpp.log", "production_id", string="HPP Logs")
-    loma_log_ids = fields.One2many("loma.log", "production_id", string="LOMA Logs")
+    weight_log_ids = fields.One2many(
+        "weight.log", "production_id", string="weight Logs"
+    )
     metal_log_ids = fields.One2many("metal.log", "production_id")
     coding_log_ids = fields.One2many(
         "coding.log",
@@ -25,7 +27,7 @@ class MrpProduction(models.Model):
     @api.depends("hpp_log_ids", "hpp_log_ids.qty_cases")
     def _compute_hpp_qty_cases(self):
         for record in self:
-            if len(record.hpp_log_ids) != 0:
+            if record.hpp_log_ids:
                 record.hpp_qty_cases = record.hpp_log_ids[0].qty_cases
             else:
                 record.hpp_qty_cases = 0
@@ -72,21 +74,23 @@ class MrpProduction(models.Model):
 
         return action
 
-    def action_view_loma_log(self):
+    def action_view_weight_log(self):
         self.ensure_one()
         action = {
-            "res_model": "loma.log",
+            "res_model": "weight.log",
             "type": "ir.actions.act_window",
         }
 
-        if len(self.loma_log_ids) == 1:
-            action.update({"view_mode": "form", "res_id": self.loma_log_ids.id})
+        if len(self.weight_log_ids) == 1:
+            action.update(
+                {"view_mode": "form", "res_id": self.weight_log_ids.id}  # type: ignore
+            )
 
         else:
             action.update(
                 {
-                    "name": self.env._("LOMA Logs for %s", self.name),
-                    "domain": Domain("id", "in", self.loma_log_ids.ids),
+                    "name": self.env._("Weight Logs for %s", self.name),
+                    "domain": Domain("id", "in", self.weight_log_ids.ids),
                     "view_mode": "list,form",
                 }
             )
