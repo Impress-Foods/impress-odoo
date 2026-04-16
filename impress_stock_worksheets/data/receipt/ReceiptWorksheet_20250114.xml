@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <?xml-model href="https://raw.githubusercontent.com/odoo/odoo/refs/heads/17.0/odoo/import_xml.rng" type="application/XML"?>
 <odoo>
-
     <!-- Create a new Worksheet Template -->
     <record id="ws_receipt_20250114" model="worksheet.template">
         <field name="name">Worksheet Receipt 2025-01-14</field>
-        <field name="color">3</field>
         <field name="res_model">quality.check</field>
         <field
             name="report_view_id"
@@ -102,5 +100,4 @@
         />
         <field name="ttype">binary</field>
     </record>
-
 </odoo>

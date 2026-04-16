@@ -45,7 +45,6 @@
                                 options="{&quot;size&quot;:[0,90]}"
                                 field_id="x_signature_0"
                             />
-
                         </group>
                     </group>
                     <group>
@@ -84,7 +83,6 @@
                                     <td>-18°C</td>
                                     <td>-</td>
                                     <td>-18°C</td>
-
                                 </tr>
                             </tbody>
                         </table>
@@ -98,6 +96,4 @@
             </form>
         </field>
     </record>
-
-
 </odoo>

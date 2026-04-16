@@ -1,7 +1,7 @@
 {
     "name": "impress_stock_worksheets",
     # Non semantic version to allow to tag the most recent document date
-    "version": "17.0.25.01.14",
+    "version": "19.0.1.0.0",
     "summary": """ Impress_stock_worksheets Summary """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <template id="ws_receipt_20250114_report">
         <div class="container">
             <div class="row">
@@ -16,7 +15,6 @@
                                     <span>État du camion: </span>
                                     <span t-field="worksheet.x_truck_state" />
                                 </td>
-
                             </tr>
                             <tr>
                                 <td>
@@ -27,7 +25,6 @@
                                     <span>État des palettes: </span>
                                     <span t-field="worksheet.x_pallet_state" />
                                 </td>
-
                             </tr>
                             <tr>
                                 <td>
@@ -44,7 +41,6 @@
                                     <span t-field="worksheet.x_driver_id" />
                                 </td>
                             </tr>
-
                         </tbody>
                     </table>
                 </div>
@@ -68,8 +64,6 @@
                     />
                 </div>
             </div>
-
-
 
             <div class="row">
                 <div class="table-responsive" name="temperature charts">
@@ -105,7 +99,6 @@
                                 <td>-18°C</td>
                                 <td>-</td>
                                 <td>-18°C</td>
-
                             </tr>
                         </tbody>
                     </table>
@@ -119,5 +112,4 @@
             </div>
         </div>
     </template>
-
 </odoo>
