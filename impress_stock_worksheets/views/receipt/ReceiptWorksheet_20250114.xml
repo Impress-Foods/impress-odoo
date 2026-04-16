@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id='ws_receipt_20250114_form_view' model='ir.ui.view'>
+        <field name="name">ws.receipt.20250114.form.view</field>
+        <field
+            name="model"
+            model="ir.model"
+            eval="obj().env.ref('impress_stock_worksheets.ws_receipt_20250114').model_id.model"
+        />
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <form create="false" js_class="worksheet_validation">
+                <sheet>
+                    <group
+                        invisible="context.get('studio') or context.get('default_x_quality_check_id')"
+                    >
+                        <group>
+                            <field name="x_quality_check_id" />
+                        </group>
+                    </group>
+                    <group>
+                        <group name="product" string="Product">
+                            <field
+                                name="x_product_state"
+                                string="Product state (no bad smells, expected color and texture, respects specs etc)"
+                                widget="selection_badge"
+                                options="{&quot;size&quot;:&quot;sm&quot;}"
+                            />
+                            <field
+                                name="x_product_allergen"
+                                string="No allergen markings on product or documents"
+                            />
+                            <field
+                                name="x_signature"
+                                widget="signature"
+                                options="{&quot;size&quot;:[0,90]}"
+                                field_id="x_signature_0"
+                            />
+                        </group>
+                        <group name="truck" string="Transport">
+                            <field
+                                name="x_pallet_state"
+                                string="Pallet state (No greases, oils, wood or metal chips, dusts, etc.)"
+                                widget="selection_badge"
+                                options="{&quot;size&quot;:&quot;sm&quot;}"
+                            />
+                            <field
+                                name="x_truck_state"
+                                string="Truck state (Clean, no traces of pests, no bad smells, etc.)"
+                                widget="selection_badge"
+                                options="{&quot;size&quot;:&quot;sm&quot;}"
+                            />
+                            <field
+                                name="x_driver_id"
+                                string="Driver's documents match receipt documents"
+                                widget="selection_badge"
+                                options="{&quot;size&quot;:&quot;sm&quot;}"
+                            />
+                            <field
+                                name="x_truck_picture"
+                                widget="image"
+                                options="{&quot;size&quot;:[0,90]}"
+                                field_id="x_truck_picture_0"
+                            />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="x_comments" string="Comments" />
+                    </group>
+                    <div class="table-responsive" name="temperature charts">
+                        <table class="table table-sm">
+                            <caption>Temperature chart</caption>
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scape="col">Product Type</th>
+                                    <th scape="col">Product minimum</th>
+                                    <th scape="col">Product maximum</th>
+                                    <th scape="col">Truck minimum</th>
+                                    <th scape="col">Truck maximum</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Fresh</td>
+                                    <td>0°C</td>
+                                    <td>4°C</td>
+                                    <td>0°C</td>
+                                    <td>4°C</td>
+                                </tr>
+                                <tr>
+                                    <td>Whole fruits and vegetables</td>
+                                    <td>0°C</td>
+                                    <td>15°C</td>
+                                    <td>0°C</td>
+                                    <td>4°C</td>
+                                </tr>
+                                <tr>
+                                    <td>Frozen</td>
+                                    <td>-</td>
+                                    <td>-18°C</td>
+                                    <td>-</td>
+                                    <td>-18°C</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="text-center">
+                        <strong>Pour l'utilisation exclusive de Impress Foods.</strong>
+                        <strong> Mis à jour le 14 janvier 2025.</strong>
+                        <strong> Feuille de contrôle Réception </strong>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
