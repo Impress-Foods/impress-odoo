@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="domino_work_center_tree" model="ir.ui.view">
+        <field name="name">domino.work.center.tree</field>
+        <field name="model">domino.work.center</field>
+        <field name="arch" type="xml">
+            <list string="Domino Printers">
+                <field name="name" readonly="1" />
+                <field name="printer_id" readonly="1" />
+                <field name="active" readonly="1" />
+            </list>
+        </field>
+    </record>
+    <record id="domino_work_center_form" model="ir.ui.view">
+        <field name="name">domino.work.center.form</field>
+        <field name="model">domino.work.center</field>
+        <field name="arch" type="xml">
+            <form string="Domino Printer">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" readonly="1" />
+                            <field name="printer_id" readonly="1" />
+                        </group>
+                        <group>
+                            <field name="active" readonly="1" />
+                            <field
+                                name="label_ids"
+                                readonly="1"
+                                widget="many2many_tags"
+                            />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="domino_work_center_action" model="ir.actions.act_window">
+        <field name="name">Domino Printers</field>
+        <field name="res_model">domino.work.center</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem
+        id="domino_work_center_menu"
+        name="Printers"
+        parent="base.menu_config"
+        action="domino_work_center_action"
+        sequence="70"
+    />
+</odoo>

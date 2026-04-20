@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
-    <record id="product_variant_easy_edit_inherit_product" model="ir.ui.view">
-        <field name="name">product.product.view.form.inherit</field>
+    <record id="product_normal_form_view" model="ir.ui.view">
+        <field name="name">product.product.form.inherit</field>
         <field name="model">product.product</field>
-        <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
+        <field name="inherit_id" ref="product.product_normal_form_view" />
         <field name="arch" type="xml">
-            <xpath expr="//sheet[1]" position="inside">
-                <group>
+            <xpath expr="//notebook[1]" position="inside">
+                <page string="Domino" name="domino">
                     <group string="Domino" name="domino">
-                        <field name="domino_name" />
+                        <group>
+                            <field name="domino_name" />
+                        </group>
+                        <group />
                     </group>
-                </group>
-            </xpath>
-            <xpath expr="//header[1]" position="inside">
-                <button
-                    string="Sync with Domino"
-                    type="object"
-                    name="action_domino_sync"
-                />
+                </page>
             </xpath>
         </field>
     </record>
-
 </odoo>

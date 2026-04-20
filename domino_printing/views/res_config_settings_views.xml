@@ -15,7 +15,7 @@
                             string="Domino API Endpoint"
                         />
                     </setting>
-                    <setting id="API endpoint for Domino connector">
+                    <setting id="API key for Domino connector">
                         <field name="domino_api_key" string="Domino API Key" />
                     </setting>
                 </block>

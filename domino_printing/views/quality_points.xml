@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="quality_point_form" model="ir.ui.view">
+        <field name="name">quality.point.form.inherit</field>
+        <field name="model">quality.point</field>
+        <field
+            name="inherit_id"
+            ref="mrp_workorder.quality_point_view_form_inherit_mrp"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='test_report_type']" position="after">
+                <field name="print_code" invisible="test_report_type != 'domino'" />
+                <field name="print_case" invisible="test_report_type != 'domino'" />
+                <field
+                    name="coding_domino_template"
+                    invisible="not print_code"
+                    required="print_code"
+                    domain="['&amp;',('domino_label_id', 'in', available_label_ids), ('print_type', '=', 'code')]"
+                />
+                <field
+                    name="case_domino_template"
+                    invisible="not print_case"
+                    required="print_case"
+                    domain="['&amp;', ('domino_label_id', 'in', available_label_ids), ('print_type', '=', 'case')]"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

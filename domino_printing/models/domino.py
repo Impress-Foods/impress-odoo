@@ -4,7 +4,7 @@ import requests
 from pydantic import BaseModel
 from werkzeug.urls import url_join
 
-from .schema import DominoProduct
+from .schema import DominoLabel, DominoPrinter
 
 _logger = logging.getLogger(__name__)
 
@@ -16,11 +16,19 @@ class DominoAPI:
         self.session = requests.Session()
 
     def _make_api_request(
-        self, endpoint: str, method: str = "GET", payload: BaseModel | None = None
-    ) -> dict:
+        self,
+        endpoint: str,
+        method: str = "GET",
+        payload: BaseModel | dict | None = None,
+    ):
         access_url = url_join(self.url, endpoint)
         headers = {"Content-Type": "application/json", "X-API-Key": self.api_key}
-        json_payload = payload.model_dump(exclude_none=True)
+        json_payload = None
+        if payload:
+            if isinstance(payload, dict):
+                json_payload = payload
+            else:
+                json_payload = payload.model_dump(exclude_none=True)
         try:
             match method:
                 case "GET":
@@ -36,22 +44,30 @@ class DominoAPI:
             _logger.warning(
                 f"Connection Error: {error} with the given URL: {access_url}"
             )
-            return {
-                "errors": {
-                    "timeout": "Cannot reach the server. Please try again later."
-                }
-            }
+            return type("Response", (), {"status_code": 500, "text": str(error)})()
         return response
 
-    def sync_product(self, product) -> None:
-        payload: DominoProduct = DominoProduct(
-            OdooProductID=product.id,
-            ProductCode=product.default_code if product.default_code else None,
-            Barcode=product.barcode if product.barcode else None,
-            ProductName=product.domino_name if product.domino_name else None,
-        )
-        if product.product_tmpl_id.use_expiration_date:
-            payload.ShelfLifeDays = product.product_tmpl_id.expiration_time
+    def get_labels(self):
+        response = self._make_api_request("/labels", method="GET")
+        if response.status_code != 200:
+            return []
 
-        response = self._make_api_request("/products", method="POST", payload=payload)
-        _logger.warning(response)
+        json = response.json()
+        labels = [DominoLabel.model_validate(label) for label in json]
+
+        return labels
+
+    def get_printers(self):
+        response = self._make_api_request("/printers", method="GET")
+        if response.status_code != 200:
+            return []
+        try:
+            printers = [DominoPrinter.model_validate(p) for p in response.json()]
+        except Exception:
+            return []
+        return printers
+
+    def send_print_job(self, printer: int, label: str, data: dict):
+        url = f"printers/{printer}/print/{label}"
+        _logger.debug(data)
+        self._make_api_request(url, "POST", data)

@@ -1,15 +1,37 @@
-from pydantic import BaseModel
+import logging
+from typing import Any
+
+from pydantic import BaseModel, Field, field_validator
+
+_logger = logging.getLogger(__name__)
 
 
-class DominoProduct(BaseModel):
-    OdooProductID: int
-    ProductCode: str | None = None
-    ProductName: str | None = None
-    Barcode: str | None = None
-    ShelfLifeDays: int | None = None
-    LabelText1: str | None = None
-    LabelText2: str | None = None
-    LabelText3: str | None = None
-    Extra1: str | None = None
-    Extra2: str | None = None
-    Extra3: str | None = None
+class DominoPrinter(BaseModel):
+    id: int
+    name: str
+    active: bool
+
+
+class DominoField(BaseModel):
+    name: str
+    type: str
+    size: int
+
+
+class DominoBufferSchema(BaseModel):
+    fields: list[DominoField]
+
+
+class DominoLabel(BaseModel):
+    id: int
+    name: str
+    buffer_schema: DominoBufferSchema = Field(default=DominoBufferSchema(fields=[]))
+    printer_ids: list[int]
+
+    @field_validator("buffer_schema", mode="before")
+    @classmethod
+    def catch_empty_buffer_schema(cls, value: Any) -> DominoBufferSchema:
+        if isinstance(value, dict):
+            return value
+        else:
+            return {"fields": []}

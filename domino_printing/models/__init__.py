@@ -2,3 +2,10 @@ from . import schema
 from . import product_product
 from . import res_config_settings
 from . import domino
+from . import quality_point
+from . import quality_check
+from . import domino_work_center
+from . import mrp_workcenter
+from . import domino_label
+from . import domino_print_field
+from . import domino_print_template
