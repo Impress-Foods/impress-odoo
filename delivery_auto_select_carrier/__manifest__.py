@@ -1,6 +1,6 @@
 {
     "name": "Delivery_auto_select_carrier",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "summary": """ Delivery_auto_select_carrier Summary """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
