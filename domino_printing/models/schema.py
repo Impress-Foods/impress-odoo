@@ -14,8 +14,8 @@ class DominoPrinter(BaseModel):
 
 class DominoField(BaseModel):
     name: str
-    type: str
-    size: int
+    type: str | None = None
+    size: int | None = None
 
 
 class DominoBufferSchema(BaseModel):

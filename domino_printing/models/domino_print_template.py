@@ -25,11 +25,6 @@ class DominoPrintTemplate(models.Model):
         string="Domino Label",
         required=True,
     )
-    work_center_ids = fields.Many2many(
-        "mrp.workcenter",
-        string="Work Centers",
-        related="domino_label_id.workcenter_ids",
-    )
 
     field_ids = fields.Many2many(
         "domino.print.field",

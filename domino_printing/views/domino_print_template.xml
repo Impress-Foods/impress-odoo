@@ -21,7 +21,6 @@
                         <field name="name" />
                         <field name="print_type" />
                         <field name="domino_label_id" />
-                        <field name="work_center_ids" widget="many2many_tags" />
                     </group>
                     <group string="Field Mappings">
                         <field name="field_ids" />
@@ -35,11 +34,4 @@
         <field name="res_model">domino.print.template</field>
         <field name="view_mode">list,form</field>
     </record>
-    <menuitem
-        id="domino_print_template_menu"
-        name="Print Templates"
-        parent="base.menu_config"
-        action="domino_print_template_action"
-        sequence="90"
-    />
 </odoo>

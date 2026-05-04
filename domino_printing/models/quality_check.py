@@ -2,8 +2,6 @@ import logging
 
 from odoo import models
 
-from .domino import DominoAPI
-
 _logger = logging.getLogger(__name__)
 
 
@@ -26,35 +24,26 @@ class QualityCheck(models.Model):
         return self._send_domino_labels()
 
     def _send_domino_labels(self):
-        case_template = None
-        code_template = None
+        code_printers = self.mapped(
+            "point_id.coding_domino_template.domino_label_id.printer_ids.id"
+        )
+        case_printers = self.mapped(
+            "point_id.case_domino_template.domino_label_id.printer_ids.id"
+        )
 
-        if self.point_id.print_case:
-            case_template = self.point_id.case_domino_template
-
-        if self.point_id.print_code:
-            code_template = self.point_id.coding_domino_template
-
-        if case_template or code_template:
-            dom = DominoAPI(
-                self.env["ir.config_parameter"]
-                .sudo()
-                .get_param("domino_printing.api_endpoint"),
-                self.env["ir.config_parameter"]
-                .sudo()
-                .get_param("domino_printing.api_key"),
-            )
-            if code_template:
-                dom.send_print_job(
-                    self.operation_id.workcenter_id.domino_code_printer_id.printer_id,
-                    code_template.domino_label_id.name,
-                    code_template._make_json_payload(self),
-                )
-            if case_template:
-                dom.send_print_job(
-                    self.operation_id.workcenter_id.domino_case_printer_id.printer_id,
-                    case_template.domino_label_id.name,
-                    case_template._make_json_payload(self),
-                )
-
-        return {}
+        action = {
+            "name": self.env._("Domino Printing"),
+            "type": "ir.actions.act_window",
+            "view_mode": "form",
+            "res_model": "domino.wizard.print",
+            "views": [[False, "form"]],
+            "target": "new",
+            "context": {
+                "default_qcc_id": self.id,
+                "default_case_printer_ids": case_printers,
+                "default_code_printer_ids": code_printers,
+                "default_print_code": self.point_id.print_code,
+                "default_print_case": self.point_id.print_case,
+            },
+        }
+        return action

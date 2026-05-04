@@ -12,9 +12,6 @@ class QualityControlPoint(models.Model):
     print_case = fields.Boolean()
     coding_domino_template = fields.Many2one("domino.print.template")
     case_domino_template = fields.Many2one("domino.print.template")
-    available_label_ids = fields.Many2many(
-        related="operation_id.workcenter_id.domino_available_label_ids"
-    )
 
     @api.constrains
     def _check_test_report_type(self):

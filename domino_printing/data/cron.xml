@@ -10,7 +10,7 @@
     </record>
     <record id="sync_printers" model="ir.cron">
         <field name="name">Sync Domino Printers</field>
-        <field name="model_id" ref="model_domino_work_center" />
+        <field name="model_id" ref="model_domino_printer" />
         <field name="interval_number">1</field>
         <field name="interval_type">days</field>
         <field name="state">code</field>

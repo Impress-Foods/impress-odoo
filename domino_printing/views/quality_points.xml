@@ -15,13 +15,13 @@
                     name="coding_domino_template"
                     invisible="not print_code"
                     required="print_code"
-                    domain="['&amp;',('domino_label_id', 'in', available_label_ids), ('print_type', '=', 'code')]"
+                    domain="[('print_type', '=', 'code')]"
                 />
                 <field
                     name="case_domino_template"
                     invisible="not print_case"
                     required="print_case"
-                    domain="['&amp;', ('domino_label_id', 'in', available_label_ids), ('print_type', '=', 'case')]"
+                    domain="[('print_type', '=', 'case')]"
                 />
             </xpath>
         </field>

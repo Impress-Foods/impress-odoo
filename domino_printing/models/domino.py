@@ -4,15 +4,21 @@ import requests
 from pydantic import BaseModel
 from werkzeug.urls import url_join
 
+from odoo.orm.environments import Environment
+
 from .schema import DominoLabel, DominoPrinter
 
 _logger = logging.getLogger(__name__)
 
 
 class DominoAPI:
-    def __init__(self, url: str, api_key: str):
-        self.url = url
-        self.api_key = api_key
+    def __init__(self, env: Environment):
+        self.url = (
+            env["ir.config_parameter"].sudo().get_param("domino_printing.api_endpoint")
+        )
+        self.api_key = (
+            env["ir.config_parameter"].sudo().get_param("domino_printing.api_key")
+        )
         self.session = requests.Session()
 
     def _make_api_request(
@@ -47,27 +53,25 @@ class DominoAPI:
             return type("Response", (), {"status_code": 500, "text": str(error)})()
         return response
 
-    def get_labels(self):
+    def get_labels(self) -> list[DominoLabel]:
         response = self._make_api_request("/labels", method="GET")
         if response.status_code != 200:
             return []
+        try:
+            return [DominoLabel.model_validate(label) for label in response.json()]
+        except Exception:
+            return []
 
-        json = response.json()
-        labels = [DominoLabel.model_validate(label) for label in json]
-
-        return labels
-
-    def get_printers(self):
+    def get_printers(self) -> list[DominoPrinter]:
         response = self._make_api_request("/printers", method="GET")
         if response.status_code != 200:
             return []
         try:
-            printers = [DominoPrinter.model_validate(p) for p in response.json()]
+            return [DominoPrinter.model_validate(p) for p in response.json()]
         except Exception:
             return []
-        return printers
 
-    def send_print_job(self, printer: int, label: str, data: dict):
+    def send_print_job(self, printer: int, label: str, data: dict) -> None:
         url = f"printers/{printer}/print/{label}"
         _logger.debug(data)
         self._make_api_request(url, "POST", data)

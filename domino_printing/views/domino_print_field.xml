@@ -59,11 +59,4 @@
         <field name="res_model">domino.print.field</field>
         <field name="view_mode">list,form</field>
     </record>
-    <menuitem
-        id="domino_print_field_menu"
-        name="Print Fields"
-        parent="base.menu_config"
-        action="domino_print_field_action"
-        sequence="100"
-    />
 </odoo>

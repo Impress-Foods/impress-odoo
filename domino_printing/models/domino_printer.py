@@ -4,14 +4,13 @@ from odoo.exceptions import UserError
 from .domino import DominoAPI
 
 
-class DominoProductionLineModel(models.Model):
-    _name = "domino.work.center"
+class DominoPrinterModel(models.Model):
+    _name = "domino.printer"
     _description = "Domino Printer"
 
     name = fields.Char(required=True)
     printer_id = fields.Integer(required=True, string="Printer ID")
     label_ids = fields.Many2many("domino.label")
-    workcenter_ids = fields.Many2many("mrp.workcenter")
     active = fields.Boolean(default=True)
 
     @api.model
@@ -19,12 +18,7 @@ class DominoProductionLineModel(models.Model):
         self._sync_printers()
 
     def _sync_printers(self):
-        dom = DominoAPI(
-            self.env["ir.config_parameter"]
-            .sudo()
-            .get_param("domino_printing.api_endpoint"),
-            self.env["ir.config_parameter"].sudo().get_param("domino_printing.api_key"),
-        )
+        dom = DominoAPI(self.env)
 
         try:
             printers = dom.get_printers()

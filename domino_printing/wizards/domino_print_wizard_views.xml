@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="domino_print_wizard_form" model="ir.ui.view">
+        <field name="name">domino.wizard.print.form</field>
+        <field name="model">domino.wizard.print</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field
+                                name="code_printer_id"
+                                widget="selection_badge"
+                                domain="[('id', 'in', code_printer_ids)]"
+                                required="print_code"
+                                invisible="not print_code"
+                            />
+                        </group>
+                        <group>
+                            <field
+                                name="case_printer_id"
+                                widget="selection_badge"
+                                domain="[('id', 'in', case_printer_ids)]"
+                                required="print_case"
+                                invisible="not print_case"
+                            />
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button
+                        name="action_print"
+                        string="Print"
+                        type="object"
+                        class="btn-primary"
+                        data-hotkey="q"
+                    />
+                    <button
+                        string="Cancel"
+                        class="btn-secondary"
+                        special="cancel"
+                        data-hotkey="z"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="domino_print_wizard_action" model="ir.actions.act_window">
+        <field name="name">Domino Print Wizard</field>
+        <field name="res_model">domino.wizard.print</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

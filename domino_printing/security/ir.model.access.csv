@@ -1,5 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-domino_printing.access_domino_work_center,access_domino_work_center,domino_printing.model_domino_work_center,base.group_user,1,1,1,1
+domino_printing.access_domino_printer,access_domino_work_center,domino_printing.model_domino_printer,base.group_user,1,1,1,1
 domino_printing.access_domino_label,access_domino_label,domino_printing.model_domino_label,base.group_user,1,1,1,1
 domino_printing.access_domino_print_field,access_domino_print_field,domino_printing.model_domino_print_field,base.group_user,1,1,1,1
 domino_printing.access_domino_print_template,access_domino_print_template,domino_printing.model_domino_print_template,base.group_user,1,1,1,1
+domino_printing.access_domino_wizard_print,access_domino_wizard_print,domino_printing.model_domino_wizard_print,base.group_user,1,1,1,1
