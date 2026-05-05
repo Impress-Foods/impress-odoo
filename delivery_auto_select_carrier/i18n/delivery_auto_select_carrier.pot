@@ -41,6 +41,11 @@ msgid "Display Name"
 msgstr ""
 
 #. module: delivery_auto_select_carrier
+#: model_terms:ir.ui.view,arch_db:delivery_auto_select_carrier.view_sale_order_form
+msgid "Get Carrier"
+msgstr ""
+
+#. module: delivery_auto_select_carrier
 #: model:ir.model.fields,field_description:delivery_auto_select_carrier.field_delivery_carrier__id
 #: model:ir.model.fields,field_description:delivery_auto_select_carrier.field_res_config_settings__id
 #: model:ir.model.fields,field_description:delivery_auto_select_carrier.field_sale_order__id
