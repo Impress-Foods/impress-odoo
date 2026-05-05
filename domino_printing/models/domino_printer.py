@@ -41,7 +41,9 @@ class DominoPrinterModel(models.Model):
                         }
                     )
         except Exception as e:
-            raise UserError(self.env._("Failed to sync printers: %(e)s", e)) from e
+            raise UserError(
+                self.env._("Failed to sync printers: %(error)s", error=e)
+            ) from e
 
     def action_sync_work_centers(self):
         self._sync_printers()

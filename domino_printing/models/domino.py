@@ -21,6 +21,9 @@ class DominoAPI:
         )
         self.session = requests.Session()
 
+    def __del__(self):
+        self.session.close()
+
     def _make_api_request(
         self,
         endpoint: str,

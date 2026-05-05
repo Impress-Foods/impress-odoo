@@ -29,11 +29,10 @@ class DominoLabelModel(models.Model):
             labels = dom.get_labels()
             existing = {rec.domino_id: rec for rec in self.search(Domain.TRUE)}
             for label in labels:
+                printers = self.env["domino.printer"].search(
+                    Domain("printer_id", "in", label.printer_ids)
+                )
                 if label.id in existing:
-                    printers = self.env["domino.printer"].search(
-                        Domain("printer_id", "in", label.printer_ids)
-                    )
-
                     existing[label.id].write(
                         {
                             "domino_id": label.id,
@@ -42,9 +41,6 @@ class DominoLabelModel(models.Model):
                         }
                     )
                 else:
-                    printers = self.env["domino.printer"].search(
-                        Domain("printer_id", "in", label.printer_ids)
-                    )
                     self.create(
                         {
                             "name": label.name,

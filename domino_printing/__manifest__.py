@@ -1,5 +1,5 @@
 {
-    "name": "Domino_printing",
+    "name": "Domino Printing",
     "version": "19.0.1.0.0",
     "summary": """ Domino_printing for work orders and manufacturing orders """,
     "author": "Cédric Paradis",

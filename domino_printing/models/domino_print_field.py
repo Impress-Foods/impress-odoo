@@ -87,24 +87,24 @@ class DominoPrintField(models.Model):
                 return self.default_value
 
     @api.model
-    def _transform_value(self, value, format: str):
-        if not format:
+    def _transform_value(self, value, fmt: str):
+        if not fmt:
             return value
         if isinstance(value, date | datetime):
-            return self._format_date(value, format)
-        if format == "upper" and isinstance(value, str):
+            return self._format_date(value, fmt)
+        if fmt == "upper" and isinstance(value, str):
             return value.upper()
-        if format == "lower" and isinstance(value, str):
+        if fmt == "lower" and isinstance(value, str):
             return value.lower()
         return value
 
     @api.model
-    def _format_date(self, value: date | datetime, format: str) -> str:
+    def _format_date(self, value: date | datetime, fmt: str) -> str:
         try:
-            if "%q" not in format:
-                return value.strftime(format)
+            if "%q" not in fmt:
+                return value.strftime(fmt)
             else:
-                new_format = format.replace("%q", "%b")
+                new_format = fmt.replace("%q", "%b")
                 formatted_date = value.strftime(new_format)
                 for month in MONTHS_ABRV:
                     if month in formatted_date:
@@ -116,8 +116,8 @@ class DominoPrintField(models.Model):
         except (ValueError, UnicodeError) as err:
             raise ValidationError(
                 self.env._(
-                    "Could not convert date %(date)s with format %(format)s",
+                    "Could not convert date %(date)s with format %(fmt)s",
                     date=value,
-                    format=format,
+                    fmt=fmt,
                 )
             ) from err
