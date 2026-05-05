@@ -9,6 +9,15 @@
             <xpath expr="//group[@name='sale_shipping']" position="inside">
                 <field name="auto_selected_carrier_id" readonly="1" />
             </xpath>
+            <xpath expr="//button[@name='action_draft']" position="after">
+                <button
+                    string="Get Carrier"
+                    name="action_auto_select_carrier"
+                    type="object"
+                    class="btn-secondary"
+                    invisible="state in ['sale', 'cancel'] or auto_selected_carrier_id"
+                />
+            </xpath>
         </field>
     </record>
 </odoo>

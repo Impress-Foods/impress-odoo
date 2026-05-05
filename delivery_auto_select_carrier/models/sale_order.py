@@ -19,7 +19,10 @@ class SaleOrder(models.Model):
     @api.depends("partner_id", "carrier_id")
     def _compute_auto_selected_carrier_id(self) -> None:
         for rec in self:
-            if not rec._compute_propagate_auto_carrier_id():
+            if (
+                not rec._compute_propagate_auto_carrier_id()
+                and not self.env.context.get("auto_select_carrier_manual")
+            ):
                 rec.auto_selected_carrier_id = False
                 continue
 
@@ -42,7 +45,7 @@ class SaleOrder(models.Model):
             )
             available_carriers = self._get_auto_select_carriers(wizard)
 
-            wizard.unlink()  # delete the wizard as soon as possible
+            wizard.sudo().unlink()  # delete the wizard as soon as possible
 
             if available_carriers:
                 rec.auto_selected_carrier_id = available_carriers[0]
@@ -93,3 +96,8 @@ class SaleOrder(models.Model):
                 )
                 picking.carrier_id = order.auto_selected_carrier_id
         return res
+
+    def action_auto_select_carrier(self) -> None:
+        self.with_context(
+            auto_select_carrier_manual=True
+        )._compute_auto_selected_carrier_id()
