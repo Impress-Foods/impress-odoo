@@ -32,10 +32,10 @@ class Xray_log_line(models.Model):
     glass_detection_value = fields.Integer("Glass detection value (2.381 mm)")
 
     stainless_detection_large_value = fields.Integer(
-        "Stainless detection value (1.2 mm)"
+        "Stainless detection value (2.0 mm)"
     )
-    ceramic_detection_large_value = fields.Integer("Ceramic detection value (3.0 mm)")
-    glass_detection_large_value = fields.Integer("Glass detection value (3.0 mm)")
+    ceramic_detection_large_value = fields.Integer("Ceramic detection value (4.0 mm)")
+    glass_detection_large_value = fields.Integer("Glass detection value (4.0 mm)")
 
     ejection = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
     last_check_for_product = fields.Boolean()
