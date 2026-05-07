@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-04 17:01+0000\n"
-"PO-Revision-Date: 2026-03-27 13:09+0000\n"
+"PO-Revision-Date: 2026-05-07 13:05+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
 "impress-odoo-17/impress_quality_logs/fr_CA/>\n"
@@ -418,9 +418,8 @@ msgstr "Seuil de détection céramique (2.381 mm)"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__ceramic_detection_large_value
-#, fuzzy
 msgid "Ceramic detection value (4.0 mm)"
-msgstr "Seuil de détection céramique (3.0 mm)"
+msgstr "Seuil de détection céramique (4.0 mm)"
 
 #. module: impress_quality_logs
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_search
@@ -596,9 +595,8 @@ msgstr "Seuil de détection verre (2.381 mm)"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__glass_detection_large_value
-#, fuzzy
 msgid "Glass detection value (4.0 mm)"
-msgstr "Seuil de détection verre (3.0 mm)"
+msgstr "Seuil de détection verre (4.0 mm)"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_metal_log_line__global_success
@@ -1291,9 +1289,8 @@ msgstr "Seuil de détection stainless (1.0 mm)"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_x_ray_log_line__stainless_detection_large_value
-#, fuzzy
 msgid "Stainless detection value (2.0 mm)"
-msgstr "Seuil de détection stainless (1.0 mm)"
+msgstr "Seuil de détection stainless (2.0 mm)"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__start_date
