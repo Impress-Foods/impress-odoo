@@ -9,7 +9,7 @@
     "data": ["views/res_partner_views.xml"],
     "assets": {
         "web.assets_backend": [
-            "impress_account_report/static/src/account_report.xml",
+            "impress_accounting/static/src/account_report.xml",
         ],
     },
     "application": False,

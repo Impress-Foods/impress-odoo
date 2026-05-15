@@ -7,9 +7,9 @@ from .rate import Rate
 _logger = logging.getLogger(__name__)
 
 
-class WizardClickship_rates(models.TransientModel):
+class WizardClickshipRates(models.TransientModel):
     _name = "wizard.clickship_rates"
-    _description = "WizardClickship_rates"
+    _description = "WizardClickshipRates"
 
     name = fields.Char()
 
