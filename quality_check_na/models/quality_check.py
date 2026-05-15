@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from odoo import api, fields, models
 from odoo.exceptions import UserError
 
@@ -22,7 +20,7 @@ class QualityCheck(models.Model):
                 {
                     "quality_state": "na",
                     "user_id": self.env.user.id,
-                    "control_date": datetime.now(),
+                    "control_date": fields.Datetime.now(),
                 }
             )
         else:

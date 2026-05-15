@@ -16,7 +16,7 @@ class MaintenanceEquipment(models.Model):
         "Quality Points Count", compute="_compute_quality_point_count"
     )
 
-    def _get_all_relevent_qcps(self) -> QualityPoint:
+    def _get_all_relevant_qcps(self) -> QualityPoint:
         self.ensure_one()
         qcp = self.env["quality.point"]
         return qcp.search(
@@ -39,13 +39,13 @@ class MaintenanceEquipment(models.Model):
     def _compute_quality_point_count(self):
         for rec in self:
             if rec.id:
-                rec.quality_point_count = len(rec._get_all_relevent_qcps())
+                rec.quality_point_count = len(rec._get_all_relevant_qcps())
             else:
                 rec.quality_point_count = 0
 
     def action_view_quality_points(self):
         self.ensure_one()
-        qcps = self._get_all_relevent_qcps()
+        qcps = self._get_all_relevant_qcps()
         if len(qcps) == 1:
             action = {
                 "name": self.env._("Quality Points"),

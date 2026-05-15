@@ -5,9 +5,9 @@ from odoo import fields, models
 _logger = logging.getLogger(__name__)
 
 
-class ClickshipPayment_method(models.Model):
+class ClickshipPaymentMethod(models.Model):
     _name = "clickship.payment_method"
-    _description = "ClickshipPayment_method"
+    _description = "ClickshipPaymentMethod"
 
     name = fields.Char(required=True)
     code = fields.Char(required=True)

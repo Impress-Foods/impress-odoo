@@ -4,7 +4,7 @@
     "summary": """ Allows to link products to maintenance equipments """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
-    "category": "Hideen",
+    "category": "Hidden",
     "depends": ["base", "stock", "maintenance"],
     "data": [
         "views/maintenance_equipment_views.xml",

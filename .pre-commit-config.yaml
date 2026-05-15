@@ -78,8 +78,6 @@ repos:
         files: \.(css|htm|html|js|json|jsx|less|md|scss|toml|ts|xml|yaml|yml)$
         language: node
         additional_dependencies:
-          - "prettier@2.7.1"
-          - "@prettier/plugin-xml@2.2.0"
           # - repo: local
           #   hooks:
           #     - id: eslint
