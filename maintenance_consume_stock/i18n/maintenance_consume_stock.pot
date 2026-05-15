@@ -55,7 +55,7 @@ msgid "Display Name"
 msgstr ""
 
 #. module: maintenance_consume_stock
-#: model:ir.model.fields,field_description:maintenance_consume_stock.field_stock_scrap__maintenance_equipement_id
+#: model:ir.model.fields,field_description:maintenance_consume_stock.field_stock_scrap__maintenance_equipment_id
 msgid "Equipment"
 msgstr ""
 
