@@ -102,7 +102,7 @@ msgstr ""
 
 #. module: delivery_clickship
 #: model:ir.model,name:delivery_clickship.model_clickship_payment_method
-msgid "ClickshipPayment_method"
+msgid "ClickshipPaymentMethod"
 msgstr ""
 
 #. module: delivery_clickship
@@ -371,7 +371,7 @@ msgstr ""
 
 #. module: delivery_clickship
 #: model:ir.model,name:delivery_clickship.model_wizard_clickship_rates
-msgid "WizardClickship_rates"
+msgid "WizardClickshipRates"
 msgstr ""
 
 #. module: delivery_clickship
