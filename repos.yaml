@@ -1,0 +1,5 @@
+./maintenance:
+  remotes:
+    oca: https://github.com/OCA/maintenance
+  merges:
+    - oca 19.0

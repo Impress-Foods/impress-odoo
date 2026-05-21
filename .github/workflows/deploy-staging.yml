@@ -1,0 +1,57 @@
+name: Deploy staging
+
+on:
+  pull_request:
+    types: [labeled, synchronize]
+    branches: ["19.0*"]
+
+jobs:
+  deploy-staging:
+    if: contains(github.event.pull_request.labels.*.name, 'to-staging')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify tests and pre-commit passed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          REPO="${{ github.repository }}"
+          SHA="${{ github.event.pull_request.head.sha }}"
+
+          echo "Checking workflows for commit $SHA"
+
+          for wf in tests pre-commit; do
+            CONCLUSION=$(gh api "/repos/$REPO/actions/runs?head_sha=$SHA&event=pull_request" \
+              --jq "[.workflow_runs[] | select(.name == \"$wf\") | .conclusion] | first // \"missing\"")
+
+            case "$CONCLUSION" in
+              success) echo "$wf: passed" ;;
+              missing)
+                echo "$wf: no run found for this head commit. Aborting."
+                exit 1
+                ;;
+              failure|cancelled|timed_out|action_required)
+                echo "$wf: $CONCLUSION. Aborting."
+                exit 1
+                ;;
+              *)
+                echo "$wf: $CONCLUSION. Aborting."
+                exit 1
+                ;;
+            esac
+          done
+
+          echo "All checks passed. Deploying staging."
+
+      - name: Dispatch staging event
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.DISPATCH_AUTOMATION_TOKEN }}
+          repository: "Impress-Foods/sh-19"
+          event-type: "trigger_staging_build"
+          client-payload: |
+            {
+              "repo": "${{ github.repository }}",
+              "sha": "${{ github.event.pull_request.head.sha }}",
+              "target_branch": "staging"
+            }
