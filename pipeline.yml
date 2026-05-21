@@ -2,4 +2,12 @@ automation:
   pr_trigger_label: "to-staging"
 
 module_whitelist:
+  - auditlog
   - base_maintenance
+  - base_report_to_printer
+  - mail_debrand
+  - website_debranding
+  - web_tree_many2one_clickable
+  - web_remember_tree_column_width
+  - web_refresher
+  - web_group_expand
