@@ -2,6 +2,8 @@ name: Deploy to Odoo.sh repo
 
 on:
   pull_request:
+    branches:
+      - "19.0*"
     types: [labeled, synchronize]
   push:
     tags:
@@ -13,12 +15,43 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check required workflows passed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          STATUS=$(curl -s -H "Authorization: token ${{secrets.GITHUB_TOKEN }}" \
-          "https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/status")
-          STATE=$(echo "$STATUS" | jq -r .state)
-          if [ "$STATE" != "success" ]; then
-            echo "Required checks not passing (state: $STATE). Aborting deploy."
+          set -euo pipefail
+          REPO="${{ github.repository }}"
+          SHA="${{ github.sha }}"
+
+          MAX_RETRIES=30
+          RETRY=0
+          while [ $RETRY -lt $MAX_RETRIES ]; do
+            ALL=$(gh api "/repos/$REPO/commits/$SHA/check-runs" \
+              --jq '[.check_runs[] | select(.name | startswith("deploy-") | not)]')
+
+            COUNT=$(echo "$ALL" | jq 'length')
+            PENDING=$(echo "$ALL" | jq '[.[] | select(.status != "completed")] | length')
+            FAILED=$(echo "$ALL" | jq '[.[] | select(.conclusion != null and .conclusion != "success")] | length')
+
+            echo "Count: $COUNT, Pending: $PENDING, Failed: $FAILED"
+
+            if [ "$COUNT" -eq 0 ]; then
+              echo "No non-deploy checks registered yet, waiting..."
+            elif [ "$PENDING" -eq 0 ] && [ "$FAILED" -eq 0 ]; then
+              echo "All required checks passed."
+              break
+            elif [ "$FAILED" -gt 0 ]; then
+              echo "One or more required checks failed:"
+              echo "$ALL" | jq '[.[] | select(.conclusion != null and .conclusion != "success") | {name, conclusion}]'
+              exit 1
+            fi
+
+            echo "Waiting... (attempt $((RETRY + 1))/$MAX_RETRIES)"
+            sleep 60
+            RETRY=$((RETRY + 1))
+          done
+
+          if [ $RETRY -ge $MAX_RETRIES ]; then
+            echo "Timed out waiting for checks to complete."
             exit 1
           fi
 
@@ -39,6 +72,57 @@ jobs:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check tag is on 19.0 branch
+        run: |
+          git fetch origin 19.0
+          if ! git merge-base --is-ancestor ${{ github.sha }} origin/19.0; then
+            echo "Tag is not on 19.0 branch. Aborting production deploy."
+            exit 1
+          fi
+      - name: Check required workflows passed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          REPO="${{ github.repository }}"
+          SHA="${{ github.sha }}"
+
+          MAX_RETRIES=30
+          RETRY=0
+          while [ $RETRY -lt $MAX_RETRIES ]; do
+            ALL=$(gh api "/repos/$REPO/commits/$SHA/check-runs" \
+              --jq '[.check_runs[] | select(.name | startswith("deploy-") | not)]')
+
+            COUNT=$(echo "$ALL" | jq 'length')
+            PENDING=$(echo "$ALL" | jq '[.[] | select(.status != "completed")] | length')
+            FAILED=$(echo "$ALL" | jq '[.[] | select(.conclusion != null and .conclusion != "success")] | length')
+
+            echo "Count: $COUNT, Pending: $PENDING, Failed: $FAILED"
+
+            if [ "$COUNT" -eq 0 ]; then
+              echo "No non-deploy checks registered yet, waiting..."
+            elif [ "$PENDING" -eq 0 ] && [ "$FAILED" -eq 0 ]; then
+              echo "All required checks passed."
+              break
+            elif [ "$FAILED" -gt 0 ]; then
+              echo "One or more required checks failed:"
+              echo "$ALL" | jq '[.[] | select(.conclusion != null and .conclusion != "success") | {name, conclusion}]'
+              exit 1
+            fi
+
+            echo "Waiting... (attempt $((RETRY + 1))/$MAX_RETRIES)"
+            sleep 60
+            RETRY=$((RETRY + 1))
+          done
+
+          if [ $RETRY -ge $MAX_RETRIES ]; then
+            echo "Timed out waiting for checks to complete."
+            exit 1
+          fi
+
       - name: Dispatch production event
         uses: peter-evans/repository-dispatch@v3
         with:
