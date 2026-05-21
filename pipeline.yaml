@@ -1,0 +1,5 @@
+automation:
+  pr_trigger_label: "to-staging"
+
+module_whitelist:
+  - base_maintenance

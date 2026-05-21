@@ -1,0 +1,90 @@
+name: Deploy production
+
+on:
+  push:
+    tags: ["*"]
+
+jobs:
+  deploy-production:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check tag is on 19.0 branch
+        run: |
+          git fetch origin 19.0
+          if ! git merge-base --is-ancestor ${{ github.sha }} origin/19.0; then
+            echo "Tag is not on 19.0 branch. Aborting production deploy."
+            exit 1
+          fi
+      - name: Verify tests and pre-commit passed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          REPO="${{ github.repository }}"
+          SHA="${{ github.sha }}"
+          MAX_RETRIES=6
+          RETRY=0
+
+          echo "Checking workflows for commit $SHA"
+
+          check_workflow() {
+            local wf="$1"
+            local result
+            result=$(gh api "/repos/$REPO/actions/runs?head_sha=$SHA" \
+              --jq "[.workflow_runs[] | select(.name == \"$wf\") | .conclusion] | first // \"missing\"")
+            echo "$result"
+          }
+
+          while [ $RETRY -lt $MAX_RETRIES ]; do
+            ALL_PASSED=true
+            for wf in tests pre-commit; do
+              CONCLUSION=$(check_workflow "$wf")
+              case "$CONCLUSION" in
+                success) echo "$wf: passed" ;;
+                missing)
+                  echo "$wf: no run found yet"
+                  ALL_PASSED=false
+                  ;;
+                queued|in_progress)
+                  echo "$wf: $CONCLUSION"
+                  ALL_PASSED=false
+                  ;;
+                failure|cancelled|timed_out|action_required)
+                  echo "$wf: $CONCLUSION. Aborting."
+                  exit 1
+                  ;;
+                *)
+                  echo "$wf: $CONCLUSION"
+                  ALL_PASSED=false
+                  ;;
+              esac
+            done
+
+            if [ "$ALL_PASSED" = true ]; then
+              echo "All checks passed. Deploying production."
+              exit 0
+            fi
+
+            RETRY=$((RETRY + 1))
+            echo "Waiting for checks... (attempt $RETRY/$MAX_RETRIES)"
+            sleep 30
+          done
+
+          echo "Timed out waiting for checks to complete."
+          exit 1
+
+      - name: Dispatch production event
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.DISPATCH_AUTOMATION_TOKEN }}
+          repository: "Impress-Foods/sh-19"
+          event-type: "trigger_production_build"
+          client-payload: |
+            {
+              "repo": "${{ github.repository }}",
+              "sha": "${{ github.sha }}",
+              "target_branch": "production"
+            }
