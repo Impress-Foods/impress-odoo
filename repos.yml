@@ -3,3 +3,26 @@
     oca: https://github.com/OCA/maintenance
   merges:
     - oca 19.0
+
+./server-tools:
+  remotes:
+    oca: https://github.com/OCA/server-tools
+  merges:
+    - oca 19.0
+
+./report_print_send:
+  remotes:
+    oca: https://github.com/OCA/report-print-send
+  merges:
+    - oca 19.0
+./server-brand:
+  remotes:
+    oca: https://github.com/OCA/server-brand
+  merges:
+    - oca 19.0
+
+./web:
+  remotes:
+    oca: https://github.com/OCA/web
+  merges:
+    - oca 19.0
