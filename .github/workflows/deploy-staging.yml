@@ -17,31 +17,39 @@ jobs:
           set -euo pipefail
           REPO="${{ github.repository }}"
           SHA="${{ github.event.pull_request.head.sha }}"
+          MAX_RETRIES=20
+          RETRY=0
 
-          echo "Checking workflows for commit $SHA"
+          while [ $RETRY -lt $MAX_RETRIES ]; do
+            ALL_PASSED=true
+            for wf in tests pre-commit; do
+              CONCLUSION=$(gh api "/repos/$REPO/actions/runs?head_sha=$SHA&event=pull_request" \
+                --jq "[.workflow_runs[] | select(.name == \"$wf\") | .conclusion] | first // \"missing\"")
 
-          for wf in tests pre-commit; do
-            CONCLUSION=$(gh api "/repos/$REPO/actions/runs?head_sha=$SHA&event=pull_request" \
-              --jq "[.workflow_runs[] | select(.name == \"$wf\") | .conclusion] | first // \"missing\"")
+              case "$CONCLUSION" in
+                success) echo "$wf: passed" ;;
+                missing) echo "$wf: not started yet"; ALL_PASSED=false ;;
+                queued|in_progress) echo "$wf: $CONCLUSION"; ALL_PASSED=false ;;
+                failure|cancelled|timed_out|action_required)
+                  echo "$wf: $CONCLUSION. Aborting."
+                  exit 1
+                  ;;
+                *) echo "$wf: $CONCLUSION"; ALL_PASSED=false ;;
+              esac
+            done
 
-            case "$CONCLUSION" in
-              success) echo "$wf: passed" ;;
-              missing)
-                echo "$wf: no run found for this head commit. Aborting."
-                exit 1
-                ;;
-              failure|cancelled|timed_out|action_required)
-                echo "$wf: $CONCLUSION. Aborting."
-                exit 1
-                ;;
-              *)
-                echo "$wf: $CONCLUSION. Aborting."
-                exit 1
-                ;;
-            esac
+            if [ "$ALL_PASSED" = true ]; then
+              echo "All checks passed. Deploying staging."
+              exit 0
+            fi
+
+            RETRY=$((RETRY + 1))
+            echo "Waiting for checks... (attempt $RETRY/$MAX_RETRIES)"
+            sleep 30
           done
 
-          echo "All checks passed. Deploying staging."
+          echo "Timed out waiting for checks to complete."
+          exit 1
 
       - name: Dispatch staging event
         uses: peter-evans/repository-dispatch@v3
