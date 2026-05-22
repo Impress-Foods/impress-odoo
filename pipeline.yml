@@ -19,6 +19,7 @@ module_whitelist:
   - sale_order_type
   # server-tools
   - auditlog
+  - sentry
   # stock-logistics-workflow
   - stock_no_negative
   - stock_picking_back2draft

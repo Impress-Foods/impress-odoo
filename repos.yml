@@ -27,6 +27,7 @@
     oca: https://github.com/OCA/server-tools
   merges:
     - oca 19.0
+    - oca /refs/pull/3517/head
 
 ./stock-logistics-workflow:
   remotes:
