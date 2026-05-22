@@ -2,11 +2,35 @@ automation:
   pr_trigger_label: "to-staging"
 
 module_whitelist:
-  - auditlog
+  # maintenance
   - base_maintenance
+  # partner-contact
+  - base_location
+  - base_country_state_translatable
+  - base_location
+  - base_location_geonames_import
+  - partner_store
+  - partner_email_check
+  # product-variant
+  - product_variant_configurator
+  - product_variant_sale_price
+  # sale-workflow
+  - sale_force_invoiced
+  - sale_order_type
+  # server-tools
+  - auditlog
+  # stock-logistics-workflow
+  - stock_no_negative
+  - stock_picking_back2draft
+  - stock_picking_origin_reference
+  - stock_picking_purchase_order_link
+  - stock_picking_sale_order_link
+  # report-print-send
   - base_report_to_printer
+  # server-brand
   - mail_debrand
   - website_debranding
+  # web
   - web_tree_many2one_clickable
   - web_remember_tree_column_width
   - web_refresher

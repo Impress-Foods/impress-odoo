@@ -4,9 +4,33 @@
   merges:
     - oca 19.0
 
+./partner-contact:
+  remotes:
+    oca: https://github.com/OCA/partner-contact
+  merges:
+    - oca 19.0
+
+./product-variant:
+  remotes:
+    oca: https://github.com/OCA/product-variant
+  merges:
+    - oca 19.0
+
+./sale-workflow:
+  remotes:
+    oca: https://github.com/OCA/sale-workflow
+  merges:
+    - oca 19.0
+
 ./server-tools:
   remotes:
     oca: https://github.com/OCA/server-tools
+  merges:
+    - oca 19.0
+
+./stock-logistics-workflow:
+  remotes:
+    oca: https://github.com/OCA/stock-logistics-workflow
   merges:
     - oca 19.0
 
@@ -15,6 +39,7 @@
     oca: https://github.com/OCA/report-print-send
   merges:
     - oca 19.0
+
 ./server-brand:
   remotes:
     oca: https://github.com/OCA/server-brand
