@@ -1,5 +1,5 @@
 {
-    "name": "Impress Quality Worksheets",
+    "name": "Impress Worksheets - Quality",
     "version": "19.0.0.1.1",
     "summary": """ Worksheets to use in conjunction with Impress Quality Logs """,
     "author": "Cédric Paradis",

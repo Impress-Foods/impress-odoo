@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="ws_delivery_meat_20260522_form_view" model="ir.ui.view">
+        <field name="name">ws.delivery.meat.20260522.form.view</field>
+        <field
+            name="model"
+            model="ir.model"
+            eval="obj().env.ref('impress_stock_worksheets.ws_delivery_meat_20260522').model_id.model"
+        />
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <form create="false" js_class="worksheet_validation">
+                <sheet>
+                    <group
+                        invisible="context.get('studio') or context.get('default_x_quality_check_id')"
+                    >
+                        <group>
+                            <field name="x_quality_check_id" />
+                        </group>
+                    </group>
+                    <group name="meat" string="Meat">
+                        <group>
+                            <field
+                                name="x_ccps_approved"
+                                string="CCPs approuved by Quality Control?"
+                                widget="selection_badge"
+                                options="{&quot;size&quot;:&quot;sm&quot;}"
+                            />
+                            <field
+                                name="x_heavy_metals_analysis"
+                                string="Heavy metals analysis received and compliant? (if export)"
+                                widget="selection_badge"
+                                options="{&quot;size&quot;:&quot;sm&quot;}"
+                            />
+                            <field
+                                name="x_pathogens_analysis"
+                                string="If pathogens analysis done, COA received and compliant?"
+                                widget="selection_badge"
+                                options="{&quot;size&quot;:&quot;sm&quot;}"
+                            />
+                        </group>
+                        <group>
+                            <field
+                                name="x_export_labeling"
+                                string="If export to USA, export labels present on every case?"
+                                widget="selection_badge"
+                                options="{&quot;size&quot;:&quot;sm&quot;}"
+                            />
+                            <field
+                                name="x_acia_inspection"
+                                string="ACIA inspection &amp; vetenerian certificate compliant?"
+                                widget="selection_badge"
+                                options="{&quot;size&quot;:&quot;sm&quot;}"
+                            />
+                        </group>
+                    </group>
+                    <div class="text-center">
+                        <strong
+                        >Pour l'utilisation exclusive de Impress Foods. Mis à jour le 22 mai 2026. Feuille de contrôle Expédition Viandes </strong>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

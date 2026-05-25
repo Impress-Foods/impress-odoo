@@ -18,17 +18,13 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <span>Vérification date d'expiration: </span>
-                                    <span t-field="worksheet.x_expiration_check" />
-                                </td>
-                                <td>
                                     <span>État des palettes: </span>
                                     <span t-field="worksheet.x_pallet_state" />
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <span>Absence d'allergènes:            </span>
+                                    <span>Absence d'allergènes: </span>
                                     <t t-if="worksheet.x_product_allergen">
                                         <span>Oui</span>
                                     </t>
