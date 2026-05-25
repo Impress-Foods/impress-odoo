@@ -5,10 +5,6 @@
     <record id="ws_receipt_20250114" model="worksheet.template">
         <field name="name">Worksheet Receipt 2025-01-14</field>
         <field name="res_model">quality.check</field>
-        <field
-            name="report_view_id"
-            ref="impress_stock_worksheets.ws_receipt_20250114_report"
-        />
     </record>
 
     <!-- Add the required fields -->

@@ -8,8 +8,6 @@
     "category": "Hidden",
     "depends": ["base", "quality_control_worksheet"],
     "data": [
-        # Fichiers en date du 2025-01-14
-        "reports/receipt/ReceiptWorksheet_20250114.xml",
         "data/receipt/ReceiptWorksheet_20250114.xml",
         "views/receipt/ReceiptWorksheet_20250114.xml",
         "data/delivery/DeliveryWorksheet_20250114.xml",
@@ -18,6 +16,8 @@
         "views/delivery_meat/DeliveryMeatWorksheet_2026_05_22.xml",
         "data/receipt_qc_meat/ReceiptQcMeatWorksheet_20260522.xml",
         "views/receipt_qc_meat/ReceiptQcMeatWorksheet_20260522.xml",
+        "data/receipt_qc_general/ReceiptQcGeneralWorksheet_20260525.xml",
+        "views/receipt_qc_general/ReceiptQcGeneralWorksheet_20260525.xml",
     ],
     "installable": True,
     "application": False,
