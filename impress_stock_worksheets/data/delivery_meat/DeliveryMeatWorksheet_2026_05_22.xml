@@ -30,7 +30,7 @@
         <field name="ttype">selection</field>
         <field
             name="selection"
-        >[('true', 'Conforme'), ('false', 'Non Conforme')]</field>
+        >[('true', 'Conforme'), ('false', 'Non Conforme'), ('na','N/A')]</field>
     </record>
 
     <record id="delivery_meat_20260522_x_pathogens_analysis" model="ir.model.fields">
