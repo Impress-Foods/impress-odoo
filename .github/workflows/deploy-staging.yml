@@ -61,5 +61,6 @@ jobs:
             {
               "repo": "${{ github.repository }}",
               "sha": "${{ github.event.pull_request.head.sha }}",
+              "ref_name": "${{ github.ref_name }}",
               "target_branch": "staging"
             }
