@@ -1,6 +1,30 @@
+./e-commerce:
+  remotes:
+    oca: https://github.com/OCA/e-commerce
+  merges:
+    - oca 19.0
+    - oca refs/pull/1174/head
+
+./mail:
+  remotes:
+    oca: https://github.com/OCA/mail
+  merges:
+    - oca 19.0
+    - oca refs/pull/179/head
+    - oca refs/pull/181/head
+    - oca refs/pull/180/head
+    - oca refs/pull/171/head
+    - oca refs/pull/112/head
+
 ./maintenance:
   remotes:
     oca: https://github.com/OCA/maintenance
+  merges:
+    - oca 19.0
+
+./manufacture:
+  remotes:
+    oca: https://github.com/OCA/manufacture
   merges:
     - oca 19.0
 
@@ -23,6 +47,12 @@
   merges:
     - oca 19.0
 
+./server-brand:
+  remotes:
+    oca: https://github.com/OCA/server-brand
+  merges:
+    - oca 19.0
+
 ./server-tools:
   remotes:
     oca: https://github.com/OCA/server-tools
@@ -30,21 +60,32 @@
     - oca 19.0
     - oca refs/pull/3517/head
 
+./server-ux:
+  remotes:
+    oca: https://github.com/OCA/server-ux
+  merges:
+    - oca 19.0
+    - oca refs/pull/1277/head
+
 ./stock-logistics-workflow:
   remotes:
     oca: https://github.com/OCA/stock-logistics-workflow
   merges:
     - oca 19.0
+    - oca refs/pull/2220/head
+
+./stock-logistics-warehouse:
+  remotes:
+    oca: https://github.com/OCA/stock-logistics-warehouse
+  merges:
+    - oca 19.0
+    - oca refs/pull/2554/head
+    - oca refs/pull/2556/head
+    - oca refs/pull/2557/head
 
 ./report_print_send:
   remotes:
     oca: https://github.com/OCA/report-print-send
-  merges:
-    - oca 19.0
-
-./server-brand:
-  remotes:
-    oca: https://github.com/OCA/server-brand
   merges:
     - oca 19.0
 
