@@ -15,6 +15,7 @@
     oca: https://github.com/OCA/product-variant
   merges:
     - oca 19.0
+    - oca refs/pull/423/head
 
 ./sale-workflow:
   remotes:

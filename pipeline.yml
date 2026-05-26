@@ -29,7 +29,7 @@ module_whitelist:
   # report-print-send
   - base_report_to_printer
   # server-brand
-  - mail_debrand
+  - mail_debranding
   - website_debranding
   # web
   - web_tree_many2one_clickable
