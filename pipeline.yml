@@ -9,7 +9,7 @@ module_whitelist:
   - mail_layout_preview
   - mail_no_user_assign_notification
   - mail_template_substitute
-  - mail_disable_follower_notification
+  - mail_optional_follower_notification
   # maintenance
   - base_maintenance
   # manufacture
