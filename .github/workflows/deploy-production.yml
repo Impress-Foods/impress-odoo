@@ -80,7 +80,7 @@ jobs:
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.DISPATCH_AUTOMATION_TOKEN }}
-          repository: "Impress-Foods/sh-19"
+          repository: "Impress-Foods/impressfoods19"
           event-type: "trigger_production_build"
           client-payload: |
             {
