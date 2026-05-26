@@ -5,6 +5,12 @@
     - oca 19.0
     - oca refs/pull/1174/head
 
+./geospatial:
+  remotes:
+    impress: https://github.com/Impress-Foods/geospatial
+  merges:
+    - impress 19.0-standalone-locator
+
 ./mail:
   remotes:
     oca: https://github.com/OCA/mail
