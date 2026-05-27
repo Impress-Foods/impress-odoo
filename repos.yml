@@ -4,9 +4,10 @@
   merges:
     - oca 19.0
     - oca refs/pull/1174/head
+
 ./emipro:
   remotes:
-    impress: https://github.com/Impress-Foods/emipro-woocommerce
+    impress: https://$GITHUB_TOKEN@github.com/Impress-Foods/emipro-woocommerce
   merges:
     - impress main
 
