@@ -86,6 +86,6 @@ jobs:
             {
               "repo": "${{ github.repository }}",
               "sha": "${{ github.sha }}",
-              "ref": "${{ github.ref_name }}",
+              "ref_name": "${{ github.ref_name }}",
               "target_branch": "production"
             }
