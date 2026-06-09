@@ -37,17 +37,7 @@ class ObiboxCarrier(models.Model):
         help="Format of the label to be printed.",
     )
 
-    obibox_delivery_day = fields.Selection(
-        selection=[
-            ("mon", "Monday"),
-            ("tue", "Tuesday"),
-            ("wed", "Wednesday"),
-            ("thu", "Thursday"),
-            ("fri", "Friday"),
-        ],
-        default="mon",
-        help="Select the day when the package will be picked up.",
-    )
+    schedule_ids = fields.One2many("obibox.delivery.schedule", "carrier_id")
 
     def obibox_rate_shipment(self, order: StockPicking | SaleOrder) -> dict:
         sr = ObiboxProvider(

@@ -275,25 +275,22 @@ class TestObiboxRequest(TestDeliveryCommon):
     @freeze_time(datetime(2025, 7, 15, 10, 30, 0))
     def test_get_pickup_date_earlier(self):
         picking_date = datetime(year=2025, month=7, day=15)
-        delivery_day = "wed"
         expected_date = datetime(year=2025, month=7, day=16)
-        date = self.sr._get_pickup_date(picking_date, delivery_day)
+        date = self.sr._get_pickup_date(picking_date, self.obibox_method)
         self.assertEqual(expected_date, date)
 
     @freeze_time(datetime(2025, 7, 16, 10, 30, 0))
     def test_get_pickup_date_day_of_before_cutoff(self):
         picking_date = datetime(year=2025, month=7, day=16)
-        delivery_day = "wed"
         expected_date = datetime(year=2025, month=7, day=16)
-        date = self.sr._get_pickup_date(picking_date, delivery_day)
+        date = self.sr._get_pickup_date(picking_date, self.obibox_method)
         self.assertEqual(expected_date, date)
 
     @freeze_time(datetime(2025, 7, 16, 19, 30, 0))
     def test_get_pickup_date_day_of_after_cutoff(self):
         picking_date = datetime(year=2025, month=7, day=16)
-        delivery_day = "wed"
         expected_date = datetime(year=2025, month=7, day=23)
-        date = self.sr._get_pickup_date(picking_date, delivery_day)
+        date = self.sr._get_pickup_date(picking_date, self.obibox_method)
         self.assertEqual(expected_date, date)
 
     @freeze_time(
@@ -307,9 +304,8 @@ class TestObiboxRequest(TestDeliveryCommon):
     )
     def test_get_pickup_date_later(self):
         picking_date = datetime(year=2025, month=7, day=17)
-        delivery_day = "wed"
         expected_date = datetime(year=2025, month=7, day=23)
-        date = self.sr._get_pickup_date(picking_date, delivery_day)
+        date = self.sr._get_pickup_date(picking_date, self.obibox_method)
         self.assertEqual(expected_date, date)
 
     def test_make_destination_fallback_sibling_billing(self):
