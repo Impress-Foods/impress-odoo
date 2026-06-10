@@ -10,7 +10,7 @@
                 <app
                     data-string="deposit_config"
                     string="Deposit Settings"
-                    name="deposit_settings"
+                    name="deposit"
                 >
                     <block title="Deposit Settings" name="deposit_settings">
                         <setting

@@ -236,9 +236,10 @@
                             <td>
                                 <h1
                                     t-attf-style="color: {{textColor}}; padding-top: 1rem;"
-                                >Order #<t t-out="so.name" /> (<t
-                                    t-out="so.date_order.date()"
-                                />) </h1>
+                                >Order #<t t-out="so.name" /> <t
+                                    t-if="so.date_order"
+                                >(<t t-out="so.date_order.date()" />)</t>
+                                </h1>
                                 <t t-call="aplus_emails.order_summary" />
                             </td>
                         </tr>

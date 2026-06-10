@@ -34,7 +34,7 @@ class SaleOrder(models.Model):
         for record in self:
             deposit_lines = record.order_line.filtered(lambda x: x.is_deposit_line)
             if len(deposit_lines) > 1:
-                deposit_lines[1:].unlink()
+                deposit_lines[1:].product_uom_qty = 0
             record.deposit_line_id = deposit_lines[0] if deposit_lines else False
 
     @api.constrains("order_line")
