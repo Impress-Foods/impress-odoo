@@ -191,6 +191,7 @@ class ObiboxProvider:
             return {"errors": {"JSONDecodeError": str(error)}}
 
     def _get_rate(self, data: RateRequest) -> Rate:
+        _logger.warning("Running _get_rate")
         endpoint = "Order/GetRatesPerServices"
 
         response = self._make_api_request(endpoint, method="POST", payload=data)
@@ -289,11 +290,13 @@ class ObiboxProvider:
         return phone or "", email or ""
 
     def _make_shipment_request(self, picking) -> ShippingRequestMulti:
+        _logger.warning("Running _make_shipment_request")
         from_address = self._make_address(picking.company_id.partner_id)
         to_address = self._make_address(picking.partner_id)
         boxes = []
         dims = []
         packages = picking._get_packages()
+        _logger.warning(packages)
         for package in packages:
             box, dim = self._make_package(package)
             boxes.append(box)
@@ -349,11 +352,13 @@ class ObiboxProvider:
         return ref.replace("/", "")
 
     def _make_rate_request(self, order: SaleOrder | StockPicking) -> RateRequest:
+        _logger.warning("Running make rate request")
         if isinstance(order, StockPicking):
             boxes: list[Box] = []
             boxes_dimensions: list[BoxesDimensions] = []
 
             packages = order._get_packages()
+            _logger.warning(packages)
             for package in packages:
                 box, dim = self._make_package(package)
                 boxes.append(box)
