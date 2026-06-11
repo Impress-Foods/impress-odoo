@@ -1,8 +1,4 @@
-import logging
-
 from odoo import api, fields, models
-
-_logger = logging.getLogger(__name__)
 
 
 class PackageType(models.Model):
@@ -14,7 +10,4 @@ class PackageType(models.Model):
     @api.depends("packaging_material_ids")
     def _compute_has_packaging_material(self):
         for record in self:
-            if len(record.packaging_material_ids) > 0:
-                record.has_packaging_material = True
-            else:
-                record.has_packaging_material = False
+            record.has_packaging_material = bool(record.packaging_material_ids)
