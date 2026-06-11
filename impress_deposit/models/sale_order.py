@@ -29,12 +29,16 @@ class SaleOrder(models.Model):
         ],
     )
 
+    @api.model
+    def _reset_other_lines(self, lines):
+        lines.product_uom_qty = 0
+
     @api.depends("order_line", "order_line.is_deposit_line")
     def _compute_deposit_line_id(self):
         for record in self:
             deposit_lines = record.order_line.filtered(lambda x: x.is_deposit_line)
             if len(deposit_lines) > 1:
-                deposit_lines[1:].product_uom_qty = 0
+                self._reset_other_lines(deposit_lines[1:])
             record.deposit_line_id = deposit_lines[0] if deposit_lines else False
 
     @api.constrains("order_line")
