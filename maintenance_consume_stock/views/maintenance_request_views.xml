@@ -8,10 +8,9 @@
         <field name="priority">1000</field>
         <field name="arch" type="xml">
             <xpath expr="//notebook/page[1]" position="after">
-                <page string="Parts">
+                <page string="Parts" id="parts">
                     <field
                         name='scrap_ids'
-                        widget='one2many_list'
                         context="{
                             'default_origin': name,
                             'default_maintenance_request_id': id,
@@ -85,8 +84,7 @@
                     </div>
                 </button>
             </xpath>
-            <xpath expr="//header/button[1]" position="before">
-                <field name="all_scraps_done" invisible="1" />
+            <xpath expr="//header" position="inside">
                 <button
                     name="action_consume_parts"
                     string="Consume Parts"
