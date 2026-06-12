@@ -115,8 +115,6 @@ class ObiboxCarrier(models.Model):
         return ""
 
     def _match_address(self, partner: ResPartner) -> bool:
-        res: bool = super()._match_address(partner)
-
         if self.delivery_type == "obibox":
             sr = ObiboxProvider(
                 self.log_xml,
@@ -126,4 +124,6 @@ class ObiboxCarrier(models.Model):
                 token=self.obibox_api_key,
             )
             res = sr.check_coverage(partner)
+        else:
+            res: bool = super()._match_address(partner)
         return res
