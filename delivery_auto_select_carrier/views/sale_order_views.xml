@@ -15,7 +15,7 @@
                     name="action_auto_select_carrier"
                     type="object"
                     class="btn-secondary"
-                    invisible="state in ['sale', 'cancel'] or auto_selected_carrier_id"
+                    invisible="state in ['cancel'] or auto_selected_carrier_id"
                 />
             </xpath>
         </field>
