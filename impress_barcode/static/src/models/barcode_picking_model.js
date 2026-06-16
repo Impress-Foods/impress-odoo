@@ -128,10 +128,10 @@ patch(BarcodePickingModel.prototype, {
                 qty_done: 0,
                 location_id: move.location_id,
                 location_dest_id: move.location_dest_id,
-                product_uom_id:
-                    move.product_uom_id || (move.product_id && move.product_id.uom_id),
-                product_uom:
-                    move.product_uom_id || (move.product_id && move.product_id.uom_id),
+                // product_uom_id:
+                //     move.product_uom_id || (move.product_id && move.product_id.uom_id),
+                // product_uom:
+                //     move.product_uom_id || (move.product_id && move.product_id.uom_id),
                 isUnreservedLine: true,
                 is_kits: move.product_id && move.product_id.is_kits,
                 lot_name: null,
