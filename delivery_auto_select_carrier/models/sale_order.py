@@ -16,6 +16,9 @@ class SaleOrder(models.Model):
         domain = Domain("can_be_auto_selected", "=", True)
 
         for rec in self:
+            if not rec.partner_id.zip:
+                rec.auto_selected_carrier_id = False
+                continue
             if (
                 not rec._compute_propagate_auto_carrier_id()
                 and not self.env.context.get("auto_select_carrier_manual")

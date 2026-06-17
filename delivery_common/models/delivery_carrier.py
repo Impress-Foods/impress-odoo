@@ -6,3 +6,7 @@ class DeliveryCarrier(models.Model):
 
     confirmation_template_id = fields.Many2one("mail.template")
     send_confirmation_email = fields.Boolean()
+
+    def _get_provider(self):
+        self.ensure_one()
+        return None

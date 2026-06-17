@@ -50,24 +50,12 @@ class ObiboxCarrier(models.Model):
     )
 
     def obibox_rate_shipment(self, order: StockPicking | SaleOrder) -> dict:
-        sr = ObiboxProvider(
-            self.log_xml,
-            self.env,
-            prod_environment=self.prod_environment,
-            username=self.obibox_username,
-            token=self.obibox_api_key,
-        )
+        sr = self._get_provider()
         res = sr.get_rate(order)
         return res
 
     def obibox_send_shipping(self, pickings: StockPicking) -> list:
-        sr = ObiboxProvider(
-            self.log_xml,
-            self.env,
-            prod_environment=self.prod_environment,
-            username=self.obibox_username,
-            token=self.obibox_api_key,
-        )
+        sr = self._get_provider()
         res: list[dict[str, Any]] = []
 
         for picking in pickings:
@@ -99,13 +87,7 @@ class ObiboxCarrier(models.Model):
         return f"https://tracking.obibox.io/{picking.carrier_tracking_ref}"
 
     def obibox_cancel_shipment(self, pickings: StockPicking) -> None:
-        sr = ObiboxProvider(
-            self.log_xml,
-            self.env,
-            prod_environment=self.prod_environment,
-            username=self.obibox_username,
-            token=self.obibox_api_key,
-        )
+        sr = self._get_provider()
         for picking in pickings:
             sr.cancel_shipment(picking)
             picking.shipping_label_attachment_id.unlink()
@@ -116,14 +98,31 @@ class ObiboxCarrier(models.Model):
 
     def _match_address(self, partner: ResPartner) -> bool:
         if self.delivery_type == "obibox":
-            sr = ObiboxProvider(
+            res: bool = self._check_coverage(partner)
+        else:
+            res: bool = super()._match_address(partner)
+        return res
+
+    def _check_coverage(self, partner: ResPartner) -> bool:
+        res: bool = False
+        if partner.zip:
+            if partner.obibox_coverage_checked:
+                res = partner.obibox_coverage
+            else:
+                sr = self._get_provider()
+                res = sr.check_coverage(partner)
+                partner.obibox_coverage = res
+        partner.obibox_coverage_checked = True
+        return res
+
+    def _get_provider(self) -> bool:
+        self.ensure_one()
+        if self.delivery_type == "obibox":
+            return ObiboxProvider(
                 self.log_xml,
                 self.env,
                 prod_environment=self.prod_environment,
                 username=self.obibox_username,
                 token=self.obibox_api_key,
             )
-            res = sr.check_coverage(partner)
-        else:
-            res: bool = super()._match_address(partner)
-        return res
+        return super()._get_provider()
