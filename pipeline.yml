@@ -52,6 +52,7 @@ module_whitelist:
   - stock_change_qty_reason
   # report-print-send
   - base_report_to_printer
+  - base_report_to_printer_cups
   # web
   - web_tree_many2one_clickable
   - web_remember_tree_column_width
