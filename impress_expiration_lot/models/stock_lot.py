@@ -14,6 +14,7 @@ class StockLot(models.Model):
             if (
                 lot.product_id.use_expiration_date
                 and len(lot.name) >= 5
+                and lot.product_id.default_code
                 and lot.product_id.default_code[0] == "E"
             ):
                 lot_number = lot.name[:5]
