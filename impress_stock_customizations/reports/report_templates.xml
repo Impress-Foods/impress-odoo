@@ -12,7 +12,7 @@
         <xpath expr="//div[1]/div[1]/div[1]" position="attributes">
             <attribute
                 name="t-if"
-            > o is not None ando._name != 'stock.picking'</attribute>
+            > o is not None and o._name != 'stock.picking'</attribute>
         </xpath>
     </template>
 
@@ -44,7 +44,7 @@
         <xpath expr="//div[1]/div[1]/div[1]" position="attributes">
             <attribute
                 name="t-if"
-            > o is not None ando._name != 'stock.picking'</attribute>
+            > o is not None and o._name != 'stock.picking'</attribute>
         </xpath>
     </template>
 
@@ -52,7 +52,7 @@
         <xpath expr="//img[hasclass('o_company_logo')][1]" position="attributes">
             <attribute
                 name="t-if"
-            >o is not None and o._name != 'stock.picking' &amp;&amp; company.logo</attribute>
+            >o is not None and o._name != 'stock.picking' and company.logo</attribute>
         </xpath>
     </template>
 </odoo>
