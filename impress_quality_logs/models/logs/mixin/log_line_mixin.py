@@ -95,9 +95,9 @@ class LogLineMixin(models.AbstractModel):
             wizard = self.env["quality.check.wizard"].browse(
                 [self.env.context["quality_wizard_id"]]
             )
-        for vals in vals_list:
-            if "quality_check_id" not in vals:
-                vals["quality_check_id"] = wizard.current_check_id.id
+            for vals in vals_list:
+                if "quality_check_id" not in vals:
+                    vals["quality_check_id"] = wizard.current_check_id.id
         record = super().create(vals_list)
         return record
 

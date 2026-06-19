@@ -16,7 +16,7 @@ class SaleOrder(models.Model):
         domain = Domain("can_be_auto_selected", "=", True)
 
         for rec in self:
-            if not rec.partner_id.zip:
+            if not rec.partner_shipping_id.zip:
                 rec.auto_selected_carrier_id = False
                 continue
             if (
