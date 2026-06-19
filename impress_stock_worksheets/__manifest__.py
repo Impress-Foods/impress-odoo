@@ -1,8 +1,8 @@
 {
     "name": "Impress Worksheets - Stock",
     # Non semantic version to allow to tag the most recent document date
-    "version": "19.0.2026.05.22",
-    "summary": """ Impress_stock_worksheets Summary """,
+    "version": "19.0.2026.06.19",
+    "summary": """ Stock related worksheets for Impress Foods""",
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
@@ -12,6 +12,8 @@
         "views/receipt/ReceiptWorksheet_20250114.xml",
         "data/delivery/DeliveryWorksheet_20250114.xml",
         "views/delivery/DeliveryWorksheet_20250114.xml",
+        "data/delivery/DeliveryWorksheet_20260619.xml",
+        "views/delivery/DeliveryWorksheet_20260619.xml",
         "data/delivery_meat/DeliveryMeatWorksheet_2026_05_22.xml",
         "views/delivery_meat/DeliveryMeatWorksheet_2026_05_22.xml",
         "data/receipt_qc_meat/ReceiptQcMeatWorksheet_20260522.xml",

@@ -21,12 +21,6 @@
                     <group name="meat" string="Meat">
                         <group>
                             <field
-                                name="x_ccps_approved"
-                                string="CCPs approuved by Quality Control?"
-                                widget="selection_badge"
-                                options="{&quot;size&quot;:&quot;sm&quot;}"
-                            />
-                            <field
                                 name="x_heavy_metals_analysis"
                                 string="Heavy metals analysis received and compliant? (if export)"
                                 widget="selection_badge"

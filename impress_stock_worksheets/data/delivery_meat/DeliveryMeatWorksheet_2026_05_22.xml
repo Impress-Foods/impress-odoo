@@ -7,19 +7,6 @@
         <field name="res_model">quality.check</field>
     </record>
 
-    <record id="delivery_meat_20260522_x_meat_ccps_approved" model="ir.model.fields">
-        <field name="name">x_ccps_approved</field>
-        <field
-            name="model_id"
-            model="ir.model"
-            eval="obj().env.ref('impress_stock_worksheets.ws_delivery_meat_20260522').model_id"
-        />
-        <field name="ttype">selection</field>
-        <field
-            name="selection"
-        >[('true', 'Conforme'), ('false', 'Non Conforme')]</field>
-    </record>
-
     <record id="delivery_meat_20260522_x_heavy_metals_analysis" model="ir.model.fields">
         <field name="name">x_heavy_metals_analysis</field>
         <field
