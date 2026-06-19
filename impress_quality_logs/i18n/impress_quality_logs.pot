@@ -683,6 +683,7 @@ msgid "Monthly Verification"
 msgstr ""
 
 #. module: impress_quality_logs
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__case_check__na
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__subunit_check__na
 msgid "N/A"
 msgstr ""
