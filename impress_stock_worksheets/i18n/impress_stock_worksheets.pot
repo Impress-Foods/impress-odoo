@@ -20,72 +20,30 @@ msgstr ""
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
 msgid "-18°C"
 msgstr ""
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
 msgid "0°C"
 msgstr ""
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
 msgid "15°C"
 msgstr ""
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
 msgid "4°C"
-msgstr ""
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "<span>Absence d'allergènes: </span>"
-msgstr ""
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "<span>Identité du chauffeur: </span>"
-msgstr ""
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "<span>Non</span>"
-msgstr ""
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "<span>Oui</span>"
-msgstr ""
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "<span>État des palettes: </span>"
-msgstr ""
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "<span>État du camion: </span>"
-msgstr ""
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "<span>État du produit: </span>"
-msgstr ""
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid ""
-"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 04 "
-"Décembre 2024. Feuille de contrôle Expédition </strong>"
 msgstr ""
 
 #. module: impress_stock_worksheets
@@ -93,6 +51,13 @@ msgstr ""
 msgid ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 14 "
 "janvier 2025. Feuille de contrôle Expédition </strong>"
+msgstr ""
+
+#. module: impress_stock_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
+msgid ""
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 19 juin"
+" 2026. Feuille de contrôle Expédition </strong>"
 msgstr ""
 
 #. module: impress_stock_worksheets
@@ -151,17 +116,12 @@ msgid "Allergen mark absent"
 msgstr ""
 
 #. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "Barêmes de température"
-msgstr ""
-
-#. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_qc_meat_20260522_form_view
 msgid "Beef"
 msgstr ""
 
 #. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_meat_20260522_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 msgid "CCPs approuved by Quality Control?"
 msgstr ""
 
@@ -186,13 +146,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:impress_stock_worksheets.receipt_qc_general_20260525_x_product_state_comment
 #: model:ir.model.fields,field_description:impress_stock_worksheets.receipt_qc_general_20260525_x_sample_comment
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
 msgid "Comments"
-msgstr ""
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "Congelé"
 msgstr ""
 
 #. module: impress_stock_worksheets
@@ -221,25 +177,17 @@ msgid "Expiration date check"
 msgstr ""
 
 #. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "Frais"
-msgstr ""
-
-#. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
 msgid "Fresh"
 msgstr ""
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
 msgid "Frozen"
-msgstr ""
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "Fruits et légumes entiers"
 msgstr ""
 
 #. module: impress_stock_worksheets
@@ -277,16 +225,6 @@ msgid ""
 msgstr ""
 
 #. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "Maximum camion"
-msgstr ""
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "Maximum produit"
-msgstr ""
-
-#. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_meat_20260522_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_qc_meat_20260522_form_view
 msgid "Meat"
@@ -298,21 +236,12 @@ msgid "Microbial analysis (if needed)"
 msgstr ""
 
 #. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "Minimum camion"
-msgstr ""
-
-#. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "Minimum produit"
-msgstr ""
-
-#. module: impress_stock_worksheets
-#: model:ir.model.fields,field_description:impress_stock_worksheets.x_quality_check_worksheet_template_24_field_x_name
-#: model:ir.model.fields,field_description:impress_stock_worksheets.x_quality_check_worksheet_template_25_field_x_name
-#: model:ir.model.fields,field_description:impress_stock_worksheets.x_quality_check_worksheet_template_26_field_x_name
-#: model:ir.model.fields,field_description:impress_stock_worksheets.x_quality_check_worksheet_template_27_field_x_name
-#: model:ir.model.fields,field_description:impress_stock_worksheets.x_quality_check_worksheet_template_28_field_x_name
+#: model:ir.model.fields,field_description:impress_stock_worksheets.x_quality_check_worksheet_template_1_field_x_name
+#: model:ir.model.fields,field_description:impress_stock_worksheets.x_quality_check_worksheet_template_2_field_x_name
+#: model:ir.model.fields,field_description:impress_stock_worksheets.x_quality_check_worksheet_template_3_field_x_name
+#: model:ir.model.fields,field_description:impress_stock_worksheets.x_quality_check_worksheet_template_4_field_x_name
+#: model:ir.model.fields,field_description:impress_stock_worksheets.x_quality_check_worksheet_template_5_field_x_name
+#: model:ir.model.fields,field_description:impress_stock_worksheets.x_quality_check_worksheet_template_6_field_x_name
 msgid "Name"
 msgstr ""
 
@@ -333,6 +262,7 @@ msgstr ""
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
 msgid "Product"
 msgstr ""
@@ -345,24 +275,28 @@ msgstr ""
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
 msgid "Product Type"
 msgstr ""
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
 msgid "Product maximum"
 msgstr ""
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
 msgid "Product minimum"
 msgstr ""
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 msgid "Product state (no bad smells, expected color and texture, etc)"
 msgstr ""
 
@@ -375,6 +309,7 @@ msgstr ""
 
 #. module: impress_stock_worksheets
 #: model:ir.model.fields,field_description:impress_stock_worksheets.delivery_20250114_x_product_state
+#: model:ir.model.fields,field_description:impress_stock_worksheets.delivery_20260619_x_product_state
 msgid "Product state and cleanliness"
 msgstr ""
 
@@ -402,6 +337,7 @@ msgstr ""
 
 #. module: impress_stock_worksheets
 #: model:ir.model.fields,field_description:impress_stock_worksheets.delivery_20250114_x_signature
+#: model:ir.model.fields,field_description:impress_stock_worksheets.delivery_20260619_x_signature
 #: model:ir.model.fields,field_description:impress_stock_worksheets.receipt_20250114_x_signature
 #: model:ir.model.fields,field_description:impress_stock_worksheets.receipt_qc_general_20260525_x_signature
 msgid "Signature"
@@ -424,6 +360,7 @@ msgstr ""
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
 msgid "Temperature chart"
 msgstr ""
@@ -437,6 +374,7 @@ msgstr ""
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
 msgid "Transport"
 msgstr ""
@@ -448,24 +386,28 @@ msgstr ""
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
 msgid "Truck maximum"
 msgstr ""
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
 msgid "Truck minimum"
 msgstr ""
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
 msgid "Truck state (Clean, no traces of pests, no bad smells, etc.)"
 msgstr ""
 
 #. module: impress_stock_worksheets
 #: model:ir.model.fields,field_description:impress_stock_worksheets.delivery_20250114_x_truck_state
+#: model:ir.model.fields,field_description:impress_stock_worksheets.delivery_20260619_x_truck_state
 msgid "Truck state and cleanliness"
 msgstr ""
 
@@ -475,17 +417,14 @@ msgid "Turkey"
 msgstr ""
 
 #. module: impress_stock_worksheets
-#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_report
-msgid "Type de produit"
-msgstr ""
-
-#. module: impress_stock_worksheets
 #: model:ir.model.fields,field_description:impress_stock_worksheets.delivery_20250114_x_pallet_used
+#: model:ir.model.fields,field_description:impress_stock_worksheets.delivery_20260619_x_pallet_used
 msgid "Type of pallet used"
 msgstr ""
 
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
 msgid "Whole fruits and vegetables"
 msgstr ""
@@ -501,7 +440,7 @@ msgid "X Acia Stamp"
 msgstr ""
 
 #. module: impress_stock_worksheets
-#: model:ir.model.fields,field_description:impress_stock_worksheets.delivery_meat_20260522_x_meat_ccps_approved
+#: model:ir.model.fields,field_description:impress_stock_worksheets.delivery_20260619_x_ccps_approved
 msgid "X Ccps Approved"
 msgstr ""
 
