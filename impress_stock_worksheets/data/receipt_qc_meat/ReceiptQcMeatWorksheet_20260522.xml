@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-model href="https://raw.githubusercontent.com/odoo/odoo/refs/heads/17.0/odoo/import_xml.rng" type="application/XML"?>
+<odoo>
+    <!-- Create a new Worksheet Template -->
+    <record id="ws_receipt_qc_meat_20260522" model="worksheet.template">
+        <field name="name">Worksheet Receipt QC Meat 2026-05-22</field>
+        <field name="res_model">quality.check</field>
+    </record>
+
+    <record id="receipt_qc_meat_20260522_x_product_provenance" model="ir.model.fields">
+        <field name="name">x_product_provenance</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_stock_worksheets.ws_receipt_qc_meat_20260522').model_id.id"
+        />
+        <field name="ttype">selection</field>
+        <field
+            name="selection"
+        >[('true', 'Conforme'), ('false', 'Non Conforme')]</field>
+    </record>
+    <record id="receipt_qc_meat_20260522_x_acia_stamp" model="ir.model.fields">
+        <field name="name">x_acia_stamp</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_stock_worksheets.ws_receipt_qc_meat_20260522').model_id.id"
+        />
+        <field name="ttype">selection</field>
+        <field
+            name="selection"
+        >[('true', 'Conforme'), ('false', 'Non Conforme')]</field>
+    </record>
+    <record id="receipt_qc_meat_20260522_x_microbial_analysis" model="ir.model.fields">
+        <field name="name">x_microbial_analysis</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_stock_worksheets.ws_receipt_qc_meat_20260522').model_id.id"
+        />
+        <field name="ttype">selection</field>
+        <field
+            name="selection"
+        >[('true', 'Conforme'), ('false', 'Non Conforme'), ('na', 'N/A')]</field>
+    </record>
+    <record id="receipt_qc_meat_20260522_x_egg_mention" model="ir.model.fields">
+        <field name="name">x_egg_mention</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_stock_worksheets.ws_receipt_qc_meat_20260522').model_id.id"
+        />
+        <field name="ttype">selection</field>
+        <field
+            name="selection"
+        >[('true', 'Conforme'), ('false', 'Non Conforme'), ('na', 'N/A')]</field>
+    </record>
+    <record id="receipt_qc_meat_20260522_x_toms_only_mention" model="ir.model.fields">
+        <field name="name">x_toms_only_mention</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_stock_worksheets.ws_receipt_qc_meat_20260522').model_id.id"
+        />
+        <field name="ttype">selection</field>
+        <field
+            name="selection"
+        >[('true', 'Conforme'), ('false', 'Non Conforme'), ('na', 'N/A')]</field>
+    </record>
+    <record id="receipt_qc_meat_20260522_x_thirty_months_mark" model="ir.model.fields">
+        <field name="name">x_thirty_months_mark</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_stock_worksheets.ws_receipt_qc_meat_20260522').model_id.id"
+        />
+        <field name="ttype">selection</field>
+        <field
+            name="selection"
+        >[('true', 'Conforme'), ('false', 'Non Conforme'), ('na', 'N/A')]</field>
+    </record>
+</odoo>

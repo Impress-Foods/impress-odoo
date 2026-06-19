@@ -52,6 +52,7 @@
                                 <field name="nominal_weight" />
                                 <field name="is_seal_ok" />
                                 <field name="is_weight_ok" />
+                                <field name="start_date" />
                                 <field name="signature" widget="signature" />
                                 <field name="notes" />
                             </group>
