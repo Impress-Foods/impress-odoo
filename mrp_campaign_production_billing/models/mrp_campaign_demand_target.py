@@ -29,7 +29,7 @@ class MrpCampaignDemandTarget(models.Model):
                 {
                     "origin": so.client_order_ref,
                     "customer": so.partner_id.name,
-                    "uom": sol.product_uom.display_name,
+                    "uom": sol.product_uom_id.display_name,
                 }
             )
         return res
