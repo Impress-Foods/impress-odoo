@@ -6,7 +6,7 @@
     >
         <field name="name">Registre</field>
         <field name="res_model">quality.check</field>
-        <field name="views">tree,kanban,form</field>
+        <field name="views">list,kanban,form</field>
         <field name="view_mode">list,kanban,form</field>
         <field name="search_view_id" ref="impress_quality_quality_check_search" />
         <field name="help" type="html">
@@ -22,7 +22,7 @@
     >
         <field name="name">Registres</field>
         <field name="res_model">quality.check</field>
-        <field name="views">tree,kanban,form</field>
+        <field name="views">list,kanban,form</field>
         <field name="view_mode">list,kanban,form</field>
         <field name="search_view_id" ref="impress_quality_quality_check_search" />
         <field
@@ -41,7 +41,7 @@
     >
         <field name="name">Registre Brix</field>
         <field name="res_model">quality.check</field>
-        <field name="views">tree,kanban,form</field>
+        <field name="views">list,kanban,form</field>
         <field name="view_mode">list,kanban,form</field>
         <field name="search_view_id" ref="impress_quality_quality_check_search" />
         <field
@@ -60,7 +60,7 @@
     >
         <field name="name">Registre Bostwick</field>
         <field name="res_model">quality.check</field>
-        <field name="views">tree,kanban,form</field>
+        <field name="views">list,kanban,form</field>
         <field name="view_mode">list,kanban,form</field>
         <field name="search_view_id" ref="impress_quality_quality_check_search" />
         <field
@@ -79,7 +79,7 @@
     >
         <field name="name">Registre Organoleptique</field>
         <field name="res_model">quality.check</field>
-        <field name="views">tree,kanban,form</field>
+        <field name="views">list,kanban,form</field>
         <field name="view_mode">list,kanban,form</field>
         <field name="search_view_id" ref="impress_quality_quality_check_search" />
         <field
