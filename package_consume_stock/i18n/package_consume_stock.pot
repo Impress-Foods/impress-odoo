@@ -14,6 +14,12 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: package_consume_stock
+#. odoo-python
+#: code:addons/package_consume_stock/models/stock_package_material.py:0
+msgid "Could not get or create packaging move for %(mat)s in %(picking)s"
+msgstr ""
+
+#. module: package_consume_stock
 #: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_material__create_uid
 msgid "Created by"
 msgstr ""
