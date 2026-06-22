@@ -34,7 +34,7 @@
                 <attribute name="decoration-success">signature</attribute>
             </xpath>
             <xpath expr="//list[1]" position="inside">
-                <field name="signature" widget="signature" optional="show" />
+                <field name="signature" widget="signature" optional="hide" />
             </xpath>
         </field>
     </record>

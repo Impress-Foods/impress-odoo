@@ -43,7 +43,7 @@ class MrpProduction(models.Model):
                 if not value:
                     raise ValidationError(
                         self.env._(
-                            "No Sale Order found withreference %s",
+                            "No Sale Order found with reference %s",
                             rec.billing_sale_order_ref,
                         )
                     )
@@ -163,6 +163,8 @@ class MrpProduction(models.Model):
         return res
 
     def update_billing_sale_order_line_on_done(self):
+        if not self:
+            return
         self.ensure_one()
         if self.billing_sale_order_line_id:
             self.billing_sale_order_line_id.qty_delivered += self.qty_produced

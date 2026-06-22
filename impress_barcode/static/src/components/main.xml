@@ -11,7 +11,9 @@
             expr="//div[hasclass('o_barcode_lines')]/div[hasclass('alert')]"
             position="after"
         >
-            <t t-if="env.model.unreservedLines.length != 0">
+            <t
+                t-if="env.model.unreservedLines &amp;&amp; env.model.unreservedLines.length != 0"
+            >
                 <div class="o_impress_missing_header">
                     <i class="fa fa-exclamation-triangle" />
                     <span>MISSING PRODUCT(S) - <t
@@ -26,7 +28,7 @@
                 >
                     <LineComponent
                         line="line"
-                        displayUOM="groups.group_uom"
+                        displayUOM="true"
                         editLine.bind="onOpenProductPage"
                     />
                 </t>

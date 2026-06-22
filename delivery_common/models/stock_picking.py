@@ -1,6 +1,7 @@
 import logging
 
 from odoo import api, fields, models
+from odoo.fields import Domain
 from odoo.tools import html2plaintext
 
 from odoo.addons.stock.models.stock_package import StockPackage
@@ -82,6 +83,11 @@ class StockPicking(models.Model):
         return res
 
     def _get_packages(self) -> StockPackage:
-        self.ensure_one()
-        packages = self.env["stock.package"].search([("picking_ids", "in", [self.id])])
-        return packages
+        domain = Domain("picking_ids", "in", self.ids)
+        if self.state != "done":
+            packages = self.env["stock.package"].search(domain)
+            return packages
+        else:
+            package_histories = self.env["stock.package.history"].search(domain)
+            packages = package_histories.mapped("package_id")
+            return packages

@@ -14,9 +14,12 @@ class StockLot(models.Model):
             if (
                 lot.product_id.use_expiration_date
                 and len(lot.name) >= 5
+                and lot.product_id.default_code
                 and lot.product_id.default_code[0] == "E"
             ):
                 lot_number = lot.name[:5]
+                if not lot_number.isnumeric():
+                    continue
                 # Assuming 'lot.name' follows the 'YYDDD' format,
                 # where 'YY' is the year and 'DDD' is the day of the year.
                 year, day = "20" + lot_number[:2], int(lot_number[2:])

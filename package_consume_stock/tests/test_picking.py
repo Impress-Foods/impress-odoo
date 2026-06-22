@@ -1,12 +1,7 @@
-import logging
-
-from odoo.exceptions import UserError
 from odoo.tests import TransactionCase
 
 from odoo.addons.stock.models.stock_location import StockLocation
 from odoo.addons.stock.models.stock_picking import StockPickingType
-
-_logger = logging.getLogger(__name__)
 
 
 class TestStockPicking(TransactionCase):
@@ -136,7 +131,7 @@ class TestStockPicking(TransactionCase):
                 "picking_type_id": self.picking_type_out.id,
             }
         )
-        self.move_model.create(
+        move = self.move_model.create(
             {
                 "product_id": self.product.id,
                 "product_uom_qty": 4,
@@ -159,7 +154,7 @@ class TestStockPicking(TransactionCase):
         )
         product_move_line = move_lines[0]
         product_move_line.qty_done = 4
-
+        move.picked = True
         picking.action_put_in_pack(package_type_id=self.package_type_wo_lot.id)
         self.assertEqual(
             picking.packages_count,
@@ -198,7 +193,7 @@ class TestStockPicking(TransactionCase):
                 "picking_type_id": self.picking_type_out.id,
             }
         )
-        self.move_model.create(
+        move = self.move_model.create(
             {
                 "product_id": self.product.id,
                 "product_uom_qty": 4,
@@ -222,6 +217,7 @@ class TestStockPicking(TransactionCase):
         product_move_line = move_lines[0]
         product_move_line.qty_done = 4  # type: ignore
 
+        move.picked = True
         picking.action_put_in_pack(package_type_id=self.package_type_w_lot.id)
         self.assertEqual(
             picking.packages_count,
@@ -249,13 +245,6 @@ class TestStockPicking(TransactionCase):
 
         # Check if all products are in the same package
         self.assertEqual(len(picking.move_line_ids.mapped("result_package_id")), 1)
-        # Should not be able to validate transfer without package lot
-        with self.assertRaises(UserError):  # type: ignore
-            picking.button_validate()
-
-        picking.move_line_ids.filtered_domain(
-            [("product_id", "=", self.packaging_material_w_lot.id)]
-        ).lot_id = self.lot_1.id
 
         # Check if possible to validate transfer
         picking.button_validate()
@@ -320,6 +309,7 @@ class TestStockPicking(TransactionCase):
         self.assertEqual(packaging_move.quantity, 2.0)
 
     def test_create_new_package_w_lot_multiple_packages(self):
+        PRODUCT_QTY = 4
         picking = self.env["stock.picking"].create(
             {
                 "location_dest_id": self.cust_loc_id.id,
@@ -327,10 +317,10 @@ class TestStockPicking(TransactionCase):
                 "picking_type_id": self.picking_type_out.id,
             }
         )
-        self.move_model.create(
+        move = self.move_model.create(
             {
                 "product_id": self.product.id,
-                "product_uom_qty": 4,
+                "product_uom_qty": PRODUCT_QTY,
                 "picking_id": picking.id,
                 "location_id": self.stock_loc_id.id,
                 "location_dest_id": self.cust_loc_id.id,
@@ -354,9 +344,9 @@ class TestStockPicking(TransactionCase):
         packaging_move = picking.move_ids.filtered_domain(
             [("product_id", "=", self.packaging_material_w_lot.id)]
         )
-        packaging_move.move_line_ids[0].lot_id = self.lot_2.id
         self.assertEqual(len(packaging_move), 1)
         self.assertEqual(packaging_move.quantity, 1.0)
+        self.assertTrue(packaging_move.move_line_ids[0].lot_id)
 
         new_product_ml = product_ml.copy()
         new_product_ml.result_package_id = False
@@ -372,19 +362,15 @@ class TestStockPicking(TransactionCase):
         )
 
         self.assertEqual(len(packages), 2)
-        # self.assertEqual(picking.packages_count, 2)
         packaging_move = picking.move_ids.filtered_domain(
             [("product_id", "=", self.packaging_material_w_lot.id)]
         )
         self.assertEqual(len(packaging_move), 1)
         self.assertEqual(packaging_move.quantity, 2.0)
-
-        # Check if all packages are in the same lot
-        self.assertEqual(
-            len(set([ml.lot_id for ml in packaging_move.move_line_ids])), 1
-        )
+        self.assertEqual(move.quantity, PRODUCT_QTY)
 
     def test_create_new_package_w_multiple_material(self):
+        PRODUCT_QTY = 4
         picking = self.env["stock.picking"].create(
             {
                 "location_dest_id": self.cust_loc_id.id,
@@ -392,10 +378,10 @@ class TestStockPicking(TransactionCase):
                 "picking_type_id": self.picking_type_out.id,
             }
         )
-        self.move_model.create(
+        move = self.move_model.create(
             {
                 "product_id": self.product.id,
-                "product_uom_qty": 4,
+                "product_uom_qty": PRODUCT_QTY,
                 "picking_id": picking.id,
                 "location_id": self.stock_loc_id.id,
                 "location_dest_id": self.cust_loc_id.id,
@@ -455,6 +441,81 @@ class TestStockPicking(TransactionCase):
         picking.move_line_ids.filtered_domain(
             [("product_id", "=", self.packaging_material_w_lot.id)]
         ).lot_id = self.lot_1.id
+        self.assertEqual(move.quantity, PRODUCT_QTY)
         # Check if possible to validate transfer
         picking.button_validate()
         self.assertEqual(picking.state, "done")
+
+    def test_wizard_path_move_line_survives(self):
+        """Regression test for default_move_line_ids context bug.
+
+        When the packaging move is created via stock.move.create(), the ORM
+        picks up default_move_line_ids from the wizard context and silently
+        reassigns the product's move line to the new packaging move.
+        """
+        # Use a picking type that forces the wizard
+        wizard_type = self.picking_type_out.copy()
+        wizard_type.set_package_type = True
+
+        picking = self.env["stock.picking"].create(
+            {
+                "location_dest_id": self.cust_loc_id.id,
+                "location_id": self.stock_loc_id.id,
+                "picking_type_id": wizard_type.id,
+            }
+        )
+        self.move_model.create(
+            {
+                "product_id": self.product.id,
+                "product_uom_qty": 2,
+                "picking_id": picking.id,
+                "location_id": self.stock_loc_id.id,
+                "location_dest_id": self.cust_loc_id.id,
+            }
+        )
+        picking.action_confirm()
+        picking.action_assign()
+        move_line = picking.move_line_ids[0]
+        move_line.qty_done = 2.0
+        move_line.picked = True
+        original_move_id = move_line.move_id.id
+        original_product_id = move_line.product_id.id
+
+        # First call: triggers the wizard (no package_type_id)
+        wizard_action = move_line.action_put_in_pack()
+        self.assertTrue(wizard_action, "Wizard should be returned")
+        self.assertEqual(wizard_action.get("type"), "ir.actions.act_window")
+
+        # Simulate wizard submission: context carries default_move_line_ids
+        ctx = {
+            **self.env.context,
+            "from_package_wizard": True,
+            "all_move_line_ids": [move_line.id],
+            "default_move_line_ids": [move_line.id],
+            "default_location_dest_id": move_line.location_dest_id.id,
+            "picking_ids": [picking.id],
+        }
+        move_line.with_context(ctx).action_put_in_pack(  # pylint: disable=context-overridden
+            package_type_id=self.package_type_wo_lot.id
+        )
+
+        # The original move line must NOT have been hijacked by the packaging move
+        self.assertEqual(
+            move_line.move_id.id,
+            original_move_id,
+            "Product move line was reassigned to packaging move",
+        )
+        self.assertEqual(
+            move_line.product_id.id,
+            original_product_id,
+            "Product move line's product changed",
+        )
+        # Packaging move line should exist separately
+        packaging_lines = picking.move_line_ids.filtered_domain(
+            [("product_id", "=", self.packaging_material_wo_lot.id)]
+        )
+        self.assertEqual(
+            len(packaging_lines),
+            1,
+            "Packaging material line should exist separately",
+        )

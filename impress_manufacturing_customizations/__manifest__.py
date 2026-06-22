@@ -1,7 +1,7 @@
 {
     "name": "Impressmanufacturing Customizations",
     "version": "19.0.1.0.0",
-    "depends": ["base", "mrp", "mrp_workorder"],
+    "depends": ["base", "mrp", "mrp_workorder", "sale_mrp"],
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Manufacturing",

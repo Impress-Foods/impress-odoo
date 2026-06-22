@@ -21,17 +21,16 @@ class StockPicking(models.Model):
     )
     def _compute_container_qty(self):
         for record in self:
-            if not record.partner_id.requires_deposit:
+            if record.partner_id.requires_deposit:
+                record.container_qty = sum(
+                    record.move_line_ids.filtered(
+                        lambda line: (
+                            line.state == "done" and line.product_id.requires_deposit
+                        )
+                    ).mapped(lambda line: line.quantity * line.product_id.qty_multiple)
+                )
+            else:
                 record.container_qty = 0
-                continue
-
-            record.container_qty = sum(
-                record.move_line_ids.filtered(
-                    lambda line: (
-                        line.state == "done" and line.product_id.requires_deposit
-                    )
-                ).mapped(lambda line: line.quantity * line.product_id.qty_multiple)
-            )
 
     def _action_done(self):
         result = super()._action_done()
@@ -41,8 +40,19 @@ class StockPicking(models.Model):
             if not sale_order or not sale_order.deposit_line_id:
                 continue
             deposit_line = sale_order.deposit_line_id
-            deposit_line.write(
-                {"qty_delivered": deposit_line.qty_delivered + picking.container_qty}
-            )
+            if picking.picking_type_id.code == "outgoing":
+                deposit_line.write(
+                    {
+                        "qty_delivered": deposit_line.qty_delivered
+                        + picking.container_qty
+                    }
+                )
+            elif picking.picking_type_id.code == "incoming":
+                deposit_line.write(
+                    {
+                        "qty_delivered": deposit_line.qty_delivered
+                        - picking.container_qty
+                    }
+                )
 
         return result
