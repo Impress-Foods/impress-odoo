@@ -14,12 +14,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: impress_barcode
-#. odoo-javascript
-#: code:addons/impress_barcode/static/src/components/line.xml:0
-msgid "DONE:"
-msgstr ""
-
-#. module: impress_barcode
 #: model:ir.model.fields,field_description:impress_barcode.field_stock_move__display_name
 #: model:ir.model.fields,field_description:impress_barcode.field_stock_picking__display_name
 msgid "Display Name"
@@ -38,18 +32,6 @@ msgid "MISSING PRODUCT(S) -"
 msgstr ""
 
 #. module: impress_barcode
-#. odoo-javascript
-#: code:addons/impress_barcode/static/src/components/line.xml:0
-msgid "PLANNED:"
-msgstr ""
-
-#. module: impress_barcode
-#. odoo-javascript
-#: code:addons/impress_barcode/static/src/components/line.xml:0
-msgid "RESERVED:"
-msgstr ""
-
-#. module: impress_barcode
 #: model:ir.model,name:impress_barcode.model_stock_move
 msgid "Stock Move"
 msgstr ""
@@ -63,10 +45,4 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/impress_barcode/static/src/components/main.xml:0
 msgid "product(s) not reserved"
-msgstr ""
-
-#. module: impress_barcode
-#. odoo-javascript
-#: code:addons/impress_barcode/static/src/components/line.xml:0
-msgid "required"
 msgstr ""
