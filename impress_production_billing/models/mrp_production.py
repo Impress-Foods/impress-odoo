@@ -106,35 +106,37 @@ class MrpProduction(models.Model):
                     rec._unlink_sale_order_line()
 
     def _create_billing_sale_order_line(self):
-        new_order_line = self.env["sale.order.line"].create(
-            {
-                "order_id": self.billing_sale_order_id.id,
-                "product_id": self.bom_id.get_production_billing_product().id,
-                "product_uom_qty": self.product_uom_qty,
-            }
-        )
-        self.billing_sale_order_line_id = new_order_line
-        self._recompute_billing_line_qty()
+        for rec in self:
+            new_order_line = self.env["sale.order.line"].create(
+                {
+                    "order_id": rec.billing_sale_order_id.id,
+                    "product_id": rec.bom_id.get_production_billing_product().id,
+                    "product_uom_qty": rec.product_uom_qty,
+                }
+            )
+            rec.billing_sale_order_line_id = new_order_line
+            rec._recompute_billing_line_qty()
 
     def _unlink_sale_order_line(self):
-        if (
-            self.env["mrp.production"].search(
-                [
-                    (
-                        "billing_sale_order_line_id",
-                        "=",
-                        self.billing_sale_order_line_id.id,
-                    )
-                ]
-            )
-            != self
-        ):
-            self._recompute_billing_line_qty()
-            self.billing_sale_order_line_id = None
-        else:
-            self._recompute_billing_line_qty()
-            if self.billing_sale_order_line_id.order_id.state == "draft":
-                self.billing_sale_order_line_id.unlink()
+        for rec in self:
+            if (
+                rec.env["mrp.production"].search(
+                    [
+                        (
+                            "billing_sale_order_line_id",
+                            "=",
+                            rec.billing_sale_order_line_id.id,
+                        )
+                    ]
+                )
+                != rec
+            ):
+                rec._recompute_billing_line_qty()
+                rec.billing_sale_order_line_id = None
+            else:
+                rec._recompute_billing_line_qty()
+                if rec.billing_sale_order_line_id.order_id.state == "draft":
+                    rec.billing_sale_order_line_id.unlink()
 
     def _recompute_billing_line_qty(self):
         # Optional feature, used to compute the total qty to deliver
@@ -159,21 +161,23 @@ class MrpProduction(models.Model):
 
     def button_mark_done(self):
         res = super().button_mark_done()
-        self.update_billing_sale_order_line_on_done()
+        for rec in self:
+            rec.update_billing_sale_order_line_on_done()
         return res
 
     def update_billing_sale_order_line_on_done(self):
         if not self:
             return
-        self.ensure_one()
-        if self.billing_sale_order_line_id:
-            self.billing_sale_order_line_id.qty_delivered += self.qty_produced
+        for rec in self:
+            if rec.billing_sale_order_line_id:
+                rec.billing_sale_order_line_id.qty_delivered += rec.qty_produced
 
     def _action_cancel(self):
         res = super()._action_cancel()
-        if self.billing_sale_order_id:
-            self.billing_sale_order_id = None
-            self.billing_sale_order_ref = False
+        for rec in self:
+            if rec.billing_sale_order_id:
+                rec.billing_sale_order_id = None
+                rec.billing_sale_order_ref = False
         return res
 
     def write(self, vals):
