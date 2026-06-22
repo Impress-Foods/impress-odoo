@@ -24,10 +24,16 @@ msgid "Create a Customer"
 msgstr ""
 
 #. module: maintenance_product_list
+#: model:ir.model.fields,field_description:maintenance_product_list.field_product_product__current_vendor_code
+msgid "Current Vendor Code"
+msgstr ""
+
+#. module: maintenance_product_list
 #: model:ir.model.fields,field_description:maintenance_product_list.field_maintenance_equipment__display_name
 #: model:ir.model.fields,field_description:maintenance_product_list.field_product_product__display_name
 #: model:ir.model.fields,field_description:maintenance_product_list.field_product_template__display_name
 #: model:ir.model.fields,field_description:maintenance_product_list.field_res_partner__display_name
+#: model:ir.model.fields,field_description:maintenance_product_list.field_stock_warehouse_orderpoint__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -36,6 +42,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:maintenance_product_list.field_product_product__id
 #: model:ir.model.fields,field_description:maintenance_product_list.field_product_template__id
 #: model:ir.model.fields,field_description:maintenance_product_list.field_res_partner__id
+#: model:ir.model.fields,field_description:maintenance_product_list.field_stock_warehouse_orderpoint__id
 msgid "ID"
 msgstr ""
 
@@ -60,6 +67,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/maintenance_product_list/models/maintenance_equipment.py:0
 msgid "Maintenance Parts"
+msgstr ""
+
+#. module: maintenance_product_list
+#: model:ir.model,name:maintenance_product_list.model_stock_warehouse_orderpoint
+msgid "Minimum Inventory Rule"
 msgstr ""
 
 #. module: maintenance_product_list
@@ -91,9 +103,21 @@ msgid "Products"
 msgstr ""
 
 #. module: maintenance_product_list
+#: model:ir.model.fields,help:maintenance_product_list.field_stock_warehouse_orderpoint__vendor_code
+msgid ""
+"This vendor's product code will be used when printing a request for "
+"quotation. Keep empty to use the internal one."
+msgstr ""
+
+#. module: maintenance_product_list
 #: model:ir.model.fields,field_description:maintenance_product_list.field_product_product__vendor_code
 #: model:ir.model.fields,field_description:maintenance_product_list.field_product_template__vendor_code
 msgid "Vendor Code"
+msgstr ""
+
+#. module: maintenance_product_list
+#: model:ir.model.fields,field_description:maintenance_product_list.field_stock_warehouse_orderpoint__vendor_code
+msgid "Vendor Product Code"
 msgstr ""
 
 #. module: maintenance_product_list
