@@ -19,21 +19,8 @@ patch(BarcodePickingModel.prototype, {
     _getMoveData(id) {
         const smData = structuredClone(this.cache.getRecord("stock.move", id));
         smData.product_id = this.cache.getRecord("product.product", smData.product_id);
+        smData.product_uom_id = this.cache.getRecord("uom.uom", smData.product_uom);
         return smData;
-    },
-
-    get unreservedMoves() {
-        const move_ids = structuredClone(this.moveIds);
-        const lines = structuredClone(this.pageLines);
-        for (const line of lines) {
-            const move_id = line.move_id;
-            const index = move_ids.indexOf(move_id);
-            if (index != -1) {
-                move_ids.splice(index, 1);
-            }
-        }
-        const moves = move_ids.map((x) => this._getMoveData(x));
-        return moves;
     },
 
     // Get unreserved moves formatted as line-compatible objects for LineComponent
@@ -53,17 +40,7 @@ patch(BarcodePickingModel.prototype, {
         const unreservedMoveIds = moveIds.filter((id) => !reservedMoveIds.has(id));
 
         // Get full move records directly from cache
-        const moves = unreservedMoveIds.map((id) => {
-            const move = this.cache.getRecord("stock.move", id);
-            if (move.product_id) {
-                move.product_id = this.cache.getRecord(
-                    "product.product",
-                    move.product_id
-                );
-            }
-            return move;
-        });
-
+        const moves = unreservedMoveIds.map((id) => this._getMoveData(id));
         // Group moves by kit (bom_id) for position calculation
         const kitGroups = {};
         moves.forEach((move, index) => {
@@ -128,10 +105,8 @@ patch(BarcodePickingModel.prototype, {
                 qty_done: 0,
                 location_id: move.location_id,
                 location_dest_id: move.location_dest_id,
-                // product_uom_id:
-                //     move.product_uom_id || (move.product_id && move.product_id.uom_id),
-                // product_uom:
-                //     move.product_uom_id || (move.product_id && move.product_id.uom_id),
+                product_uom_id:
+                    move.product_uom_id || (move.product_id && move.product_id.uom_id),
                 isUnreservedLine: true,
                 is_kits: move.product_id && move.product_id.is_kits,
                 lot_name: null,

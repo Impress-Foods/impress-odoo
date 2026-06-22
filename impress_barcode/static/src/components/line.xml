@@ -24,36 +24,6 @@
     </t>
 
     <t
-        t-name="impress_barcode.LineReservationStatus"
-        t-inherit="stock_barcode.LineComponent"
-        t-inherit-mode="extension"
-        owl="1"
-    >
-        <xpath expr="//div[hasclass('o_barcode_line_details')]" position="inside">
-            <div
-                t-if="env.model.lineModel == 'stock.move.line' &amp;&amp; plannedQty !== reservedQty"
-                t-att-class="'o_impress_reservation_status o_status_' + reservationStatus"
-            >
-                <div class="o_reservation_row">
-                    <span class="o_label">RESERVED:</span>
-                    <span class="o_value" t-esc="reservedQty" />
-                </div>
-                <div class="o_reservation_row">
-                    <span class="o_label">DONE:</span>
-                    <span class="o_value" t-esc="doneQty" />
-                </div>
-                <div class="o_reservation_row">
-                    <span class="o_label">PLANNED:</span>
-                    <span class="o_value" t-esc="plannedQty" />
-                </div>
-                <div t-if="availableQty > 0" class="o_reservation_row o_available">
-                    <span class="o_warning">+<t t-esc="availableQty" /> required</span>
-                </div>
-            </div>
-        </xpath>
-    </t>
-
-    <t
         t-name="impress_barcode.HideUnreservedDeleteButton"
         t-inherit="stock_barcode.LineLowerButtons"
         t-inherit-mode="extension"
@@ -64,4 +34,18 @@
         </xpath>
     </t>
 
+    <t
+        t-name="impress_barcode.LineQuantity"
+        t-inherit="stock_barcode.LineQuantity"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//div[@name='quantity']/span[2]" position="inside">
+            <span
+                style="color: var(--danger);"
+                t-if="qtyDemand &lt; plannedQty"
+                t-esc="'(' + qtyDemand +'/'+plannedQty +')'"
+            />
+        </xpath>
+    </t>
 </templates>

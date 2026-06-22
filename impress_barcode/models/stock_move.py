@@ -18,6 +18,7 @@ class StockMove(models.Model):
                 "product_uom_qty",
                 "bom_line_id",
                 "description_picking",
+                "product_uom",
             ]
         )
         return res

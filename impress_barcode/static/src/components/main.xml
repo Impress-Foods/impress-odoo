@@ -28,7 +28,7 @@
                 >
                     <LineComponent
                         line="line"
-                        displayUOM="groups.group_uom"
+                        displayUOM="true"
                         editLine.bind="onOpenProductPage"
                     />
                 </t>
