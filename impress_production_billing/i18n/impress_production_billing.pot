@@ -192,7 +192,7 @@ msgstr ""
 #. module: impress_production_billing
 #. odoo-python
 #: code:addons/impress_production_billing/models/mrp_production.py:0
-msgid "No Sale Order found withreference %s"
+msgid "No Sale Order found with reference %s"
 msgstr ""
 
 #. module: impress_production_billing
