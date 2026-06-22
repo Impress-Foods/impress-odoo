@@ -12,8 +12,8 @@
         <field name="priority">16</field>
         <field name="arch" type="xml">
             <xpath expr="//div[@name='bom_div']" position="after">
-                <field name="x_related_project" invisible='not x_related_project' />
-                <field name="x_related_task" invisible='not x_related_task' />
+                <!-- <field name="x_related_project" invisible='not x_related_project' />
+                <field name="x_related_task" invisible='not x_related_task' /> -->
             </xpath>
         </field>
     </record>
@@ -29,13 +29,12 @@
         <field name="priority">17</field>
         <field name="arch" type="xml">
             <xpath expr="//div[@class='o_kanban_record_top']" position="after">
-                <field name="x_related_project" />
                 <div class='o_kanban_record_bottom oe_kanban_record_bottom_left'>
                     <span>
-                        <t
+                        <!-- <t
                             t-esc="record.x_related_project.raw_value"
                             t-if="x_related_project"
-                        />
+                        /> -->
                     </span>
                 </div>
             </xpath>
