@@ -174,6 +174,7 @@ class CustomerPortal(portal.CustomerPortal):
         so=None,
         search="",
         search_in="all",
+        **kwargs,
     ):
         ProductionOrder = request.env["mrp.production"]
 
