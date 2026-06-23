@@ -2,10 +2,7 @@ import logging
 from collections import OrderedDict
 from operator import itemgetter
 
-import werkzeug
-
 from odoo import http
-from odoo.exceptions import AccessError, MissingError
 from odoo.http import request
 from odoo.tools import groupby as groupbyelem
 
@@ -30,60 +27,6 @@ class CustomerPortal(portal.CustomerPortal):
 
         return http.request.render(
             "impress_production_billing.portal_my_manufacturings", values
-        )
-
-    @http.route(
-        "/my/manufacturings/<int:manufacturing_id>",
-        type="http",
-        auth="user",
-        methods=["GET"],
-        website=True,
-    )
-    def portal_my_manufacturing(self, manufacturing_id):
-        try:
-            self._document_check_access("mrp.production", manufacturing_id)
-        except (AccessError, MissingError):
-            return request.redirect("/my")
-
-        manufacturing = request.env["mrp.production"].browse(manufacturing_id)
-        return request.render(
-            "impress_production_billing.manufacturing_portal",  # type: ignore
-            {"manufacturing": manufacturing},
-        )
-
-    @http.route(
-        "/my/manufacturings/<int:manufacturing_id>/manufacturing_portal",
-        type="http",
-        auth="user",
-        methods=["GET"],
-    )
-    def render_manufacturing_backend_view(self, manufacturing_id):
-        try:
-            manufacturing = self._document_check_access(
-                "mrp.production", manufacturing_id
-            )
-        except (AccessError, MissingError) as err:
-            raise werkzeug.exceptions.NotFound from err  # type: ignore
-
-        session_info = request.env["ir.http"].session_info()
-        production_company = manufacturing.company_id  # type: ignore
-        session_info.update(
-            action_name="impress_production_billing.manufacturing_portal_view_production_action",
-            manufacturing_id=manufacturing.id,
-            user_companies={
-                "current_company": production_company.id,
-                "allowed_companies": {
-                    production_company.id: {
-                        "id": production_company.id,
-                        "name": production_company.name,
-                    },
-                },
-            },
-        )
-
-        return request.render(
-            "impress_production_billing.manufacturing_portal_embed",  # type: ignore
-            {"session_info": session_info},
         )
 
     def _get_searchbar_filters(self):

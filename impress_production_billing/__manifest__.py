@@ -11,21 +11,10 @@
         "security/ir.model.access.csv",
         "views/mrp_bom_views.xml",
         "views/mrp_production_views.xml",
-        "views/portal/portal_mrp_production_views.xml",
         "views/portal/portal_production.xml",
         "views/portal/portal_sale_order_views.xml",
         "views/sale_order_views.xml",
     ],
-    "assets": {
-        "web.assets_frontend": [
-            "impress_production_billing/static/src/scss/manufacturing_portal.scss",
-        ],
-        "impress_production_billing.webclient": [
-            ("include", "web.assets_backend"),
-            ("remove", "web/static/src/start.js"),
-            "impress_production_billing/static/src/manufacturing_portal/*",
-        ],
-    },
     "installable": True,
     "license": "GPL-2",
 }
