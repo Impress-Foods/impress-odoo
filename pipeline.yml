@@ -19,8 +19,8 @@ module_whitelist:
   - mrp_bom_tracking
   - mrp_production_back_to_draft
   # partner-contact
-  - base_location
-  - base_country_state_translatable
+  # - base_location
+  # - base_country_state_translatable
   # - base_location_geonames_import
   - partner_store
   # product-variant
@@ -33,7 +33,7 @@ module_whitelist:
   - mail_debranding
   - website_debranding
   # server-tools
-  - auditlog
+  #- auditlog
   - sentry
   # server-ux
   - base_optional_quick_create
