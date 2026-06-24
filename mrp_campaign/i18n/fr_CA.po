@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20260219\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-24 16:20+0000\n"
-"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"PO-Revision-Date: 2026-06-24 19:04+0000\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/mrp_campaign/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -325,8 +325,8 @@ msgid ""
 "(Requested: %(new_quantity)s, Fixed Produced: %(fixed_qty_produced)s)"
 msgstr ""
 "Impossible d'ajuster une quantité moindre que celle produite par les "
-"productions existantes dans les états 'En Cours' et 'Complétée'. (Demandée: "
-"%(new_quantity)s, Produite: %(fixed_qty_produced)s)"
+"productions existantes dans les états 'En Cours' et 'Complétée'. (Demandée: %"
+"(new_quantity)s, Produite: %(fixed_qty_produced)s)"
 
 #. module: mrp_campaign
 #. odoo-python
@@ -1232,8 +1232,8 @@ msgid ""
 "Trying to assign a larger quantity than required (%(assigned)d > %(demand)d)."
 "assigned"
 msgstr ""
-"Tentative d'assigner une quantité plus grande que requise (%(assigned)d > "
-"%(demand)d)"
+"Tentative d'assigner une quantité plus grande que requise (%(assigned)d > %"
+"(demand)d)"
 
 #. module: mrp_campaign
 #. odoo-python
