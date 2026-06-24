@@ -386,7 +386,9 @@ class ObiboxProvider:
             next_date += timedelta(weeks=1)
         return next_date
 
-    def _get_pickup_date(self, date: datetime, carrier: DeliveryCarrier) -> datetime:
+    def _get_pickup_date(
+        self, cuurrent_date: datetime, carrier: DeliveryCarrier
+    ) -> datetime:
         schedules = carrier.schedule_ids
         if not schedules:
             raise ValueError(
@@ -399,9 +401,9 @@ class ObiboxProvider:
         next_pickups: list[date] = []
         for schedule in schedules:
             pickup = self._get_next_pickup_date(
-                date.date(), schedule.pickup_day, schedule.pickup_hour
+                cuurrent_date.date(), schedule.pickup_day, schedule.pickup_hour
             )
-            if pickup >= date.date():
+            if pickup >= cuurrent_date.date():
                 next_pickups.append(pickup)
 
         if not next_pickups:

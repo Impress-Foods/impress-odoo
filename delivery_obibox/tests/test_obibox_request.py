@@ -308,6 +308,96 @@ class TestObiboxRequest(TestDeliveryCommon):
         date = self.sr._get_pickup_date(picking_date, self.obibox_method)
         self.assertEqual(expected_date, date)
 
+    @freeze_time(
+        datetime(
+            2025,
+            7,
+            17,
+            10,
+            30,
+        )
+    )
+    def test_get_pickup_date_multiple_pickups(self):
+        method = self.env["delivery.carrier"].create(
+            {
+                "name": "Obibox",
+                "delivery_type": "obibox",
+                "integration_level": "rate_and_ship",
+                "product_id": self.obibox_method.product_id.id,
+                "obibox_api_key": "test_api_key",
+                "obibox_username": "test_username",
+                "obibox_label_format": "zpl",
+                "schedule_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "pickup_day": "wed",
+                            "pickup_hour": 15,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "pickup_day": "fri",
+                            "pickup_hour": 15,
+                        },
+                    ),
+                ],
+            }
+        )
+
+        picking_date = datetime(year=2025, month=7, day=17)
+        expected_date = datetime(year=2025, month=7, day=18)
+        date = self.sr._get_pickup_date(picking_date, method)
+        self.assertEqual(expected_date, date)
+
+    @freeze_time(
+        datetime(
+            2025,
+            7,
+            17,
+            10,
+            30,
+        )
+    )
+    def test_get_pickup_date_multiple_pickups_week_rollover(self):
+        method = self.env["delivery.carrier"].create(
+            {
+                "name": "Obibox",
+                "delivery_type": "obibox",
+                "integration_level": "rate_and_ship",
+                "product_id": self.obibox_method.product_id.id,
+                "obibox_api_key": "test_api_key",
+                "obibox_username": "test_username",
+                "obibox_label_format": "zpl",
+                "schedule_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "pickup_day": "wed",
+                            "pickup_hour": 15,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "pickup_day": "mon",
+                            "pickup_hour": 15,
+                        },
+                    ),
+                ],
+            }
+        )
+
+        picking_date = datetime(year=2025, month=7, day=17)
+        expected_date = datetime(year=2025, month=7, day=21)
+        date = self.sr._get_pickup_date(picking_date, method)
+        self.assertEqual(expected_date, date)
+
     def test_make_destination_fallback_sibling_billing(self):
         """Test fallback to billing info when Shipping and Billing are siblings."""
         # Create Main Customer
