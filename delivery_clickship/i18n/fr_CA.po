@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-22 12:16+0000\n"
-"Last-Translator: cparadis <cparadis@impressfoods.com>\n"
+"PO-Revision-Date: 2026-06-24 15:34+0000\n"
+"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/delivery_clickship/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -208,7 +208,7 @@ msgstr "Mis à jour par"
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_rate__write_date
 #: model:ir.model.fields,field_description:delivery_clickship.field_wizard_clickship_rates__write_date
 msgid "Last Updated on"
-msgstr "Mis à jour le"
+msgstr "Dernière mise à jour le"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_payment_method__name

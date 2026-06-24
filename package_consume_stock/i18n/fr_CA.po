@@ -6,43 +6,110 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-21 19:59+0000\n"
+"PO-Revision-Date: 2026-06-24 16:20+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
-"Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
+"Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/package_consume_stock/fr_CA/>\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 2026.5\n"
 
 #. module: package_consume_stock
-#: model:ir.model.fields,field_description:package_consume_stock.field_stock_quant_package__material_added
+#. odoo-python
+#: code:addons/package_consume_stock/models/stock_package_material.py:0
+msgid "Could not get or create packaging move for %(mat)s in %(picking)s"
+msgstr ""
+"Échec lors de l'obtention ou de la création du mouvement d'emballage for %"
+"(mat)s dans %(picking)s"
+
+#. module: package_consume_stock
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_material__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: package_consume_stock
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_material__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: package_consume_stock
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_move_line__display_name
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package__display_name
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_material__display_name
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_type__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
+
+#. module: package_consume_stock
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_type__has_packaging_material
+msgid "Has Packaging Material"
+msgstr "A du matériel d'emballage"
+
+#. module: package_consume_stock
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_move_line__id
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package__id
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_material__id
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_type__id
+msgid "ID"
+msgstr "ID"
+
+#. module: package_consume_stock
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_material__write_uid
+msgid "Last Updated by"
+msgstr "Mis à jour par"
+
+#. module: package_consume_stock
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_material__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: package_consume_stock
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_material__location_id
+msgid "Location"
+msgstr "Localisation"
+
+#. module: package_consume_stock
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package__material_added
 msgid "Material Added"
 msgstr "Matériel ajouté"
 
 #. module: package_consume_stock
-#: model:ir.model,name:package_consume_stock.model_stock_quant_package
-msgid "Packages"
+#: model:ir.model,name:package_consume_stock.model_stock_package_material
+msgid "Material to be added to a package"
+msgstr "Matériel à ajouter au colis"
+
+#. module: package_consume_stock
+#: model:ir.model,name:package_consume_stock.model_stock_package
+msgid "Package"
 msgstr "Colis"
 
 #. module: package_consume_stock
-#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_type__packaging_material_id
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_type__packaging_material_ids
 msgid "Packaging Material"
 msgstr "Matériel d'emballage"
 
 #. module: package_consume_stock
-#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_type__source_location_id
-msgid "Source Location"
-msgstr "Emplacement d'origine"
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_material__product_id
+msgid "Product"
+msgstr "Produit"
+
+#. module: package_consume_stock
+#: model:ir.model,name:package_consume_stock.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movements de stock (Stock Move Line)"
+
+#. module: package_consume_stock
+#: model:ir.model.fields,field_description:package_consume_stock.field_stock_package_material__quantity
+msgid "Quantity"
+msgstr "Quantité"
 
 #. module: package_consume_stock
 #: model:ir.model,name:package_consume_stock.model_stock_package_type
 msgid "Stock package type"
 msgstr "Type de paquet"
 
-#. module: package_consume_stock
-#: model:ir.model,name:package_consume_stock.model_stock_picking
-msgid "Transfer"
-msgstr "Transfert"
+#~ msgid "Transfer"
+#~ msgstr "Transfert"

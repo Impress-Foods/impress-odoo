@@ -141,14 +141,31 @@ msgid "Certificate of Analysis"
 msgstr ""
 
 #. module: impress_stock_worksheets
-#: model:ir.model.fields,field_description:impress_stock_worksheets.receipt_qc_general_20260525_x_coa_comment
-#: model:ir.model.fields,field_description:impress_stock_worksheets.receipt_qc_general_20260525_x_expiration_date_comment
-#: model:ir.model.fields,field_description:impress_stock_worksheets.receipt_qc_general_20260525_x_product_state_comment
-#: model:ir.model.fields,field_description:impress_stock_worksheets.receipt_qc_general_20260525_x_sample_comment
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20250114_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_delivery_20260619_form_view
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_20250114_form_view
+#: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_qc_general_20260525_form_view
 msgid "Comments"
+msgstr ""
+
+#. module: impress_stock_worksheets
+#: model:ir.model.fields,field_description:impress_stock_worksheets.receipt_qc_general_20260525_x_coa_comment
+msgid "Comments (COA)"
+msgstr ""
+
+#. module: impress_stock_worksheets
+#: model:ir.model.fields,field_description:impress_stock_worksheets.receipt_qc_general_20260525_x_expiration_date_comment
+msgid "Comments (expiration date)"
+msgstr ""
+
+#. module: impress_stock_worksheets
+#: model:ir.model.fields,field_description:impress_stock_worksheets.receipt_qc_general_20260525_x_product_state_comment
+msgid "Comments (product state)"
+msgstr ""
+
+#. module: impress_stock_worksheets
+#: model:ir.model.fields,field_description:impress_stock_worksheets.receipt_qc_general_20260525_x_sample_comment
+msgid "Comments (sample)"
 msgstr ""
 
 #. module: impress_stock_worksheets
