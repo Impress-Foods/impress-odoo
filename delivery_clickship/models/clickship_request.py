@@ -174,7 +174,7 @@ class ClickshipProvider:
                         access_url, data=payload, headers=headers, timeout=30
                     )
                 case _:
-                    _logger.warning(f"Unsupported method: {method}")
+                    self.debug_logger(f"Unsupported method: {method}")
                     return {
                         "errors": {
                             "method": "Unsupported method: %s" % method,
