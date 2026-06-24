@@ -166,7 +166,7 @@ class ObiboxProvider:
                         timeout=30,
                     )
                 case _:
-                    _logger.warning(f"Unsupported method: {method}")
+                    self.debug_logger(f"Unsupported method: {method}")
                     return {"errors": {"method": f"Unsupported method: {method}"}}
 
             response_json = response.json()
@@ -178,8 +178,9 @@ class ObiboxProvider:
             return response_json
 
         except requests.exceptions.ConnectionError as error:
-            _logger.warning(
-                f"Connection Error: {error} with the given URL: {access_url}"
+            self.debug_logger(
+                f"Connection Error: {error} with the given URL: {access_url}",
+                "obibox_request",
             )
             return {
                 "errors": {
@@ -187,7 +188,7 @@ class ObiboxProvider:
                 }
             }
         except json.decoder.JSONDecodeError as error:
-            _logger.warning(f"JSONDecodeError: {error}")
+            self.debug_logger(f"JSON Decode Issue: {error}", "obibox_request")
             return {"errors": {"JSONDecodeError": str(error)}}
 
     def _get_rate(self, data: RateRequest) -> Rate:
@@ -200,7 +201,7 @@ class ObiboxProvider:
             else:
                 raise KeyError
         except KeyError as e:
-            _logger.error(response)
+            self.debug_logger(f"Rate not found: {e}", "obibox_request")
             raise ValidationError(self.env._("Rate not found: %s", e)) from e
         return res
 

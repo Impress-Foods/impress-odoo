@@ -57,26 +57,41 @@
                                 <field name="notes" />
                             </group>
                             <group>
-                                <field name="ferrous" invisible="not ferrous" />
-                                <field name="non_ferrous" invisible="not non_ferrous" />
-                                <field name='stainless' invisible="not stainless" />
+                                <field
+                                    name="ferrous"
+                                    invisible="not ferrous"
+                                    string="Ferrous (2.0mm)"
+                                />
+                                <field
+                                    name="non_ferrous"
+                                    invisible="not non_ferrous"
+                                    string="Non ferrous (2.5 mm)"
+                                />
+                                <field
+                                    name='stainless'
+                                    invisible=" not stainless"
+                                    string="Stainless (3.5 mm)"
+                                />
                                 <field
                                     name="ferrous_large"
                                     invisible="not ferrous_large"
+                                    string="Ferrous (2.0mm)"
                                 />
                                 <field
                                     name="non_ferrous_large"
                                     invisible="not non_ferrous_large"
+                                    string="Non ferrous (3.0 mm)"
                                 />
                                 <field
                                     name='stainless_large'
                                     invisible="not stainless_large"
+                                    string="Stainless (4.0 mm)"
                                 />
                                 <field name="start_date" />
                                 <field
                                     name="signature"
                                     widget="signature"
-                                    options="{'size':[0,90]}"
+                                    options="{'size' :[0,90]}"
                                 />
                             </group>
                         </group>
@@ -100,7 +115,7 @@
                         string="Name"
                         name="sequence"
                         domain="[]"
-                        context="{'group_by':'sequence'}"
+                        context="{'group_by' :'sequence' }"
                     />
                 </group>
             </search>
