@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-13 21:21+0000\n"
 "PO-Revision-Date: 2026-06-24 19:04+0000\n"
-"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/impress_stock_worksheets/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -366,8 +366,7 @@ msgstr "Date de production/expiration concorde l'entente avec le fournisseur?"
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_qc_meat_20260522_form_view
 msgid "Provenance of product: canadian or foreign with import certificate."
-msgstr ""
-"Provenance des produits: canadien ou étranger avec certificat d'import."
+msgstr "Provenance des produits: canadien ou étranger avec certificat d'import."
 
 #. module: impress_stock_worksheets
 #: model:ir.model.fields,field_description:impress_stock_worksheets.receipt_qc_general_20260525_x_sample
