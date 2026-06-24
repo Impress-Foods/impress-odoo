@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-24 19:04+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-06-24 20:15+0000\n"
+"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/delivery_obibox/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -27,13 +27,13 @@ msgstr "Transporteur"
 #. odoo-python
 #: code:addons/delivery_obibox/models/obibox_request.py:0
 msgid "Carrier %(name)s doesn't have any pickup schedules configured"
-msgstr ""
+msgstr "Transporteur %(name)s n'a pas d'horaire de ramassage de configuré"
 
 #. module: delivery_obibox
 #. odoo-python
 #: code:addons/delivery_obibox/models/obibox_request.py:0
 msgid "Carrier %(name)s doesn't have any schedules in the future"
-msgstr ""
+msgstr "Le transporteur %(name)s n'a pas de ramassage dans le futur"
 
 #. module: delivery_obibox
 #: model:ir.model,name:delivery_obibox.model_res_partner
@@ -118,7 +118,7 @@ msgstr "Lundi"
 #. module: delivery_obibox
 #: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__next_pickup
 msgid "Next Pickup"
-msgstr ""
+msgstr "Prochain ramassage"
 
 #. module: delivery_obibox
 #: model:delivery.carrier,name:delivery_obibox.delivery_carrier_obibox
@@ -167,27 +167,27 @@ msgstr "PDF"
 #. module: delivery_obibox
 #: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__pickup_day
 msgid "Pickup Day"
-msgstr ""
+msgstr "Journée du ramassage"
 
 #. module: delivery_obibox
 #: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__pickup_hour
 msgid "Pickup Hour"
-msgstr ""
+msgstr "Heure de ramassage"
 
 #. module: delivery_obibox
 #: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__display_pickup_hour
 msgid "Pickup Time"
-msgstr ""
+msgstr "Heure de ramassage"
 
 #. module: delivery_obibox
 #: model:ir.model.constraint,message:delivery_obibox.constraint_obibox_delivery_schedule_check_pickup_hour
 msgid "Pickup hour must be between 0 and 23"
-msgstr ""
+msgstr "L'heure de ramassage doit être entre 0 et 23"
 
 #. module: delivery_obibox
 #: model:ir.model,name:delivery_obibox.model_obibox_delivery_schedule
 msgid "Pickup schedule for obibox"
-msgstr ""
+msgstr "Horaire de ramassage pour Obibox"
 
 #. module: delivery_obibox
 #: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__delivery_type
@@ -203,7 +203,7 @@ msgstr "Taux manquants: %s"
 #. module: delivery_obibox
 #: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__schedule_ids
 msgid "Schedule"
-msgstr ""
+msgstr "Horaire"
 
 #. module: delivery_obibox
 #: model:ir.model.fields,help:delivery_obibox.field_obibox_delivery_schedule__pickup_day
