@@ -190,9 +190,9 @@ class ClickshipProvider:
             return response_json
 
         except requests.exceptions.ConnectionError as error:
-            _logger.warning(
-                "Connection Error: %(error) with the given URL: %(url)",
-                {"error": error, "url": access_url},
+            self.debug_logger(
+                f"Connection Error: {error} with the given URL: {access_url}",
+                "clickship_request",
             )
             return {
                 "errors": {
@@ -200,7 +200,7 @@ class ClickshipProvider:
                 }
             }
         except json.decoder.JSONDecodeError as error:
-            _logger.warning(f"JSONDecodeError: {error}")
+            self.debug_logger(f"JSON Decode Issue: {error}", "clickship_request")
             return {"errors": {"JSONDecodeError": str(error)}}
 
     def _post_request_rate(self, data: RateRequestData) -> str:
