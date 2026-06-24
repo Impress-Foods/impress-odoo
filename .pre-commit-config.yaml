@@ -57,7 +57,7 @@ repos:
           - --repo-name=impress-odoo
           - --if-source-changed
           - --keep-source-digest
-      - id: oca-gen-external-dependencies
+      # - id: oca-gen-external-dependencies
   - repo: https://github.com/OCA/odoo-pre-commit-hooks
     rev: v0.1.7
     hooks:

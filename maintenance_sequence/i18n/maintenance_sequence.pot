@@ -35,11 +35,6 @@ msgid "New"
 msgstr ""
 
 #. module: maintenance_sequence
-#: model_terms:ir.ui.view,arch_db:maintenance_sequence.view_maintenance_request_search
-msgid "Request"
-msgstr ""
-
-#. module: maintenance_sequence
 #: model:ir.model.fields,field_description:maintenance_sequence.field_maintenance_request__sequence
 msgid "Sequence"
 msgstr ""

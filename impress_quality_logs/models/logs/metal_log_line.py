@@ -30,9 +30,9 @@ class MetalLogLine(models.Model):
     non_ferrous = fields.Integer("Non ferrous (2.5 mm)")
     stainless = fields.Integer("Stainless (3.5 mm)")
 
-    ferrous_large = fields.Integer("Ferrous (2.0 mm)")
-    non_ferrous_large = fields.Integer("Non ferrous (3.0 mm)")
-    stainless_large = fields.Integer("Stainless (4.0 mm)")
+    ferrous_large = fields.Integer("Ferrous large (2.0 mm)")
+    non_ferrous_large = fields.Integer("Non ferrous large (3.0 mm)")
+    stainless_large = fields.Integer("Stainless large (4.0 mm)")
 
     torque = fields.Integer()
     mean_weight = fields.Float()

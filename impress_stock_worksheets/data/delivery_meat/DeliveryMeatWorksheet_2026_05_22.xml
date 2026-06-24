@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-model href="https://raw.githubusercontent.com/odoo/odoo/refs/heads/19.0/odoo/import_xml.rng" type="application/XML"?>
+<odoo>
+    <!-- Create a new Worksheet Template -->
+    <record id="ws_delivery_meat_20260522" model="worksheet.template">
+        <field name="name">Worksheet delivery Meat 2026-05-22</field>
+        <field name="res_model">quality.check</field>
+    </record>
+
+    <record id="delivery_meat_20260522_x_heavy_metals_analysis" model="ir.model.fields">
+        <field name="name">x_heavy_metals_analysis</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_stock_worksheets.ws_delivery_meat_20260522').model_id"
+        />
+        <field name="ttype">selection</field>
+        <field
+            name="selection"
+        >[('true', 'Conforme'), ('false', 'Non Conforme'), ('na','N/A')]</field>
+    </record>
+
+    <record id="delivery_meat_20260522_x_pathogens_analysis" model="ir.model.fields">
+        <field name="name">x_pathogens_analysis</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_stock_worksheets.ws_delivery_meat_20260522').model_id"
+        />
+        <field name="ttype">selection</field>
+        <field
+            name="selection"
+        >[('true', 'Conforme'), ('false', 'Non Conforme'),('na','N/A')]</field>
+    </record>
+
+    <record id="delivery_meat_20260522_x_export_labeling" model="ir.model.fields">
+        <field name="name">x_export_labeling</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_stock_worksheets.ws_delivery_meat_20260522').model_id"
+        />
+        <field name="ttype">selection</field>
+        <field
+            name="selection"
+        >[('true', 'Conforme'), ('false', 'Non Conforme'),('na','N/A')]</field>
+    </record>
+
+    <record id="delivery_meat_20260522_x_acia_inspection" model="ir.model.fields">
+        <field name="name">x_acia_inspection</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_stock_worksheets.ws_delivery_meat_20260522').model_id"
+        />
+        <field name="ttype">selection</field>
+        <field name="selection">[('true', 'Accepté'), ('false', 'Refusé')]</field>
+    </record>
+</odoo>

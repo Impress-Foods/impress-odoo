@@ -13,6 +13,7 @@ class ProductProduct(models.Model):
         string="Maintenance Equipments",
     )
     vendor_code = fields.Char(compute="_compute_vendor_code", store=True)
+    current_vendor_code = fields.Char(compute="_compute_current_vendor_code")
 
     @api.depends("seller_ids", "seller_ids.product_code")
     def _compute_vendor_code(self):
@@ -22,6 +23,23 @@ class ProductProduct(models.Model):
                 product.vendor_code = vendor.product_code
             else:
                 product.vendor_code = False
+
+    def _compute_current_vendor_code(self):
+        order_id = self.env["purchase.order"].browse(
+            self.env.context.get("product_catalog_order_id", False)
+        )
+        for record in self:
+            if order_id:
+                supplier_ids = record.seller_ids.filtered_domain(
+                    [("partner_id", "=", order_id.partner_id.id)]
+                ).sorted("sequence")
+
+                if supplier_ids:
+                    record.current_vendor_code = supplier_ids[0].product_code
+                else:
+                    record.current_vendor_code = False
+            else:
+                record.current_vendor_code = False
 
 
 class ProductTemplate(models.Model):

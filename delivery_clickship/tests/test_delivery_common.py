@@ -9,7 +9,9 @@ class TestDeliveryCommon(common.TransactionCase):
     def setUp(self):
         super().setUp()
         self.sr = ClickshipProvider(
-            debug_logger=lambda msg, name: None,
+            debug_logger=self.env.ref(
+                "delivery_clickship.delivery_carrier_clickship"
+            ).log_xml,
             env=self.env,
             prod_environment=False,
             token="test_token",

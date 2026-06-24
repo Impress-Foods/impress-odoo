@@ -1,4 +1,3 @@
-import logging
 from unittest.mock import patch
 
 from odoo.tests import common
@@ -6,8 +5,6 @@ from odoo.tests import common
 from odoo.addons.base.models.res_partner import ResPartner
 from odoo.addons.sale.models.sale_order import SaleOrder
 from odoo.addons.sale.models.sale_order_line import SaleOrderLine
-
-_logger = logging.getLogger(__name__)
 
 
 class TestSaleOrder(common.TransactionCase):
@@ -141,13 +138,20 @@ class TestSaleOrder(common.TransactionCase):
     def test_auto_select_carrier_outside_domain(self) -> None:
         sale_order = self.setup_sale_order(self.partner_G2)
         sale_order.origin = "something else"
-        _logger.warning(sale_order._compute_propagate_auto_carrier_id())
+        sale_order._compute_auto_selected_carrier_id()
         sale_order.action_confirm()
         self.assertEqual(sale_order.auto_selected_carrier_id, self.carrier_model)
 
-    def test_auto_select_carrier_top_prority(self) -> None:
+    def test_auto_select_carrier_top_priority(self) -> None:
         sale_order = self.setup_sale_order(self.partner_G2)
         sale_order.action_confirm()
+        self.assertEqual(sale_order.auto_selected_carrier_id, self.carrier_G2)
+
+    def test_auto_select_carrier_manual(self) -> None:
+        sale_order = self.setup_sale_order(self.partner_G2)
+        sale_order.action_confirm()
+        sale_order.auto_selected_carrier_id = False
+        sale_order.action_auto_select_carrier()
         self.assertEqual(sale_order.auto_selected_carrier_id, self.carrier_G2)
 
     def test_auto_select_carrier_lower_priority(self) -> None:
@@ -173,10 +177,10 @@ class TestSaleOrder(common.TransactionCase):
         self.assertEqual(picking.carrier_id, self.carrier_model)
 
     @patch(
-        "odoo.addons.delivery_auto_select_carrier.models.sale_order.SaleOrder._get_auto_select_carriers"
+        "odoo.addons.delivery.models.delivery_carrier.DeliveryCarrier.available_carriers"
     )
-    def test_no_auto_select_carriers(self, mock_get_auto_select_carriers):
-        mock_get_auto_select_carriers.return_value = self.carrier_model
+    def test_no_auto_select_carriers(self, mock_available_carriers):
+        mock_available_carriers.return_value = self.carrier_model
 
         sale_order = self.setup_sale_order(self.partner_J)
         sale_order.action_confirm()

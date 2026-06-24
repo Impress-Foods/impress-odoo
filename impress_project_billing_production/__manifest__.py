@@ -9,16 +9,12 @@
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "license": "LGPL-3",
     "depends": [
-        "base",
         "base_automation",
-        "account",
-        "product",
-        "analytic",
-        "project",
         "mrp",
         "timesheet_grid",
         "account_accountant",
         "sale_management",
+        "sale_project",
     ],
     "data": [
         "views/sale_order_views.xml",

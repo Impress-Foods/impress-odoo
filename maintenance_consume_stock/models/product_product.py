@@ -9,8 +9,7 @@ class ProductProduct(models.Model):
     _inherit = "product.product"
 
     def _compute_display_name(self):
-        # pylint: disable=W8110
-        super()._compute_display_name()
+        res = super()._compute_display_name()
         if self.env.context.get("global_vendor_search", False):
             for product in self:
                 supplier_rules = product.seller_ids + product.variant_seller_ids
@@ -21,8 +20,13 @@ class ProductProduct(models.Model):
                         if isinstance(x, str)
                     ]
                     if vendor_codes:
-                        formatted_vendor_codes = "-".join(vendor_codes)
-                        product.display_name = f"[{product.default_code}-{formatted_vendor_codes}] {product.name}"  # noqa: E501
+                        codes = []
+                        if product.default_code:
+                            codes.append(product.default_code)
+                        codes += vendor_codes
+                        formatted_codes = "] [".join(codes)
+                        product.display_name = f"[{formatted_codes}] {product.name}"
+        return res
 
     @api.model
     def name_search(self, name="", args=None, operator="ilike", limit=100):

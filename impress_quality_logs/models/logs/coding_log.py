@@ -20,7 +20,7 @@ class CodingLog(models.Model):
 
     unit_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
     sleeve_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
-    case_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
+    case_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok"), ("na", "N/A")])
     subunit_check = fields.Selection(
         [("ok", "Ok"), ("not_ok", "Not Ok"), ("na", "N/A")]
     )

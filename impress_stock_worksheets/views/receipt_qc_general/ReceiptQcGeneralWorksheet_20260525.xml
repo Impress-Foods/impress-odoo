@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id='ws_receipt_qc_general_20260525_form_view' model='ir.ui.view'>
+        <field name="name">ws.receipt.qc.general.20260525.form.view</field>
+        <field
+            name="model"
+            model="ir.model"
+            eval="obj().env.ref('impress_stock_worksheets.ws_receipt_qc_general_20260525').model_id.model"
+        />
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <form create="false" js_class="worksheet_validation">
+                <sheet>
+                    <group
+                        invisible="context.get('studio') or context.get('default_x_quality_check_id')"
+                    >
+                        <group>
+                            <field name="x_quality_check_id" />
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <separator string="Product State" />
+                            <div>Description</div>
+                            <div>
+                                <ul>
+                                    <li>Acceptable sensory quality.</li>
+                                    <li
+                                    >Matches the quality of the last product purchased, or the sample approved prior to purchase. Compare.</li>
+                                </ul>
+                            </div>
+                            <field
+                                name="x_product_state"
+                                widget="selection_badge"
+                                options="{&quot;size&quot;:&quot;sm&quot;}"
+                            />
+                            <field name="x_product_state_comment" string="Comments" />
+
+                            <separator string="Sample" />
+                            <div>Description</div>
+                            <div>
+                                <ul>
+                                    <li
+                                    >Sample collected? To be done for IQF product lots, and for dry ingredients.</li>
+                                </ul>
+                            </div>
+
+                            <field
+                                name="x_sample"
+                                widget="selection_badge"
+                                options="{&quot;size&quot;:&quot;sm&quot;}"
+                            />
+                            <field name="x_sample_comment" string="Comments" />
+                        </group>
+                        <group>
+                            <separator string="Certificate of Analysis" />
+                            <div>Description</div>
+                            <div>
+                                <ul>
+                                    <li
+                                    >COA received, filed, and results compliant with specifications?</li>
+                                </ul>
+                            </div>
+                            <field
+                                name="x_coa"
+                                widget="selection_badge"
+                                options="{&quot;size&quot;:&quot;sm&quot;}"
+                            />
+                            <field name="x_coa_comment" />
+
+                            <separator string="Expiration Date" />
+                            <div>Description</div>
+                            <div>
+                                <ul>
+                                    <li
+                                    >Production/expiration date matches what was agreed with the supplier?</li>
+                                    <li
+                                    >Ingredient age not too advanced? (At least 6 months remaining, unless prior agreement with the supplier)</li>
+                                    <li
+                                    >The "Use-by date", "Best-before date", and "Alert date" for the ingredient lot have been entered into Odoo.</li>
+                                </ul>
+                            </div>
+                            <field
+                                name="x_expiration_date"
+                                widget="selection_badge"
+                                options="{&quot;size&quot;:&quot;sm&quot;}"
+                            />
+                            <field name="x_expiration_date_comment" string="Comments" />
+                        </group>
+                    </group>
+                    <group>
+                        <field
+                            name="x_signature"
+                            widget="signature"
+                            options="{&quot;size&quot;:[0,90]}"
+                        />
+                    </group>
+
+                    <div class="text-center">
+                        <strong>Pour l'utilisation exclusive de Impress Foods.</strong>
+                        <strong> Mis à jour le 25 mai 2026.</strong>
+                        <strong
+                        > Feuille de contrôle Réception Qualité - Général</strong>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

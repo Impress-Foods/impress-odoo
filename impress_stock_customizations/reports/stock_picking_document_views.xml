@@ -6,11 +6,7 @@
         <field name="inherit_id" ref="stock.report_picking" />
         <field name="priority">20</field>
         <field name="arch" type="xml">
-            <xpath expr="//div[1]" position="after" />
-            <xpath
-                expr="//div[hasclass('o_report_stockpicking_operations')][1]"
-                position="before"
-            >
+            <xpath expr="//div//div[1]" position="before">
                 <t
                     t-set="has_shelf_life"
                     t-value="any(o.mapped('move_ids.move_line_ids.lot_id.expiration_date'))"

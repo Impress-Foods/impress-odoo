@@ -4,3 +4,4 @@ from . import obibox_carrier
 from . import stock_package_type
 from . import stock_picking
 from . import pickup_schedule
+from . import res_partner
