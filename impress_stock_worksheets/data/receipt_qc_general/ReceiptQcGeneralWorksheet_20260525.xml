@@ -24,7 +24,7 @@
         model='ir.model.fields'
     >
         <field name="name">x_product_state_comment</field>
-        <field name="field_description">Comments</field>
+        <field name="field_description">Comments (product state)</field>
         <field
             name="model_id"
             model="ir.model"
@@ -51,7 +51,7 @@
         model='ir.model.fields'
     >
         <field name="name">x_expiration_date_comment</field>
-        <field name="field_description">Comments</field>
+        <field name="field_description">Comments (expiration date)</field>
         <field
             name="model_id"
             model="ir.model"
@@ -76,7 +76,7 @@
 
     <record id='receipt_qc_general_20260525_x_coa_comment' model='ir.model.fields'>
         <field name="name">x_coa_comment</field>
-        <field name="field_description">Comments</field>
+        <field name="field_description">Comments (COA)</field>
         <field
             name="model_id"
             model="ir.model"
@@ -101,7 +101,7 @@
 
     <record id='receipt_qc_general_20260525_x_sample_comment' model='ir.model.fields'>
         <field name="name">x_sample_comment</field>
-        <field name="field_description">Comments</field>
+        <field name="field_description">Comments (sample)</field>
         <field
             name="model_id"
             model="ir.model"

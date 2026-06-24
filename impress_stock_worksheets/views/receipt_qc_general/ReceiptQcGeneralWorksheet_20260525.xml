@@ -34,7 +34,7 @@
                                 widget="selection_badge"
                                 options="{&quot;size&quot;:&quot;sm&quot;}"
                             />
-                            <field name="x_product_state_comment" />
+                            <field name="x_product_state_comment" string="Comments" />
 
                             <separator string="Sample" />
                             <div>Description</div>
@@ -50,7 +50,7 @@
                                 widget="selection_badge"
                                 options="{&quot;size&quot;:&quot;sm&quot;}"
                             />
-                            <field name="x_sample_comment" />
+                            <field name="x_sample_comment" string="Comments" />
                         </group>
                         <group>
                             <separator string="Certificate of Analysis" />
@@ -85,7 +85,7 @@
                                 widget="selection_badge"
                                 options="{&quot;size&quot;:&quot;sm&quot;}"
                             />
-                            <field name="x_expiration_date_comment" />
+                            <field name="x_expiration_date_comment" string="Comments" />
                         </group>
                     </group>
                     <group>
