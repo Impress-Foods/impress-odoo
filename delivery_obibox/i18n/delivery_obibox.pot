@@ -14,8 +14,21 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__carrier_id
 #: model:ir.model.fields,field_description:delivery_obibox.field_stock_package_type__package_carrier_type
 msgid "Carrier"
+msgstr ""
+
+#. module: delivery_obibox
+#. odoo-python
+#: code:addons/delivery_obibox/models/obibox_request.py:0
+msgid "Carrier %(name)s doesn't have any pickup schedules configured"
+msgstr ""
+
+#. module: delivery_obibox
+#. odoo-python
+#: code:addons/delivery_obibox/models/obibox_request.py:0
+msgid "Carrier %(name)s doesn't have any schedules in the future"
 msgstr ""
 
 #. module: delivery_obibox
@@ -41,7 +54,18 @@ msgid "Create a Customer"
 msgstr ""
 
 #. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: delivery_obibox
 #: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__display_name
 #: model:ir.model.fields,field_description:delivery_obibox.field_res_partner__display_name
 #: model:ir.model.fields,field_description:delivery_obibox.field_stock_package_type__display_name
 #: model:ir.model.fields,field_description:delivery_obibox.field_stock_picking__display_name
@@ -54,12 +78,13 @@ msgid "Format of the label to be printed."
 msgstr ""
 
 #. module: delivery_obibox
-#: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__obibox_delivery_day__fri
+#: model:ir.model.fields.selection,name:delivery_obibox.selection__obibox_delivery_schedule__pickup_day__fri
 msgid "Friday"
 msgstr ""
 
 #. module: delivery_obibox
 #: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__id
 #: model:ir.model.fields,field_description:delivery_obibox.field_res_partner__id
 #: model:ir.model.fields,field_description:delivery_obibox.field_stock_package_type__id
 #: model:ir.model.fields,field_description:delivery_obibox.field_stock_picking__id
@@ -72,8 +97,23 @@ msgid "Label Format"
 msgstr ""
 
 #. module: delivery_obibox
-#: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__obibox_delivery_day__mon
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields.selection,name:delivery_obibox.selection__obibox_delivery_schedule__pickup_day__mon
 msgid "Monday"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__next_pickup
+msgid "Next Pickup"
 msgstr ""
 
 #. module: delivery_obibox
@@ -101,11 +141,6 @@ msgid "Obibox Coverage Checked"
 msgstr ""
 
 #. module: delivery_obibox
-#: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__obibox_delivery_day
-msgid "Obibox Delivery Day"
-msgstr ""
-
-#. module: delivery_obibox
 #: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__obibox_api_key
 msgid "Obibox Key"
 msgstr ""
@@ -126,6 +161,31 @@ msgid "PDF"
 msgstr ""
 
 #. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__pickup_day
+msgid "Pickup Day"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__pickup_hour
+msgid "Pickup Hour"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__display_pickup_hour
+msgid "Pickup Time"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.constraint,message:delivery_obibox.constraint_obibox_delivery_schedule_check_pickup_hour
+msgid "Pickup hour must be between 0 and 23"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model,name:delivery_obibox.model_obibox_delivery_schedule
+msgid "Pickup schedule for obibox"
+msgstr ""
+
+#. module: delivery_obibox
 #: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__delivery_type
 msgid "Provider"
 msgstr ""
@@ -137,7 +197,12 @@ msgid "Rate not found: %s"
 msgstr ""
 
 #. module: delivery_obibox
-#: model:ir.model.fields,help:delivery_obibox.field_delivery_carrier__obibox_delivery_day
+#: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__schedule_ids
+msgid "Schedule"
+msgstr ""
+
+#. module: delivery_obibox
+#: model:ir.model.fields,help:delivery_obibox.field_obibox_delivery_schedule__pickup_day
 msgid "Select the day when the package will be picked up."
 msgstr ""
 
@@ -152,7 +217,7 @@ msgid "Stock package type"
 msgstr ""
 
 #. module: delivery_obibox
-#: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__obibox_delivery_day__thu
+#: model:ir.model.fields.selection,name:delivery_obibox.selection__obibox_delivery_schedule__pickup_day__thu
 msgid "Thursday"
 msgstr ""
 
@@ -162,12 +227,12 @@ msgid "Transfer"
 msgstr ""
 
 #. module: delivery_obibox
-#: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__obibox_delivery_day__tue
+#: model:ir.model.fields.selection,name:delivery_obibox.selection__obibox_delivery_schedule__pickup_day__tue
 msgid "Tuesday"
 msgstr ""
 
 #. module: delivery_obibox
-#: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__obibox_delivery_day__wed
+#: model:ir.model.fields.selection,name:delivery_obibox.selection__obibox_delivery_schedule__pickup_day__wed
 msgid "Wednesday"
 msgstr ""
 
