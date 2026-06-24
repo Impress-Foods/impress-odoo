@@ -1,6 +1,6 @@
 import json
 import logging
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from typing import Any
 
 import requests
@@ -14,6 +14,7 @@ from odoo.orm.environments import Environment
 
 from odoo.addons.base.models.res_company import ResCompany
 from odoo.addons.base.models.res_partner import ResPartner
+from odoo.addons.delivery.models.delivery_carrier import DeliveryCarrier
 from odoo.addons.product.models.uom_uom import UomUom
 from odoo.addons.sale.models.sale_order import SaleOrder
 from odoo.addons.stock.models.stock_package import StockPackage
@@ -29,7 +30,6 @@ from .schema import (
 )
 
 _logger = logging.getLogger(__name__)
-
 days = {"mon": 0, "tue": 1, "wed": 2, "thu": 3, "fri": 4}
 
 
@@ -304,9 +304,8 @@ class ObiboxProvider:
 
         phone, email = self._get_contact_info(picking)
 
-        pickup_date = self._get_pickup_date(
-            picking.date_done, picking.carrier_id.obibox_delivery_day
-        )
+        pickup_date = self._get_pickup_date(picking.date_done, picking.carrier_id)
+
         data = ShippingRequestMulti(
             order_ref_number=self._get_order_ref(picking),
             from_address1=from_address["address1"],
@@ -378,10 +377,41 @@ class ObiboxProvider:
         )
         return data
 
-    def _get_pickup_date(self, date: datetime, delivery_day: str) -> datetime:
-        next_delivery_day = date + relativedelta(weekday=days[delivery_day])
-        today = datetime.today()
-        if next_delivery_day.date() == today.date():
-            if today.hour >= (15 + 4):  # Add UTC <-> EST offset
-                next_delivery_day = next_delivery_day + timedelta(weeks=1)
-        return next_delivery_day
+    @staticmethod
+    def _get_next_pickup_date(
+        from_date: date, pickup_day: str, pickup_hour: int
+    ) -> date:
+        next_date = from_date + relativedelta(weekday=days[pickup_day])
+        if next_date == from_date and datetime.now().hour >= pickup_hour:
+            next_date += timedelta(weeks=1)
+        return next_date
+
+    def _get_pickup_date(
+        self, cuurrent_date: datetime, carrier: DeliveryCarrier
+    ) -> datetime:
+        schedules = carrier.schedule_ids
+        if not schedules:
+            raise ValueError(
+                self.env._(
+                    "Carrier %(name)s doesn't have any pickup schedules configured",
+                    name=carrier.display_name,
+                )
+            )
+
+        next_pickups: list[date] = []
+        for schedule in schedules:
+            pickup = self._get_next_pickup_date(
+                cuurrent_date.date(), schedule.pickup_day, schedule.pickup_hour
+            )
+            if pickup >= cuurrent_date.date():
+                next_pickups.append(pickup)
+
+        if not next_pickups:
+            raise ValueError(
+                self.env._(
+                    "Carrier %(name)s doesn't have any schedules in the future",
+                    name=carrier.display_name,
+                )
+            )
+
+        return datetime.combine(min(next_pickups), datetime.min.time())
