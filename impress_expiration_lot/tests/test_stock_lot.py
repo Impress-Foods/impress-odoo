@@ -5,9 +5,10 @@ from odoo.tests import TransactionCase, tagged
 
 @tagged("standard", "impress")
 class TestStockLot(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.product = self.env["product.product"].create(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.product = cls.env["product.product"].create(
             {
                 "name": "Test Product",
                 "type": "consu",
@@ -39,3 +40,11 @@ class TestStockLot(TransactionCase):
         self.assertEqual(lot.use_date.date(), best_before_date.date())
         self.assertEqual(lot.removal_date.date(), removal_date.date())
         self.assertEqual(lot.alert_date.date(), alert_date.date())
+
+    def test_create_lot_with_invalid_product_code(self):
+        lot = self.env["stock.lot"].create(
+            {"name": "2e001", "product_id": self.product.id}
+        )
+        exp = lot.expiration_date
+        lot._calculate_expiration_date()
+        self.assertEqual(lot.expiration_date.date(), exp.date())

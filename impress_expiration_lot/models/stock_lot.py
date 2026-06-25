@@ -17,20 +17,23 @@ class StockLot(models.Model):
             if (
                 lot.product_id.use_expiration_date
                 and len(lot.name) >= 5
+                and lot.product_id.default_code
                 and lot.product_id.default_code[0] == "E"
             ):
-                lot_number = lot.name[:5]
-                # Assuming 'lot.name' follows the 'YYDDD' format,
-                # where 'YY' is the year and 'DDD' is the day of the year.
-                year, day = "20" + lot_number[:2], int(lot_number[2:])
-                year_date = datetime.fromisoformat(year + "-01-01")
-                lot.production_date = year_date + timedelta(days=(day))
-
+                try:
+                    lot_number = lot.name[:5]
+                    year, day = "20" + lot_number[:2], int(lot_number[2:])
+                    year_date = datetime.fromisoformat(year + "-01-01")
+                    lot.production_date = year_date + timedelta(days=(day))
+                except (ValueError, TypeError):
+                    lot.production_date = lot.create_date.date()
             else:
                 lot.production_date = lot.create_date.date()
 
     def _calculate_expiration_date(self):
         for lot in self:
+            if not lot.production_date:
+                continue
             expiration_date = lot.production_date + timedelta(
                 days=lot.product_id.expiration_time
             )
