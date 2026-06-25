@@ -148,6 +148,11 @@ msgid "Tag Name"
 msgstr ""
 
 #. module: impress_maintenance_quality_mgmt
+#: model:ir.model.constraint,message:impress_maintenance_quality_mgmt.constraint_maintenance_team_tag_check_unique_tag_name
+msgid "Tag name must be unique!"
+msgstr ""
+
+#. module: impress_maintenance_quality_mgmt
 #: model:ir.model.fields,field_description:impress_maintenance_quality_mgmt.field_maintenance_team__team_tag_ids
 msgid "Team Tag"
 msgstr ""

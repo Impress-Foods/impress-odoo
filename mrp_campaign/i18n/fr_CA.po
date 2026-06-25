@@ -6,16 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20260219\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-03-27 13:51+0000\n"
+"PO-Revision-Date: 2026-06-24 19:04+0000\n"
 "Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
-"Language-Team: French (Canada) <http://weblate.impressfoods.net/projects/"
-"impress-odoo-17/mrp_campaign/fr_CA/>\n"
+"Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
+"impress-odoo/mrp_campaign/fr_CA/>\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 2026.5\n"
 
 #. module: mrp_campaign
 #: model:ir.actions.report,print_report_name:mrp_campaign.action_report_mrp_campaign
@@ -325,8 +325,8 @@ msgid ""
 "(Requested: %(new_quantity)s, Fixed Produced: %(fixed_qty_produced)s)"
 msgstr ""
 "Impossible d'ajuster une quantité moindre que celle produite par les "
-"productions existantes dans les états 'En Cours' et 'Complétée'. (Demandée: "
-"%(new_quantity)s, Produite: %(fixed_qty_produced)s)"
+"productions existantes dans les états 'En Cours' et 'Complétée'. (Demandée: %"
+"(new_quantity)s, Produite: %(fixed_qty_produced)s)"
 
 #. module: mrp_campaign
 #. odoo-python
@@ -600,7 +600,7 @@ msgstr "Si coché, une nouveau message a besoin de votre attention."
 #: model:ir.model.fields,help:mrp_campaign.field_mrp_campaign__message_has_error
 #: model:ir.model.fields,help:mrp_campaign.field_mrp_campaign__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr "Si coché, certains message ont une erreur de livraison."
+msgstr "Si coché, certains messages ont une erreur de livraison."
 
 #. module: mrp_campaign
 #: model:ir.model.fields.selection,name:mrp_campaign.selection__mrp_campaign__state__progress
@@ -682,7 +682,7 @@ msgstr "Mis à jour par"
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_line__write_date
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_partition_wizard__write_date
 msgid "Last Updated on"
-msgstr "Mis à jour le"
+msgstr "Dernière mise à jour le"
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__line_ids
@@ -973,7 +973,7 @@ msgstr "Nombre de productions"
 #. module: mrp_campaign
 #: model:ir.model,name:mrp_campaign.model_mrp_production
 msgid "Production Order"
-msgstr "Ordre de Production"
+msgstr "Ordre de Fabrication"
 
 #. module: mrp_campaign
 #: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_form
@@ -1232,8 +1232,8 @@ msgid ""
 "Trying to assign a larger quantity than required (%(assigned)d > %(demand)d)."
 "assigned"
 msgstr ""
-"Tentative d'assigner une quantité plus grande que requise (%(assigned)d > "
-"%(demand)d)"
+"Tentative d'assigner une quantité plus grande que requise (%(assigned)d > %"
+"(demand)d)"
 
 #. module: mrp_campaign
 #. odoo-python

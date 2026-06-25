@@ -4,14 +4,6 @@ import {patch} from "@web/core/utils/patch";
 import HeaderComponent from "@stock_barcode_mrp/components/header";
 
 patch(MainComponent.prototype, {
-    get unreservedMoves() {
-        if (this.env.model.lineModel != "stock.move.line") {
-            return [];
-        } else {
-            return this.env.model.unreservedMoves;
-        }
-    },
-
     async doReservation() {
         await this.env.model.save();
         await this.orm.call(this.resModel, "action_assign", [[this.resId]]);

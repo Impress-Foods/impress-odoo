@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!-- TODO: Figure out the problem with these views  -->
 <odoo>
     <!-- View maintenance.request tree -->
     <record id="view_maintenance_request_tree" model="ir.ui.view">

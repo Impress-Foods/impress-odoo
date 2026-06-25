@@ -23,9 +23,15 @@
                                 required="delivery_type == 'obibox'"
                             />
                             <field name="obibox_label_format" />
-                            <field name="obibox_delivery_day" />
                         </group>
                     </group>
+                    <field name="schedule_ids">
+                        <list editable="bottom">
+                            <field name="pickup_day" />
+                            <field name="display_pickup_hour" />
+                            <field name="next_pickup" />
+                        </list>
+                    </field>
                 </page>
             </xpath>
         </field>

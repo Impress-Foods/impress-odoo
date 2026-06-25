@@ -1,12 +1,7 @@
-import logging
 from ast import literal_eval
 
 from odoo import api, fields, models
-
-from odoo.addons.delivery.models.delivery_carrier import DeliveryCarrier
-from odoo.addons.delivery.wizard.choose_delivery_carrier import ChooseDeliveryCarrier
-
-_logger = logging.getLogger(__name__)
+from odoo.fields import Domain
 
 
 class SaleOrder(models.Model):
@@ -16,51 +11,32 @@ class SaleOrder(models.Model):
         "delivery.carrier", compute="_compute_auto_selected_carrier_id", store=True
     )
 
-    @api.depends("partner_id", "carrier_id")
+    @api.depends("partner_shipping_id")
     def _compute_auto_selected_carrier_id(self) -> None:
+        domain = Domain("can_be_auto_selected", "=", True)
+
         for rec in self:
+            if not rec.partner_shipping_id.zip:
+                rec.auto_selected_carrier_id = False
+                continue
             if (
                 not rec._compute_propagate_auto_carrier_id()
                 and not self.env.context.get("auto_select_carrier_manual")
             ):
                 rec.auto_selected_carrier_id = False
                 continue
-
-            # get available carriers
-            carrier_id = self.env["delivery.carrier"].search([], limit=80)
-            # Arbitrary default carrier required by the wizard
-            if carrier_id:
-                carrier_id = carrier_id[0]
-
-            else:
-                rec.auto_selected_carrier_id = False
-                continue
-
-            wizard = self.env["choose.delivery.carrier"].create(
-                {
-                    "partner_id": rec.partner_shipping_id.id,
-                    "order_id": rec.id,
-                    "carrier_id": carrier_id.id,
-                }
+            auto_selectable_carriers = self.env["delivery.carrier"].search(
+                domain
+                + self.env["delivery.carrier"]._check_company_domain(rec.company_id)
             )
-            available_carriers = self._get_auto_select_carriers(wizard)
 
-            wizard.sudo().unlink()  # delete the wizard as soon as possible
+            available = auto_selectable_carriers.available_carriers(
+                rec.partner_shipping_id, rec
+            )
 
-            if available_carriers:
-                rec.auto_selected_carrier_id = available_carriers[0]
-            else:
-                rec.auto_selected_carrier_id = False
-
-    @api.model
-    def _get_auto_select_carriers(
-        self, wizard: ChooseDeliveryCarrier
-    ) -> DeliveryCarrier:
-        # We get the highest priority carrier. Arbitrary selection
-        # when multiple carriers with the same priority are available
-        return wizard.available_carrier_ids.filtered("can_be_auto_selected").sorted(
-            key="priority", reverse=True
-        )
+            rec.auto_selected_carrier_id = available.sorted(
+                key="priority", reverse=True
+            )[:1]
 
     def _compute_propagate_auto_carrier_id(self) -> bool:
         # Computes if we should auto select a carrier for the
@@ -78,12 +54,13 @@ class SaleOrder(models.Model):
             .get_param("delivery_auto_select_carrier.domain")
         )
 
-        if not domain:
-            domain = []
-
         if isinstance(domain, str):
-            domain = literal_eval(domain)
-        res = self.id in self.env["sale.order"].search(domain).mapped("id")
+            domain = Domain(literal_eval(domain) if domain else [])
+        else:
+            domain = Domain.TRUE
+
+        domain &= Domain("id", "=", self.id)
+        res = self.env["sale.order"].search_count(domain)
         return res
 
     def _action_confirm(self) -> None:
@@ -101,3 +78,13 @@ class SaleOrder(models.Model):
         self.with_context(
             auto_select_carrier_manual=True
         )._compute_auto_selected_carrier_id()
+        for rec in self:
+            if (
+                rec._compute_propagate_auto_carrier_id()
+                and rec.auto_selected_carrier_id
+            ):
+                domain = Domain("picking_type_code", "=", "outgoing") & Domain(
+                    "state", "in", ["draft", "waiting", "confirmed", "assigned"]
+                )
+                pickings = rec.picking_ids.filtered_domain(domain)
+                pickings.carrier_id = rec.auto_selected_carrier_id

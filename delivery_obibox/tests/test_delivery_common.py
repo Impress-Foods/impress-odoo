@@ -33,7 +33,16 @@ class TestDeliveryCommon(common.TransactionCase):
                 "obibox_api_key": "test_api_key",
                 "obibox_username": "test_username",
                 "obibox_label_format": "zpl",
-                "obibox_delivery_day": "wed",
+                "schedule_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "pickup_day": "wed",
+                            "pickup_hour": 15,
+                        },
+                    ),
+                ],
             }
         )
 

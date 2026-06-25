@@ -17,10 +17,9 @@ class MaintenanceTeamTag(models.Model):
     color = fields.Integer(
         string="Color Index", default=lambda self: self._get_default_color
     )
-
-    _sql_constraints = [
-        ("tag_name_unique", "unique(name)", "Tag name must be unique!"),
-    ]
+    _check_unique_tag_name = models.Constraint(
+        "UNIQUE(name)", "Tag name must be unique!"
+    )
 
 
 class MaintenanceTeam(models.Model):

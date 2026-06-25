@@ -8,7 +8,7 @@
         <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
             <t t-if="title">
                 <li
-                    t-if="page_name == 'manufacturing' or manufacturing"
+                    t-if="page_name == 'manufacturing'"
                     t-attf-class="breadcrumb-item #{'active' if breadcrumbs_url else ''}"
                 >
                     <a
@@ -121,10 +121,6 @@
                     <!-- Row for single elements -->
                     <t t-foreach="mos" t-as="mo">
                         <tr>
-                            <!-- <td><a
-                            t-attf-href="/my/manufacturings/#{mo.id}?{{
-                            keep_query()
-                            }}"><span t-field="mo.name"/></a></td>-->
                             <td>
                                 <span t-field="mo.name" />
                             </td>
@@ -162,56 +158,6 @@
                     </t>
                 </tbody>
             </t>
-        </t>
-    </template>
-
-    <template id="manufacturing_portal" name="Manufacturing View in Portal">
-        <t t-call="portal.frontend_layout">
-            <div class="o_portal container mt-3">
-                <div class="row align-items-center bg-white g-0 border rounded">
-                    <div class="col-10">
-                        <t
-                            t-call="impress_production_billing.portal_my_home_menu_manufacturing"
-                        >
-                            <t t-set="title" t-value="manufacturing.name" />
-                            <t t-set="breadcrumbs_url">/my/manufacturings</t>
-                        </t>
-                    </div>
-                </div>
-            </div>
-
-            <div class="o_portal container mt-3 o_manufacturing_portal">
-                <div
-                    class="row align-items-center bg-white g-0 border rounded o_manufacturing_portal"
-                >
-                    <t t-set="no_footer" t-value="true" />
-                    <t t-call="impress_production_billing.manufacturing" />
-                </div>
-            </div>
-        </t>
-    </template>
-
-    <template id="manufacturing" name="Manufacturing Portal View">
-        <iframe
-            width="100%"
-            height="100%"
-            frameborder="0"
-            t-attf-src="/my/manufacturings/{{ manufacturing.id }}/manufacturing_portal"
-        />
-    </template>
-
-    <template id="manufacturing_portal_embed" name="Manufacturing Portal">
-        <t t-call="web.layout">
-            <t t-set="head_manufacturing_portal">
-                <script type="text/javascript"> odoo.__session_info__ = <t
-                    t-out="json.dumps(session_info)"
-                />; </script>
-                <base target="_parent" />
-                <t t-call-assets="impress_production_billing.webclient" />
-                <t t-call="web.conditional_assets_tests" />
-            </t>
-            <t t-set="head" t-value="head_manufacturing_portal + (head or '')" />
-            <t t-set="body_classname" t-value="'o_web_client o_manufacturing_portal'" />
         </t>
     </template>
 </odoo>

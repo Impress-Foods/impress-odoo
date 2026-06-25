@@ -10,13 +10,7 @@
         "views/documents_document_views.xml",
         "views/product_document_views.xml",
     ],
-    "assets": {
-        "web.assets_backend": [
-            "documents_archive/static/src/**/*.js",
-            "documents_archive/static/src/**/*.xml",
-            "documents_archive/static/src/**/*.scss",
-        ]
-    },
+    "assets": {"web.assets_backend": ["documents_archive/static/src/**/*.js"]},
     "installable": True,
     "license": "GPL-2",
 }

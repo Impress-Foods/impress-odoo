@@ -34,6 +34,8 @@ class LabelWizard(models.TransientModel):
         "uom.uom",
         string="Packaging",
         domain="[('id', 'in', available_uom_ids)]",
+        compute="_compute_available_uom_ids",
+        inverse="_inverse_product_uom_id",
     )
     available_uom_ids = fields.Many2many(
         "uom.uom",
@@ -135,6 +137,9 @@ class LabelWizard(models.TransientModel):
             record.available_uom_ids = uoms
             if not record.product_uom_id:
                 record.product_uom_id = product.uom_id
+
+    def _inverse_product_uom_id(self):
+        return
 
     @api.onchange("picking_id", "product_id", "lot_id")
     def get_product_uom_qty(self) -> None:

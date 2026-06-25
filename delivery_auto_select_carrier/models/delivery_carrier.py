@@ -1,8 +1,4 @@
-import logging
-
 from odoo import fields, models
-
-_logger = logging.getLogger(__name__)
 
 
 class DeliveryCarrier(models.Model):

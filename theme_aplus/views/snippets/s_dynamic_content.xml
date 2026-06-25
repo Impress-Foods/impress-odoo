@@ -185,7 +185,8 @@
                 <t t-set="product" t-value="record" />
                 <div
                     class="product-info ap-product-card-minimalist"
-                    t-attf-id="{{ product.name }}"
+                    t-att-id="product.name"
+                    t-attf-style="--minimalist-secondary-color: {{data.get('card_secondary_color')}};"
                 >
                     <t
                         t-set="tmpl_id"

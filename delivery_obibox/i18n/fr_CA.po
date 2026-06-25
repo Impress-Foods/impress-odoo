@@ -6,21 +6,76 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-08-21 19:59+0000\n"
-"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
-"Language-Team: French (Canada) <https://weblate.impressfoods.net/projects/"
+"PO-Revision-Date: 2026-06-24 20:15+0000\n"
+"Last-Translator: Automatic translation add-on <noreply-addon-"
+"autotranslate@weblate.org>\n"
+"Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/delivery_obibox/fr_CA/>\n"
 "Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 2026.5\n"
 
 #. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__carrier_id
 #: model:ir.model.fields,field_description:delivery_obibox.field_stock_package_type__package_carrier_type
 msgid "Carrier"
 msgstr "Transporteur"
+
+#. module: delivery_obibox
+#. odoo-python
+#: code:addons/delivery_obibox/models/obibox_request.py:0
+msgid "Carrier %(name)s doesn't have any pickup schedules configured"
+msgstr "Transporteur %(name)s n'a pas d'horaire de ramassage de configuré"
+
+#. module: delivery_obibox
+#. odoo-python
+#: code:addons/delivery_obibox/models/obibox_request.py:0
+msgid "Carrier %(name)s doesn't have any schedules in the future"
+msgstr "Le transporteur %(name)s n'a pas de ramassage dans le futur"
+
+#. module: delivery_obibox
+#: model:ir.model,name:delivery_obibox.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: delivery_obibox
+#. odoo-python
+#: code:addons/delivery_obibox/models/obibox_request.py:0
+msgid "Could not cancel shipment: %s"
+msgstr "Impossible d'annuler l'expédition: %s"
+
+#. module: delivery_obibox
+#. odoo-python
+#: code:addons/delivery_obibox/models/obibox_request.py:0
+msgid "Could not find zip code for partner %s"
+msgstr "Code postal introuvable pour partenaire %s"
+
+#. module: delivery_obibox
+#: model:ir.model,website_form_label:delivery_obibox.model_res_partner
+msgid "Create a Customer"
+msgstr "Créer un client"
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__display_name
+#: model:ir.model.fields,field_description:delivery_obibox.field_res_partner__display_name
+#: model:ir.model.fields,field_description:delivery_obibox.field_stock_package_type__display_name
+#: model:ir.model.fields,field_description:delivery_obibox.field_stock_picking__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
 
 #. module: delivery_obibox
 #: model:ir.model.fields,help:delivery_obibox.field_delivery_carrier__obibox_label_format
@@ -28,9 +83,18 @@ msgid "Format of the label to be printed."
 msgstr "Format de l'étiquette à imprimer."
 
 #. module: delivery_obibox
-#: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__obibox_delivery_day__fri
+#: model:ir.model.fields.selection,name:delivery_obibox.selection__obibox_delivery_schedule__pickup_day__fri
 msgid "Friday"
 msgstr "Vendredi"
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__id
+#: model:ir.model.fields,field_description:delivery_obibox.field_res_partner__id
+#: model:ir.model.fields,field_description:delivery_obibox.field_stock_package_type__id
+#: model:ir.model.fields,field_description:delivery_obibox.field_stock_picking__id
+msgid "ID"
+msgstr "ID"
 
 #. module: delivery_obibox
 #: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__obibox_label_format
@@ -38,11 +102,27 @@ msgid "Label Format"
 msgstr "Format d'étiquette"
 
 #. module: delivery_obibox
-#: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__obibox_delivery_day__mon
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__write_uid
+msgid "Last Updated by"
+msgstr "Mis à jour par"
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: delivery_obibox
+#: model:ir.model.fields.selection,name:delivery_obibox.selection__obibox_delivery_schedule__pickup_day__mon
 msgid "Monday"
 msgstr "Lundi"
 
 #. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__next_pickup
+msgid "Next Pickup"
+msgstr "Prochain ramassage"
+
+#. module: delivery_obibox
+#: model:delivery.carrier,name:delivery_obibox.delivery_carrier_obibox
 #: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__delivery_type__obibox
 #: model:ir.model.fields.selection,name:delivery_obibox.selection__stock_package_type__package_carrier_type__obibox
 msgid "Obibox"
@@ -54,9 +134,16 @@ msgid "Obibox Configuration"
 msgstr "Configuration Obibox"
 
 #. module: delivery_obibox
-#: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__obibox_delivery_day
-msgid "Obibox Delivery Day"
-msgstr "Jour de livraison Obibox"
+#: model:ir.model.fields,field_description:delivery_obibox.field_res_partner__obibox_coverage
+#: model:ir.model.fields,field_description:delivery_obibox.field_res_users__obibox_coverage
+msgid "Obibox Coverage"
+msgstr "Couverture Obibox"
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_res_partner__obibox_coverage_checked
+#: model:ir.model.fields,field_description:delivery_obibox.field_res_users__obibox_coverage_checked
+msgid "Obibox Coverage Checked"
+msgstr "Couverture Obibox vérifiée"
 
 #. module: delivery_obibox
 #: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__obibox_api_key
@@ -79,12 +166,48 @@ msgid "PDF"
 msgstr "PDF"
 
 #. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__pickup_day
+msgid "Pickup Day"
+msgstr "Journée du ramassage"
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__pickup_hour
+msgid "Pickup Hour"
+msgstr "Heure de ramassage"
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__display_pickup_hour
+msgid "Pickup Time"
+msgstr "Heure de ramassage"
+
+#. module: delivery_obibox
+#: model:ir.model.constraint,message:delivery_obibox.constraint_obibox_delivery_schedule_check_pickup_hour
+msgid "Pickup hour must be between 0 and 23"
+msgstr "L'heure de ramassage doit être entre 0 et 23"
+
+#. module: delivery_obibox
+#: model:ir.model,name:delivery_obibox.model_obibox_delivery_schedule
+msgid "Pickup schedule for obibox"
+msgstr "Horaire de ramassage pour Obibox"
+
+#. module: delivery_obibox
 #: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__delivery_type
 msgid "Provider"
 msgstr "Transporteur"
 
 #. module: delivery_obibox
-#: model:ir.model.fields,help:delivery_obibox.field_delivery_carrier__obibox_delivery_day
+#. odoo-python
+#: code:addons/delivery_obibox/models/obibox_request.py:0
+msgid "Rate not found: %s"
+msgstr "Taux manquants: %s"
+
+#. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__schedule_ids
+msgid "Schedule"
+msgstr "Horaire"
+
+#. module: delivery_obibox
+#: model:ir.model.fields,help:delivery_obibox.field_obibox_delivery_schedule__pickup_day
 msgid "Select the day when the package will be picked up."
 msgstr "Sélectionner le jour de récupération du colis."
 
@@ -99,7 +222,7 @@ msgid "Stock package type"
 msgstr "Type de paquet"
 
 #. module: delivery_obibox
-#: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__obibox_delivery_day__thu
+#: model:ir.model.fields.selection,name:delivery_obibox.selection__obibox_delivery_schedule__pickup_day__thu
 msgid "Thursday"
 msgstr "Jeudi"
 
@@ -109,12 +232,12 @@ msgid "Transfer"
 msgstr "Transfert"
 
 #. module: delivery_obibox
-#: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__obibox_delivery_day__tue
+#: model:ir.model.fields.selection,name:delivery_obibox.selection__obibox_delivery_schedule__pickup_day__tue
 msgid "Tuesday"
 msgstr "Mardi"
 
 #. module: delivery_obibox
-#: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__obibox_delivery_day__wed
+#: model:ir.model.fields.selection,name:delivery_obibox.selection__obibox_delivery_schedule__pickup_day__wed
 msgid "Wednesday"
 msgstr "Mercredi"
 
@@ -122,3 +245,6 @@ msgstr "Mercredi"
 #: model:ir.model.fields.selection,name:delivery_obibox.selection__delivery_carrier__obibox_label_format__zpl
 msgid "ZPL"
 msgstr "ZPL"
+
+#~ msgid "Obibox Delivery Day"
+#~ msgstr "Jour de livraison Obibox"

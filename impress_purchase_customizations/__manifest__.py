@@ -9,6 +9,7 @@
     "data": [
         "report/purchase_order_report.xml",
         "security/groups.xml",
+        "views/purchase_order_views.xml",
     ],
     "application": False,
     "installable": True,

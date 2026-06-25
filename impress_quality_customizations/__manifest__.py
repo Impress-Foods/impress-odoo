@@ -14,4 +14,7 @@
         "views/quality_point_views.xml",
         "views/menus.xml",
     ],
+    "external_dependencies": {
+        "python": ["odoo_upgrade @ git+https://github.com/odoo/upgrade-util@master"]
+    },
 }

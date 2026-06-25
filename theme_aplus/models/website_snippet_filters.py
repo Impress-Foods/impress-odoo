@@ -9,10 +9,6 @@ class WebsiteSnipperFilter(models.Model):
     _inherit = "website.snippet.filter"
 
     @api.model
-    def _get_products(self, mode, context):
-        return super()._get_products(mode, context)
-
-    @api.model
     def _get_products_alternative_products_templates(
         self, website, limit, domain, context
     ):
