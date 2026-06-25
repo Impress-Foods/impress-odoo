@@ -1,8 +1,11 @@
+import logging
+
 from odoo import api, fields, models
-from odoo.exceptions import UserError
-from odoo.fields import Command, Domain
+from odoo.fields import Command
 
 from .domino import DominoAPI
+
+_logger = logging.getLogger(__name__)
 
 
 class DominoLabelModel(models.Model):
@@ -24,35 +27,40 @@ class DominoLabelModel(models.Model):
 
     def _sync_labels(self):
         dom = DominoAPI(self.env)
+        labels = dom.get_labels()
+        if labels is None:
+            _logger.warning("Failed to fetch labels from Domino API — skipping sync")
+            return
 
-        try:
-            labels = dom.get_labels()
-            existing = {rec.domino_id: rec for rec in self.search(Domain.TRUE)}
-            for label in labels:
-                printers = self.env["domino.printer"].search(
-                    Domain("printer_id", "in", label.printer_ids)
+        existing = {rec.domino_id: rec for rec in self.search([])}
+        synced_ids = set()
+        for label in labels:
+            printers = self.env["domino.printer"].search(
+                [("printer_id", "in", label.printer_ids)]
+            )
+            synced_ids.add(label.id)
+            if label.id in existing:
+                existing[label.id].write(
+                    {
+                        "domino_id": label.id,
+                        "schema_json": label.buffer_schema.model_dump_json(),
+                        "printer_ids": [Command.set(printers.ids)],
+                    }
                 )
-                if label.id in existing:
-                    existing[label.id].write(
-                        {
-                            "domino_id": label.id,
-                            "schema_json": label.buffer_schema.model_dump_json(),
-                            "printer_ids": [Command.set(printers.ids)],
-                        }
-                    )
-                else:
-                    self.create(
-                        {
-                            "name": label.name,
-                            "domino_id": label.id,
-                            "schema_json": label.buffer_schema.model_dump_json(),
-                            "printer_ids": [Command.set(printers.ids)],
-                        }
-                    )
-        except Exception as e:
-            raise UserError(
-                self.env._("Failed to sync labels: %(error)s", error=e)
-            ) from e
+            else:
+                self.create(
+                    {
+                        "name": label.name,
+                        "domino_id": label.id,
+                        "schema_json": label.buffer_schema.model_dump_json(),
+                        "printer_ids": [Command.set(printers.ids)],
+                    }
+                )
+
+        if synced_ids:
+            stale = self.search([("domino_id", "not in", list(synced_ids))])
+            if stale:
+                stale.unlink()
 
     def action_sync_labels(self):
         self._sync_labels()

@@ -9,26 +9,26 @@ from odoo.addons.quality.models.quality import QualityCheck
 _logger = logging.getLogger(__name__)
 
 
-MONTHS_ABRV = {
-    "Jan": "JA",
-    "Feb": "FE",
-    "Mar": "MR",
-    "Apr": "AL",
-    "May": "MA",
-    "Jun": "JN",
-    "Jul": "JL",
-    "Aug": "AU",
-    "Sep": "SE",
-    "Oct": "OC",
-    "Nov": "NO",
-    "Dec": "DE",
-}
-
-
 class DominoPrintField(models.Model):
     _name = "domino.print.field"
     _description = "Domino Print Field Mapping"
     _order = "name"
+
+    # Abbr for %q format directive
+    MONTHS_ABRV = {
+        "Jan": "JA",
+        "Feb": "FE",
+        "Mar": "MR",
+        "Apr": "AL",
+        "May": "MA",
+        "Jun": "JN",
+        "Jul": "JL",
+        "Aug": "AU",
+        "Sep": "SE",
+        "Oct": "OC",
+        "Nov": "NO",
+        "Dec": "DE",
+    }
 
     name = fields.Char(required=True)
     field_type = fields.Selection(
@@ -43,7 +43,7 @@ class DominoPrintField(models.Model):
         help="Target field name in Domino API payload",
     )
     transform = fields.Char(
-        help="Transform to apply, e.g. 'date:%Y-%m-%d', lower'. %q: CAN months abbrv",
+        help="Transform to apply, e.g. 'date: %Y-%m-%d', lower'. %q: CAN months abbrv",
     )
     default_value = fields.Char(
         help="Default value if odoo_field_path resolves to empty",
@@ -103,15 +103,11 @@ class DominoPrintField(models.Model):
         try:
             if "%q" not in fmt:
                 return value.strftime(fmt)
-            else:
-                new_format = fmt.replace("%q", "%b")
-                formatted_date = value.strftime(new_format)
-                for month in MONTHS_ABRV:
-                    if month in formatted_date:
-                        formatted_date = formatted_date.replace(
-                            month, MONTHS_ABRV[month]
-                        )
-                return formatted_date
+            new_format = fmt.replace("%q", "%b")
+            formatted_date = value.strftime(new_format)
+            for abrv, can_abrv in self.MONTHS_ABRV.items():
+                formatted_date = formatted_date.replace(abrv, can_abrv)
+            return formatted_date
 
         except (ValueError, UnicodeError) as err:
             raise ValidationError(

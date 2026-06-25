@@ -30,8 +30,7 @@ class DominoLabel(BaseModel):
 
     @field_validator("buffer_schema", mode="before")
     @classmethod
-    def catch_empty_buffer_schema(cls, value: Any) -> DominoBufferSchema:
-        if isinstance(value, dict):
+    def catch_empty_buffer_schema(cls, value: Any) -> dict | DominoBufferSchema:
+        if isinstance(value, (dict, DominoBufferSchema)):
             return value
-        else:
-            return {"fields": []}
+        return {}

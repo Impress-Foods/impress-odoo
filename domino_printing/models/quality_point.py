@@ -13,7 +13,7 @@ class QualityControlPoint(models.Model):
     coding_domino_template = fields.Many2one("domino.print.template")
     case_domino_template = fields.Many2one("domino.print.template")
 
-    @api.constrains
+    @api.constrains("test_report_type", "operation_id")
     def _check_test_report_type(self):
         for record in self:
             if record.test_report_type == "domino" and not record.operation_id:
