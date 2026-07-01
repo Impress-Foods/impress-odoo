@@ -1,6 +1,9 @@
 import {ConfirmationDialog} from "@web/core/confirmation_dialog/confirmation_dialog";
 import {HtmlField} from "@html_editor/fields/html_field";
+import {FloatField} from "@web/views/fields/float/float_field";
+import {Field} from "@web/views/fields/field";
 import {onWillDestroy} from "@odoo/owl";
+import {useService} from "@web/core/utils/hooks";
 
 export class QualityCheckDialog extends ConfirmationDialog {
     static template = "shop_floor_usability.QualityCheckDialog";
@@ -12,13 +15,17 @@ export class QualityCheckDialog extends ConfirmationDialog {
     static components = {
         ...ConfirmationDialog.components,
         HtmlField,
+        FloatField,
+        Field,
     };
 
     setup() {
         super.setup();
         this._result = null;
+        this._stateToSet = null;
+        this.action = useService("action");
         onWillDestroy(() => {
-            this.props.onComplete?.(this._result);
+            this.props.onComplete?.(this._result, this._stateToSet);
         });
     }
 
@@ -28,6 +35,10 @@ export class QualityCheckDialog extends ConfirmationDialog {
 
     get isPassfail() {
         return this.check.test_type === "passfail";
+    }
+
+    get isMeasure() {
+        return this.check.test_type === "measure";
     }
 
     get htmlInfo() {
@@ -40,16 +51,21 @@ export class QualityCheckDialog extends ConfirmationDialog {
     }
 
     async validate() {
-        const action = this.isPassfail ? "action_pass_and_next" : "action_next";
-        await this._action(action);
+        if (this.isMeasure) {
+            return this._actionMeasure();
+        }
+        if (this.isPassfail) {
+            return this._action("action_pass_and_next", "pass");
+        }
+        return this._action("action_next", "pass");
     }
 
     async pass() {
-        await this._action("action_pass_and_next");
+        await this._action("action_pass_and_next", "pass");
     }
 
     async fail() {
-        await this._action("action_fail_and_next");
+        await this._action("action_fail_and_next", "fail");
     }
 
     skip() {
@@ -60,12 +76,24 @@ export class QualityCheckDialog extends ConfirmationDialog {
         this.props.close();
     }
 
-    async _action(action) {
+    async _action(action, stateToSet = "pass") {
         return this.execButton(async () => {
             const {model, resModel, resId} = this.props.record;
             this._result = await model.orm.call(resModel, action, [resId], {
                 context: {from_shopfloor: true},
             });
+            this._stateToSet = stateToSet;
+        });
+    }
+
+    async _actionMeasure() {
+        return this.execButton(async () => {
+            await this.props.record.save({reload: false});
+            const {model, resModel, resId} = this.props.record;
+            this._result = await model.orm.call(resModel, "do_measure", [resId], {
+                context: {from_shopfloor: true},
+            });
+            this._stateToSet = "pass";
         });
     }
 }

@@ -18,6 +18,20 @@
                     <div class="o_instruction w-75" t-if="check.note">
                         <HtmlField t-props="htmlInfo" />
                     </div>
+                    <div t-if="isMeasure" class="o_measure_section mt-3">
+                        <div class="d-flex align-items-center gap-2 mb-3">
+                            <FloatField name="'measure'" record="props.record" />
+                            <span
+                                t-esc="check.norm_unit"
+                                class="text-lowercase fw-bold"
+                            />
+                        </div>
+                        <Field
+                            name="'additional_note'"
+                            record="props.record"
+                            placeholder="'Write quality check notes...'"
+                        />
+                    </div>
                 </div>
                 <t t-set-slot="footer">
                     <div class="d-flex justify-content-between w-100">
@@ -35,7 +49,13 @@
                                 barcode_trigger="fail"
                             >Fail</button>
                             <button
-                                t-else=""
+                                t-if="isMeasure"
+                                class="btn btn-primary me-2"
+                                t-on-click="validate"
+                                barcode_trigger="next"
+                            >Validate</button>
+                            <button
+                                t-if="!isPassfail &amp;&amp; !isMeasure"
                                 class="btn btn-primary me-2"
                                 t-on-click="validate"
                                 barcode_trigger="next"
