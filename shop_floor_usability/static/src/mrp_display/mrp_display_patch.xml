@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-inherit="mrp_workorder.MrpDisplay.BurgerMenu" t-inherit-mode="extension">
+        <xpath
+            expr="//button[hasclass('dropdown-item')][.//i[hasclass('fa-refresh')]]"
+            position="replace"
+        />
+    </t>
+
+    <t t-inherit="mrp_workorder.MrpDisplay" t-inherit-mode="extension">
+        <xpath
+            expr="//t[@t-call='mrp_workorder.MrpDisplay.BurgerMenu'][@t-if='ui.isSmall']"
+            position="before"
+        >
+            <t t-if="ui.isSmall">
+                <button
+                    class="o_btn_icon btn btn-light"
+                    type="button"
+                    t-on-click="onClickRefresh"
+                    title="Reload Data"
+                >
+                    <i class="fa fa-refresh" role="img" />
+                </button>
+            </t>
+        </xpath>
+        <xpath
+            expr="//t[@t-call='mrp_workorder.MrpDisplay.BurgerMenu'][@t-if='!ui.isSmall']"
+            position="before"
+        >
+            <t t-if="!ui.isSmall">
+                <button
+                    class="o_btn_icon btn btn-light"
+                    type="button"
+                    t-on-click="onClickRefresh"
+                    title="Reload Data"
+                >
+                    <i class="fa fa-refresh" role="img" />
+                </button>
+            </t>
+        </xpath>
+    </t>
+
+</templates>

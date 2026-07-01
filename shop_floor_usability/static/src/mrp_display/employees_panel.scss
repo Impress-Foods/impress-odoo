@@ -1,0 +1,14 @@
+.o_mrp_employees_panel {
+    transition:
+        width 0.2s ease,
+        min-width 0.2s ease;
+}
+
+.o_panel_header {
+    min-height: 2.75rem;
+
+    .o_panel_collapse_btn {
+        font-size: 0.75rem;
+        line-height: 1;
+    }
+}
