@@ -1,6 +1,6 @@
 {
     "name": "Maintenance Product Bridge",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "summary": """ Allows to link products to maintenance equipments """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
