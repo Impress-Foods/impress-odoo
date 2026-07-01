@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="shop_floor_usability.QualityCheckDialog">
+        <div class="o_tablet_popups">
+            <Dialog size="'md'" modalRef="modalRef">
+                <t t-set-slot="header">
+                    <div class="d-flex w-100">
+                        <div class="h4" t-esc="check.title || check.name" />
+                        <button
+                            type="button"
+                            class="btn-close"
+                            aria-label="Close"
+                            t-on-click="_cancel"
+                        />
+                    </div>
+                </t>
+                <div class="o_quality_check_body w-100">
+                    <div class="o_instruction w-75" t-if="check.note">
+                        <HtmlField t-props="htmlInfo" />
+                    </div>
+                </div>
+                <t t-set-slot="footer">
+                    <div class="d-flex justify-content-between w-100">
+                        <div>
+                            <button
+                                t-if="isPassfail"
+                                class="btn btn-success me-2"
+                                t-on-click="pass"
+                                barcode_trigger="pass"
+                            >Pass</button>
+                            <button
+                                t-if="isPassfail"
+                                class="btn btn-danger me-2"
+                                t-on-click="fail"
+                                barcode_trigger="fail"
+                            >Fail</button>
+                            <button
+                                t-else=""
+                                class="btn btn-primary me-2"
+                                t-on-click="validate"
+                                barcode_trigger="next"
+                            >Next</button>
+                        </div>
+                        <div>
+                            <button
+                                t-if="check.previous_check_id"
+                                class="btn btn-secondary me-2"
+                                t-on-click="back"
+                                barcode_trigger="prev"
+                            >&lt; Back</button>
+                            <button
+                                t-if="check.next_check_id"
+                                class="btn btn-secondary"
+                                t-on-click="skip"
+                                barcode_trigger="skip"
+                            >Skip &gt;</button>
+                        </div>
+                    </div>
+                </t>
+            </Dialog>
+        </div>
+    </t>
+</templates>

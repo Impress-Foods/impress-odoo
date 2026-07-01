@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t
+        t-name="shop_floor_usability.MrpLogNoteDialog"
+        t-inherit="mrp_workorder.MrpLogNoteDialog"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//TextField[1]" position="attributes">
+            <attribute name="readonly">true</attribute>
+        </xpath>
+    </t>
+</templates>
