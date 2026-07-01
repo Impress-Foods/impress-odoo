@@ -29,8 +29,8 @@ class ProductProduct(models.Model):
         return res
 
     @api.model
-    def name_search(self, name="", args=None, operator="ilike", limit=100):
-        res = super().name_search(name, args, operator, limit)
+    def name_search(self, name="", domain=None, operator="ilike", limit=100):
+        res = super().name_search(name, domain, operator, limit)
         if self.env.context.get("global_vendor_search", False):
             domain = [
                 "|",
