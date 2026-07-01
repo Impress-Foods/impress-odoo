@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-inherit="mrp_workorder.MrpDisplayEmployeesPanel" t-inherit-mode="extension">
+        <xpath
+            expr="//t[@t-call='mrp_workorder.MrpDisplayEmployeesPanel_content']"
+            position="before"
+        >
+            <div
+                class="o_panel_header d-flex align-items-center p-2 border-bottom"
+                t-att-class="state.collapsed ? 'justify-content-center' : 'justify-content-between'"
+            >
+                <span
+                    t-if="!state.collapsed"
+                    class="fw-bold small text-uppercase text-muted text-nowrap"
+                >Operators</span>
+                <button
+                    class="o_panel_collapse_btn btn btn-light border-0 p-1"
+                    t-on-click="toggleCollapse"
+                    t-att-title="state.collapsed ? 'Expand' : 'Collapse'"
+                >
+                    <i
+                        class="fa"
+                        t-att-class="state.collapsed ? 'fa-chevron-right' : 'fa-chevron-left'"
+                    />
+                </button>
+            </div>
+        </xpath>
+        <xpath
+            expr="//t[@t-call='mrp_workorder.MrpDisplayEmployeesPanel_content']"
+            position="attributes"
+        >
+            <attribute name="t-if">!state.collapsed</attribute>
+        </xpath>
+        <xpath
+            expr="//div[hasclass('o_mrp_employees_panel')][@t-if='!ui.isSmall']/div[hasclass('p-3')]"
+            position="attributes"
+        >
+            <attribute name="t-if">!state.collapsed</attribute>
+        </xpath>
+        <xpath
+            expr="//div[hasclass('o_mrp_employees_panel')][@t-if='!ui.isSmall']"
+            position="attributes"
+        >
+            <attribute
+                name="t-att-style"
+            >state.collapsed ? 'width: 44px; min-width: 44px;' : ''</attribute>
+        </xpath>
+    </t>
+
+</templates>

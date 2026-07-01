@@ -10,6 +10,7 @@
         "web.assets_backend": [
             "shop_floor_usability/static/src/**/*.js",
             "shop_floor_usability/static/src/**/*.xml",
+            "shop_floor_usability/static/src/**/*.scss",
         ],
     },
     "installable": True,
