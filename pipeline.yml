@@ -4,6 +4,7 @@ automation:
 module_whitelist:
   # e-commerce
   - website_sale_order_type
+  - website_geoengine_store_locator
   # emipro
   - common_connector_library
   - woo_commerce_ept
