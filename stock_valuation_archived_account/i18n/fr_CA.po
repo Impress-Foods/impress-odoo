@@ -1,0 +1,30 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_valuation_archived_account
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e-20260330\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr_CA\n"
+
+#. module: stock_valuation_archived_account
+#: model:ir.model.fields,field_description:stock_valuation_archived_account.field_stock_account_stock_valuation_report__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_valuation_archived_account
+#: model:ir.model.fields,field_description:stock_valuation_archived_account.field_stock_account_stock_valuation_report__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_valuation_archived_account
+#: model:ir.model,name:stock_valuation_archived_account.model_stock_account_stock_valuation_report
+msgid "Stock Valuation"
+msgstr ""

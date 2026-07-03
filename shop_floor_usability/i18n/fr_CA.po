@@ -1,0 +1,89 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shop_floor_usability
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e-20260330\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr_CA\n"
+
+#. module: shop_floor_usability
+#. odoo-javascript
+#: code:addons/shop_floor_usability/static/src/mrp_display/dialog/mrp_quality_check_dialog.xml:0
+msgid "< Back"
+msgstr ""
+
+#. module: shop_floor_usability
+#. odoo-javascript
+#: code:addons/shop_floor_usability/static/src/mrp_display/dialog/mrp_additional_note_dialog.xml:0
+#: code:addons/shop_floor_usability/static/src/mrp_display/mrp_record_line/quality_check.xml:0
+msgid "Additional Note"
+msgstr ""
+
+#. module: shop_floor_usability
+#. odoo-javascript
+#: code:addons/shop_floor_usability/static/src/mrp_display/dialog/mrp_additional_note_dialog.xml:0
+msgid "Cancel"
+msgstr ""
+
+#. module: shop_floor_usability
+#. odoo-javascript
+#: code:addons/shop_floor_usability/static/src/mrp_display/dialog/mrp_additional_note_dialog.xml:0
+#: code:addons/shop_floor_usability/static/src/mrp_display/dialog/mrp_quality_check_dialog.xml:0
+msgid "Close"
+msgstr ""
+
+#. module: shop_floor_usability
+#. odoo-javascript
+#: code:addons/shop_floor_usability/static/src/mrp_display/dialog/mrp_quality_check_dialog.xml:0
+msgid "Fail"
+msgstr ""
+
+#. module: shop_floor_usability
+#. odoo-javascript
+#: code:addons/shop_floor_usability/static/src/mrp_display/dialog/mrp_quality_check_dialog.xml:0
+msgid "Next"
+msgstr ""
+
+#. module: shop_floor_usability
+#. odoo-javascript
+#: code:addons/shop_floor_usability/static/src/mrp_display/employees_panel_patch.xml:0
+msgid "Operators"
+msgstr ""
+
+#. module: shop_floor_usability
+#. odoo-javascript
+#: code:addons/shop_floor_usability/static/src/mrp_display/dialog/mrp_quality_check_dialog.xml:0
+msgid "Pass"
+msgstr ""
+
+#. module: shop_floor_usability
+#. odoo-javascript
+#: code:addons/shop_floor_usability/static/src/mrp_display/mrp_display_patch.xml:0
+msgid "Reload Data"
+msgstr ""
+
+#. module: shop_floor_usability
+#. odoo-javascript
+#: code:addons/shop_floor_usability/static/src/mrp_display/dialog/mrp_additional_note_dialog.xml:0
+msgid "Save and Close"
+msgstr ""
+
+#. module: shop_floor_usability
+#. odoo-javascript
+#: code:addons/shop_floor_usability/static/src/mrp_display/dialog/mrp_quality_check_dialog.xml:0
+msgid "Skip >"
+msgstr ""
+
+#. module: shop_floor_usability
+#. odoo-javascript
+#: code:addons/shop_floor_usability/static/src/mrp_display/dialog/mrp_quality_check_dialog.xml:0
+msgid "Validate"
+msgstr ""
