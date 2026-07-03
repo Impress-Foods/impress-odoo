@@ -35,6 +35,8 @@ msgstr ""
 
 #. module: impress_purchase_customizations
 #: model_terms:ir.ui.view,arch_db:impress_purchase_customizations.purchase_order_form
+#: model_terms:ir.ui.view,arch_db:impress_purchase_customizations.purchase_order_kpis_tree
+#: model_terms:ir.ui.view,arch_db:impress_purchase_customizations.purchase_order_list
 msgid "Create Bill"
 msgstr ""
 
