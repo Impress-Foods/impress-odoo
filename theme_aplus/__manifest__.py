@@ -1,6 +1,6 @@
 {
     "name": "Theme A+",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "summary": """ A+ Theme """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
@@ -41,6 +41,7 @@
             "theme_aplus/static/src/scss/product_page.scss",
             "theme_aplus/static/src/scss/tabbed_container.scss",
             "theme_aplus/static/src/js/website_sale.js",
+            "theme_aplus/static/src/js/sticky_object.js",
         ],
         "website.website_builder_assets": [
             "theme_aplus/static/src/website_builder/wave_transition_option.js",
