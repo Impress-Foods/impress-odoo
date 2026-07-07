@@ -20,7 +20,19 @@ patch(BarcodePickingModel.prototype, {
         const smData = structuredClone(this.cache.getRecord("stock.move", id));
         smData.product_id = this.cache.getRecord("product.product", smData.product_id);
         smData.product_uom_id = this.cache.getRecord("uom.uom", smData.product_uom);
+        smData.location_id = this.cache.getRecord("stock.location", smData.location_id);
+        smData.location_dest_id = this.cache.getRecord(
+            "stock.location",
+            smData.location_dest_id
+        );
         return smData;
+    },
+
+    _isSublocation(childLocation, parentLocation) {
+        if (!childLocation?.parent_path || !parentLocation?.parent_path) {
+            return false;
+        }
+        return childLocation.parent_path.indexOf(parentLocation.parent_path) === 0;
     },
 
     // Get unreserved moves formatted as line-compatible objects for LineComponent
