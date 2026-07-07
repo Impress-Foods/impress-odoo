@@ -21,10 +21,6 @@ class DominoLabelModel(models.Model):
         help="JSON schema for the label buffer fields",
     )
 
-    @api.model
-    def _cron_sync_labels(self):
-        self._sync_labels()
-
     def _sync_labels(self):
         dom = DominoAPI(self.env)
         labels = dom.get_labels()
@@ -42,7 +38,6 @@ class DominoLabelModel(models.Model):
             if label.id in existing:
                 existing[label.id].write(
                     {
-                        "domino_id": label.id,
                         "schema_json": label.buffer_schema.model_dump_json(),
                         "printer_ids": [Command.set(printers.ids)],
                     }
@@ -63,4 +58,8 @@ class DominoLabelModel(models.Model):
                 stale.unlink()
 
     def action_sync_labels(self):
+        self._sync_labels()
+
+    @api.model
+    def _cron_sync_labels(self):
         self._sync_labels()

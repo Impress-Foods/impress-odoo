@@ -9,6 +9,12 @@ _logger = logging.getLogger(__name__)
 class TestSyncPrinters(common.TransactionCase):
     def setUp(self):
         super().setUp()
+        self.env["ir.config_parameter"].sudo().set_param(
+            "domino_printing.api_endpoint", "https://domino.test/api/"
+        )
+        self.env["ir.config_parameter"].sudo().set_param(
+            "domino_printing.api_key", "test-key-123"
+        )
         self.Model = self.env["domino.printer"]
 
     def _make_printer(self, domino_id, name, active=True):

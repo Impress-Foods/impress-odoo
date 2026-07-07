@@ -1,8 +1,8 @@
 import logging
+from urllib.parse import urljoin
 
 import requests
 from pydantic import BaseModel, ValidationError
-from werkzeug.urls import url_join
 
 from odoo.orm.environments import Environment
 
@@ -16,11 +16,20 @@ class DominoAPI:
         self.url = (
             env["ir.config_parameter"].sudo().get_param("domino_printing.api_endpoint")
         )
-        if type(self.url) is str:
+        if isinstance(self.url, str):
             self.url = self.url.rstrip("/") + "/"
         self.api_key = (
             env["ir.config_parameter"].sudo().get_param("domino_printing.api_key")
         )
+        if not self.url or not self.api_key:
+            raise ValueError(
+                env._(
+                    "Domino API endpoint and API key must be configured. "
+                    "\n %(url)s \n %(key)s",
+                    url=self.url,
+                    key="*" * len(self.api_key or ""),
+                )
+            )
         self.session = requests.Session()
 
     def _make_api_request(
@@ -29,7 +38,7 @@ class DominoAPI:
         method: str = "GET",
         payload: BaseModel | dict | None = None,
     ):
-        access_url = url_join(self.url, endpoint)
+        access_url = urljoin(self.url, endpoint)
         headers = {"Content-Type": "application/json", "X-API-Key": self.api_key}
         json_payload = None
         if payload:

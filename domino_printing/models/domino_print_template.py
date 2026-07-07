@@ -44,7 +44,7 @@ class DominoPrintTemplate(models.Model):
         self._validate_payload(fields_dict, data_fields)
         return {"textFields": fields_dict, "dataFields": data_fields}
 
-    def _validate_payload(self, fields: dict, data_fields: list):
+    def _validate_payload(self, domino_fields: dict, data_fields: list):
         self.ensure_one()
         required_fields = self.field_ids.filtered("required")
 
@@ -52,7 +52,7 @@ class DominoPrintTemplate(models.Model):
             if field.field_type == "data":
                 matched = any(d.get("name") == field.target_field for d in data_fields)
             else:
-                matched = field.target_field in fields
+                matched = field.target_field in domino_fields
             if not matched:
                 raise ValidationError(
                     self.env._(

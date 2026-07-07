@@ -14,8 +14,8 @@ class DominoPrintField(models.Model):
     _description = "Domino Print Field Mapping"
     _order = "name"
 
-    # Abbr for %q format directive
-    MONTHS_ABRV = {
+    # Abbreviations for %q format directive
+    months_abbreviations = {
         "Jan": "JA",
         "Feb": "FE",
         "Mar": "MR",
@@ -74,7 +74,17 @@ class DominoPrintField(models.Model):
                             field=self.target_field,
                         )
                     )
-                return self._transform_value(value[0], self.transform)
+                result = value[0]
+                if not result:
+                    if self.default_value:
+                        return self.default_value
+                    raise ValidationError(
+                        self.env._(
+                            "No value found for field %(field)s",
+                            field=self.target_field,
+                        )
+                    )
+                return self._transform_value(result, self.transform)
 
             case "data":
                 data = {}
@@ -105,7 +115,7 @@ class DominoPrintField(models.Model):
                 return value.strftime(fmt)
             new_format = fmt.replace("%q", "%b")
             formatted_date = value.strftime(new_format)
-            for abrv, can_abrv in self.MONTHS_ABRV.items():
+            for abrv, can_abrv in self.months_abbreviations.items():
                 formatted_date = formatted_date.replace(abrv, can_abrv)
             return formatted_date
 

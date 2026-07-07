@@ -135,6 +135,35 @@ class TestGetFieldValue(common.TransactionCase):
         with self.assertRaises(ValidationError):
             field.get_field_value(check)
 
+    def test_dynamic_empty_field_no_default_raises(self):
+        product = self.env["product.product"].create({"name": "No Code Product"})
+        field = self.Model.create(
+            {
+                "name": "test_dynamic_empty_no_default",
+                "field_type": "dynamic",
+                "odoo_field_path": "product_id.default_code",
+                "target_field": "CODE",
+            }
+        )
+        check = self._make_check(product)
+        with self.assertRaises(ValidationError):
+            field.get_field_value(check)
+
+    def test_dynamic_empty_field_with_default_returns_default(self):
+        product = self.env["product.product"].create({"name": "Fallback Product"})
+        field = self.Model.create(
+            {
+                "name": "test_dynamic_empty_with_default",
+                "field_type": "dynamic",
+                "odoo_field_path": "product_id.default_code",
+                "target_field": "CODE",
+                "default_value": "FALLBACK",
+            }
+        )
+        check = self._make_check(product)
+        result = field.get_field_value(check)
+        self.assertEqual(result, "FALLBACK")
+
     def test_dynamic_multiple_values_raises(self):
         field = self.Model.create(
             {

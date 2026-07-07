@@ -16,8 +16,12 @@ class DominoPrintWizard(models.TransientModel):
     code_template = fields.Many2one(related="qcc_id.point_id.coding_domino_template")
     case_template = fields.Many2one(related="qcc_id.point_id.case_domino_template")
 
-    code_printer_ids = fields.Many2many("domino.printer", "domino_wizard_code_printers")
-    case_printer_ids = fields.Many2many("domino.printer", "domino_wizard_case_printers")
+    code_printer_ids = fields.Many2many(
+        "domino.printer", "domino_wizard_code_printers", string="Code Printers"
+    )
+    case_printer_ids = fields.Many2many(
+        "domino.printer", "domino_wizard_case_printers", string="Case Printers"
+    )
 
     print_case = fields.Boolean()
     print_code = fields.Boolean()

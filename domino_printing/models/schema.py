@@ -33,4 +33,4 @@ class DominoLabel(BaseModel):
     def catch_empty_buffer_schema(cls, value: Any) -> dict | DominoBufferSchema:
         if isinstance(value, (dict, DominoBufferSchema)):
             return value
-        return {}
+        return DominoBufferSchema(fields=[])

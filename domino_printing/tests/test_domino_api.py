@@ -110,6 +110,22 @@ class TestDominoAPI(common.TransactionCase):
         self.assertIsNone(result)
 
     @patch("odoo.addons.domino_printing.models.domino.requests.Session.get")
+    def test_get_labels_null_buffer_schema(self, mock_get):
+        mock_response = MagicMock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = [
+            {"id": 1, "name": "Label A", "printer_ids": [1], "buffer_schema": None},
+        ]
+        mock_get.return_value = mock_response
+
+        api = self._get_api()
+        result = api.get_labels()
+
+        self.assertIsNotNone(result)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0].buffer_schema.fields, [])
+
+    @patch("odoo.addons.domino_printing.models.domino.requests.Session.get")
     def test_get_printers_success(self, mock_get):
         mock_response = MagicMock()
         mock_response.status_code = 200
