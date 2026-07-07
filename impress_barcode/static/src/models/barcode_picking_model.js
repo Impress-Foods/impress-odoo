@@ -52,7 +52,9 @@ patch(BarcodePickingModel.prototype, {
         const unreservedMoveIds = moveIds.filter((id) => !reservedMoveIds.has(id));
 
         // Get full move records directly from cache
-        const moves = unreservedMoveIds.map((id) => this._getMoveData(id));
+        const moves = unreservedMoveIds
+            .map((id) => this._getMoveData(id))
+            .filter((move) => move.product_uom_qty > 0);
         // Group moves by kit (bom_id) for position calculation
         const kitGroups = {};
         moves.forEach((move, index) => {
