@@ -20,7 +20,19 @@ patch(BarcodePickingModel.prototype, {
         const smData = structuredClone(this.cache.getRecord("stock.move", id));
         smData.product_id = this.cache.getRecord("product.product", smData.product_id);
         smData.product_uom_id = this.cache.getRecord("uom.uom", smData.product_uom);
+        smData.location_id = this.cache.getRecord("stock.location", smData.location_id);
+        smData.location_dest_id = this.cache.getRecord(
+            "stock.location",
+            smData.location_dest_id
+        );
         return smData;
+    },
+
+    _isSublocation(childLocation, parentLocation) {
+        if (!childLocation?.parent_path || !parentLocation?.parent_path) {
+            return false;
+        }
+        return childLocation.parent_path.indexOf(parentLocation.parent_path) === 0;
     },
 
     // Get unreserved moves formatted as line-compatible objects for LineComponent
@@ -40,7 +52,9 @@ patch(BarcodePickingModel.prototype, {
         const unreservedMoveIds = moveIds.filter((id) => !reservedMoveIds.has(id));
 
         // Get full move records directly from cache
-        const moves = unreservedMoveIds.map((id) => this._getMoveData(id));
+        const moves = unreservedMoveIds
+            .map((id) => this._getMoveData(id))
+            .filter((move) => move.product_uom_qty > 0);
         // Group moves by kit (bom_id) for position calculation
         const kitGroups = {};
         moves.forEach((move, index) => {
