@@ -223,7 +223,7 @@
             transition: scale 0.1s linear;
             &.active {
                 background-color: var(--highlight-color, var(--o-color-1)) !important;
-                color: white;
+                color: white !important;
             }
             &:hover {
                 scale: 0.95;

@@ -11,6 +11,7 @@ from pydantic import BaseModel
 from pydantic import ValidationError as PydanticValidationError
 from werkzeug.urls import url_join
 
+from odoo import fields
 from odoo.exceptions import ValidationError
 from odoo.orm.environments import Environment
 
@@ -500,9 +501,11 @@ class ClickshipProvider:
         return package_data
 
     def _make_pickup_details(self, contact: HrEmployee | ResPartner) -> PickupDetails:
+        local_time = fields.Datetime.context_timestamp(self, fields.Datetime.now())
+
         details = PickupDetails(
             date=self._make_current_date(),
-            ready_at=TimeOfDay(hour=8, minute=0),
+            ready_at=TimeOfDay(hour=local_time.hour + 1, minute=local_time.minute),
             ready_until=TimeOfDay(hour=16, minute=0),
             pickup_location="Docks",
             contact_name=contact.name,
