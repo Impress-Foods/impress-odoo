@@ -19,6 +19,7 @@
         "views/stock_lot_views.xml",
         "views/res_partner_views.xml",
         "reports/stock_picking_with_checks_report.xml",
+        "reports/report_deliveryslip.xml",
     ],
     "assets": {
         "web.report_assets_common": [
