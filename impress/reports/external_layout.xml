@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<?xml-model href="../../import_xml.rng"?>
 <odoo>
     <template id="external_layout_impress">
         <div
@@ -63,7 +64,7 @@
             t-value="'data:image/png;base64,%s' % company.layout_background_image.decode('utf-8') if company.layout_background_image and company.layout_background == 'Custom' else '/base/static/img/demo_logo_report.png' if company.layout_background == 'Demo logo' else ''"
         />
         <div
-            t-attf-class="article o_report_layout_boxed o_company_#{company.id}_layout {{  'o_report_layout_background' if company.layout_background != 'Blank'  else  '' }}"
+            t-attf-class="article o_report_layout_impress o_company_#{company.id}_layout {{  'o_report_layout_background' if company.layout_background != 'Blank'  else  '' }}"
             t-attf-style="{{ 'background-image: url(%s);' % layout_background_url if layout_background_url else '' }}"
             t-att-data-oe-model="o and o._name"
             t-att-data-oe-id="o and o.id"
@@ -92,5 +93,19 @@
                 </div>
             </div>
         </div>
+    </template>
+    <template id="styles_company_report" inherit_id="web.styles_company_report">
+        <xpath expr="//t[@t-elif][last()]" position="after">
+            <t t-elif="layout == 'impress.external_layout_impress'">
+                &amp;.o_report_layout_impress {
+                    .o_total td {
+                        background-color: <t t-esc='primary' />;
+                        strong {
+                            color: preview-color-contrast(<t t-esc='primary' />);
+                        }
+                    }
+                }
+            </t>
+        </xpath>
     </template>
 </odoo>

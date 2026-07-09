@@ -11,7 +11,7 @@
     "data": ["reports/external_layout.xml", "data/external_layout.xml"],
     "assets": {
         "web.report_assets_common": [
-            "impress/static/src/scss/layout_boxed.scss",
+            "impress/static/src/scss/layout_impress.scss",
         ],
     },
 }

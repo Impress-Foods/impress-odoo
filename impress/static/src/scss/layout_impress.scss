@@ -1,6 +1,6 @@
 .o_boxed_footer,
 .o_boxed_header,
-.o_report_layout_boxed {
+.o_report_layout_impress {
     color: map-get($grays, "700");
     font-size: 15px;
 }
@@ -27,7 +27,7 @@
         margin: 4px 0;
     }
 }
-.o_report_layout_boxed {
+.o_report_layout_impress {
     > h2 {
         text-transform: uppercase;
     }
@@ -91,15 +91,9 @@
             }
             &:last-child td,
             &.o_total td {
-                background-color: rgba($o-default-report-primary-color, 0.9);
-                color: #fff;
-
                 &:first-child {
                     border-right: none;
                 }
-            }
-            &.o_total strong {
-                color: white;
             }
         }
     }
