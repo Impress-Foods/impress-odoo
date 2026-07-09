@@ -1,10 +1,28 @@
-.o_table_boxed {
-    tfoot {
-        tr {
-            td {
-                border-right: 1px solid #9a9ca5;
-            }
-            border-top: 1px solid #9a9ca5;
+.o_report_layout_standard {
+    table.o_main_table {
+        border-collapse: collapse;
+        border: 1px solid #111827;
+
+        td,
+        th {
+            border: 1px solid #111827;
         }
+
+        thead {
+            border-bottom: 2px solid #111827;
+        }
+    }
+}
+.check_callout {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #a9dcb5;
+
+    .input_line {
+        display: inline-block;
+        border-bottom: 1px solid black;
+        min-width: 200px;
+        margin: 0 5px;
+        vertical-align: bottom;
     }
 }
