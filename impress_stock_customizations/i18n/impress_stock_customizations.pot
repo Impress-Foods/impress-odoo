@@ -171,6 +171,11 @@ msgid "Transfer"
 msgstr ""
 
 #. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.product_template_form_view
+msgid "UoMs"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model:ir.actions.report,name:impress_stock_customizations.action_report_zpl_online_sales_content
 msgid "ZPL Online Sales Content"
 msgstr ""
