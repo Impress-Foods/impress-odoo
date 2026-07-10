@@ -21,9 +21,12 @@
                     <strong>Shelf life remaining</strong>
                 </th>
             </xpath>
-            <xpath expr="//tbody/t/t[3]/tr/td[4]" position="after">
+            <xpath expr="//tbody[1]//tr[1]/td[last()]" position="before">
+                <td name="td_blank_shelf_life" />
+            </xpath>
+            <xpath expr="//tbody[1]//t[@t-as='line']/tr/td[4]" position="after">
                 <td
-                    name="shelflife_remaining"
+                    name="td_shelflife_remaining"
                     t-if="has_shelf_life"
                     class="text-center h6"
                 >

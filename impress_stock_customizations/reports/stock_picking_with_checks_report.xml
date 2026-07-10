@@ -9,11 +9,11 @@
         <xpath expr="//table[1]" position="attributes">
             <attribute name="class" separator=" " add="" remove="table-borderless" />
         </xpath>
-        <xpath expr="//th[@name='th_quantity']" position="before">
+        <!-- <xpath expr="//th[@name='th_quantity']" position="before">
             <th class="text-end">
                 <strong>Demand</strong>
             </th>
-        </xpath>
+        </xpath> -->
         <xpath expr="//th[@name='th_quantity']" position="after">
             <th class="text-end">
                 <strong>Check</strong>
@@ -21,24 +21,31 @@
         </xpath>
 
         <xpath expr="//td[hasclass('o_td_quantity')]" position="after">
-            <td />
+            <td name="td_check_sm" />
         </xpath>
-        <xpath expr="//td[hasclass('o_td_quantity')]" position="before">
-            <td class="o_td_quantity text-end">
+        <!-- <xpath expr="//td[hasclass('o_td_quantity')]" position="before">
+            <td class="o_td_quantity text-end" name="td_quantity_demand">
                 <span
                     t-out="format_number(move.product_uom_qty)"
                     class="text-nowrap"
                 >3.00</span>
                 <span t-field="move.product_uom" groups="uom.group_uom">units</span>
             </td>
+        </xpath> -->
+
+        <xpath expr="//td[hasclass('o_td_quantity')]/span[1]" position="after">
+            <span
+                t-out="' / ' + str(format_number(move.product_uom_qty))"
+                class="text-nowrap"
+            >3.00</span>
         </xpath>
 
         <xpath expr="//tbody[1]//t[@t-as='line']/tr/td[2]" position="after">
-            <td />
+            <td name="td_check_sml" />
         </xpath>
-        <xpath expr="//tbody[1]//t[@t-as='line']/tr/td[1]" position="after">
+        <!-- <xpath expr="//tbody[1]//t[@t-as='line']/tr/td[1]" position="after">
             <td />
-        </xpath>
+        </xpath> -->
 
         <xpath expr="//table[1]//tbody[1]" position="inside">
             <!-- Moves without reservations lines-->
