@@ -12,6 +12,19 @@
                     t-value="any(o.mapped('move_ids.move_line_ids.lot_id.expiration_date'))"
                 />
             </xpath>
+
+            <xpath expr="//td[hasclass('o_td_quantity')]/span[1]" position="after">
+                <span
+                    t-out="' / ' + str(format_number(move.product_uom_qty))"
+                    class="text-nowrap"
+                >3.00</span>
+            </xpath>
+            <xpath expr="//td[hasclass('o_td_quantity')]/span[1]" position="before">
+                <span t-if="move.product_uom_qty > move.quantity">
+                    <i class="fa fa-exclamation-triangle" />
+                </span>
+            </xpath>
+
             <xpath expr="//th[@name='th_barcode']" position="before">
                 <th
                     name="th_shelflife_remaining"
@@ -21,9 +34,7 @@
                     <strong>Shelf life remaining</strong>
                 </th>
             </xpath>
-            <xpath expr="//tbody[1]//tr[1]/td[last()]" position="before">
-                <td name="td_blank_shelf_life" />
-            </xpath>
+
             <xpath expr="//tbody[1]//t[@t-as='line']/tr/td[4]" position="after">
                 <td
                     name="td_shelflife_remaining"
@@ -37,6 +48,73 @@
                         <span> days</span>
                     </div>
                 </td>
+            </xpath>
+            <xpath expr="//table[1]//tbody[1]" position="inside">
+                <!-- Moves without reservations lines-->
+                <t
+                    t-foreach="o.move_ids.filtered(lambda m: not m.quantity).sorted(key=lambda
+                                move: (move.move_line_ids and move.move_line_ids[0].location_id.complete_name,
+                                move.move_line_ids and move.move_line_ids[0].location_dest_id.complete_name))"
+                    t-as="move"
+                >
+                    <tr>
+                        <td class="text-start">
+                            <span
+                                t-field="move.product_id.display_name"
+                            >Customizable Desk</span>
+                            <br />
+                            <span
+                                t-if="move.description_picking and move.description_picking != move.product_id.name and move.description_picking != move.product_id.display_name"
+                            >
+                                <span
+                                    t-out="move.description_picking"
+                                    t-options="{'widget': 'text'}"
+                                >Description on transfer</span>
+                            </span>
+                        </td>
+                        <td class="o_td_quantity text-end">
+                            <span
+                                t-out="format_number(move.product_uom_qty)"
+                                class="text-nowrap"
+                            >3.00</span>
+                            <span
+                                t-field="move.product_uom"
+                                groups="uom.group_uom"
+                            >units</span>
+                            <span
+                                t-if="move.packaging_uom_id and move.packaging_uom_id != move.product_uom"
+                            > (<span
+                                t-field="move.packaging_uom_qty"
+                                t-options='{"widget": "integer"}'
+                            /> <span t-field="move.packaging_uom_id.name" />) </span>
+                        </td>
+
+                        <t id="colspan-calculation" t-set="colspan" t-value="0" />
+                        <t
+                            t-if="from_col_exists"
+                            t-set="colspan"
+                            t-value="colspan + 1"
+                        />
+                        <t t-if="to_col_exists" t-set="colspan" t-value="colspan + 1" />
+                        <t
+                            t-if="barcode_col_exists"
+                            t-set="colspan"
+                            t-value="colspan + 1"
+                        />
+                        <t
+                            t-if="has_shelf_life"
+                            t-set="colspan"
+                            t-value="colspan + 1"
+                        />
+
+                        <td t-att-colspan="colspan" class="text-center">
+                            <span>
+                                <i
+                                class="fa fa-exclamation-triangle"
+                            /> No reservation for this product! </span>
+                        </td>
+                    </tr>
+                </t>
             </xpath>
         </field>
     </record>
