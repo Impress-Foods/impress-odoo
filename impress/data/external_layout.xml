@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="report_layout_impress" model="report.layout">
+        <field name="name">Impress</field>
+        <field name="sequence">7</field>
+        <field name="view_id" ref="impress.external_layout_impress" />
+    </record>
+</odoo>

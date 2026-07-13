@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-model href="../../import_xml.rng" type="application/xml"?>
+<odoo>
+    <template
+        id="report_stock_picking_with_checks_view"
+        inherit_id="stock.report_picking"
+        primary="True"
+    >
+        <xpath expr="//table[1]" position="attributes">
+            <attribute name="class" separator=" " add="" remove="table-borderless" />
+        </xpath>
+
+        <xpath expr="//th[@name='th_quantity']" position="after">
+            <th class="text-end">
+                <strong>Check</strong>
+            </th>
+        </xpath>
+
+        <xpath expr="//td[hasclass('o_td_quantity')]" position="after">
+            <td name="td_check_sm" />
+        </xpath>
+
+        <xpath expr="//tbody[1]//t[@t-as='line']/tr/td[2]" position="after">
+            <td name="td_check_sml" />
+        </xpath>
+
+        <xpath expr="//t[@id='colspan-calculation']" position="after">
+            <t t-set="colspan" t-value="colspan + 1" />
+        </xpath>
+
+        <xpath expr="//table[2]" position="after">
+            <div class="check_callout">
+                <span>Second verification done by:</span>
+                <span class="input_line" />
+                <span>Date:</span>
+                <span class="input_line" />
+            </div>
+        </xpath>
+    </template>
+
+    <record id="report_stock_picking_with_checks" model="ir.actions.report">
+        <field name="name">Picking with Checks</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >impress_stock_customizations.report_stock_picking_with_checks_view</field>
+        <field
+            name="report_file"
+        >impress_stock_customizations.report_stock_picking_with_checks_view</field>
+        <field
+            name="print_report_name"
+        >'Picking with Checks - %s - %s' % (object.partner_id.name or '', object.origin)</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
