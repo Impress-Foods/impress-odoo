@@ -6,13 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e-20260330\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2026-07-13 20:13+0000\n"
+"Last-Translator: Cédric Paradis <cedric@cedricparadis.ca>\n"
+"Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
+"impress-odoo/impress/fr_CA/>\n"
+"Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 2026.5\n"
 
 #. module: impress
 #: model_terms:ir.ui.view,arch_db:impress.styles_company_report
@@ -21,11 +24,14 @@ msgid ""
 "                    .o_total td {\n"
 "                        background-color:"
 msgstr ""
+"&amp;.o_report_layout_impress {\n"
+"                    .o_total td {\n"
+"                        background-color:"
 
 #. module: impress
 #: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
 msgid "(document name)"
-msgstr ""
+msgstr "(document name)"
 
 #. module: impress
 #: model_terms:ir.ui.view,arch_db:impress.styles_company_report
@@ -34,48 +40,51 @@ msgid ""
 "                        strong {\n"
 "                            color: preview-color-contrast("
 msgstr ""
+";\n"
+"                        strong {\n"
+"                            color: preview-color-contrast("
 
 #. module: impress
 #: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
 msgid "<strong>Company address block</strong>"
-msgstr ""
+msgstr "<strong>Company address block</strong>"
 
 #. module: impress
 #: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
 msgid "<strong>Company details block</strong>"
-msgstr ""
+msgstr "<strong>Company details block</strong>"
 
 #. module: impress
 #: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
 msgid "Company Report Footer"
-msgstr ""
+msgstr "Company Report Footer"
 
 #. module: impress
 #: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
 msgid "Contains the company address."
-msgstr ""
+msgstr "Contains the company address."
 
 #. module: impress
 #: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
 msgid "Contains the company details."
-msgstr ""
+msgstr "Contains the company details."
 
 #. module: impress
 #: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
 msgid "Logo"
-msgstr ""
+msgstr "Logo"
 
 #. module: impress
 #: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
 msgid "Page: <span class=\"page\"/> / <span class=\"topage\"/>"
-msgstr ""
+msgstr "Page: <span class=\"page\"/> / <span class=\"topage\"/>"
 
 #. module: impress
 #: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
 msgid "Tax ID"
-msgstr ""
+msgstr "# Taxes"
 
 #. module: impress
 #: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
 msgid "US12345671"
-msgstr ""
+msgstr "US12345671"
