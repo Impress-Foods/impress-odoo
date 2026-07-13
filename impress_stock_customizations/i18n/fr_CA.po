@@ -27,6 +27,19 @@ msgstr ""
 "object.origin)"
 
 #. module: impress_stock_customizations
+#: model:ir.actions.report,print_report_name:impress_stock_customizations.report_stock_picking_with_checks
+#, fuzzy
+#| msgid ""
+#| "'Online Sale Label - %s - %s' % (object.partner_id.name or '', "
+#| "object.origin)"
+msgid ""
+"'Picking with Checks - %s - %s' % (object.partner_id.name or '', "
+"object.origin)"
+msgstr ""
+"'Étiquette vente en ligne- %s - %s' % (object.partner_id.name or '', "
+"object.origin)"
+
+#. module: impress_stock_customizations
 #: model:ir.actions.report,print_report_name:impress_stock_customizations.action_report_zpl_online_sales_content
 msgid ""
 "'ZPL Online Sales Content - %s - %s' % (object.partner_id.name or '', "
@@ -37,9 +50,38 @@ msgstr ""
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
+msgid "3.00"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
+msgid ""
+"<span>\n"
+"                                <i class=\"fa fa-exclamation-triangle\"/> No "
+"reservation for this product! </span>"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.stock_report_delivery_has_serial_move_line
 msgid "<span> days</span>"
 msgstr "<span> jours</span>"
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_stock_picking_with_checks_view
+msgid ""
+"<span>Second verification done by:</span>\n"
+"                <span class=\"input_line\"/>\n"
+"                <span>Date:</span>\n"
+"                <span class=\"input_line\"/>"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_stock_picking_with_checks_view
+#, fuzzy
+#| msgid "<strong>Shelf life remaining</strong>"
+msgid "<strong>Check</strong>"
+msgstr "<strong>Durée de vie restante</strong>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.impress_stock_report_delivery_document_add_minimum_shelf_life
@@ -53,6 +95,13 @@ msgstr ""
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
 msgid "<strong>Shelf life remaining</strong>"
+msgstr "<strong>Durée de vie restante</strong>"
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_deliveryslip_document
+#, fuzzy
+#| msgid "<strong>Shelf life remaining</strong>"
+msgid "<strong>Total: </strong>"
 msgstr "<strong>Durée de vie restante</strong>"
 
 #. module: impress_stock_customizations
@@ -76,6 +125,11 @@ msgid "Create a Customer"
 msgstr "Créer un client"
 
 #. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
+msgid "Customizable Desk"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model:ir.model.fields,help:impress_stock_customizations.field_stock_lot__alert_date
 msgid ""
 "Date to determine the expired lots and serial numbers using the filter "
@@ -83,6 +137,11 @@ msgid ""
 msgstr ""
 "Date utilisée afin de déterminer les lots et numéros de série à l'aide du "
 "filter \"Alertes d'expiration\"."
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
+msgid "Description on transfer"
+msgstr ""
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_res_partner__display_name
@@ -134,6 +193,11 @@ msgstr "Étiquette de vente en ligne"
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.zpl_online_sales_content_view
 msgid "Order:"
 msgstr "Commande:"
+
+#. module: impress_stock_customizations
+#: model:ir.actions.report,name:impress_stock_customizations.report_stock_picking_with_checks
+msgid "Picking with Checks"
+msgstr ""
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.zpl_online_sales_content_view
@@ -329,6 +393,11 @@ msgstr "Jours"
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.zpl_online_sales_content_view
 msgid "of"
 msgstr "de"
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
+msgid "units"
+msgstr ""
 
 #~ msgid "(document barcode)"
 #~ msgstr "(code-barre du document)"
