@@ -6,13 +6,6 @@
         <field name="inherit_id" ref="stock.report_picking" />
         <field name="priority">20</field>
         <field name="arch" type="xml">
-            <xpath expr="//div//div[1]" position="before">
-                <t
-                    t-set="has_shelf_life"
-                    t-value="any(o.mapped('move_ids.move_line_ids.lot_id.expiration_date'))"
-                />
-            </xpath>
-
             <xpath expr="//td[hasclass('o_td_quantity')]/span[1]" position="after">
                 <span
                     t-out="' / ' + str(format_number(move.product_uom_qty))"
@@ -25,6 +18,12 @@
                 </span>
             </xpath>
 
+            <xpath expr="//div//div[1]" position="before">
+                <t
+                    t-set="has_shelf_life"
+                    t-value="any(o.mapped('move_ids.move_line_ids.lot_id.expiration_date'))"
+                />
+            </xpath>
             <xpath expr="//th[@name='th_barcode']" position="before">
                 <th
                     name="th_shelflife_remaining"
@@ -35,6 +34,9 @@
                 </th>
             </xpath>
 
+            <xpath expr="//tbody[1]/t/tr/td[last()]" position="before">
+                <td />
+            </xpath>
             <xpath expr="//tbody[1]//t[@t-as='line']/tr/td[4]" position="after">
                 <td
                     name="td_shelflife_remaining"
