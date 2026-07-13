@@ -6,8 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-24 19:04+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-07-13 12:24+0000\n"
+"Last-Translator: Automatic translation add-on <noreply-addon-"
+"autotranslate@weblate.org>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/impress_stock_customizations/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -27,22 +28,18 @@ msgstr ""
 
 #. module: impress_stock_customizations
 #: model:ir.actions.report,print_report_name:impress_stock_customizations.action_report_zpl_online_sales_content
-#, fuzzy
-#| msgid ""
-#| "'Online Sale Label - %s - %s' % (object.partner_id.name or '', "
-#| "object.origin)"
 msgid ""
 "'ZPL Online Sales Content - %s - %s' % (object.partner_id.name or '', "
 "object.origin)"
 msgstr ""
-"'Étiquette vente en ligne- %s - %s' % (object.partner_id.name or '', "
+"'Contenu ventes en ligne (ZPL) - %s - %s' % (object.partner_id.name or '', "
 "object.origin)"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.stock_report_delivery_has_serial_move_line
 msgid "<span> days</span>"
-msgstr ""
+msgstr "<span> jours</span>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.impress_stock_report_delivery_document_add_minimum_shelf_life
@@ -56,27 +53,27 @@ msgstr ""
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
 msgid "<strong>Shelf life remaining</strong>"
-msgstr ""
+msgstr "<strong>Durée de vie restante</strong>"
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__alert_date
 msgid "Alert Date"
-msgstr ""
+msgstr "Date d'alerte"
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__use_date
 msgid "Best before Date"
-msgstr ""
+msgstr "Date Meilleur Avant"
 
 #. module: impress_stock_customizations
 #: model:ir.model,name:impress_stock_customizations.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contact"
 
 #. module: impress_stock_customizations
 #: model:ir.model,website_form_label:impress_stock_customizations.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Créer un client"
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,help:impress_stock_customizations.field_stock_lot__alert_date
@@ -84,47 +81,49 @@ msgid ""
 "Date to determine the expired lots and serial numbers using the filter "
 "\"Expiration Alerts\"."
 msgstr ""
+"Date utilisée afin de déterminer les lots et numéros de série à l'aide du "
+"filter \"Alertes d'expiration\"."
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_res_partner__display_name
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__display_name
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_picking__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom d'affichage"
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__expiration_date
 msgid "Expiration Date"
-msgstr ""
+msgstr "Date d'expiration"
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_res_partner__id
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__id
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_picking__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__life_remaining
 msgid "Life Remaining"
-msgstr ""
+msgstr "Vie restante"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.zpl_online_sales_content_view
 msgid "Lot"
-msgstr ""
+msgstr "Lot"
 
 #. module: impress_stock_customizations
 #: model:ir.model,name:impress_stock_customizations.model_stock_lot
 msgid "Lot/Serial"
-msgstr ""
+msgstr "Lot/Numéro de série"
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_res_partner__minimum_shelf_life
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_res_users__minimum_shelf_life
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_picking__minimum_shelf_life
 msgid "Minimum Shelf Life"
-msgstr ""
+msgstr "Durée de vie minimum"
 
 #. module: impress_stock_customizations
 #: model:ir.actions.report,name:impress_stock_customizations.action_report_online_sale_label
@@ -134,27 +133,27 @@ msgstr "Étiquette de vente en ligne"
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.zpl_online_sales_content_view
 msgid "Order:"
-msgstr ""
+msgstr "Commande:"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.zpl_online_sales_content_view
 msgid "Product"
-msgstr ""
+msgstr "Produit"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.zpl_online_sales_content_view
 msgid "Qty"
-msgstr ""
+msgstr "Quantité"
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__removal_date
 msgid "Removal Date"
-msgstr ""
+msgstr "Date d'enlèvement"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_delivery_document_add_shelf_life
 msgid "Shelf life remaining"
-msgstr ""
+msgstr "Durée de vie restante"
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,help:impress_stock_customizations.field_stock_lot__expiration_date
@@ -162,6 +161,8 @@ msgid ""
 "This is the date on which the goods with this Serial Number may become "
 "dangerous and must not be consumed."
 msgstr ""
+"La date à laquelle les produits avec ce numéro de série peuvent devenir "
+"dangereux et ne devraient pas être consommés."
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,help:impress_stock_customizations.field_stock_lot__removal_date
@@ -170,6 +171,9 @@ msgid ""
 "removed from the stock and not be counted in the Fresh On Hand Stock "
 "anymore. This date will be used in FEFO removal strategy."
 msgstr ""
+"La date à partir de laquelle les produits avec ce numéro de série devraient "
+"être retirés du stock et ne pas être comptés dans le stock En main Frais. "
+"Cette date sera utilisé pour la stratégie de retrait FEFO."
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,help:impress_stock_customizations.field_stock_lot__use_date
@@ -177,64 +181,42 @@ msgid ""
 "This is the date on which the goods with this Serial Number start "
 "deteriorating, without being dangerous yet."
 msgstr ""
+"La date à partir de laquelle les produits avec ce numéro de série commencent "
+"à se détériorer, sans être dangereux pour autant."
 
 #. module: impress_stock_customizations
 #: model:ir.model,name:impress_stock_customizations.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Transfert"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.product_template_form_view
 msgid "UoMs"
-msgstr ""
+msgstr "Unités de mesure"
 
 #. module: impress_stock_customizations
 #: model:ir.actions.report,name:impress_stock_customizations.action_report_zpl_online_sales_content
-#, fuzzy
-#| msgid "Online Sale Label"
 msgid "ZPL Online Sales Content"
-msgstr "Étiquette de vente en ligne"
+msgstr "Contenue de vente en ligne (ZPL)"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
-#, fuzzy
-#| msgid ""
-#| "^FS\n"
-#| "            ^FO100,100\n"
-#| "            ^A0N,44,33^FDClient:"
 msgid "^FS ^FO100,100 ^A0N,44,33^FDClient:"
-msgstr ""
-"^FS\n"
-"            ^FO100,100\n"
-"            ^A0N,44,33^FDClient:"
+msgstr "^FS ^FO100,100 ^A0N,44,33^FDClient:"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
-#, fuzzy
-#| msgid ""
-#| "^FS ^FO130,639\n"
-#| "                        ^A0N,40,40^FB800,1^FDCase QTY:"
 msgid "^FS ^FO130,639 ^A0N,40,40^FB800,1^FDCase QTY:"
-msgstr ""
-"^FS ^FO130,639\n"
-"                        ^A0N,40,40^FB800,1^FDNb de caisses:"
+msgstr "^FS ^FO130,639 ^A0N,40,40^FB800,1^FDNb de caisses::"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
-#, fuzzy
-#| msgid ""
-#| "^FS ^FO130,689\n"
-#| "                        ^A0N,40,40^FB800,1^FDProduct Net Weight (KG): ^FS "
-#| "^FO130,739\n"
-#| "                        ^A0N,40,40^FB800,1^FDCode Date:"
 msgid ""
 "^FS ^FO130,689 ^A0N,40,40^FB800,1^FDProduct Net Weight (KG): ^FS ^FO130,739 "
 "^A0N,40,40^FB800,1^FDCode Date:"
 msgstr ""
-"^FS ^FO130,689\n"
-"                        ^A0N,40,40^FB800,1^FDPoids net du produit (KG): ^FS "
-"^FO130,739\n"
-"                        ^A0N,40,40^FB800,1^FDDate de codage:"
+"^FS ^FO130,689 ^A0N,40,40^FB800,1^FDPoids du produit (KG): ^FS ^FO130,739 "
+"^A0N,40,40^FB800,1^FDDate de codage:"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
@@ -243,31 +225,13 @@ msgstr "^FS ^FO20,489 ^A0N,40,40^FB500,1^FDGTIN:"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
-#, fuzzy
-#| msgid ""
-#| "^FS ^FO20,539 ^A0N,40,40^FB800,2^FDItem\n"
-#| "                        Description:"
 msgid "^FS ^FO20,539 ^A0N,40,40^FB800,2^FDItem Description:"
-msgstr ""
-"^FS ^FO20,539 ^A0N,40,40^FB800,2^FDItem\n"
-"                        Description:"
+msgstr "^FS ^FO20,539 ^A0N,40,40^FB800,2^FDItem Description:"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
-#, fuzzy
-#| msgid ""
-#| "^FS\n"
-#| "\n"
-#| "            ^FO425,150^BY3\n"
-#| "            ^BXN,8,200\n"
-#| "            ^FD"
 msgid "^FS ^FO425,150^BY3 ^BXN,8,200 ^FD"
-msgstr ""
-"^FS\n"
-"\n"
-"            ^FO425,150^BY3\n"
-"            ^BXN,8,200\n"
-"            ^FD"
+msgstr "^FS ^FO425,150^BY3 ^BXN,8,200 ^FD"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
@@ -276,112 +240,56 @@ msgstr "^FS ^FO500,489 ^A0N,40,40^FB500,1^FDLOT:"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
-#, fuzzy
-#| msgid ""
-#| "^FS ^FO518,273\n"
-#| "                        ^A0N,26,26^FB500,1^FDPro: 12345 ^FS ^FO518,303 "
-#| "^A0N,26,26^FB500,1^FDB/L:\n"
-#| "                        123456789 ^FS ^FX Product Field ^FO20,439 "
-#| "^A0N,40,40^FB500,1^FDPO:"
 msgid ""
 "^FS ^FO518,273 ^A0N,26,26^FB500,1^FDPro: 12345 ^FS ^FO518,303 "
 "^A0N,26,26^FB500,1^FDB/L: 123456789 ^FS ^FX Product Field ^FO20,439 "
 "^A0N,40,40^FB500,1^FDPO:"
 msgstr ""
-"^FS ^FO518,273\n"
-"                        ^A0N,26,26^FB500,1^FDPro: 12345 ^FS ^FO518,303 "
-"^A0N,26,26^FB500,1^FDB/L:\n"
-"                        123456789 ^FS ^FX Product Field ^FO20,439 "
+"^FS ^FO518,273 ^A0N,26,26^FB500,1^FDPro: 12345 ^FS ^FO518,303 "
+"^A0N,26,26^FB500,1^FDB/L: 123456789 ^FS ^FX Product Field ^FO20,439 "
 "^A0N,40,40^FB500,1^FDPO:"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
-#, fuzzy
-#| msgid ""
-#| "^FS ^FO90,288\n"
-#| "                        ^BCN,100,N,N,Y^FD420"
 msgid "^FS ^FO90,288 ^BCN,100,N,N,Y^FD420"
-msgstr ""
-"^FS ^FO90,288\n"
-"                        ^BCN,100,N,N,Y^FD420"
+msgstr "^FS ^FO90,288 ^BCN,100,N,N,Y^FD420"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
-#, fuzzy
-#| msgid ""
-#| "^FS ^FX Carrier Field\n"
-#| "                        ^FO518,213 ^A0N,26,26^FB500,1^FDCarrier: ^FS "
-#| "^FO518,243\n"
-#| "                        ^A0N,26,26^FB500,1^FD"
 msgid ""
 "^FS ^FX Carrier Field ^FO518,213 ^A0N,26,26^FB500,1^FDCarrier: ^FS "
 "^FO518,243 ^A0N,26,26^FB500,1^FD"
 msgstr ""
-"^FS ^FX Carrier Field\n"
-"                        ^FO518,213 ^A0N,26,26^FB500,1^FDCarrier: ^FS "
-"^FO518,243\n"
-"                        ^A0N,26,26^FB500,1^FD"
+"^FS ^FX Carrier Field ^FO518,213 ^A0N,26,26^FB500,1^FDCarrier: ^FS "
+"^FO518,243 ^A0N,26,26^FB500,1^FD"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
-#, fuzzy
-#| msgid ""
-#| "^FS ^FX MAN Segment\n"
-#| "                        ^FO10,822 ^A0N,26,26^FB500,1^FDMAN Segment "
-#| "(SSCC-18): ^FS ^FO110,900\n"
-#| "                        ^BCN,225,Y,Y,Y,A^FD(00)003001234000000001 ^XZ"
 msgid ""
 "^FS ^FX MAN Segment ^FO10,822 ^A0N,26,26^FB500,1^FDMAN Segment (SSCC-18): "
 "^FS ^FO110,900\n"
 "                        ^BCN,225,Y,Y,Y,A^FD(00)003001234000000001 ^XZ"
 msgstr ""
-"^FS ^FX MAN Segment\n"
-"                        ^FO10,822 ^A0N,26,26^FB500,1^FDMAN Segment "
-"(SSCC-18): ^FS ^FO110,900\n"
+"^FS ^FX MAN Segment ^FO10,822 ^A0N,26,26^FB500,1^FDMAN Segment (SSCC-18): "
+"^FS ^FO110,900\n"
 "                        ^BCN,225,Y,Y,Y,A^FD(00)003001234000000001 ^XZ"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
-#, fuzzy
-#| msgid ""
-#| "^FS ^FX Postal code field ^FO10,213\n"
-#| "                        ^A0N,26,26^FB500,1^FDShip to Postal Code: ^FS "
-#| "^FO15,243\n"
-#| "                        ^A0N,26,26^FB500,1^FD(420)"
 msgid ""
 "^FS ^FX Postal code field ^FO10,213 ^A0N,26,26^FB500,1^FDShip to Postal "
 "Code: ^FS ^FO15,243 ^A0N,26,26^FB500,1^FD(420)"
 msgstr ""
-"^FS ^FX Postal code field ^FO10,213\n"
-"                        ^A0N,26,26^FB500,1^FDShip to Postal Code: ^FS "
-"^FO15,243\n"
-"                        ^A0N,26,26^FB500,1^FD(420)"
+"^FS ^FX Postal code field ^FO10,213 ^A0N,26,26^FB500,1^FDShip to Postal "
+"Code: ^FS ^FO15,243 ^A0N,26,26^FB500,1^FD(420)"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
 msgid "^FS ^XZ"
-msgstr ""
+msgstr "^FS ^XZ"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
-#, fuzzy
-#| msgid ""
-#| "^XACI28 ^FX Border Definitions\n"
-#| "                        ^FX From field ^FO2,4 ^GB254,203,2 ^FS ^FX To "
-#| "field ^FO254,4 ^GB558,203,2\n"
-#| "                        ^FS ^FX Postal Code field ^FO2,203 ^GB508,206,2 "
-#| "^FS ^FX Carrier info field\n"
-#| "                        ^FO508,203 ^GB304,206,2 ^FS ^FX Product info "
-#| "field ^FO2,409 ^GB812,406,2 ^FS\n"
-#| "                        ^FX MAN Segment field ^FO2,815 ^GB812,403,2 ^FS "
-#| "^FX Data definitions ^FX\n"
-#| "                        From field ^FO10,16 ^A0N,26,26^FB200,1^FDFrom/DE: "
-#| "^FS ^FO20,50\n"
-#| "                        ^A0N,26,26^FB225,5^FDImpress Foods Inc. 1910 rue "
-#| "du Sanctuaire, Quebec, QC\n"
-#| "                        G1E 3L2 ^FS ^FX To field ^FO264,16 "
-#| "^A0N,26,26^FB200,1^FDTo/A: ^FS ^FO284,50\n"
-#| "                        ^A0N,26,26^FB300,5^FD"
 msgid ""
 "^XACI28 ^FX Border Definitions ^FX From field ^FO2,4 ^GB254,203,2 ^FS ^FX To "
 "field ^FO254,4 ^GB558,203,2 ^FS ^FX Postal Code field ^FO2,203 ^GB508,206,2 "
@@ -395,35 +303,22 @@ msgid ""
 "                        ^A0N,26,26^FB200,1^FDTo/A: ^FS ^FO284,50 "
 "^A0N,26,26^FB300,5^FD"
 msgstr ""
-"^XACI28 ^FX Border Definitions\n"
-"                        ^FX From field ^FO2,4 ^GB254,203,2 ^FS ^FX To field "
-"^FO254,4 ^GB558,203,2\n"
-"                        ^FS ^FX Postal Code field ^FO2,203 ^GB508,206,2 ^FS "
-"^FX Carrier info field\n"
-"                        ^FO508,203 ^GB304,206,2 ^FS ^FX Product info field "
-"^FO2,409 ^GB812,406,2 ^FS\n"
-"                        ^FX MAN Segment field ^FO2,815 ^GB812,403,2 ^FS ^FX "
-"Data definitions ^FX\n"
-"                        From field ^FO10,16 ^A0N,26,26^FB200,1^FDFrom/DE: "
-"^FS ^FO20,50\n"
-"                        ^A0N,26,26^FB225,5^FDImpress Foods Inc. 1910 rue du "
-"Sanctuaire, Quebec, QC\n"
-"                        G1E 3L2 ^FS ^FX To field ^FO264,16 "
-"^A0N,26,26^FB200,1^FDTo/A: ^FS ^FO284,50\n"
-"                        ^A0N,26,26^FB300,5^FD"
+"^XACI28 ^FX Border Definitions ^FX From field ^FO2,4 ^GB254,203,2 ^FS ^FX To "
+"field ^FO254,4 ^GB558,203,2 ^FS ^FX Postal Code field ^FO2,203 ^GB508,206,2 "
+"^FS ^FX\n"
+"                        Carrier info field ^FO508,203 ^GB304,206,2 ^FS ^FX "
+"Product info field ^FO2,409 ^GB812,406,2 ^FS ^FX MAN Segment field ^FO2,815 "
+"^GB812,403,2 ^FS ^FX Data definitions ^FX From\n"
+"                        field ^FO10,16 ^A0N,26,26^FB200,1^FDFrom/DE: ^FS "
+"^FO20,50 ^A0N,26,26^FB225,5^FDImpress Foods Inc. 1910 rue du Sanctuaire, "
+"Quebec, QC G1E 3L2 ^FS ^FX To field ^FO264,16\n"
+"                        ^A0N,26,26^FB200,1^FDTo/A: ^FS ^FO284,50 "
+"^A0N,26,26^FB300,5^FD"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
-#, fuzzy
-#| msgid ""
-#| "^XA^CI28\n"
-#| "            ^FO100,50\n"
-#| "            ^A0N,44,33^FDCommande:"
 msgid "^XA^CI28 ^FO100,50 ^A0N,44,33^FDCommande:"
-msgstr ""
-"^XA^CI28\n"
-"            ^FO100,50\n"
-"            ^A0N,44,33^FDCommande:"
+msgstr "^XA^CI28 ^FO100,50 ^A0N,44,33^FDCommande:"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.impress_stock_report_delivery_document_add_minimum_shelf_life
@@ -433,7 +328,7 @@ msgstr "Jours"
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.zpl_online_sales_content_view
 msgid "of"
-msgstr ""
+msgstr "de"
 
 #~ msgid "(document barcode)"
 #~ msgstr "(code-barre du document)"
