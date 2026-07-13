@@ -1,0 +1,81 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* impress
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e-20260330\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr_CA\n"
+
+#. module: impress
+#: model_terms:ir.ui.view,arch_db:impress.styles_company_report
+msgid ""
+"&amp;.o_report_layout_impress {\n"
+"                    .o_total td {\n"
+"                        background-color:"
+msgstr ""
+
+#. module: impress
+#: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
+msgid "(document name)"
+msgstr ""
+
+#. module: impress
+#: model_terms:ir.ui.view,arch_db:impress.styles_company_report
+msgid ""
+";\n"
+"                        strong {\n"
+"                            color: preview-color-contrast("
+msgstr ""
+
+#. module: impress
+#: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
+msgid "<strong>Company address block</strong>"
+msgstr ""
+
+#. module: impress
+#: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
+msgid "<strong>Company details block</strong>"
+msgstr ""
+
+#. module: impress
+#: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
+msgid "Company Report Footer"
+msgstr ""
+
+#. module: impress
+#: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
+msgid "Contains the company address."
+msgstr ""
+
+#. module: impress
+#: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
+msgid "Contains the company details."
+msgstr ""
+
+#. module: impress
+#: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
+msgid "Logo"
+msgstr ""
+
+#. module: impress
+#: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
+msgid "Page: <span class=\"page\"/> / <span class=\"topage\"/>"
+msgstr ""
+
+#. module: impress
+#: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
+msgid "Tax ID"
+msgstr ""
+
+#. module: impress
+#: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
+msgid "US12345671"
+msgstr ""
