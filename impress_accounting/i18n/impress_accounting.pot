@@ -14,6 +14,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: impress_accounting
+#. odoo-python
+#: code:addons/impress_accounting/models/account_move.py:0
+msgid ""
+"Bill for client '%(client)s' with reference '%(ref)s' already exists: "
+"%(bills)s"
+msgstr ""
+
+#. module: impress_accounting
 #: model:ir.model,name:impress_accounting.model_res_partner
 msgid "Contact"
 msgstr ""
@@ -24,11 +32,13 @@ msgid "Create a Customer"
 msgstr ""
 
 #. module: impress_accounting
+#: model:ir.model.fields,field_description:impress_accounting.field_account_move__display_name
 #: model:ir.model.fields,field_description:impress_accounting.field_res_partner__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: impress_accounting
+#: model:ir.model.fields,field_description:impress_accounting.field_account_move__id
 #: model:ir.model.fields,field_description:impress_accounting.field_res_partner__id
 msgid "ID"
 msgstr ""
@@ -38,4 +48,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:impress_accounting.field_res_users__invoice_partner_id
 #: model_terms:ir.ui.view,arch_db:impress_accounting.view_res_partner_form
 msgid "Invoice Partner"
+msgstr ""
+
+#. module: impress_accounting
+#: model:ir.model,name:impress_accounting.model_account_move
+msgid "Journal Entry"
 msgstr ""
