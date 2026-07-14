@@ -89,6 +89,11 @@ msgid "Alert Date"
 msgstr ""
 
 #. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.online_sales_summary
+msgid "Barcode"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__use_date
 msgid "Best before Date"
 msgstr ""
@@ -121,6 +126,7 @@ msgid "Description on transfer"
 msgstr ""
 
 #. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_online_sales_summary__display_name
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_res_partner__display_name
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__display_name
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_picking__display_name
@@ -133,6 +139,7 @@ msgid "Expiration Date"
 msgstr ""
 
 #. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_online_sales_summary__id
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_res_partner__id
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__id
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_picking__id
@@ -162,8 +169,33 @@ msgid "Minimum Shelf Life"
 msgstr ""
 
 #. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.online_sales_summary
+msgid "Number of boxes"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model:ir.actions.report,name:impress_stock_customizations.action_report_online_sale_label
 msgid "Online Sale Label"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.actions.report,print_report_name:impress_stock_customizations.action_report_online_summary
+msgid "Online Sale Summary"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.model,name:impress_stock_customizations.model_report_impress_stock_customizations_online_sales_summary
+msgid "Online Sales Summary Report"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.actions.report,name:impress_stock_customizations.action_report_online_summary
+msgid "Online Summary"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.online_sales_summary
+msgid "Order"
 msgstr ""
 
 #. module: impress_stock_customizations
@@ -179,6 +211,11 @@ msgstr ""
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.zpl_online_sales_content_view
 msgid "Product"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.online_sales_summary
+msgid "Products"
 msgstr ""
 
 #. module: impress_stock_customizations
@@ -216,6 +253,11 @@ msgstr ""
 msgid ""
 "This is the date on which the goods with this Serial Number start "
 "deteriorating, without being dangerous yet."
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.online_sales_summary
+msgid "Total:"
 msgstr ""
 
 #. module: impress_stock_customizations
