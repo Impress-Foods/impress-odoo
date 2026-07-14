@@ -12,6 +12,6 @@ class ResPartner(models.Model):
 
     def get_invoicing_partner(self):
         if self.invoice_partner_id:
-            return self.invoice_partner_id.id
+            return self.invoice_partner_id
         else:
-            return self.id
+            return self

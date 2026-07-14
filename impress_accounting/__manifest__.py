@@ -1,7 +1,7 @@
 {
-    "name": "Impress_accounting",
+    "name": "Impress Accounting",
     "version": "19.0.1.0.0",
-    "summary": """ Impress_accounting Summary """,
+    "summary": """ Accounting specific changes for Impress Foods """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
