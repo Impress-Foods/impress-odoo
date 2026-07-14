@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="online_sales_summary">
+        <t t-call="web.html_container">
+            <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+            <table
+                class="table table-bordered"
+                style="width: 100%; border: 1px solid #dee2e6; border-collapse: collapse;"
+            >
+                <thead>
+                    <tr>
+                        <th
+                            style="width: 15%; border: 1px solid #dee2e6; padding: 8px;"
+                        >Order</th>
+                        <th
+                            style="width: 30%; border: 1px solid #dee2e6; padding: 8px;"
+                        >Products</th>
+                        <th
+                            style="width: 15%; border: 1px solid #dee2e6; padding: 8px;"
+                        >Number of boxes</th>
+                        <th
+                            style="width: 15%; border: 1px solid #dee2e6; padding: 8px;"
+                        >Barcode</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="pickings" t-as="picking">
+                        <td
+                            style="width: 15%; border: 1px solid #dee2e6; padding: 8px;"
+                        >
+                            <table
+                                class="table table-borderless m-0"
+                                style="width: 100%; border: none; border-collapse: collapse;"
+                            >
+                                <tr>
+                                    <td>
+                                        <span t-out="picking['order']" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span t-out="picking['client']" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>
+                                            <strong t-out="picking['carrier']" />
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td
+                            class="p-0"
+                            style="width: 30%; border: 1px solid #dee2e6; vertical-align: top;"
+                        >
+                            <table
+                                class="table table-borderless m-0"
+                                style="width: 100%; border: none; border-collapse: collapse;"
+                            >
+                                <tbody>
+                                    <tr
+                                        t-foreach="picking['products_by_category']"
+                                        t-as="cat"
+                                    >
+                                        <td
+                                            style="padding: 6px 8px; border: none;"
+                                            t-out="cat +':'"
+                                        />
+                                        <td
+                                            style="padding: 6px 8px; border: none; text-align: right;"
+                                            t-out="int(picking['products_by_category'][cat])"
+                                        />
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td
+                                            style="padding: 6px 8px; border: none; font-weight: bold;"
+                                        >Total: </td>
+                                        <td
+                                            style="padding: 6px 8px; border: none; font-weight: bold; text-align: right;"
+                                            t-out="str(picking['total'])"
+                                        />
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </td>
+
+                        <td
+                            style="width: 15%; border: 1px solid #dee2e6; padding: 8px;"
+                        />
+
+                        <td
+                            style="width: 15%; border: 1px solid #dee2e6; padding: 8px; text-align: center; vertical-align: middle;"
+                        >
+                            <span
+                                t-out="picking['name']"
+                                t-options="{'widget': 'barcode', 'symbology': 'QR', 'width': 100, 'height': 100}"
+                                style="display: block; margin: 0 auto; width: 100px; height: 100px;"
+                            />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </t>
+    </template>
+
+    <record id="us_letter_small_margins" model="report.paperformat">
+        <field name="name">US Letter (small margins)</field>
+        <field name="format">Letter</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">10</field>
+        <field name="margin_right">10</field>
+        <field name="header_spacing">0</field>
+    </record>
+
+    <record id="action_report_online_summary" model="ir.actions.report">
+        <field name="name">Online Summary</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="paperformat_id"
+            ref="impress_stock_customizations.us_letter_small_margins"
+        />
+        <field
+            name="report_name"
+        >impress_stock_customizations.online_sales_summary</field>
+        <field
+            name="report_file"
+        >impress_stock_customizations.online_sales_summary</field>
+        <field name="print_report_name">Online Sale Summary</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
