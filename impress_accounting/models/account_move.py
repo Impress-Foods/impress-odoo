@@ -7,11 +7,15 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     def _post(self, soft=True):
-        for move in self.filtered(lambda mv: mv.ref and mv.commercial_partner_id):
+        for move in self.filtered(
+            lambda mv: (
+                mv.ref and mv.commercial_partner_id and mv.move_type == "in_invoice"
+            )
+        ):
             move_domain = (
                 Domain("commercial_partner_id", "=", move.commercial_partner_id.id)
                 & Domain("ref", "=", move.ref)
-                & Domain("move_type", "=", move.move_type)
+                & Domain("move_type", "=", "in_invoice")
             )
             matching_posted_move = self.search(
                 move_domain & Domain("state", "=", "posted")
