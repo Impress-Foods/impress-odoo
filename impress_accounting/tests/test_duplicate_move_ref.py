@@ -82,6 +82,20 @@ class TestDuplicateMoveRef(TransactionCase):
             }
         )
 
+    def _create_invoice_move(self, partner, ref):
+        return self.env["account.move"].create(
+            {
+                "partner_id": partner.id,
+                "ref": ref,
+                "journal_id": self.journal.id,
+                "move_type": "out_invoice",
+                "invoice_date": fields.Date.today(),
+                "invoice_line_ids": [
+                    (0, 0, {"name": "Line", "price_unit": 100.0, "quantity": 1})
+                ],
+            }
+        )
+
     def test_unique_pair_posts(self):
         """Distinct (partner, ref) pairs should post without error."""
         move_a = self._create_vendor_bill(self.partner_a, "INV-001")
