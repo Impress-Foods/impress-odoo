@@ -1,3 +1,4 @@
+from odoo import fields
 from odoo.exceptions import UserError
 from odoo.tests import TransactionCase, tagged
 
@@ -31,6 +32,8 @@ class TestDuplicateMoveRef(TransactionCase):
                 "code": "TST",
             }
         )
+        cls.journal.default_account_id = cls.account_revenue
+        cls.partner_a.property_account_receivable_id = cls.account_recv
 
     def _create_move(self, partner, ref):
         AccountMove = self.env["account.move"]  # noqa: N806
@@ -60,6 +63,20 @@ class TestDuplicateMoveRef(TransactionCase):
                             "credit": 100,
                         },
                     ),
+                ],
+            }
+        )
+
+    def _create_invoice_move(self, partner, ref):
+        return self.env["account.move"].create(
+            {
+                "partner_id": partner.id,
+                "ref": ref,
+                "journal_id": self.journal.id,
+                "move_type": "out_invoice",
+                "invoice_date": fields.Date.today(),
+                "invoice_line_ids": [
+                    (0, 0, {"name": "Line", "price_unit": 100.0, "quantity": 1})
                 ],
             }
         )
@@ -149,3 +166,12 @@ class TestDuplicateMoveRef(TransactionCase):
         self.assertEqual(move_a.state, "draft")
         self.assertEqual(move_b.state, "draft")
         self.assertEqual(move_c.state, "draft")
+
+    def test_payment_with_same_ref_does_not_raise(self):
+        """Duplicate check shouldn't apply on different move types"""
+        move_a = self._create_move(self.partner_a, "INV-001")
+        move_b = self._create_invoice_move(self.partner_a, "INV-001")
+        move_a.action_post()
+        move_b.action_post()
+        self.assertEqual(move_a.state, "posted")
+        self.assertEqual(move_b.state, "posted")
