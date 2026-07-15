@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-07-13 14:18+0000\n"
+"PO-Revision-Date: 2026-07-15 05:56+0000\n"
 "Last-Translator: Cédric Paradis <cedric@cedricparadis.ca>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/impress_stock_customizations/fr_CA/>\n"
@@ -110,7 +110,7 @@ msgstr "Date d'alerte"
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.online_sales_summary
 msgid "Barcode"
-msgstr ""
+msgstr "Code-barre"
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__use_date
@@ -192,7 +192,7 @@ msgstr "Durée de vie minimum"
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.online_sales_summary
 msgid "Number of boxes"
-msgstr ""
+msgstr "Nombre de boîtes"
 
 #. module: impress_stock_customizations
 #: model:ir.actions.report,name:impress_stock_customizations.action_report_online_sale_label
@@ -201,29 +201,23 @@ msgstr "Étiquette de vente en ligne"
 
 #. module: impress_stock_customizations
 #: model:ir.actions.report,print_report_name:impress_stock_customizations.action_report_online_summary
-#, fuzzy
-#| msgid "Online Sale Label"
 msgid "Online Sale Summary"
-msgstr "Étiquette de vente en ligne"
+msgstr "Résumé ventes en ligne"
 
 #. module: impress_stock_customizations
 #: model:ir.model,name:impress_stock_customizations.model_report_impress_stock_customizations_online_sales_summary
-#, fuzzy
-#| msgid "Online Sale Label"
 msgid "Online Sales Summary Report"
-msgstr "Étiquette de vente en ligne"
+msgstr "Rapport résumé ventes en ligne"
 
 #. module: impress_stock_customizations
 #: model:ir.actions.report,name:impress_stock_customizations.action_report_online_summary
 msgid "Online Summary"
-msgstr ""
+msgstr "Résumé ventes en ligne"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.online_sales_summary
-#, fuzzy
-#| msgid "Order:"
 msgid "Order"
-msgstr "Commande:"
+msgstr "Commande"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.zpl_online_sales_content_view
@@ -242,10 +236,8 @@ msgstr "Produit"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.online_sales_summary
-#, fuzzy
-#| msgid "Product"
 msgid "Products"
-msgstr "Produit"
+msgstr "Produits"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.zpl_online_sales_content_view
@@ -294,7 +286,7 @@ msgstr ""
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.online_sales_summary
 msgid "Total:"
-msgstr ""
+msgstr "Total:"
 
 #. module: impress_stock_customizations
 #: model:ir.model,name:impress_stock_customizations.model_stock_picking
