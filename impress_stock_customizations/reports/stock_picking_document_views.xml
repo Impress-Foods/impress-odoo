@@ -4,10 +4,7 @@
     <template id="report_picking" inherit_id="stock.report_picking">
         <xpath expr="//table[hasclass('o_main_table')]//tr[1]/td[1]" position="after">
             <td class="text-start">
-                <span
-                    t-out="move.description_picking"
-                    t-options="{'widget': 'text'}"
-                >Description on transfer</span>
+                <span t-field="move.product_id.display_name">Customizable Desk</span>
             </td>
         </xpath>
 
@@ -69,9 +66,8 @@
                 <tr>
                     <td class="text-start">
                         <span
-                            t-out="move.description_picking"
-                            t-options="{'widget': 'text'}"
-                        >Description on transfer</span>
+                            t-field="move.product_id.display_name"
+                        >Customizable Desk</span>
                     </td>
                     <td class="o_td_quantity text-end">
                         <span
