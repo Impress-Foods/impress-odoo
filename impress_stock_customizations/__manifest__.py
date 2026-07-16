@@ -1,6 +1,6 @@
 {
     "name": "Impress Stock Customizations",
-    "version": "19.0.1.1.2",
+    "version": "19.0.1.1.3",
     "depends": ["base", "stock", "product_expiry"],
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
