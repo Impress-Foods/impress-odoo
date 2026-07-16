@@ -11,7 +11,7 @@
         </xpath>
 
         <xpath expr="//th[@name='th_quantity']" position="after">
-            <th class="text-end">
+            <th class="text-center" style="width: 10%;">
                 <strong>Check</strong>
             </th>
         </xpath>
