@@ -15,7 +15,6 @@
         "reports/impress_stock_customizations_labels.xml",
         "reports/online_sale_labels.xml",
         "reports/stock_picking_document_views.xml",
-        "reports/report_templates.xml",
         "views/stock_lot_views.xml",
         "views/res_partner_views.xml",
         "reports/stock_picking_with_checks_report.xml",

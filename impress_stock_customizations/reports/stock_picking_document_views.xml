@@ -106,4 +106,15 @@
             </t>
         </xpath>
     </template>
+
+    <template id="report_picking_add_page_numbers" inherit_id="stock.report_picking">
+        <xpath expr="//div[hasclass('page')]" position="inside">
+            <div
+                t-if="report_type == 'pdf'"
+                class="footer border-top pt-2 text-muted text-center"
+            >
+                Page <span class="page" /> / <span class="topage" />
+            </div>
+        </xpath>
+    </template>
 </odoo>
