@@ -11,6 +11,7 @@
     "license": "GPL-2",
     # data files always loaded at installation
     "data": [
+        "reports/paperformat_data.xml",
         "reports/impress_stock_customizations_stock_delivery_document_views.xml",
         "reports/impress_stock_customizations_labels.xml",
         "reports/online_sale_labels.xml",

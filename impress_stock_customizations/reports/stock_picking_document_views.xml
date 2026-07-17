@@ -113,7 +113,13 @@
                 t-if="report_type == 'pdf'"
                 class="footer border-top pt-2 text-muted text-center"
             >
-                Page <span class="page" /> / <span class="topage" />
+                <div class="d-flex flex-row justify-content-between">
+                    <span t-out="o.name" />
+                    <div>
+                        Page <span class="page" /> / <span class="topage" />
+                    </div>
+                    <span t-out="o.origin" />
+                </div>
             </div>
         </xpath>
     </template>
