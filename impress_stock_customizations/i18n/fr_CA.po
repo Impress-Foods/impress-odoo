@@ -50,9 +50,14 @@ msgstr "3.00"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
+#, fuzzy
+#| msgid ""
+#| "<span>\n"
+#| "                                <i class=\"fa fa-exclamation-triangle\"/> "
+#| "No reservation for this product! </span>"
 msgid ""
 "<span>\n"
-"                                <i class=\"fa fa-exclamation-triangle\"/> No "
+"                            <i class=\"fa fa-exclamation-triangle\"/> No "
 "reservation for this product! </span>"
 msgstr ""
 "<span>\n"
@@ -84,10 +89,14 @@ msgid "<strong>Check</strong>"
 msgstr "<strong>Vérification</strong>"
 
 #. module: impress_stock_customizations
-#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.impress_stock_report_delivery_document_add_minimum_shelf_life
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_delivery_document
+#, fuzzy
+#| msgid ""
+#| "<strong>Minimum shelf life:</strong>\n"
+#| "                    <br/>"
 msgid ""
 "<strong>Minimum shelf life:</strong>\n"
-"                    <br/>"
+"                <br/>"
 msgstr ""
 "<strong>Durée de vie minimale:</strong>\n"
 "                    <br/>"
@@ -98,7 +107,7 @@ msgid "<strong>Shelf life remaining</strong>"
 msgstr "<strong>Durée de vie restante</strong>"
 
 #. module: impress_stock_customizations
-#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_deliveryslip_document
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_delivery_document
 msgid "<strong>Total: </strong>"
 msgstr "<strong>Total: </strong>"
 
@@ -140,11 +149,6 @@ msgid ""
 msgstr ""
 "Date utilisée afin de déterminer les lots et numéros de série à l'aide du "
 "filter \"Alertes d'expiration\"."
-
-#. module: impress_stock_customizations
-#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
-msgid "Description on transfer"
-msgstr "Description sur le transfert"
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_online_sales_summary__display_name
@@ -225,6 +229,11 @@ msgid "Order:"
 msgstr "Commande:"
 
 #. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking_add_page_numbers
+msgid "Page <span class=\"page\"/> / <span class=\"topage\"/>"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model:ir.actions.report,name:impress_stock_customizations.report_stock_picking_with_checks
 msgid "Picking with Checks"
 msgstr "Picking avec checks"
@@ -250,7 +259,7 @@ msgid "Removal Date"
 msgstr "Date d'enlèvement"
 
 #. module: impress_stock_customizations
-#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_delivery_document_add_shelf_life
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_delivery_document
 msgid "Shelf life remaining"
 msgstr "Durée de vie restante"
 
@@ -425,7 +434,7 @@ msgid "^XA^CI28 ^FO100,50 ^A0N,44,33^FDCommande:"
 msgstr "^XA^CI28 ^FO100,50 ^A0N,44,33^FDCommande:"
 
 #. module: impress_stock_customizations
-#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.impress_stock_report_delivery_document_add_minimum_shelf_life
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_delivery_document
 msgid "days"
 msgstr "Jours"
 
@@ -438,6 +447,9 @@ msgstr "de"
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
 msgid "units"
 msgstr "unités"
+
+#~ msgid "Description on transfer"
+#~ msgstr "Description sur le transfert"
 
 #~ msgid "(document barcode)"
 #~ msgstr "(code-barre du document)"
