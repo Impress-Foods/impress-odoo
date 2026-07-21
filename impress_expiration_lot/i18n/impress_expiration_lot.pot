@@ -32,8 +32,3 @@ msgstr ""
 #: model:ir.actions.server,name:impress_expiration_lot.impress_expiration_parse_lot_number_action
 msgid "Parse lot number and set correct dates"
 msgstr ""
-
-#. module: impress_expiration_lot
-#: model:base.automation,name:impress_expiration_lot.impress_expiration_parse_lot_number_rule
-msgid "Parse lot number and set correct dates on lot creation"
-msgstr ""
