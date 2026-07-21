@@ -47,4 +47,4 @@ class TestStockLot(TransactionCase):
         )
         exp = lot.expiration_date
         lot._calculate_expiration_date()
-        self.assertEqual(lot.expiration_date, exp)
+        self.assertEqual(lot.expiration_date.date(), exp.date())

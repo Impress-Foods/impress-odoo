@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="sync_labels" model="ir.cron">
+        <field name="name">Sync Domino Labels</field>
+        <field name="model_id" ref="model_domino_label" />
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="state">code</field>
+        <field name="code">model._cron_sync_labels()</field>
+    </record>
+    <record id="sync_printers" model="ir.cron">
+        <field name="name">Sync Domino Printers</field>
+        <field name="model_id" ref="model_domino_printer" />
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="state">code</field>
+        <field name="code">model._cron_sync_printers()</field>
+    </record>
+</odoo>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="domino_printing_root_menu"
+        name="Domino"
+        parent="mrp.menu_mrp_configuration"
+        sequence="120"
+    />
+    <menuitem
+        id="domino_printer_menu"
+        name="Printers"
+        parent="domino_printing.domino_printing_root_menu"
+        action="domino_printer_action"
+        sequence="70"
+    />
+    <menuitem
+        id="domino_label_menu"
+        name="Labels"
+        parent="domino_printing.domino_printing_root_menu"
+        action="domino_label_action"
+        sequence="80"
+    />
+    <menuitem
+        id="domino_print_template_menu"
+        name="Print Templates"
+        parent="domino_printing.domino_printing_root_menu"
+        action="domino_print_template_action"
+        sequence="90"
+    />
+    <menuitem
+        id="domino_print_field_menu"
+        name="Print Fields"
+        parent="domino_printing.domino_printing_root_menu"
+        action="domino_print_field_action"
+        sequence="100"
+    />
+</odoo>

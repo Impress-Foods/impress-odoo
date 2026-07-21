@@ -1,7 +1,7 @@
 import logging
 from datetime import datetime, timedelta
 
-from odoo import models
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -9,7 +9,10 @@ _logger = logging.getLogger(__name__)
 class StockLot(models.Model):
     _inherit = "stock.lot"
 
-    def _calculate_expiration_date(self):
+    production_date = fields.Date(compute="_compute_production_date", store=True)
+
+    @api.depends("name")
+    def _compute_production_date(self):
         for lot in self:
             if (
                 lot.product_id.use_expiration_date
@@ -17,35 +20,34 @@ class StockLot(models.Model):
                 and lot.product_id.default_code
                 and lot.product_id.default_code[0] == "E"
             ):
-                lot_number = lot.name[:5]
-                if not lot_number.isnumeric():
-                    continue
-                # Assuming 'lot.name' follows the 'YYDDD' format,
-                # where 'YY' is the year and 'DDD' is the day of the year.
-                year, day = "20" + lot_number[:2], int(lot_number[2:])
-                year_date = datetime.fromisoformat(year + "-01-01")
-                create_date = year_date + timedelta(days=(day))
+                try:
+                    lot_number = lot.name[:5]
+                    year, day = "20" + lot_number[:2], int(lot_number[2:])
+                    year_date = datetime.fromisoformat(year + "-01-01")
+                    lot.production_date = year_date + timedelta(days=(day))
+                except (ValueError, TypeError):
+                    lot.production_date = lot.create_date.date()
+            else:
+                lot.production_date = lot.create_date.date()
 
-                expiration_date = create_date + timedelta(
-                    days=lot.product_id.expiration_time
-                )
-                best_before_date = expiration_date - timedelta(
-                    days=lot.product_id.use_time
-                )
-                removal_date = expiration_date - timedelta(
-                    days=lot.product_id.removal_time + 1
-                )
-                alert_date = expiration_date - timedelta(
-                    days=lot.product_id.alert_time + 1
-                )
+    def _calculate_expiration_date(self):
+        for lot in self:
+            if not lot.production_date:
+                continue
+            expiration_date = lot.production_date + timedelta(
+                days=lot.product_id.expiration_time
+            )
+            best_before_date = expiration_date - timedelta(days=lot.product_id.use_time)
+            removal_date = expiration_date - timedelta(
+                days=lot.product_id.removal_time + 1
+            )
+            alert_date = expiration_date - timedelta(days=lot.product_id.alert_time + 1)
 
-                lot.write(
-                    {
-                        "expiration_date": expiration_date.strftime(
-                            "%Y-%m-%d %H:%M:%S"
-                        ),
-                        "use_date": best_before_date.strftime("%Y-%m-%d %H:%M:%S"),
-                        "removal_date": removal_date.strftime("%Y-%m-%d %H:%M:%S"),
-                        "alert_date": alert_date.strftime("%Y-%m-%d %H:%M:%S"),
-                    }
-                )
+            lot.write(
+                {
+                    "expiration_date": expiration_date.strftime("%Y-%m-%d %H:%M:%S"),
+                    "use_date": best_before_date.strftime("%Y-%m-%d %H:%M:%S"),
+                    "removal_date": removal_date.strftime("%Y-%m-%d %H:%M:%S"),
+                    "alert_date": alert_date.strftime("%Y-%m-%d %H:%M:%S"),
+                }
+            )
