@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-24 19:04+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-07-21 16:33+0000\n"
+"Last-Translator: Cédric Paradis <cedric@cedricparadis.ca>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/impress_expiration_lot/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -20,12 +20,12 @@ msgstr ""
 #. module: impress_expiration_lot
 #: model:ir.model.fields,field_description:impress_expiration_lot.field_stock_lot__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom d'affichage"
 
 #. module: impress_expiration_lot
 #: model:ir.model.fields,field_description:impress_expiration_lot.field_stock_lot__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: impress_expiration_lot
 #: model:ir.model,name:impress_expiration_lot.model_stock_lot
@@ -34,10 +34,8 @@ msgstr "Lot/Numéro de série"
 
 #. module: impress_expiration_lot
 #: model:ir.actions.server,name:impress_expiration_lot.impress_expiration_parse_lot_number_action
-#, fuzzy
-#| msgid "Parse lot number and set correct dates on lot creation"
 msgid "Parse lot number and set correct dates"
-msgstr "Analyse le numéro de lot et détermine la date de création du lot"
+msgstr "Analyser le numéro de lot et entrer les bonnes dates"
 
 #~ msgid "Execute Code"
 #~ msgstr "Exécuter le code"

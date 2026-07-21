@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-07-15 05:56+0000\n"
+"PO-Revision-Date: 2026-07-21 16:33+0000\n"
 "Last-Translator: Cédric Paradis <cedric@cedricparadis.ca>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/impress_stock_customizations/fr_CA/>\n"
@@ -50,11 +50,6 @@ msgstr "3.00"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
-#, fuzzy
-#| msgid ""
-#| "<span>\n"
-#| "                                <i class=\"fa fa-exclamation-triangle\"/> "
-#| "No reservation for this product! </span>"
 msgid ""
 "<span>\n"
 "                            <i class=\"fa fa-exclamation-triangle\"/> No "
@@ -90,10 +85,6 @@ msgstr "<strong>Vérification</strong>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_delivery_document
-#, fuzzy
-#| msgid ""
-#| "<strong>Minimum shelf life:</strong>\n"
-#| "                    <br/>"
 msgid ""
 "<strong>Minimum shelf life:</strong>\n"
 "                <br/>"
@@ -231,7 +222,7 @@ msgstr "Commande:"
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking_add_page_numbers
 msgid "Page <span class=\"page\"/> / <span class=\"topage\"/>"
-msgstr ""
+msgstr "Page <span class=\"page\"/> / <span class=\"topage\"/>"
 
 #. module: impress_stock_customizations
 #: model:ir.actions.report,name:impress_stock_customizations.report_stock_picking_with_checks
