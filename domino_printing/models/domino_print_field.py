@@ -1,4 +1,5 @@
 import logging
+import re
 from datetime import date, datetime
 
 from odoo import api, fields, models
@@ -116,7 +117,7 @@ class DominoPrintField(models.Model):
             new_format = fmt.replace("%q", "%b")
             formatted_date = value.strftime(new_format)
             for abrv, can_abrv in self.months_abbreviations.items():
-                formatted_date = formatted_date.replace(abrv, can_abrv)
+                formatted_date = re.sub(rf"\b{abrv}\b", can_abrv, formatted_date)
             return formatted_date
 
         except (ValueError, UnicodeError) as err:

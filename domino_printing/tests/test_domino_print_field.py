@@ -109,6 +109,9 @@ class TestGetFieldValue(common.TransactionCase):
         self.assertEqual(result, "ABC123")
 
     def test_dynamic_with_transform(self):
+        product = self.env["product.product"].create(
+            {"name": "Lowercase Product", "default_code": "abc123"}
+        )
         field = self.Model.create(
             {
                 "name": "test_dynamic_upper",
@@ -118,7 +121,7 @@ class TestGetFieldValue(common.TransactionCase):
                 "transform": "upper",
             }
         )
-        check = self._make_check(self.product)
+        check = self._make_check(product)
         result = field.get_field_value(check)
         self.assertEqual(result, "ABC123")
 
