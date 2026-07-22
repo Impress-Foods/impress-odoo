@@ -311,7 +311,10 @@ class MrpCampaign(models.Model):
             [
                 Domain("name", "=", lot_name)
                 & Domain("product_id", "in", products.ids)
-                & Domain("company_id", "=", self.company_id.id)
+                & (
+                    Domain("company_id", "=", self.company_id.id)
+                    | Domain("company_id", "=", False)
+                )
             ]
         )
         lots_by_product = {lot.product_id.id: lot for lot in existing_lots}
