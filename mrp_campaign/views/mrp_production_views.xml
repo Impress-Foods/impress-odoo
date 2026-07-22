@@ -35,4 +35,17 @@
             </xpath>
         </field>
     </record>
+    <record id="view_mrp_production_filter_shop_floor" model="ir.ui.view">
+        <field name="name">mrp.production.select.shop.floor.inherit</field>
+        <field name="model">mrp.production</field>
+        <field
+            name="inherit_id"
+            ref="mrp_workorder.view_mrp_production_filter_shop_floor"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[last()]" position="after">
+                <field name="campaign_id" string="Campaign" />
+            </xpath>
+        </field>
+    </record>
 </odoo>
