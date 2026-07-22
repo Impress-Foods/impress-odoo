@@ -1,5 +1,5 @@
 {
-    "name": "Impressmanufacturing Customizations",
+    "name": "Impress Manufacturing Customizations",
     "version": "19.0.1.0.0",
     "depends": ["base", "mrp", "mrp_workorder", "sale_mrp"],
     "author": "Cédric Paradis",
