@@ -85,7 +85,10 @@ class MrpCampaignCreator(models.Model):
             return self.env["stock.move"].search(
                 Domain("product_id.anchor_product_id", "=", self.product_id.id)
                 & Domain("state", "not in", ["draft", "done", "cancelled"])
-                & Domain("picking_id.picking_type_code", "=", "outgoing")
+                & (
+                    Domain("sale_line_id", "!=", False)
+                    | Domain("picking_id.picking_type_code", "=", "outgoing")
+                )
             )
 
         return self.env["stock.move"]

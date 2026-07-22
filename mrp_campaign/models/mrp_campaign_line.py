@@ -321,6 +321,7 @@ class CampaignLine(models.Model):
                         "campaign_line_id": self.id,
                         "created_by_campaign": True,
                         "date_start": self.campaign_id.date_planned_start,
+                        "picking_type_id": self.bom_id.picking_type_id.id,
                     }
                 )
         else:
@@ -332,6 +333,7 @@ class CampaignLine(models.Model):
                     "campaign_line_id": self.id,
                     "created_by_campaign": True,
                     "date_start": self.campaign_id.date_planned_start,
+                    "picking_type_id": self.bom_id.picking_type_id.id,
                 }
             )
         return values
