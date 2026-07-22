@@ -11,6 +11,7 @@
             <div
                 class="d-flex align-items-center me-4"
                 style="width: 128px; height: 128px;"
+                t-if="!env.isSmall"
             >
                 <img
                     style="max-height: 100%; width: auto; margin: auto;"
