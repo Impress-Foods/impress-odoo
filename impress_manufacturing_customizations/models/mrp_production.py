@@ -15,3 +15,5 @@ class MrpProduction(models.Model):
         store=True,
         depends=["product_tmpl_id"],
     )
+
+    to_plan = fields.Boolean(default=True)

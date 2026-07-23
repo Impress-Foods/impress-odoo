@@ -39,7 +39,7 @@
             <span
                 class="h5 mb-0"
                 t-if="record.campaign_id"
-                t-esc="record.campaign_id[1]"
+                t-esc="record.campaign_id.display_name"
             />
         </div>
     </t>
@@ -51,7 +51,11 @@
                 t-if="record.production_date"
                 t-esc="record.production_date.toISODate()"
             />
-            <span class="h5" t-if="record.campaign_id" t-esc="record.campaign_id[1]" />
+            <span
+                class="h5"
+                t-if="record.campaign_id"
+                t-esc="record.campaign_id.display_name"
+            />
         </div>
     </t>
 </templates>

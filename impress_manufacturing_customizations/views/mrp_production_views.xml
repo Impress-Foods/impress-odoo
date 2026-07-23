@@ -78,6 +78,26 @@
             <xpath expr="//field[@name='user_id']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <xpath expr="//field[@name='date_deadline']" position="before">
+                <field name="to_plan" />
+            </xpath>
+        </field>
+    </record>
+    <record id="view_mrp_production_filter_shop_floor" model="ir.ui.view">
+        <field name="name">mrp.production.select.shop.floor.inherit</field>
+        <field name="model">mrp.production</field>
+        <field
+            name="inherit_id"
+            ref="mrp_workorder.view_mrp_production_filter_shop_floor"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//filter[last()]" position="after">
+                <filter
+                    string="Planned today"
+                    name="filter_today"
+                    domain="[('date_start', '&lt;', 'now')]"
+                />
+            </xpath>
         </field>
     </record>
 </odoo>
