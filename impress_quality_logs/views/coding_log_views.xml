@@ -56,20 +56,34 @@
                         <h1>
                             <field name="name" placeholder="Name..." />
                         </h1>
+                        <field name="log_type" readonly="1" />
                     </div>
                     <group>
                         <group>
                             <field name="lot_id" />
-                            <field name="case_code" />
-                            <field name="unit_code" />
-                            <field name="unit_check" />
-                            <field name="subunit_check" />
+                            <field name="case_code" invisible="log_type == 'bottles'" />
+                            <field name="unit_code" invisible="log_type == 'cases'" />
+                            <field name="unit_check" invisible="log_type == 'cases'" />
+                            <field
+                                name="subunit_check"
+                                invisible="log_type == 'bottles'"
+                            />
+                            <field
+                                name="case_check"
+                                invisible="log_type == 'bottles'"
+                            />
                             <field name="notes" />
                         </group>
                         <group>
-                            <field name="sleeve_check" />
+                            <field
+                                name="sleeve_check"
+                                invisible="log_type == 'cases'"
+                            />
                             <field name="shelf_life_check" />
-                            <field name="keep_cold_check" />
+                            <field
+                                name="keep_cold_check"
+                                invisible="log_type == 'bottles'"
+                            />
                             <field name="start_date" />
 
                             <field
