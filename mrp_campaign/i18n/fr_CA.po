@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20260219\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-24 19:04+0000\n"
-"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"PO-Revision-Date: 2026-07-23 13:20+0000\n"
+"Last-Translator: Cédric Paradis <cedric@cedricparadis.ca>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/mrp_campaign/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -90,13 +90,13 @@ msgstr "Ajouter des demandes"
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
 msgid "Add all"
-msgstr ""
+msgstr "Tout ajouter"
 
 #. module: mrp_campaign
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
 msgid "Add to selection"
-msgstr ""
+msgstr "Ajouter à la sélection"
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_production__anchor_product_id
@@ -113,8 +113,6 @@ msgstr "Nombre de pièces jointes"
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_creator__available_lines
-#, fuzzy
-#| msgid "Available Demand Move"
 msgid "Available Lines"
 msgstr "Mouvements source disponibles"
 
@@ -142,10 +140,8 @@ msgstr "Créer un reliquat à partir des demandes restantes"
 
 #. module: mrp_campaign
 #: model:ir.model,name:mrp_campaign.model_mrp_campaign_wizard_partition
-#, fuzzy
-#| msgid "Wizard to Partition an MRP Campaign (Split or Backorder)"
 msgid "Base Wizard to Partition an MRP Campaign"
-msgstr "Assistant pour partitionner une campagne (Fractionnement ou Reliquat)"
+msgstr "Assistant pour partitionner une campagne"
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__batch_size
@@ -242,7 +238,7 @@ msgstr "Ligne de campagne"
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_production.py:0
 msgid "Campaign MOs cannot have multiple lots."
-msgstr ""
+msgstr "Les MOs liés à une campagne ne peuvent pas avoir plus d'un lot."
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__name
@@ -309,10 +305,8 @@ msgstr ""
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, fuzzy
-#| msgid "Trying to assign a negative quantity (%(qty)d) to a SO.qty"
 msgid "Cannot assign negative quantity to target %s."
-msgstr "Tentative d'assigner une quantité négative (%(qty)d) à un SO"
+msgstr "Impossible d'assigner une quantité négative (%(qty)d) à un SO."
 
 #. module: mrp_campaign
 #. odoo-python
@@ -323,30 +317,22 @@ msgstr "Impossible de confirmer la campagne %s sans demande."
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, fuzzy
-#| msgid ""
-#| "Cannot plan less of %(product)s than currently produced quantity (%"
-#| "(plan)f < %(actual)f) "
 msgid ""
 "Cannot plan less of %(product)s than the floor quantity. Floor: %(floor)s, "
 "Planned: %(planned)s"
 msgstr ""
 "Impossible de planifier moins de %(product)s que la quantité produite "
-"actuelle (%(plan)f < %(actual)f) "
+"actuelle (%(plan)f < %(actual)f)"
 
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, fuzzy
-#| msgid ""
-#| "Cannot plan less of %(product)s than currently produced quantity (%"
-#| "(plan)f < %(actual)f) "
 msgid ""
 "Cannot plan more of %(product)s than the initial planned quantity. Initial: %"
 "(initial)s, Planned: %(planned)s"
 msgstr ""
-"Impossible de planifier moins de %(product)s que la quantité produite "
-"actuelle (%(plan)f < %(actual)f) "
+"Impossible de planifier plus de %(product)s que la quantité planifiée (%"
+"(plan)f < %(actual)f)"
 
 #. module: mrp_campaign
 #. odoo-python
@@ -402,15 +388,11 @@ msgstr "Qté consommée"
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
 msgid "Could not find campaign line with id %(line)s"
-msgstr ""
+msgstr "Une ligne de campagne avec l'id %(line)s ne peut être trouvée"
 
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_campaign_line.py:0
-#, fuzzy
-#| msgid ""
-#| "Could not resolve downstream product for %(product)s with BoM %"
-#| "(bom)sproduct"
 msgid "Could not resolve downstream product for %(product)s with BoM %(bom)s"
 msgstr ""
 "Impossible de déterminer le produit en aval pour %(product)s avec la "
@@ -419,10 +401,8 @@ msgstr ""
 #. module: mrp_campaign
 #: model:ir.actions.act_window,name:mrp_campaign.action_mrp_campaign_direct_wizard_create
 #: model:ir.ui.menu,name:mrp_campaign.menu_mrp_campaign_direct_wizard
-#, fuzzy
-#| msgid "Create Campaign"
 msgid "Create Campaign (Direct)"
-msgstr "Créer une campagne"
+msgstr "Créer une campagne (Direct)"
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_production__created_by_campaign
@@ -451,10 +431,8 @@ msgstr "Créé le"
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_stock_move__sale_customer_ref
-#, fuzzy
-#| msgid "Campaign Reference"
 msgid "Customer Reference"
-msgstr "Référence de la campagne"
+msgstr "Référence client"
 
 #. module: mrp_campaign
 #: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_search
@@ -486,14 +464,14 @@ msgstr "Ligne de demande"
 #. module: mrp_campaign
 #: model:ir.model,name:mrp_campaign.model_mrp_campaign_demand_target
 msgid "Demand target - maps demand to external source"
-msgstr ""
+msgstr "Cible de demande - relie les demandes à une source externe"
 
 #. module: mrp_campaign
 #: model:ir.model.fields.selection,name:mrp_campaign.selection__mrp_campaign__workflow_type__direct
 #: model:ir.model.fields.selection,name:mrp_campaign.selection__mrp_campaign_wizard_creator__workflow_type__direct
 #: model:ir.model.fields.selection,name:mrp_campaign.selection__mrp_campaign_wizard_partition__workflow_type__direct
 msgid "Direct"
-msgstr ""
+msgstr "Direct"
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_bom__display_name
@@ -641,10 +619,8 @@ msgstr "Est abonné"
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_target__is_fully_planned
-#, fuzzy
-#| msgid "Planned"
 msgid "Is Fully Planned"
-msgstr "Planifié"
+msgstr "Est complètement planifié"
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__is_out_of_sync
@@ -655,12 +631,12 @@ msgstr "Est désynchronisé"
 #. module: mrp_campaign
 #: model:ir.model.fields,help:mrp_campaign.field_mrp_campaign_wizard_creator__available_lines
 msgid "JSON array of demand lines. Fields: id, name, qty, date, additional_ref"
-msgstr ""
+msgstr "JSON array of demand lines. Fields: id, name, qty, date, additional_ref"
 
 #. module: mrp_campaign
 #: model:ir.model.fields,help:mrp_campaign.field_mrp_campaign_wizard_creator__selected_line_ids
 msgid "JSON array of selected line IDs"
-msgstr ""
+msgstr "JSON array of selected line IDs"
 
 #. module: mrp_campaign
 #. odoo-python
@@ -709,7 +685,7 @@ msgstr "Ligne"
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
 msgid "Line %(line)s does not belong to campaign %(campaign)s"
-msgstr ""
+msgstr "La ligne %(line)s n'appartient pas à la campagne %(campaign)s"
 
 #. module: mrp_campaign
 #: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_form
@@ -745,16 +721,12 @@ msgstr "Données invalides: attribute 'demand_moves' manquant dans le JSON."
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, fuzzy
-#| msgid "Malformed Data: missing 'tree' attribute in JSON."
 msgid "Malformed data: missing 'line_id' in tree."
-msgstr "Données invalides: attribute 'tree' manquant dans le JSON."
+msgstr "Données invalides: attribut 'line_id' manquant dans 'tree'."
 
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, fuzzy
-#| msgid "Malformed Data: missing 'tree' attribute in JSON."
 msgid "Malformed data: missing 'tree' attribute in JSON."
 msgstr "Données invalides: attribute 'tree' manquant dans le JSON."
 
@@ -771,8 +743,6 @@ msgstr "Ligne de demande de campagne"
 
 #. module: mrp_campaign
 #: model:ir.actions.act_window,name:mrp_campaign.action_mrp_campaign_demand_target
-#, fuzzy
-#| msgid "Manufacturing Campaign Demands"
 msgid "Manufacturing Campaign Demand Targets"
 msgstr "Demandes de campagne"
 
@@ -788,10 +758,8 @@ msgstr "Campagnes de production"
 
 #. module: mrp_campaign
 #: model:ir.model,name:mrp_campaign.model_mrp_production
-#, fuzzy
-#| msgid "Manufacturing Campaign"
 msgid "Manufacturing Order"
-msgstr "Campagne de production"
+msgstr "Ordre de Fabrication"
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__message_has_error
@@ -850,13 +818,13 @@ msgstr "Type de la prochaine activité"
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
 msgid "No available lines"
-msgstr ""
+msgstr "Aucune ligne disponible"
 
 #. module: mrp_campaign
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
 msgid "No selected lines"
-msgstr ""
+msgstr "Aucune ligne sélectionnée"
 
 #. module: mrp_campaign
 #. odoo-python
@@ -965,6 +933,8 @@ msgstr "Variante de produit"
 msgid ""
 "Product mismatch for line %(line_id)s: expected %(expected)s, got %(actual)s"
 msgstr ""
+"Produit inattendu pour la ligne %(line_id)s: %(actual)s au lieu de %"
+"(expected)s"
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__production_ids
@@ -1002,6 +972,8 @@ msgstr "Quantité"
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
 msgid "Quantity %(qty).2f exceeds upstream demand %(max).2f for target %(id)s."
 msgstr ""
+"Quantité %(qty).2f plus élevée que la demande en aval de %(max).2f pour "
+"cible %(id)s."
 
 #. module: mrp_campaign
 #: model:ir.model.fields,help:mrp_campaign.field_mrp_campaign_line__fulfilled_qty
@@ -1021,7 +993,7 @@ msgstr "Quantité promise par les MOs (en progrès et terminés)"
 #. module: mrp_campaign
 #: model:ir.model.fields,help:mrp_campaign.field_mrp_campaign_demand__target_qty
 msgid "Quantity to produce for this demand (sum of promised quantities)."
-msgstr ""
+msgstr "Quantité à produire pour cette demande (somme des quantités promises)."
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__rating_ids
@@ -1038,13 +1010,13 @@ msgstr "Ratio:"
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
 msgid "Remove all"
-msgstr ""
+msgstr "Tout retirer"
 
 #. module: mrp_campaign
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
 msgid "Remove from selection"
-msgstr ""
+msgstr "Retirer de la sélection"
 
 #. module: mrp_campaign
 #: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_tree
@@ -1086,18 +1058,18 @@ msgstr "Rechercher campagnes"
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
 msgid "Search..."
-msgstr ""
+msgstr "Rechercher..."
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_creator__selected_line_ids
 msgid "Selected Line"
-msgstr ""
+msgstr "Ligne sélectionnée"
 
 #. module: mrp_campaign
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
 msgid "Selected Lines"
-msgstr ""
+msgstr "Lignes sélectionnées"
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign__sequence
@@ -1118,17 +1090,13 @@ msgstr "Source"
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_production__source_id
-#, fuzzy
-#| msgid "Source Document"
 msgid "Source Document ID"
 msgstr "Document source"
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_production__source_model
-#, fuzzy
-#| msgid "Source Document"
 msgid "Source Document Model"
-msgstr "Document source"
+msgstr "Modèle du document source"
 
 #. module: mrp_campaign
 #: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_form
@@ -1182,33 +1150,25 @@ msgstr "Synchroniser les MOs"
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand__target_ids
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_target__target_id
-#, fuzzy
-#| msgid "Target:"
 msgid "Target"
-msgstr "Objectif:"
+msgstr "Objectif"
 
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, fuzzy
-#| msgid "Select the demand moves you want to add to this campaign."
 msgid "Target %s does not belong to this campaign."
-msgstr "Sélectionner les mouvements de stock à ajouter à la campagne."
+msgstr "Cible %s n'appartient pas à cette campagne."
 
 #. module: mrp_campaign
 #. odoo-python
 #: code:addons/mrp_campaign/wizards/mrp_campaign_partition.py:0
-#, fuzzy
-#| msgid "Not all proxies could be found in the database."
 msgid "Target %s not found in database."
-msgstr "Certains proxy ne sont pas trouvés dans la base de données."
+msgstr "Cible %s n'a pas été trouvée dans la base de données."
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand_target__target_model
-#, fuzzy
-#| msgid "Target:"
 msgid "Target Model"
-msgstr "Objectif:"
+msgstr "Model objectif"
 
 #. module: mrp_campaign
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_demand__target_qty
@@ -1226,7 +1186,7 @@ msgstr "Objectif:"
 #. odoo-python
 #: code:addons/mrp_campaign/models/mrp_campaign.py:0
 msgid "Targets %s do not belong to this campaign."
-msgstr ""
+msgstr "Cible %s n'appartient pas à cette campagne."
 
 #. module: mrp_campaign
 #: model:ir.model.fields,help:mrp_campaign.field_mrp_campaign_demand__bom_id
@@ -1309,10 +1269,8 @@ msgstr "Historique de communication du site web"
 
 #. module: mrp_campaign
 #: model:ir.model,name:mrp_campaign.model_mrp_campaign_wizard_creator
-#, fuzzy
-#| msgid "Mrp Campaign Creator"
 msgid "Wizard for campaign creation"
-msgstr "Créateur de campagne"
+msgstr "Assistant de création de campagne"
 
 #. module: mrp_campaign
 #: model:ir.model,name:mrp_campaign.model_mrp_workorder
@@ -1325,7 +1283,7 @@ msgstr "Ordre de travail"
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_creator__workflow_type
 #: model:ir.model.fields,field_description:mrp_campaign.field_mrp_campaign_wizard_partition__workflow_type
 msgid "Workflow Type"
-msgstr ""
+msgstr "Type de processus"
 
 #. module: mrp_campaign
 #: model_terms:ir.ui.view,arch_db:mrp_campaign.report_mrp_campaign_document

@@ -6,8 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-24 19:04+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-07-23 13:20+0000\n"
+"Last-Translator: Automatic translation add-on <noreply-addon-"
+"autotranslate@weblate.org>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/impress_manufacturing_customizations/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -37,7 +38,7 @@ msgstr "Ordre de Fabrication"
 #. module: impress_manufacturing_customizations
 #: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.view_mrp_production_filter_shop_floor
 msgid "Planned today"
-msgstr ""
+msgstr "Planifié aujourd'hui"
 
 #. module: impress_manufacturing_customizations
 #: model:ir.model.fields,field_description:impress_manufacturing_customizations.field_mrp_production__product_category_id
@@ -57,7 +58,7 @@ msgstr "Séquence"
 #. module: impress_manufacturing_customizations
 #: model:ir.model.fields,field_description:impress_manufacturing_customizations.field_mrp_production__to_plan
 msgid "To Plan"
-msgstr ""
+msgstr "À Planifier"
 
 #. module: impress_manufacturing_customizations
 #: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.workorder_dashboard_view_search
