@@ -1,6 +1,6 @@
 {
     "name": "Delivery - Clickship",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "summary": """ Clickship delivery provider """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",

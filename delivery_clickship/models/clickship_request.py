@@ -11,7 +11,6 @@ from pydantic import BaseModel
 from pydantic import ValidationError as PydanticValidationError
 from werkzeug.urls import url_join
 
-from odoo import fields
 from odoo.exceptions import ValidationError
 from odoo.orm.environments import Environment
 
@@ -113,9 +112,6 @@ class ClickshipProvider:
     ) -> dict[str, Any]:
         data = self._make_shipment_request(picking, contact)
         shipment_id = self._post_book_shipment(data)
-
-        # pickup_details = self._make_pickup_details(contact)
-        # self._post_schedule_pickup(shipment_id, pickup_details)
         shipment: Shipment = self._get_shipment_status(shipment_id)
 
         price = int(shipment.rate.total.value) / 100
@@ -275,7 +271,6 @@ class ClickshipProvider:
         response = self._make_api_request(
             f"shipment/{shipment_id}/schedule", "POST", payload=request_data
         )
-        # _logger.warning(response)
         if response:
             return True
         return True
@@ -407,7 +402,7 @@ class ClickshipProvider:
     def _make_address(self, partner: ResPartner | HrEmployee | ResCompany) -> Address:
         record: ResPartner | ResCompany | None = None
 
-        if isinstance(partner, ResPartner) or isinstance(partner, ResCompany):
+        if isinstance(partner, (ResPartner, ResCompany)):
             record = partner
 
         elif isinstance(partner, HrEmployee):
@@ -466,13 +461,13 @@ class ClickshipProvider:
             return Package(
                 measurements=Box(
                     weight=Weight(unit=WeightUnitEnum.kg.value, value=4.55),
-                    cuboid=Cuboid(unit="mm", l=254, w=254, h=254),
+                    cuboid=Cuboid(unit="mm", length=254, width=254, height=254),
                 ),
                 description="Box",
             )
 
         w_uom = WeightUnitEnum.kg.value
-        match package.weight_uom_name:  # type: ignore
+        match package.weight_uom_name:
             case "lb":
                 w_uom = WeightUnitEnum.lb.value
             case "g":
@@ -484,28 +479,30 @@ class ClickshipProvider:
 
         l_uom = package.package_type_id.length_uom_name or "mm"
 
-        l = package.package_type_id.packaging_length or 254  # noqa
-        w = package.package_type_id.width or 254
-        h = package.package_type_id.height or 254
+        length = package.package_type_id.packaging_length or 254
+        width = package.package_type_id.width or 254
+        height = package.package_type_id.height or 254
 
-        weight = package.shipping_weight or 4.55  # type: ignore
+        weight = package.shipping_weight or 4.55
 
         package_data = Package(
             measurements=Box(
                 weight=Weight(unit=w_uom, value=weight),
-                cuboid=Cuboid(unit=LengthUnitEnum[l_uom].value, l=l, w=w, h=h),
+                cuboid=Cuboid(
+                    unit=LengthUnitEnum[l_uom].value,
+                    length=length,
+                    width=width,
+                    height=height,
+                ),
             ),
             description=package.package_type_id.name or "Box",
         )
-
         return package_data
 
     def _make_pickup_details(self, contact: HrEmployee | ResPartner) -> PickupDetails:
-        local_time = fields.Datetime.context_timestamp(self, fields.Datetime.now())
-
         details = PickupDetails(
             date=self._make_current_date(),
-            ready_at=TimeOfDay(hour=local_time.hour + 1, minute=local_time.minute),
+            ready_at=TimeOfDay(hour=11, minute=59),
             ready_until=TimeOfDay(hour=16, minute=0),
             pickup_location="Docks",
             contact_name=contact.name,
