@@ -106,9 +106,9 @@ class Weight(BaseModel):
 
 class Cuboid(BaseModel):
     unit: str
-    l: float  # noqa
-    w: float  # noqa
-    h: float  # noqa
+    length: float = Field(validation_alias="length", serialization_alias="l")
+    width: float = Field(validation_alias="width", serialization_alias="w")
+    height: float = Field(validation_alias="height", serialization_alias="h")
 
 
 class Box(BaseModel):

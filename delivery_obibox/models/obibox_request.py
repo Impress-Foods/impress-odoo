@@ -62,10 +62,9 @@ class ObiboxProvider:
 
         response = self._make_api_request(f"Order/GetServices/{zip_code}", "GET")
 
-        if not response or isinstance(response, dict) and response.get("errors", False):
-            return False
-
-        return True
+        return not (
+            not response or isinstance(response, dict) and response.get("errors", False)
+        )
 
     def get_rate(self, order: SaleOrder | StockPicking) -> dict[str, bool | float]:
         data = self._make_rate_request(order)
@@ -300,7 +299,7 @@ class ObiboxProvider:
             boxes.append(box)
             dims.append(dim)
 
-        total_weight = sum(map(lambda x: x.weight, dims))
+        total_weight = sum(x.weight for x in dims)
 
         phone, email = self._get_contact_info(picking)
 
@@ -382,7 +381,7 @@ class ObiboxProvider:
         from_date: date, pickup_day: str, pickup_hour: int
     ) -> date:
         next_date = from_date + relativedelta(weekday=days[pickup_day])
-        if next_date == from_date and datetime.now().hour >= pickup_hour:
+        if next_date == from_date and datetime.now().hour >= pickup_hour:  # noqa: DTZ005
             next_date += timedelta(weeks=1)
         return next_date
 
