@@ -54,6 +54,16 @@ msgid "Sales Orders"
 msgstr ""
 
 #. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.view_order_form
+msgid "Sum of Delivered"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.view_order_form
+msgid "Sum of Quantity"
+msgstr ""
+
+#. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
 msgid "To invoice"
 msgstr ""
