@@ -461,7 +461,7 @@ class ClickshipProvider:
             return Package(
                 measurements=Box(
                     weight=Weight(unit=WeightUnitEnum.kg.value, value=4.55),
-                    cuboid=Cuboid(unit="mm", length=254, width=254, height=254),
+                    cuboid=Cuboid(unit="mm", l=254, w=254, h=254),
                 ),
                 description="Box",
             )
@@ -490,9 +490,9 @@ class ClickshipProvider:
                 weight=Weight(unit=w_uom, value=weight),
                 cuboid=Cuboid(
                     unit=LengthUnitEnum[l_uom].value,
-                    length=length,
-                    width=width,
-                    height=height,
+                    l=length,
+                    w=width,
+                    h=height,
                 ),
             ),
             description=package.package_type_id.name or "Box",
