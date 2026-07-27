@@ -87,6 +87,35 @@
                     position="move"
                 />
             </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="options">{"no_create":true}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                <attribute name="options">{"no_create":true}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+                <attribute name="options">{"no_create":true}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <xpath expr="//field[@name='client_order_ref']" position="move" />
+            </xpath>
+            <xpath expr="//field[@name='product_template_id']" position="attributes">
+                <attribute
+                    name="options"
+                >{"no_open":true,"no_quick_create":true,"no_create_edit":true}</attribute>
+            </xpath>
+            <xpath
+                expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/list[1]/field[@name='product_uom_qty']"
+                position="attributes"
+            >
+                <attribute name="sum">Sum of Quantity</attribute>
+            </xpath>
+            <xpath
+                expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/list[1]/field[@name='qty_delivered']"
+                position="attributes"
+            >
+                <attribute name="sum">Sum of Delivered</attribute>
+            </xpath>
         </field>
     </record>
 
@@ -97,6 +126,25 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="delivery_zip" optional="true" />
+            </xpath>
+            <xpath expr="//field[@name='invoice_status']" position="after">
+                <field
+                    name="delivery_status"
+                    optional="hide"
+                    widget="badge"
+                    decoration-success="delivery_status == 'full'"
+                    decoration-info="delivery_status == 'pending'"
+                    decoration-warning="delivery_status in ['started', 'partial']"
+                />
+            </xpath>
+            <xpath expr="/list//field[@name='name']" position="after">
+                <xpath expr="/list//field[@name='client_order_ref']" position="move" />
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="partner_shipping_id" optional="show" />
+            </xpath>
+            <xpath expr="//field[@name='activity_ids']" position="after">
+                <field name="delivery_count" optional="show" />
             </xpath>
         </field>
     </record>
