@@ -339,9 +339,9 @@ class TestClickshipRequest(TestDeliveryCommon):
                 weight=Weight(unit="kg", value=package.shipping_weight or 4.55),
                 cuboid=Cuboid(
                     unit="mm",
-                    length=package.package_type_id.packaging_length or 254,
-                    width=package.package_type_id.width or 254,
-                    height=package.package_type_id.height or 254,
+                    l=package.package_type_id.packaging_length or 254,
+                    w=package.package_type_id.width or 254,
+                    h=package.package_type_id.height or 254,
                 ),
             ),
             description=package.package_type_id.name or "Box",
@@ -355,7 +355,7 @@ class TestClickshipRequest(TestDeliveryCommon):
         expected_package = Package(
             measurements=Box(
                 weight=Weight(unit="kg", value=4.55),
-                cuboid=Cuboid(unit="mm", length=254, width=254, height=254),
+                cuboid=Cuboid(unit="mm", l=254, w=254, h=254),
             ),
             description="Box",
         )
