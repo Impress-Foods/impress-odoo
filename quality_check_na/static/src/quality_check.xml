@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t
+        t-name="quality_check_na.QualityCheckInherit"
+        t-inherit="mrp_workorder.QualityCheck"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//button[@t-if='hasInstruction']" position="after">
+            <button
+                t-if="!isComplete &amp;&amp; canBeNa"
+                t-on-click.stop="naCheck"
+                class="o_btn_icon btn"
+                t-att-barcode_trigger="isActive ? 'NA' : false"
+                t-attf-class="{{isActive ? 'btn-info' : 'btn-outline-secondary'}}"
+            >
+                <i class="fa fa-ban" role="img" />
+            </button>
+        </xpath>
+        <xpath expr="//span[@t-out='showQty']" position="attributes">
+            <attribute
+                name="t-att-class"
+            >passFailTypes.includes(type) ? (passed ? 'text-success' : (skipped ? 'text-muted' : 'text-danger')) : ''</attribute>
+        </xpath>
+    </t>
+</templates>
