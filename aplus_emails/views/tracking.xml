@@ -133,6 +133,7 @@
                                     <t t-out="so.name" />
                                 </b> and are currently preparing it with care. You can track its progress using the button below. Our
                                     delivery driver picks up orders every <b
+                                >Monday</b> &amp; <b
                                 > Wednesday</b>, so yours will be delivered within 48 hours after pickup.</p>
                             </td>
                         </tr>
