@@ -324,7 +324,7 @@
                                 </strong> and are currently preparing it with care. You can track its progress using the button below. </p>
                                 <p
                                     t-attf-style="color: {{textColor}};"
-                                >Our delivery driver picks up orders every Wednesday at noon, so yours will be delivered within 48 hours after pickup.</p>
+                                >Our delivery driver picks up orders every Monday &amp; Wednesday at noon, so yours will be delivered within 48 hours after pickup.</p>
                                 <t t-if="object.carrier_tracking_url">
                                     <div style="text-align: center; margin: 30px 0;">
                                         <a
@@ -363,7 +363,7 @@
                                 </strong> et sommes présentement en train de la préparer avec soin. </p>
                                 <p
                                     t-attf-style="color: {{textColor}};"
-                                >Notre livreur passe chaque mercredi midi pour récupérer les commandes ! La vôtre sera donc livrée dans les 48 heures suivant la cueillette.</p>
+                                >Notre livreur passe chaque lundi et mercredi midis pour récupérer les commandes ! La vôtre sera donc livrée dans les 48 heures suivant la cueillette.</p>
                                 <t t-if="object.carrier_tracking_url">
                                     <div style="text-align: center; margin: 30px 0;">
                                         <a
