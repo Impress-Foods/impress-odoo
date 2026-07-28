@@ -23,6 +23,16 @@ msgid "<strong>Customer — </strong>"
 msgstr "<strong>Client — </strong>"
 
 #. module: impress_sales_customizations
+#: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order__id
+msgid "ID"
+msgstr ""
+
+#. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
 msgid "Invoiced"
 msgstr "Facturé"
@@ -38,11 +48,33 @@ msgid "Sale"
 msgstr "Vente"
 
 #. module: impress_sales_customizations
+#: model:ir.model,name:impress_sales_customizations.model_sale_order
+#, fuzzy
+#| msgid "Sales Orders"
+msgid "Sales Order"
+msgstr "Bons de vente"
+
+#. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
 msgid "Sales Orders"
 msgstr "Bons de vente"
 
 #. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.view_order_form
+msgid "Sum of Delivered"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.view_order_form
+msgid "Sum of Quantity"
+msgstr ""
+
+#. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
 msgid "To invoice"
 msgstr "À facturer"
+
+#. module: impress_sales_customizations
+#: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order__delivery_zip
+msgid "Zip"
+msgstr ""
