@@ -18,14 +18,18 @@ class CodingLog(models.Model):
     notes = fields.Char()
     start_date = fields.Datetime()
 
-    unit_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
-    sleeve_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
+    unit_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok"), ("na", "N/A")])
+    sleeve_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok"), ("na", "N/A")])
     case_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok"), ("na", "N/A")])
     subunit_check = fields.Selection(
         [("ok", "Ok"), ("not_ok", "Not Ok"), ("na", "N/A")]
     )
-    shelf_life_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
-    keep_cold_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
+    shelf_life_check = fields.Selection(
+        [("ok", "Ok"), ("not_ok", "Not Ok"), ("na", "N/A")]
+    )
+    keep_cold_check = fields.Selection(
+        [("ok", "Ok"), ("not_ok", "Not Ok"), ("na", "N/A")]
+    )
 
     global_success_check = fields.Selection(
         [("ok", "Ok"), ("not_ok", "Not Ok")],
@@ -34,6 +38,13 @@ class CodingLog(models.Model):
     )
 
     operator_signature = fields.Binary()
+
+    log_type = fields.Selection(
+        [
+            ("bottles", "Bottles"),
+            ("cases", "Cases"),
+        ]
+    )
 
     @api.depends(
         "unit_check",
@@ -52,13 +63,16 @@ class CodingLog(models.Model):
 
     def _check_global_success(self):
         self.ensure_one()
-        return (
-            self.unit_check == "ok"
-            and self.sleeve_check == "ok"
-            and self.case_check == "ok"
-            and self.subunit_check == "ok"
-            and self.shelf_life_check == "ok"
-            and self.keep_cold_check == "ok"
+        return all(
+            v in ("ok", "na")
+            for v in (
+                self.unit_check,
+                self.sleeve_check,
+                self.case_check,
+                self.subunit_check,
+                self.shelf_life_check,
+                self.keep_cold_check,
+            )
         )
 
     @api.depends("signature")
