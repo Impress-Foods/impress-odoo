@@ -62,16 +62,37 @@
                             <field name="lot_id" />
                             <field name="case_code" />
                             <field name="unit_code" />
-                            <field name="unit_check" />
-                            <field name="subunit_check" />
+                            <field
+                                name="date_check"
+                                invisible="unit_check and subunit_check"
+                            />
+                            <field
+                                name="unit_check"
+                                invisible="date_check or not unit_check"
+                            />
+                            <field
+                                name="subunit_check"
+                                invisible="barcode_check or not subunit_check"
+                            />
                             <field name="notes" />
                         </group>
                         <group>
-                            <field name="sleeve_check" />
-                            <field name="shelf_life_check" />
-                            <field name="keep_cold_check" />
+                            <field name="sleeve_check" invisible="not sleeve_check" />
+                            <field
+                                name="shelf_life_check"
+                                invisible="not shelf_life_check"
+                            />
+                            <field
+                                name="keep_cold_check"
+                                invisible="not keep_cold_check"
+                            />
+                            <field name="barcode_check" invisible="sleeve_check" />
+                            <field
+                                name="packaging_check"
+                                invisible="keep_cold_check and shelf_life_check"
+                            />
                             <field name="start_date" />
-
+                            <field name="picture" widget="image" />
                             <field
                                 name="operator_signature"
                                 widget="signature"

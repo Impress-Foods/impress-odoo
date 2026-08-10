@@ -18,14 +18,23 @@ class CodingLog(models.Model):
     notes = fields.Char()
     start_date = fields.Datetime()
 
+    # == Deprecated (08-2026) fields, kept for backward compatibility ==
     unit_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
-    sleeve_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
     case_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok"), ("na", "N/A")])
+    sleeve_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
     subunit_check = fields.Selection(
         [("ok", "Ok"), ("not_ok", "Not Ok"), ("na", "N/A")]
     )
     shelf_life_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
     keep_cold_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
+
+    # == New fields (08-2026) ==
+    date_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
+    barcode_check = fields.Selection(
+        [("ok", "Ok"), ("not_ok", "Not Ok"), ("na", "N/A")]
+    )
+    packaging_check = fields.Selection([("ok", "Ok"), ("not_ok", "Not Ok")])
+    picture = fields.Binary()
 
     global_success_check = fields.Selection(
         [("ok", "Ok"), ("not_ok", "Not Ok")],
@@ -52,6 +61,7 @@ class CodingLog(models.Model):
 
     def _check_global_success(self):
         self.ensure_one()
+
         return (
             self.unit_check == "ok"
             and self.sleeve_check == "ok"

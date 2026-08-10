@@ -1,6 +1,6 @@
 {
     "name": "Impress Worksheets - Quality",
-    "version": "19.0.0.1.1",
+    "version": "19.0.0.1.2",
     "summary": """ Worksheets to use in conjunction with Impress Quality Logs """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
@@ -26,6 +26,8 @@
         "views/xray/XrayWorksheet_20250303.xml",
         "data/xray/XrayWorksheet_large_20251126.xml",
         "views/xray/XrayWorksheet_large_20251126.xml",
+        "data/coding/CodingWorksheet_20260810.xml",
+        "views/coding/CodingWorksheet_20260810.xml",
     ],
     "installable": True,
     "license": "GPL-2",

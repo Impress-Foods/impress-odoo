@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- oca-hooks:disable=xml-duplicate-record-id -->
+<odoo>
+    <!-- Create a new Worksheet Template -->
+    <record id="ws_coding_20260810" model="worksheet.template">
+        <field name="name">Worksheet coding 2026-08-10</field>
+        <field name="res_model">quality.check</field>
+    </record>
+
+    <!-- Add the required fields -->
+    <!-- ws: x_coding_log_id - Many2One Compute -->
+    <record id='x_worksheet_20260810_coding_log_id' model='ir.model.fields'>
+        <field name="name">x_coding_log_id</field>
+        <field name="field_description">coding Log</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_coding_20260810').model_id.id"
+        />
+        <field name="relation" model="ir.model" eval="'coding.log'" />
+        <field name="ttype">many2one</field>
+    </record>
+
+    <record id='x_worksheet_20260810_coding_log_id' model='ir.model.fields'>
+        <field name="depends">x_quality_check_id</field>
+        <field
+            name="compute"
+            eval="
+'for rec in self:\n
+    if not rec.x_coding_log_id:\n
+        existing_log = rec.env[\'coding.log\'].search([\n
+            (\'name\', \'=\', rec.x_quality_check_id.production_id.name)\n
+        ])\n
+        if not existing_log:\n
+            rec[\'x_coding_log_id\'] = rec.env[\'coding.log\'].create({\n
+                \'name\': rec.x_quality_check_id.production_id.name,\n
+                \'quality_check_id\': rec.x_quality_check_id.id\n
+            })\n
+        else: \n
+            rec[\'x_coding_log_id\'] = existing_log[0]
+            '"
+        />
+    </record>
+
+    <!-- log: x_ws_xx_id - One2Many - x_coding_log_id -->
+    <record id='coding_log_x_worksheet_20260810_id' model='ir.model.fields'>
+        <field name="name">x_worksheet_20260810_id</field>
+        <field name="field_description">Worksheet 2026-08-10</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_quality_logs.model_coding_log').id"
+        />
+        <field
+            name="relation"
+            model="ir.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_coding_20260810').model_id.model"
+        />
+        <field
+            name="relation_field"
+            model="ir.model.fields"
+            eval="obj().env.ref('impress_quality_worksheets.x_worksheet_20260810_coding_log_id').name"
+        />
+        <field name="ttype">one2many</field>
+        <field name="on_delete">cascade</field>
+    </record>
+
+    <record id='x_worksheet_20260810_case_code' model='ir.model.fields'>
+        <field name="name">x_case_code</field>
+        <field name="field_description">Case Code</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_coding_20260810').model_id.id"
+        />
+        <field name="related">x_coding_log_id.case_code</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id='x_worksheet_20260810_unit_code' model='ir.model.fields'>
+        <field name="name">x_unit_code</field>
+        <field name="field_description">Unit Code</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_coding_20260810').model_id.id"
+        />
+        <field name="related">x_coding_log_id.unit_code</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id='x_worksheet_20260810_shelf_life' model='ir.model.fields'>
+        <field name="name">x_shelf_life</field>
+        <field name="field_description">Shelf Life</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_coding_20260810').model_id.id"
+        />
+        <field name="related">x_coding_log_id.shelf_life</field>
+        <field name="ttype">integer</field>
+    </record>
+    <record id='x_worksheet_20260810_lot_id' model='ir.model.fields'>
+        <field name="name">x_lot_id</field>
+        <field name="field_description">Lot</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_coding_20260810').model_id.id"
+        />
+        <field name="related">x_coding_log_id.lot_id</field>
+        <field name="ttype">many2one</field>
+        <field name="relation">stock.lot</field>
+        <field name="on_delete">cascade</field>
+    </record>
+
+    <record id='x_worksheet_20260810_date_check' model='ir.model.fields'>
+        <field name="name">x_date_check</field>
+        <field name="field_description">Date Check</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_coding_20260810').model_id.id"
+        />
+        <field name="related">x_coding_log_id.date_check</field>
+        <field name="ttype">selection</field>
+        <field name="selection">[('ok', 'Ok'), ('not_ok', 'Not Ok')]</field>
+    </record>
+
+    <record id='x_worksheet_20260810_barcode_check' model='ir.model.fields'>
+        <field name="name">x_barcode_check</field>
+        <field name="field_description">Barcode Check</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_coding_20260810').model_id.id"
+        />
+        <field name="related">x_coding_log_id.packaging_check</field>
+        <field name="ttype">selection</field>
+        <field
+            name="selection"
+        >[('ok', 'Ok'), ('not_ok', 'Not Ok'),('na', 'N/A')]</field>
+    </record>
+
+    <record id='x_worksheet_20260810_packaging_check' model='ir.model.fields'>
+        <field name="name">x_packaging_check</field>
+        <field name="field_description">Packaging Check</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_coding_20260810').model_id.id"
+        />
+        <field name="related">x_coding_log_id.packaging_check</field>
+        <field name="ttype">selection</field>
+        <field name="selection">[('ok', 'Ok'), ('not_ok', 'Not Ok')]</field>
+    </record>
+
+    <record id='x_worksheet_20260810_picture' model='ir.model.fields'>
+        <field name="name">x_picture</field>
+        <field name="field_description">Picture</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_coding_20260810').model_id.id"
+        />
+        <field name="related">x_coding_log_id.picture</field>
+        <field name="ttype">binary</field>
+    </record>
+
+    <record id='x_worksheet_20260810_signature' model='ir.model.fields'>
+        <field name="name">x_signature</field>
+        <field name="field_description">Signature</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_coding_20260810').model_id.id"
+        />
+        <field name="related">x_coding_log_id.operator_signature</field>
+        <field name="ttype">binary</field>
+    </record>
+
+    <record id='x_worksheet_20260810_notes' model='ir.model.fields'>
+        <field name="name">x_notes</field>
+        <field name="field_description">Notes</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_coding_20260810').model_id.id"
+        />
+        <field name="related">x_coding_log_id.notes</field>
+        <field name="ttype">char</field>
+    </record>
+
+    <record id='x_worksheet_20260810_start_date' model='ir.model.fields'>
+        <field name="name">x_start_date</field>
+        <field name="field_description">Start Date</field>
+        <field
+            name="model_id"
+            model="ir.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_coding_20260810').model_id.id"
+        />
+        <field name="related">x_coding_log_id.start_date</field>
+        <field name="ttype">datetime</field>
+    </record>
+</odoo>
