@@ -13,3 +13,9 @@ class StockPickingType(models.Model):
         automatically when the picking is validated.""",
         default=False,
     )
+
+    auto_print_instructions_label = fields.Boolean(
+        help="""If checked, the instructions label will be printed
+        automatically when the picking is validated.""",
+        default=False,
+    )

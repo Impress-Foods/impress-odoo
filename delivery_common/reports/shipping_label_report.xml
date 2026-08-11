@@ -16,4 +16,34 @@
             <t t-out="doc" />
         </t>
     </template>
+
+    <template id="report_delivery_instructions_label">
+        <t t-foreach="docs" t-as="transfer">
+        <!-- xml-formatter-disable -->
+^XA
+^CI28
+^FO20,25
+^A0N,44,33
+^FB792,10,0,c ^FD<t t-out="transfer.delivery_instructions" />^FS
+^XZ
+        <!-- xml-formatter-enable -->
+        </t>
+    </template>
+
+    <record id="action_report_delivery_instructions_label" model="ir.actions.report">
+        <field name="name">Instructions Label</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-text</field>
+        <field
+            name="report_name"
+        >delivery_common.report_delivery_instructions_label</field>
+        <field
+            name="report_file"
+        >delivery_common.report_delivery_instructions_label</field>
+        <field
+            name="print_report_name"
+        >'Delivery Instructions Label - %s - %s' % (object.partner_id.name or '', object.origin)</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">report</field>
+    </record>
 </odoo>

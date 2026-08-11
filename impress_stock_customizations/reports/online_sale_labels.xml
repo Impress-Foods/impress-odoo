@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <template id="report_online_sale_label">
-        <t
-            t-foreach="docs"
-            t-as="transfer"
-        > ^XA^CI28 ^FO100,50 ^A0N,44,33^FDCommande: <t
-            t-out="transfer.origin"
-        /> ^FS ^FO100,100 ^A0N,44,33^FDClient: <t
-            t-out="transfer.partner_id.display_name"
-        /> ^FS ^FO425,150^BY3 ^BXN,8,200 ^FD<t t-out="transfer.origin" /> ^FS ^XZ </t>
+        <t t-foreach="docs" t-as="transfer">
+        <!-- xml-formatter-disable -->
+^XA ^CI28
+^FO50,50 ^A0N,44,33^FDCommande: <t t-out="transfer.origin" /> ^FS
+^FO50,100 ^A0N,44,33^FDClient: <t t-out="transfer.partner_id.display_name" /> ^FS
+^FO50,150 ^A0N,44,33^FD<t t-out="transfer.carrier_id.name" /> ^FS
+^FO650,250^BY3 ^BXN,8,200 ^FD<t t-out="transfer.name" /> ^FS
+^XZ
+        <!-- xml-formatter-enable -->
+        </t>
     </template>
 
     <record id="action_report_online_sale_label" model="ir.actions.report">

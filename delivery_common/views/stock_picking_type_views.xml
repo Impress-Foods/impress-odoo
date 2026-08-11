@@ -11,6 +11,10 @@
                     name="auto_print_delivery_label"
                     invisible="code != 'outgoing'"
                 />
+                <field
+                    name="auto_print_instructions_label"
+                    invisible="code != 'outgoing'"
+                />
             </xpath>
         </field>
     </record>
