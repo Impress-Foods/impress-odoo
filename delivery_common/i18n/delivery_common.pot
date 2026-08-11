@@ -24,8 +24,20 @@ msgid "'%s' % object.name"
 msgstr ""
 
 #. module: delivery_common
+#: model:ir.actions.report,print_report_name:delivery_common.action_report_delivery_instructions_label
+msgid ""
+"'Delivery Instructions Label - %s - %s' % (object.partner_id.name or '', "
+"object.origin)"
+msgstr ""
+
+#. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking_type__auto_print_delivery_label
 msgid "Auto Print Delivery Label"
+msgstr ""
+
+#. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking_type__auto_print_instructions_label
+msgid "Auto Print Instructions Label"
 msgstr ""
 
 #. module: delivery_common
@@ -64,6 +76,18 @@ msgstr ""
 msgid ""
 "If checked, the delivery label will be printed\n"
 "        automatically when the picking is validated."
+msgstr ""
+
+#. module: delivery_common
+#: model:ir.model.fields,help:delivery_common.field_stock_picking_type__auto_print_instructions_label
+msgid ""
+"If checked, the instructions label will be printed\n"
+"        automatically when the picking is validated."
+msgstr ""
+
+#. module: delivery_common
+#: model:ir.actions.report,name:delivery_common.action_report_delivery_instructions_label
+msgid "Instructions Label"
 msgstr ""
 
 #. module: delivery_common
@@ -114,4 +138,21 @@ msgstr ""
 #. module: delivery_common
 #: model:ir.model,name:delivery_common.model_stock_picking
 msgid "Transfer"
+msgstr ""
+
+#. module: delivery_common
+#: model_terms:ir.ui.view,arch_db:delivery_common.report_delivery_instructions_label
+msgid ""
+"^FS\n"
+"^XZ"
+msgstr ""
+
+#. module: delivery_common
+#: model_terms:ir.ui.view,arch_db:delivery_common.report_delivery_instructions_label
+msgid ""
+"^XA\n"
+"^CI28\n"
+"^FO20,25\n"
+"^A0N,44,33\n"
+"^FB792,10,0,c ^FD"
 msgstr ""
