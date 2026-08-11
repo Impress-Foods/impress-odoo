@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-07-21 16:33+0000\n"
+"PO-Revision-Date: 2026-08-11 15:24+0000\n"
 "Last-Translator: Cédric Paradis <cedric@cedricparadis.ca>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/impress_stock_customizations/fr_CA/>\n"
@@ -305,30 +305,30 @@ msgstr "Contenue de vente en ligne (ZPL)"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
-#, fuzzy
-#| msgid "^FS ^FO100,100 ^A0N,44,33^FDClient:"
 msgid ""
 "^FS\n"
 "^FO50,100 ^A0N,44,33^FDClient:"
-msgstr "^FS ^FO100,100 ^A0N,44,33^FDClient:"
+msgstr ""
+"^FS\n"
+"^FO50,100 ^A0N,44,33^FDClient:"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
-#, fuzzy
-#| msgid "^FS ^FO100,100 ^A0N,44,33^FDClient:"
 msgid ""
 "^FS\n"
 "^FO50,150 ^A0N,44,33^FD"
-msgstr "^FS ^FO100,100 ^A0N,44,33^FDClient:"
+msgstr ""
+"^FS\n"
+"^FO50,150 ^A0N,44,33^FD"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
-#, fuzzy
-#| msgid "^FS ^FO425,150^BY3 ^BXN,8,200 ^FD"
 msgid ""
 "^FS\n"
 "^FO650,250^BY3 ^BXN,8,200 ^FD"
-msgstr "^FS ^FO425,150^BY3 ^BXN,8,200 ^FD"
+msgstr ""
+"^FS\n"
+"^FO650,250^BY3 ^BXN,8,200 ^FD"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
@@ -336,6 +336,8 @@ msgid ""
 "^FS\n"
 "^XZ"
 msgstr ""
+"^FS\n"
+"^XZ"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
@@ -413,12 +415,12 @@ msgstr ""
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
-#, fuzzy
-#| msgid "^XA^CI28 ^FO100,50 ^A0N,44,33^FDCommande:"
 msgid ""
 "^XA ^CI28\n"
 "^FO50,50 ^A0N,44,33^FDCommande:"
-msgstr "^XA^CI28 ^FO100,50 ^A0N,44,33^FDCommande:"
+msgstr ""
+"^XA ^CI28\n"
+"^FO50,50 ^A0N,44,33^FDCommande:"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
