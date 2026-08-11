@@ -277,7 +277,30 @@ msgstr ""
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
-msgid "^FS ^FO100,100 ^A0N,44,33^FDClient:"
+msgid ""
+"^FS\n"
+"^FO50,100 ^A0N,44,33^FDClient:"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
+msgid ""
+"^FS\n"
+"^FO50,150 ^A0N,44,33^FD"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
+msgid ""
+"^FS\n"
+"^FO650,250^BY3 ^BXN,8,200 ^FD"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
+msgid ""
+"^FS\n"
+"^XZ"
 msgstr ""
 
 #. module: impress_stock_customizations
@@ -300,11 +323,6 @@ msgstr ""
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
 msgid "^FS ^FO20,539 ^A0N,40,40^FB800,2^FDItem Description:"
-msgstr ""
-
-#. module: impress_stock_customizations
-#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
-msgid "^FS ^FO425,150^BY3 ^BXN,8,200 ^FD"
 msgstr ""
 
 #. module: impress_stock_customizations
@@ -348,7 +366,9 @@ msgstr ""
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
-msgid "^FS ^XZ"
+msgid ""
+"^XA ^CI28\n"
+"^FO50,50 ^A0N,44,33^FDCommande:"
 msgstr ""
 
 #. module: impress_stock_customizations
@@ -358,11 +378,6 @@ msgid ""
 "                        Carrier info field ^FO508,203 ^GB304,206,2 ^FS ^FX Product info field ^FO2,409 ^GB812,406,2 ^FS ^FX MAN Segment field ^FO2,815 ^GB812,403,2 ^FS ^FX Data definitions ^FX From\n"
 "                        field ^FO10,16 ^A0N,26,26^FB200,1^FDFrom/DE: ^FS ^FO20,50 ^A0N,26,26^FB225,5^FDImpress Foods Inc. 1910 rue du Sanctuaire, Quebec, QC G1E 3L2 ^FS ^FX To field ^FO264,16\n"
 "                        ^A0N,26,26^FB200,1^FDTo/A: ^FS ^FO284,50 ^A0N,26,26^FB300,5^FD"
-msgstr ""
-
-#. module: impress_stock_customizations
-#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
-msgid "^XA^CI28 ^FO100,50 ^A0N,44,33^FDCommande:"
 msgstr ""
 
 #. module: impress_stock_customizations
