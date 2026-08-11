@@ -86,5 +86,17 @@
                 t-if="line.product_uom_id.name[0].isnumeric()"
             >x</span>
         </xpath>
+        <xpath expr="//div[hasclass('page')]/div[1]" position="before">
+            <t
+                t-set="has_discount"
+                t-value="any(line.discount for line in o.order_line)"
+            />
+        </xpath>
+        <xpath expr="//th[@name='th_discount']" position="attributes">
+            <attribute name="t-if">has_discount</attribute>
+        </xpath>
+        <xpath expr="//tbody[1]//td[4]" position="attributes">
+            <attribute name="t-if">has_discount</attribute>
+        </xpath>
     </template>
 </odoo>
