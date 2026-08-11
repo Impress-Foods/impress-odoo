@@ -5,7 +5,7 @@ from odoo.fields import Domain
 from odoo.tools import html2plaintext
 
 from odoo.addons.stock.models.stock_package import StockPackage
-from odoo.addons.web.controllers.utils import clean_action  # noqa
+from odoo.addons.web.controllers.utils import clean_action
 
 _logger = logging.getLogger(__name__)
 
@@ -30,9 +30,9 @@ class StockPicking(models.Model):
                 if picking.sale_id.note:
                     text = html2plaintext(picking.sale_id.note)
                     # prevent default T&C from showing up
-                    if picking.env.company.terms_type and "http" in text:
-                        pass
-                    elif text == picking.env.company.invoice_terms:
+                    if (
+                        picking.env.company.terms_type and "http" in text
+                    ) or text == picking.env.company.invoice_terms:
                         pass
                     else:
                         note = text
@@ -50,10 +50,23 @@ class StockPicking(models.Model):
         pickings_print_delivery_label = self.filtered(
             lambda p: p.picking_type_id.auto_print_delivery_label
         )
+        pickings_print_instructions_label = self.filtered(
+            lambda p: (
+                p.picking_type_id.auto_print_instructions_label
+                and p.delivery_instructions
+            )
+        )
         if pickings_print_delivery_label:
             action = self.env.ref(
                 "delivery_common.report_shipping_label"
             ).report_action(pickings_print_delivery_label.ids, config=False)
+            clean_action(action, self.env)
+            report_actions.append(action)
+
+        if pickings_print_instructions_label:
+            action = self.env.ref(
+                "delivery_common.report_delivery_instructions_label"
+            ).report_action(pickings_print_instructions_label.ids, config=False)
             clean_action(action, self.env)
             report_actions.append(action)
 
@@ -68,9 +81,6 @@ class StockPicking(models.Model):
                 and record.carrier_id.send_confirmation_email
                 and record.carrier_id.confirmation_template_id
             ):
-                # subtype_id = self.env["ir.model.data"]._xmlid_to_res_id(
-                #     "mail.mt_comment"
-                # )
                 subtype_id = self.env.ref("mail.mt_comment").id
                 record.tracking_email_sent = True
                 delivery_template = record.carrier_id.confirmation_template_id

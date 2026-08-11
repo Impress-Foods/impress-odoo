@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t
+        t-name="stock_barcode_main_inherit_add_online_label_button"
+        t-inherit="stock_barcode.MainComponent"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//button[hasclass('o_stock_mobile_barcode')][1]" position="before">
+            <button
+                t-if="env.model.formViewId"
+                t-on-click="printOnlineLabel"
+                class="o_show_information btn nav-link"
+            >
+                <i class="fa fa-map-pin" />
+            </button>
+        </xpath>
+    </t>
+</templates>
