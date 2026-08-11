@@ -305,8 +305,37 @@ msgstr "Contenue de vente en ligne (ZPL)"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
-msgid "^FS ^FO100,100 ^A0N,44,33^FDClient:"
+#, fuzzy
+#| msgid "^FS ^FO100,100 ^A0N,44,33^FDClient:"
+msgid ""
+"^FS\n"
+"^FO50,100 ^A0N,44,33^FDClient:"
 msgstr "^FS ^FO100,100 ^A0N,44,33^FDClient:"
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
+#, fuzzy
+#| msgid "^FS ^FO100,100 ^A0N,44,33^FDClient:"
+msgid ""
+"^FS\n"
+"^FO50,150 ^A0N,44,33^FD"
+msgstr "^FS ^FO100,100 ^A0N,44,33^FDClient:"
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
+#, fuzzy
+#| msgid "^FS ^FO425,150^BY3 ^BXN,8,200 ^FD"
+msgid ""
+"^FS\n"
+"^FO650,250^BY3 ^BXN,8,200 ^FD"
+msgstr "^FS ^FO425,150^BY3 ^BXN,8,200 ^FD"
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
+msgid ""
+"^FS\n"
+"^XZ"
+msgstr ""
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
@@ -331,11 +360,6 @@ msgstr "^FS ^FO20,489 ^A0N,40,40^FB500,1^FDGTIN:"
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
 msgid "^FS ^FO20,539 ^A0N,40,40^FB800,2^FDItem Description:"
 msgstr "^FS ^FO20,539 ^A0N,40,40^FB800,2^FDItem Description:"
-
-#. module: impress_stock_customizations
-#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
-msgid "^FS ^FO425,150^BY3 ^BXN,8,200 ^FD"
-msgstr "^FS ^FO425,150^BY3 ^BXN,8,200 ^FD"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
@@ -389,8 +413,12 @@ msgstr ""
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
-msgid "^FS ^XZ"
-msgstr "^FS ^XZ"
+#, fuzzy
+#| msgid "^XA^CI28 ^FO100,50 ^A0N,44,33^FDCommande:"
+msgid ""
+"^XA ^CI28\n"
+"^FO50,50 ^A0N,44,33^FDCommande:"
+msgstr "^XA^CI28 ^FO100,50 ^A0N,44,33^FDCommande:"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_ASN_label
@@ -420,11 +448,6 @@ msgstr ""
 "^A0N,26,26^FB300,5^FD"
 
 #. module: impress_stock_customizations
-#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_online_sale_label
-msgid "^XA^CI28 ^FO100,50 ^A0N,44,33^FDCommande:"
-msgstr "^XA^CI28 ^FO100,50 ^A0N,44,33^FDCommande:"
-
-#. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_delivery_document
 msgid "days"
 msgstr "Jours"
@@ -438,6 +461,9 @@ msgstr "de"
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
 msgid "units"
 msgstr "unités"
+
+#~ msgid "^FS ^XZ"
+#~ msgstr "^FS ^XZ"
 
 #~ msgid "Description on transfer"
 #~ msgstr "Description sur le transfert"

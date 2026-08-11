@@ -28,8 +28,22 @@ msgid "'%s' % object.name"
 msgstr "'%s' % object.name"
 
 #. module: delivery_common
+#: model:ir.actions.report,print_report_name:delivery_common.action_report_delivery_instructions_label
+msgid ""
+"'Delivery Instructions Label - %s - %s' % (object.partner_id.name or '', "
+"object.origin)"
+msgstr ""
+
+#. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking_type__auto_print_delivery_label
 msgid "Auto Print Delivery Label"
+msgstr "Impression étiquette d'expédition"
+
+#. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking_type__auto_print_instructions_label
+#, fuzzy
+#| msgid "Auto Print Delivery Label"
+msgid "Auto Print Instructions Label"
 msgstr "Impression étiquette d'expédition"
 
 #. module: delivery_common
@@ -43,9 +57,25 @@ msgid "Delivery Instructions"
 msgstr "Instructions de livraison"
 
 #. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:delivery_common.field_report_delivery_common_report_shipping_label_view__display_name
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking_type__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: delivery_common
 #: model_terms:ir.ui.view,arch_db:delivery_common.delivery_carrier_for_inherit_module_name
 msgid "Emails"
 msgstr "Courriels"
+
+#. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:delivery_common.field_report_delivery_common_report_shipping_label_view__id
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking__id
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking_type__id
+msgid "ID"
+msgstr ""
 
 #. module: delivery_common
 #: model:ir.model.fields,help:delivery_common.field_stock_picking_type__auto_print_delivery_label
@@ -55,6 +85,26 @@ msgid ""
 msgstr ""
 "Si sélectionné, l'étiquette d'expédition sera automatiquement imprimée "
 "lorsque le transfert sera validé."
+
+#. module: delivery_common
+#: model:ir.model.fields,help:delivery_common.field_stock_picking_type__auto_print_instructions_label
+#, fuzzy
+#| msgid ""
+#| "If checked, the delivery label will be printed\n"
+#| "        automatically when the picking is validated."
+msgid ""
+"If checked, the instructions label will be printed\n"
+"        automatically when the picking is validated."
+msgstr ""
+"Si sélectionné, l'étiquette d'expédition sera automatiquement imprimée "
+"lorsque le transfert sera validé."
+
+#. module: delivery_common
+#: model:ir.actions.report,name:delivery_common.action_report_delivery_instructions_label
+#, fuzzy
+#| msgid "Delivery Instructions"
+msgid "Instructions Label"
+msgstr "Instructions de livraison"
 
 #. module: delivery_common
 #: model:ir.model,name:delivery_common.model_stock_picking_type
@@ -105,3 +155,20 @@ msgstr "Courriel de suivi envoyé"
 #: model:ir.model,name:delivery_common.model_stock_picking
 msgid "Transfer"
 msgstr "Transfert"
+
+#. module: delivery_common
+#: model_terms:ir.ui.view,arch_db:delivery_common.report_delivery_instructions_label
+msgid ""
+"^FS\n"
+"^XZ"
+msgstr ""
+
+#. module: delivery_common
+#: model_terms:ir.ui.view,arch_db:delivery_common.report_delivery_instructions_label
+msgid ""
+"^XA\n"
+"^CI28\n"
+"^FO20,25\n"
+"^A0N,44,33\n"
+"^FB792,10,0,c ^FD"
+msgstr ""
