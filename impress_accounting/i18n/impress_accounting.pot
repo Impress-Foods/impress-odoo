@@ -33,12 +33,14 @@ msgstr ""
 
 #. module: impress_accounting
 #: model:ir.model.fields,field_description:impress_accounting.field_account_move__display_name
+#: model:ir.model.fields,field_description:impress_accounting.field_account_payment__display_name
 #: model:ir.model.fields,field_description:impress_accounting.field_res_partner__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: impress_accounting
 #: model:ir.model.fields,field_description:impress_accounting.field_account_move__id
+#: model:ir.model.fields,field_description:impress_accounting.field_account_payment__id
 #: model:ir.model.fields,field_description:impress_accounting.field_res_partner__id
 msgid "ID"
 msgstr ""
@@ -53,4 +55,9 @@ msgstr ""
 #. module: impress_accounting
 #: model:ir.model,name:impress_accounting.model_account_move
 msgid "Journal Entry"
+msgstr ""
+
+#. module: impress_accounting
+#: model:ir.model,name:impress_accounting.model_account_payment
+msgid "Payments"
 msgstr ""
