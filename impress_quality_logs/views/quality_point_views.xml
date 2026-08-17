@@ -17,7 +17,7 @@
         <field name="inherit_id" ref="quality.quality_point_view_form" />
         <field name="arch" type="xml">
             <field name="worksheet_template_id" position="before">
-                <field name="log_type_id" />
+                <field name="log_type_id" invisible="test_type != 'worksheet'" />
             </field>
         </field>
     </record>
