@@ -500,9 +500,10 @@ class ClickshipProvider:
         return package_data
 
     def _make_pickup_details(self, contact: HrEmployee | ResPartner) -> PickupDetails:
+        current_time = datetime.now(ZoneInfo("America/Montreal"))
         details = PickupDetails(
             date=self._make_current_date(),
-            ready_at=TimeOfDay(hour=11, minute=59),
+            ready_at=TimeOfDay(hour=current_time.hour, minute=current_time.minute),
             ready_until=TimeOfDay(hour=16, minute=0),
             pickup_location="Docks",
             contact_name=contact.name,
