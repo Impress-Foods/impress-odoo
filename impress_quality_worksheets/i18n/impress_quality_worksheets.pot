@@ -15,6 +15,7 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20260810_form_view
 msgid ""
 "<span style=\"font-weight: bold;\">Frequency: </span>\n"
 "                            <span>At the start of every finished product format</span>"
@@ -63,6 +64,13 @@ msgid ""
 msgstr ""
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20260810_form_view
+msgid ""
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 10 Août"
+" 2026. Feuille de contrôle Codage </strong>"
+msgstr ""
+
+#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 22 "
@@ -106,6 +114,11 @@ msgid ""
 msgstr ""
 
 #. module: impress_quality_worksheets
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_barcode_check
+msgid "Barcode Check"
+msgstr ""
+
+#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 msgid ""
@@ -120,6 +133,7 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_case_code
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_case_code
 msgid "Case Code"
 msgstr ""
 
@@ -134,7 +148,18 @@ msgid "Ceramic Detection Threshold (4.0 mm)"
 msgstr ""
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20260810_form_view
+msgid "Check Date (legible, shelf life OK)"
+msgstr ""
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20260810_form_view
+msgid "Check sleeve / product / cases"
+msgstr ""
+
+#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20260810_form_view
 msgid "Check unit code and lot code"
 msgstr ""
 
@@ -143,6 +168,11 @@ msgstr ""
 msgid ""
 "Comparer le poids du produit avec le poids visé pour cette production : si "
 "poids sous la cible ou + de 3g, faire un ajustement."
+msgstr ""
+
+#. module: impress_quality_worksheets
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_date_check
+msgid "Date Check"
 msgstr ""
 
 #. module: impress_quality_worksheets
@@ -251,6 +281,7 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20260810_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "Initials"
@@ -263,6 +294,7 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_lot_id
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_lot_id
 msgid "Lot"
 msgstr ""
 
@@ -274,6 +306,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_19_field_x_name
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_20_field_x_name
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_21_field_x_name
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_22_field_x_name
 msgid "Name"
 msgstr ""
 
@@ -294,7 +327,19 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_notes
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_notes
 msgid "Notes"
+msgstr ""
+
+#. module: impress_quality_worksheets
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_packaging_check
+msgid "Packaging Check"
+msgstr ""
+
+#. module: impress_quality_worksheets
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_picture
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20260810_form_view
+msgid "Picture"
 msgstr ""
 
 #. module: impress_quality_worksheets
@@ -324,6 +369,7 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_shelf_life
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_shelf_life
 msgid "Shelf Life"
 msgstr ""
 
@@ -334,6 +380,7 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_signature
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_signature
 msgid "Signature"
 msgstr ""
 
@@ -364,6 +411,7 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_start_date
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_start_date
 msgid "Start Date"
 msgstr ""
 
@@ -379,6 +427,7 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_unit_code
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_unit_code
 msgid "Unit Code"
 msgstr ""
 
@@ -428,6 +477,11 @@ msgid "Worksheet 2026-03-05"
 msgstr ""
 
 #. module: impress_quality_worksheets
+#: model:ir.model.fields,field_description:impress_quality_worksheets.coding_log_x_worksheet_20260810_id
+msgid "Worksheet 2026-08-10"
+msgstr ""
+
+#. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.metal_log_x_worksheet_large_20260303_id
 msgid "Worksheet Large 2026-03-03"
 msgstr ""
@@ -452,6 +506,7 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_coding_log_id
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_coding_log_id
 msgid "coding Log"
 msgstr ""
 
