@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-03 20:06+0000\n"
-"PO-Revision-Date: 2026-06-24 19:04+0000\n"
-"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"PO-Revision-Date: 2026-08-17 14:34+0000\n"
+"Last-Translator: admin <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/impress_quality_worksheets/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -20,6 +20,7 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20260810_form_view
 msgid ""
 "<span style=\"font-weight: bold;\">Frequency: </span>\n"
 "                            <span>At the start of every finished product "
@@ -83,6 +84,15 @@ msgstr ""
 "2026. Feuille de contrôle Poids </strong>"
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20260810_form_view
+msgid ""
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 10 Août "
+"2026. Feuille de contrôle Codage </strong>"
+msgstr ""
+"<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 10 Août "
+"2026. Feuille de contrôle Codage </strong>"
+
+#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid ""
 "<strong>Pour l'utilisation exclusive de Impress Foods. Mis à jour le 22 "
@@ -129,6 +139,11 @@ msgstr ""
 "Aviser le contrôle qualité si le poids est en dessous de la limite visée."
 
 #. module: impress_quality_worksheets
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_barcode_check
+msgid "Barcode Check"
+msgstr "Vérification Codes-barre"
+
+#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_20250203_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.MetalWorksheet_large_20260303_form_view
 msgid ""
@@ -145,6 +160,7 @@ msgstr "Vérification caisse"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_case_code
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_case_code
 msgid "Case Code"
 msgstr "Code de la caisse"
 
@@ -159,7 +175,18 @@ msgid "Ceramic Detection Threshold (4.0 mm)"
 msgstr "Seuil de détection de la céramique (4.0 mm)"
 
 #. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20260810_form_view
+msgid "Check Date (legible, shelf life OK)"
+msgstr "Vérifier la date (lisible, durée de vie OK)"
+
+#. module: impress_quality_worksheets
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20260810_form_view
+msgid "Check sleeve / product / cases"
+msgstr "Vérifier étiquette / produit / caisses"
+
+#. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20260810_form_view
 msgid "Check unit code and lot code"
 msgstr "Vérifier le code-barre de produit et de lot"
 
@@ -171,6 +198,11 @@ msgid ""
 msgstr ""
 "Comparer le poids du produit avec le poids visé pour cette production : si "
 "poids sous la cible ou + de 3g, faire un ajustement."
+
+#. module: impress_quality_worksheets
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_date_check
+msgid "Date Check"
+msgstr "Vérification date"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
@@ -298,6 +330,7 @@ msgstr ""
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20250303_form_view
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20260810_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_20250303_form_view
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.x_rayWorksheet_large_20251126_form_view
 msgid "Initials"
@@ -310,8 +343,21 @@ msgstr "Vérification mention \"Garder réfrigéré\" ou \"Garder congelé\""
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_lot_id
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_lot_id
 msgid "Lot"
 msgstr "Lot"
+
+#. module: impress_quality_worksheets
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_15_field_x_name
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_16_field_x_name
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_17_field_x_name
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_18_field_x_name
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_19_field_x_name
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_20_field_x_name
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_21_field_x_name
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_quality_check_worksheet_template_22_field_x_name
+msgid "Name"
+msgstr "Nom"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260305_weight_nominal_weight
@@ -330,8 +376,20 @@ msgstr "Non Ferreux (3.0 mm)"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_notes
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_notes
 msgid "Notes"
 msgstr "Notes"
+
+#. module: impress_quality_worksheets
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_packaging_check
+msgid "Packaging Check"
+msgstr "Vérification emballage"
+
+#. module: impress_quality_worksheets
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_picture
+#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20260810_form_view
+msgid "Picture"
+msgstr "Photo"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.weightWorksheet_20260305_form_view
@@ -360,6 +418,7 @@ msgstr "S'assurer que la balance est stable sur une table de travail."
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_shelf_life
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_shelf_life
 msgid "Shelf Life"
 msgstr "Durée de vie"
 
@@ -370,6 +429,7 @@ msgstr "Vérification durée de vie"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_signature
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_signature
 msgid "Signature"
 msgstr "Signature"
 
@@ -400,6 +460,7 @@ msgstr "Seuil de détection Stainless (2.0mm)"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_start_date
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_start_date
 msgid "Start Date"
 msgstr "Date de début"
 
@@ -415,6 +476,7 @@ msgstr "Vérification unité"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_unit_code
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_unit_code
 msgid "Unit Code"
 msgstr "Code unité"
 
@@ -466,6 +528,11 @@ msgid "Worksheet 2026-03-05"
 msgstr "Worksheet 2026-03-05"
 
 #. module: impress_quality_worksheets
+#: model:ir.model.fields,field_description:impress_quality_worksheets.coding_log_x_worksheet_20260810_id
+msgid "Worksheet 2026-08-10"
+msgstr "Worksheet 2026-08-10"
+
+#. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.metal_log_x_worksheet_large_20260303_id
 msgid "Worksheet Large 2026-03-03"
 msgstr "Worksheet Large 2026-03-03"
@@ -490,6 +557,7 @@ msgstr "Valeur de rejet Rayon-X"
 
 #. module: impress_quality_worksheets
 #: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20250303_coding_log_id
+#: model:ir.model.fields,field_description:impress_quality_worksheets.x_worksheet_20260810_coding_log_id
 msgid "coding Log"
 msgstr "Registre de Codage"
 

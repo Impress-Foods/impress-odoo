@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id='codingWorksheet_20260810_form_view' model='ir.ui.view'>
+        <field name="name">coding.worksheet.20260810.form.view</field>
+        <field
+            name="model"
+            model="ir.model"
+            eval="obj().env.ref('impress_quality_worksheets.ws_coding_20260810').model_id.model"
+        />
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <form create="false" js_class="worksheet_validation">
+                <sheet>
+                    <group
+                        invisible="context.get('studio') or context.get('default_x_quality_check_id')"
+                    >
+                        <group>
+                            <field name="x_quality_check_id" />
+                        </group>
+                    </group>
+                    <div>
+                        <p>
+                            <span style="font-weight: bold;">Frequency: </span>
+                            <span>At the start of every finished product format</span>
+                        </p>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="x_lot_id" readonly="1" />
+                            <field name="x_shelf_life" readonly='1' />
+                            <field name="x_case_code" required='1' />
+                            <field name="x_unit_code" required='1' />
+                            <field
+                                name="x_date_check"
+                                required='1'
+                                string="Check Date (legible, shelf life OK)"
+                            />
+                            <field name="x_start_date" required='1' />
+                            <field name="x_notes" />
+                        </group>
+                        <group>
+                            <field
+                                string="Check unit code and lot code"
+                                name="x_barcode_check"
+                                required='1'
+                            />
+                            <field
+                                name="x_packaging_check"
+                                required='1'
+                                string="Check sleeve / product / cases"
+                            />
+                            <field name="x_picture" widget="image" string="Picture" />
+                            <field
+                                name="x_signature"
+                                widget="signature"
+                                options="{'size':[0,90]}"
+                                required='1'
+                                string="Initials"
+                            />
+                        </group>
+                    </group>
+
+                    <div class="text-center">
+                        <strong
+                        >Pour l'utilisation exclusive de Impress Foods. Mis à jour le 10 Août 2026. Feuille de contrôle Codage </strong>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
