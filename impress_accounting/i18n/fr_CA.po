@@ -40,12 +40,14 @@ msgstr "Créer un client"
 
 #. module: impress_accounting
 #: model:ir.model.fields,field_description:impress_accounting.field_account_move__display_name
+#: model:ir.model.fields,field_description:impress_accounting.field_account_payment__display_name
 #: model:ir.model.fields,field_description:impress_accounting.field_res_partner__display_name
 msgid "Display Name"
 msgstr "Nom d'affichage"
 
 #. module: impress_accounting
 #: model:ir.model.fields,field_description:impress_accounting.field_account_move__id
+#: model:ir.model.fields,field_description:impress_accounting.field_account_payment__id
 #: model:ir.model.fields,field_description:impress_accounting.field_res_partner__id
 msgid "ID"
 msgstr "ID"
@@ -61,3 +63,8 @@ msgstr "Partenaire de facturation"
 #: model:ir.model,name:impress_accounting.model_account_move
 msgid "Journal Entry"
 msgstr "Pièce Comptable"
+
+#. module: impress_accounting
+#: model:ir.model,name:impress_accounting.model_account_payment
+msgid "Payments"
+msgstr ""

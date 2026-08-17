@@ -125,8 +125,8 @@ msgid ""
 "                    <span invisible=\"hpp_qty_cases == qty_producing\" "
 "class=\"text-danger\">HPP not ok</span>"
 msgstr ""
-"<span invisible=\"hpp_qty_cases != qty_producing\" class=\"text-success\">"
-"HPP conforme</span>\n"
+"<span invisible=\"hpp_qty_cases != qty_producing\" class=\"text-"
+"success\">HPP conforme</span>\n"
 "                    <span invisible=\"hpp_qty_cases == qty_producing\" "
 "class=\"text-danger\">HPP non-conforme</span>"
 
@@ -165,6 +165,13 @@ msgid "Average Threshold"
 msgstr "Seuil moyen"
 
 #. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__barcode_check
+#, fuzzy
+#| msgid "Case Check"
+msgid "Barcode Check"
+msgstr "Vérification caisse"
+
+#. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__barrel_1_qty
 msgid "Barrel 1 Quantity"
 msgstr "Quantité baril 1"
@@ -201,8 +208,8 @@ msgstr "Calibration"
 msgid ""
 "Cannot delete log type \"%(name)s\" - %(count)s quality point(s) reference it"
 msgstr ""
-"Impossible de supprimer le type de registre \"%(name)s\" - %(count)s point"
-"(s) de contrôle qualité y font référence"
+"Impossible de supprimer le type de registre \"%(name)s\" - %(count)s "
+"point(s) de contrôle qualité y font référence"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__case_check
@@ -312,6 +319,13 @@ msgstr "Date de la vérification quotidienne"
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_search
 msgid "Date"
 msgstr "Date"
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__date_check
+#, fuzzy
+#| msgid "Case Check"
+msgid "Date Check"
+msgstr "Vérification caisse"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__display_name
@@ -707,6 +721,7 @@ msgid "Monthly Verification"
 msgstr "Vérification mensuelle"
 
 #. module: impress_quality_logs
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__barcode_check__na
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__case_check__na
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__subunit_check__na
 msgid "N/A"
@@ -773,9 +788,12 @@ msgid "Non ferrous large (3.0 mm)"
 msgstr "Non-ferreux gros (3.0mm)"
 
 #. module: impress_quality_logs
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__barcode_check__not_ok
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__case_check__not_ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__date_check__not_ok
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__global_success_check__not_ok
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__keep_cold_check__not_ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__packaging_check__not_ok
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__shelf_life_check__not_ok
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__sleeve_check__not_ok
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__subunit_check__not_ok
@@ -828,9 +846,12 @@ msgid "Number of messages with delivery error"
 msgstr "Nombre de messages avec une erreur de livraison"
 
 #. module: impress_quality_logs
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__barcode_check__ok
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__case_check__ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__date_check__ok
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__global_success_check__ok
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__keep_cold_check__ok
+#: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__packaging_check__ok
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__shelf_life_check__ok
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__sleeve_check__ok
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__coding_log__subunit_check__ok
@@ -851,6 +872,18 @@ msgstr "Signature de l'opérateur"
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_search
 msgid "Orphans"
 msgstr "Orphelins"
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__packaging_check
+msgid "Packaging Check"
+msgstr ""
+
+#. module: impress_quality_logs
+#: model:ir.model.fields,field_description:impress_quality_logs.field_coding_log__picture
+#, fuzzy
+#| msgid "Signature"
+msgid "Picture"
+msgstr "Signature"
 
 #. module: impress_quality_logs
 #: model:ir.model.fields,field_description:impress_quality_logs.field_hpp_log_line__pressure_reached
