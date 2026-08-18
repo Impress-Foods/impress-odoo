@@ -19,6 +19,7 @@
 
     <template id="report_delivery_instructions_label">
         <t t-foreach="docs" t-as="transfer">
+            <t t-foreach="transfer.package_history_ids" t-as="pack">
         <!-- xml-formatter-disable -->
 ^XA
 ^CI28
@@ -30,6 +31,7 @@
 ^FD<t t-out="transfer.origin" />^FS
 ^XZ
         <!-- xml-formatter-enable -->
+            </t>
         </t>
     </template>
 
