@@ -144,6 +144,15 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:delivery_common.report_delivery_instructions_label
 msgid ""
 "^FS\n"
+"^FO10,360\n"
+"^A0N,44,33\n"
+"^FD"
+msgstr ""
+
+#. module: delivery_common
+#: model_terms:ir.ui.view,arch_db:delivery_common.report_delivery_instructions_label
+msgid ""
+"^FS\n"
 "^XZ"
 msgstr ""
 
@@ -154,5 +163,5 @@ msgid ""
 "^CI28\n"
 "^FO20,25\n"
 "^A0N,44,33\n"
-"^FB792,10,0,c ^FD"
+"^FB792,7,0,c ^FD"
 msgstr ""
