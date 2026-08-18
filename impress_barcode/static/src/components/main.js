@@ -14,6 +14,14 @@ patch(MainComponent.prototype, {
         this.env.model._createState();
         this.render();
     },
+    async openBackend() {
+        const action = await this.orm.call(
+            this.resModel,
+            "action_open_picking_backend_form",
+            [[this.resId]]
+        );
+        await this.action.doAction(action);
+    },
 });
 
 MainComponent.components.Header = HeaderComponent;

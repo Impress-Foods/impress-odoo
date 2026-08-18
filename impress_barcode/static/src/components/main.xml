@@ -36,4 +36,47 @@
         </xpath>
     </t>
 
+        <t
+        t-name="stock_barcode_main_inherit_add_origin"
+        t-inherit="stock_barcode.MainComponent"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath
+            expr="//button[@class='o_title btn text-start p-0']/div[1]"
+            position="replace"
+        >
+            <t t-if="env.model.origin">
+                <span t-esc="env.model.name + ' - ' + env.model.origin" />
+            </t>
+            <t t-else="">
+                <span t-esc="env.model.name" />
+            </t>
+        </xpath>
+    </t>
+
+    <t
+        t-name="stock_barcode_main_inherit_extra_buttons"
+        t-inherit="stock_barcode.MainComponent"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//button[hasclass('o_stock_mobile_barcode')][1]" position="before">
+            <button
+                t-if="env.model.formViewId"
+                t-on-click="doReservation"
+                class="o_show_information btn nav-link"
+            >
+                <i class="fa fa-check" />
+            </button>
+            <button
+                t-if="env.model.formViewId"
+                t-on-click="openBackend"
+                class="o_show_information btn nav-link"
+            >
+                <i class="fa fa-desktop" />
+            </button>
+        </xpath>
+    </t>
+
 </templates>

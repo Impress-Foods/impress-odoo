@@ -7,7 +7,7 @@ patch(BarcodePickingModel.prototype, {
     getTotalDemand(move_id) {
         try {
             return this.cache.getRecord("stock.move", move_id)["product_uom_qty"];
-        } catch (error) {
+        } catch {
             return 0;
         }
     },
@@ -74,9 +74,7 @@ patch(BarcodePickingModel.prototype, {
                             kitGroups[kitKey].moves.push({move, index});
                         }
                     }
-                } catch (e) {
-                    // Kit info not available in cache
-                }
+                } catch {}
             }
         });
 
@@ -106,9 +104,7 @@ patch(BarcodePickingModel.prototype, {
                             }
                         }
                     }
-                } catch (e) {
-                    /* ignore */
-                }
+                } catch {}
             }
 
             return {
@@ -189,7 +185,7 @@ patch(BarcodePickingModel.prototype, {
             }
 
             return {planned, reserved, done, available, status};
-        } catch (e) {
+        } catch {
             return {
                 planned: 0,
                 reserved: 0,
@@ -209,18 +205,14 @@ patch(BarcodePickingModel.prototype, {
                 try {
                     const moveA = this.cache.getRecord("stock.move", a.move_id);
                     nameA = moveA?.description_picking;
-                } catch (e) {
-                    /* ignore */
-                }
+                } catch {}
             }
             let nameB = b.description_picking;
             if (!nameB && b.move_id) {
                 try {
                     const moveB = this.cache.getRecord("stock.move", b.move_id);
                     nameB = moveB?.description_picking;
-                } catch (e) {
-                    /* ignore */
-                }
+                } catch {}
             }
             nameA = nameA ? nameA.toUpperCase() : "zzz";
             nameB = nameB ? nameB.toUpperCase() : "zzz";
@@ -264,9 +256,7 @@ patch(BarcodePickingModel.prototype, {
                 try {
                     const move = this.cache.getRecord("stock.move", item.move_id);
                     groupKey = move?.description_picking;
-                } catch (e) {
-                    // Ignore errors
-                }
+                } catch {}
             }
 
             if (groupKey) {
