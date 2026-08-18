@@ -1,18 +1,8 @@
-/** @odoo-module **/
 import {patch} from "@web/core/utils/patch";
 import {DateTimePicker} from "@web/core/datetime/datetime_picker";
-import {ensureArray} from "@web/core/utils/arrays";
 import {Time} from "@web/core/l10n/time";
-import {MAX_VALID_DATE, MIN_VALID_DATE, clampDate, today} from "@web/core/l10n/dates";
 
-const {DateTime, Info} = luxon;
-
-const parseLimitDate = (value, defaultValue) =>
-    clampDate(
-        value === "today" ? today() : value || defaultValue,
-        MIN_VALID_DATE,
-        MAX_VALID_DATE
-    );
+const {DateTime, _Info} = luxon;
 
 patch(DateTimePicker.prototype, {
     getTimeValues(props) {

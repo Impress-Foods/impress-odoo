@@ -154,7 +154,7 @@ export class AddImageAction extends BuilderAction {
     static id = "addMarqueeImage";
     static dependencies = ["media", "imageMarqueeOption"];
 
-    async load({editingElement}) {
+    async load({_editingElement}) {
         let selectedImages;
         await new Promise((resolve) => {
             const onClose = this.dependencies.media.openMediaDialog({
