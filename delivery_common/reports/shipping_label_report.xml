@@ -19,14 +19,19 @@
 
     <template id="report_delivery_instructions_label">
         <t t-foreach="docs" t-as="transfer">
+            <t t-foreach="transfer.package_history_ids" t-as="pack">
         <!-- xml-formatter-disable -->
 ^XA
 ^CI28
 ^FO20,25
 ^A0N,44,33
-^FB792,10,0,c ^FD<t t-out="transfer.delivery_instructions" />^FS
+^FB792,7,0,c ^FD<t t-out="transfer.delivery_instructions" />^FS
+^FO10,360
+^A0N,44,33
+^FD<t t-out="transfer.origin" />^FS
 ^XZ
         <!-- xml-formatter-enable -->
+            </t>
         </t>
     </template>
 

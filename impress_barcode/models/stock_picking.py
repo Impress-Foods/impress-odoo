@@ -35,3 +35,15 @@ class StockPicking(models.Model):
         )
 
         return data
+
+    def action_open_picking_backend_form(self):
+        self.ensure_one()
+        view = self.env.ref("stock.view_picking_form")
+        return {
+            "name": self.env._("Open picking"),
+            "type": "ir.actions.act_window",
+            "res_model": "stock.picking",
+            "view_mode": "form",
+            "views": [(view.id, "form")],
+            "res_id": self.id,
+        }
