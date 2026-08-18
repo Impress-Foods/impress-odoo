@@ -20,12 +20,8 @@ module_whitelist:
   - mrp_bom_tracking
   - mrp_production_back_to_draft
   # partner-contact
-  # - base_location
-  # - base_country_state_translatable
-  # - base_location_geonames_import
   - partner_store
   # product-variant
-  # - product_variant_configurator
   - product_variant_sale_price
   # sale-workflow
   - sale_force_invoiced
@@ -34,10 +30,11 @@ module_whitelist:
   - mail_debranding
   - website_debranding
   # server-tools
-  #- auditlog
   - sentry
   # server-ux
   - base_optional_quick_create
+  - developer_menu
+  - server_action_mass_edit
   # stock-logistics-workflow
   - stock_no_negative
   - stock_picking_back2draft
@@ -49,6 +46,7 @@ module_whitelist:
   - stock_quant_reservation_info
   - stock_quant_reservation_info_mrp
   - stock_change_qty_reason
+  - stock_picking_type_user_restriction
   # report-print-send
   - base_report_to_printer
   - base_report_to_printer_cups
