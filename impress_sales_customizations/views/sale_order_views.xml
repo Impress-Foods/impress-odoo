@@ -77,7 +77,7 @@
         <field name="model">sale.order</field>
         <field name="priority">100</field>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='delivery_status']" position="after">
+            <xpath expr="//field[@name='partner_shipping_id']" position="after">
                 <xpath
                     expr="//group[@name='sale_shipping']//label[1]"
                     position="move"
