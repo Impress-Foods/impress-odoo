@@ -32,6 +32,17 @@ msgid "MISSING PRODUCT(S) -"
 msgstr ""
 
 #. module: impress_barcode
+#: model_terms:ir.ui.view,arch_db:impress_barcode.stock_picking_view_kanban_barcode_inherit
+msgid "Open Form"
+msgstr ""
+
+#. module: impress_barcode
+#. odoo-python
+#: code:addons/impress_barcode/models/stock_picking.py:0
+msgid "Open picking"
+msgstr ""
+
+#. module: impress_barcode
 #: model:ir.model,name:impress_barcode.model_stock_move
 msgid "Stock Move"
 msgstr ""
