@@ -24,7 +24,10 @@
 ^CI28
 ^FO20,25
 ^A0N,44,33
-^FB792,10,0,c ^FD<t t-out="transfer.delivery_instructions" />^FS
+^FB792,7,0,c ^FD<t t-out="transfer.delivery_instructions" />^FS
+^FO10,360
+^A0N,44,33
+^FD<t t-out="transfer.origin" />^FS
 ^XZ
         <!-- xml-formatter-enable -->
         </t>
