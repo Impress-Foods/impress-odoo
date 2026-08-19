@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime, timezone
+from datetime import datetime
 
 from odoo import api, fields, models
 from odoo.fields import Domain
@@ -27,7 +27,7 @@ class Xray_log(models.Model):
     def _compute_monthly_signature_date(self):
         for rec in self:
             if rec.monthly_signature:
-                rec.monthly_signature_date = datetime.now(tz=timezone.utc)
+                rec.monthly_signature_date = datetime.now()
 
     def action_view_x_ray_lines(self):
         self.ensure_one()
