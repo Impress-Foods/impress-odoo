@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 
 from odoo import api, fields, models
 
@@ -75,7 +75,7 @@ class CodingLog(models.Model):
     def _compute_weekly_signature_date(self):
         for rec in self:
             if rec.signature:
-                rec.weekly_signature_date = datetime.now(tz=datetime.timezone.utc)
+                rec.weekly_signature_date = datetime.now(tz=timezone.utc)
 
     def action_sign_log(self):
         for rec in self:
