@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+printing_connector.access_print_field,access_print_field,printing_connector.model_print_field,base.group_user,1,1,1,1
+printing_connector.access_print_report,access_print_report,printing_connector.model_print_report,base.group_user,1,1,1,1

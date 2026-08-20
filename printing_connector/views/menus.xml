@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem id="printing_menu" name="Printing" sequence="10" />
+
+    <menuitem
+        id="print_report_menu"
+        name="Print Reports"
+        action="action_print_report"
+        parent="printing_menu"
+        sequence="10"
+    />
+
+    <menuitem
+        id="print_field_menu"
+        name="Fields"
+        action="action_print_field"
+        parent="printing_menu"
+        sequence="11"
+    />
+</odoo>
