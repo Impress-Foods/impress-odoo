@@ -1,15 +1,10 @@
 {
     "name": "Impress Stock Customizations",
-    "version": "19.0.1.1.4",
+    "version": "19.0.1.1.5",
     "depends": ["base", "stock", "product_expiry", "stock_barcode_mrp"],
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Inventory",
-    "summary": """
-    Customizations for the stock module developped in-house by Impress Foods SEC
-    """,
-    "license": "GPL-2",
-    # data files always loaded at installation
     "data": [
         "reports/paperformat_data.xml",
         "reports/impress_stock_customizations_stock_delivery_document_views.xml",
@@ -22,6 +17,7 @@
         "reports/report_deliveryslip.xml",
         "views/product_template_views.xml",
         "reports/report_online_sales_summary_report.xml",
+        "reports/report_packingslip.xml",
     ],
     "assets": {
         "web.report_assets_common": [
@@ -32,4 +28,5 @@
             "impress_stock_customizations/static/src/**/*.xml",
         ],
     },
+    "license": "GPL-2",
 }
