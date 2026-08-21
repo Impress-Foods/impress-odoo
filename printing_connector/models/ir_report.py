@@ -27,7 +27,7 @@ class IrReport(models.Model):
                 )
             )
         records = self.env[report.model].browse(res_ids)
-        payload = print_report._render_json_payload(records)
+        payload = print_report._render_json_payload(records, extra_data=data)
         return payload
 
     @api.model
@@ -39,6 +39,14 @@ class IrReport(models.Model):
                     "Could not find report with report_ref %(ref)s", ref=report_ref
                 )
             )
+        if len(res_ids) > 1:
+            raise ValidationError(
+                self.env._("Cannot print API label for multiple records")
+            )
+        if len(res_ids) == 0:
+            raise ValidationError(
+                self.env._("Cannot print API label for empty recordset")
+            )
         payload = self._render_api(report, res_ids, data)
-        _logger.debug(payload)
-        return {"success": True, "message": "Sent to printer"}
+        res = report.print_report_id.print_server_id._send(payload)
+        return res

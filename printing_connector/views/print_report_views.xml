@@ -7,6 +7,7 @@
             <list>
                 <field name="name" />
                 <field name="target_model_id" />
+                <field name="print_server_id" />
             </list>
         </field>
     </record>
@@ -20,6 +21,9 @@
                     <group>
                         <field name="name" />
                         <field name="target_model_id" />
+                    </group>
+                    <group>
+                        <field name="print_server_id" />
                     </group>
                 </group>
                 <group>

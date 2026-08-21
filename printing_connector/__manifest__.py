@@ -11,6 +11,8 @@
         "views/print_field_views.xml",
         "views/print_report_views.xml",
         "views/ir_report_views.xml",
+        "views/print_server_views.xml",
+        "views/print_printer_views.xml",
         "views/menus.xml",
     ],
     "assets": {
