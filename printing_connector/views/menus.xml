@@ -17,4 +17,11 @@
         parent="printing_menu"
         sequence="11"
     />
+    <menuitem
+        id="print_server_menu"
+        name="Servers"
+        action="action_print_server"
+        parent="printing_menu"
+        sequence="12"
+    />
 </odoo>

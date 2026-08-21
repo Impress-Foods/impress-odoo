@@ -6,7 +6,11 @@
         <field name="inherit_id" ref="base.act_report_xml_view" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='report_name']" position="after">
-                <field name="print_report_id" invisible="report_type != 'api'" />
+                <field
+                    name="print_report_id"
+                    invisible="report_type != 'api' "
+                    domain="[('model', '=', model)]"
+                />
             </xpath>
         </field>
     </record>
