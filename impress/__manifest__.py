@@ -1,6 +1,6 @@
 {
     "name": "Impress Customizations",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.0.1",
     "depends": ["base", "web"],
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
