@@ -65,7 +65,7 @@ class StockPicking(models.Model):
 
         if pickings_print_instructions_label:
             action = self.env.ref(
-                "delivery_common.report_delivery_instructions_label"
+                "delivery_common.action_report_delivery_instructions_label"
             ).report_action(pickings_print_instructions_label.ids, config=False)
             clean_action(action, self.env)
             report_actions.append(action)

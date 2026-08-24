@@ -19,7 +19,7 @@
 
     <template id="report_delivery_instructions_label">
         <t t-foreach="docs" t-as="transfer">
-            <t t-foreach="transfer.package_history_ids" t-as="pack">
+            <t t-foreach="[1] * (len(transfer.package_history_ids) or 1)" t-as="pack">
         <!-- xml-formatter-disable -->
 ^XA
 ^CI28
