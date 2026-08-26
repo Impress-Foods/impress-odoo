@@ -1,4 +1,6 @@
+import datetime
 import logging
+from typing import Any
 
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
@@ -45,7 +47,7 @@ class FieldMapping(models.Model):
                             model=model,
                         )
                     )
-                target_field = model._fields__[field]
+                target_field = model._fields[field]
             else:
                 for i, field in enumerate(parts):
                     if field not in model._fields:
@@ -69,7 +71,7 @@ class FieldMapping(models.Model):
                         model = self.env[target_field.comodel_name]
             rec.field_type = target_field.type
 
-    def get_value(self, record=None):
+    def get_value(self, record=None) -> Any:
         self.ensure_one()
 
         if self.static_value:
@@ -117,6 +119,20 @@ class FieldMapping(models.Model):
         match value:
             case models.BaseModel():
                 value = value.display_name or value.name
+            case datetime.datetime():
+                assert isinstance(value, datetime.datetime)
+                try:
+                    value = value.strftime(self.formatting)
+                except ValueError:
+                    raise ValidationError(
+                        self.env._(
+                            "Could not format date using %(string)s",
+                            string=self.formatting,
+                        )
+                    ) from None
+            case str():
+                assert isinstance(value, str)
+                value = value.strip()
             case _:
                 pass
 

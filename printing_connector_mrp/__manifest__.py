@@ -6,7 +6,7 @@
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "depends": ["printing_connector", "mrp_workorder"],
-    "data": ["views/quality_point_views.xml"],
+    "data": ["views/quality_point_views.xml", "views/mrp_workcenter_views.xml"],
     "application": False,
     "auto_install": True,
     "license": "GPL-2",

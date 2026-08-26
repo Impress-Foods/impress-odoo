@@ -12,3 +12,5 @@ class QualityControlPoint(models.Model):
         "ir.actions.report",
         domain=[("model", "=", "quality.check"), ("report_type", "=", "api")],
     )
+
+    printer_id = fields.Many2one("print.printer")

@@ -47,5 +47,28 @@ class QualityCheck(models.Model):
         res["id"] = report.id
         return res
 
+    def _get_print_qty(self):
+        if self.env.context.get("printing_printing_quantity", False):
+            return self.env.context.get("printing_printing_quantity")
+        return super()._get_print_qty()
+
     def _get_printer(self):
-        return False
+        """Resolves printers by priority"""
+        self.ensure_one()
+
+        if self.env.context.get("printing_printer_override", False):
+            printer = self.env["print.printer"].browse(
+                self.env.context.get("printing_printer_override")
+            )
+            if printer:
+                return printer.technical_name
+
+        if self.point_id.printer_id:
+            return self.point_id.printer_id.technical_name
+
+        if self.workcenter_id.default_printer_id:
+            return self.workcenter_id.default_printer_id.technical_name
+
+        raise ValidationError(
+            self.env._("No printer could be found for this print job!")
+        )
