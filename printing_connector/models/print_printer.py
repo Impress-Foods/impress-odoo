@@ -9,3 +9,4 @@ class PrintPrinter(models.Model):
 
     name = fields.Char()
     technical_name = fields.Char()
+    server_id = fields.Many2one("print.server")

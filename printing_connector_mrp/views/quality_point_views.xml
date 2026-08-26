@@ -11,6 +11,7 @@
                     invisible="test_report_type != 'api'"
                     required="test_report_type == 'api'"
                 />
+                <field name="printer_id" invisible="test_report_type != 'api'" />
             </xpath>
         </field>
     </record>

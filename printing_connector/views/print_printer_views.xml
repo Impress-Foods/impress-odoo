@@ -6,6 +6,8 @@
         <field name="arch" type="xml">
             <list>
                 <field name="name" />
+                <field name="technical_name" />
+                <field name="server_id" />
             </list>
         </field>
     </record>
@@ -19,6 +21,7 @@
                     <group>
                         <field name="name" />
                         <field name="technical_name" />
+                        <field name="server_id" />
                     </group>
                     <group />
                 </group>
