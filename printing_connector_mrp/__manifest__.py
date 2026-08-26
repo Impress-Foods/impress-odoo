@@ -7,6 +7,12 @@
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "depends": ["printing_connector", "mrp_workorder"],
     "data": ["views/quality_point_views.xml", "views/mrp_workcenter_views.xml"],
+    "assets": {
+        "web.assets_backend": [
+            "printing_connector_mrp/static/src/**/*.js",
+            "printing_connector_mrp/static/src/**/*.xml",
+        ]
+    },
     "application": False,
     "auto_install": True,
     "license": "GPL-2",
