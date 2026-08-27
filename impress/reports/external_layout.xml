@@ -13,6 +13,7 @@
                             t-if="company.logo"
                             t-att-src="image_data_uri(company.logo)"
                             alt="Logo"
+                            class="o_company_logo_small"
                         />
                     </div>
                     <div class="col-6 text-end mb4">
@@ -70,8 +71,7 @@
             t-att-data-oe-id="o and o.id"
             t-att-data-oe-lang="o and o.env.context.get('lang')"
         >
-            <div class="pt-5">
-                <!-- This div ensures that the address is not cropped by the header. -->
+            <div>
                 <t t-call="web.address_layout" />
             </div>
             <h2 t-out="layout_document_title" />
@@ -96,16 +96,13 @@
     </template>
     <template id="styles_company_report" inherit_id="web.styles_company_report">
         <xpath expr="//t[@t-elif][last()]" position="after">
-            <t t-elif="layout == 'impress.external_layout_impress'">
-                &amp;.o_report_layout_impress {
-                    .o_total td {
-                        background-color: <t t-esc='primary' />;
-                        strong {
-                            color: preview-color-contrast(<t t-esc='primary' />);
-                        }
-                    }
-                }
-            </t>
+            <t
+                t-elif="layout == 'impress.external_layout_impress'"
+            > &amp;.o_report_layout_impress { .o_total td { background-color: <t
+                t-esc='primary'
+            />; strong { color: preview-color-contrast(<t
+                t-esc='primary'
+            />); } } } </t>
         </xpath>
     </template>
 </odoo>

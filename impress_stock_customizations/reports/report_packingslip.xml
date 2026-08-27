@@ -72,7 +72,7 @@
                             class="col col-3 mw-100 mb-2"
                             name="div_origin"
                         >
-                            <strong>Order</strong>
+                            <strong>Invoice #</strong>
                             <div t-field="o.origin" class="m-0">S0001</div>
                         </div>
                         <div
