@@ -1,12 +1,11 @@
 {
     "name": "Impress Stock Customizations",
-    "version": "19.0.1.1.5",
-    "depends": ["base", "stock", "product_expiry", "stock_barcode_mrp"],
+    "version": "19.0.1.2.0",
+    "depends": ["base", "stock", "product_expiry", "stock_barcode_mrp", "impress"],
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Inventory",
     "data": [
-        "reports/paperformat_data.xml",
         "reports/impress_stock_customizations_stock_delivery_document_views.xml",
         "reports/impress_stock_customizations_labels.xml",
         "reports/online_sale_labels.xml",

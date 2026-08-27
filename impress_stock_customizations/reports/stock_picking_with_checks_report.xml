@@ -53,9 +53,6 @@
         >'Picking with Checks - %s - %s' % (object.partner_id.name or '', object.origin)</field>
         <field name="binding_model_id" ref="stock.model_stock_picking" />
         <field name="binding_type">report</field>
-        <field
-            name="paperformat_id"
-            ref="impress_stock_customizations.us_letter_small_margins"
-        />
+        <field name="paperformat_id" ref="impress.us_letter_small_margins" />
     </record>
 </odoo>

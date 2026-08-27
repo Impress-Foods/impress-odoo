@@ -112,10 +112,7 @@
         <field name="name">Online Summary</field>
         <field name="model">stock.picking</field>
         <field name="report_type">qweb-pdf</field>
-        <field
-            name="paperformat_id"
-            ref="impress_stock_customizations.us_letter_small_margins"
-        />
+        <field name="paperformat_id" ref="impress.us_letter_small_margins" />
         <field
             name="report_name"
         >impress_stock_customizations.online_sales_summary</field>

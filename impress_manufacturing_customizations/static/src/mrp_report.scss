@@ -1,0 +1,29 @@
+.input_line {
+    display: table;
+    width: 100%;
+
+    .label {
+        display: table-cell;
+        white-space: nowrap;
+        padding-right: 8px;
+    }
+
+    .line {
+        display: table-cell;
+        width: 100%;
+        border-bottom: 1px solid black;
+    }
+}
+
+.extra_line {
+    border-bottom: 1px solid black;
+    padding-top: 1rem;
+    width: 100%;
+}
+
+.o_checklist.o_checklist_no_margin {
+    padding-left: 1rem;
+    li {
+        margin-left: 0px;
+    }
+}
