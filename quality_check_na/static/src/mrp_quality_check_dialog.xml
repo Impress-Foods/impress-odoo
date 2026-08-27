@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t
+        t-name="quality_check_na.add_na_button"
+        t-inherit="shop_floor_usability.QualityCheckDialog"
+        t-inherit-mode="extension"
+        owl="1"
+    >
+        <xpath expr="//button[@name='button_fail']" position="after">
+            <button
+                name="button_na"
+                t-if="isPassfail &amp;&amp; props.record.data.can_be_na"
+                class="btn btn-secondary med-2"
+                t-on-click="na"
+                barcode_trigger="na"
+            >N/A</button>
+        </xpath>
+    </t>
+</templates>

@@ -41,3 +41,9 @@ class QualityCheck(models.Model):
             if rec.quality_state == "na":
                 rec.measure_success = "pass"
         return res
+
+    def action_na_and_next(self):
+        self.ensure_one()
+        self.do_na()
+        result = self._next()
+        return result if isinstance(result, dict) else {"next_check_id": result}
