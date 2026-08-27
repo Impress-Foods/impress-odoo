@@ -41,7 +41,7 @@
                                     <strong>Quantity to Produce: &amp;nbsp;</strong>
                                     <span
                                         t-field="o.product_qty"
-                                    >Quantity to product</span>
+                                    >Quantity to produce</span>
                                     <span t-field="o.product_uom_id">Unit</span>
                                 </p>
                                 <p class="input_line">
