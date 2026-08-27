@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20260219\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-24 19:04+0000\n"
-"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"PO-Revision-Date: 2026-08-27 16:23+0000\n"
+"Last-Translator: admin <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/quality_check_na/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -34,7 +34,7 @@ msgstr "Peut être N/A"
 #: model:ir.model.fields,field_description:quality_check_na.field_quality_check_wizard__display_name
 #: model:ir.model.fields,field_description:quality_check_na.field_quality_point__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom d'affichage"
 
 #. module: quality_check_na
 #: model:ir.model.fields,field_description:quality_check_na.field_mrp_workorder__id
@@ -42,7 +42,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality_check_na.field_quality_check_wizard__id
 #: model:ir.model.fields,field_description:quality_check_na.field_quality_point__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: quality_check_na
 #. odoo-javascript
@@ -83,17 +83,17 @@ msgstr "État"
 #. odoo-python
 #: code:addons/quality_check_na/models/quality_check.py:0
 msgid "This Quality Check cannot be set to N/A"
-msgstr ""
+msgstr "Ce contrôle qualité ne peut pas être marqué comme NA"
 
 #. module: quality_check_na
 #: model:ir.model,name:quality_check_na.model_quality_check_wizard
 msgid "Wizard for Quality Check Pop Up"
-msgstr ""
+msgstr "Modal pour assistant de contrôle qualité"
 
 #. module: quality_check_na
 #: model:ir.model,name:quality_check_na.model_mrp_workorder
 msgid "Work Order"
-msgstr ""
+msgstr "Ordre de travail"
 
 #. module: quality_check_na
 #. odoo-python
@@ -102,3 +102,5 @@ msgid ""
 "You need to complete Quality Checks using the Shop Floor before marking Work "
 "Order as Done."
 msgstr ""
+"Vous devez compléter le contrôle qualité dans l'application Atelier avant de "
+"marquer cet ordre de travail comme complété."
