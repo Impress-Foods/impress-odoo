@@ -218,7 +218,7 @@ msgstr ""
 
 #. module: impress_manufacturing_customizations
 #: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
-msgid "Quantity to product"
+msgid "Quantity to produce"
 msgstr ""
 
 #. module: impress_manufacturing_customizations
