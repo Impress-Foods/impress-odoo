@@ -19,10 +19,135 @@ msgstr ""
 "X-Generator: Weblate 2026.5\n"
 
 #. module: impress_manufacturing_customizations
+#: model:ir.actions.report,print_report_name:impress_manufacturing_customizations.action_report_job_sheet
+msgid "'Job Sheet - %s' % (object.name)"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "12345678901"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "25"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "8 GB RAM"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid ""
+"<span class=\"label\">pH</span>\n"
+"                                        <span class=\"line\"/>"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "<span class=\"x_studio_field_l2DBU\">Ligne de Production</span>"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid ""
+"<strong class=\"label\">Quantity Produced:</strong>\n"
+"                                    <span class=\"line\"/>"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid ""
+"<strong class=\"label\">Supervisor Note:</strong>\n"
+"                                    <span class=\"line\"/>"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid ""
+"<strong class=\"label\">Supervisor Verification:</strong>\n"
+"                                    <span class=\"line\"/>"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid ""
+"<strong>125ml (kg): </strong>\n"
+"                                    <span name=\"x_studio_125ml_kg\">0 kg </"
+"span>"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid ""
+"<strong>500ml (kg):</strong>\n"
+"                                    <span name=\"x_studio_500ml_kg\">0 kg</"
+"span>"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid ""
+"<strong>American (kg): </strong>\n"
+"                                    <span name=\"x_studio_usa_kg_1\">0 kg</"
+"span>"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid ""
+"<strong>Canadian (kg): </strong>\n"
+"                                    <span name=\"x_studio_can_kg\">0 kg</"
+"span>"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "<strong>Date: &amp;nbsp;</strong>"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "<strong>Product:</strong>"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "<strong>Quantity to Produce: &amp;nbsp;</strong>"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "Barcode"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "Components"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "Consumed"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
 #: model:ir.model.fields,field_description:impress_manufacturing_customizations.field_mrp_production__display_name
 #: model:ir.model.fields,field_description:impress_manufacturing_customizations.field_sale_order__display_name
 msgid "Display Name"
 msgstr "Nom d'affichage"
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "Emball"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "Embouteillé"
+msgstr ""
 
 #. module: impress_manufacturing_customizations
 #: model:ir.model.fields,field_description:impress_manufacturing_customizations.field_mrp_production__id
@@ -31,9 +156,34 @@ msgid "ID"
 msgstr "ID"
 
 #. module: impress_manufacturing_customizations
+#: model:ir.actions.report,name:impress_manufacturing_customizations.action_report_job_sheet
+msgid "Job Sheet"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "MRP-001"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
 #: model:ir.model,name:impress_manufacturing_customizations.model_mrp_production
 msgid "Manufacturing Order"
 msgstr "Ordre de Fabrication"
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "Odoo"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "Package barcode"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "Pieces"
+msgstr ""
 
 #. module: impress_manufacturing_customizations
 #: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.view_mrp_production_filter_shop_floor
@@ -41,9 +191,48 @@ msgid "Planned today"
 msgstr "Planifié aujourd'hui"
 
 #. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "Pressé"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+#, fuzzy
+#| msgid "Product Category"
+msgid "Product"
+msgstr "Catégorie de produit"
+
+#. module: impress_manufacturing_customizations
 #: model:ir.model.fields,field_description:impress_manufacturing_customizations.field_mrp_production__product_category_id
 msgid "Product Category"
 msgstr "Catégorie de produit"
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "Product:"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+#, fuzzy
+#| msgid "Product Category"
+msgid "Production Date"
+msgstr "Catégorie de produit"
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "Préparé"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "Qualité"
+msgstr ""
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "Quantity to product"
+msgstr ""
 
 #. module: impress_manufacturing_customizations
 #: model:ir.model,name:impress_manufacturing_customizations.model_sale_order
@@ -54,6 +243,11 @@ msgstr "Bon de vente"
 #: model:ir.model.fields,field_description:impress_manufacturing_customizations.field_mrp_production__sequence
 msgid "Sequence"
 msgstr "Séquence"
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "To Consume"
+msgstr ""
 
 #. module: impress_manufacturing_customizations
 #: model:ir.model.fields,field_description:impress_manufacturing_customizations.field_mrp_production__to_plan
@@ -69,6 +263,11 @@ msgstr "Aujourd'hui"
 #: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.view_mrp_production_filter
 msgid "Today and Before"
 msgstr "Aujourd'hui et avant"
+
+#. module: impress_manufacturing_customizations
+#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
+msgid "Unit"
+msgstr ""
 
 #. module: impress_manufacturing_customizations
 #: model:ir.ui.menu,name:impress_manufacturing_customizations.workorder_dashboard_menu

@@ -24,11 +24,31 @@ msgstr "Permettre \"Non Applicable\""
 
 #. module: quality_check_na
 #: model:ir.model.fields,field_description:quality_check_na.field_quality_check__can_be_na
+#: model:ir.model.fields,field_description:quality_check_na.field_quality_check_wizard__can_be_na
 msgid "Can Be Na"
 msgstr "Peut être N/A"
 
 #. module: quality_check_na
+#: model:ir.model.fields,field_description:quality_check_na.field_mrp_workorder__display_name
+#: model:ir.model.fields,field_description:quality_check_na.field_quality_check__display_name
+#: model:ir.model.fields,field_description:quality_check_na.field_quality_check_wizard__display_name
+#: model:ir.model.fields,field_description:quality_check_na.field_quality_point__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: quality_check_na
+#: model:ir.model.fields,field_description:quality_check_na.field_mrp_workorder__id
+#: model:ir.model.fields,field_description:quality_check_na.field_quality_check__id
+#: model:ir.model.fields,field_description:quality_check_na.field_quality_check_wizard__id
+#: model:ir.model.fields,field_description:quality_check_na.field_quality_point__id
+msgid "ID"
+msgstr ""
+
+#. module: quality_check_na
+#. odoo-javascript
+#: code:addons/quality_check_na/static/src/mrp_quality_check_dialog.xml:0
 #: model_terms:ir.ui.view,arch_db:quality_check_na.quality_check_view_form_na
+#: model_terms:ir.ui.view,arch_db:quality_check_na.view_quality_check_wizard
 msgid "N/A"
 msgstr "N/A"
 
@@ -58,3 +78,27 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality_check_na.field_quality_check__quality_state
 msgid "Status"
 msgstr "État"
+
+#. module: quality_check_na
+#. odoo-python
+#: code:addons/quality_check_na/models/quality_check.py:0
+msgid "This Quality Check cannot be set to N/A"
+msgstr ""
+
+#. module: quality_check_na
+#: model:ir.model,name:quality_check_na.model_quality_check_wizard
+msgid "Wizard for Quality Check Pop Up"
+msgstr ""
+
+#. module: quality_check_na
+#: model:ir.model,name:quality_check_na.model_mrp_workorder
+msgid "Work Order"
+msgstr ""
+
+#. module: quality_check_na
+#. odoo-python
+#: code:addons/quality_check_na/models/mrp_workorder.py:0
+msgid ""
+"You need to complete Quality Checks using the Shop Floor before marking Work "
+"Order as Done."
+msgstr ""

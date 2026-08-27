@@ -26,6 +26,17 @@ msgstr ""
 "object.origin)"
 
 #. module: impress_stock_customizations
+#: model:ir.actions.report,print_report_name:impress_stock_customizations.action_report_packing_slip
+#, fuzzy
+#| msgid ""
+#| "'Picking with Checks - %s - %s' % (object.partner_id.name or '', "
+#| "object.origin)"
+msgid "'Packing Slip - %s - %s' % (object.partner_id.name or '', object.name)"
+msgstr ""
+"'Picking avec vérification - %s - %s' % (object.partner_id.name or '', "
+"object.origin)"
+
+#. module: impress_stock_customizations
 #: model:ir.actions.report,print_report_name:impress_stock_customizations.report_stock_picking_with_checks
 msgid ""
 "'Picking with Checks - %s - %s' % (object.partner_id.name or '', "
@@ -44,6 +55,12 @@ msgstr ""
 "object.origin)"
 
 #. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
+msgid "1.00"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
 msgid "3.00"
 msgstr "3.00"
@@ -66,6 +83,13 @@ msgid "<span> days</span>"
 msgstr "<span> jours</span>"
 
 #. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
+#, fuzzy
+#| msgid "<span> days</span>"
+msgid "<span>Packing Slip</span>"
+msgstr "<span> jours</span>"
+
+#. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_stock_picking_with_checks_view
 msgid ""
 "<span>Second verification done by:</span>\n"
@@ -84,6 +108,34 @@ msgid "<strong>Check</strong>"
 msgstr "<strong>Vérification</strong>"
 
 #. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
+#, fuzzy
+#| msgid "<strong>Total: </strong>"
+msgid "<strong>Contact</strong>"
+msgstr "<strong>Total: </strong>"
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
+#, fuzzy
+#| msgid "<strong>Check</strong>"
+msgid "<strong>Customer</strong>"
+msgstr "<strong>Vérification</strong>"
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
+#, fuzzy
+#| msgid "<strong>Check</strong>"
+msgid "<strong>Delivered</strong>"
+msgstr "<strong>Vérification</strong>"
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
+#, fuzzy
+#| msgid "<strong>Shelf life remaining</strong>"
+msgid "<strong>Delivery Address</strong>"
+msgstr "<strong>Durée de vie restante</strong>"
+
+#. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_delivery_document
 msgid ""
 "<strong>Minimum shelf life:</strong>\n"
@@ -93,14 +145,56 @@ msgstr ""
 "                    <br/>"
 
 #. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
+#, fuzzy
+#| msgid "<strong>Check</strong>"
+msgid "<strong>Order</strong>"
+msgstr "<strong>Vérification</strong>"
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
+#, fuzzy
+#| msgid "<strong>Total: </strong>"
+msgid "<strong>Product</strong>"
+msgstr "<strong>Total: </strong>"
+
+#. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
 msgid "<strong>Shelf life remaining</strong>"
 msgstr "<strong>Durée de vie restante</strong>"
 
 #. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
+#, fuzzy
+#| msgid "<strong>Check</strong>"
+msgid "<strong>Shipping Date</strong>"
+msgstr "<strong>Vérification</strong>"
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
+#, fuzzy
+#| msgid "<strong>Check</strong>"
+msgid "<strong>Signature</strong>"
+msgstr "<strong>Vérification</strong>"
+
+#. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_delivery_document
 msgid "<strong>Total: </strong>"
 msgstr "<strong>Total: </strong>"
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
+#, fuzzy
+#| msgid "<strong>Total: </strong>"
+msgid "<strong>Vendor Address</strong>"
+msgstr "<strong>Total: </strong>"
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
+#, fuzzy
+#| msgid "<strong>Check</strong>"
+msgid "<strong>Warehouse Address</strong>"
+msgstr "<strong>Vérification</strong>"
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__alert_date
@@ -128,6 +222,7 @@ msgid "Create a Customer"
 msgstr "Créer un client"
 
 #. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
 msgid "Customizable Desk"
 msgstr "Bureau modifiable"
@@ -140,6 +235,11 @@ msgid ""
 msgstr ""
 "Date utilisée afin de déterminer les lots et numéros de série à l'aide du "
 "filter \"Alertes d'expiration\"."
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
+msgid "Description on transfer"
+msgstr "Description sur le transfert"
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_online_sales_summary__display_name
@@ -161,6 +261,11 @@ msgstr "Date d'expiration"
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_picking__id
 msgid "ID"
 msgstr "ID"
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
+msgid "John Doe"
+msgstr ""
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__life_remaining
@@ -220,6 +325,16 @@ msgid "Order:"
 msgstr "Commande:"
 
 #. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
+msgid "Pack of 6"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.actions.report,name:impress_stock_customizations.action_report_packing_slip
+msgid "Packing Slip"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking_add_page_numbers
 msgid "Page <span class=\"page\"/> / <span class=\"topage\"/>"
 msgstr "Page <span class=\"page\"/> / <span class=\"topage\"/>"
@@ -248,6 +363,11 @@ msgstr "Quantité"
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__removal_date
 msgid "Removal Date"
 msgstr "Date d'enlèvement"
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
+msgid "S0001"
+msgstr ""
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_delivery_document
@@ -460,15 +580,13 @@ msgid "of"
 msgstr "de"
 
 #. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
 msgid "units"
 msgstr "unités"
 
 #~ msgid "^FS ^XZ"
 #~ msgstr "^FS ^XZ"
-
-#~ msgid "Description on transfer"
-#~ msgstr "Description sur le transfert"
 
 #~ msgid "(document barcode)"
 #~ msgstr "(code-barre du document)"
