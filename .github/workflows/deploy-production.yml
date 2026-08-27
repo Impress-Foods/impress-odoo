@@ -4,6 +4,11 @@ on:
   push:
     tags: ["*"]
 
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
 jobs:
   deploy-production:
     runs-on: ubuntu-latest
@@ -75,6 +80,113 @@ jobs:
 
           echo "Timed out waiting for checks to complete."
           exit 1
+
+      - name: Create GitHub Release and tag PRs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          REPO="${{ github.repository }}"
+          TAG="${{ github.ref_name }}"
+          SHA="${{ github.sha }}"
+
+          git fetch --tags --force origin
+
+          BASE_BRANCH=$(git branch -r --contains "$SHA" 2>/dev/null \
+            | sed 's/\*//; s/^[[:space:]]*//; s|^origin/||' \
+            | grep -vE '^(HEAD|->|$)' | head -1)
+          BASE_BRANCH=${BASE_BRANCH:-19.0}
+          echo "Tag $TAG points to branch: $BASE_BRANCH"
+
+          PREV=$(git tag --merged "$TAG" --sort=-creatordate | grep -v "^$TAG$" | head -1 || true)
+          echo "Building release notes for $TAG (previous release: ${PREV:-none})"
+
+          if [ -n "$PREV" ]; then
+            RANGE="$PREV..$TAG"
+          else
+            RANGE=$(git rev-list --max-parents=0 "$TAG" | tail -1)..$TAG
+            echo "No previous release found, listing all history"
+          fi
+
+          COMMITS=$(git log "$RANGE" --format=%s | grep -v '^$' || true)
+
+          PR_IDS=$(echo "$COMMITS" | sed -nE 's/.*\(#([0-9]+)\).*/\1/p' | awk '!seen[$0]++' || true)
+
+          KEEP_PR=""
+          SKIPPED=0
+          while read -r n; do
+            [ -z "$n" ] && continue
+            META=$(gh pr view "$n" --json baseRefName,title --jq '[.baseRefName, .title] | @tsv' 2>/dev/null || true)
+            if [ -z "$META" ]; then
+              echo "Warning: PR #$n not found, including anyway"
+              KEEP_PR+="$n	PR #$n"$'\n'
+              continue
+            fi
+            PR_BASE=$(cut -f1 <<< "$META")
+            if [ "$PR_BASE" != "$BASE_BRANCH" ]; then
+              echo "Skipping PR #$n (targets $PR_BASE, not $BASE_BRANCH)"
+              SKIPPED=$((SKIPPED + 1))
+              continue
+            fi
+            KEEP_PR+="$n	$(cut -f2 <<< "$META")"$'\n'
+          done <<< "$PR_IDS"
+
+          NOTES_FILE=$(mktemp)
+          {
+            echo "# Release $TAG"
+            echo
+            if [ -n "$KEEP_PR" ]; then
+              PR_COUNT=$(echo "$KEEP_PR" | sed '/^$/d' | wc -l)
+              echo "## Merged PRs ($PR_COUNT)"
+              echo
+              while IFS=$'\t' read -r n TITLE; do
+                [ -z "$n" ] && continue
+                echo "- #$n $TITLE"
+              done <<< "$KEEP_PR"
+            fi
+            OTHER=$(echo "$COMMITS" | grep -vE '\(#[0-9]+\)' || true)
+            if [ -n "$OTHER" ]; then
+              echo
+              echo "## Other commits"
+              echo
+              echo "$OTHER" | sed 's/^/- /' | sed "s/\[$BASE_BRANCH\]//"
+            fi
+            echo
+            echo "Deployed to production with tag \`$TAG\` (commit \`$SHA\`)."
+          } > "$NOTES_FILE"
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists, updating notes"
+            gh release edit "$TAG" --notes-file "$NOTES_FILE"
+          else
+            gh release create "$TAG" --target "$SHA" --title "Release $TAG" --notes-file "$NOTES_FILE"
+          fi
+
+          create_label() {
+            gh api "/repos/$REPO/labels" -f name="$1" -f color=0E8A16 >/dev/null 2>&1 || \
+              echo "Note: label '$1' already exists or could not be created"
+          }
+          create_label "Live"
+          create_label "released:$TAG"
+
+          MILESTONE_NO=$(gh api "/repos/$REPO/milestones?state=all" \
+            --jq ".[] | select(.title == \"Release $TAG\") | .number" | head -1)
+          if [ -z "$MILESTONE_NO" ]; then
+            echo "Creating milestone 'Release $TAG'"
+            MILESTONE_NO=$(gh api "/repos/$REPO/milestones" -f title="Release $TAG" --jq .number)
+          fi
+          echo "Milestone: Release $TAG (#$MILESTONE_NO)"
+
+          PRS_TAGGED=0
+          while IFS=$'\t' read -r n TITLE; do
+            [ -z "$n" ] && continue
+            if gh pr edit "$n" --add-label Live --add-label "released:$TAG" --milestone "Release $TAG" >/dev/null; then
+              PRS_TAGGED=$((PRS_TAGGED + 1))
+            else
+              echo "Warning: could not tag PR #$n"
+            fi
+          done <<< "$KEEP_PR"
+          echo "Tagged $PRS_TAGGED PRs ($SKIPPED skipped: targeted another branch)"
 
       - name: Dispatch production event
         uses: peter-evans/repository-dispatch@v3

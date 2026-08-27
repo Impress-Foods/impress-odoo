@@ -22,10 +22,8 @@
     oca: https://github.com/OCA/mail
   merges:
     - oca 19.0
-    - oca refs/pull/112/head
     - oca refs/pull/171/head
     - oca refs/pull/179/head
-    - oca refs/pull/180/head
     - oca refs/pull/181/head
 
 ./maintenance:

@@ -38,23 +38,27 @@
                         <div>
                             <button
                                 t-if="isPassfail"
+                                name="button_pass"
                                 class="btn btn-success me-2"
                                 t-on-click="pass"
                                 barcode_trigger="pass"
                             >Pass</button>
                             <button
+                                name="button_fail"
                                 t-if="isPassfail"
                                 class="btn btn-danger me-2"
                                 t-on-click="fail"
                                 barcode_trigger="fail"
                             >Fail</button>
                             <button
+                                name="button_validate"
                                 t-if="isMeasure"
                                 class="btn btn-primary me-2"
                                 t-on-click="validate"
                                 barcode_trigger="next"
                             >Validate</button>
                             <button
+                                name="button_next"
                                 t-if="!isPassfail &amp;&amp; !isMeasure"
                                 class="btn btn-primary me-2"
                                 t-on-click="validate"
