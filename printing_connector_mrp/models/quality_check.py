@@ -26,7 +26,6 @@ class QualityCheck(models.Model):
 
     def _send_api_label(self):
         self.ensure_one()
-        _logger.debug(self.env.context)
         report = self.point_id.report_id
 
         if report.report_type != "api":
@@ -39,20 +38,55 @@ class QualityCheck(models.Model):
 
         qty = self._get_print_qty()
 
-        lot_id = self.workorder_id.finished_lot_ids.ids
-        if len(lot_id) > 1:
-            raise ValidationError(
-                self.env._("Cannot send label for multiple lots via API")
-            )
-
-        if not lot_id:
-            raise ValidationError(self.env._("Must specify lot for label printing"))
+        record = self._get_record_for_api_report()
 
         res = report.report_action(
-            lot_id, data={"qty": qty, "printer": self._get_printer_name()}
+            record.ids, data={"qty": qty, "printer": self._get_printer_name()}
         )
+
         res["id"] = report.id
         return res
+
+    def _get_record_for_api_report(self):
+        target_model = self.point_id.report_id.print_report_id.target_model_id.model
+
+        match target_model:
+            case "stock.lot":
+                lot_id = self.workorder_id.finished_lot_ids
+                if len(lot_id) > 1:
+                    raise ValidationError(
+                        self.env._("Cannot send label for multiple lots via API")
+                    )
+
+                if not lot_id:
+                    raise ValidationError(
+                        self.env._("Must specify lot for label printing")
+                    )
+
+                return lot_id
+
+            case "product.product":
+                product_id = self.product_id
+                if len(product_id) > 1:
+                    raise ValidationError(
+                        self.env._("Cannot send label for multiple products via API")
+                    )
+
+                if not product_id:
+                    raise ValidationError(
+                        self.env._("Must specify product for label printing")
+                    )
+
+                return product_id
+
+            case _:
+                raise ValidationError(
+                    self.env._(
+                        "Can only print reports for 'product.product' "
+                        "or 'stock.lot' models. Current model: %(model)s",
+                        model=target_model,
+                    )
+                )
 
     def _get_print_qty(self):
         if self.env.context.get("printing_printing_quantity", False):
@@ -95,9 +129,12 @@ class QualityCheck(models.Model):
 
         printers = self.env["print.printer"].search_read(domain, ["name"])
 
+        record = self._get_record_for_api_report()
         return {
             "printers": printers,
             "printer_id": self._get_printer().id,
             "qty": self._get_print_qty(),
-            "data": self.point_id.report_id.print_report_id._render_json_payload(self),
+            "data": self.point_id.report_id.print_report_id._render_json_payload(
+                record
+            ),
         }

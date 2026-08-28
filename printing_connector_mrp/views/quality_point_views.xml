@@ -10,6 +10,7 @@
                     name="report_id"
                     invisible="test_report_type != 'api'"
                     required="test_report_type == 'api'"
+                    domain="[('model','in',['stock.lot', 'product.product'])]"
                 />
                 <field name="printer_id" invisible="test_report_type != 'api'" />
             </xpath>

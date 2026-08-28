@@ -65,4 +65,15 @@ patch(QualityCheck.prototype, {
             return super.doActionAndNext(action, stateToSet);
         }
     },
+
+    async _chainToNext(result) {
+        if (!result?.next_check_id) return;
+        const _parentRecord = this.props.record._parentRecord;
+        const checks = _parentRecord.data.check_ids.records;
+        const nextCheck = checks.find((c) => c.resId === result.next_check_id);
+        if (nextCheck?.component) {
+            await new Promise((r) => setTimeout(r));
+            await nextCheck.component.clicked();
+        }
+    },
 });

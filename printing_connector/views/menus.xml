@@ -29,6 +29,6 @@
         name="Servers"
         action="action_print_server"
         parent="printing_menu"
-        sequence="12"
+        sequence="13"
     />
 </odoo>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="print_server_view_list" model="ir.ui.view">
         <field name="name">print.server.view.list</field>
@@ -15,17 +15,38 @@
         <field name="name">print.server.view.form</field>
         <field name="model">print.server</field>
         <field name="arch" type="xml">
-            <form>
-                <group>
+            <form string="Print Server">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_debug"
+                            invisible="debug_logging"
+                            class="oe_stat_button"
+                            type="object" icon="fa-code">
+                            <div class="o_stat_info o_field_widget">
+                                <span class="o_stat_text text-danger">No debug</span>
+                            </div>
+                        </button>
+                            <button name="toggle_debug"
+                                invisible="not debug_logging"
+                                class="oe_stat_button"
+                                type="object" icon="fa-code">
+                            <div class="o_stat_info o_field_widget">
+                                <span class="text-success">Debug requests</span>
+                            </div>
+                        </button>
+                    </div>
+
                     <group>
-                        <field name="name" />
-                        <field name="url" />
-                        <field name="api_key" />
+                        <group>
+                            <field name="name" />
+                            <field name="url" />
+                            <field name="api_key" password="True" />
+                        </group>
+                        <group>
+                            <field name="timeout" />
+                        </group>
                     </group>
-                    <group>
-                        <field name="timeout" />
-                    </group>
-                </group>
+                </sheet>
             </form>
         </field>
     </record>
@@ -35,8 +56,6 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">print.server</field>
         <field name="view_mode">list,form</field>
-        <field name="domain">[]</field>
-        <field name="context">{}</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
                 There is no examples click here to add new print server.
