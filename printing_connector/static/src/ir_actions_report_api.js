@@ -5,19 +5,11 @@ async function apiReportActionHandler(action, options, env) {
         return false;
     }
     const orm = env.services.orm;
-    env.services.ui.block();
-    try {
-        const result = await orm.call("ir.actions.report", "print_api", [
-            action.id,
-            action.context.active_ids,
-            action.data,
-        ]);
-        env.services.notification.add(result.message, {
-            type: result.success ? "success" : "danger",
-        });
-    } finally {
-        env.services.ui.unblock();
-    }
+    await orm.call("ir.actions.report", "print_api", [
+        action.id,
+        action.context.active_ids,
+        action.data,
+    ]);
     options.onClose?.();
     return true;
 }

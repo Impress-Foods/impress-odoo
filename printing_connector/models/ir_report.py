@@ -1,9 +1,5 @@
-import logging
-
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
-
-_logger = logging.getLogger(__name__)
 
 
 class IrReport(models.Model):
@@ -48,5 +44,5 @@ class IrReport(models.Model):
                 self.env._("Cannot print API label for empty recordset")
             )
         payload = self._render_api(report, res_ids, data)
-        res = report.print_report_id.print_server_id._send(payload)
-        return res
+        success, message = report.print_report_id.print_server_id._send(payload)
+        return {"success": success, "message": message}
