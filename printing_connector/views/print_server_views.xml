@@ -44,6 +44,7 @@
                         </group>
                         <group>
                             <field name="timeout" />
+                            <field name="method" />
                         </group>
                     </group>
                 </sheet>

@@ -24,6 +24,7 @@
                     </group>
                     <group>
                         <field name="print_server_id" />
+                        <field name="template" />
                     </group>
                 </group>
                 <group>

@@ -41,7 +41,12 @@ class QualityCheck(models.Model):
         record = self._get_record_for_api_report()
 
         res = report.report_action(
-            record.ids, data={"qty": qty, "printer": self._get_printer_name()}
+            record.ids,
+            data={
+                "_qty": qty,
+                "_printer": self._get_printer_name(),
+                "_job": self._get_print_job_name(),
+            },
         )
 
         res["id"] = report.id
@@ -118,6 +123,15 @@ class QualityCheck(models.Model):
         self.ensure_one()
         return self._get_printer().technical_name
 
+    def _get_print_job_name(self):
+        self.ensure_one()
+        if self.workorder_id:
+            return self.workorder_id.display_name
+        elif self.production_id:
+            return self.production_id.display_name
+        else:
+            return self.display_name
+
     def get_print_data(self):
         self.ensure_one()
         report = self.point_id.report_id.print_report_id
@@ -132,8 +146,8 @@ class QualityCheck(models.Model):
         record = self._get_record_for_api_report()
         return {
             "printers": printers,
-            "printer_id": self._get_printer().id,
-            "qty": self._get_print_qty(),
+            "_printer_id": self._get_printer().id,
+            "_qty": self._get_print_qty(),
             "data": self.point_id.report_id.print_report_id._render_json_payload(
                 record
             ),
