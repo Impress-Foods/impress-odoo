@@ -23,6 +23,7 @@ class IrReport(models.Model):
                 )
             )
         records = self.env[report.model].browse(res_ids)
+        data = {"_template": print_report.template} | data
         payload = print_report._render_json_payload(records, extra_data=data)
         return payload
 

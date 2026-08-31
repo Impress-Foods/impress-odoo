@@ -24,11 +24,20 @@ class FieldMapping(models.Model):
     static_value = fields.Char()
     formatting = fields.Char()
 
+    @api.constrains("target_field")
+    def _check_target_field(self):
+        for record in self:
+            if record.target_field[0] == "_":
+                raise ValidationError(
+                    self.env._("Target field cannot be start with '_'!")
+                )
+
     @api.depends("source_field")
     def _compute_field_type(self):
         for rec in self:
             if rec.static_value:
                 rec.field_type = "char"
+                continue
 
             if not rec.source_field:
                 continue

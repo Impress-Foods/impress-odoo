@@ -5,6 +5,7 @@ import psycopg2
 import requests
 
 from odoo import SUPERUSER_ID, api, fields, models
+from odoo.exceptions import ValidationError
 from odoo.modules.registry import Registry
 
 _logger = logging.getLogger(__name__)
@@ -15,8 +16,13 @@ class PrintServer(models.Model):
     _description = "Print server for label printing"
 
     active = fields.Boolean(default=True)
-    name = fields.Char()
+    name = fields.Char(required=True)
     url = fields.Char()
+
+    method = fields.Selection(
+        selection=[("get", "GET"), ("post", "POST")], required=True, default="get"
+    )
+
     api_key = fields.Char()
     timeout = fields.Integer()
 
@@ -33,10 +39,20 @@ class PrintServer(models.Model):
         headers = {"Authorization": "Bearer " + (self.api_key or "")}
 
         try:
-            self.log_xml(f"{self.url} POST \n {data}", "print.report._send")
-            r = requests.post(
-                self.url, json=data, headers=headers, timeout=self.timeout or 30
-            )
+            self.log_xml(f"{self.url} {self.method} \n {data}", "print.report._send")
+            match self.method:
+                case "get":
+                    r = requests.get(
+                        self.url, json=data, headers=headers, timeout=self.timeout or 30
+                    )
+                case "post":
+                    r = requests.post(
+                        self.url, json=data, headers=headers, timeout=self.timeout or 30
+                    )
+                case _:
+                    raise ValidationError(
+                        self.env._("Must specify method for API request")
+                    )
         except requests.ConnectionError as error:
             self.log_xml(
                 f"Connection Error: {error} with the given URL: {self.url}",
