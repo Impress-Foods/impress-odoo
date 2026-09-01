@@ -5,7 +5,7 @@
     "category": "hidden",
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
-    "depends": ["base"],
+    "depends": ["base", "product"],
     "data": [
         "security/ir.model.access.csv",
         "views/print_field_views.xml",
@@ -13,6 +13,7 @@
         "views/ir_report_views.xml",
         "views/print_server_views.xml",
         "views/print_printer_views.xml",
+        "views/product_views.xml",
         "views/menus.xml",
     ],
     "assets": {

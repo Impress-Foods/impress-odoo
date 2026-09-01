@@ -20,10 +20,13 @@ class TestPrintField(TransactionCase):
                 "target_model_id": self.env["ir.model"]
                 .search([("model", "=", model)], limit=1)[0]
                 .id,
+                "name": "test",
+                "template": "test",
                 "mapping_ids": [
                     Command.create(
                         {
                             "source_field": mapping,
+                            "target_field": "test",
                         }
                     )
                 ],
