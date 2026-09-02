@@ -86,7 +86,7 @@
                                 name="keep_cold_check"
                                 invisible="not keep_cold_check"
                             />
-                            <field name="barcode_check" invisible="sleeve_check" />
+                            <field name="barcode_check" invisible="True" />
                             <field
                                 name="packaging_check"
                                 invisible="keep_cold_check and shelf_life_check"

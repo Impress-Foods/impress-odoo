@@ -41,11 +41,6 @@
                         </group>
                         <group>
                             <field
-                                string="Check unit code and lot code"
-                                name="x_barcode_check"
-                                required='1'
-                            />
-                            <field
                                 name="x_packaging_check"
                                 required='1'
                                 string="Check sleeve / product / cases"
