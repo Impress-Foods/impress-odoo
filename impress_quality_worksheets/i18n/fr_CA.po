@@ -186,7 +186,6 @@ msgstr "Vérifier étiquette / produit / caisses"
 
 #. module: impress_quality_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20250303_form_view
-#: model_terms:ir.ui.view,arch_db:impress_quality_worksheets.codingWorksheet_20260810_form_view
 msgid "Check unit code and lot code"
 msgstr "Vérifier le code-barre de produit et de lot"
 
