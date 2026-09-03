@@ -75,7 +75,7 @@ class CodingLog(models.Model):
     def _compute_weekly_signature_date(self):
         for rec in self:
             if rec.signature:
-                rec.weekly_signature_date = datetime.now()
+                rec.weekly_signature_date = datetime.now()  # noqa: DTZ005
 
     def action_sign_log(self):
         for rec in self:
