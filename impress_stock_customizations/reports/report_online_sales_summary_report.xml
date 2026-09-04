@@ -64,6 +64,7 @@
                                     <tr
                                         t-foreach="picking['products_by_category']"
                                         t-as="cat"
+                                        t-if="cat"
                                     >
                                         <td
                                             style="padding: 6px 8px; border: none;"
@@ -74,6 +75,7 @@
                                             t-out="int(picking['products_by_category'][cat])"
                                         />
                                     </tr>
+                                    <t t-else="" />
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -86,6 +88,18 @@
                                         />
                                     </tr>
                                 </tfoot>
+                                <tbody t-if="picking.get('kits')">
+                                    <tr t-foreach="picking['kits']" t-as="kit_name">
+                                        <td
+                                            style="padding: 6px 8px; border: none; font-style: italic;"
+                                            t-out="kit_name"
+                                        />
+                                        <td
+                                            style="padding: 6px 8px; border: none; text-align: right;"
+                                            t-out="picking['kits'][kit_name]"
+                                        />
+                                    </tr>
+                                </tbody>
                             </table>
                         </td>
 
@@ -119,7 +133,7 @@
         <field
             name="report_file"
         >impress_stock_customizations.online_sales_summary</field>
-        <field name="print_report_name">Online Sale Summary</field>
+        <field name="print_report_name">'Online Sale Summary'</field>
         <field name="binding_model_id" ref="stock.model_stock_picking" />
         <field name="binding_type">report</field>
     </record>
