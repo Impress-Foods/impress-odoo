@@ -21,6 +21,11 @@ msgid ""
 msgstr ""
 
 #. module: impress_stock_customizations
+#: model:ir.actions.report,print_report_name:impress_stock_customizations.action_report_online_summary
+msgid "'Online Sale Summary'"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model:ir.actions.report,print_report_name:impress_stock_customizations.action_report_packing_slip
 msgid "'Packing Slip - %s - %s' % (object.partner_id.name or '', object.name)"
 msgstr ""
@@ -170,11 +175,6 @@ msgid "Contact"
 msgstr ""
 
 #. module: impress_stock_customizations
-#: model:ir.model,website_form_label:impress_stock_customizations.model_res_partner
-msgid "Create a Customer"
-msgstr ""
-
-#. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
 msgid "Customizable Desk"
@@ -248,11 +248,6 @@ msgstr ""
 #. module: impress_stock_customizations
 #: model:ir.actions.report,name:impress_stock_customizations.action_report_online_sale_label
 msgid "Online Sale Label"
-msgstr ""
-
-#. module: impress_stock_customizations
-#: model:ir.actions.report,print_report_name:impress_stock_customizations.action_report_online_summary
-msgid "Online Sale Summary"
 msgstr ""
 
 #. module: impress_stock_customizations
