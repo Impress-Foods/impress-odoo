@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-08-27 16:23+0000\n"
+"PO-Revision-Date: 2026-09-04 17:11+0000\n"
 "Last-Translator: admin <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/impress_stock_customizations/fr_CA/>\n"
@@ -27,7 +27,6 @@ msgstr ""
 
 #. module: impress_stock_customizations
 #: model:ir.actions.report,print_report_name:impress_stock_customizations.action_report_online_summary
-#, fuzzy
 msgid "'Online Sale Summary'"
 msgstr "'Résumé ventes en ligne'"
 
