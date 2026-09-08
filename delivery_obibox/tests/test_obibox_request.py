@@ -69,7 +69,7 @@ class TestObiboxRequest(TestDeliveryCommon):
 
         expected_dims = []
         expected_boxes = [
-            schema.Box(Large=False, OverSize=False, ShipTo80=False) for i in packages
+            schema.Box(Large=False, OverSize=False, ShipTo80=False) for _ in packages
         ]
 
         for package in packages:
@@ -103,7 +103,7 @@ class TestObiboxRequest(TestDeliveryCommon):
         self.assertEqual(address, expected_address)
 
     def test_make_address_company(self):
-        partner = self.env["res.company"].browse([1])  # noqa
+        partner = self.env["res.company"].browse([1])
         expected_address = {
             "address1": partner.street,
             "address2": partner.street2 or "",
@@ -154,7 +154,7 @@ class TestObiboxRequest(TestDeliveryCommon):
     @freeze_time(datetime(year=2025, month=7, day=15))
     def test_make_shipment_request(self):
         picking = self.make_picking(n_packages=2)
-
+        picking.obibox_hand_to_hand = True
         packages = picking._get_packages()
         pack1 = packages[0]
         pack2 = packages[1]
@@ -174,7 +174,7 @@ class TestObiboxRequest(TestDeliveryCommon):
             )
             ** 3
         )
-        picking.date_done = datetime.today()
+        picking.date_done = datetime.now()
 
         total_weight = pack1_weight + pack2_weight
         boxes = [schema.Box(), schema.Box()]
@@ -211,6 +211,7 @@ class TestObiboxRequest(TestDeliveryCommon):
             weight=total_weight,
             boxes=boxes,
             boxes_dimensions=dims,
+            hand_to_hand=True,
         )
         shipping_request = self.sr._make_shipment_request(picking)
         self.assertEqual(shipping_request, expected_shipping_request)

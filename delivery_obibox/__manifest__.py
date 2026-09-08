@@ -1,6 +1,6 @@
 {
     "name": "Delivery - Obibox",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.2.0",
     "summary": """ Obibox Delivery Connector """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
@@ -13,6 +13,7 @@
     },
     "data": [
         "views/delivery_carrier_views.xml",
+        "views/stock_picking_views.xml",
         "data/delivery_obibox.xml",
         "security/ir.model.access.csv",
     ],

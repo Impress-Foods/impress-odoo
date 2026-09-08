@@ -1,6 +1,6 @@
 import json
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from unittest.mock import patch
 
 from freezegun import freeze_time
@@ -17,7 +17,7 @@ class TestPicking(TestDeliveryCommon):
     @patch(
         "odoo.addons.delivery_obibox.models.obibox_request.ObiboxProvider._make_api_request"
     )
-    @freeze_time(datetime(year=2025, month=7, day=15))
+    @freeze_time(datetime(year=2025, month=7, day=15, tzinfo=timezone.utc))
     def test_complete_book_shipment_1_package(self, mock_api):
         return_value_1 = json.loads(
             """[{"ServiceName": "NEXTDAY",
@@ -43,7 +43,7 @@ class TestPicking(TestDeliveryCommon):
     @patch(
         "odoo.addons.delivery_obibox.models.obibox_request.ObiboxProvider._make_api_request"
     )
-    @freeze_time(datetime(year=2025, month=7, day=15))
+    @freeze_time(datetime(year=2025, month=7, day=15, tzinfo=timezone.utc))
     def test_complete_book_shipment_2_package(self, mock_api):
         return_value_1 = json.loads(
             """[{"ServiceName": "NEXTDAY",
