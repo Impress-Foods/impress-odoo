@@ -5,6 +5,8 @@ from typing import Any
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
+from ..tools import date_formatter, string_formatter
+
 _logger = logging.getLogger(__name__)
 
 
@@ -134,21 +136,10 @@ class FieldMapping(models.Model):
                 value = value.display_name or value.name
             case datetime.datetime():
                 assert isinstance(value, datetime.datetime)
-                if self.formatting:
-                    try:
-                        value = value.strftime(self.formatting)
-                    except ValueError:
-                        raise ValidationError(
-                            self.env._(
-                                "Could not format date using %(string)s",
-                                string=self.formatting,
-                            )
-                        ) from None
-                else:
-                    value = value.isoformat(timespec="seconds")
+                value = date_formatter.format_date(value, self.formatting)
             case str():
                 assert isinstance(value, str)
-                value = value.strip()
+                value = string_formatter.format_string(value, self.formatting)
             case _:
                 pass
 
