@@ -13,7 +13,7 @@ extend-select = [
     "UP",  # pyupgrade
 ]
 extend-safe-fixes = ["UP008"]
-ignore = ["UP032","UP031"]
+ignore = ["UP032","UP031", "DTZ001", "DTZ005"]
 exclude = ["setup/*"]
 
 

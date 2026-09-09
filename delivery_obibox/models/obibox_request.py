@@ -329,6 +329,7 @@ class ObiboxProvider:
             weight=total_weight,
             boxes=boxes,
             boxes_dimensions=dims,
+            hand_to_hand=picking.obibox_hand_to_hand,
         )
         return data
 
