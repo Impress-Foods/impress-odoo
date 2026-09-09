@@ -34,7 +34,7 @@ export class PrintDialog extends ConfirmationDialog {
 
     validate() {
         this.selected.printer_id = this.state.printer_id;
-        this.selected.qty = this.state.qty;
+        this.selected.qty = this.state._qty;
         this.props.confirm?.(this.selected);
         this.props.close();
     }
