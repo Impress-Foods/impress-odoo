@@ -24,6 +24,10 @@ class FieldMapping(models.Model):
     static_value = fields.Char()
     formatting = fields.Char()
 
+    translate = fields.Boolean()
+
+    languages = fields.Many2many(comodel_name="res.lang")
+
     @api.constrains("target_field")
     def _check_target_field(self):
         for record in self:
@@ -130,15 +134,18 @@ class FieldMapping(models.Model):
                 value = value.display_name or value.name
             case datetime.datetime():
                 assert isinstance(value, datetime.datetime)
-                try:
-                    value = value.strftime(self.formatting)
-                except ValueError:
-                    raise ValidationError(
-                        self.env._(
-                            "Could not format date using %(string)s",
-                            string=self.formatting,
-                        )
-                    ) from None
+                if self.formatting:
+                    try:
+                        value = value.strftime(self.formatting)
+                    except ValueError:
+                        raise ValidationError(
+                            self.env._(
+                                "Could not format date using %(string)s",
+                                string=self.formatting,
+                            )
+                        ) from None
+                else:
+                    value = value.isoformat(timespec="seconds")
             case str():
                 assert isinstance(value, str)
                 value = value.strip()

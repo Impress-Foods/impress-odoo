@@ -27,6 +27,8 @@
                         <field name="field_type" />
                         <field name="static_value" />
                         <field name="formatting" />
+                        <field name="translate" />
+                        <field name="languages" widget="many2many_checkboxes" invisible="not translate" />
                     </group>
                 </group>
             </form>

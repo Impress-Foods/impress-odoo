@@ -26,7 +26,7 @@ class TestPrintField(TransactionCase):
                     Command.create(
                         {
                             "source_field": mapping,
-                            "target_field": "test",
+                            "target_field": "field",
                         }
                     )
                 ],
@@ -52,3 +52,31 @@ class TestPrintField(TransactionCase):
         company = self.env["res.company"].search([])[0]
         value = mapping.get_value(company)
         self.assertEqual(value, "USD")
+
+    def test_get_translated_field(self):
+        NAME_FR = "French Name"
+        NAME_EN = "English Name"
+        lang_model = self.env["res.lang"]
+        fr = lang_model.search(
+            [("code", "=", "fr_CA"), ("active", "in", [False, True])]
+        )
+
+        fr.active = True
+        en = lang_model.search(
+            [("code", "=", "en_US"), ("active", "in", [False, True])]
+        )
+
+        report, mapping = self.make_single_field_report("product.template", "name")
+
+        mapping.translate = True
+        mapping.languages = [fr.id, en.id]
+
+        product = self.env["product.product"].create({"type": "consu", "name": NAME_EN})
+        product.with_context(lang=fr.code).write({"name": NAME_FR})
+
+        values = report._render_json_payload(product)
+
+        self.assertIn("field_fr", values)
+        self.assertEqual(values["field_fr"], NAME_FR)
+        self.assertIn("field_en", values)
+        self.assertEqual(values["field_en"], NAME_EN)
