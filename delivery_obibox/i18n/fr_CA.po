@@ -146,6 +146,11 @@ msgid "Obibox Coverage Checked"
 msgstr "Couverture Obibox vérifiée"
 
 #. module: delivery_obibox
+#: model:ir.model.fields,field_description:delivery_obibox.field_stock_picking__obibox_hand_to_hand
+msgid "Obibox Hand To Hand"
+msgstr ""
+
+#. module: delivery_obibox
 #: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__obibox_api_key
 msgid "Obibox Key"
 msgstr "Clé Obibox"
