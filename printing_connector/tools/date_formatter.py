@@ -37,5 +37,5 @@ def format_date(date_obj: datetime, format_string: str | None = None) -> str:
                 )
             ) from None
     else:
-        value = value.isoformat(timespec="seconds")
+        value = date_obj.isoformat(timespec="seconds")
     return value

@@ -36,7 +36,8 @@ class PrintServer(models.Model):
 
     def _send(self, data) -> tuple[bool, Any]:
         self.ensure_one()
-        headers = {"Authorization": "Bearer " + (self.api_key or "")}
+
+        headers = {"Authorization": "Bearer " + (self.api_key)} if self.api_key else {}
 
         try:
             self.log_xml(f"{self.url} {self.method} \n {data}", "print.report._send")
