@@ -1,5 +1,6 @@
 import logging
 
+from odoo.fields import Command
 from odoo.tests import TransactionCase
 
 _logger = logging.getLogger(__name__)
@@ -20,8 +21,8 @@ class TestApiLabelFeedbackContext(TransactionCase):
         )
         cls.point = cls.env["quality.point"].create(
             {
-                "product_id": cls.product.id,
-                "test_type": "print_label",
+                "product_ids": [Command.set([cls.product.id])],
+                "test_type_id": cls.env.ref("mrp_workorder.test_type_print_label").id,
                 "test_report_type": "api",
                 "report_id": cls.report.id,
             }
@@ -35,7 +36,7 @@ class TestApiLabelFeedbackContext(TransactionCase):
         )
 
     def _send(self, from_shopfloor):
-        QualityCheck = self.env["quality.check"]
+        QualityCheck = type(self.env["quality.check"])
         self.patch(QualityCheck, "_get_printer_name", lambda self: "dummy")
         self.patch(QualityCheck, "_get_print_qty", lambda self: 1)
         self.patch(

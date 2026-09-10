@@ -1,9 +1,4 @@
-import logging
-
 from odoo import fields, models
-from odoo.fields import Domain
-
-_logger = logging.getLogger(__name__)
 
 
 class PrintReport(models.Model):
@@ -21,17 +16,16 @@ class PrintReport(models.Model):
         self.ensure_one()
         rec.ensure_one()
 
-        data = {
-            field.target_field: field.get_formatted_value(rec)
-            for field in self.mapping_ids.filtered_domain(
-                Domain("translate", "=", False)
-            )
-        }
-
-        for field in self.mapping_ids.filtered_domain(Domain("translate", "=", True)):
-            for lang in field.languages:
-                key = f"{field.target_field}_{lang.code[:2]}"
-                data[key] = field.get_formatted_value(rec.with_context(lang=lang.code))
+        data = {}
+        for field in self.mapping_ids:
+            if field.translate:
+                for lang in field.languages:
+                    key = f"{field.target_field}_{lang.code[:2]}"
+                    data[key] = field.get_formatted_value(
+                        rec.with_context(lang=lang.code)
+                    )
+            else:
+                data[field.target_field] = field.get_formatted_value(rec)
 
         if extra_data:
             data = extra_data | data
