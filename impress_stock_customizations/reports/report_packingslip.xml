@@ -31,7 +31,7 @@
     </template>
 
     <template id="report_packingslip_document">
-        <t t-set="o" t-value="o.with_context(lang=o._get_report_lang())" />
+        <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)" />
         <t t-set="data" t-value="o._get_packing_list_data()" />
         <t
             t-set="format_number"

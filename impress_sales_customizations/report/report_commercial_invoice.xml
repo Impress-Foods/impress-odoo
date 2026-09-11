@@ -334,10 +334,10 @@
                         <p class="mb-0">
                             <strong>Signature</strong>
                         </p>
-                        <p
+                        <!-- <p
                             class="text-muted"
                             t-out="env.user.name"
-                        >Name of authorized person</p>
+                        >Name of authorized person</p> -->
                     </div>
                 </div>
             </div>
