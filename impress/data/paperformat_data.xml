@@ -4,11 +4,22 @@
         <field name="name">US Letter (small margins)</field>
         <field name="format">Letter</field>
         <field name="orientation">Portrait</field>
-        <field name="margin_top">10</field>
+        <field name="margin_top">30</field>
         <field name="margin_bottom">10</field>
         <field name="margin_left">10</field>
         <field name="margin_right">10</field>
-        <field name="header_spacing">0</field>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+    <record id="us_letter_small_margins_landscape" model="report.paperformat">
+        <field name="name">US Letter (small margins)</field>
+        <field name="format">Letter</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">30</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">10</field>
+        <field name="margin_right">10</field>
+        <field name="header_spacing">20</field>
         <field name="dpi">90</field>
     </record>
 

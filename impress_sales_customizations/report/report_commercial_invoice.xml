@@ -21,7 +21,7 @@
                     <strong>Buyer</strong>
                     <div
                         t-field="doc.partner_invoice_id"
-                        t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": False}'
+                        t-options='{"widget": "contact", "fields": ["address", "name", "phone", "vat"], "no_marker": True, "phone_icons": False}'
                     />
                     <strong class="d-block mt-3">Deliver to</strong>
                     <div
@@ -32,14 +32,10 @@
             </t>
             <div class="page">
                 <t t-set="layout_document_title">
-                    <span>Commercial Invoice</span>
+                    <span>Commercial Invoice #<span t-field="doc.name" /></span>
                 </t>
 
                 <div class="row mb-4" id="informations">
-                    <div class="col" name="informations_reference">
-                        <strong>Invoice #</strong>
-                        <div t-field="doc.name">SO0000</div>
-                    </div>
                     <div t-if="doc.date_order" class="col" name="informations_date">
                         <strong>Date</strong>
                         <div
@@ -80,14 +76,17 @@
                     t-value="not hide_taxes_details and any(l._has_taxes() for l in lines_to_report)"
                 />
 
+                <t
+                    t-set="format_number"
+                    t-value="lambda x: int(x) if x == int(x) else round(x, 2)"
+                />
                 <table class="o_has_total_table table o_main_table table-borderless">
                     <!-- In case we want to repeat the header, remove "display: table-row-group" -->
                     <thead style="display: table-row-group">
                         <tr>
-                            <th
-                                name="th_description"
-                                class="text-start"
-                            >Description of Goods</th>
+                            <th name="th_description" class="text-start">
+                                <strong>Description of Goods</strong>
+                            </th>
                             <th
                                 name="th_hts"
                                 class="text-end text-nowrap"
@@ -95,11 +94,8 @@
                             <th
                                 name="th_weight_gross"
                                 class="text-end"
-                            >Gross Weight (kg)</th>
-                            <th
-                                name="th_weight_ney"
-                                class="text-end"
-                            >Net Weight (kg)</th>
+                            >Gross Wt. (kg)</th>
+                            <th name="th_weight_ney" class="text-end">Net Wt. (kg)</th>
                             <th
                                 name="th_quantity"
                                 class="text-end text-nowrap"
@@ -109,12 +105,11 @@
                                 class="text-end text-nowrap"
                             >Unit Price</th>
                             <th name="th_subtotal" class="text-end">
-                                <span>Total Price</span>
+                                <span>Total</span>
                             </th>
                         </tr>
                     </thead>
                     <tbody class="sale_tbody">
-                        <t t-set="total_net" t-value="0" />
                         <t t-set="total_qty" t-value="0" />
 
                         <t t-set="current_section" t-value="None" />
@@ -235,7 +230,14 @@
                                         name="td_product_name"
                                         t-att-class="padding_class"
                                     >
-                                        <span t-field="line.name">Bacon Burger</span>
+                                        <span
+                                            t-if="line.product_id.description_sale"
+                                            t-field="line.product_id.description_sale"
+                                        >Bacon Burger</span>
+                                        <span
+                                            t-else=""
+                                            t-field="line.product_id.display_name"
+                                        >Bacon Burger</span>
                                     </td>
                                     <td name="td_hts" class="padding_class text-end">
                                         <name t-field="line.product_id.hs_code" />
@@ -244,10 +246,6 @@
                                         <name t-field="line.ordered_gross_weight" />
                                     </td>
                                     <td name="td_net_weight" class="text-end">
-                                        <t
-                                            t-set="total_net"
-                                            t-value="total_net + line.ordered_net_weight"
-                                        />
                                         <name t-field="line.ordered_net_weight" />
                                     </td>
                                     <td
@@ -259,7 +257,7 @@
                                             t-value="total_qty + line.product_uom_qty"
                                         />
                                         <span
-                                            t-field="line.product_uom_qty"
+                                            t-out="format_number(line.product_uom_qty)"
                                             class="text-nowrap"
                                         >3</span>
                                         <span t-field="line.product_uom_id">units</span>
@@ -307,37 +305,39 @@
                             <td />
                             <td />
                             <td class="text-end">
-                                <span t-field="doc.shipping_weight" />
+                                <span t-out="'%.1f' % doc.ordered_gross_weight" />
                             </td>
                             <td class="text-end">
-                                <span t-out="'{0:,.1f}'.format(total_net)" />
+                                <span t-out="'%.1f' % doc.ordered_net_weight" />
                             </td>
                             <td class="text-end">
-                                <span t-out="'{0:,.2f}'.format(total_qty)" />
+                                <span t-out="format_number(total_qty)" />
                             </td>
-                            <td style="border-right: none;">
-                                Invoice total:
-                            </td>
-                            <td>
+                            <td class="text-end" colspan="2">
+                                <span>Invoice total:</span>
                                 <span t-field="doc.amount_untaxed" />
                             </td>
                         </tr>
                     </tbody>
                 </table>
 
-                <div t-if="not doc.signature" />
-                <div t-else="" class="mt-4 ml64 mr4" name="signature">
-                    <div class="offset-8">
-                        <strong>Signature</strong>
-                    </div>
-                    <div class="offset-8">
-                        <img
-                            t-att-src="image_data_uri(doc.signature)"
-                            style="max-height: 4cm; max-width: 8cm;"
+                <div class="row mt-5">
+                    <div class="col-6">
+                        <div>
+                            <p>
+                                I declare that the information on this invoice is true and correct to the best of my knowledge.
+                            </p>
+                        </div>
+                        <div
+                            style="border-top: 1px solid #000; width: 250px; margin-top: 60px;"
                         />
-                    </div>
-                    <div class="offset-8 text-center">
-                        <span t-field="doc.signed_by">Oscar Morgan</span>
+                        <p class="mb-0">
+                            <strong>Signature</strong>
+                        </p>
+                        <p
+                            class="text-muted"
+                            t-out="env.user.name"
+                        >Name of authorized person</p>
                     </div>
                 </div>
             </div>
@@ -359,6 +359,7 @@
         <field name="name">Commercial Invoice</field>
         <field name="model">sale.order</field>
         <field name="report_type">qweb-pdf</field>
+        <field name="paperformat_id" ref="impress.us_letter_small_margins" />
         <field
             name="report_name"
         >impress_sales_customizations.report_commercial_invoice</field>

@@ -81,6 +81,7 @@
         <div t-attf-class="footer o_boxed_footer o_company_#{company.id}_layout">
             <div class="text-center">
                 <div t-field="company.report_footer">Company Report Footer</div>
+
                 <div t-if="report_type == 'pdf'"> Page: <span class="page" /> / <span
                     class="topage"
                 />
@@ -94,6 +95,7 @@
             </div>
         </div>
     </template>
+
     <template id="styles_company_report" inherit_id="web.styles_company_report">
         <xpath expr="//t[@t-elif][last()]" position="after">
             <t
