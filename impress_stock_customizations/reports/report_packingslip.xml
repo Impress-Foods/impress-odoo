@@ -130,7 +130,10 @@
                                 t-value="'background-color: ' + o.company_id.primary_color or '#6c757d' + ';'"
                             />
                             <tr class="o_line_section fw-bolder">
-                                <td colspan="2" t-att-style="bg_color">
+                                <td
+                                    t-att-colspan="3 if data['has_lots'] else 2"
+                                    t-att-style="bg_color"
+                                >
                                     <span
                                         class="ms-1"
                                         t-out="section['package'].name"
@@ -223,7 +226,7 @@
         >impress_stock_customizations.report_packingslip</field>
         <field
             name="print_report_name"
-        >'Packing Slip - %s - %s' % (object.partner_id.name or '', object.name)</field>
+        >"Packing Slip - %s - %s" % (object.partner_id.name or "", object.name)</field>
         <field name="binding_model_id" ref="stock.model_stock_picking" />
         <field name="binding_type">report</field>
     </record>

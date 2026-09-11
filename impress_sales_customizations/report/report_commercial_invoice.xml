@@ -367,7 +367,7 @@
         >impress_sales_customizations.report_commercial_invoice</field>
         <field
             name="print_report_name"
-        >'Commercial Invoice - %s - %s' % (object.partner_id.name or '', object.name)</field>
+        >"Commercial Invoice - %s - %s" % (object.partner_id.name or "", object.name)</field>
         <field name="binding_model_id" ref="model_sale_order" />
         <field name="binding_type">report</field>
     </record>
