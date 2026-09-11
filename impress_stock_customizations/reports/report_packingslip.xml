@@ -214,7 +214,7 @@
         <field name="name">Packing Slip</field>
         <field name="model">stock.picking</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="paperformat_id" ref="impress.us_letter_small_margins_landscape" />
+        <field name="paperformat_id" ref="impress.us_letter_landscape" />
         <field
             name="report_name"
         >impress_stock_customizations.report_packingslip</field>
