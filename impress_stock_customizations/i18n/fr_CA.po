@@ -6,8 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-09-04 17:11+0000\n"
-"Last-Translator: admin <cparadis@impressfoods.com>\n"
+"PO-Revision-Date: 2026-09-11 17:52+0000\n"
+"Last-Translator: Automatic translation add-on <noreply-addon-"
+"autotranslate@weblate.org>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/impress_stock_customizations/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -58,7 +59,7 @@ msgstr ""
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
 msgid "2023-12-31"
-msgstr ""
+msgstr "2023-12-31"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
@@ -85,7 +86,7 @@ msgstr "<span> jours</span>"
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
 msgid "<span>Package Gross Weight includes pallet weight</span>"
-msgstr ""
+msgstr "<span>Le poids brut comprends le poids des palettes</span>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
@@ -107,10 +108,8 @@ msgstr ""
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
-#, fuzzy
-#| msgid "<strong>Order</strong>"
 msgid "<strong>Carrier</strong>"
-msgstr "<strong>Commande</strong>"
+msgstr "<strong>Transporteur</strong>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_stock_picking_with_checks_view
@@ -119,59 +118,43 @@ msgstr "<strong>Vérification</strong>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
-#, fuzzy
-#| msgid "<strong>Signature</strong>"
 msgid "<strong>Consignee</strong>"
-msgstr "<strong>Signature</strong>"
+msgstr "<strong>Destinataire</strong>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
-#, fuzzy
-#| msgid "<strong>Customer</strong>"
 msgid "<strong>Country of Origin</strong>"
-msgstr "<strong>Client</strong>"
+msgstr "<strong>Pays d'origine</strong>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
-#, fuzzy
-#| msgid "<strong>Signature</strong>"
 msgid "<strong>Date</strong>"
-msgstr "<strong>Signature</strong>"
+msgstr "<strong>Date</strong>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
-#, fuzzy
-#| msgid "<strong>Vendor Address</strong>"
 msgid "<strong>Description of Goods</strong>"
-msgstr "<strong>Adresse du vendeur</strong>"
+msgstr "<strong>Description des produits</strong>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
-#, fuzzy
-#| msgid "<strong>Product</strong>"
 msgid "<strong>Gross Wt. (kg)</strong>"
-msgstr "<strong>Produit</strong>"
+msgstr "<strong>Poids brut (kg)</strong>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
-#, fuzzy
-#| msgid "<strong>Customer</strong>"
 msgid "<strong>Hts Number</strong>"
-msgstr "<strong>Client</strong>"
+msgstr "<strong>Code HTS</strong>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
-#, fuzzy
-#| msgid "<strong>Contact</strong>"
 msgid "<strong>Invoice #</strong>"
-msgstr "<strong>Contact</strong>"
+msgstr "<strong># de facture</strong>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
-#, fuzzy
-#| msgid "<strong>Contact</strong>"
 msgid "<strong>Lot</strong>"
-msgstr "<strong>Contact</strong>"
+msgstr "<strong>Lot</strong>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_delivery_document
@@ -184,24 +167,18 @@ msgstr ""
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
-#, fuzzy
-#| msgid "<strong>Check</strong>"
 msgid "<strong>Net Wt. (kg)</strong>"
-msgstr "<strong>Vérification</strong>"
+msgstr "<strong>Poids net(kg)</strong>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
-#, fuzzy
-#| msgid "<strong>Check</strong>"
 msgid "<strong>Packages</strong>"
-msgstr "<strong>Vérification</strong>"
+msgstr "<strong>Unité de chargement</strong>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
-#, fuzzy
-#| msgid "<strong>Contact</strong>"
 msgid "<strong>Quantity</strong>"
-msgstr "<strong>Contact</strong>"
+msgstr "<strong>Quantité</strong>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
@@ -210,10 +187,8 @@ msgstr "<strong>Durée de vie restante</strong>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
-#, fuzzy
-#| msgid "<strong>Shipping Date</strong>"
 msgid "<strong>Shipper</strong>"
-msgstr "<strong>Date d'expédition</strong>"
+msgstr "<strong>Expéditeur</strong>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
@@ -227,10 +202,8 @@ msgstr "<strong>Total: </strong>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
-#, fuzzy
-#| msgid "<strong>Check</strong>"
 msgid "<strong>Tracking</strong>"
-msgstr "<strong>Vérification</strong>"
+msgstr "<strong>Suivi</strong>"
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__alert_date
@@ -240,7 +213,7 @@ msgstr "Date d'alerte"
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.packing_list_line
 msgid "Bacon Burger"
-msgstr ""
+msgstr "Bacon Burger"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.online_sales_summary
@@ -255,7 +228,7 @@ msgstr "Date Meilleur Avant"
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
 msgid "Canada"
-msgstr ""
+msgstr "Canada"
 
 #. module: impress_stock_customizations
 #: model:ir.model,name:impress_stock_customizations.model_res_partner
@@ -338,7 +311,7 @@ msgstr "Durée de vie minimum"
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_product_template__net_weight
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_package__net_weight
 msgid "Net Weight"
-msgstr ""
+msgstr "Poids net"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.online_sales_summary
@@ -373,7 +346,7 @@ msgstr "Commande:"
 #. module: impress_stock_customizations
 #: model:ir.model,name:impress_stock_customizations.model_stock_package
 msgid "Package"
-msgstr ""
+msgstr "Colis"
 
 #. module: impress_stock_customizations
 #: model:ir.actions.report,name:impress_stock_customizations.action_report_packing_slip
@@ -452,15 +425,13 @@ msgstr ""
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
-#, fuzzy
-#| msgid "Total:"
 msgid "Total"
-msgstr "Total:"
+msgstr "Total"
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_package__total_count
 msgid "Total Count"
-msgstr ""
+msgstr "Compte total"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.online_sales_summary

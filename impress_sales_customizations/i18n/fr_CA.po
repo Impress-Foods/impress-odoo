@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-07-28 13:38+0000\n"
+"PO-Revision-Date: 2026-09-11 17:52+0000\n"
 "Last-Translator: Automatic translation add-on <noreply-addon-"
 "autotranslate@weblate.org>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
@@ -23,57 +23,52 @@ msgstr ""
 msgid ""
 "'Commercial Invoice - %s - %s' % (object.partner_id.name or '', object.name)"
 msgstr ""
+"'Facture Commerciale - %s - %s' % (object.partner_id.name or '', object.name)"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "2023-12-31"
-msgstr ""
+msgstr "2023-12-31"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "25.00"
-msgstr ""
+msgstr "25.00"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "27.00"
-msgstr ""
+msgstr "27.00"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "<span>Invoice total:</span>"
-msgstr ""
+msgstr "<span>Total de la facture:</span>"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "<span>Total</span>"
-msgstr ""
+msgstr "<span>Total</span>"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "<strong class=\"d-block mt-3\">Deliver to</strong>"
-msgstr ""
+msgstr "<strong class=\"d-block mt-3\">Livrer à</strong>"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
-#, fuzzy
-#| msgid "<strong>Customer — </strong>"
 msgid "<strong>Buyer</strong>"
-msgstr "<strong>Client — </strong>"
+msgstr "<strong>Acheteur</strong>"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
-#, fuzzy
-#| msgid "<strong>Customer — </strong>"
 msgid "<strong>Country of Origin</strong>"
-msgstr "<strong>Client — </strong>"
+msgstr "<strong>Pays d'origine</strong>"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
-#, fuzzy
-#| msgid "<strong>Customer — </strong>"
 msgid "<strong>Currency</strong>"
-msgstr "<strong>Client — </strong>"
+msgstr "<strong>Devise</strong>"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
@@ -82,87 +77,77 @@ msgstr "<strong>Client — </strong>"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
-#, fuzzy
-#| msgid "<strong>Customer — </strong>"
 msgid "<strong>Date</strong>"
-msgstr "<strong>Client — </strong>"
+msgstr "<strong>Date</strong>"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
-#, fuzzy
-#| msgid "<strong>Customer — </strong>"
 msgid "<strong>Description of Goods</strong>"
-msgstr "<strong>Client — </strong>"
+msgstr "<strong>Description des produits</strong>"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
-#, fuzzy
-#| msgid "<strong>Customer — </strong>"
 msgid "<strong>Port of Entry</strong>"
-msgstr "<strong>Client — </strong>"
+msgstr "<strong>Port d'entrée</strong>"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
-#, fuzzy
-#| msgid "<strong>Customer — </strong>"
 msgid "<strong>Salesperson</strong>"
-msgstr "<strong>Client — </strong>"
+msgstr "<strong>Vendeur</strong>"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
-#, fuzzy
-#| msgid "<strong>Customer — </strong>"
 msgid "<strong>Seller</strong>"
-msgstr "<strong>Client — </strong>"
+msgstr "<strong>Vendeur</strong>"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
-#, fuzzy
-#| msgid "<strong>Customer — </strong>"
 msgid "<strong>Signature</strong>"
-msgstr "<strong>Client — </strong>"
+msgstr "<strong>Signature</strong>"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "A note, whose content usually applies to the section or product above."
 msgstr ""
+"Une note, qui s'applique habituellement à la section ou au produite ci-"
+"dessus."
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "A section title"
-msgstr ""
+msgstr "Un titre de section"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "Bacon Burger"
-msgstr ""
+msgstr "Bacon Burger"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "Canadian Dollars"
-msgstr ""
+msgstr "Dollar Canadien"
 
 #. module: impress_sales_customizations
 #: model:ir.actions.report,name:impress_sales_customizations.action_report_commercial_invoice
 msgid "Commercial Invoice"
-msgstr ""
+msgstr "Facture Commerciale"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "Commercial Invoice #"
-msgstr ""
+msgstr "# de facture commerciale"
 
 #. module: impress_sales_customizations
 #: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order__delivered_gross_weight
 #: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order_line__delivered_gross_weight
 msgid "Delivered Gross Weight"
-msgstr ""
+msgstr "Poids brut livré"
 
 #. module: impress_sales_customizations
 #: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order__delivered_net_weight
 #: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order_line__delivered_net_weight
 msgid "Delivered Net Weight"
-msgstr ""
+msgstr "Poids net livré"
 
 #. module: impress_sales_customizations
 #: model:ir.model.fields,field_description:impress_sales_customizations.field_product_template__display_name
@@ -174,12 +159,12 @@ msgstr "Nom d'affichage"
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "Gross Wt. (kg)"
-msgstr ""
+msgstr "Poids brut (kg)"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "Hts Number"
-msgstr ""
+msgstr "Code hts"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
@@ -187,6 +172,8 @@ msgid ""
 "I declare that the information on this invoice is true and correct to the "
 "best of my knowledge."
 msgstr ""
+"Je déclare que les informations figurant sur cette facture sont exactes et "
+"véridiques au mieux de mes connaissances."
 
 #. module: impress_sales_customizations
 #: model:ir.model.fields,field_description:impress_sales_customizations.field_product_template__id
@@ -203,18 +190,18 @@ msgstr "Facturé"
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "Mitchell Admin"
-msgstr ""
+msgstr "Mitchell Admin"
 
 #. module: impress_sales_customizations
 #: model:ir.model.fields,field_description:impress_sales_customizations.field_product_product__net_weight
 #: model:ir.model.fields,field_description:impress_sales_customizations.field_product_template__net_weight
 msgid "Net Weight"
-msgstr ""
+msgstr "Poids net"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "Net Wt. (kg)"
-msgstr ""
+msgstr "Poids net (kg)"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
@@ -225,35 +212,33 @@ msgstr "Rien à facturer"
 #: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order__ordered_gross_weight
 #: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order_line__ordered_gross_weight
 msgid "Ordered Gross Weight"
-msgstr ""
+msgstr "Poids brut commandé"
 
 #. module: impress_sales_customizations
 #: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order__ordered_net_weight
 #: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order_line__ordered_net_weight
 msgid "Ordered Net Weight"
-msgstr ""
+msgstr "Poids net commandé"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "Port Huron, MI"
-msgstr ""
+msgstr "Port Huron, MI"
 
 #. module: impress_sales_customizations
 #: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order__port_of_entry
 msgid "Port Of Entry"
-msgstr ""
+msgstr "Port d'entrée"
 
 #. module: impress_sales_customizations
 #: model:ir.model,name:impress_sales_customizations.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Produit"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
-#, fuzzy
-#| msgid "Sum of Quantity"
 msgid "Quantity"
-msgstr "Somme de Quantité"
+msgstr "Quantité"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
@@ -267,10 +252,8 @@ msgstr "Bon de vente"
 
 #. module: impress_sales_customizations
 #: model:ir.model,name:impress_sales_customizations.model_sale_order_line
-#, fuzzy
-#| msgid "Sales Order"
 msgid "Sales Order Line"
-msgstr "Bon de vente"
+msgstr "Ligne de bon de vente"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
@@ -295,12 +278,12 @@ msgstr "À facturer"
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "Unit Price"
-msgstr ""
+msgstr "Prix unitaire"
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "United States of America"
-msgstr ""
+msgstr "États Unis d'Amérique"
 
 #. module: impress_sales_customizations
 #: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order__delivery_zip
@@ -310,4 +293,4 @@ msgstr "Code Postal"
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "units"
-msgstr ""
+msgstr "unités"

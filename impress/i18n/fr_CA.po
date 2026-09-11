@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e-20260330\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-07-13 20:13+0000\n"
-"Last-Translator: Cédric Paradis <cedric@cedricparadis.ca>\n"
+"PO-Revision-Date: 2026-09-11 17:52+0000\n"
+"Last-Translator: admin <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/impress/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -19,15 +19,10 @@ msgstr ""
 
 #. module: impress
 #: model_terms:ir.ui.view,arch_db:impress.styles_company_report
-#, fuzzy
-#| msgid ""
-#| "&amp;.o_report_layout_impress {\n"
-#| "                    .o_total td {\n"
-#| "                        background-color:"
 msgid "&amp;.o_report_layout_impress { .o_total td { background-color:"
 msgstr ""
 "&amp;.o_report_layout_impress {\n"
-"                    .o_total td {\n"
+" .o_total td {\n"
 "                        background-color:"
 
 #. module: impress
@@ -37,16 +32,8 @@ msgstr "(document name)"
 
 #. module: impress
 #: model_terms:ir.ui.view,arch_db:impress.styles_company_report
-#, fuzzy
-#| msgid ""
-#| ";\n"
-#| "                        strong {\n"
-#| "                            color: preview-color-contrast("
 msgid "; strong { color: preview-color-contrast("
-msgstr ""
-";\n"
-"                        strong {\n"
-"                            color: preview-color-contrast("
+msgstr "; strong { color: preview-color-contrast("
 
 #. module: impress
 #: model_terms:ir.ui.view,arch_db:impress.external_layout_impress
