@@ -68,13 +68,14 @@
                 <tr>
                     <td t-if="has_shelf_life" id="shelf-life-padding-1" />
                     <td t-if="has_shelf_life" id="shelf-life-padding-2" />
-                    <td t-if="has_expiry_date" id="expiry-date-padding-1" />
+                    <td t-if="has_hs_code" id="hs-code-padding-1" />
                     <td class="text-end">
                         <strong>Total: </strong>
                     </td>
                     <td class="text-end">
                         <t t-out="total_delivered" />
                     </td>
+                    <td t-if="has_hs_code" id="hs-code-padding-1" />
                 </tr>
             </tfoot>
         </xpath>
