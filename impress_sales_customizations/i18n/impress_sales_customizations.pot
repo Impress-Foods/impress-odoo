@@ -14,17 +14,161 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: impress_sales_customizations
+#: model:ir.actions.report,print_report_name:impress_sales_customizations.action_report_commercial_invoice
+msgid ""
+"'Commercial Invoice - %s - %s' % (object.partner_id.name or '', object.name)"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "2023-12-31"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "25.00"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "27.00"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "<span>Invoice total:</span>"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "<span>Total</span>"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "<strong class=\"d-block mt-3\">Deliver to</strong>"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "<strong>Buyer</strong>"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "<strong>Country of Origin</strong>"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "<strong>Currency</strong>"
+msgstr ""
+
+#. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
 msgid "<strong>Customer — </strong>"
 msgstr ""
 
 #. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "<strong>Date</strong>"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "<strong>Description of Goods</strong>"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "<strong>Port of Entry</strong>"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "<strong>Salesperson</strong>"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "<strong>Seller</strong>"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "<strong>Signature</strong>"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "A note, whose content usually applies to the section or product above."
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "A section title"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "Bacon Burger"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "Canadian Dollars"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model:ir.actions.report,name:impress_sales_customizations.action_report_commercial_invoice
+msgid "Commercial Invoice"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "Commercial Invoice #"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order__delivered_gross_weight
+#: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order_line__delivered_gross_weight
+msgid "Delivered Gross Weight"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order__delivered_net_weight
+#: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order_line__delivered_net_weight
+msgid "Delivered Net Weight"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model:ir.model.fields,field_description:impress_sales_customizations.field_product_template__display_name
 #: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order__display_name
+#: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order_line__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "Gross Wt. (kg)"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "Hts Number"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid ""
+"I declare that the information on this invoice is true and correct to the "
+"best of my knowledge."
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model:ir.model.fields,field_description:impress_sales_customizations.field_product_template__id
 #: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order__id
+#: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order_line__id
 msgid "ID"
 msgstr ""
 
@@ -34,8 +178,56 @@ msgid "Invoiced"
 msgstr ""
 
 #. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "Mitchell Admin"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model:ir.model.fields,field_description:impress_sales_customizations.field_product_product__net_weight
+#: model:ir.model.fields,field_description:impress_sales_customizations.field_product_template__net_weight
+msgid "Net Weight"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "Net Wt. (kg)"
+msgstr ""
+
+#. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.sale_order_view_gantt
 msgid "Nothing to invoice"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order__ordered_gross_weight
+#: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order_line__ordered_gross_weight
+msgid "Ordered Gross Weight"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order__ordered_net_weight
+#: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order_line__ordered_net_weight
+msgid "Ordered Net Weight"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "Port Huron, MI"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order__port_of_entry
+msgid "Port Of Entry"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model:ir.model,name:impress_sales_customizations.model_product_template
+msgid "Product"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "Quantity"
 msgstr ""
 
 #. module: impress_sales_customizations
@@ -46,6 +238,11 @@ msgstr ""
 #. module: impress_sales_customizations
 #: model:ir.model,name:impress_sales_customizations.model_sale_order
 msgid "Sales Order"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model:ir.model,name:impress_sales_customizations.model_sale_order_line
+msgid "Sales Order Line"
 msgstr ""
 
 #. module: impress_sales_customizations
@@ -69,6 +266,21 @@ msgid "To invoice"
 msgstr ""
 
 #. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "Unit Price"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "United States of America"
+msgstr ""
+
+#. module: impress_sales_customizations
 #: model:ir.model.fields,field_description:impress_sales_customizations.field_sale_order__delivery_zip
 msgid "Zip"
+msgstr ""
+
+#. module: impress_sales_customizations
+#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
+msgid "units"
 msgstr ""
