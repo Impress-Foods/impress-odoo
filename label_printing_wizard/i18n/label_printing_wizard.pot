@@ -29,7 +29,7 @@ msgid "Available UOMs"
 msgstr ""
 
 #. module: label_printing_wizard
-#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_labelWizard_form
+#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_label_wizard_form
 msgid "Cancel"
 msgstr ""
 
@@ -37,12 +37,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/label_printing_wizard/reports/labels.py:0
 msgid "Cannot create a GS1 barcode without a product"
-msgstr ""
-
-#. module: label_printing_wizard
-#. odoo-python
-#: code:addons/label_printing_wizard/models/stock_move_line.py:0
-msgid "Context is not a dict: %s"
 msgstr ""
 
 #. module: label_printing_wizard
@@ -104,7 +98,7 @@ msgid "Label Base Report"
 msgstr ""
 
 #. module: label_printing_wizard
-#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_labelWizard_form
+#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_label_wizard_form
 msgid "Label Printing Wizard"
 msgstr ""
 
@@ -139,11 +133,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__lot_id
 #: model:ir.model.fields.selection,name:label_printing_wizard.selection__label_wizard__model__lot
 msgid "Lot"
-msgstr ""
-
-#. module: label_printing_wizard
-#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__lot_domain
-msgid "Lot Domain"
 msgstr ""
 
 #. module: label_printing_wizard
@@ -193,7 +182,7 @@ msgid "Picking"
 msgstr ""
 
 #. module: label_printing_wizard
-#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_labelWizard_form
+#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_label_wizard_form
 #: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_stock_picking_form_inherit
 msgid "Print Label"
 msgstr ""
@@ -219,11 +208,6 @@ msgid "Product %s does not have a valid EAN"
 msgstr ""
 
 #. module: label_printing_wizard
-#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__product_domain
-msgid "Product Domain"
-msgstr ""
-
-#. module: label_printing_wizard
 #: model:ir.actions.report,name:label_printing_wizard.report_label_product_product_zpl_2x4
 msgid "Product Label (ZPL 2x4)"
 msgstr ""
@@ -245,13 +229,8 @@ msgid "Product Moves (Stock Move Line)"
 msgstr ""
 
 #. module: label_printing_wizard
-#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__product_template_id
-msgid "Product Template"
-msgstr ""
-
-#. module: label_printing_wizard
 #: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__product_uom_qty
-#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_labelWizard_form
+#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_label_wizard_form
 msgid "Quantity"
 msgstr ""
 
