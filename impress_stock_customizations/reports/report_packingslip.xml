@@ -129,8 +129,15 @@
                                 t-set="bg_color"
                                 t-value="'background-color: ' + o.company_id.primary_color or '#6c757d' + ';'"
                             />
+                            <t
+                                t-set="package_name_colspan"
+                                t-value="3 if data['has_lots'] else 2"
+                            />
                             <tr class="o_line_section fw-bolder">
-                                <td colspan="2" t-att-style="bg_color">
+                                <td
+                                    t-att-colspan="package_name_colspan"
+                                    t-att-style="bg_color"
+                                >
                                     <span
                                         class="ms-1"
                                         t-out="section['package'].name"
