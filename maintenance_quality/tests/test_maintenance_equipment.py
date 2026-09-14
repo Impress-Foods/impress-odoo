@@ -7,39 +7,40 @@ _logger = logging.getLogger(__name__)
 
 @tagged("standard", "impress")
 class TestMaintenanceEquipment(TransactionCase):
-    def setUp(self):
-        super().setUp()
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
 
-        self.equipment_model = self.env["maintenance.equipment"]
-        self.equipment_category_model = self.env["maintenance.equipment.category"]
-        self.workcenter_model = self.env["mrp.workcenter"]
-        self.qcp_model = self.env["quality.point"]
+        cls.equipment_model = cls.env["maintenance.equipment"]
+        cls.equipment_category_model = cls.env["maintenance.equipment.category"]
+        cls.workcenter_model = cls.env["mrp.workcenter"]
+        cls.qcp_model = cls.env["quality.point"]
 
-        self.category = self.equipment_category_model.create(
+        cls.category = cls.equipment_category_model.create(
             {
                 "name": "Test Category",
             }
         )
 
-        self.workcenter = self.workcenter_model.create(
+        cls.workcenter = cls.workcenter_model.create(
             {
                 "name": "Test Workcenter",
             }
         )
 
-        self.qcp_category = self.qcp_model.create(
+        cls.qcp_category = cls.qcp_model.create(
             {
                 "name": "Test QCP",
                 "control_point_type": "maintenance",
-                "equipment_category_ids": [(4, self.category.id)],
+                "equipment_category_ids": [(4, cls.category.id)],
             }
         )
 
-        self.qcp_workcenter = self.qcp_model.create(
+        cls.qcp_workcenter = cls.qcp_model.create(
             {
                 "name": "Test QCP",
                 "control_point_type": "maintenance",
-                "workcenter_ids": [(4, self.workcenter.id)],
+                "workcenter_ids": [(4, cls.workcenter.id)],
             }
         )
 

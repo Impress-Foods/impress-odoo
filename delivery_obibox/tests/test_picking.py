@@ -11,9 +11,6 @@ _logger = logging.getLogger(__name__)
 
 
 class TestPicking(TestDeliveryCommon):
-    def setUp(self):
-        super().setUp()
-
     @patch(
         "odoo.addons.delivery_obibox.models.obibox_request.ObiboxProvider._make_api_request"
     )

@@ -7,86 +7,87 @@ _logger = logging.getLogger(__name__)
 
 @tagged("standard", "impress")
 class TestMaintenanceRequest(TransactionCase):
-    def setUp(self):
-        super().setUp()
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
 
-        equipment_model = self.env["maintenance.equipment"]
-        qcp_model = self.env["quality.point"]
+        equipment_model = cls.env["maintenance.equipment"]
+        qcp_model = cls.env["quality.point"]
 
-        self.category = self.env["maintenance.equipment.category"].create(
+        cls.category = cls.env["maintenance.equipment.category"].create(
             {
                 "name": "Test Category",
             }
         )
 
-        self.workcenter = self.env["mrp.workcenter"].create(
+        cls.workcenter = cls.env["mrp.workcenter"].create(
             {
                 "name": "Test Workcenter",
             }
         )
 
-        self.equipment = equipment_model.create(
+        cls.equipment = equipment_model.create(
             {
                 "name": "Test Equipment",
             }
         )
 
-        self.equipment_cat = equipment_model.create(
+        cls.equipment_cat = equipment_model.create(
             {
                 "name": "Test Equipment",
-                "category_id": self.category.id,
+                "category_id": cls.category.id,
             }
         )
 
-        self.equipment_wc = equipment_model.create(
+        cls.equipment_wc = equipment_model.create(
             {
                 "name": "Test Equipment",
-                "workcenter_id": self.workcenter.id,
+                "workcenter_id": cls.workcenter.id,
             }
         )
 
-        self.equipment_cat_wc = equipment_model.create(
+        cls.equipment_cat_wc = equipment_model.create(
             {
                 "name": "Test Equipment",
-                "category_id": self.category.id,
-                "workcenter_id": self.workcenter.id,
+                "category_id": cls.category.id,
+                "workcenter_id": cls.workcenter.id,
             }
         )
 
-        self.qcp_equipment = qcp_model.create(
+        cls.qcp_equipment = qcp_model.create(
             {
                 "name": "Test QCP",
                 "check_corrective": True,
-                "equipment_ids": [(4, self.equipment.id)],
+                "equipment_ids": [(4, cls.equipment.id)],
                 "control_point_type": "maintenance",
             }
         )
 
-        self.qcp_cat = qcp_model.create(
+        cls.qcp_cat = qcp_model.create(
             {
                 "name": "Test QCP",
                 "check_corrective": True,
-                "equipment_category_ids": [(4, self.category.id)],
+                "equipment_category_ids": [(4, cls.category.id)],
                 "control_point_type": "maintenance",
             }
         )
 
-        self.qcp_wc = qcp_model.create(
+        cls.qcp_wc = qcp_model.create(
             {
                 "name": "Test QCP",
                 "check_corrective": True,
-                "workcenter_ids": [(4, self.workcenter.id)],
+                "workcenter_ids": [(4, cls.workcenter.id)],
                 "control_point_type": "maintenance",
             }
         )
 
-        self.qcp_preventive = qcp_model.create(
+        cls.qcp_preventive = qcp_model.create(
             {
                 "name": "Test QCP",
                 "check_preventive": True,
-                "equipment_ids": [(4, self.equipment.id)],
-                "equipment_category_ids": [(4, self.category.id)],
-                "workcenter_ids": [(4, self.workcenter.id)],
+                "equipment_ids": [(4, cls.equipment.id)],
+                "equipment_category_ids": [(4, cls.category.id)],
+                "workcenter_ids": [(4, cls.workcenter.id)],
                 "control_point_type": "maintenance",
             }
         )

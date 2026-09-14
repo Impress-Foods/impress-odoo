@@ -4,9 +4,10 @@ from odoo.tests import TransactionCase, tagged
 
 @tagged("standard", "impress")
 class TestGS1CheckDigit(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.sequence_model = self.env["ir.sequence"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.sequence_model = cls.env["ir.sequence"]
 
     def test_gs1_check_digit_basic(self):
         """Test basic GS1 check digit calculation"""

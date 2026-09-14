@@ -32,9 +32,6 @@ _logger = logging.getLogger(__name__)
 
 
 class TestClickshipRequest(TestDeliveryCommon):
-    def setUp(self):
-        super().setUp()
-
     def test_clickship_provider_initialization(self):
         """Test ClickshipProvider initialization"""
         provider = self.sr
