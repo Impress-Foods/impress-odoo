@@ -128,6 +128,13 @@ msgstr "<strong>Pays d'origine</strong>"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
+#, fuzzy
+#| msgid "<strong>Country of Origin</strong>"
+msgid "<strong>Customer Reference</strong>"
+msgstr "<strong>Pays d'origine</strong>"
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
 msgid "<strong>Date</strong>"
 msgstr "<strong>Date</strong>"
 
