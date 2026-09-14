@@ -108,6 +108,11 @@ msgstr ""
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
+msgid "<strong>Customer Reference</strong>"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
 msgid "<strong>Date</strong>"
 msgstr ""
 
