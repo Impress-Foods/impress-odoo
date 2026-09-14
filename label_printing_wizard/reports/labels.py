@@ -1,5 +1,3 @@
-import logging
-
 import markupsafe
 
 from odoo import api, models
@@ -9,7 +7,16 @@ from odoo.addons.product.models.product_product import ProductProduct
 from odoo.addons.stock.models.stock_lot import StockLot
 from odoo.addons.uom.models.uom_uom import UomUom
 
-_logger = logging.getLogger(__name__)
+UOM_UNIT = "uom.product_uom_unit"
+UOM_KGM = "uom.product_uom_kgm"
+UOM_LITRE = "uom.product_uom_litre"
+UOM_GRAM = "uom.product_uom_gram"
+UOM_MILLILITER = "uom.product_uom_milliliter"
+
+GS1_REFERENCE_FALLBACKS = {
+    UOM_GRAM: UOM_KGM,
+    UOM_MILLILITER: UOM_LITRE,
+}
 
 
 def pad_to_size(string, size):
@@ -20,23 +27,12 @@ class ReportLabelBase(models.AbstractModel):
     _name = "report.label_printing_wizard.label_base"
     _description = "Label Base Report"
 
-    UOM_UNIT = "uom.product_uom_unit"
-    UOM_KGM = "uom.product_uom_kgm"
-    UOM_LITRE = "uom.product_uom_litre"
-    UOM_GRAM = "uom.product_uom_gram"
-    UOM_MILLILITER = "uom.product_uom_milliliter"
-
-    GS1_REFERENCE_FALLBACKS = {
-        UOM_GRAM: UOM_KGM,
-        UOM_MILLILITER: UOM_LITRE,
-    }
-
     @api.model
     def _get_reference_uoms(self) -> list:
         return [
-            (self.UOM_UNIT, self.env.ref(self.UOM_UNIT)),
-            (self.UOM_KGM, self.env.ref(self.UOM_KGM)),
-            (self.UOM_LITRE, self.env.ref(self.UOM_LITRE)),
+            (UOM_UNIT, self.env.ref(UOM_UNIT)),
+            (UOM_KGM, self.env.ref(UOM_KGM)),
+            (UOM_LITRE, self.env.ref(UOM_LITRE)),
         ]
 
     @api.model
@@ -66,20 +62,18 @@ class ReportLabelBase(models.AbstractModel):
         target_xml_id = target_uom.get_external_id().get(target_uom.id, "")
 
         if not best_match:
-            if target_xml_id in self.GS1_REFERENCE_FALLBACKS:
-                fallback_xml_id = self.GS1_REFERENCE_FALLBACKS[target_xml_id]
+            if target_xml_id in GS1_REFERENCE_FALLBACKS:
+                fallback_xml_id = GS1_REFERENCE_FALLBACKS[target_xml_id]
                 fallback_uom = self.env.ref(fallback_xml_id)
                 return (fallback_uom, fallback_xml_id)
             return None
-
-        ref_uom, ref_str = best_match
 
         return best_match
 
     @api.model
     def _prepare_label_data(
         self,
-        record: StockLot | ProductProduct,
+        _record: StockLot | ProductProduct | None = None,
         product_uom_qty: float = 0,
         product_uom_id: UomUom = None,
         label_count: int = 1,
@@ -105,7 +99,7 @@ class ReportLabelBase(models.AbstractModel):
         return data
 
     @api.model
-    def _make_variable_decimal_code(self, quantity: int | float, prefix: str) -> str:
+    def _make_variable_decimal_code(self, quantity: float, prefix: str) -> str:
         if isinstance(quantity, int):
             return prefix + "0" + pad_to_size(str(quantity), 6)
 
@@ -145,11 +139,11 @@ class ReportLabelBase(models.AbstractModel):
     @api.model
     def _get_gs1_barcode(
         self,
-        product_id: ProductProduct = None,
-        lot_id: StockLot = None,
-        quantity: int | float = 0,
-        uom: UomUom = None,
-        packaging_qty: int | float | None = None,
+        product_id: ProductProduct | None = None,
+        lot_id: StockLot | None = None,
+        quantity: float = 0,
+        uom: UomUom | None = None,
+        _packaging_qty: float | None = None,
     ):
         if not product_id:
             raise ValidationError(
@@ -194,14 +188,16 @@ class ReportLabelBase(models.AbstractModel):
     @api.model
     def _build_label_record(
         self,
-        record,
-        data_dict: dict,
-        display_name: str,
-        product_id: ProductProduct = None,
-        lot_id: StockLot = None,
+        _record=None,
+        data_dict: dict | None = None,
+        display_name: str = "",
+        product_id: ProductProduct | None = None,
+        lot_id: StockLot | None = None,
     ) -> dict:
+        if data_dict is None:
+            data_dict = {}
         label_data = self._prepare_label_data(
-            record,
+            _record,
             product_uom_qty=data_dict.get("product_uom_qty", 0),
             product_uom_id=self.env["uom.uom"].browse(data_dict.get("product_uom_id"))
             if data_dict.get("product_uom_id")
@@ -209,7 +205,7 @@ class ReportLabelBase(models.AbstractModel):
             label_count=data_dict.get("label_count", 1),
         )
 
-        uom_ref = label_data.get("unit_type", self.UOM_UNIT)
+        uom_ref = label_data.get("unit_type", UOM_UNIT)
         uom = self.env.ref(uom_ref)
         quantity = label_data.get("qty", 0)
 
@@ -247,7 +243,11 @@ class ReportProductProductLabel2x4(models.AbstractModel):
 
         product_list = []
         for product in products:
-            product_values = data[str(product.id)]
+            # Be tolerant to both str and int keys (JSON round-trip stringifies)
+            product_values = data.get(str(product.id), data.get(product.id, {}))
+            if not product_values:
+                # Fallback to defaults when called without data (e.g. direct print)
+                product_values = {}
             data_dict = self._build_label_record(
                 product,
                 product_values,
@@ -279,10 +279,12 @@ class ReportLotLabel2x4(models.AbstractModel):
         lot_list = []
 
         for lot in lots:
-            if "label_product_qty" in self.env.context and len(lots) != 1:
+            if len(lots) != 1:
                 raise UserError(self.env._("Only one lot can be selected"))
 
-            lot_values = data[str(lot.id)]
+            lot_values = data.get(str(lot.id), data.get(lot.id, {}))  # type: ignore[arg-type]
+            if not lot_values:
+                lot_values = {}
             data_dict = self._build_label_record(
                 lot,
                 lot_values,

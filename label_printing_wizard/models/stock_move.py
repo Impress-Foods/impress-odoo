@@ -1,8 +1,4 @@
-import logging
-
 from odoo import models
-
-_logger = logging.getLogger(__name__)
 
 
 class StockMove(models.Model):
@@ -22,7 +18,7 @@ class StockMove(models.Model):
             "context": {
                 "default_picking_id": self.picking_id.id,
                 "default_product_id": self.product_id.id,
-                "default_product_qty": self.product_uom_qty,
+                "default_product_uom_qty": self.product_uom_qty,
             },
         }
 

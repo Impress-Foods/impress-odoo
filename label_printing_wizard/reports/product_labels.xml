@@ -10,7 +10,7 @@
                     t-set="product_uom"
                     t-value="product_info.get('product_uom', product.uom_id)"
                 />
-                <t t-translate="off">
+                <t t-translation="off">
                     <t t-out="'^XA^CI28'" />
                     <t name="product_name">
                         <t
@@ -50,7 +50,7 @@
                     t-set="product_uom"
                     t-value="product_info.get('product_uom', product.uom_id)"
                 />
-                <t t-translate="off">
+                <t t-translation="off">
                     <t name="setup">
                         <t t-out="'^XA^CI28'" />
                     </t>

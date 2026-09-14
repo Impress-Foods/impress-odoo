@@ -2,12 +2,11 @@
 <templates xml:space="preserve">
 
     <t
-        t-name="stock_barcode_main_inherit_add_label_printing_button"
+        t-name="label_printing_wizard.MainComponent"
         t-inherit="stock_barcode.MainComponent"
         t-inherit-mode="extension"
-        owl="1"
     >
-        <xpath expr="//nav[hasclass('navbar-nav')][2]/t/button[1]" position="after">
+        <xpath expr="//button[hasclass('o_stock_mobile_barcode')]" position="before">
             <button
                 t-if="env.model.formViewId and resModel === 'stock.picking'"
                 t-on-click="labelWizard"

@@ -27,14 +27,12 @@
         <field name="arch" type="xml">
             <xpath expr="//sheet" position="before">
                 <header>
-                    <field name="product_variant_ids" invisible="1" />
+                    <field name="product_variant_id" invisible="1" />
                     <button
                         name="%(label_printing_wizard.action_label_wizard)d"
                         string="Print Labels"
                         type="action"
-                        context="{'default_model': 'product',
-                    'default_product_template_id': id,
-                    }"
+                        context="{'default_model': 'product', 'default_product_id': product_variant_id}"
                     />
                 </header>
             </xpath>

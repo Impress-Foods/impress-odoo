@@ -1,10 +1,6 @@
-import logging
 from typing import Any
 
 from odoo import models
-from odoo.exceptions import ValidationError
-
-_logger = logging.getLogger(__name__)
 
 
 class StockMoveLine(models.Model):
@@ -20,16 +16,12 @@ class StockMoveLine(models.Model):
             "context": {
                 "default_picking_id": self.picking_id.id,
                 "default_product_id": self.product_id.id,
-                "default_product_qty": self.quantity_product_uom,
+                "default_product_uom_qty": self.quantity_product_uom,
             },
         }
         if self.lot_id:
-            if isinstance(action["context"], dict):
-                context: dict[str, Any] = action["context"]
-                context["default_lot_id"] = self.lot_id.id
-                context["default_model"] = "lot"
-            else:
-                raise ValidationError(
-                    self.env._("Context is not a dict: %s", action["context"])
-                )
+            context: dict[str, Any] = action["context"]
+            context["default_lot_id"] = self.lot_id.id
+            context["default_model"] = "lot"
+
         return action

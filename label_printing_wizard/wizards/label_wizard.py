@@ -1,9 +1,5 @@
-import logging
-
 from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
-
-_logger = logging.getLogger(__name__)
 
 
 class LabelWizard(models.TransientModel):
@@ -19,13 +15,7 @@ class LabelWizard(models.TransientModel):
         required=True,
     )
 
-    product_id = fields.Many2one(
-        "product.product",
-        store=True,
-        readonly=False,
-        compute="_compute_product_id",
-    )
-    product_template_id = fields.Many2one("product.template")
+    product_id = fields.Many2one("product.product")
 
     uom_id = fields.Many2one("uom.uom", related="product_id.uom_id")
     lot_id = fields.Many2one("stock.lot")
@@ -34,9 +24,12 @@ class LabelWizard(models.TransientModel):
         "uom.uom",
         string="Packaging",
         domain="[('id', 'in', available_uom_ids)]",
-        compute="_compute_available_uom_ids",
+        compute="_compute_product_uom_id",
         inverse="_inverse_product_uom_id",
+        store=True,
+        readonly=False,
     )
+
     available_uom_ids = fields.Many2many(
         "uom.uom",
         string="Available UOMs",
@@ -60,50 +53,77 @@ class LabelWizard(models.TransientModel):
         required=True,
     )
 
-    product_domain = fields.Char(compute="_compute_product_domain")
-    lot_domain = fields.Char(compute="_compute_lot_domain")
+    # ------------------------------------------------------------------
+    # Autofill helpers
+    # ------------------------------------------------------------------
+    @api.model
+    def _quantity_and_uom_for(self, picking, product, lot):
+        """Return (qty, uom) for the given picking/product/lot triple.
 
-    @api.onchange("product_id")
-    def _onchange_product_id(self):
-        self.ensure_one()
-        self.product_uom_id = False
+        Pure helper used by default_get and the onchange, so both paths
+        stay in sync. No side effects.
+        """
+        if not picking or not picking.exists() or not product or not product.exists():
+            return 0, False
 
-    @api.depends("product_template_id")
-    def _compute_product_id(self):
-        for record in self:
-            if not record.product_template_id:
-                record.product_id = False
-            else:
-                record.product_id = record.product_template_id.product_variant_id
+        quantity = 0
+        selected_uom = False
+        if product.tracking in ["lot", "serial"] and lot and lot.exists():
+            move_lines = picking.move_line_ids.filtered(
+                lambda ml, product=product, lot=lot: (
+                    ml.product_id == product and ml.lot_id == lot
+                )
+            )
+            quantity = sum(move_lines.mapped("qty_done"))
+            if move_lines:
+                selected_uom = move_lines[0].product_uom_id
+        else:
+            moves = picking.move_ids.filtered(
+                lambda m, product=product: m.product_id == product
+            )
+            quantity = sum(moves.mapped("product_uom_qty"))
+            if moves:
+                selected_uom = moves[0].product_uom
 
-    @api.depends("model", "product_template_id", "picking_id")
-    def _compute_product_domain(self):
-        for record in self:
-            domain = []
-            if record.model == "lot":
-                domain = [("tracking", "in", ["serial", "lot"])]
+        return quantity, selected_uom
 
-            if record.product_template_id:
-                domain += [("product_tmpl_id", "=", record.product_template_id.id)]
+    @api.model
+    def default_get(self, fields):
+        vals = super().default_get(fields)
 
-            if record.picking_id:
-                product_ids = record.picking_id.move_ids.product_id.ids
-                domain += [("id", "in", product_ids)]
+        if "model" in fields and not vals.get("model") and vals.get("lot_id"):
+            vals["model"] = "lot"
 
-            record.product_domain = domain
+        if (
+            vals.get("picking_id")
+            and vals.get("product_id")
+            and ("product_uom_qty" in fields or "product_uom_id" in fields)
+        ):
+            picking = self.env["stock.picking"].browse(vals["picking_id"])
+            product = self.env["product.product"].browse(vals["product_id"])
+            lot_id = vals.get("lot_id")
+            lot = (
+                self.env["stock.lot"].browse(lot_id)
+                if lot_id
+                else self.env["stock.lot"]
+            )
 
-    @api.depends("product_id", "picking_id")
-    def _compute_lot_domain(self):
-        for record in self:
-            domain = []
-            if record.product_id:
-                domain += [("product_id", "=", record.product_id.id)]
+            qty, uom = self._quantity_and_uom_for(picking, product, lot)
 
-            if record.picking_id:
-                domain += [("id", "in", record.picking_id.move_line_ids.lot_id.ids)]
+            if "product_uom_qty" in fields and qty and not vals.get("product_uom_qty"):
+                vals["product_uom_qty"] = qty
 
-            record.lot_domain = domain
+            if "product_uom_id" in fields and uom and not vals.get("product_uom_id"):
+                product_uoms = product.uom_id | product.product_uom_ids.uom_id
+                product_uoms |= product.uom_ids
+                if uom in product_uoms:
+                    vals["product_uom_id"] = uom.id
 
+        return vals
+
+    # ------------------------------------------------------------------
+    # Computes
+    # ------------------------------------------------------------------
     @api.depends("model", "label_size")
     def _compute_label_report(self) -> None:
         for record in self:
@@ -135,8 +155,11 @@ class LabelWizard(models.TransientModel):
             uoms = product.uom_id | product.product_uom_ids.uom_id
             uoms |= product.uom_ids
             record.available_uom_ids = uoms
-            if not record.product_uom_id:
-                record.product_uom_id = product.uom_id
+
+    @api.depends("product_id")
+    def _compute_product_uom_id(self):
+        for rec in self:
+            rec.product_uom_id = rec.product_id.uom_id if rec.product_id else False
 
     def _inverse_product_uom_id(self):
         return
@@ -147,25 +170,9 @@ class LabelWizard(models.TransientModel):
             if not record.picking_id or not record.product_id:
                 continue
 
-            quantity = 0
-            selected_uom = False
-            if record.product_id.tracking in ["lot", "serial"] and record.lot_id:
-                move_lines = record.picking_id.move_line_ids.filtered(
-                    lambda ml, record=record: (
-                        ml.product_id == record.product_id
-                        and ml.lot_id == record.lot_id
-                    )
-                )
-                quantity = sum(move_lines.mapped("qty_done"))
-                if move_lines:
-                    selected_uom = move_lines[0].product_uom_id
-            else:
-                moves = record.picking_id.move_ids.filtered(
-                    lambda m, record=record: m.product_id == record.product_id
-                )
-                quantity = sum(moves.mapped("product_uom_qty"))
-                if moves:
-                    selected_uom = moves[0].product_uom_id
+            quantity, selected_uom = self._quantity_and_uom_for(
+                record.picking_id, record.product_id, record.lot_id
+            )
 
             record.product_uom_qty = quantity
             if selected_uom and selected_uom in record.available_uom_ids:
@@ -188,7 +195,7 @@ class LabelWizard(models.TransientModel):
             "product_uom_id": self.product_uom_id.id,
         }
 
-        return {res_id: data}
+        return {str(res_id): data}
 
     def print_label(self):
         self.ensure_one()
@@ -198,4 +205,6 @@ class LabelWizard(models.TransientModel):
             raise UserError(self.env._("Report type not supported"))
         data = self._make_values()
 
-        return report.report_action(list(data.keys()), data)
+        # report_action expects int docids; keys are str for JSON round-trip
+        docids = [int(k) for k in data]
+        return report.report_action(docids, data)

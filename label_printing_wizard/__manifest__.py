@@ -1,6 +1,6 @@
 {
     "name": "Label Printing Wizard",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "summary": """
     Adds different wizards to print custom labels for products and lots
     """,
@@ -14,7 +14,6 @@
     ],
     "data": [
         "wizards/label_wizard.xml",
-        "reports/common.xml",
         "reports/lot_labels.xml",
         "reports/product_labels.xml",
         "reports/reports.xml",
@@ -26,7 +25,7 @@
     "assets": {
         "web.assets_backend": [
             "label_printing_wizard/static/src/**/*.js",
-            # "label_printing_wizard/static/src/**/*.xml",
+            "label_printing_wizard/static/src/**/*.xml",
         ]
     },
     "application": True,
