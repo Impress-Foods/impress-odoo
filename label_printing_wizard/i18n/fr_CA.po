@@ -7,8 +7,9 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-19 13:55+0000\n"
-"PO-Revision-Date: 2026-06-24 19:04+0000\n"
-"Last-Translator: Cédric Paradis <cparadis@impressfoods.com>\n"
+"PO-Revision-Date: 2026-09-14 19:57+0000\n"
+"Last-Translator: Automatic translation add-on <noreply-addon-"
+"autotranslate@weblate.org>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/label_printing_wizard/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -29,21 +30,26 @@ msgid "4x6"
 msgstr "4x6"
 
 #. module: label_printing_wizard
-#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_labelWizard_form
-msgid "<span class=\"ms-1\" invisible=\"not packaging_id\">Cases</span>"
-msgstr "<span class=\"ms-1\" invisible=\"not packaging_id\">Caisses</span>"
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__available_uom_ids
+msgid "Available UOMs"
+msgstr "UdM disponibles"
 
 #. module: label_printing_wizard
-#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_labelWizard_form
+#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_label_wizard_form
 msgid "Cancel"
 msgstr "Annuler"
 
 #. module: label_printing_wizard
 #. odoo-python
 #: code:addons/label_printing_wizard/reports/labels.py:0
-#, python-format
 msgid "Cannot create a GS1 barcode without a product"
 msgstr "Impossible de créer un code barre GS1 sans un produit"
+
+#. module: label_printing_wizard
+#. odoo-python
+#: code:addons/label_printing_wizard/reports/labels.py:0
+msgid "Could not find base unit for %s"
+msgstr "Impossible de trouver l'unité de base pour %s"
 
 #. module: label_printing_wizard
 #: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__create_uid
@@ -62,13 +68,35 @@ msgstr "Unité de mesure par défaut pour toutes les opérations d'inventaire."
 
 #. module: label_printing_wizard
 #: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__display_name
+#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_base__display_name
+#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_lot_zpl_2x4__display_name
+#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_lot_zpl_4x6__display_name
+#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_product_product_zpl_2x4__display_name
+#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_product_product_zpl_4x6__display_name
+#: model:ir.model.fields,field_description:label_printing_wizard.field_stock_move__display_name
+#: model:ir.model.fields,field_description:label_printing_wizard.field_stock_move_line__display_name
+#: model:ir.model.fields,field_description:label_printing_wizard.field_stock_picking__display_name
 msgid "Display Name"
 msgstr "Nom d'affichage"
 
 #. module: label_printing_wizard
 #: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__id
+#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_base__id
+#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_lot_zpl_2x4__id
+#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_lot_zpl_4x6__id
+#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_product_product_zpl_2x4__id
+#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_product_product_zpl_4x6__id
+#: model:ir.model.fields,field_description:label_printing_wizard.field_stock_move__id
+#: model:ir.model.fields,field_description:label_printing_wizard.field_stock_move_line__id
+#: model:ir.model.fields,field_description:label_printing_wizard.field_stock_picking__id
 msgid "ID"
 msgstr "ID"
+
+#. module: label_printing_wizard
+#. odoo-python
+#: code:addons/label_printing_wizard/wizards/label_wizard.py:0
+msgid "Invalid model for wizard!"
+msgstr "Modèle invalide pour l'assistant!"
 
 #. module: label_printing_wizard
 #: model:ir.model,name:label_printing_wizard.model_report_label_printing_wizard_label_base
@@ -76,7 +104,7 @@ msgid "Label Base Report"
 msgstr "Rapport d'étiquette de base"
 
 #. module: label_printing_wizard
-#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_labelWizard_form
+#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_label_wizard_form
 msgid "Label Printing Wizard"
 msgstr "Assistant d'impression d'étiquettes"
 
@@ -91,12 +119,9 @@ msgid "Label Size"
 msgstr "Taille de l'étiquette"
 
 #. module: label_printing_wizard
-#. odoo-python
-#: code:addons/label_printing_wizard/wizards/label_wizard.py:0
 #: model:ir.actions.act_window,name:label_printing_wizard.action_label_wizard
 #: model:ir.model,name:label_printing_wizard.model_label_wizard
 #: model:ir.ui.menu,name:label_printing_wizard.label_wizard_menu
-#, python-format
 msgid "Label Wizard"
 msgstr "Assistant d'étiquette"
 
@@ -115,11 +140,6 @@ msgstr "Dernière mise à jour le"
 #: model:ir.model.fields.selection,name:label_printing_wizard.selection__label_wizard__model__lot
 msgid "Lot"
 msgstr "Lot"
-
-#. module: label_printing_wizard
-#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__lot_domain
-msgid "Lot Domain"
-msgstr "Domaine du lot"
 
 #. module: label_printing_wizard
 #: model:ir.model,name:label_printing_wizard.model_report_label_printing_wizard_label_lot_zpl_2x4
@@ -147,24 +167,20 @@ msgid "Model"
 msgstr "Modèle"
 
 #. module: label_printing_wizard
-#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__name
-msgid "Name"
-msgstr "Nom"
-
-#. module: label_printing_wizard
 #: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__label_qty
 msgid "Number of Labels"
 msgstr "Nombre d'étiquettes"
 
 #. module: label_printing_wizard
-#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__packaging_id
-msgid "Packaging"
-msgstr "Emballage"
+#. odoo-python
+#: code:addons/label_printing_wizard/reports/labels.py:0
+msgid "Only one lot can be selected"
+msgstr "Seulement un lot peut être sélectionné à la fois"
 
 #. module: label_printing_wizard
-#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__packaging_qty
-msgid "Packaging Qty"
-msgstr "Quantité d'emballages"
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__product_uom_id
+msgid "Packaging"
+msgstr "Emballage"
 
 #. module: label_printing_wizard
 #: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__picking_id
@@ -172,7 +188,7 @@ msgid "Picking"
 msgstr "Transfert"
 
 #. module: label_printing_wizard
-#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_labelWizard_form
+#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_label_wizard_form
 #: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_stock_picking_form_inherit
 msgid "Print Label"
 msgstr "Imprimer l'étiquette"
@@ -192,9 +208,10 @@ msgid "Product"
 msgstr "Produit"
 
 #. module: label_printing_wizard
-#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__product_domain
-msgid "Product Domain"
-msgstr "Domaine du produit"
+#. odoo-python
+#: code:addons/label_printing_wizard/reports/labels.py:0
+msgid "Product %s does not have a valid EAN"
+msgstr "Le produit %s ne possède pas un EAN valide"
 
 #. module: label_printing_wizard
 #: model:ir.actions.report,name:label_printing_wizard.report_label_product_product_zpl_2x4
@@ -218,20 +235,20 @@ msgid "Product Moves (Stock Move Line)"
 msgstr "Movements de stock (Stock Move Line)"
 
 #. module: label_printing_wizard
-#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__product_template_id
-msgid "Product Template"
-msgstr "Produit"
-
-#. module: label_printing_wizard
-#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__product_qty
-#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_labelWizard_form
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__product_uom_qty
+#: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_label_wizard_form
 msgid "Quantity"
 msgstr "Quantité"
 
 #. module: label_printing_wizard
 #. odoo-python
+#: code:addons/label_printing_wizard/reports/labels.py:0
+msgid "Quantity cannot be negative!"
+msgstr "La quantité ne peut pas être négative!"
+
+#. module: label_printing_wizard
+#. odoo-python
 #: code:addons/label_printing_wizard/wizards/label_wizard.py:0
-#, python-format
 msgid "Report type not supported"
 msgstr "Type de rapport non supporté"
 
@@ -247,5 +264,26 @@ msgstr "Transfert"
 
 #. module: label_printing_wizard
 #: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__uom_id
-msgid "Unit of Measure"
-msgstr "Unité de mesure"
+msgid "Unit"
+msgstr "Unité"
+
+#~ msgid "<span class=\"ms-1\" invisible=\"not packaging_id\">Cases</span>"
+#~ msgstr "<span class=\"ms-1\" invisible=\"not packaging_id\">Caisses</span>"
+
+#~ msgid "Lot Domain"
+#~ msgstr "Domaine du lot"
+
+#~ msgid "Name"
+#~ msgstr "Nom"
+
+#~ msgid "Packaging Qty"
+#~ msgstr "Quantité d'emballages"
+
+#~ msgid "Product Domain"
+#~ msgstr "Domaine du produit"
+
+#~ msgid "Product Template"
+#~ msgstr "Produit"
+
+#~ msgid "Unit of Measure"
+#~ msgstr "Unité de mesure"
