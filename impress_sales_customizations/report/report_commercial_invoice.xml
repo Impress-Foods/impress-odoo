@@ -182,7 +182,7 @@
                                 >
                                     <t
                                         t-set="section_name_colspan"
-                                        t-value="3 + (1 if display_discount else 0) + (1 if display_taxes else 0)"
+                                        t-value="6 + (1 if display_discount else 0) + (1 if display_taxes else 0)"
                                     />
                                     <t t-if="not show_section_total">
                                         <t t-set="section_name_colspan" t-value="99" />
@@ -235,18 +235,26 @@
                                             t-field="line.product_id.description_sale"
                                         >Bacon Burger</span>
                                         <span
-                                            t-else=""
+                                            t-elif="line.product_id.display_name"
                                             t-field="line.product_id.display_name"
+                                        >Bacon Burger</span>
+                                        <span
+                                            t-else=""
+                                            t-field="line.name"
                                         >Bacon Burger</span>
                                     </td>
                                     <td name="td_hts" class="padding_class text-end">
                                         <name t-field="line.product_id.hs_code" />
                                     </td>
                                     <td name="td_gross_weight" class="text-end">
-                                        <name t-field="line.ordered_gross_weight" />
+                                        <name
+                                            t-out="format_number(line.ordered_gross_weight)"
+                                        />
                                     </td>
                                     <td name="td_net_weight" class="text-end">
-                                        <name t-field="line.ordered_net_weight" />
+                                        <name
+                                            t-out="format_number(line.ordered_net_weight)"
+                                        />
                                     </td>
                                     <td
                                         name="td_product_quantity"
