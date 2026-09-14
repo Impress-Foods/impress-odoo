@@ -1,30 +1,31 @@
 from datetime import datetime
 
-from odoo.tests import common
+from odoo.tests import TransactionCase
 
 from ..models.clickship_request import ClickshipProvider
 
 
-class TestDeliveryCommon(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.sr = ClickshipProvider(
-            debug_logger=self.env.ref(
-                "delivery_clickship.delivery_carrier_clickship"
-            ).log_xml,
-            env=self.env,
+class TestDeliveryCommon(TransactionCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        debug_logger = cls.browse_ref(
+            cls, "delivery_clickship.delivery_carrier_clickship"
+        )
+
+        cls.sr = ClickshipProvider(
+            debug_logger=debug_logger.log_xml,
+            env=cls.env,
             prod_environment=False,
             token="test_token",
         )
 
-        location_id = self.ref("stock.stock_location_stock")
-        self.location = self.env["stock.location"].browse(location_id)
-        self.partner_location = self.env["stock.location"].browse(
-            self.ref("stock.stock_location_customers")
-        )
+        cls.location = cls.browse_ref(cls, "stock.stock_location_stock")
+        cls.partner_location = cls.browse_ref(cls, "stock.stock_location_customers")
 
         # Create delivery product
-        delivery_product = self.env["product.product"].create(
+        delivery_product = cls.env["product.product"].create(
             {
                 "name": "Delivery Product",
                 "type": "service",
@@ -32,7 +33,7 @@ class TestDeliveryCommon(common.TransactionCase):
         )
 
         # Create HR Employee for contact
-        self.contact = self.env["hr.employee"].create(
+        cls.contact = cls.env["hr.employee"].create(
             {
                 "name": "Test Contact",
                 "work_phone": "+1-514-555-0123",
@@ -41,7 +42,7 @@ class TestDeliveryCommon(common.TransactionCase):
         )
 
         # Create payment method
-        self.payment_method = self.env["clickship.payment_method"].create(
+        cls.payment_method = cls.env["clickship.payment_method"].create(
             {
                 "name": "Test Payment Method",
                 "code": "test_payment_method",
@@ -49,23 +50,23 @@ class TestDeliveryCommon(common.TransactionCase):
         )
 
         # Create clickship delivery carrier
-        self.clickship_method = self.env["delivery.carrier"].create(
+        cls.clickship_method = cls.env["delivery.carrier"].create(
             {
                 "name": "ClickShip",
                 "delivery_type": "clickship",
                 "integration_level": "rate_and_ship",
                 "product_id": delivery_product.id,
                 "clickship_api_key": "test_api_key",
-                "clickship_contact": self.contact.id,
-                "clickship_payment_method": self.payment_method.id,
+                "clickship_contact": cls.contact.id,
+                "clickship_payment_method": cls.payment_method.id,
             }
         )
 
         # Link payment method to carrier
-        self.payment_method.delivery_carrier_id = self.clickship_method.id
+        cls.payment_method.delivery_carrier_id = cls.clickship_method.id
 
         # Create package type
-        self.package_type = self.env["stock.package.type"].create(
+        cls.package_type = cls.env["stock.package.type"].create(
             {
                 "name": "Test Package Type",
                 "base_weight": 0.1,
@@ -76,7 +77,7 @@ class TestDeliveryCommon(common.TransactionCase):
         )
 
         # Create test products
-        self.productA = self.env["product.product"].create(
+        cls.productA = cls.env["product.product"].create(
             {
                 "name": "Test Product A",
                 "type": "consu",
@@ -84,7 +85,7 @@ class TestDeliveryCommon(common.TransactionCase):
                 "weight": 0.1,
             }
         )
-        self.productB = self.env["product.product"].create(
+        cls.productB = cls.env["product.product"].create(
             {
                 "name": "Test Product B",
                 "type": "consu",
@@ -94,55 +95,38 @@ class TestDeliveryCommon(common.TransactionCase):
         )
 
         # Get picking types and UOMs
-        self.out = self.env["stock.picking.type"].browse(
-            self.ref("stock.picking_type_out")
-        )
+        cls.out = cls.browse_ref(cls, "stock.picking_type_out")
 
-        uom = self.env["uom.uom"]
-        self.in_uom = uom.browse(self.ref("uom.product_uom_inch"))
-        self.ft_uom = uom.browse(self.ref("uom.product_uom_foot"))
-        self.lb_uom = uom.browse(self.ref("uom.product_uom_lb"))
-        self.kg_uom = uom.browse(self.ref("uom.product_uom_kgm"))
-        self.mm_uom = uom.search([("name", "=", "mm")], limit=1)
-        if not self.mm_uom:
-            self.mm_uom = uom.create(
-                {"name": "mm", "category_id": self.ref("uom.uom_categ_length")}
-            )
-
-        self.package_w_uom = uom.search(
-            [("name", "=", self.package_type.weight_uom_name)]
-        )
-        if not self.package_w_uom:
-            self.package_w_uom = self.kg_uom
-
-        self.package_l_uom = uom.search(
-            [("name", "=", self.package_type.length_uom_name)]
-        )
-        if not self.package_l_uom:
-            self.package_l_uom = self.mm_uom
+        cls.in_uom = cls.browse_ref(cls, "uom.product_uom_inch")
+        cls.ft_uom = cls.browse_ref(cls, "uom.product_uom_foot")
+        cls.lb_uom = cls.browse_ref(cls, "uom.product_uom_lb")
+        cls.kg_uom = cls.browse_ref(cls, "uom.product_uom_kgm")
+        cls.mm_uom = cls.browse_ref(cls, "uom.product_uom_millimeter")
+        cls.package_w_uom = cls.kg_uom
+        cls.package_l_uom = cls.mm_uom
 
         # Create test partner
-        self.partner = self.env["res.partner"].create(
+        cls.partner = cls.env["res.partner"].create(
             {
                 "name": "Test Client",
                 "street": "1010 avenue test",
                 "street2": "App 1010",
                 "city": "TestVille",
-                "state_id": self.env["res.country.state"]
+                "state_id": cls.env["res.country.state"]
                 .search([("code", "=", "QC")], limit=1)
                 .id,
-                "country_id": self.env["res.country"].search([("code", "=", "CA")]).id,
+                "country_id": cls.env["res.country"].search([("code", "=", "CA")]).id,
                 "zip": "H0H0H0",
                 "phone": "4181234567",
                 "email": "test@test.com",
             }
         )
-        self.env.ref("base.CAD").active = True
-        company = self.env["res.company"].browse([1])[0]
+        cls.browse_ref(cls, "base.CAD").active = True
+        company = cls.browse_ref(cls, "base.main_company")
         company.phone = "4181234567"
         company.email = "test@test.com"
-        company.state_id = self.ref("base.state_ca_qc")
-        company.country_id = self.ref("base.ca")
+        company.state_id = cls.browse_ref(cls, "base.state_ca_qc")
+        company.country_id = cls.browse_ref(cls, "base.ca")
 
     def make_picking(self, n_packages=1, contact=None):
         """Create a test picking with packages"""

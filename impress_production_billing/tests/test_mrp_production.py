@@ -6,33 +6,34 @@ from odoo.tests import TransactionCase, tagged
 
 @tagged("standard", "impress")
 class TestMrpProduction(TransactionCase):
-    def setUp(self):
-        super().setUp()
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
 
-        self.product_model = self.env["product.product"]
-        self.mo_model = self.env["mrp.production"]
-        self.so_model = self.env["sale.order"]
-        self.so_line_model = self.env["sale.order.line"]
-        self.bom_model = self.env["mrp.bom"]
+        cls.product_model = cls.env["product.product"]
+        cls.mo_model = cls.env["mrp.production"]
+        cls.so_model = cls.env["sale.order"]
+        cls.so_line_model = cls.env["sale.order.line"]
+        cls.bom_model = cls.env["mrp.bom"]
 
-        self.partner = self.env["res.partner"].create({"name": "test partner"})
+        cls.partner = cls.env["res.partner"].create({"name": "test partner"})
 
-        self.billing_product = self.product_model.create(
+        cls.billing_product = cls.product_model.create(
             {"name": "Billing Product", "type": "service"}
         )
 
-        self.product = self.product_model.create(
+        cls.product = cls.product_model.create(
             {
                 "name": "Test Product",
                 "type": "consu",
             }
         )
 
-        self.bom = self.bom_model.create(
+        cls.bom = cls.bom_model.create(
             {
-                "product_id": self.product.id,
-                "product_tmpl_id": self.product.product_tmpl_id.id,
-                "billing_product_id": self.billing_product.id,
+                "product_id": cls.product.id,
+                "product_tmpl_id": cls.product.product_tmpl_id.id,
+                "billing_product_id": cls.billing_product.id,
             }
         )
 

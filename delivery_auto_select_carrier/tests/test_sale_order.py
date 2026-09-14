@@ -8,115 +8,116 @@ from odoo.addons.sale.models.sale_order_line import SaleOrderLine
 
 
 class TestSaleOrder(common.TransactionCase):
-    def setUp(self) -> None:
-        super().setUp()
+    @classmethod
+    def setUpClass(cls) -> None:
+        super().setUpClass()
 
-        self.env["ir.config_parameter"].sudo().set_param(
+        cls.env["ir.config_parameter"].sudo().set_param(
             "delivery_auto_select_carrier.domain", [("origin", "=", "test")]
         )
-        self.carrier_model = self.env["delivery.carrier"]
-        self.so_model: SaleOrder = self.env["sale.order"]
-        self.product_model = self.env["product.product"]
-        self.partner_model: ResPartner = self.env["res.partner"]
-        self.sol_model: SaleOrderLine = self.env["sale.order.line"]
-        self.delivery_product = self.product_model.create(
+        cls.carrier_model = cls.env["delivery.carrier"]
+        cls.so_model: SaleOrder = cls.env["sale.order"]
+        cls.product_model = cls.env["product.product"]
+        cls.partner_model: ResPartner = cls.env["res.partner"]
+        cls.sol_model: SaleOrderLine = cls.env["sale.order.line"]
+        cls.delivery_product = cls.product_model.create(
             {
                 "name": "Delivery Product",
                 "type": "service",
             }
         )
 
-        self.sale_product = self.product_model.create(
+        cls.sale_product = cls.product_model.create(
             {"name": "Sale Product", "type": "consu", "is_storable": True}
         )
 
-        zip_prefix_1 = self.env["delivery.zip.prefix"].create(
+        zip_prefix_1 = cls.env["delivery.zip.prefix"].create(
             {
                 "name": "G2",
             }
         )
 
-        zip_prefix_2 = self.env["delivery.zip.prefix"].create(
+        zip_prefix_2 = cls.env["delivery.zip.prefix"].create(
             {
                 "name": "H",
             }
         )
-        self.carrier_G2 = self.carrier_model.create(
+        cls.carrier_G2 = cls.carrier_model.create(
             {
                 "name": "Carrier G2",
                 "delivery_type": "fixed",
-                "product_id": self.delivery_product.id,
+                "product_id": cls.delivery_product.id,
                 "can_be_auto_selected": True,
-                "country_ids": [self.env.ref("base.ca").id],
+                "country_ids": [cls.env.ref("base.ca").id],
                 "zip_prefix_ids": [zip_prefix_1.id],
                 "priority": 99,
             }
         )
-        self.carrier_H = self.carrier_model.create(
+        cls.carrier_H = cls.carrier_model.create(
             {
                 "name": "Carrier H",
                 "delivery_type": "fixed",
-                "product_id": self.delivery_product.id,
+                "product_id": cls.delivery_product.id,
                 "can_be_auto_selected": True,
-                "country_ids": [self.env.ref("base.ca").id],
+                "country_ids": [cls.env.ref("base.ca").id],
                 "zip_prefix_ids": [zip_prefix_2.id],
                 "priority": 95,
             }
         )
-        self.carrier_no_prefix = self.carrier_model.create(
+        cls.carrier_no_prefix = cls.carrier_model.create(
             {
                 "name": "Carrier No Prefix",
                 "delivery_type": "fixed",
-                "product_id": self.delivery_product.id,
+                "product_id": cls.delivery_product.id,
                 "can_be_auto_selected": True,
                 "priority": 90,
             }
         )
-        self.carrier_model.create(
+        cls.carrier_model.create(
             {
                 "name": "Carrier Not Auto Select",
                 "delivery_type": "fixed",
-                "product_id": self.delivery_product.id,
+                "product_id": cls.delivery_product.id,
                 "can_be_auto_selected": False,
                 "priority": 100,
             }
         )
-        self.partner_G2 = self.partner_model.create(
+        cls.partner_G2 = cls.partner_model.create(
             {
                 "name": "G2",
                 "street": "42 rue Test",
                 "city": "Québec",
-                "state_id": self.env.ref("base.state_ca_qc").id,
-                "country_id": self.env.ref("base.ca").id,
+                "state_id": cls.env.ref("base.state_ca_qc").id,
+                "country_id": cls.env.ref("base.ca").id,
                 "zip": "G2G2G2",
                 "phone": "5555555555",
             }
         )
-        self.partner_H = self.partner_model.create(
+        cls.partner_H = cls.partner_model.create(
             {
                 "name": "H",
                 "street": "42 rue Test",
                 "city": "Québec",
-                "state_id": self.env.ref("base.state_ca_qc").id,
-                "country_id": self.env.ref("base.ca").id,
+                "state_id": cls.env.ref("base.state_ca_qc").id,
+                "country_id": cls.env.ref("base.ca").id,
                 "zip": "H2H2H2",
                 "phone": "5555555555",
             }
         )
-        self.partner_J = self.partner_model.create(
+        cls.partner_J = cls.partner_model.create(
             {
                 "name": "J",
                 "street": "42 rue Test",
                 "city": "Québec",
-                "state_id": self.env.ref("base.state_ca_qc").id,
-                "country_id": self.env.ref("base.ca").id,
+                "state_id": cls.env.ref("base.state_ca_qc").id,
+                "country_id": cls.env.ref("base.ca").id,
                 "zip": "J2J2J2",
                 "phone": "5555555555",
             }
         )
 
-    def setup_sale_order(self, partner: ResPartner) -> SaleOrder:
-        sale_order = self.so_model.create(
+    def setup_sale_order(cls, partner: ResPartner) -> SaleOrder:
+        sale_order = cls.so_model.create(
             {
                 "partner_id": partner.id,
                 "partner_shipping_id": partner.id,
@@ -124,12 +125,12 @@ class TestSaleOrder(common.TransactionCase):
                 "origin": "test",
             }
         )
-        self.sol_model.create(
+        cls.sol_model.create(
             {
                 "order_id": sale_order.id,
-                "product_id": self.sale_product.id,
+                "product_id": cls.sale_product.id,
                 "product_uom_qty": 1,
-                "product_uom_id": self.sale_product.uom_id.id,
+                "product_uom_id": cls.sale_product.uom_id.id,
                 "name": "test",
             }
         )

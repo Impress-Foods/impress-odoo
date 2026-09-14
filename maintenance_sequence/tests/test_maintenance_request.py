@@ -3,9 +3,10 @@ from odoo.tests.common import TransactionCase, tagged
 
 @tagged("impress")
 class TestMaintenanceRequestSequence(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.MaintenanceRequest = self.env["maintenance.request"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.MaintenanceRequest = cls.env["maintenance.request"]
 
     def test_sequence_is_set_on_create(self):
         request = self.MaintenanceRequest.create(

@@ -6,9 +6,6 @@ _logger = logging.getLogger(__name__)
 
 
 class TestRateModel(TestDeliveryCommon):
-    def setUp(self):
-        super().setUp()
-
     def test_rate_model_creation(self):
         """Test creating clickship.rate records"""
         # Create a currency

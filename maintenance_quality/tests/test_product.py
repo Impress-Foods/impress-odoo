@@ -7,43 +7,44 @@ _logger = logging.getLogger(__name__)
 
 @tagged("standard", "impress")
 class TestProductProduct(TransactionCase):
-    def setUp(self):
-        super().setUp()
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
 
-        product_model = self.env["product.product"]
-        quality_point_model = self.env["quality.point"]
-        product_category_model = self.env["product.category"]
+        product_model = cls.env["product.product"]
+        quality_point_model = cls.env["quality.point"]
+        product_category_model = cls.env["product.category"]
 
-        self.category = product_category_model.create(
+        cls.category = product_category_model.create(
             {
                 "name": "Test Category",
             }
         )
 
-        self.product = product_model.create(
+        cls.product = product_model.create(
             {
                 "name": "Test Product",
-                "categ_id": self.category.id,
+                "categ_id": cls.category.id,
             }
         )
 
-        self.quality_point_product = quality_point_model.create(
+        cls.quality_point_product = quality_point_model.create(
             {
                 "name": "Test Quality Point Product",
                 "control_point_type": "stock",
-                "product_ids": [(4, self.product.id)],
+                "product_ids": [(4, cls.product.id)],
             }
         )
 
-        self.quality_point_categ = quality_point_model.create(
+        cls.quality_point_categ = quality_point_model.create(
             {
                 "name": "Test Quality Point Category",
                 "control_point_type": "stock",
-                "product_category_ids": [(4, self.category.id)],
+                "product_category_ids": [(4, cls.category.id)],
             }
         )
 
-        self.quality_point_maintenance = quality_point_model.create(
+        cls.quality_point_maintenance = quality_point_model.create(
             {
                 "name": "Test Quality Point Maintenance",
                 "control_point_type": "maintenance",

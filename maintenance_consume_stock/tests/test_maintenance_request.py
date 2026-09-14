@@ -8,21 +8,22 @@ _logger_ = logging.getLogger(__name__)
 
 @tagged("standard", "impress")
 class TestMaintenanceRequest(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.request_model = self.env["maintenance.request"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.request_model = cls.env["maintenance.request"]
 
-        self.product = self.env["product.product"].create(
+        cls.product = cls.env["product.product"].create(
             {
                 "name": "Test Product",
                 "type": "consu",
             }
         )
 
-        self.equipment = self.env["maintenance.equipment"].create(
+        cls.equipment = cls.env["maintenance.equipment"].create(
             {"name": "Test equipment"}
         )
-        self.scrap = self.env["stock.scrap"]
+        cls.scrap = cls.env["stock.scrap"]
 
     def test_create_scrap(self):
         request = self.request_model.create(

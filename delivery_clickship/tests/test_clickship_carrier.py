@@ -7,9 +7,6 @@ from .test_delivery_common import TestDeliveryCommon
 
 
 class TestClickshipCarrier(TestDeliveryCommon):
-    def setUp(self):
-        super().setUp()
-
     @patch(
         "odoo.addons.delivery_clickship.models.clickship_request.ClickshipProvider.get_rate"
     )

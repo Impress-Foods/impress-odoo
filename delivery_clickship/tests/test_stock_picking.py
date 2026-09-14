@@ -10,9 +10,6 @@ _logger = logging.getLogger(__name__)
 
 
 class TestStockPicking(TestDeliveryCommon):
-    def setUp(self):
-        super().setUp()
-
     def test_compute_clickship_rate_needed_true(self):
         """Test that clickship_rate_needed is True when service_id is missing"""
         picking = self.make_picking()

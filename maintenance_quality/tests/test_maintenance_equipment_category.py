@@ -7,22 +7,23 @@ _logger = logging.getLogger(__name__)
 
 @tagged("standard", "impress")
 class TestMaintenanceEquipmentCategory(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.category_model = self.env["maintenance.equipment.category"]
-        self.qcp_model = self.env["quality.point"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.category_model = cls.env["maintenance.equipment.category"]
+        cls.qcp_model = cls.env["quality.point"]
 
-        self.category = self.category_model.create(
+        cls.category = cls.category_model.create(
             {
                 "name": "Test Category",
             }
         )
 
-        self.qcp = self.qcp_model.create(
+        cls.qcp = cls.qcp_model.create(
             {
                 "name": "Test QCP",
                 "control_point_type": "maintenance",
-                "equipment_category_ids": [(4, self.category.id)],
+                "equipment_category_ids": [(4, cls.category.id)],
             }
         )
 

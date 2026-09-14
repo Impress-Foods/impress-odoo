@@ -6,9 +6,6 @@ _logger = logging.getLogger(__name__)
 
 
 class TestWizardPaymentMethod(TestDeliveryCommon):
-    def setUp(self):
-        super().setUp()
-
     def test_payment_method_creation(self):
         """Test creating clickship.payment_method records"""
         payment_method = self.env["clickship.payment_method"].create(

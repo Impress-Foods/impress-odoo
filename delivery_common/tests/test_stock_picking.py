@@ -2,10 +2,6 @@ from .test_delivery_common import TestDeliveryCommon
 
 
 class TestGetPackages(TestDeliveryCommon):
-    @classmethod
-    def setUpClass(self):
-        super().setUpClass()
-
     def test_get_packages_single_package(self):
         """_get_packages returns the single package linked to a non-done picking"""
         picking = self.make_picking()

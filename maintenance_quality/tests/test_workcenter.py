@@ -7,22 +7,23 @@ _logger = logging.getLogger(__name__)
 
 @tagged("standard", "impress")
 class TestWorkCenter(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.workcenter_model = self.env["mrp.workcenter"]
-        self.qcp_model = self.env["quality.point"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.workcenter_model = cls.env["mrp.workcenter"]
+        cls.qcp_model = cls.env["quality.point"]
 
-        self.workcenter = self.workcenter_model.create(
+        cls.workcenter = cls.workcenter_model.create(
             {
                 "name": "Test Workcenter",
             }
         )
 
-        self.qcp = self.qcp_model.create(
+        cls.qcp = cls.qcp_model.create(
             {
                 "name": "Test QCP",
                 "control_point_type": "maintenance",
-                "workcenter_ids": [(4, self.workcenter.id)],
+                "workcenter_ids": [(4, cls.workcenter.id)],
             }
         )
 

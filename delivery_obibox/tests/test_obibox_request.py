@@ -10,11 +10,12 @@ _logger = logging.getLogger(__name__)
 
 
 class TestObiboxRequest(TestDeliveryCommon):
-    def setUp(self):
-        super().setUp()
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
 
-        company = self.env["res.company"].browse([1])
-        state = self.env.ref("base.state_ca_qc")
+        company = cls.env["res.company"].browse([1])
+        state = cls.env.ref("base.state_ca_qc")
         company.state_id = state
 
     def test_make_package_1_package(self):

@@ -1,30 +1,29 @@
 from datetime import datetime
 
-from odoo.tests import common
+from odoo.tests import TransactionCase
 
 from ..models.obibox_request import ObiboxProvider
 
 
-class TestDeliveryCommon(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.sr = ObiboxProvider(
-            None, self.env, prod_environment=False, username="test", token="test"
+class TestDeliveryCommon(TransactionCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.sr = ObiboxProvider(
+            None, cls.env, prod_environment=False, username="test", token="test"
         )
 
-        location_id = self.ref("stock.stock_location_stock")
-        self.location = self.env["stock.location"].browse(location_id)
-        self.partner_location = self.env["stock.location"].browse(
-            self.ref("stock.stock_location_customers")
-        )
-        delivery_product = self.env["product.product"].create(
+        cls.location = cls.browse_ref(cls, "stock.stock_location_stock")
+        cls.partner_location = cls.browse_ref(cls, "stock.stock_location_customers")
+
+        delivery_product = cls.env["product.product"].create(
             {
                 "name": "Delivery Product",
                 "type": "service",
             }
         )
 
-        self.obibox_method = self.env["delivery.carrier"].create(
+        cls.obibox_method = cls.env["delivery.carrier"].create(
             {
                 "name": "Obibox",
                 "delivery_type": "obibox",
@@ -46,7 +45,7 @@ class TestDeliveryCommon(common.TransactionCase):
             }
         )
 
-        self.package_type = self.env["stock.package.type"].create(
+        cls.package_type = cls.env["stock.package.type"].create(
             {
                 "name": "Test Package Type",
                 "base_weight": 0.1,
@@ -56,7 +55,7 @@ class TestDeliveryCommon(common.TransactionCase):
             }
         )
 
-        self.productA = self.env["product.product"].create(
+        cls.productA = cls.env["product.product"].create(
             {
                 "name": "Test Product",
                 "type": "consu",
@@ -64,7 +63,7 @@ class TestDeliveryCommon(common.TransactionCase):
                 "weight": 0.1,
             }
         )
-        self.productB = self.env["product.product"].create(
+        cls.productB = cls.env["product.product"].create(
             {
                 "name": "Test Product",
                 "type": "consu",
@@ -72,29 +71,24 @@ class TestDeliveryCommon(common.TransactionCase):
                 "weight": 0.1,
             }
         )
-        self.out = self.env["stock.picking.type"].browse(
-            self.ref("stock.picking_type_out")
-        )
 
-        uom = self.env["uom.uom"]
-        self.in_uom = uom.browse(self.ref("uom.product_uom_inch"))
-        self.ft_uom = uom.browse(self.ref("uom.product_uom_foot"))
-        self.lb_uom = uom.browse(self.ref("uom.product_uom_lb"))
-        self.package_w_uom = uom.search(
-            [("name", "=", self.package_type.weight_uom_name)]
-        )[0]
+        cls.out = cls.browse_ref(cls, "stock.picking_type_out")
 
-        self.package_l_uom = uom.search(
-            [("name", "=", self.package_type.length_uom_name)]
-        )[0]
+        cls.in_uom = cls.browse_ref(cls, "uom.product_uom_inch")
+        cls.ft_uom = cls.browse_ref(cls, "uom.product_uom_foot")
+        cls.lb_uom = cls.browse_ref(cls, "uom.product_uom_lb")
+        cls.kg_uom = cls.browse_ref(cls, "uom.product_uom_kgm")
+        cls.mm_uom = cls.browse_ref(cls, "uom.product_uom_millimeter")
+        cls.package_w_uom = cls.kg_uom
+        cls.package_l_uom = cls.mm_uom
 
-        self.partner = self.env["res.partner"].create(
+        cls.partner = cls.env["res.partner"].create(
             {
                 "name": "Test Client",
                 "street": "1010 avenue test",
                 "street2": "App 1010",
                 "city": "TestVille",
-                "state_id": self.env["res.country.state"]
+                "state_id": cls.env["res.country.state"]
                 .search([("code", "=", "QC")])[0]
                 .id,
                 "zip": "H0H0H0",
@@ -104,12 +98,12 @@ class TestDeliveryCommon(common.TransactionCase):
         )
 
         # Ensure company has required fields
-        self.env.company.write(
+        cls.env.company.write(
             {
                 "phone": "5141234567",
                 "email": "company@test.com",
-                "state_id": self.partner.state_id.id,
-                "country_id": self.env["res.country"]
+                "state_id": cls.partner.state_id.id,
+                "country_id": cls.env["res.country"]
                 .search([("code", "=", "CA")], limit=1)
                 .id,
                 "zip": "H1H1H1",
