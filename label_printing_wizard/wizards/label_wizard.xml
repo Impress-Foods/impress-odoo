@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <!-- View labelWizard form -->
-    <record id="view_labelWizard_form" model="ir.ui.view">
+    <record id="view_label_wizard_form" model="ir.ui.view">
         <field name="name">view.labelWizard.form</field>
         <field name="model">label_wizard</field>
         <field name="arch" type="xml">
@@ -65,6 +65,7 @@
         <field name="view_mode">form</field>
         <field name="binding_model_id" ref="label_printing_wizard.model_label_wizard" />
         <field name="target">new</field>
+        <field name="view_id" ref="label_printing_wizard.view_label_wizard_form" />
     </record>
 
     <menuitem
