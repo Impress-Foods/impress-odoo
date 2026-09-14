@@ -127,10 +127,17 @@
                         <t t-foreach="data['sections']" t-as="section">
                             <t
                                 t-set="bg_color"
-                                t-value="'background-color: ' + o.company_id.primary_color or '#6c757d' + ';'"
+                                t-value="'background-color: ' + (o.company_id.primary_color or '#6c757d') + ';'"
+                            />
+                            <t
+                                t-set="package_name_colspan"
+                                t-value="3 if data['has_lots'] else 2"
                             />
                             <tr class="o_line_section fw-bolder">
-                                <td colspan="2" t-att-style="bg_color">
+                                <td
+                                    t-att-colspan="package_name_colspan"
+                                    t-att-style="bg_color"
+                                >
                                     <span
                                         class="ms-1"
                                         t-out="section['package'].name"
@@ -158,8 +165,6 @@
                                 />
                             </t>
                         </t>
-                    </tbody>
-                    <tfoot>
                         <tr class="o_top_border fw-bolder">
                             <td
                                 t-att-colspan="3 if data['has_lots'] else 2"
@@ -175,7 +180,7 @@
                                 <span t-out="format_number(data['total_quantity'])" />
                             </td>
                         </tr>
-                    </tfoot>
+                    </tbody>
                 </table>
 
                 <div t-if="o.signature" class="mt32 ml64 mr4" name="signature">
