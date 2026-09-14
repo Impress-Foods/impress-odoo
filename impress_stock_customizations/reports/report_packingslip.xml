@@ -85,6 +85,10 @@
                         <strong>Packages</strong>
                         <div t-out="data['total_packages']" />
                     </div>
+                    <div class="col" t-if="o.sale_id.client_order_ref">
+                        <strong>Customer Reference</strong>
+                        <div t-field="o.sale_id.client_order_ref" />
+                    </div>
                 </div>
 
                 <table class="o_has_total_table table o_main_table table-borderless">
