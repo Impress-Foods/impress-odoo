@@ -7,10 +7,7 @@
         <field name="arch" type="xml">
             <form string="Label Printing Wizard">
                 <group>
-                    <field name="product_template_id" invisible="1" />
                     <field name="picking_id" invisible="1" />
-                    <field name="product_domain" invisible="1" />
-                    <field name="lot_domain" invisible="1" />
 
                     <group>
                         <field name="model" widget="radio" />
@@ -21,13 +18,13 @@
                     <group>
                         <field
                             name="product_id"
-                            domain="product_domain"
+                            domain="[('id','in', picking_id.move_ids.product_id.ids), ('tracking','in',['lot','serial'])] if picking_id and model == 'lot' else [('id','in', picking_id.move_ids.product_id.ids)] if picking_id else [('tracking','in',['lot','serial'])] if model == 'lot' else []"
                             required="model == 'product'"
                         />
 
                         <field
                             name="lot_id"
-                            domain="lot_domain"
+                            domain="[('product_id','=',product_id), ('id','in', picking_id.move_line_ids.lot_id.ids)] if picking_id and product_id else [('product_id','=',product_id)] if product_id else [('id','in', picking_id.move_line_ids.lot_id.ids)] if picking_id else []"
                             context="{'default_product_id': product_id}"
                             required="model == 'lot'"
                             invisible="model != 'lot'"
