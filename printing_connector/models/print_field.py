@@ -1,13 +1,10 @@
 import datetime
-import logging
 from typing import Any
 
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 from ..tools import date_formatter, string_formatter
-
-_logger = logging.getLogger(__name__)
 
 
 class FieldMapping(models.Model):
@@ -49,31 +46,16 @@ class FieldMapping(models.Model):
                 continue
 
             parts = rec.source_field.split(".")
-            model = self.env[rec.target_model_id.model]
+            model: models.Model = self.env[rec.target_model_id.model]
             target_field = None
 
             if len(parts) == 1:
                 field = parts[0]
-                if field not in model._fields:
-                    raise ValidationError(
-                        self.env._(
-                            "Field %(field)s does not exist on model %(model)s",
-                            field=field,
-                            model=model,
-                        )
-                    )
-                target_field = model._fields[field]
+                target_field = self._get_field(model, field)
+
             else:
                 for i, field in enumerate(parts):
-                    if field not in model._fields:
-                        raise ValidationError(
-                            self.env._(
-                                "Field %(field)s does not exist on model %(model)s",
-                                field=field,
-                                model=model,
-                            )
-                        )
-                    target_field = model._fields[field]
+                    target_field = self._get_field(model, field)
                     if i < len(parts) - 1:
                         if not target_field.comodel_name:
                             raise ValidationError(
@@ -144,3 +126,15 @@ class FieldMapping(models.Model):
                 pass
 
         return value
+
+    @api.model
+    def _get_field(self, model: models.Model, field: str):
+        if field not in model._fields:
+            raise ValidationError(
+                self.env._(
+                    "Field %(field)s does not exist on model %(model)s",
+                    field=field,
+                    model=model,
+                )
+            )
+        return model._fields[field]

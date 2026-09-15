@@ -1,10 +1,6 @@
-import logging
-
 from odoo import fields, models
 from odoo.exceptions import ValidationError
 from odoo.fields import Domain
-
-_logger = logging.getLogger(__name__)
 
 
 class QualityCheck(models.Model):
@@ -131,6 +127,20 @@ class QualityCheck(models.Model):
             return self.production_id.display_name
         else:
             return self.display_name
+
+    def action_open_print_wizard(self):
+        """Open the print wizard pre-filled with the check's defaults."""
+        self.ensure_one()
+        print_data = self.get_print_data()
+        return self.env["print.wizard"].open_wizard(
+            self.point_id.report_id.id,
+            self._get_record_for_api_report().ids,
+            defaults={
+                "printer_id": print_data["_printer_id"],
+                "qty": print_data["_qty"],
+                "preview": print_data["data"],
+            },
+        )
 
     def get_print_data(self):
         self.ensure_one()

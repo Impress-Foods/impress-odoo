@@ -220,6 +220,13 @@ class TestQualityCheckApi(TransactionCase):
             self.assertEqual(self.check._get_product_label_action("api"), sentinel)
             self.assertEqual(self.check._get_lot_label_action("api"), sentinel)
 
+    def test_action_open_print_wizard(self):
+        action = self.check.action_open_print_wizard()
+        self.assertEqual(action["res_model"], "print.wizard")
+        wizard = self.env["print.wizard"].browse(action["res_id"])
+        self.assertEqual(wizard.ir_actions_report_id, self.report)
+        self.assertEqual(wizard.printer_id, self.printer)
+
     def test_get_print_data(self):
         data = self.check.get_print_data()
         self.assertIn("printers", data)

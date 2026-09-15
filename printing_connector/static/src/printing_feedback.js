@@ -7,17 +7,20 @@ const DEFAULT_TRANSLATIONS = {
     printing_error: "Label could not be sent to the printer",
 };
 
-export function showPrintingFeedback(env, result, translations = DEFAULT_TRANSLATIONS) {
+export function showPrintingFeedback(env, result, _action) {
     const {success, message} = result || {};
     if (success) {
-        env.services.notification.add(translations.printing_success, {
+        env.services.notification.add(DEFAULT_TRANSLATIONS.printing_success, {
             type: "success",
         });
     } else {
-        const msg = message || translations.printing_error;
-        env.services.notification.add(`${translations.printing_error}: ${msg}`, {
-            type: "danger",
-        });
+        const msg = message || DEFAULT_TRANSLATIONS.printing_error;
+        env.services.notification.add(
+            `${DEFAULT_TRANSLATIONS.printing_error}: ${msg}`,
+            {
+                type: "danger",
+            }
+        );
     }
 }
 

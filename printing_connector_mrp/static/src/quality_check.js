@@ -1,6 +1,5 @@
 import {patch} from "@web/core/utils/patch";
 import {QualityCheck} from "@mrp_workorder/mrp_display/mrp_record_line/quality_check";
-import {PrintDialog} from "./mrp_print_dialog";
 
 patch(QualityCheck.prototype, {
     setup() {
@@ -14,22 +13,35 @@ patch(QualityCheck.prototype, {
 
     async clicked() {
         if (this.type == "print_label" && this.test_report_type == "api") {
-            const data = await new Promise((resolve) => {
-                this.dialog.add(PrintDialog, {
-                    record: this.props.record,
-                    confirm: (data) => resolve(data),
-                    cancel: () => resolve(null),
-                    confirmLabel: "Print",
-                });
+            const action = await this.props.record.model.orm.call(
+                this.props.record.resModel,
+                "action_open_print_wizard",
+                [this.props.record.resId]
+            );
+            const wizardId = action.res_id;
+
+            const selection = await new Promise((resolve) => {
+                this.action
+                    .doAction(action, {
+                        onClose: async () => {
+                            const [wizard] = await this.props.record.model.orm.read(
+                                "print.wizard",
+                                [wizardId],
+                                ["result_ready", "result_printer_id", "result_qty"]
+                            );
+                            resolve(wizard?.result_ready ? wizard : null);
+                        },
+                    })
+                    .catch(() => resolve(null));
             });
 
-            if (!data) {
+            if (!selection) {
                 return;
             }
 
             this.extraContext = {
-                printing_printing_quantity: data.qty,
-                printing_printer_override: data.printer_id,
+                printing_printing_quantity: selection.result_qty,
+                printing_printer_override: selection.result_printer_id?.[0],
             };
             return this.doActionAndNext("action_print");
         } else {

@@ -15,7 +15,6 @@ class PrintServer(models.Model):
     _name = "print.server"
     _description = "Print server for label printing"
 
-    active = fields.Boolean(default=True)
     name = fields.Char(required=True)
     url = fields.Char()
 
@@ -27,8 +26,6 @@ class PrintServer(models.Model):
     timeout = fields.Integer()
 
     debug_logging = fields.Boolean(default=False)
-
-    print_report_ids = fields.One2many("print.report", "print_server_id")
 
     def toggle_debug(self):
         for record in self:
