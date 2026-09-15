@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="print_wizard_view_form" model="ir.ui.view">
+        <field name="name">print.wizard.view.form</field>
+        <field name="model">print.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Print Label">
+                <group>
+                    <field
+                        name="printer_id"
+                        options="{'no_create': True}"
+                        domain="[('id', 'in', available_printer_ids)]"
+                    />
+                    <field name="qty" />
+                </group>
+                <field name="preview_ids" nolabel="1" readonly="1">
+                    <list>
+                        <field name="key" />
+                        <field name="value" />
+                    </list>
+                </field>
+                <footer>
+                    <button
+                        name="action_confirm"
+                        string="Print"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_print_wizard" model="ir.actions.act_window">
+        <field name="name">Print</field>
+        <field name="res_model">print.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
