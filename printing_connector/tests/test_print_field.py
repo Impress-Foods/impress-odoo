@@ -52,7 +52,7 @@ class TestPrintField(TestCommon):
             self.make_single_field_report("res.company", "name.foo")
 
     def test_static_value_type_and_value(self):
-        report, mapping = self.make_single_field_report("res.company", "name")
+        _, mapping = self.make_single_field_report("res.company", "name")
         mapping.write({"source_field": False, "static_value": "  hello  "})
         self.assertEqual(mapping.field_type, "char")
         self.assertEqual(mapping.get_value(), "  hello  ")

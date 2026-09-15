@@ -15,6 +15,7 @@
         "views/print_printer_views.xml",
         "views/product_views.xml",
         "views/menus.xml",
+        "wizards/print_wizard_views.xml",
     ],
     "assets": {
         "web.assets_backend": [

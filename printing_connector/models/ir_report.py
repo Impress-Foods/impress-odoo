@@ -44,6 +44,7 @@ class IrReport(models.Model):
             raise ValidationError(
                 self.env._("Cannot print API label for empty recordset")
             )
+
         payload = self._render_api(report, res_ids, data)
         success, message = report.print_report_id.print_server_id._send(payload)
         return {"success": success, "message": message}
