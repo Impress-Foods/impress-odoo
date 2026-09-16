@@ -14,9 +14,10 @@
             </xpath>
             <xpath expr="//field[@name='state']" position="before">
                 <button
-                    action="action_open_picking_backend_form"
-                    class="fa fa-desktop"
+                    name="action_open_picking_backend_form"
+                    class="btn btn-link p-0 ms-1 text-black fa fa-desktop"
                     title="Open Form"
+                    type="object"
                 />
             </xpath>
         </field>
