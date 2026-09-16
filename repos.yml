@@ -3,7 +3,6 @@
     oca: https://github.com/OCA/e-commerce
   merges:
     - oca 19.0
-    - oca refs/pull/1174/head
 
 ./emipro:
   remotes:
@@ -49,7 +48,6 @@
     oca: https://github.com/OCA/product-variant
   merges:
     - oca 19.0
-    - oca refs/pull/423/head
 
 ./sale-workflow:
   remotes:
@@ -68,21 +66,19 @@
     oca: https://github.com/OCA/server-tools
   merges:
     - oca 19.0
-    - oca refs/pull/3517/head
 
 ./server-ux:
   remotes:
     oca: https://github.com/OCA/server-ux
   merges:
     - oca 19.0
-    - oca refs/pull/1277/head
+    - oca refs/pull/1273/head
 
 ./stock-logistics-workflow:
   remotes:
     oca: https://github.com/OCA/stock-logistics-workflow
   merges:
     - oca 19.0
-    - oca refs/pull/2220/head
 
 ./stock-logistics-warehouse:
   remotes:
