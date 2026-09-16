@@ -26,6 +26,9 @@ module_whitelist:
   # sale-workflow
   - sale_force_invoiced
   - sale_order_type
+  - sale_invoice_to_partner
+  - sale_delivery_state
+  - sale_stock_delivery_state
   # server-brand
   - mail_debranding
   - website_debranding
@@ -35,6 +38,7 @@ module_whitelist:
   - base_optional_quick_create
   - developer_menu
   - server_action_mass_edit
+  - sequence_check_digit
   # stock-logistics-workflow
   - stock_no_negative
   - stock_picking_back2draft
