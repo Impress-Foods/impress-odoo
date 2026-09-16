@@ -44,7 +44,7 @@
         <xpath expr="//div[@name='quantity']/span[2]" position="inside">
             <span
                 style="color: var(--danger);"
-                t-if="qtyDemand &lt; plannedQty"
+                t-if="!props.subline and qtyDemand &lt; plannedQty"
                 t-esc="'(' + qtyDemand +'/'+plannedQty +')'"
             />
         </xpath>

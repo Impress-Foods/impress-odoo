@@ -11,21 +11,16 @@
             expr="//div[hasclass('o_barcode_lines')]/div[hasclass('alert')]"
             position="after"
         >
-            <t
-                t-if="env.model.unreservedLines &amp;&amp; env.model.unreservedLines.length != 0"
-            >
+            <t t-set="unreservedLines" t-value="env.model.unreservedLines" />
+            <t t-if="unreservedLines and unreservedLines.length">
                 <div class="o_impress_missing_header">
                     <i class="fa fa-exclamation-triangle" />
                     <span>MISSING PRODUCT(S) - <t
-                        t-esc="env.model.unreservedLines.length"
+                        t-esc="unreservedLines.length"
                     /> product(s) not reserved</span>
                 </div>
 
-                <t
-                    t-foreach="env.model.unreservedLines"
-                    t-as="line"
-                    t-key="line.virtual_id"
-                >
+                <t t-foreach="unreservedLines" t-as="line" t-key="line.virtual_id">
                     <LineComponent
                         line="line"
                         displayUOM="true"
@@ -63,14 +58,14 @@
     >
         <xpath expr="//button[hasclass('o_stock_mobile_barcode')][1]" position="before">
             <button
-                t-if="env.model.formViewId"
+                t-if="env.model.formViewId and env.model.resModel == 'stock.picking'"
                 t-on-click="doReservation"
                 class="o_show_information btn nav-link"
             >
                 <i class="fa fa-check" />
             </button>
             <button
-                t-if="env.model.formViewId"
+                t-if="env.model.formViewId and env.model.resModel == 'stock.picking'"
                 t-on-click="openBackend"
                 class="o_show_information btn nav-link"
             >
