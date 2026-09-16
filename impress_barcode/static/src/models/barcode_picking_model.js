@@ -4,20 +4,12 @@ import {patch} from "@web/core/utils/patch";
 import BarcodePickingModel from "@stock_barcode/models/barcode_picking_model";
 
 patch(BarcodePickingModel.prototype, {
-    getTotalDemand(move_id) {
-        try {
-            return this.cache.getRecord("stock.move", move_id)["product_uom_qty"];
-        } catch {
-            return 0;
-        }
-    },
-
     get origin() {
         return this.record.origin;
     },
 
     _getMoveData(id) {
-        const smData = structuredClone(this.cache.getRecord("stock.move", id));
+        const smData = this.cache.getRecord("stock.move", id);
         smData.product_id = this.cache.getRecord("product.product", smData.product_id);
         smData.product_uom_id = this.cache.getRecord("uom.uom", smData.product_uom);
         smData.location_id = this.cache.getRecord("stock.location", smData.location_id);
@@ -26,6 +18,26 @@ patch(BarcodePickingModel.prototype, {
             smData.location_dest_id
         );
         return smData;
+    },
+
+    _getMoveLineData() {
+        const smlData = super._getMoveLineData(...arguments);
+        // The base implementation assumes any move line unknown from the
+        // current state was created in the Barcode App, so its `quantity`
+        // holds the done quantity. This is wrong for lines created server-side
+        // (e.g. after changing a lot/serial from the line form): such a line is
+        // reserved but not picked, so `quantity` is the reservation and the
+        // done quantity must stay 0. Without this, the whole reservation is
+        // displayed as done with a null demand until a full page reload.
+        if (
+            smlData.picked === false &&
+            smlData.quantity &&
+            smlData.qty_done === smlData.quantity
+        ) {
+            smlData.qty_done = 0;
+            smlData.reserved_uom_qty = smlData.quantity;
+        }
+        return smlData;
     },
 
     _isSublocation(childLocation, parentLocation) {
@@ -128,76 +140,28 @@ patch(BarcodePickingModel.prototype, {
         });
     },
 
-    totalSupply(product_id) {
-        const move_lines = this.cache.dbIdCache["stock.move.line"];
-        let total = 0;
-
-        for (const key in move_lines) {
-            const line = move_lines[key];
-            if (line.product_id == product_id) {
-                total += line.qty_done;
+    // Total demand of a line, summed over every move of its group so grouped
+    // lines (kits, multiple lots, ...) report the whole demand instead of a
+    // single subline's move.
+    _getPlannedQty(line) {
+        const sublines = line.lines && line.lines.length ? line.lines : [line];
+        const moveIds = [
+            ...new Set(sublines.map((subline) => subline.move_id).filter(Boolean)),
+        ];
+        let planned = 0;
+        for (const moveId of moveIds) {
+            try {
+                const move = this.cache.getRecord("stock.move", moveId);
+                planned += move.product_uom_qty || 0;
+            } catch {
+                // The move isn't (yet) in the cache, ignore it for the demand.
             }
         }
-        return total;
-    },
-
-    // Compute reservation data for a line
-    _getReservationData(line) {
-        // Handle unreserved lines (no move line, but have stock.move)
-        if (line.isUnreservedLine && line._move) {
-            const planned = line._move.product_uom_qty || 0;
-            return {
-                planned: planned,
-                reserved: 0,
-                done: 0,
-                available: planned,
-                status: "unreserved",
-            };
-        }
-
-        const move_id = line.move_id;
-        if (!move_id) {
-            return {
-                planned: 0,
-                reserved: 0,
-                done: 0,
-                available: 0,
-                status: "unreserved",
-            };
-        }
-
-        try {
-            const move = this.cache.getRecord("stock.move", move_id);
-            const planned = move.product_uom_qty || 0;
-            const done = line.qty_done || 0;
-            // Reserved = what's reserved in move lines (reserved_uom_qty)
-            const reserved = line.reserved_uom_qty || 0;
-            // Available = what's physically available but not reserved
-            const available = Math.max(0, planned - reserved);
-
-            let status = "complete";
-            if (reserved === 0 && planned > 0) {
-                status = "unreserved";
-            } else if (reserved > 0 && done < planned) {
-                status = "partial";
-            } else if (done > reserved) {
-                status = "over";
-            }
-
-            return {planned, reserved, done, available, status};
-        } catch {
-            return {
-                planned: 0,
-                reserved: 0,
-                done: line.qty_done || 0,
-                available: 0,
-                status: "unreserved",
-            };
-        }
+        return planned;
     },
 
     get groupedLines() {
-        const res = super.groupedLines;
+        const res = [...super.groupedLines];
         res.sort((a, b) => {
             // Get description from line or from move
             let nameA = a.description_picking;
@@ -233,8 +197,6 @@ patch(BarcodePickingModel.prototype, {
             return data;
         }
 
-        const groupColorMap = {};
-        let colorIndex = 0;
         const colorPalette = [
             "#7db31a",
             "#4d86a5",
@@ -249,39 +211,34 @@ patch(BarcodePickingModel.prototype, {
         ];
         const maxColors = colorPalette.length;
 
-        data.forEach((item) => {
+        const groupKeyOf = (item) => {
             let groupKey = item.description_picking;
-
             if (!groupKey && item.move_id) {
                 try {
                     const move = this.cache.getRecord("stock.move", item.move_id);
                     groupKey = move?.description_picking;
                 } catch {}
             }
-
-            if (groupKey) {
-                const sep = groupKey.indexOf(" - ");
-                const key =
-                    sep !== -1 ? groupKey.slice(0, sep).trim() : groupKey.trim();
-                if (groupColorMap[key]) {
-                    item.color = groupColorMap[key];
-                } else {
-                    let newColor;
-
-                    if (colorIndex < maxColors) {
-                        newColor = colorPalette[colorIndex];
-                    } else {
-                        newColor = colorPalette[colorIndex % maxColors];
-                    }
-
-                    item.color = newColor;
-                    groupColorMap[key] = newColor;
-                    colorIndex++;
-                }
-            } else {
-                item.color = "";
+            if (!groupKey) {
+                return "";
             }
+            const sep = groupKey.indexOf(" - ");
+            return (sep !== -1 ? groupKey.slice(0, sep) : groupKey).trim();
+        };
+
+        // Assign the palette on the sorted set of group keys so a group always
+        // keeps the same color, whatever the order the lines are rendered in.
+        const keys = data.map((item) => groupKeyOf(item));
+        const groupColorMap = {};
+        const uniqueKeys = [...new Set(keys.filter(Boolean))].sort();
+        uniqueKeys.forEach((key, index) => {
+            groupColorMap[key] = colorPalette[index % maxColors];
         });
+
+        data.forEach((item, index) => {
+            item.color = keys[index] ? groupColorMap[keys[index]] : "";
+        });
+        return data;
     },
 
     groupKey(line) {
@@ -289,6 +246,61 @@ patch(BarcodePickingModel.prototype, {
             return `unreserved_${line.virtual_id}`;
         }
         return super.groupKey(...arguments) + `_${line.location_dest_id.id}`;
+    },
+
+    // Transfer the still-unfulfilled reservation of a sibling line to a newly
+    // created line so picking a different lot reassigns the demand instead of
+    // leaving the whole reservation stuck on the original lot. Without this,
+    // picking 1 unit of lot X (reserved 2) then 1 unit of lot Y shows lot X as
+    // "1/2" and lot Y as "1 (0/2)" instead of both as "1/1".
+    _stealSiblingReservation(line) {
+        if (
+            !line ||
+            !["lot", "serial"].includes(line.product_id?.tracking) ||
+            !line.qty_done ||
+            line.reserved_uom_qty ||
+            // Package lines count as complete without a reservation and
+            // unreserved lines are display-only: never reassign to them.
+            line.package_id ||
+            line.result_package_id ||
+            line.isUnreservedLine
+        ) {
+            return;
+        }
+        const donor = this.currentState.lines.find((other) => {
+            if (other === line || !other.reserved_uom_qty) {
+                return false;
+            }
+            if (other.qty_done >= other.reserved_uom_qty) {
+                return false;
+            }
+            if (line.move_id && other.move_id) {
+                return other.move_id === line.move_id;
+            }
+            return (
+                other.product_id.id === line.product_id.id &&
+                other.location_id.id === line.location_id.id &&
+                other.location_dest_id.id === line.location_dest_id.id
+            );
+        });
+        if (!donor) {
+            return;
+        }
+        const stolen = Math.min(donor.reserved_uom_qty - donor.qty_done, line.qty_done);
+        if (stolen > 0) {
+            donor.reserved_uom_qty -= stolen;
+            line.reserved_uom_qty = stolen;
+        }
+    },
+
+    async _createNewLine(params) {
+        const newLine = await super._createNewLine(...arguments);
+        // Copies/splits (`copyOf`) handle their own reservation, so only
+        // reassign the reservation for lines created from a fresh scan.
+        if (!params?.copyOf) {
+            this._stealSiblingReservation(newLine);
+        }
+        return newLine;
     },
 
     lineCanBeSelected(line) {

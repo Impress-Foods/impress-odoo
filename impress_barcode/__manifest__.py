@@ -6,12 +6,10 @@
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.0.4",
     "license": "GPL-2",
     "depends": [
-        "base",
         "stock",
-        "sale_management",
         "stock_barcode",
         "stock_barcode_mrp",
     ],
@@ -23,6 +21,9 @@
             "impress_barcode/static/src/**/*.js",
             "impress_barcode/static/src/**/*.xml",
             "impress_barcode/static/src/**/*.scss",
+        ],
+        "web.assets_unit_tests": [
+            "impress_barcode/static/tests/**/*.js",
         ],
     },
 }
