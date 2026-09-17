@@ -31,6 +31,7 @@
                 <td class="text-end">
                     <t t-out="total_delivered" />
                 </td>
+                <td t-if="has_hs_code" id="hs-code-padding" />
             </tfoot>
         </xpath>
 
@@ -74,17 +75,19 @@
         <xpath expr="//table[@name='stock_move_line_table']/tbody" position="after">
             <tfoot>
                 <tr>
-                    <td t-if="has_shelf_life" id="shelf-life-padding-1" />
-                    <td t-if="has_shelf_life" id="shelf-life-padding-2" />
-                    <td t-if="has_hs_code" id="hs-code-padding-1" />
-                    <td t-if="has_hs_code" id="hs-code-padding-1" />
+                    <t t-set="colspan" t-value="1" />
 
-                    <td class="text-end">
+                    <t t-if="has_serial_number" t-set="colspan" t-value="colspan + 1" />
+                    <t t-if="has_shelf_life" t-set="colspan" t-value="colspan + 1" />
+                    <t t-if="has_shelf_life" t-set="colspan" t-value="colspan + 1" />
+
+                    <td class="text-end" t-att-colspan="colspan">
                         <strong>Total: </strong>
                     </td>
                     <td class="text-end">
                         <t t-out="total_delivered" />
                     </td>
+                    <td t-if="has_hs_code" id="hs-code-padding" />
                 </tr>
             </tfoot>
         </xpath>
