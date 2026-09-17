@@ -24,22 +24,9 @@ msgid "<span class=\"o_stat_text\">Scraps</span>"
 msgstr ""
 
 #. module: maintenance_consume_stock
-#: model:ir.model.fields,field_description:maintenance_consume_stock.field_maintenance_request__all_scraps_done
-msgid "All Scraps Done"
-msgstr ""
-
-#. module: maintenance_consume_stock
 #. odoo-python
 #: code:addons/maintenance_consume_stock/models/maintenance_request.py:0
 msgid "Cannot delete a maintenance request with done scrap moves"
-msgstr ""
-
-#. module: maintenance_consume_stock
-#. odoo-python
-#: code:addons/maintenance_consume_stock/models/stock_scrap.py:0
-msgid ""
-"Cannot unlink a scrap move that is done and assigned to a maintenance "
-"request"
 msgstr ""
 
 #. module: maintenance_consume_stock
@@ -55,8 +42,8 @@ msgid "Display Name"
 msgstr ""
 
 #. module: maintenance_consume_stock
-#: model:ir.model.fields,field_description:maintenance_consume_stock.field_stock_scrap__maintenance_equipment_id
-msgid "Equipment"
+#: model:ir.model.fields,field_description:maintenance_consume_stock.field_maintenance_request__has_scraps_to_validate
+msgid "Has Scraps To Validate"
 msgstr ""
 
 #. module: maintenance_consume_stock
@@ -108,10 +95,4 @@ msgstr ""
 #. module: maintenance_consume_stock
 #: model:ir.model.fields,field_description:maintenance_consume_stock.field_stock_scrap__product_vendor_code
 msgid "Vendor Code"
-msgstr ""
-
-#. module: maintenance_consume_stock
-#. odoo-python
-#: code:addons/maintenance_consume_stock/models/maintenance_request.py:0
-msgid "id"
 msgstr ""
