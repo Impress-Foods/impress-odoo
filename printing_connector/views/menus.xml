@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem id="printing_menu" name="Printing" sequence="10" />
+
+    <menuitem
+        id="print_report_menu"
+        name="Print Reports"
+        action="action_print_report"
+        parent="printing_menu"
+        sequence="10"
+    />
+
+    <menuitem
+        id="print_field_menu"
+        name="Fields"
+        action="action_print_field"
+        parent="printing_menu"
+        sequence="11"
+    />
+    <menuitem
+        id="print_printer_menu"
+        name="Printers"
+        action="action_print_printer"
+        parent="printing_menu"
+        sequence="12"
+    />
+    <menuitem
+        id="print_server_menu"
+        name="Servers"
+        action="action_print_server"
+        parent="printing_menu"
+        sequence="13"
+    />
+</odoo>

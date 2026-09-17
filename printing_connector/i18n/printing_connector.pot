@@ -1,0 +1,217 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* printing_connector
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e-20260330\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: printing_connector
+#: model:ir.model.fields.selection,name:printing_connector.selection__ir_actions_report__report_type__api
+msgid "API"
+msgstr ""
+
+#. module: printing_connector
+#. odoo-python
+#: code:addons/printing_connector/models/print_field.py:0
+msgid "Cannot get value if 'model_id is missing!"
+msgstr ""
+
+#. module: printing_connector
+#. odoo-python
+#: code:addons/printing_connector/models/print_field.py:0
+msgid "Cannot get value if 'source_field' is missing!"
+msgstr ""
+
+#. module: printing_connector
+#. odoo-python
+#: code:addons/printing_connector/models/ir_report.py:0
+msgid "Could not find report with report_ref %(ref)s"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model.fields,field_description:printing_connector.field_print_field__create_uid
+#: model:ir.model.fields,field_description:printing_connector.field_print_report__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model.fields,field_description:printing_connector.field_print_field__create_date
+#: model:ir.model.fields,field_description:printing_connector.field_print_report__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model.fields,field_description:printing_connector.field_ir_actions_report__display_name
+#: model:ir.model.fields,field_description:printing_connector.field_print_field__display_name
+#: model:ir.model.fields,field_description:printing_connector.field_print_report__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: printing_connector
+#. odoo-python
+#: code:addons/printing_connector/models/print_field.py:0
+msgid "Field %(field)s does not exist on model %(model)s"
+msgstr ""
+
+#. module: printing_connector
+#. odoo-python
+#: code:addons/printing_connector/models/print_field.py:0
+msgid "Field %(field)s on %(model)s is not relational"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model.fields,field_description:printing_connector.field_print_field__field_type
+msgid "Field Type"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.ui.menu,name:printing_connector.print_field_menu
+msgid "Fields"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model.fields,field_description:printing_connector.field_print_field__formatting
+msgid "Formatting"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model.fields,field_description:printing_connector.field_ir_actions_report__id
+#: model:ir.model.fields,field_description:printing_connector.field_print_field__id
+#: model:ir.model.fields,field_description:printing_connector.field_print_report__id
+msgid "ID"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model.fields,field_description:printing_connector.field_print_field__write_uid
+#: model:ir.model.fields,field_description:printing_connector.field_print_report__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model.fields,field_description:printing_connector.field_print_field__write_date
+#: model:ir.model.fields,field_description:printing_connector.field_print_report__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model.fields,field_description:printing_connector.field_print_report__mapping_ids
+msgid "Mapping"
+msgstr ""
+
+#. module: printing_connector
+#. odoo-python
+#: code:addons/printing_connector/models/ir_report.py:0
+msgid ""
+"Mismatch between print_report %(print)s and ir.report %(report)s models"
+msgstr ""
+
+#. module: printing_connector
+#. odoo-python
+#: code:addons/printing_connector/models/print_field.py:0
+msgid "Multiple values found for mapping %(mapping)s on record %(record)s"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model.fields,field_description:printing_connector.field_print_report__name
+msgid "Name"
+msgstr ""
+
+#. module: printing_connector
+#. odoo-python
+#: code:addons/printing_connector/models/print_field.py:0
+msgid "No value found for mapping %(mapping)s on record %(record)s"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.actions.act_window,name:printing_connector.action_print_field
+msgid "Print Fields"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model.fields,field_description:printing_connector.field_ir_actions_report__print_report_id
+msgid "Print Report"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.actions.act_window,name:printing_connector.action_print_report
+#: model:ir.ui.menu,name:printing_connector.print_report_menu
+msgid "Print Reports"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model,name:printing_connector.model_print_field
+msgid "Print field mapping"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.ui.menu,name:printing_connector.printing_menu
+msgid "Printing"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model.fields,field_description:printing_connector.field_print_field__report_id
+msgid "Report"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model,name:printing_connector.model_ir_actions_report
+msgid "Report Action"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model.fields,field_description:printing_connector.field_ir_actions_report__report_type
+msgid "Report Type"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model,name:printing_connector.model_print_report
+msgid "Report for label printing"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model.fields,field_description:printing_connector.field_print_field__source_field
+msgid "Source Field"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model.fields,field_description:printing_connector.field_print_field__static_value
+msgid "Static Value"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model.fields,field_description:printing_connector.field_print_field__target_field
+msgid "Target Field"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model.fields,field_description:printing_connector.field_print_field__target_model_id
+#: model:ir.model.fields,field_description:printing_connector.field_print_report__target_model_id
+msgid "Target Model"
+msgstr ""
+
+#. module: printing_connector
+#: model:ir.model.fields,help:printing_connector.field_ir_actions_report__report_type
+msgid ""
+"The type of the report that will be rendered, each one having its own "
+"rendering method. HTML means the report will be opened directly in your "
+"browser PDF means the report will be rendered using Wkhtmltopdf and "
+"downloaded by the user."
+msgstr ""
+
+#. module: printing_connector
+#: model_terms:ir.actions.act_window,help:printing_connector.action_print_field
+msgid "There is no examples click here to add new print field."
+msgstr ""
+
+#. module: printing_connector
+#: model_terms:ir.actions.act_window,help:printing_connector.action_print_report
+msgid "There is no examples click here to add new print report."
+msgstr ""

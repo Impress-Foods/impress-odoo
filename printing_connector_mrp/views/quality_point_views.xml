@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="quality_point_view_form_inherit" model="ir.ui.view">
+        <field name="name">quality_point.view.form.inherit</field>
+        <field name="model">quality.point</field>
+        <field name="inherit_id" ref="quality.quality_point_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='test_report_type']" position="after">
+                <field
+                    name="report_id"
+                    invisible="test_report_type != 'api'"
+                    required="test_report_type == 'api'"
+                    domain="[('model','in',['stock.lot', 'product.product'])]"
+                />
+                <field name="printer_id" invisible="test_report_type != 'api'" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
