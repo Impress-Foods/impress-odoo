@@ -34,33 +34,33 @@
                                     <field
                                         name="tracking"
                                         invisible='1'
-                                        readonly="state in ['done']"
+                                        readonly="state == 'done'"
                                     />
                                     <field
                                         name="company_id"
                                         invisible="1"
-                                        readonly="state in ['done']"
+                                        readonly="state == 'done'"
                                     />
                                     <field
                                         name="location_id"
                                         required="1"
-                                        readonly="state in ['done']"
+                                        readonly="state == 'done'"
                                     />
                                     <field
                                         name="product_id"
                                         required="1"
-                                        readonly="state in ['done']"
+                                        readonly="state == 'done'"
                                         context="{'global_vendor_search': True}"
                                     />
                                     <field
                                         name="scrap_qty"
                                         required="1"
-                                        readonly="state in ['done']"
+                                        readonly="state == 'done'"
                                     />
                                     <field
                                         name="lot_id"
                                         invisible="tracking=='none' or not product_id"
-                                        readonly="state in ['done']"
+                                        readonly="state == 'done'"
                                     />
                                 </group>
                             </group>
@@ -90,7 +90,7 @@
                     string="Consume Parts"
                     type="object"
                     class="oe_highlight"
-                    invisible="scrap_count == 0 or all_scraps_done"
+                    invisible="not has_scraps_to_validate"
                     groups="maintenance.group_equipment_manager"
                 />
             </xpath>

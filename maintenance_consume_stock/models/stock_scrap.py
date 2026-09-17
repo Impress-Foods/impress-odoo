@@ -1,9 +1,4 @@
-import logging
-
-from odoo import api, fields, models
-from odoo.exceptions import UserError
-
-_logger = logging.getLogger(__name__)
+from odoo import fields, models
 
 
 class StockScrap(models.Model):
@@ -14,25 +9,8 @@ class StockScrap(models.Model):
         string="Maintenance Request",
         ondelete="cascade",
     )
-    maintenance_equipment_id = fields.Many2one(
-        related="maintenance_request_id.equipment_id",
-        string="Equipment",
-        store=True,
-        depends=["maintenance_request_id", "maintenance_request_id.equipment_id"],
-    )
 
     product_vendor_code = fields.Char(related="product_id.vendor_code")
-
-    @api.ondelete(at_uninstall=False)
-    def _unlink_except_linked(self):
-        for record in self:
-            if record.maintenance_request_id and record.state == "done":
-                raise UserError(
-                    self.env._(
-                        "Cannot unlink a scrap move that is done and "
-                        "assigned to a maintenance request"
-                    )
-                )
 
     def action_view_maintenance_request(self):
         self.ensure_one()
