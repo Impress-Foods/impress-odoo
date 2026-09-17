@@ -263,7 +263,7 @@
         id="menu_mrp_campaign"
         name="Campaigns"
         parent="mrp.menu_mrp_root"
-        sequence="50"
+        sequence="8"
         groups="mrp.group_mrp_user"
     />
     <menuitem
