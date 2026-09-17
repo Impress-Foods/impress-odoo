@@ -50,6 +50,14 @@
         </xpath>
 
         <!-- Shelf life -->
+        <xpath expr="//*[@name='div_sched_date']" position="after">
+            <div class="col-auto" name="minimum_shelf_life" t-if="o.minimum_shelf_life">
+                <strong>Minimum shelf life:</strong>
+                <br />
+                <p>
+                    <span t-field="o.minimum_shelf_life">0</span> days </p>
+            </div>
+        </xpath>
         <xpath expr="//table[@name='stock_move_line_table']/thead" position="before">
             <t
                 t-set="has_shelf_life"
@@ -69,13 +77,14 @@
                     <td t-if="has_shelf_life" id="shelf-life-padding-1" />
                     <td t-if="has_shelf_life" id="shelf-life-padding-2" />
                     <td t-if="has_hs_code" id="hs-code-padding-1" />
+                    <td t-if="has_hs_code" id="hs-code-padding-1" />
+
                     <td class="text-end">
                         <strong>Total: </strong>
                     </td>
                     <td class="text-end">
                         <t t-out="total_delivered" />
                     </td>
-                    <td t-if="has_hs_code" id="hs-code-padding-1" />
                 </tr>
             </tfoot>
         </xpath>
@@ -94,15 +103,6 @@
                 t-field="o.name"
                 t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:300px;height:50px;'}"
             />
-        </xpath>
-
-        <xpath expr="//*[@name='div_sched_date']" position="after">
-            <div class="col-auto" name="minimum_shelf_life" t-if="o.minimum_shelf_life">
-                <strong>Minimum shelf life:</strong>
-                <br />
-                <p>
-                    <span t-field="o.minimum_shelf_life">0</span> days </p>
-            </div>
         </xpath>
     </template>
     <template
