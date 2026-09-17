@@ -2,7 +2,6 @@
 <odoo>
     <record id="maintenance_scrap_location" model="stock.location">
         <field name="name">Used Maintenance</field>
-        <!-- <field name="location_id" ref="stock.stock_location_locations_virtual" /> -->
         <field name="usage">inventory</field>
     </record>
 </odoo>
