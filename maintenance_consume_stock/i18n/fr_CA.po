@@ -28,27 +28,12 @@ msgid "<span class=\"o_stat_text\">Scraps</span>"
 msgstr "<span class=\"o_stat_text\">Rebuts</span>"
 
 #. module: maintenance_consume_stock
-#: model:ir.model.fields,field_description:maintenance_consume_stock.field_maintenance_request__all_scraps_done
-msgid "All Scraps Done"
-msgstr "Tout les rebuts complétés"
-
-#. module: maintenance_consume_stock
 #. odoo-python
 #: code:addons/maintenance_consume_stock/models/maintenance_request.py:0
-#, python-format
 msgid "Cannot delete a maintenance request with done scrap moves"
 msgstr ""
 "Il n'est pas possible de supprimer une requête de maintenance ayant de "
 "rebuts de complétés"
-
-#. module: maintenance_consume_stock
-#. odoo-python
-#: code:addons/maintenance_consume_stock/models/stock_scrap.py:0
-#, python-format
-msgid ""
-"Cannot unlink a scrap move that is done and assigned to a maintenance request"
-msgstr ""
-"Impossible de supprimer un rebut complété et lié à une requête de maintenance"
 
 #. module: maintenance_consume_stock
 #: model_terms:ir.ui.view,arch_db:maintenance_consume_stock.view_maintenance_request_form
@@ -56,16 +41,29 @@ msgid "Consume Parts"
 msgstr "Consommer des pièces"
 
 #. module: maintenance_consume_stock
-#: model:ir.model.fields,field_description:maintenance_consume_stock.field_stock_scrap__maintenance_equipement_id
-msgid "Equipment"
-msgstr "Équipement"
+#: model:ir.model.fields,field_description:maintenance_consume_stock.field_maintenance_request__display_name
+#: model:ir.model.fields,field_description:maintenance_consume_stock.field_product_product__display_name
+#: model:ir.model.fields,field_description:maintenance_consume_stock.field_stock_scrap__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: maintenance_consume_stock
+#: model:ir.model.fields,field_description:maintenance_consume_stock.field_maintenance_request__has_scraps_to_validate
+msgid "Has Scraps To Validate"
+msgstr ""
+
+#. module: maintenance_consume_stock
+#: model:ir.model.fields,field_description:maintenance_consume_stock.field_maintenance_request__id
+#: model:ir.model.fields,field_description:maintenance_consume_stock.field_product_product__id
+#: model:ir.model.fields,field_description:maintenance_consume_stock.field_stock_scrap__id
+msgid "ID"
+msgstr ""
 
 #. module: maintenance_consume_stock
 #. odoo-python
 #: code:addons/maintenance_consume_stock/models/stock_scrap.py:0
 #: model:ir.model,name:maintenance_consume_stock.model_maintenance_request
 #: model:ir.model.fields,field_description:maintenance_consume_stock.field_stock_scrap__maintenance_request_id
-#, python-format
 msgid "Maintenance Request"
 msgstr "Requête de maintenance"
 
@@ -73,6 +71,11 @@ msgstr "Requête de maintenance"
 #: model_terms:ir.ui.view,arch_db:maintenance_consume_stock.view_maintenance_request_form
 msgid "Parts"
 msgstr "Pièces"
+
+#. module: maintenance_consume_stock
+#: model:ir.model,name:maintenance_consume_stock.model_product_product
+msgid "Product Variant"
+msgstr ""
 
 #. module: maintenance_consume_stock
 #: model:ir.model,name:maintenance_consume_stock.model_stock_scrap
@@ -87,7 +90,6 @@ msgstr "Nombre de rebuts"
 #. module: maintenance_consume_stock
 #. odoo-python
 #: code:addons/maintenance_consume_stock/models/maintenance_request.py:0
-#, python-format
 msgid "Scrap Moves"
 msgstr "Mouvements de rebut"
 
@@ -95,3 +97,22 @@ msgstr "Mouvements de rebut"
 #: model:ir.model.fields,field_description:maintenance_consume_stock.field_maintenance_request__scrap_ids
 msgid "Scraps"
 msgstr "Rebuts"
+
+#. module: maintenance_consume_stock
+#: model:ir.model.fields,field_description:maintenance_consume_stock.field_stock_scrap__product_vendor_code
+msgid "Vendor Code"
+msgstr ""
+
+#~ msgid "All Scraps Done"
+#~ msgstr "Tout les rebuts complétés"
+
+#, python-format
+#~ msgid ""
+#~ "Cannot unlink a scrap move that is done and assigned to a maintenance "
+#~ "request"
+#~ msgstr ""
+#~ "Impossible de supprimer un rebut complété et lié à une requête de "
+#~ "maintenance"
+
+#~ msgid "Equipment"
+#~ msgstr "Équipement"
