@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-24 19:04+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-09-18 12:20+0000\n"
+"Last-Translator: admin <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/maintenance_consume_stock/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -45,19 +45,19 @@ msgstr "Consommer des pièces"
 #: model:ir.model.fields,field_description:maintenance_consume_stock.field_product_product__display_name
 #: model:ir.model.fields,field_description:maintenance_consume_stock.field_stock_scrap__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom d'affichage"
 
 #. module: maintenance_consume_stock
 #: model:ir.model.fields,field_description:maintenance_consume_stock.field_maintenance_request__has_scraps_to_validate
 msgid "Has Scraps To Validate"
-msgstr ""
+msgstr "A des rebuts à valider"
 
 #. module: maintenance_consume_stock
 #: model:ir.model.fields,field_description:maintenance_consume_stock.field_maintenance_request__id
 #: model:ir.model.fields,field_description:maintenance_consume_stock.field_product_product__id
 #: model:ir.model.fields,field_description:maintenance_consume_stock.field_stock_scrap__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: maintenance_consume_stock
 #. odoo-python
@@ -75,7 +75,7 @@ msgstr "Pièces"
 #. module: maintenance_consume_stock
 #: model:ir.model,name:maintenance_consume_stock.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Variante de produit"
 
 #. module: maintenance_consume_stock
 #: model:ir.model,name:maintenance_consume_stock.model_stock_scrap
@@ -101,7 +101,7 @@ msgstr "Rebuts"
 #. module: maintenance_consume_stock
 #: model:ir.model.fields,field_description:maintenance_consume_stock.field_stock_scrap__product_vendor_code
 msgid "Vendor Code"
-msgstr ""
+msgstr "Code fournisseur"
 
 #~ msgid "All Scraps Done"
 #~ msgstr "Tout les rebuts complétés"
