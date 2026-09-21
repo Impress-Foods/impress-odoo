@@ -3,15 +3,15 @@ from odoo.exceptions import UserError, ValidationError
 
 
 class LabelWizard(models.TransientModel):
-    _name = "label_wizard"
+    _name = "label.wizard"
     _description = "Label Wizard"
 
     model = fields.Selection(
         [
-            ("product", "Product"),
-            ("lot", "Lot"),
+            ("product.product", "Product"),
+            ("stock.lot", "Lot"),
         ],
-        default="product",
+        default="product.product",
         required=True,
     )
 
@@ -53,6 +53,18 @@ class LabelWizard(models.TransientModel):
         required=True,
     )
 
+    @api.constrains("label_qty")
+    def _check_label_qty(self):
+        for record in self:
+            if record.label_qty <= 0:
+                raise ValidationError(self.env._("Must print at least 1 label!"))
+
+    @api.constrains("product_uom_qty")
+    def _check_product_uom_qty(self):
+        for record in self:
+            if record.product_uom_qty < 0:
+                raise ValidationError(self.env._("Must set a 0 or positive quantity!"))
+
     # ------------------------------------------------------------------
     # Autofill helpers
     # ------------------------------------------------------------------
@@ -74,7 +86,7 @@ class LabelWizard(models.TransientModel):
                     ml.product_id == product and ml.lot_id == lot
                 )
             )
-            quantity = sum(move_lines.mapped("qty_done"))
+            quantity = sum(move_lines.mapped("quantity"))
             if move_lines:
                 selected_uom = move_lines[0].product_uom_id
         else:
@@ -92,7 +104,7 @@ class LabelWizard(models.TransientModel):
         vals = super().default_get(fields)
 
         if "model" in fields and not vals.get("model") and vals.get("lot_id"):
-            vals["model"] = "lot"
+            vals["model"] = "stock.lot"
 
         if (
             vals.get("picking_id")
@@ -128,7 +140,7 @@ class LabelWizard(models.TransientModel):
     def _compute_label_report(self) -> None:
         for record in self:
             report_ref = False
-            if record.model == "product":
+            if record.model == "product.product":
                 if record.label_size == "2x4":
                     report_ref = (
                         "label_printing_wizard.report_label_product_product_zpl_2x4"
@@ -137,7 +149,7 @@ class LabelWizard(models.TransientModel):
                     report_ref = (
                         "label_printing_wizard.report_label_product_product_zpl_4x6"
                     )
-            elif record.model == "lot":
+            elif record.model == "stock.lot":
                 if record.label_size == "2x4":
                     report_ref = "label_printing_wizard.report_label_lot_zpl_2x4"
                 else:
@@ -182,9 +194,9 @@ class LabelWizard(models.TransientModel):
         self.ensure_one()
         res_id = 0
         match self.model:
-            case "product":
+            case "product.product":
                 res_id = self.product_id.id
-            case "lot":
+            case "stock.lot":
                 res_id = self.lot_id.id
             case _:
                 raise ValidationError(self.env._("Invalid model for wizard!"))

@@ -9,7 +9,7 @@ class StockMoveLine(models.Model):
     def action_open_label_wizard(self) -> dict:
         action: dict[str, str | list[Any] | dict[str, Any]] = {
             "type": "ir.actions.act_window",
-            "res_model": "label_wizard",
+            "res_model": "label.wizard",
             "view_mode": "form",
             "target": "new",
             "views": [(False, "form")],
@@ -22,6 +22,6 @@ class StockMoveLine(models.Model):
         if self.lot_id:
             context: dict[str, Any] = action["context"]
             context["default_lot_id"] = self.lot_id.id
-            context["default_model"] = "lot"
+            context["default_model"] = "stock.lot"
 
         return action

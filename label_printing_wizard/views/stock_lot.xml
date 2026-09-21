@@ -11,7 +11,7 @@
                         name="%(label_printing_wizard.action_label_wizard)d"
                         string="Print Labels"
                         type="action"
-                        context="{'default_model': 'lot', 'default_product_id': product_id, 'default_lot_id': id}"
+                        context="{'default_model': 'stock.lot', 'default_product_id': product_id, 'default_lot_id': id}"
                     />
                 </header>
             </xpath>

@@ -3,7 +3,7 @@
     <!-- View labelWizard form -->
     <record id="view_label_wizard_form" model="ir.ui.view">
         <field name="name">view.labelWizard.form</field>
-        <field name="model">label_wizard</field>
+        <field name="model">label.wizard</field>
         <field name="arch" type="xml">
             <form string="Label Printing Wizard">
                 <group>
@@ -18,16 +18,16 @@
                     <group>
                         <field
                             name="product_id"
-                            domain="[('id','in', picking_id.move_ids.product_id.ids), ('tracking','in',['lot','serial'])] if picking_id and model == 'lot' else [('id','in', picking_id.move_ids.product_id.ids)] if picking_id else [('tracking','in',['lot','serial'])] if model == 'lot' else []"
-                            required="model == 'product'"
+                            domain="[('id','in', picking_id.move_ids.product_id.ids), ('tracking','in',['lot','serial'])] if picking_id and model == 'stock.lot' else [('id','in', picking_id.move_ids.product_id.ids)] if picking_id else [('tracking','in',['lot','serial'])] if model == 'stock.lot' else []"
+                            required="model == 'product.product'"
                         />
 
                         <field
                             name="lot_id"
                             domain="[('product_id','=',product_id), ('id','in', picking_id.move_line_ids.lot_id.ids)] if picking_id and product_id else [('product_id','=',product_id)] if product_id else [('id','in', picking_id.move_line_ids.lot_id.ids)] if picking_id else []"
                             context="{'default_product_id': product_id}"
-                            required="model == 'lot'"
-                            invisible="model != 'lot'"
+                            required="model == 'stock.lot'"
+                            invisible="model != 'stock.lot'"
                         />
 
                         <label for="product_uom_qty" string="Quantity" />
@@ -58,7 +58,7 @@
     <record id="action_label_wizard" model="ir.actions.act_window">
         <field name="name">Label Wizard</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">label_wizard</field>
+        <field name="res_model">label.wizard</field>
         <field name="view_mode">form</field>
         <field name="binding_model_id" ref="label_printing_wizard.model_label_wizard" />
         <field name="target">new</field>

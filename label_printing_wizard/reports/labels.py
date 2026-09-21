@@ -1,7 +1,7 @@
 import markupsafe
 
 from odoo import api, models
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import ValidationError
 
 from odoo.addons.product.models.product_product import ProductProduct
 from odoo.addons.stock.models.stock_lot import StockLot
@@ -278,11 +278,10 @@ class ReportLotLabel2x4(models.AbstractModel):
         lots = self.env["stock.lot"].browse(res_ids)
         lot_list = []
 
-        for lot in lots:
-            if len(lots) != 1:
-                raise UserError(self.env._("Only one lot can be selected"))
+        lots.ensure_one()
 
-            lot_values = data.get(str(lot.id), data.get(lot.id, {}))  # type: ignore[arg-type]
+        for lot in lots:
+            lot_values = data.get(str(lot.id), data.get(lot.id, {}))
             if not lot_values:
                 lot_values = {}
             data_dict = self._build_label_record(
