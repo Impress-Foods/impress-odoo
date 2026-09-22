@@ -20,6 +20,11 @@ msgstr ""
 "X-Generator: Weblate 2026.5\n"
 
 #. module: label_printing_wizard
+#: model:ir.actions.report,print_report_name:label_printing_wizard.report_product_template_label_pdf
+msgid "'Products Labels - %s' % (object.name)"
+msgstr ""
+
+#. module: label_printing_wizard
 #: model:ir.model.fields.selection,name:label_printing_wizard.selection__label_wizard__label_size__2x4
 msgid "2x4"
 msgstr "2x4"
@@ -137,7 +142,7 @@ msgstr "Dernière mise à jour le"
 
 #. module: label_printing_wizard
 #: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__lot_id
-#: model:ir.model.fields.selection,name:label_printing_wizard.selection__label_wizard__model__lot
+#: model:ir.model.fields.selection,name:label_printing_wizard.selection__label_wizard__model__stock_lot
 msgid "Lot"
 msgstr "Lot"
 
@@ -167,15 +172,21 @@ msgid "Model"
 msgstr "Modèle"
 
 #. module: label_printing_wizard
-#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__label_qty
-msgid "Number of Labels"
-msgstr "Nombre d'étiquettes"
+#. odoo-python
+#: code:addons/label_printing_wizard/wizards/label_wizard.py:0
+msgid "Must print at least 1 label!"
+msgstr ""
 
 #. module: label_printing_wizard
 #. odoo-python
-#: code:addons/label_printing_wizard/reports/labels.py:0
-msgid "Only one lot can be selected"
-msgstr "Seulement un lot peut être sélectionné à la fois"
+#: code:addons/label_printing_wizard/wizards/label_wizard.py:0
+msgid "Must set a 0 or positive quantity!"
+msgstr ""
+
+#. module: label_printing_wizard
+#: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__label_qty
+msgid "Number of Labels"
+msgstr "Nombre d'étiquettes"
 
 #. module: label_printing_wizard
 #: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__product_uom_id
@@ -203,7 +214,7 @@ msgstr "Imprimer les étiquettes"
 
 #. module: label_printing_wizard
 #: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__product_id
-#: model:ir.model.fields.selection,name:label_printing_wizard.selection__label_wizard__model__product
+#: model:ir.model.fields.selection,name:label_printing_wizard.selection__label_wizard__model__product_product
 msgid "Product"
 msgstr "Produit"
 
@@ -222,6 +233,13 @@ msgstr "Étiquette de produit (ZPL 2x4)"
 #: model:ir.actions.report,name:label_printing_wizard.report_label_product_product_zpl_4x6
 msgid "Product Label (ZPL 4x6)"
 msgstr "Étiquette de produit (ZPL 4x6)"
+
+#. module: label_printing_wizard
+#: model:ir.actions.report,name:label_printing_wizard.report_product_template_label_pdf
+#, fuzzy
+#| msgid "Product Label (ZPL 2x4)"
+msgid "Product Label 2x4 (PDF)"
+msgstr "Étiquette de produit (ZPL 2x4)"
 
 #. module: label_printing_wizard
 #: model:ir.model,name:label_printing_wizard.model_report_label_printing_wizard_label_product_product_zpl_2x4
@@ -266,6 +284,9 @@ msgstr "Transfert"
 #: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__uom_id
 msgid "Unit"
 msgstr "Unité"
+
+#~ msgid "Only one lot can be selected"
+#~ msgstr "Seulement un lot peut être sélectionné à la fois"
 
 #~ msgid "<span class=\"ms-1\" invisible=\"not packaging_id\">Cases</span>"
 #~ msgstr "<span class=\"ms-1\" invisible=\"not packaging_id\">Caisses</span>"
