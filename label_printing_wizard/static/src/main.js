@@ -8,17 +8,6 @@ patch(MainComponent.prototype, {
         const action = await this.orm.call(this.resModel, "action_open_label_wizard", [
             [this.resId],
         ]);
-        /**
-        const onClose = (res) => {
-            if (res && res.cancelled) {
-                this.env.model._cancelNotification();
-                this.env.config.historyBack();
-            }
-        };
-        this.action.doAction(action, {
-            onClose: onClose.bind(this),
-        });
-         */
         this.action.doAction(action);
     },
 });

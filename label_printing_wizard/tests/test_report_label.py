@@ -13,11 +13,10 @@ class TestReportLabelBase(common.TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
 
-        uom = cls.env["uom.uom"]
-        cls.unit_uom = uom.search([("name", "=", "Units")])
-        cls.weight_uom_kg = uom.search([("name", "=", "kg")])
-        cls.volume_uom_liter = uom.search([("name", "=", "L")])
-        cls.weight_uom_g = uom.search([("name", "=", "g")])
+        cls.unit_uom = cls.env.ref("uom.product_uom_unit")
+        cls.weight_uom_kg = cls.env.ref("uom.product_uom_kgm")
+        cls.volume_uom_liter = cls.env.ref("uom.product_uom_litre")
+        cls.weight_uom_g = cls.env.ref("uom.product_uom_gram")
 
         # Create products
         cls.product_template_tracking_none = cls.env["product.template"].create(
@@ -108,17 +107,17 @@ class TestReportLabelBase(common.TransactionCase):
             "barcodes_gs1_nomenclature.default_gs1_nomenclature"
         )
 
-    def _assert_parsed_gs1(cls, barcode, expected) -> None:
+    def _assert_parsed_gs1(self, barcode, expected) -> None:
         """Helper to verify that a GS1 barcode parses into expected values.
         expected: dict mapping AI to expected value (e.g. {'01': '...', '10': '...'})
         """
-        parsed_results = cls.nomenclature.parse_barcode(barcode)
+        parsed_results = self.nomenclature.parse_barcode(barcode)
         parsed_dict = {res["ai"]: res["value"] for res in parsed_results}
         for ai, expected_val in expected.items():
-            cls.assertIn(
+            self.assertIn(
                 ai, parsed_dict, f"AI {ai} missing from parsed barcode {barcode}"
             )
-            cls.assertEqual(
+            self.assertEqual(
                 parsed_dict[ai],
                 expected_val,
                 f"Value mismatch for AI {ai} in barcode {barcode}. "

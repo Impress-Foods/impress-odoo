@@ -12,7 +12,7 @@
                         name="%(label_printing_wizard.action_label_wizard)d"
                         string="Print Labels"
                         type="action"
-                        context="{'default_model': 'product', 'default_product_id': id}"
+                        context="{'default_model': 'product.product', 'default_product_id': id}"
                     />
                 </header>
             </xpath>
@@ -32,7 +32,7 @@
                         name="%(label_printing_wizard.action_label_wizard)d"
                         string="Print Labels"
                         type="action"
-                        context="{'default_model': 'product', 'default_product_id': product_variant_id}"
+                        context="{'default_model': 'product.product', 'default_product_id': product_variant_id}"
                     />
                 </header>
             </xpath>
@@ -50,7 +50,7 @@
                         name="%(label_printing_wizard.action_label_wizard)d"
                         string="Print Labels"
                         type="action"
-                        context="{'default_model': 'product', 'default_product_id': id}"
+                        context="{'default_model': 'product.product', 'default_product_id': id}"
                     />
                 </header>
             </xpath>

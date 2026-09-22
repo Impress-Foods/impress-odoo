@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-name="label_printing_wizard_mrp.MrpDisplayMenuDialog"
+        t-inherit="mrp_workorder.MrpDisplayMenuDialog"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//Dialog/div[1]/div[1]" position="inside">
+            <div class="col-6 p-1">
+                <button
+                    class="d-flex flex-column gap-1 btn btn-secondary fs-3 w-100 h-100 py-3"
+                    name="action_label_wizard"
+                    t-on-click="() => this.openLabelWizard()"
+                >
+                    <i class="fa fa-random" /> Labels
+                </button>
+            </div>
+        </xpath>
+    </t>
+
+</templates>

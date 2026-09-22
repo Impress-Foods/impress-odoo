@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="label_2x4" model="report.paperformat">
+        <field name="name">Label 2inx4in</field>
+        <field name="format">custom</field>
+        <field name="orientation">Landscape</field>
+        <field name="page_height">101</field>
+        <field name="page_width">50</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_spacing">0</field>
+        <field name="dpi">96</field>
+        <field name="disable_shrinking" eval="True" />
+    </record>
+
+    <record id="label_4x6" model="report.paperformat">
+        <field name="name">Label 4inx6in</field>
+        <field name="format">custom</field>
+        <field name="orientation">Landscape</field>
+        <field name="page_height">152</field>
+        <field name="page_width">101</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_spacing">0</field>
+        <field name="dpi">96</field>
+        <field name="disable_shrinking" eval="True" />
+    </record>
+
+    <record id="label_3x3" model="report.paperformat">
+        <field name="name">Label 3inx3in</field>
+        <field name="format">custom</field>
+        <field name="orientation">Landscape</field>
+        <field name="page_height">76</field>
+        <field name="page_width">76</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_spacing">0</field>
+        <field name="dpi">96</field>
+        <field name="disable_shrinking" eval="True" />
+    </record>
+</odoo>
