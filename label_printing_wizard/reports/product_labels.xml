@@ -12,26 +12,27 @@
                 />
                 <t t-translation="off">
                     <t t-out="'^XA^CI28'" />
+                    <t t-out="'^PW812^LL406^LH0,0'" />
                     <t name="product_name">
                         <t
-                            t-out="'^FO10,10 ^A0N,66,44^FB800,2,0,L^FD' + product_info['display_name_markup'] + '^FS'"
+                            t-out="'^FO10,10^A0N,66,44^FB800,2,0,L^FD' + product_info['display_name_markup'] + '^FS'"
                         />
                     </t>
                     <t t-if="product_qty != 0" name="product_quantity">
                         <t
-                            t-out="'^FO10,250 ^A0N,66,44^FB800,2,0,L^FDQTY: ' + str(product_qty) + ' ' + product_uom.display_name + '^FS'"
+                            t-out="'^FO10,250^A0N,66,44^FB800,2,0,L^FDQTY: ' + str(product_qty) + ' ' + product_uom.display_name + '^FS'"
                         />
                     </t>
 
                     <t name="barcode">
                         <t t-if="product_info['gs1_barcode']">
                             <t
-                                t-out="'^FO550,160^BY3 ^BXN,12,200 ^FD' + product_info['gs1_barcode'] + '^FS'"
+                                t-out="'^FO550,160^BY10,2,100^BXN,10,200^FD' + product_info['gs1_barcode'] + '^FS'"
                             />
                         </t>
                         <t t-elif="product.barcode">
                             <t
-                                t-out="'^FO550,160^BY3 ^BXN,12,200 ^FD' + product.barcode + '^FS'"
+                                t-out="'^FO550,160^BY10,2,100^BXN,10,200^FD' + product.barcode + '^FS'"
                             />
                         </t>
                     </t>
@@ -56,23 +57,23 @@
                     </t>
                     <t name="product_name">
                         <t
-                            t-out="'^FO600,50 ^A0R,88,66^FB1100,2,0,L^FD' + product_info['display_name_markup'] + '^FS'"
+                            t-out="'^FO600,50^A0R,88,66^FB1100,2,0,L^FD' + product_info['display_name_markup'] + '^FS'"
                         />
                     </t>
                     <t t-if="product_qty != 0" name="product_qty">
                         <t
-                            t-out="'^FO400,50 ^A0R,88,66^FDQTY: ' + str(product_qty) + ' ' + product_uom.display_name + '^FS'"
+                            t-out="'^FO400,50^A0R,88,66^FDQTY: ' + str(product_qty) + ' ' + product_uom.display_name + '^FS'"
                         />
                     </t>
                     <t name="barcode">
                         <t t-if="product_info['gs1_barcode']">
                             <t
-                                t-out="'^FO100,800^BY3 ^BXR,20,200 ^FD' + product_info['gs1_barcode'] + '^FS'"
+                                t-out="'^FO100,800^BY20,2,100^BXR,20,200^FD' + product_info['gs1_barcode'] + '^FS'"
                             />
                         </t>
                         <t t-elif="product.barcode">
                             <t
-                                t-out="'^FO100,800^BY3 ^BXR,20,200 ^FD' + product.barcode + '^FS'"
+                                t-out="'^FO100,800^BY20,2,100^BXR,20,200^FD' + product.barcode + '^FS'"
                             />
                         </t>
                     </t>
