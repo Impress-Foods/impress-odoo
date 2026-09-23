@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="print_report_view_list" model="ir.ui.view">
+        <field name="name">print.report.list</field>
+        <field name="model">print.report</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="target_model_id" />
+                <field name="template" />
+            </list>
+        </field>
+    </record>
+
+    <record id="print_report_view_form" model="ir.ui.view">
+        <field name="name">print.report.form</field>
+        <field name="model">print.report</field>
+        <field name="arch" type="xml">
+            <form string="API Payload Profile">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="target_model_id" />
+                            <field name="model" />
+                        </group>
+                        <group>
+                            <field name="template" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Field Mappings" name="mappings">
+                            <field name="mapping_ids">
+                                <list editable="bottom">
+                                    <field name="target_field" />
+                                    <field name="source_field" />
+                                    <field name="field_type" readonly="1" />
+                                    <field name="static_value" />
+                                    <field name="formatting" optional="hide" />
+                                    <field name="translate" optional="hide" />
+                                    <field
+                                        name="languages"
+                                        widget="many2many_tags"
+                                        invisible="not translate"
+                                        optional="hide"
+                                    />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_print_report" model="ir.actions.act_window">
+        <field name="name">API Payload Profiles</field>
+        <field name="res_model">print.report</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        id="print_report_menu"
+        name="API Payload Profiles"
+        parent="base_report_to_printer.printing_menu"
+        action="action_print_report"
+        sequence="30"
+    />
+</odoo>
