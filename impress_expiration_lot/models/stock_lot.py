@@ -1,6 +1,6 @@
 from datetime import date, datetime, timedelta
 
-from odoo import api, models
+from odoo import api, fields, models
 
 
 class StockLot(models.Model):
@@ -15,7 +15,7 @@ class StockLot(models.Model):
         year, day = "20" + lot_number[:2], int(lot_number[2:])
         production = datetime.combine(
             date(int(year), 1, 1) + timedelta(days=day - 1),
-            datetime.strptime("12:00", "%H:%M").time(),
+            datetime.strptime("12:00", "%H:%M").time(),  # noqa: DTZ007
         )
         if not product_id:
             return {"expiration_date": production.strftime("%Y-%m-%d %H:%M:%S")}
@@ -62,3 +62,63 @@ class StockLot(models.Model):
             date_vals = lot._get_date_vals(lot.name, lot.product_id.id)
             if date_vals:
                 lot.write(date_vals)
+
+    @api.model
+    def _get_lots_to_send_alert(self, alert_date):
+        first_pass_date = alert_date - timedelta(days=1)
+        lots = self.env["stock.lot"].search([("alert_date", ">=", first_pass_date)])
+        lots = lots.filtered(lambda lot: lot.alert_date.date() == alert_date)
+        alert_lots = (
+            self.env["stock.quant"]
+            .search(
+                [
+                    ("lot_id", "in", lots.ids),
+                    ("quantity", ">", 0),
+                    ("location_id.usage", "=", "internal"),
+                ]
+            )
+            .mapped("lot_id")
+        )
+        return alert_lots
+
+    @api.model
+    def _cron_send_alert(self):
+        today = fields.Date.today()
+        lots = self._get_lots_to_send_alert(today)
+
+        if not lots:
+            return
+
+        email_template = self.env.ref(
+            "impress_expiration_lot.aggregated_lot_expiry_alert"
+        )
+
+        email_values = {
+            "email_cc": False,
+            "auto_delete": False,
+            "message_type": "user_notification",
+            "recipient_ids": [],
+            "partner_ids": [],
+            "scheduled_date": False,
+            "email_to": email_template.email_to,
+        }
+        base_url = self.env["ir.config_parameter"].get_param("web.base.url", "")
+        body = self.env["ir.ui.view"]._render_template(
+            "impress_expiration_lot.body_aggregated_expiry_alert",
+            {"today": today, "lots": lots, "base_url": base_url},
+        )
+
+        sender_email = self.env["res.company"].browse([1]).email_formatted
+        mail = (
+            self.env["mail.mail"]
+            .sudo()
+            .create(
+                {
+                    "subject": self.env._("Lot alerts for %s", today),
+                    "email_from": sender_email,
+                    "body_html": body,
+                    **email_values,
+                }
+            )
+        )
+        mail.send()
