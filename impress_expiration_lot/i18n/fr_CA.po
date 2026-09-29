@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-07-21 16:33+0000\n"
-"Last-Translator: Cédric Paradis <cedric@cedricparadis.ca>\n"
+"PO-Revision-Date: 2026-09-29 15:58+0000\n"
+"Last-Translator: admin <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/impress_expiration_lot/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -21,6 +21,7 @@ msgstr ""
 #: model:mail.template,subject:impress_expiration_lot.aggregated_lot_expiry_alert
 msgid " Lot expiry alerts for {{ datetime.datetime.today().date() }} "
 msgstr ""
+" Alertes d'expiration de lot pour {{ datetime.datetime.today().date() }} "
 
 #. module: impress_expiration_lot
 #: model:mail.template,body_html:impress_expiration_lot.aggregated_lot_expiry_alert
@@ -28,11 +29,13 @@ msgid ""
 "<div/>\n"
 "        "
 msgstr ""
+"<div/>\n"
+"        "
 
 #. module: impress_expiration_lot
 #: model:mail.template,name:impress_expiration_lot.aggregated_lot_expiry_alert
 msgid "Aggregated lot expiry alert"
-msgstr ""
+msgstr "Alerte d'expiration de lot agrégée"
 
 #. module: impress_expiration_lot
 #: model:ir.model.fields,field_description:impress_expiration_lot.field_stock_lot__display_name
@@ -48,7 +51,7 @@ msgstr "ID"
 #. odoo-python
 #: code:addons/impress_expiration_lot/models/stock_lot.py:0
 msgid "Lot alerts for %s"
-msgstr ""
+msgstr "Alertes de lot pour %s"
 
 #. module: impress_expiration_lot
 #: model:ir.model,name:impress_expiration_lot.model_stock_lot
@@ -63,12 +66,12 @@ msgstr "Analyser le numéro de lot et entrer les bonnes dates"
 #. module: impress_expiration_lot
 #: model:ir.actions.server,name:impress_expiration_lot.ir_cron_send_aggregated_lot_alert_ir_actions_server
 msgid "Send aggregated lot alert"
-msgstr ""
+msgstr "Envoyer l'alerte d'expiration de lot agrégée"
 
 #. module: impress_expiration_lot
 #: model_terms:ir.ui.view,arch_db:impress_expiration_lot.body_aggregated_expiry_alert
 msgid "The following lots have expiry alerts today ("
-msgstr ""
+msgstr "Les lots suivants tombent en alerte d'expiration aujourd'hui ("
 
 #~ msgid "Execute Code"
 #~ msgstr "Exécuter le code"
