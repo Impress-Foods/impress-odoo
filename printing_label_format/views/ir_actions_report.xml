@@ -5,12 +5,8 @@
         <field name="model">ir.actions.report</field>
         <field name="inherit_id" ref="base.act_report_xml_view" />
         <field name="arch" type="xml">
-            <!-- The size is declared here, so it is edited here. It is not
-                 guarded on the dashboard flag: that flag lives downstream and
-                 a report type the map does not know yet must still be able to
-                 carry a size. -->
             <field name="report_type" position="after">
-                <field name="label_size" />
+                <field name="label_size_id" />
             </field>
         </field>
     </record>

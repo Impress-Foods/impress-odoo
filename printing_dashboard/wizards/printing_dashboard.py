@@ -23,8 +23,7 @@ class PrintingDashboard(models.TransientModel):
     product_id = fields.Many2one(
         "product.product", ondelete="cascade", domain=[("type", "=", "consu")]
     )
-    # The product is what narrows the lot picker: labeling a lot means picking
-    # one of that product's lots, not any lot in the database.
+
     lot_id = fields.Many2one(
         "stock.lot",
         domain="[('product_id','=',product_id.id)]",
@@ -34,29 +33,42 @@ class PrintingDashboard(models.TransientModel):
         "ir.actions.report",
         string="Report",
         domain="[('model','=',target_model), ('is_dashboard_report','=',True),"
-        " ('label_format','=',printer_label_format),"
-        " ('label_size','=',printer_label_size)]",
+        "('label_format','=',printer_label_format),"
+        "('label_size_id','=',printer_label_size_id)]",
         help="Report action to execute. Only reports marked as dashboard "
         "reports are offered, because only those can consume the payload the "
         "dashboard builds. Choosing a printer narrows this to the labels that "
         "machine can print.",
     )
     copies = fields.Integer(string="Labels", default=1)
-    # Plain text rather than a Selection: this only feeds the printer domain
-    # below, and the list of formats belongs to printing_label_format.
     report_label_format = fields.Char(compute="_compute_report_label_format")
-    report_label_size = fields.Char(compute="_compute_report_label_format")
+    report_label_size_id = fields.Many2one(
+        "printing.label.size", compute="_compute_report_label_format"
+    )
     printer_label_format = fields.Char(compute="_compute_printer_label")
-    printer_label_size = fields.Char(compute="_compute_printer_label")
+    printer_label_size_id = fields.Many2one(
+        "printing.label.size", compute="_compute_printer_label"
+    )
     printer_has_report = fields.Boolean(compute="_compute_printer_has_report")
     printer_id = fields.Many2one(
         "printing.printer",
         domain="[('label_format', '=', report_label_format),"
-        " ('label_size', '=', report_label_size)]",
+        " ('label_size_id', '=', report_label_size_id)]",
         help="Printer this label goes to. Pick the machine you are standing at "
         "and the labels narrow to what it prints. It starts on whatever "
         "printer the report is already configured for, which is usually what "
         "you want.",
+    )
+    product_uom_qty = fields.Float(string="Quantity")
+    product_uom_id = fields.Many2one(
+        "uom.uom",
+        string="Packaging",
+        domain="[('id', 'in', available_uom_ids)]",
+    )
+    available_uom_ids = fields.Many2many(
+        "uom.uom",
+        string="Available UOMs",
+        compute="_compute_available_uom_ids",
     )
 
     def _printer_report_domain(self) -> Domain:
@@ -68,12 +80,12 @@ class PrintingDashboard(models.TransientModel):
             self.target_model, self.printer_id
         )
 
-    @api.depends("printer_id.label_format", "printer_id.label_size")
+    @api.depends("printer_id.label_format", "printer_id.label_size_id")
     def _compute_printer_label(self) -> None:
         for dashboard in self:
             printer = dashboard.printer_id
             dashboard.printer_label_format = printer.label_format
-            dashboard.printer_label_size = printer.label_size
+            dashboard.printer_label_size_id = printer.label_size_id
 
     @api.depends("printer_id", "target_model")
     def _compute_printer_has_report(self) -> None:
@@ -86,18 +98,6 @@ class PrintingDashboard(models.TransientModel):
                     dashboard._printer_report_domain(), limit=1
                 )
             )
-
-    product_uom_qty = fields.Float(string="Quantity")
-    product_uom_id = fields.Many2one(
-        "uom.uom",
-        string="Packaging",
-        domain="[('id', 'in', available_uom_ids)]",
-    )
-    available_uom_ids = fields.Many2many(
-        "uom.uom",
-        string="Available UOMs",
-        compute="_compute_available_uom_ids",
-    )
 
     def _get_source_record(self) -> models.Model:
         """Return the record this dashboard was opened from, if still there."""
@@ -117,17 +117,12 @@ class PrintingDashboard(models.TransientModel):
             source = dashboard._get_source_record()
             dashboard.source_name = source.display_name if source else False
 
-    @api.depends("report_id.report_type", "report_id.label_size")
+    @api.depends("report_id.report_type", "report_id.label_size_id")
     def _compute_report_label_format(self) -> None:
-        printer_obj = self.env["printing.printer"]
         for dashboard in self:
             report = dashboard.report_id
-            dashboard.report_label_format = (
-                printer_obj._label_format_of(report) if report else False
-            )
-            dashboard.report_label_size = (
-                printer_obj._label_size_of(report) if report else False
-            )
+            dashboard.report_label_format = report.label_format if report else False
+            dashboard.report_label_size_id = report.label_size_id if report else False
 
     @api.depends("product_id")
     def _compute_available_uom_ids(self) -> None:

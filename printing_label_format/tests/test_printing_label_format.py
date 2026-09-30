@@ -1,6 +1,8 @@
 from unittest.mock import patch
 
-from odoo.tests.common import TransactionCase
+from psycopg2 import IntegrityError
+
+from odoo.tests.common import TransactionCase, mute_logger
 
 
 class TestPrintingLabelFormat(TransactionCase):
@@ -10,7 +12,7 @@ class TestPrintingLabelFormat(TransactionCase):
                 "name": name,
                 "model": "product.product",
                 "report_type": report_type,
-                "label_size": size,
+                "label_size_id": self._size(size).id if size else False,
                 "report_name": "base.report_partner",
             }
         )
@@ -22,17 +24,19 @@ class TestPrintingLabelFormat(TransactionCase):
                 "system_name": name.lower().replace(" ", "-"),
                 "backend": "base",
                 "label_format": label_format,
-                "label_size": size,
+                "label_size_id": self._size(size).id if size else False,
             }
         )
 
-    def test_label_format_of_report(self):
-        printer_obj = self.env["printing.printer"]
+    def _size(self, name):
+        return self.env.ref(f"printing_label_format.size_{name}")
+
+    def test_the_report_declares_its_format(self):
         pdf_report = self._make_report("PLF PDF Label", "qweb-pdf")
         zpl_report = self._make_report("PLF ZPL Label", "qweb-text")
 
-        self.assertEqual(printer_obj._label_format_of(pdf_report), "pdf")
-        self.assertEqual(printer_obj._label_format_of(zpl_report), "zpl")
+        self.assertEqual(pdf_report.label_format, "pdf")
+        self.assertEqual(zpl_report.label_format, "zpl")
 
     def test_a_printer_takes_one_format_and_size(self):
         """A template written for one size is not printable on another, so both
@@ -64,24 +68,25 @@ class TestPrintingLabelFormat(TransactionCase):
         html_report = self._make_report("PLF HTML Label", "qweb-html")
         zpl_printer = self._make_printer("PLF ZPL", "zpl")
 
-        self.assertIsNone(self.env["printing.printer"]._label_format_of(html_report))
+        self.assertFalse(html_report.label_format)
         self.assertFalse(zpl_printer._supports_report(html_report))
 
     def test_the_map_is_where_routing_lives(self):
         # Extending the map is all it takes to route a report type to a format
         # that is already declared, so a module adding a format only has to
         # list it in the selection and map it here.
-        printer_obj = self.env["printing.printer"]
+        report_model = self.env["ir.actions.report"]
         html_report = self._make_report("PLF HTML Label", "qweb-html")
         zpl_printer = self._make_printer("PLF ZPL", "zpl")
         pdf_printer = self._make_printer("PLF PDF", "pdf")
 
         with patch.object(
-            type(printer_obj),
+            type(report_model),
             "_label_format_map",
             return_value={"qweb-pdf": "pdf", "qweb-text": "zpl", "qweb-html": "pdf"},
         ):
-            self.assertEqual(printer_obj._label_format_of(html_report), "pdf")
+            html_report._compute_label_format()
+            self.assertEqual(html_report.label_format, "pdf")
             self.assertTrue(pdf_printer._supports_report(html_report))
             self.assertFalse(zpl_printer._supports_report(html_report))
 
@@ -111,6 +116,25 @@ class TestPrintingLabelFormat(TransactionCase):
         self.assertEqual(view.model, "ir.actions.report")
         self.assertIn("label_size", view.arch)
 
+    def test_the_seeded_sizes_carry_their_dimensions(self):
+        """An administrator adds a size without code, so the model holds the
+        physical stock rather than a Selection."""
+        size = self._size("4x6")
+
+        self.assertEqual(size.name, "4x6")
+        self.assertEqual(size.width_mm, 101)
+        self.assertEqual(size.height_mm, 152)
+
+    def test_a_size_name_is_unique(self):
+        """Two records for the same stock would silently break the pairing."""
+        with (
+            self.assertRaises(IntegrityError),
+            mute_logger("odoo.sql_db"),
+        ):
+            self.env["printing.label.size"].create(
+                {"name": "2x4", "width_mm": 50, "height_mm": 101}
+            )
+
     def test_the_label_types_live_here(self):
         """A transport adds its label type without depending on the dashboard.
 
@@ -121,5 +145,5 @@ class TestPrintingLabelFormat(TransactionCase):
 
         self.assertEqual(report_model._label_report_types(), ["qweb-text"])
         # A type the printer stack can render is not necessarily a label.
-        self.assertIn("qweb-pdf", self.env["printing.printer"]._label_format_map())
+        self.assertIn("qweb-pdf", report_model._label_format_map())
         self.assertNotIn("qweb-pdf", report_model._label_report_types())

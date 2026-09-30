@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="size_2x4" model="printing.label.size">
+        <field name="name">2x4</field>
+        <field name="width_mm">50</field>
+        <field name="height_mm">101</field>
+    </record>
+
+    <record id="size_3x3" model="printing.label.size">
+        <field name="name">3x3</field>
+        <field name="width_mm">76</field>
+        <field name="height_mm">76</field>
+    </record>
+
+    <record id="size_4x6" model="printing.label.size">
+        <field name="name">4x6</field>
+        <field name="width_mm">101</field>
+        <field name="height_mm">152</field>
+    </record>
+</odoo>

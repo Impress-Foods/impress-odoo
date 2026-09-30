@@ -20,28 +20,25 @@ class QualityCheckPrinterPicker(models.TransientModel):
         "produces, which is what a work order step normally wants.",
     )
     report_label_format = fields.Char(compute="_compute_report_label_format")
-    report_label_size = fields.Char(compute="_compute_report_label_format")
+    report_label_size_id = fields.Many2one(
+        "printing.label.size", compute="_compute_report_label_format"
+    )
     printer_id = fields.Many2one(
         "printing.printer",
         string="Printer",
         required=True,
         domain="[('label_format', '=', report_label_format),"
-        " ('label_size', '=', report_label_size)]",
+        " ('label_size_id', '=', report_label_size_id)]",
         help="Printer to print on. Starts on the one this step uses, and "
         "offers any other that can print this label.",
     )
 
-    @api.depends("report_id.report_type", "report_id.label_size")
+    @api.depends("report_id.report_type", "report_id.label_size_id")
     def _compute_report_label_format(self) -> None:
-        printer_obj = self.env["printing.printer"]
         for picker in self:
             report = picker.report_id
-            picker.report_label_format = (
-                printer_obj._label_format_of(report) if report else False
-            )
-            picker.report_label_size = (
-                printer_obj._label_size_of(report) if report else False
-            )
+            picker.report_label_format = report.label_format if report else False
+            picker.report_label_size_id = report.label_size_id if report else False
 
     @api.model
     def default_get(self, fields_list):

@@ -10,7 +10,7 @@
         <field name="arch" type="xml">
             <field name="backend" position="after">
                 <field name="label_format" />
-                <field name="label_size" />
+                <field name="label_size_id" />
             </field>
         </field>
     </record>

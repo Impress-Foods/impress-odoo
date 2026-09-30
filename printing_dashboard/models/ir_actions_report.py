@@ -43,7 +43,7 @@ class IrActionsReport(models.Model):
         return self._dashboard_report_domain(model) & Domain(
             [
                 ("label_format", "=", printer.label_format),
-                ("label_size", "=", printer.label_size),
+                ("label_size_id", "=", printer.label_size_id.id),
             ]
         )
 
@@ -207,7 +207,7 @@ class IrActionsReport(models.Model):
                 self.env._(
                     "Printer %(printer)s cannot print %(format)s labels.",
                     printer=printer.display_name,
-                    format=self.env["printing.printer"]._label_format_of(self).upper(),
+                    format=self.label_format.upper(),
                 )
             )
         renderer_name = self._label_renderer_name()

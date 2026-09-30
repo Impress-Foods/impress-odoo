@@ -18,12 +18,8 @@ class IrActionsReport(models.Model):
     # coordinates, so a report says what it is written for. It is the other
     # half of the pairing printing.printer declares, which is why it lives
     # here rather than with the dashboard that consumes it.
-    label_size = fields.Selection(
-        selection=[
-            ("2x4", "2x4"),
-            ("3x3", "3x3"),
-            ("4x6", "4x6"),
-        ],
+    label_size_id = fields.Many2one(
+        "printing.label.size",
         help="Label size this report is written for. It only matters for a "
         "label report: a template written for one size is not printable on "
         "another, so a label is only offered for a printer carrying the same "
@@ -40,8 +36,17 @@ class IrActionsReport(models.Model):
         """
         return ["qweb-text"]
 
+    @api.model
+    def _label_format_map(self):
+        """Map a report type onto the printer format that renders it.
+
+        A transport that adds a report type adds the format it prints on here,
+        so the pairing stays one predicate rather than a special case per
+        transport.
+        """
+        return {"qweb-pdf": "pdf", "qweb-text": "zpl"}
+
     @api.depends("report_type")
     def _compute_label_format(self):
-        printer_obj = self.env["printing.printer"]
         for report in self:
-            report.label_format = printer_obj._label_format_of(report)
+            report.label_format = self._label_format_map().get(report.report_type)

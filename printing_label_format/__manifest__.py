@@ -10,8 +10,11 @@
         "base_report_to_printer",
     ],
     "data": [
+        "security/ir.model.access.csv",
+        "data/printing_label_size_data.xml",
         "views/printing_printer_views.xml",
         "views/ir_actions_report.xml",
+        "views/printing_label_size_views.xml",
     ],
     "application": False,
     "auto_install": False,

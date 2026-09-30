@@ -35,11 +35,15 @@ class TestPrintingDashboard(TransactionCase):
                 "name": name,
                 "model": "product.product",
                 "report_type": "qweb-text",
-                "label_size": size,
+                "label_size_id": cls._size(size).id,
                 "report_name": "dashboard_test_label",
                 "is_dashboard_report": True,
             }
         )
+
+    @classmethod
+    def _size(cls, name):
+        return cls.env.ref(f"printing_label_format.size_{name}")
 
     @classmethod
     def _make_printer(cls, name, label_format=False, label_size="2x4"):
@@ -49,7 +53,7 @@ class TestPrintingDashboard(TransactionCase):
                 "system_name": name.lower().replace(" ", "-"),
                 "backend": "base",
                 "label_format": label_format,
-                "label_size": label_size,
+                "label_size_id": cls._size(label_size).id if label_size else False,
             }
         )
 
@@ -389,14 +393,14 @@ class TestPrintingDashboard(TransactionCase):
         dashboard.printer_id = self.wide_zpl_printer
         dashboard._onchange_printer_id()
         self.assertTrue(dashboard.printer_id._supports_report(dashboard.report_id))
-        self.assertEqual(dashboard.report_id.label_size, "4x6")
+        self.assertEqual(dashboard.report_id.label_size_id, self._size("4x6"))
 
         # A printer that still prints the label keeps it.
         dashboard.printer_id = self.spare_zpl_printer
         dashboard.report_id = self.label_report
         dashboard._onchange_printer_id()
         self.assertEqual(dashboard.report_id, self.label_report)
-        self.assertEqual(wide_report.label_size, "4x6")
+        self.assertEqual(wide_report.label_size_id, self._size("4x6"))
 
     def test_changing_report_drops_a_printer_that_no_longer_fits(self):
         undeclared = self._make_printer("Dashboard Undeclared", False)
