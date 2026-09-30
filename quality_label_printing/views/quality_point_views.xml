@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="quality_point_view_form" model="ir.ui.view">
+        <field name="name">quality.point.view.form.inherit</field>
+        <field name="model">quality.point</field>
+        <field name="inherit_id" ref="quality.quality_point_view_form" />
+        <field name="arch" type="xml">
+            <!-- The step names its own report and printer, so core's pdf/zpl
+                 toggle, which nothing reads, is dead weight here. -->
+            <field name="test_report_type" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </field>
+            <field name="test_type_id" position="after">
+                <field
+                    name="label_report_id"
+                    invisible="test_type != 'print_label'"
+                    options="{'no_quick_create': True}"
+                />
+                <field
+                    name="label_printer_id"
+                    invisible="test_type != 'print_label'"
+                    options="{'no_create': True}"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
