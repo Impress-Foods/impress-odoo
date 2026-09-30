@@ -29,6 +29,8 @@ class TestPrintingApi(TransactionCase):
                 "system_name": "LABEL-01",
                 "backend": "api",
                 "api_server_id": cls.server.id,
+                "label_format": "api",
+                "label_size": "2x4",
             }
         )
         cls.base_printer = cls.env["printing.printer"].create(
@@ -91,6 +93,36 @@ class TestPrintingApi(TransactionCase):
     def test_api_report_type_is_available(self):
         selection = dict(self.env["ir.actions.report"]._fields["report_type"].selection)
         self.assertEqual(selection.get("api"), "API")
+
+    def test_an_api_printer_takes_an_api_report_and_the_matching_size(self):
+        """The format is the job representation and the size the stock, so the
+        pairing holds for the API backend exactly as it does for CUPS."""
+        api_report = self._report()
+        api_report.label_size = "2x4"
+
+        self.assertEqual(
+            self.env["printing.printer"]._label_format_of(api_report), "api"
+        )
+        self.assertTrue(self.printer._supports_report(api_report))
+
+        api_report.label_size = "4x6"
+        self.assertFalse(
+            self.printer._supports_report(api_report),
+            "Right format, wrong stock must still be refused",
+        )
+
+    def test_an_api_printer_takes_no_qweb_report(self):
+        zpl_report = self.env["ir.actions.report"].create(
+            {
+                "name": "Local ZPL label",
+                "model": "res.partner",
+                "report_type": "qweb-text",
+                "label_size": "2x4",
+                "report_name": "base_report_to_printer_api.test_zpl",
+            }
+        )
+
+        self.assertFalse(self.printer._supports_report(zpl_report))
 
     def test_switching_printer_backend_clears_api_endpoint(self):
         printer = self.printer.new({"backend": "base"})

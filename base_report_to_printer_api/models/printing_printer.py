@@ -11,11 +11,24 @@ class PrintingPrinter(models.Model):
         selection_add=[("api", "API")],
         ondelete={"api": "cascade"},
     )
+    label_format = fields.Selection(
+        selection_add=[("api", "API")],
+        ondelete={"api": "set null"},
+    )
     api_server_id = fields.Many2one(
         comodel_name="printing.api.server",
         string="API Endpoint",
         ondelete="restrict",
     )
+
+    @api.model
+    def _label_format_map(self):
+        """Route an API report to the API format.
+
+        The format is the representation of the print job: here it is the
+        structured payload the remote server renders, not a document we render.
+        """
+        return super()._label_format_map() | {"api": "api"}
 
     @api.onchange("backend")
     def _onchange_backend(self):
