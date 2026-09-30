@@ -17,18 +17,12 @@ class IrActionsReport(models.Model):
     )
 
     @api.model
-    def _label_report_types(self) -> list:
-        """Return the report types that produce a label.
-
-        The dashboard prints labels and nothing else, so a document report is
-        not a candidate however it is otherwise configured.  A transport that
-        ships labels adds its type here.
-        """
-        return ["qweb-text"]
-
-    @api.model
     def _dashboard_report_domain(self, model: str) -> Domain:
-        """Return the domain of reports the dashboard is able to drive."""
+        """Return the domain of reports the dashboard is able to drive.
+
+        The label types come from the label format module, so a transport that
+        adds a label type is offered without naming the dashboard.
+        """
         return Domain(
             [
                 ("model", "=", model),

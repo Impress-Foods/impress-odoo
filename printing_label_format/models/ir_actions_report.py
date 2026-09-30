@@ -30,6 +30,16 @@ class IrActionsReport(models.Model):
         "size.",
     )
 
+    @api.model
+    def _label_report_types(self) -> list:
+        """Return the report types that produce a label.
+
+        Not every report that carries a format is a label: a PDF the printer
+        stack can render is a document.  A transport that ships labels adds its
+        type here.
+        """
+        return ["qweb-text"]
+
     @api.depends("report_type")
     def _compute_label_format(self):
         printer_obj = self.env["printing.printer"]

@@ -110,3 +110,16 @@ class TestPrintingLabelFormat(TransactionCase):
 
         self.assertEqual(view.model, "ir.actions.report")
         self.assertIn("label_size", view.arch)
+
+    def test_the_label_types_live_here(self):
+        """A transport adds its label type without depending on the dashboard.
+
+        The list is owned by this module, so the dashboard consumes it and a
+        transport extends it, both through the same dependency.
+        """
+        report_model = self.env["ir.actions.report"]
+
+        self.assertEqual(report_model._label_report_types(), ["qweb-text"])
+        # A type the printer stack can render is not necessarily a label.
+        self.assertIn("qweb-pdf", self.env["printing.printer"]._label_format_map())
+        self.assertNotIn("qweb-pdf", report_model._label_report_types())
