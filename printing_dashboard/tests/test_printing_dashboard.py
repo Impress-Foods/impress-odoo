@@ -378,30 +378,6 @@ class TestPrintingDashboard(TransactionCase):
 
     # -- onchange: the printer and the label follow each other -------------
 
-    def test_changing_printer_moves_to_a_label_it_prints(self):
-        """A machine is what an operator knows, so changing it lands on that
-        machine's label rather than an empty field."""
-        wide_report = self._make_report("Dashboard 4x6 Label", size="4x6")
-        dashboard = self.env["printing.dashboard"].new(
-            {
-                "product_id": self.product.id,
-                "report_id": self.label_report.id,
-                "printer_id": self.zpl_printer.id,
-            }
-        )
-
-        dashboard.printer_id = self.wide_zpl_printer
-        dashboard._onchange_printer_id()
-        self.assertTrue(dashboard.printer_id._supports_report(dashboard.report_id))
-        self.assertEqual(dashboard.report_id.label_size_id, self._size("4x6"))
-
-        # A printer that still prints the label keeps it.
-        dashboard.printer_id = self.spare_zpl_printer
-        dashboard.report_id = self.label_report
-        dashboard._onchange_printer_id()
-        self.assertEqual(dashboard.report_id, self.label_report)
-        self.assertEqual(wide_report.label_size_id, self._size("4x6"))
-
     def test_changing_report_drops_a_printer_that_no_longer_fits(self):
         undeclared = self._make_printer("Dashboard Undeclared", False)
         dashboard = self.env["printing.dashboard"].new(

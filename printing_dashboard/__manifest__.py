@@ -19,6 +19,7 @@
         "views/ir_actions_report.xml",
         "wizards/printing_dashboard.xml",
         "views/source_buttons.xml",
+        "views/printing_printer_views.xml",
     ],
     "assets": {
         "web.assets_backend": [

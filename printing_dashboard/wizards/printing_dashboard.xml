@@ -16,6 +16,7 @@
                             required="target_model == 'stock.lot'"
                             domain="[('product_id', '=', product_id)]"
                         />
+                        <field name="copies" />
                     </group>
                     <group>
                         <field name="printer_id" widget="selection_badge" />
@@ -29,8 +30,11 @@
                                 another machine, or have a label created for it.
                             </div>
                         </div>
-                        <field name="report_id" options="{'no_quick_create': True}" />
-                        <field name="copies" />
+                        <field
+                            name="report_id"
+                            options="{'no_quick_create': True}"
+                            widget="selection_badge"
+                        />
                         <label for="product_uom_qty" string="Quantity" />
                         <div class="o_row g-0 d-flex">
                             <field name="product_uom_qty" />

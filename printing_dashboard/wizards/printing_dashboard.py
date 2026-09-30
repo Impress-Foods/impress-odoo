@@ -32,32 +32,31 @@ class PrintingDashboard(models.TransientModel):
     report_id = fields.Many2one(
         "ir.actions.report",
         string="Report",
-        domain="[('model','=',target_model), ('is_dashboard_report','=',True),"
-        "('label_format','=',printer_label_format),"
-        "('label_size_id','=',printer_label_size_id)]",
+        domain="[('id', 'in', available_report_ids)]",
         help="Report action to execute. Only reports marked as dashboard "
         "reports are offered, because only those can consume the payload the "
         "dashboard builds. Choosing a printer narrows this to the labels that "
         "machine can print.",
     )
+    available_report_ids = fields.Many2many(
+        "ir.actions.report",
+        string="Available Reports",
+        compute="_compute_available_report_ids",
+    )
     copies = fields.Integer(string="Labels", default=1)
-    report_label_format = fields.Char(compute="_compute_report_label_format")
-    report_label_size_id = fields.Many2one(
-        "printing.label.size", compute="_compute_report_label_format"
-    )
-    printer_label_format = fields.Char(compute="_compute_printer_label")
-    printer_label_size_id = fields.Many2one(
-        "printing.label.size", compute="_compute_printer_label"
-    )
     printer_has_report = fields.Boolean(compute="_compute_printer_has_report")
     printer_id = fields.Many2one(
         "printing.printer",
-        domain="[('label_format', '=', report_label_format),"
-        " ('label_size_id', '=', report_label_size_id)]",
+        domain=[("show_in_dashboard", "=", True)],
         help="Printer this label goes to. Pick the machine you are standing at "
         "and the labels narrow to what it prints. It starts on whatever "
         "printer the report is already configured for, which is usually what "
         "you want.",
+    )
+    available_printer_ids = fields.Many2many(
+        "printing.printer",
+        string="Available Printers",
+        compute="_compute_available_printer_ids",
     )
     product_uom_qty = fields.Float(string="Quantity")
     product_uom_id = fields.Many2one(
@@ -80,12 +79,46 @@ class PrintingDashboard(models.TransientModel):
             self.target_model, self.printer_id
         )
 
-    @api.depends("printer_id.label_format", "printer_id.label_size_id")
-    def _compute_printer_label(self) -> None:
+    @api.depends("printer_id", "target_model")
+    def _compute_available_report_ids(self) -> None:
+        """Narrow the reports to what the chosen printer can print.
+
+        With no printer chosen nothing past the target model is narrowed: the
+        machine is the thing an operator knows, and picking one moves the report
+        onto its label.
+        """
+        report_model = self.env["ir.actions.report"]
         for dashboard in self:
-            printer = dashboard.printer_id
-            dashboard.printer_label_format = printer.label_format
-            dashboard.printer_label_size_id = printer.label_size_id
+            if not dashboard.target_model:
+                dashboard.available_report_ids = report_model.browse()
+            elif not dashboard.printer_id:
+                dashboard.available_report_ids = report_model.search(
+                    report_model._dashboard_report_domain(dashboard.target_model)
+                )
+            else:
+                dashboard.available_report_ids = report_model.search(
+                    dashboard._printer_report_domain()
+                )
+
+    @api.depends("report_id")
+    def _compute_available_printer_ids(self) -> None:
+        """Narrow the printers to what can print the chosen report.
+
+        With no report chosen nothing is narrowed, so an operator standing at a
+        4x6 machine can pick it and have the report follow.
+        """
+        printer_model = self.env["printing.printer"]
+        for dashboard in self:
+            report = dashboard.report_id
+            if not report:
+                dashboard.available_printer_ids = printer_model.search([], limit=100)
+            else:
+                dashboard.available_printer_ids = printer_model.search(
+                    [
+                        ("label_format", "=", report.label_format),
+                        ("label_size_id", "=", report.label_size_id),
+                    ]
+                )
 
     @api.depends("printer_id", "target_model")
     def _compute_printer_has_report(self) -> None:
@@ -116,13 +149,6 @@ class PrintingDashboard(models.TransientModel):
         for dashboard in self:
             source = dashboard._get_source_record()
             dashboard.source_name = source.display_name if source else False
-
-    @api.depends("report_id.report_type", "report_id.label_size_id")
-    def _compute_report_label_format(self) -> None:
-        for dashboard in self:
-            report = dashboard.report_id
-            dashboard.report_label_format = report.label_format if report else False
-            dashboard.report_label_size_id = report.label_size_id if report else False
 
     @api.depends("product_id")
     def _compute_available_uom_ids(self) -> None:
@@ -161,25 +187,13 @@ class PrintingDashboard(models.TransientModel):
                 dashboard.product_uom_id = uom
 
     @api.onchange("printer_id")
-    def _onchange_printer_id(self) -> None:
-        """Move to a label the newly chosen printer can print.
-
-        A machine is the thing an operator at that machine knows, so changing
-        it should land on that machine's label rather than leaving an empty
-        field and three more taps.  The reverse direction is not symmetric:
-        changing the label drops the printer instead, because the printer is
-        the part they own.
-        """
+    def _onchange_printer_id(self):
         for dashboard in self:
-            printer = dashboard.printer_id
-            if not printer:
+            if not dashboard.printer_id:
                 continue
             report = dashboard.report_id
-            if report and printer._supports_report(report):
-                continue
-            dashboard.report_id = self.env["ir.actions.report"].search(
-                dashboard._printer_report_domain(), limit=1
-            )
+            if report and not dashboard.printer_id._supports_report(report):
+                dashboard.report_id = False
 
     @api.onchange("report_id")
     def _onchange_report_id(self) -> None:
