@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t
+        t-name="printing_dashboard.LineUpperButtons"
+        t-inherit="stock_barcode.LineUpperButtons"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//div/button[1]" position="before">
+            <button
+                t-if="!displayToggleBtn and env.model.resModel === 'stock.picking'"
+                class="o_line_button o_edit btn btn-secondary"
+                t-on-click="openPrintDashboard"
+                title="Print"
+            >
+                <i class="fa fa-print oi-large" role="img" />
+            </button>
+        </xpath>
+    </t>
+
+    <t
+        t-name="printing_dashboard.LineLot"
+        t-inherit="stock_barcode.LineLot"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//button[1]" position="before">
+            <button
+                t-if="!displayToggleBtn and env.model.resModel === 'stock.picking'"
+                class="o_line_button o_edit btn btn-secondary"
+                t-on-click="openPrintDashboard"
+                title="Print"
+            >
+                <i class="fa fa-print oi-large" role="img" />
+            </button>
+        </xpath>
+    </t>
+</templates>

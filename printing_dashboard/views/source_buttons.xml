@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_product_view_form_inherit_dashboard" model="ir.ui.view">
+        <field name="name">product.product.form.inherit.printing.dashboard</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button
+                        name="action_open_print_dashboard"
+                        type="object"
+                        string="Print"
+                        groups="base.group_user"
+                    />
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_view_form_inherit_dashboard" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.printing.dashboard</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <field name="product_variant_id" invisible="1" />
+                    <button
+                        name="action_open_print_dashboard"
+                        type="object"
+                        string="Print"
+                        groups="base.group_user"
+                    />
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock_lot_view_form_inherit_dashboard" model="ir.ui.view">
+        <field name="name">stock.lot.form.inherit.printing.dashboard</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button
+                        name="action_open_print_dashboard"
+                        type="object"
+                        string="Print"
+                        groups="base.group_user"
+                    />
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock_move_view_form_inherit_dashboard" model="ir.ui.view">
+        <field name="name">stock.move.form.inherit.printing.dashboard</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header[1]" position="inside">
+                <button
+                    name="action_open_print_dashboard"
+                    type="object"
+                    string="Print"
+                    groups="base.group_user"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock_move_line_view_form_inherit_dashboard" model="ir.ui.view">
+        <field name="name">stock.move.line.form.inherit.printing.dashboard</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header[1]" position="inside">
+                <button
+                    name="action_open_print_dashboard"
+                    type="object"
+                    string="Print"
+                    groups="base.group_user"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock_picking_view_form_inherit_dashboard" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.printing.dashboard</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header[1]" position="inside">
+                <button
+                    name="action_open_print_dashboard"
+                    type="object"
+                    string="Print"
+                    groups="base.group_user"
+                />
+            </xpath>
+            <xpath expr="//button[@name='action_show_details']" position="before">
+                <button
+                    name="action_open_print_dashboard"
+                    type="object"
+                    icon="fa-print"
+                    groups="base.group_user"
+                    title="print_dashboard"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="mrp_production_view_form_inherit_dashboard" model="ir.ui.view">
+        <field name="name">mrp.production.form.inherit.printing.dashboard</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//header[1]" position="inside">
+                <button
+                    name="action_open_print_dashboard"
+                    type="object"
+                    string="Print"
+                    groups="base.group_user"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="mrp_workorder_view_form_inherit_dashboard" model="ir.ui.view">
+        <field name="name">mrp.workorder.form.inherit.printing.dashboard</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp_workorder.mrp_workorder_view_form_tablet" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='openMenuPopup']" position="after">
+                <button
+                    name="action_open_print_dashboard"
+                    type="object"
+                    string="Print"
+                    class="btn btn-secondary"
+                    groups="base.group_user"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
