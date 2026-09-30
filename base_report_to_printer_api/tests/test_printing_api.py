@@ -30,7 +30,7 @@ class TestPrintingApi(TransactionCase):
                 "backend": "api",
                 "api_server_id": cls.server.id,
                 "label_format": "api",
-                "label_size": cls.env.ref("printing_label_format.size_2x4").id,
+                "label_size_id": cls.env.ref("printing_label_format.size_2x4").id,
             }
         )
         cls.base_printer = cls.env["printing.printer"].create(
@@ -101,22 +101,18 @@ class TestPrintingApi(TransactionCase):
         report_model = self.env["ir.actions.report"]
 
         self.assertIn("api", report_model._label_report_types())
-        self.assertEqual(
-            self.env["printing.printer"]._label_format_of(self._report()), "api"
-        )
+        self.assertEqual(self._report().label_format, "api")
 
     def test_an_api_printer_takes_an_api_report_and_the_matching_size(self):
         """The format is the job representation and the size the stock, so the
         pairing holds for the API backend exactly as it does for CUPS."""
         api_report = self._report()
-        api_report.label_size = self.env.ref("printing_label_format.size_2x4")
+        api_report.label_size_id = self.env.ref("printing_label_format.size_2x4")
 
-        self.assertEqual(
-            self.env["printing.printer"]._label_format_of(api_report), "api"
-        )
+        self.assertEqual(api_report.label_format, "api")
         self.assertTrue(self.printer._supports_report(api_report))
 
-        api_report.label_size = self.env.ref("printing_label_format.size_4x6")
+        api_report.label_size_id = self.env.ref("printing_label_format.size_4x6")
         self.assertFalse(
             self.printer._supports_report(api_report),
             "Right format, wrong stock must still be refused",
@@ -128,7 +124,7 @@ class TestPrintingApi(TransactionCase):
                 "name": "Local ZPL label",
                 "model": "res.partner",
                 "report_type": "qweb-text",
-                "label_size": self.env.ref("printing_label_format.size_2x4").id,
+                "label_size_id": self.env.ref("printing_label_format.size_2x4").id,
                 "report_name": "base_report_to_printer_api.test_zpl",
             }
         )

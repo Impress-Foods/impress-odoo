@@ -19,6 +19,12 @@ class IrActionsReport(models.Model):
     )
 
     @api.model
+    def _label_format_map(self):
+        format_map = super()._label_format_map()
+        format_map.update({"api": "api"})
+        return format_map
+
+    @api.model
     def _label_report_types(self) -> list:
         """An API report produces a label, so the dashboard may offer it."""
         return super()._label_report_types() + ["api"]

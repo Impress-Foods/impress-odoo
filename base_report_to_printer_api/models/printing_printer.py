@@ -21,15 +21,6 @@ class PrintingPrinter(models.Model):
         ondelete="restrict",
     )
 
-    @api.model
-    def _label_format_map(self):
-        """Route an API report to the API format.
-
-        The format is the representation of the print job: here it is the
-        structured payload the remote server renders, not a document we render.
-        """
-        return super()._label_format_map() | {"api": "api"}
-
     @api.onchange("backend")
     def _onchange_backend(self):
         for printer in self:
@@ -154,3 +145,9 @@ class PrintingPrinter(models.Model):
             data=data,
             **kwargs,
         )
+
+    def write(self, vals):
+        """Clear the API endpoint if the backend is changed away from API."""
+        if "backend" in vals and vals["backend"] == "api":
+            vals["status"] = "available"
+        return super().write(vals)
