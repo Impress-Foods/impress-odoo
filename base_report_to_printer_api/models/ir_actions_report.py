@@ -18,6 +18,11 @@ class IrActionsReport(models.Model):
         ondelete="set null",
     )
 
+    @api.model
+    def _label_report_types(self) -> list:
+        """An API report produces a label, so the dashboard may offer it."""
+        return super()._label_report_types() + ["api"]
+
     @api.onchange("report_type")
     def _onchange_report_type(self):
         for report in self:

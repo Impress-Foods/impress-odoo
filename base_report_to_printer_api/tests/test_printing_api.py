@@ -94,6 +94,17 @@ class TestPrintingApi(TransactionCase):
         selection = dict(self.env["ir.actions.report"]._fields["report_type"].selection)
         self.assertEqual(selection.get("api"), "API")
 
+    def test_an_api_report_is_a_label_type(self):
+        """The transport declares its report type a label, so a dashboard that
+        consumes the label types offers it without depending on this module.
+        """
+        report_model = self.env["ir.actions.report"]
+
+        self.assertIn("api", report_model._label_report_types())
+        self.assertEqual(
+            self.env["printing.printer"]._label_format_of(self._report()), "api"
+        )
+
     def test_an_api_printer_takes_an_api_report_and_the_matching_size(self):
         """The format is the job representation and the size the stock, so the
         pairing holds for the API backend exactly as it does for CUPS."""
