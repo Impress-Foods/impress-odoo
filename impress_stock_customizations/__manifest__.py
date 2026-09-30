@@ -1,18 +1,22 @@
 {
     "name": "Impress Stock Customizations",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.4.0",
     "depends": [
-        "base",
         "impress",
-        "stock",
         "stock_delivery",
         "product_expiry",
         "stock_barcode_mrp",
+        "printing_dashboard",
+        "barcodes_gs1_nomenclature",
     ],
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Inventory",
     "data": [
+        "reports/label_paperformat.xml",
+        "reports/label_product_zpl.xml",
+        "reports/label_lot_zpl.xml",
+        "reports/label_reports.xml",
         "reports/impress_stock_customizations_labels.xml",
         "reports/online_sale_labels.xml",
         "reports/stock_picking_document_views.xml",
@@ -27,11 +31,7 @@
     "assets": {
         "web.report_assets_common": [
             "impress_stock_customizations/static/src/**/*.scss"
-        ],
-        "web.assets_backend": [
-            "impress_stock_customizations/static/src/**/*.js",
-            "impress_stock_customizations/static/src/**/*.xml",
-        ],
+        ]
     },
     "license": "GPL-2",
 }

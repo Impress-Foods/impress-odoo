@@ -17,6 +17,7 @@
         <field name="name">Online Sale Label</field>
         <field name="model">stock.picking</field>
         <field name="report_type">qweb-text</field>
+        <field name="label_size">2x4</field>
         <field
             name="report_name"
         >impress_stock_customizations.report_online_sale_label</field>
@@ -117,6 +118,7 @@
         <field name="name">ZPL Online Sales Content</field>
         <field name="model">stock.picking</field>
         <field name="report_type">qweb-text</field>
+        <field name="label_size">4x6</field>
         <field
             name="report_name"
         >impress_stock_customizations.zpl_online_sales_content</field>
