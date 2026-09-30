@@ -6,7 +6,7 @@
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "license": "GPL-2",
-    "depends": ["base_report_to_printer"],
+    "depends": ["base_report_to_printer", "printing_label_format"],
     "data": [
         "security/ir.model.access.csv",
         "views/printing_api_server.xml",
