@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t
+        t-name="printing_dashboard.MainComponent"
+        t-inherit="stock_barcode.MainComponent"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//button[hasclass('o_stock_mobile_barcode')]" position="before">
+            <button
+                t-if="env.model.formViewId and resModel === 'stock.picking'"
+                t-on-click="openPrintDashboard"
+                class="btn"
+                title="Print"
+            >
+                <i class="fa fa-print oi-large" role="img" />
+            </button>
+        </xpath>
+    </t>
+</templates>
