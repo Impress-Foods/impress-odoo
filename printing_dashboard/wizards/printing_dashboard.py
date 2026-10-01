@@ -21,13 +21,25 @@ class PrintingDashboard(models.TransientModel):
         string="Label For",
     )
     product_id = fields.Many2one(
-        "product.product", ondelete="cascade", domain=[("type", "=", "consu")]
+        "product.product",
+        ondelete="cascade",
+        domain="[('type', '=', 'consu')] + "
+        "([('id', 'in', available_target_product_ids)] if restrict_targets else [])",
     )
-
     lot_id = fields.Many2one(
         "stock.lot",
-        domain="[('product_id','=',product_id.id)]",
         ondelete="cascade",
+        domain="[('product_id', '=', product_id)] + "
+        "([('id', 'in', available_target_lot_ids)] if restrict_targets else [])",
+    )
+    # A source that knows which of its own records a label may be printed for
+    # narrows the pickers to them, so an invalid choice is never offered.
+    restrict_targets = fields.Boolean(compute="_compute_available_target_ids")
+    available_target_product_ids = fields.Many2many(
+        "product.product", compute="_compute_available_target_ids"
+    )
+    available_target_lot_ids = fields.Many2many(
+        "stock.lot", compute="_compute_available_target_ids"
     )
     report_id = fields.Many2one(
         "ir.actions.report",
@@ -122,6 +134,26 @@ class PrintingDashboard(models.TransientModel):
         for dashboard in self:
             source = dashboard._get_source_record()
             dashboard.source_name = source.display_name if source else False
+
+    @api.depends("source_model", "source_id")
+    def _compute_available_target_ids(self) -> None:
+        """Offer only the targets the source can be labelled for.
+
+        ``_get_print_dashboard_target_ids`` is the same answer
+        ``_check_target_allowed`` validates against.  An empty mapping means the
+        source does not restrict anything and the pickers stay open; an empty
+        list means it restricts and owns none of that kind.
+        """
+        for dashboard in self:
+            source = dashboard._get_source_record()
+            candidates = source._get_print_dashboard_target_ids() if source else {}
+            dashboard.restrict_targets = bool(candidates)
+            dashboard.available_target_product_ids = self.env["product.product"].browse(
+                candidates.get("product.product", [])
+            )
+            dashboard.available_target_lot_ids = self.env["stock.lot"].browse(
+                candidates.get("stock.lot", [])
+            )
 
     @api.depends("product_id")
     def _compute_available_uom_ids(self) -> None:

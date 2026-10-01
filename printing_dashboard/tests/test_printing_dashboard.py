@@ -3,6 +3,7 @@ from unittest.mock import patch
 from odoo import Command
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests.common import TransactionCase
+from odoo.tools.view_validation import get_expression_field_names
 
 
 class TestPrintingDashboard(TransactionCase):
@@ -235,8 +236,9 @@ class TestPrintingDashboard(TransactionCase):
     # -- guards ------------------------------------------------------------
 
     def test_a_transfer_refuses_a_target_it_does_not_own(self):
-        """The picker lists every product and lot, so a source has to reject one
-        that is not its own."""
+        """The pickers are narrowed, but a domain is client-side, so the source
+        still rejects a target that was set another way -- a prefilled context,
+        a stale source, a programmatic write."""
         lot = self.env["stock.lot"].create(
             {"name": "DASHBOARD-GUARD-001", "product_id": self.product.id}
         )
@@ -251,6 +253,64 @@ class TestPrintingDashboard(TransactionCase):
         source._check_target_allowed("stock.lot", lot)
         with self.assertRaises(UserError):
             source._check_target_allowed("product.product", unrelated)
+
+    def test_a_transfer_narrows_its_pickers_to_its_own_records(self):
+        """Poka-yoke: a target the transfer does not own is never offered, so it
+        cannot be chosen in the first place."""
+        lot = self.env["stock.lot"].create(
+            {"name": "DASHBOARD-NARROW-001", "product_id": self.product.id}
+        )
+        unrelated = self.env["product.product"].create(
+            {"name": "Dashboard Narrowed Out", "type": "consu"}
+        )
+        picking = self._make_picking(self.product, lot=lot)
+        dashboard = self._dashboard_from_action(picking.action_open_print_dashboard())
+
+        self.assertTrue(dashboard.restrict_targets)
+        # _origin unwraps the NewId that new() puts around an x2many.
+        self.assertEqual(dashboard.available_target_product_ids._origin, self.product)
+        self.assertEqual(dashboard.available_target_lot_ids._origin, lot)
+        self.assertNotIn(unrelated, dashboard.available_target_product_ids._origin)
+
+    def test_a_source_without_candidates_keeps_its_pickers_open(self):
+        """An empty mapping means "no restriction", not "nothing is allowed", so
+        the domain has to branch on it -- otherwise every product vanishes from
+        the picker for the sources that impose no restriction."""
+        dashboard = self._dashboard_from_action(
+            self.product.action_open_print_dashboard()
+        )
+
+        self.assertFalse(dashboard.restrict_targets)
+        self.assertFalse(dashboard.available_target_product_ids)
+        self.assertFalse(dashboard.available_target_lot_ids)
+        self.assertIn(
+            "if restrict_targets",
+            self.env["printing.dashboard"]._fields["product_id"].domain,
+        )
+
+    def test_every_field_a_picker_domain_names_is_loaded_by_the_form(self):
+        """A domain is evaluated against the loaded record, so a field it names
+        that the form never loads is silently absent and the clause collapses.
+
+        The view is where that goes wrong: a domain on a field node replaces the
+        field's own domain, so the field is never even fetched.  That is how the
+        lot picker stopped being narrowed while the server tests stayed green.
+        The picker domains therefore live on the fields and nowhere else.
+        """
+        dashboard = self.env["printing.dashboard"]
+        loaded = dashboard.get_view(view_type="form")["models"]["printing.dashboard"]
+
+        for field in dashboard._fields.values():
+            if not (field.relational and isinstance(field.domain, str)):
+                continue
+            named = {
+                name
+                for name in get_expression_field_names(field.domain)
+                if name in dashboard._fields
+            }
+            self.assertTrue(named, f"{field.name} no longer narrows on its own fields")
+            for name in named:
+                self.assertIn(name, loaded, f"{field.name} names unloaded {name}")
 
     def test_a_document_cannot_be_flagged_as_a_dashboard_report(self):
         """A packing slip ticked into the flag would be offered as a label."""

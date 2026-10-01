@@ -15,10 +15,18 @@ class ProductTemplate(models.Model):
         context["target"] = self.product_variant_id
         return context
 
+    def _get_print_dashboard_target_ids(self) -> dict[str, list[int]]:
+        self.ensure_one()
+        return {"product.product": self.product_variant_ids.ids}
+
 
 class StockLot(models.Model):
     _name = "stock.lot"
     _inherit = ["printing.dashboard.source", "stock.lot"]
+
+    def _get_print_dashboard_target_ids(self) -> dict[str, list[int]]:
+        self.ensure_one()
+        return {"product.product": self.product_id.ids, "stock.lot": self.ids}
 
 
 class StockMove(models.Model):
@@ -40,6 +48,13 @@ class StockMove(models.Model):
         )
         return context
 
+    def _get_print_dashboard_target_ids(self) -> dict[str, list[int]]:
+        self.ensure_one()
+        return {
+            "product.product": self.product_id.ids,
+            "stock.lot": self.move_line_ids.lot_id.ids,
+        }
+
 
 class StockMoveLine(models.Model):
     _name = "stock.move.line"
@@ -57,6 +72,10 @@ class StockMoveLine(models.Model):
             }
         )
         return context
+
+    def _get_print_dashboard_target_ids(self) -> dict[str, list[int]]:
+        self.ensure_one()
+        return {"product.product": self.product_id.ids, "stock.lot": self.lot_id.ids}
 
 
 class StockPicking(models.Model):
@@ -84,17 +103,7 @@ class StockPicking(models.Model):
         return context
 
     def _label_quantity_for(self, target) -> tuple:
-        """Return the (quantity, uom) this transfer shows for ``target``.
-
-        Labels taken off a transfer state the quantity that was actually
-        received: the summed quantity of the matching move lines for a lot, or
-        of the moves for a product.  Without this the operator opens the
-        dashboard to a zeroed quantity and has to work it out by hand.
-
-        The lines are read through the moves rather than through
-        ``picking.move_line_ids``, which is not populated until the transfer is
-        confirmed and would read as no quantity at all.
-        """
+        """Return the (quantity, uom) this transfer shows for ``target``."""
         self.ensure_one()
         if not target:
             return 0.0, self.env["uom.uom"]
