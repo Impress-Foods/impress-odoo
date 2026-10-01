@@ -56,10 +56,9 @@ class PrintingDashboardSource(models.AbstractModel):
         target = context.get("target")
         if isinstance(target, models.BaseModel) and target:
             if target._name == "stock.lot":
-                # The product is required and filters the lot picker, so a lot
-                # target always brings its own product along.
                 return "stock.lot", target.product_id.id or False, target.id
-            return "product.product", target.id, False
+            if target._name == "product.product":
+                return "product.product", target.id, False
         return (
             context.get("target_model") or "product.product",
             context.get("product_id") or False,

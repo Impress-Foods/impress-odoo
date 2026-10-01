@@ -206,8 +206,17 @@ class IrActionsReport(models.Model):
                 title=self.report_name,
                 res_ids=target.ids,
             )
+        # A report takes its records from ``docids``, but some read ``active_ids``
+        # from the context instead.  In a target="new" dialog that context is the
+        # dialog's own, so the two disagree and the label renders from whatever
+        # the context carried.  Pin both to the target.
         renderer = getattr(
-            self.with_context(must_skip_send_to_printer=True),
+            self.with_context(
+                must_skip_send_to_printer=True,
+                active_model=target._name,
+                active_id=target.id,
+                active_ids=target.ids,
+            ),
             renderer_name,
         )
         document, _doc_format = renderer(self.report_name, target.ids, data=data)
