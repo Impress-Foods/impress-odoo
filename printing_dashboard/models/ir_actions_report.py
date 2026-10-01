@@ -73,13 +73,7 @@ class IrActionsReport(models.Model):
 
     @api.model
     def _get_default_dashboard_report(self, model: str) -> models.Model:
-        """Return a sensible default dashboard report for ``model``, if any.
-
-        The dashboard is report-agnostic, so when a source does not name a
-        report we pick one for the target model, preferring the narrowest
-        label, which is the one sized for a label printer.  Returns an empty
-        recordset when the model has none.
-        """
+        """Return a sensible default dashboard report for ``model``, if any."""
         domain = self._dashboard_report_domain(model)
         for report_type in self._label_report_types():
             report = self.search(
@@ -202,14 +196,7 @@ class IrActionsReport(models.Model):
         printer = printer or self.browse()
         if not printer:
             raise UserError(self.env._("Select a printer before printing."))
-        if not printer._supports_report(self):
-            raise UserError(
-                self.env._(
-                    "Printer %(printer)s cannot print %(format)s labels.",
-                    printer=printer.display_name,
-                    format=self.label_format.upper(),
-                )
-            )
+
         renderer_name = self._label_renderer_name()
         if renderer_name is None:
             return printer.print_document(

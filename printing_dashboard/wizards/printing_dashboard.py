@@ -53,11 +53,6 @@ class PrintingDashboard(models.TransientModel):
         "printer the report is already configured for, which is usually what "
         "you want.",
     )
-    available_printer_ids = fields.Many2many(
-        "printing.printer",
-        string="Available Printers",
-        compute="_compute_available_printer_ids",
-    )
     product_uom_qty = fields.Float(string="Quantity")
     product_uom_id = fields.Many2one(
         "uom.uom",
@@ -89,35 +84,13 @@ class PrintingDashboard(models.TransientModel):
         """
         report_model = self.env["ir.actions.report"]
         for dashboard in self:
-            if not dashboard.target_model:
-                dashboard.available_report_ids = report_model.browse()
-            elif not dashboard.printer_id:
+            if not dashboard.printer_id:
                 dashboard.available_report_ids = report_model.search(
                     report_model._dashboard_report_domain(dashboard.target_model)
                 )
             else:
                 dashboard.available_report_ids = report_model.search(
                     dashboard._printer_report_domain()
-                )
-
-    @api.depends("report_id")
-    def _compute_available_printer_ids(self) -> None:
-        """Narrow the printers to what can print the chosen report.
-
-        With no report chosen nothing is narrowed, so an operator standing at a
-        4x6 machine can pick it and have the report follow.
-        """
-        printer_model = self.env["printing.printer"]
-        for dashboard in self:
-            report = dashboard.report_id
-            if not report:
-                dashboard.available_printer_ids = printer_model.search([], limit=100)
-            else:
-                dashboard.available_printer_ids = printer_model.search(
-                    [
-                        ("label_format", "=", report.label_format),
-                        ("label_size_id", "=", report.label_size_id),
-                    ]
                 )
 
     @api.depends("printer_id", "target_model")

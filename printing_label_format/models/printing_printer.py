@@ -25,8 +25,10 @@ class PrintingPrinter(models.Model):
         "label is ever sent to.",
     )
 
-    def _supports_report(self, report):
+    def _supports_report(self, report) -> bool:
         self.ensure_one()
+        if self.label_format is None or self.label_size_id is None:
+            return False
         return (
             self.label_format == report.label_format
             and self.label_size_id == report.label_size_id
