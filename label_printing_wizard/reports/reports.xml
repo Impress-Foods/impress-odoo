@@ -5,9 +5,8 @@
         <field name="label_size_id" ref="printing_label_format.size_4x6" />
         <field name="model">stock.lot</field>
         <field name="report_type">qweb-text</field>
-        <field name="is_dashboard_report">True</field>
-        <field name="report_name">impress_stock_customizations.label_lot_zpl_4x6</field>
-        <field name="report_file">impress_stock_customizations.label_lot_zpl_4x6</field>
+        <field name="report_name">label_printing_wizard.label_lot_zpl_4x6</field>
+        <field name="report_file">label_printing_wizard.label_lot_zpl_4x6</field>
         <field name="binding_model_id" ref="stock.model_stock_lot" />
         <field name="binding_type">report</field>
     </record>
@@ -17,9 +16,8 @@
         <field name="label_size_id" ref="printing_label_format.size_2x4" />
         <field name="model">stock.lot</field>
         <field name="report_type">qweb-text</field>
-        <field name="is_dashboard_report">True</field>
-        <field name="report_name">impress_stock_customizations.label_lot_zpl_2x4</field>
-        <field name="report_file">impress_stock_customizations.label_lot_zpl_2x4</field>
+        <field name="report_name">label_printing_wizard.label_lot_zpl_2x4</field>
+        <field name="report_file">label_printing_wizard.label_lot_zpl_2x4</field>
         <field name="binding_model_id" ref="stock.model_stock_lot" />
         <field name="binding_type">report</field>
     </record>
@@ -29,13 +27,12 @@
         <field name="label_size_id" ref="printing_label_format.size_4x6" />
         <field name="model">product.product</field>
         <field name="report_type">qweb-text</field>
-        <field name="is_dashboard_report">True</field>
         <field
             name="report_name"
-        >impress_stock_customizations.label_product_product_zpl_4x6</field>
+        >label_printing_wizard.label_product_product_zpl_4x6</field>
         <field
             name="report_file"
-        >impress_stock_customizations.label_product_product_zpl_4x6</field>
+        >label_printing_wizard.label_product_product_zpl_4x6</field>
         <field name="binding_model_id" ref="product.model_product_product" />
         <field name="binding_type">report</field>
     </record>
@@ -45,13 +42,12 @@
         <field name="label_size_id" ref="printing_label_format.size_2x4" />
         <field name="model">product.product</field>
         <field name="report_type">qweb-text</field>
-        <field name="is_dashboard_report">True</field>
         <field
             name="report_name"
-        >impress_stock_customizations.label_product_product_zpl_2x4</field>
+        >label_printing_wizard.label_product_product_zpl_2x4</field>
         <field
             name="report_file"
-        >impress_stock_customizations.label_product_product_zpl_2x4</field>
+        >label_printing_wizard.label_product_product_zpl_2x4</field>
         <field name="binding_model_id" ref="product.model_product_product" />
         <field name="binding_type">report</field>
     </record>

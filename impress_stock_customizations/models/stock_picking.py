@@ -8,6 +8,12 @@ class StockPicking(models.Model):
 
     minimum_shelf_life = fields.Integer(related="partner_id.minimum_shelf_life")
 
+    def action_print_online_label(self):
+        self.ensure_one()
+        return self.env.ref(
+            "impress_stock_customizations.action_report_online_sale_label"
+        ).report_action(self, config=False)
+
     def _get_packing_list_move_lines(self, package):
         """Return the done move lines contained in ``package``.
 
@@ -15,10 +21,8 @@ class StockPicking(models.Model):
         """
         self.ensure_one()
         return self.move_line_ids.filtered(
-            lambda line: (
-                line.result_package_id == package
-                or line.package_history_id.outermost_dest_id == package
-            )
+            lambda line: line.result_package_id == package
+            or line.package_history_id.outermost_dest_id == package
         )
 
     def _prepare_packing_list_lines(self, move_lines):

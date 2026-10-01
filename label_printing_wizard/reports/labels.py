@@ -24,7 +24,7 @@ def pad_to_size(string, size):
 
 
 class ReportLabelBase(models.AbstractModel):
-    _name = "report.impress_stock_customizations.label_base"
+    _name = "report.label_printing_wizard.label_base"
     _description = "Label Base Report"
 
     @api.model
@@ -232,10 +232,9 @@ class ReportLabelBase(models.AbstractModel):
 
 
 class ReportProductProductLabel2x4(models.AbstractModel):
-    _inherit = "report.impress_stock_customizations.label_base"
+    _inherit = "report.label_printing_wizard.label_base"
 
-    _name = "report.impress_stock_customizations.label_product_product_zpl_2x4"
-    _table = "report_product_label_2x4"
+    _name = "report.label_printing_wizard.label_product_product_zpl_2x4"
     _description = "Product Label Report"
 
     def _get_report_values(self, docids, data):
@@ -263,16 +262,14 @@ class ReportProductProductLabel2x4(models.AbstractModel):
 
 
 class ReportProductProductLabel4x6(models.AbstractModel):
-    _inherit = "report.impress_stock_customizations.label_product_product_zpl_2x4"
-    _name = "report.impress_stock_customizations.label_product_product_zpl_4x6"
-    _table = "report_product_label_4x6"
+    _inherit = "report.label_printing_wizard.label_product_product_zpl_2x4"
+    _name = "report.label_printing_wizard.label_product_product_zpl_4x6"
     _description = "Product Label Report"
 
 
 class ReportLotLabel2x4(models.AbstractModel):
-    _inherit = "report.impress_stock_customizations.label_base"
-    _name = "report.impress_stock_customizations.label_lot_zpl_2x4"
-    _table = "report_lot_label_2x4"
+    _inherit = "report.label_printing_wizard.label_base"
+    _name = "report.label_printing_wizard.label_lot_zpl_2x4"
     _description = "Lot Label Report 2x4"
 
     def _get_report_values(self, docids, data):
@@ -280,6 +277,8 @@ class ReportLotLabel2x4(models.AbstractModel):
 
         lots = self.env["stock.lot"].browse(res_ids)
         lot_list = []
+
+        lots.ensure_one()
 
         for lot in lots:
             lot_values = data.get(str(lot.id), data.get(lot.id, {}))
@@ -298,44 +297,7 @@ class ReportLotLabel2x4(models.AbstractModel):
         return {"docs": lot_list}
 
 
-class ReportLotLabel4x6(models.AbstractModel):
-    _inherit = "report.impress_stock_customizations.label_lot_zpl_2x4"
-    _name = "report.impress_stock_customizations.label_lot_zpl_4x6"
-    _table = "report_lot_label_4x6"
+class ReportLotLabel2x6(models.AbstractModel):
+    _inherit = "report.label_printing_wizard.label_lot_zpl_2x4"
+    _name = "report.label_printing_wizard.label_lot_zpl_4x6"
     _description = "Lot Label Report 4x6"
-
-
-class ReportSimpleLabel2x4(models.AbstractModel):
-    _name = "report.impress_stock_customizations.report_simple_label_2x4"
-    _description = "Product Label PDF Report"
-
-    def _get_report_values(self, docids, data):
-        data = data or {}
-        products = self.env["product.product"].browse(docids)
-        docs = []
-        for product in products:
-            product_data = data.get(str(product.id), data.get(product.id, {}))
-            label_count = product_data.get("label_count", 1)
-            docs.extend([product] * max(int(label_count), 0))
-        return {"docs": docs}
-
-
-class ReportOnlineSaleLabel(models.AbstractModel):
-    _name = "report.impress_stock_customizations.report_online_sale_label"
-    _description = "Online Sale Label Report"
-
-    def _get_report_values(self, docids, data):
-        data = data or {}
-        pickings = self.env["stock.picking"].browse(docids)
-        docs = []
-        for picking in pickings:
-            picking_data = data.get(str(picking.id), data.get(picking.id, {}))
-            label_count = picking_data.get("label_count", 1)
-            docs.extend([picking] * max(int(label_count), 0))
-        return {"docs": docs}
-
-
-class ReportZplOnlineSalesContent(models.AbstractModel):
-    _inherit = "report.impress_stock_customizations.report_online_sale_label"
-    _name = "report.impress_stock_customizations.zpl_online_sales_content"
-    _description = "Online Sale ZPL Content Report"

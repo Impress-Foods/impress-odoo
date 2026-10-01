@@ -510,10 +510,6 @@
         <field name="name">Picking with Checks</field>
         <field name="model">stock.picking</field>
         <field name="report_type">qweb-pdf</field>
-        <!-- Stated rather than omitted: the field is not in this record's
-             history, so leaving it out would keep whatever the database
-             already held. This is a document, so it is not a label. -->
-        <field name="is_dashboard_report">False</field>
         <field
             name="report_name"
         >impress_stock_customizations.report_stock_picking_with_checks_view</field>

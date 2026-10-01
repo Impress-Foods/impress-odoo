@@ -126,9 +126,6 @@
         <field name="name">Online Summary</field>
         <field name="model">stock.picking</field>
         <field name="report_type">qweb-pdf</field>
-        <!-- A document, not a label. Stated explicitly so the value is
-             cleared on upgrade rather than left as the database has it. -->
-        <field name="is_dashboard_report">False</field>
         <field name="paperformat_id" ref="impress.us_letter_small_margins" />
         <field
             name="report_name"
