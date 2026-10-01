@@ -1,6 +1,6 @@
 {
     "name": "Label Printing Wizard",
-    "version": "19.0.1.2.1",
+    "version": "19.0.1.3.0",
     "summary": """
     Adds different wizards to print custom labels for products and lots
     """,
@@ -16,9 +16,6 @@
         "security/ir.model.access.csv",
         "data/paperformat_data.xml",
         "wizards/label_wizard.xml",
-        "reports/lot_labels.xml",
-        "reports/product_labels.xml",
-        "reports/reports.xml",
         "views/product_product.xml",
         "views/stock_lot.xml",
         "views/stock_picking.xml",
