@@ -1,0 +1,158 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* printing_label_format
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e-20260330\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: printing_label_format
+#: model_terms:ir.actions.act_window,help:printing_label_format.printing_label_size_action
+msgid ""
+"A label size is the physical stock a label is printed on. Add\n"
+"                one before writing a report for it."
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model.constraint,message:printing_label_format.constraint_printing_label_size_name_uniq
+msgid "A label size with this name already exists."
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model.fields,field_description:printing_label_format.field_printing_label_size__active
+msgid "Active"
+msgstr ""
+
+#. module: printing_label_format
+#: model_terms:ir.actions.act_window,help:printing_label_format.printing_label_size_action
+msgid "Add a label size"
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model.fields,field_description:printing_label_format.field_printing_label_size__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model.fields,field_description:printing_label_format.field_printing_label_size__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model.fields,field_description:printing_label_format.field_ir_actions_report__display_name
+#: model:ir.model.fields,field_description:printing_label_format.field_printing_label_size__display_name
+#: model:ir.model.fields,field_description:printing_label_format.field_printing_printer__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model.fields,help:printing_label_format.field_printing_printer__label_format
+msgid ""
+"Format this printer is able to render. A printer only ever takes one format,"
+" so a report is only ever sent to a printer declared for its own. Leave "
+"empty only for a printer that no report is ever sent to."
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model.fields,help:printing_label_format.field_ir_actions_report__label_format
+msgid "Format this report renders as, derived from its type."
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model.fields,field_description:printing_label_format.field_printing_label_size__height_mm
+msgid "Height (mm)"
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model.fields,field_description:printing_label_format.field_ir_actions_report__id
+#: model:ir.model.fields,field_description:printing_label_format.field_printing_label_size__id
+#: model:ir.model.fields,field_description:printing_label_format.field_printing_printer__id
+msgid "ID"
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model.fields,field_description:printing_label_format.field_ir_actions_report__label_format
+#: model:ir.model.fields,field_description:printing_label_format.field_printing_printer__label_format
+msgid "Label Format"
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model,name:printing_label_format.model_printing_label_size
+#: model:ir.model.fields,field_description:printing_label_format.field_ir_actions_report__label_size_id
+#: model:ir.model.fields,field_description:printing_label_format.field_printing_printer__label_size_id
+msgid "Label Size"
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.actions.act_window,name:printing_label_format.printing_label_size_action
+#: model:ir.ui.menu,name:printing_label_format.printing_label_size_menu
+msgid "Label Sizes"
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model.fields,help:printing_label_format.field_printing_printer__label_size_id
+msgid ""
+"Label size this printer is loaded with. A template written for one size is "
+"not printable on another, so labels are only offered for a printer carrying "
+"their own size. Leave empty only for a printer no label is ever sent to."
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model.fields,help:printing_label_format.field_ir_actions_report__label_size_id
+msgid ""
+"Label size this report is written for. It only matters for a label report: a"
+" template written for one size is not printable on another, so a label is "
+"only offered for a printer carrying the same size."
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model.fields,field_description:printing_label_format.field_printing_label_size__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model.fields,field_description:printing_label_format.field_printing_label_size__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model,name:printing_label_format.model_printing_printer
+msgid "Logical Printer"
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model.fields,field_description:printing_label_format.field_printing_label_size__name
+msgid "Name"
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model.fields,help:printing_label_format.field_printing_label_size__name
+msgid "Name this label stock is known by."
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model.fields.selection,name:printing_label_format.selection__printing_printer__label_format__pdf
+msgid "PDF"
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model,name:printing_label_format.model_ir_actions_report
+msgid "Report Action"
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model.fields,field_description:printing_label_format.field_printing_label_size__width_mm
+msgid "Width (mm)"
+msgstr ""
+
+#. module: printing_label_format
+#: model:ir.model.fields.selection,name:printing_label_format.selection__printing_printer__label_format__zpl
+msgid "ZPL"
+msgstr ""
