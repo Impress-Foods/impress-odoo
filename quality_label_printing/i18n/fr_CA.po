@@ -1,0 +1,169 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* quality_label_printing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e-20260330\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr_CA\n"
+
+#. module: quality_label_printing
+#: model_terms:ir.ui.view,arch_db:quality_label_printing.quality_check_printer_picker_view_form
+msgid "Cancel"
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model.fields,field_description:quality_label_printing.field_quality_check_printer_picker__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model.fields,field_description:quality_label_printing.field_quality_check_printer_picker__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model.fields,field_description:quality_label_printing.field_quality_check__display_name
+#: model:ir.model.fields,field_description:quality_label_printing.field_quality_check_printer_picker__display_name
+#: model:ir.model.fields,field_description:quality_label_printing.field_quality_point__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model.fields,help:quality_label_printing.field_quality_check_printer_picker__copies
+msgid ""
+"How many labels to print. Defaults to the quantity this run produces, which "
+"is what a work order step normally wants."
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model.fields,field_description:quality_label_printing.field_quality_check__id
+#: model:ir.model.fields,field_description:quality_label_printing.field_quality_check_printer_picker__id
+#: model:ir.model.fields,field_description:quality_label_printing.field_quality_point__id
+msgid "ID"
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model.fields,field_description:quality_label_printing.field_quality_point__label_printer_id
+msgid "Label Printer"
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model.fields,field_description:quality_label_printing.field_quality_point__label_report_id
+msgid "Label Report"
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model.fields,help:quality_label_printing.field_quality_point__label_report_id
+msgid ""
+"Label this step prints. Left empty, the printing dashboard picks a default "
+"for the product or the lot."
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model.fields,field_description:quality_label_printing.field_quality_check_printer_picker__copies
+msgid "Labels"
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model.fields,field_description:quality_label_printing.field_quality_check_printer_picker__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model.fields,field_description:quality_label_printing.field_quality_check_printer_picker__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: quality_label_printing
+#. odoo-python
+#: code:addons/quality_label_printing/models/quality_check.py:0
+msgid "No label report is configured for this quality step."
+msgstr ""
+
+#. module: quality_label_printing
+#. odoo-python
+#: code:addons/quality_label_printing/wizards/quality_check_printer_picker.py:0
+msgid "No quality check to print a label for."
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model,name:quality_label_printing.model_quality_check_printer_picker
+msgid "Pick a Printer and a Count for a Quality Check Label"
+msgstr ""
+
+#. module: quality_label_printing
+#: model_terms:ir.ui.view,arch_db:quality_label_printing.quality_check_printer_picker_view_form
+msgid "Print"
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.actions.act_window,name:quality_label_printing.quality_check_printer_picker_action
+#: model_terms:ir.ui.view,arch_db:quality_label_printing.quality_check_printer_picker_view_form
+msgid "Print Label"
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model.fields,field_description:quality_label_printing.field_quality_check_printer_picker__printer_id
+msgid "Printer"
+msgstr ""
+
+#. module: quality_label_printing
+#. odoo-python
+#: code:addons/quality_label_printing/models/quality_point.py:0
+msgid "Printer %(printer)s cannot print the labels report %(report)s produces."
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model.fields,help:quality_label_printing.field_quality_point__label_printer_id
+msgid ""
+"Printer this workstation prints the label on. Left empty, the printer the "
+"report is already configured for is used. The operator can still print "
+"elsewhere when printing."
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model.fields,help:quality_label_printing.field_quality_check_printer_picker__printer_id
+msgid ""
+"Printer to print on. Starts on the one this step uses, and offers any other "
+"that can print this label."
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model,name:quality_label_printing.model_quality_check
+#: model:ir.model.fields,field_description:quality_label_printing.field_quality_check_printer_picker__quality_check_id
+msgid "Quality Check"
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model,name:quality_label_printing.model_quality_point
+msgid "Quality Control Point"
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model.fields,field_description:quality_label_printing.field_quality_check_printer_picker__report_id
+msgid "Report"
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model.fields,field_description:quality_label_printing.field_quality_check_printer_picker__report_label_format
+msgid "Report Label Format"
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model.fields,field_description:quality_label_printing.field_quality_check_printer_picker__report_label_size_id
+msgid "Report Label Size"
+msgstr ""
+
+#. module: quality_label_printing
+#. odoo-python
+#: code:addons/quality_label_printing/models/quality_check.py:0
+msgid "You did not set a lot/serial number for the final product."
+msgstr ""
