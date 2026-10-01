@@ -12,7 +12,7 @@ class ProductTemplate(models.Model):
 
     def _get_print_dashboard_context(self):
         context = super()._get_print_dashboard_context()
-        context["target"] = self.product_variant_id or self
+        context["target"] = self.product_variant_id
         return context
 
 

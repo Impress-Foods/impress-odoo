@@ -17,6 +17,20 @@ class TestPrintingDashboard(TransactionCase):
                 "arch_base": '<t t-name="dashboard_test_label">LABEL</t>',
             }
         )
+        # A report that takes its records from the context rather than docids,
+        # the way label_printing_wizard's reports do.
+        cls.env["ir.ui.view"].create(
+            {
+                "name": "Dashboard Test Context Label",
+                "key": "dashboard_test_context_label",
+                "type": "qweb",
+                "arch_base": '<t t-name="dashboard_test_context_label">'
+                '<t t-set="ambient" t-value="env.context.get(\'active_ids\') or []"/>'
+                "<t t-raw=\"'|'.join(env['product.product'].browse(ambient)"
+                ".mapped('display_name'))\"/>"
+                "</t>",
+            }
+        )
         cls.product = cls.env["product.product"].create(
             {"name": "Dashboard Product", "type": "consu"}
         )
@@ -29,14 +43,14 @@ class TestPrintingDashboard(TransactionCase):
         cls.wide_zpl_printer = cls._make_printer("Dashboard ZPL 4x6", "zpl", "4x6")
 
     @classmethod
-    def _make_report(cls, name, size="2x4"):
+    def _make_report(cls, name, size="2x4", template="dashboard_test_label"):
         return cls.env["ir.actions.report"].create(
             {
                 "name": name,
                 "model": "product.product",
                 "report_type": "qweb-text",
                 "label_size_id": cls._size(size).id,
-                "report_name": "dashboard_test_label",
+                "report_name": template,
                 "is_dashboard_report": True,
             }
         )
@@ -122,6 +136,24 @@ class TestPrintingDashboard(TransactionCase):
         with patch.object(type(self.zpl_printer), "print_file", autospec=True) as spy:
             dashboard.action_print()
         return [call.args[0] for call in spy.call_args_list]
+
+    def _printed_document(self, dashboard):
+        """Return the document action_print actually sent to the printer.
+
+        print_document writes the content to a temporary file and removes it
+        once print_file returns, so it has to be read from inside the call.
+        """
+        documents = []
+
+        def _read(printer, file_name, report=None, **print_opts):
+            with open(file_name, "rb") as handle:
+                documents.append(handle.read())
+
+        with patch.object(
+            type(dashboard.printer_id), "print_file", autospec=True, side_effect=_read
+        ):
+            dashboard.action_print()
+        return documents
 
     # -- opening -----------------------------------------------------------
 
@@ -312,6 +344,34 @@ class TestPrintingDashboard(TransactionCase):
 
         self.assertEqual(len(self._print_and_capture(dashboard)), 1)
 
+    def test_a_report_reading_the_context_still_prints_the_target(self):
+        """A report may take its records from the context rather than docids.
+
+        The dashboard is a target="new" dialog, so that context is the dialog's
+        own rather than the selection, and a report preferring it renders
+        whichever product the context carried -- a real record printed with
+        another record's payload, which looks like a valid label for the wrong
+        product rather than an error.
+        """
+        unrelated = self.env["product.product"].create(
+            {"name": "Dashboard Ambient Product", "type": "consu"}
+        )
+        # Built here rather than in setUpClass: an extra dashboard report in the
+        # shared fixture changes which report _get_default_dashboard_report
+        # picks for every other test.
+        context_report = self._make_report(
+            "Dashboard Context Report", template="dashboard_test_context_label"
+        )
+        dashboard = self._dashboard(context_report, self.zpl_printer)
+
+        documents = self._printed_document(
+            dashboard.with_context(active_ids=unrelated.ids)
+        )
+
+        self.assertEqual(len(documents), 1)
+        self.assertIn(self.product.display_name, documents[0].decode())
+        self.assertNotIn(unrelated.display_name, documents[0].decode())
+
     def test_the_report_printer_is_the_default(self):
         """base_report_to_printer already knows where this report prints."""
         self.label_report.write({"printing_printer_id": self.zpl_printer.id})
@@ -428,3 +488,14 @@ class TestPrintingDashboard(TransactionCase):
         )
 
         self.assertFalse(dashboard.printer_has_report)
+
+    def test_a_template_is_never_resolved_as_a_product(self):
+        template = self.env["product.template"].create(
+            {"name": "Dashboard Template", "type": "consu"}
+        )
+        target_model, product_id, _lot_id = self.env[
+            "printing.dashboard.source"
+        ]._resolve_target({"target": template})
+
+        self.assertEqual(target_model, "product.product")
+        self.assertFalse(product_id)
