@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_printing_dashboard_form" model="ir.ui.view">
+        <field name="name">printing.dashboard.form</field>
+        <field name="model">printing.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Print">
+                <group>
+                    <group>
+                        <field name="target_model" widget="selection_badge" />
+                        <field name="product_id" options="{'no_create': True}" />
+                        <field
+                            name="lot_id"
+                            options="{'no_create': True}"
+                            invisible="target_model != 'stock.lot'"
+                            required="target_model == 'stock.lot'"
+                            domain="[('product_id', '=', product_id)]"
+                        />
+                        <field name="copies" />
+                    </group>
+                    <group>
+                        <field name="printer_id" widget="selection_badge" />
+                        <div
+                            class="o_row"
+                            colspan="2"
+                            invisible="not printer_id or printer_has_report"
+                        >
+                            <div class="alert alert-warning m-0" role="alert">
+                                No label is set up for this printer yet. Pick
+                                another machine, or have a label created for it.
+                            </div>
+                        </div>
+                        <field
+                            name="report_id"
+                            options="{'no_quick_create': True}"
+                            widget="selection_badge"
+                        />
+                        <label for="product_uom_qty" string="Quantity" />
+                        <div class="o_row g-0 d-flex">
+                            <field name="product_uom_qty" />
+                            <field
+                                name="product_uom_id"
+                                options="{'no_quick_create': True}"
+                            />
+                        </div>
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        name="action_print"
+                        type="object"
+                        string="Print"
+                        class="oe_highlight"
+                    />
+                    <button special="cancel" string="Cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_printing_dashboard" model="ir.actions.act_window">
+        <field name="name">Printing Dashboard</field>
+        <field name="res_model">printing.dashboard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_printing_dashboard_form" />
+        <field name="target">new</field>
+    </record>
+</odoo>

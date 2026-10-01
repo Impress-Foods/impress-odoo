@@ -2,6 +2,7 @@
 <odoo>
     <record id="report_label_lot_zpl_4x6" model="ir.actions.report">
         <field name="name">Lot/Serial Number (ZPL 4x6)</field>
+        <field name="label_size_id" ref="printing_label_format.size_4x6" />
         <field name="model">stock.lot</field>
         <field name="report_type">qweb-text</field>
         <field name="report_name">label_printing_wizard.label_lot_zpl_4x6</field>
@@ -12,6 +13,7 @@
 
     <record id="report_label_lot_zpl_2x4" model="ir.actions.report">
         <field name="name">Lot/Serial Number (ZPL 2x4)</field>
+        <field name="label_size_id" ref="printing_label_format.size_2x4" />
         <field name="model">stock.lot</field>
         <field name="report_type">qweb-text</field>
         <field name="report_name">label_printing_wizard.label_lot_zpl_2x4</field>
@@ -22,6 +24,7 @@
 
     <record id="report_label_product_product_zpl_4x6" model="ir.actions.report">
         <field name="name">Product Label (ZPL 4x6)</field>
+        <field name="label_size_id" ref="printing_label_format.size_4x6" />
         <field name="model">product.product</field>
         <field name="report_type">qweb-text</field>
         <field
@@ -36,6 +39,7 @@
 
     <record id="report_label_product_product_zpl_2x4" model="ir.actions.report">
         <field name="name">Product Label (ZPL 2x4)</field>
+        <field name="label_size_id" ref="printing_label_format.size_2x4" />
         <field name="model">product.product</field>
         <field name="report_type">qweb-text</field>
         <field

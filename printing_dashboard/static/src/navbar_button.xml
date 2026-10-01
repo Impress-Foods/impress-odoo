@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="printing_dashboard.NavbarButton">
+        <button
+            class="btn d-flex justify-content-center align-items-center o_nav_entry"
+            title="Print Label"
+            t-on-click.stop="onClick"
+        >
+            <i class="fa fa-print oi-large" role="img" />
+        </button>
+    </t>
+</templates>

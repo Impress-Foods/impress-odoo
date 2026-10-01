@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="printing_label_size_view_list" model="ir.ui.view">
+        <field name="name">printing.label.size.list</field>
+        <field name="model">printing.label.size</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name" />
+                <field name="width_mm" />
+                <field name="height_mm" />
+                <field name="active" invisible="1" />
+            </list>
+        </field>
+    </record>
+
+    <record id="printing_label_size_action" model="ir.actions.act_window">
+        <field name="name">Label Sizes</field>
+        <field name="res_model">printing.label.size</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a label size
+            </p>
+            <p>
+                A label size is the physical stock a label is printed on. Add
+                one before writing a report for it.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="printing_label_size_menu"
+        name="Label Sizes"
+        action="printing_label_size_action"
+        parent="base_report_to_printer.printing_menu"
+        sequence="30"
+        groups="base_report_to_printer.printing_group_manager"
+    />
+</odoo>

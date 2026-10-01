@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="quality_check_printer_picker_view_form" model="ir.ui.view">
+        <field name="name">quality.check.printer.picker.form</field>
+        <field name="model">quality.check.printer.picker</field>
+        <field name="arch" type="xml">
+            <form string="Print Label">
+                <group>
+                    <field name="report_id" readonly="1" />
+                    <field name="copies" />
+                    <field name="printer_id" widget="selection_badge" />
+                </group>
+                <footer>
+                    <button
+                        name="action_confirm"
+                        string="Print"
+                        type="object"
+                        class="oe_highlight"
+                        data-hotkey="q"
+                    />
+                    <button
+                        string="Cancel"
+                        class="btn-secondary"
+                        special="cancel"
+                        data-hotkey="c"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="quality_check_printer_picker_action" model="ir.actions.act_window">
+        <field name="name">Print Label</field>
+        <field name="res_model">quality.check.printer.picker</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
