@@ -1,8 +1,7 @@
 import logging
-from typing import Any
 
 from odoo import api, fields, models
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import ValidationError
 from odoo.fields import Domain
 
 _logger = logging.getLogger(__name__)
@@ -83,16 +82,6 @@ class IrActionsReport(models.Model):
                 return report
         return self.browse()
 
-    def _get_dashboard_data_extra(self, copies: int) -> dict[str, Any]:
-        """Return transport-specific keys to merge into the dashboard payload.
-
-        The dashboard is transport-agnostic: a report whose transport reserves
-        keys of its own overrides this instead of the dashboard special-casing
-        its ``report_type``.  For example, the API transport's ``_qty`` key is
-        the number of labels to print (``copies``).
-        """
-        return {}
-
     @api.model
     def _get_default_printer(self) -> models.Model:
         """Return the printer this report is configured to print on, if any.
@@ -115,125 +104,3 @@ class IrActionsReport(models.Model):
                 exc_info=True,
             )
             return self.env["printing.printer"]
-
-    def _print_label_data(
-        self,
-        target: models.Model,
-        copies: int,
-        product_uom_qty: float = 0.0,
-        product_uom_id: models.Model | None = None,
-    ) -> dict[str, Any]:
-        """Return the label payload for a single target.
-
-        A dict keyed by the target id holding ``label_count``,
-        ``product_uom_qty`` and ``product_uom_id``.  Keys supplied by
-        ``_get_dashboard_data_extra`` are reserved for the transport.
-        """
-        self.ensure_one()
-        target.ensure_one()
-        target_data = {"label_count": copies}
-        if product_uom_qty:
-            target_data["product_uom_qty"] = product_uom_qty
-            target_data["product_uom_id"] = (
-                product_uom_id.id if product_uom_id else False
-            )
-        target_data.update(self._get_dashboard_data_extra(copies))
-        return {str(target.id): target_data}
-
-    def _print_label_for(
-        self,
-        target: models.Model,
-        printer: models.Model,
-        source: models.Model | None = None,
-        target_model: str = "product.product",
-        copies: int = 1,
-        product_uom_qty: float = 0.0,
-        product_uom_id: models.Model | None = None,
-    ) -> None:
-        """Validate and print one label for ``target`` on ``printer``.
-
-        Every guard lives here so the target belongs to its source, the printer
-        can render the report, and the print happen in one transaction.  A
-        caller cannot reach the printer half-validated.
-        """
-        self.ensure_one()
-        if not target:
-            raise UserError(self.env._("Select a target before printing."))
-        if copies < 1:
-            raise ValidationError(self.env._("Copies must be greater than zero."))
-        if self.model != target_model:
-            raise UserError(
-                self.env._("The selected report is not valid for the target.")
-            )
-        if source:
-            source._check_target_allowed(target_model, target)
-        if not printer:
-            raise UserError(self.env._("Select a printer before printing."))
-        if not printer._supports_report(self):
-            raise UserError(
-                self.env._(
-                    "Printer %(printer)s cannot print %(report)s.",
-                    printer=printer.display_name,
-                    report=self.display_name,
-                )
-            )
-        data = self._print_label_data(target, copies, product_uom_qty, product_uom_id)
-        self._print_label(target, data=data, printer=printer)
-
-    def _print_label(
-        self,
-        target: models.Model,
-        data: dict[str, Any] | None = None,
-        printer: models.Model | None = None,
-    ) -> None:
-        """Render ``target``'s label and send it to ``printer``.
-
-        Renders and prints server-side: ``base_report_to_printer``'s client
-        dispatchers resolve their own printer and would discard the one passed
-        in.
-        """
-        self.ensure_one()
-        printer = printer or self.browse()
-        if not printer:
-            raise UserError(self.env._("Select a printer before printing."))
-
-        renderer_name = self._label_renderer_name()
-        if renderer_name is None:
-            return printer.print_document(
-                self,
-                None,
-                doc_format=self.report_type,
-                title=self.report_name,
-                res_ids=target.ids,
-            )
-        # A report takes its records from ``docids``, but some read ``active_ids``
-        # from the context instead.  In a target="new" dialog that context is the
-        # dialog's own, so the two disagree and the label renders from whatever
-        # the context carried.  Pin both to the target.
-        renderer = getattr(
-            self.with_context(
-                must_skip_send_to_printer=True,
-                active_model=target._name,
-                active_id=target.id,
-                active_ids=target.ids,
-            ),
-            renderer_name,
-        )
-        document, _doc_format = renderer(self.report_name, target.ids, data=data)
-        printer.print_document(
-            self,
-            document,
-            doc_format=self.report_type,
-            title=self.report_name,
-            res_ids=target.ids,
-        )
-
-    def _label_renderer_name(self) -> str | None:
-        """Return this report type's render method, or ``None`` if a transport
-        owns it and renders its own document.
-        """
-        renderers = {
-            "qweb-pdf": "_render_qweb_pdf",
-            "qweb-text": "_render_qweb_text",
-        }
-        return renderers.get(self.report_type)

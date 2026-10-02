@@ -31,6 +31,30 @@ class TestPrintingLabelFormat(TransactionCase):
     def _size(self, name):
         return self.env.ref(f"printing_label_format.size_{name}")
 
+    def test_a_transport_report_type_has_no_qweb_renderer(self):
+        """A type a transport owns renders its own document, so it must not be
+        sent to a QWeb renderer it does not have."""
+        report = self._make_report("PLF HTML Report", "qweb-html")
+
+        self.assertIsNone(report._label_renderer_name())
+
+    def test_the_payload_is_keyed_by_target_and_counts_labels(self):
+        # A base model on purpose: this module depends on the printing stack
+        # only, so the target has to be one a test database is guaranteed to
+        # carry.
+        report = self._make_report("PLF Payload Label", "qweb-text")
+        target = self.env["res.partner"].create({"name": "PLF Payload Partner"})
+
+        self.assertEqual(
+            report._print_label_data(target, copies=3),
+            {str(target.id): {"label_count": 3}},
+        )
+        # A zero quantity is omitted rather than encoded as zero.
+        self.assertEqual(
+            report._print_label_data(target, copies=2),
+            {str(target.id): {"label_count": 2}},
+        )
+
     def test_the_report_declares_its_format(self):
         pdf_report = self._make_report("PLF PDF Label", "qweb-pdf")
         zpl_report = self._make_report("PLF ZPL Label", "qweb-text")

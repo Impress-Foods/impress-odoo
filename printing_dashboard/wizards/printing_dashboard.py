@@ -340,10 +340,15 @@ class PrintingDashboard(models.TransientModel):
                     "The selected report is not available in the printing dashboard."
                 )
             )
+        source = self._get_source_record()
+        if source:
+            # The dispatch is shared with callers that have no document behind
+            # the target, so whether a target belongs to the document it was
+            # drawn from is the dashboard's own question.
+            source._check_target_allowed(self.target_model, self.target)
         self.report_id._print_label_for(
             self.target,
             self.printer_id,
-            source=self._get_source_record(),
             target_model=self.target_model,
             copies=self.copies,
             product_uom_qty=self.product_uom_qty,
