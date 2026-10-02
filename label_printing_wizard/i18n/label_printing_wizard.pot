@@ -39,18 +39,6 @@ msgid "Cancel"
 msgstr ""
 
 #. module: label_printing_wizard
-#. odoo-python
-#: code:addons/label_printing_wizard/reports/labels.py:0
-msgid "Cannot create a GS1 barcode without a product"
-msgstr ""
-
-#. module: label_printing_wizard
-#. odoo-python
-#: code:addons/label_printing_wizard/reports/labels.py:0
-msgid "Could not find base unit for %s"
-msgstr ""
-
-#. module: label_printing_wizard
 #: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__create_uid
 msgid "Created by"
 msgstr ""
@@ -67,11 +55,6 @@ msgstr ""
 
 #. module: label_printing_wizard
 #: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__display_name
-#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_base__display_name
-#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_lot_zpl_2x4__display_name
-#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_lot_zpl_4x6__display_name
-#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_product_product_zpl_2x4__display_name
-#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_product_product_zpl_4x6__display_name
 #: model:ir.model.fields,field_description:label_printing_wizard.field_stock_move__display_name
 #: model:ir.model.fields,field_description:label_printing_wizard.field_stock_move_line__display_name
 #: model:ir.model.fields,field_description:label_printing_wizard.field_stock_picking__display_name
@@ -80,11 +63,6 @@ msgstr ""
 
 #. module: label_printing_wizard
 #: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__id
-#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_base__id
-#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_lot_zpl_2x4__id
-#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_lot_zpl_4x6__id
-#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_product_product_zpl_2x4__id
-#: model:ir.model.fields,field_description:label_printing_wizard.field_report_label_printing_wizard_label_product_product_zpl_4x6__id
 #: model:ir.model.fields,field_description:label_printing_wizard.field_stock_move__id
 #: model:ir.model.fields,field_description:label_printing_wizard.field_stock_move_line__id
 #: model:ir.model.fields,field_description:label_printing_wizard.field_stock_picking__id
@@ -95,11 +73,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/label_printing_wizard/wizards/label_wizard.py:0
 msgid "Invalid model for wizard!"
-msgstr ""
-
-#. module: label_printing_wizard
-#: model:ir.model,name:label_printing_wizard.model_report_label_printing_wizard_label_base
-msgid "Label Base Report"
 msgstr ""
 
 #. module: label_printing_wizard
@@ -138,26 +111,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__lot_id
 #: model:ir.model.fields.selection,name:label_printing_wizard.selection__label_wizard__model__stock_lot
 msgid "Lot"
-msgstr ""
-
-#. module: label_printing_wizard
-#: model:ir.model,name:label_printing_wizard.model_report_label_printing_wizard_label_lot_zpl_2x4
-msgid "Lot Label Report 2x4"
-msgstr ""
-
-#. module: label_printing_wizard
-#: model:ir.model,name:label_printing_wizard.model_report_label_printing_wizard_label_lot_zpl_4x6
-msgid "Lot Label Report 4x6"
-msgstr ""
-
-#. module: label_printing_wizard
-#: model:ir.actions.report,name:label_printing_wizard.report_label_lot_zpl_2x4
-msgid "Lot/Serial Number (ZPL 2x4)"
-msgstr ""
-
-#. module: label_printing_wizard
-#: model:ir.actions.report,name:label_printing_wizard.report_label_lot_zpl_4x6
-msgid "Lot/Serial Number (ZPL 4x6)"
 msgstr ""
 
 #. module: label_printing_wizard
@@ -213,30 +166,8 @@ msgid "Product"
 msgstr ""
 
 #. module: label_printing_wizard
-#. odoo-python
-#: code:addons/label_printing_wizard/reports/labels.py:0
-msgid "Product %s does not have a valid EAN"
-msgstr ""
-
-#. module: label_printing_wizard
-#: model:ir.actions.report,name:label_printing_wizard.report_label_product_product_zpl_2x4
-msgid "Product Label (ZPL 2x4)"
-msgstr ""
-
-#. module: label_printing_wizard
-#: model:ir.actions.report,name:label_printing_wizard.report_label_product_product_zpl_4x6
-msgid "Product Label (ZPL 4x6)"
-msgstr ""
-
-#. module: label_printing_wizard
 #: model:ir.actions.report,name:label_printing_wizard.report_product_template_label_pdf
 msgid "Product Label 2x4 (PDF)"
-msgstr ""
-
-#. module: label_printing_wizard
-#: model:ir.model,name:label_printing_wizard.model_report_label_printing_wizard_label_product_product_zpl_2x4
-#: model:ir.model,name:label_printing_wizard.model_report_label_printing_wizard_label_product_product_zpl_4x6
-msgid "Product Label Report"
 msgstr ""
 
 #. module: label_printing_wizard
@@ -248,12 +179,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:label_printing_wizard.field_label_wizard__product_uom_qty
 #: model_terms:ir.ui.view,arch_db:label_printing_wizard.view_label_wizard_form
 msgid "Quantity"
-msgstr ""
-
-#. module: label_printing_wizard
-#. odoo-python
-#: code:addons/label_printing_wizard/reports/labels.py:0
-msgid "Quantity cannot be negative!"
 msgstr ""
 
 #. module: label_printing_wizard
