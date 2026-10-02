@@ -47,12 +47,6 @@ msgid "Cancel"
 msgstr ""
 
 #. module: printing_dashboard
-#. odoo-python
-#: code:addons/printing_dashboard/models/ir_actions_report.py:0
-msgid "Copies must be greater than zero."
-msgstr ""
-
-#. module: printing_dashboard
 #: model:ir.model.fields,field_description:printing_dashboard.field_printing_dashboard__create_uid
 msgid "Created by"
 msgstr ""
@@ -190,12 +184,6 @@ msgid "Printer"
 msgstr ""
 
 #. module: printing_dashboard
-#. odoo-python
-#: code:addons/printing_dashboard/models/ir_actions_report.py:0
-msgid "Printer %(printer)s cannot print %(report)s."
-msgstr ""
-
-#. module: printing_dashboard
 #: model:ir.model.fields,field_description:printing_dashboard.field_printing_dashboard__printer_has_report
 msgid "Printer Has Report"
 msgstr ""
@@ -267,20 +255,8 @@ msgstr ""
 
 #. module: printing_dashboard
 #. odoo-python
-#: code:addons/printing_dashboard/models/ir_actions_report.py:0
-msgid "Select a printer before printing."
-msgstr ""
-
-#. module: printing_dashboard
-#. odoo-python
 #: code:addons/printing_dashboard/wizards/printing_dashboard.py:0
 msgid "Select a report before printing."
-msgstr ""
-
-#. module: printing_dashboard
-#. odoo-python
-#: code:addons/printing_dashboard/models/ir_actions_report.py:0
-msgid "Select a target before printing."
 msgstr ""
 
 #. module: printing_dashboard
@@ -312,12 +288,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/printing_dashboard/wizards/printing_dashboard.py:0
 msgid "The selected report is not available in the printing dashboard."
-msgstr ""
-
-#. module: printing_dashboard
-#. odoo-python
-#: code:addons/printing_dashboard/models/ir_actions_report.py:0
-msgid "The selected report is not valid for the target."
 msgstr ""
 
 #. module: printing_dashboard
