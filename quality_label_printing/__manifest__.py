@@ -8,7 +8,8 @@
     "license": "GPL-2",
     "depends": [
         "quality_mrp_workorder",
-        "printing_dashboard",
+        "base_report_to_printer",
+        "printing_label_format",
     ],
     "data": [
         "security/ir.model.access.csv",

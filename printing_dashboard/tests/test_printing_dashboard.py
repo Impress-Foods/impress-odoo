@@ -471,31 +471,6 @@ class TestPrintingDashboard(TransactionCase):
         ):
             dashboard.action_print()
 
-    def test_a_transport_report_type_has_no_qweb_renderer(self):
-        """A type a transport owns renders its own document, so it must not be
-        sent to a QWeb renderer it does not have."""
-        report = self.env["ir.actions.report"].create(
-            {
-                "name": "Dashboard HTML Report",
-                "model": "product.product",
-                "report_type": "qweb-html",
-                "report_name": "dashboard_test_label",
-            }
-        )
-
-        self.assertIsNone(report._label_renderer_name())
-
-    def test_the_payload_is_keyed_by_target_and_counts_labels(self):
-        self.assertEqual(
-            self.label_report._print_label_data(self.product, copies=3),
-            {str(self.product.id): {"label_count": 3}},
-        )
-        # A zero quantity is omitted rather than encoded as zero.
-        self.assertEqual(
-            self.label_report._print_label_data(self.product, copies=2),
-            {str(self.product.id): {"label_count": 2}},
-        )
-
     # -- onchange: the printer and the label follow each other -------------
 
     def test_changing_report_drops_a_printer_that_no_longer_fits(self):

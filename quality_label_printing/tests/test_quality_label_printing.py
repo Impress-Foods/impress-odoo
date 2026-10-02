@@ -48,14 +48,14 @@ class TestQualityLabelPrinting(TransactionCase):
         )
 
     @classmethod
-    def _make_report(cls, name, model):
+    def _make_report(cls, name, model, **extra):
         return cls.env["ir.actions.report"].create(
             {
                 "name": name,
                 "model": model,
                 "report_type": "qweb-text",
                 "report_name": "quality_label_printing.test_label",
-                "is_dashboard_report": True,
+                **extra,
             }
         )
 
@@ -129,6 +129,39 @@ class TestQualityLabelPrinting(TransactionCase):
 
         with self.assertRaises(UserError):
             check._get_label_target()
+
+    def test_a_step_without_a_report_refuses_rather_than_guessing(self):
+        """A step prints the label it was configured with, or nothing.
+
+        There is no fallback to the report some other screen would offer: a step
+        is set up once by whoever configures the line, and quietly printing a
+        different label puts the wrong thing on a finished lot.
+        """
+        check, _product = self._make_check({})
+        self._with_lot(check)
+
+        with self.assertRaisesRegex(UserError, "No label report is configured"):
+            check.action_print()
+
+    def test_a_report_is_not_tied_to_the_printing_dashboard(self):
+        """The step picks a report; being offered in the dashboard is unrelated.
+
+        A step is a quality concern and the dashboard is a shop-floor one, so
+        requiring this report to also be offered in the dashboard would tie the
+        two together over a flag neither of them owns.  A step configured
+        against it still prints.
+        """
+        report = self._make_report("QLP Off-Dashboard Label", model="stock.lot")
+        if "is_dashboard_report" in self.env["ir.actions.report"]._fields:
+            # Only meaningful where the dashboard happens to be installed
+            # alongside; this module does not depend on it either way.
+            self.assertFalse(report.is_dashboard_report)
+        check, _product = self._make_check(
+            {"label_report_id": report.id, "label_printer_id": self.printer.id}
+        )
+        self._with_lot(check)
+
+        self.assertEqual(self._open_picker(check).report_id, report)
 
     def test_action_print_opens_the_picker_with_a_usable_handoff(self):
         """The client maps over action.views unconditionally, and the dialog is

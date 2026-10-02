@@ -25,13 +25,15 @@ class QualityCheck(models.Model):
         return lots[:1]
 
     def _get_label_report(self):
-        """Return the report this step prints, defaulting like the dashboard."""
+        """Return the report this step prints.
+
+        A step names its own report.  There is no fallback: the dashboard
+        offers a report to an operator making a choice at print time, whereas
+        a step is configured once by whoever sets the line up, and quietly
+        printing some other label would put the wrong thing on a finished lot.
+        """
         self.ensure_one()
         report = self.point_id.label_report_id
-        if not report:
-            report = self.env["ir.actions.report"]._get_default_dashboard_report(
-                self._get_label_target()._name
-            )
         if not report:
             raise UserError(
                 self.env._("No label report is configured for this quality step.")
