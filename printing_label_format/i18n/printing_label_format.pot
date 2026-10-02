@@ -36,6 +36,12 @@ msgid "Add a label size"
 msgstr ""
 
 #. module: printing_label_format
+#. odoo-python
+#: code:addons/printing_label_format/models/ir_actions_report.py:0
+msgid "Copies must be greater than zero."
+msgstr ""
+
+#. module: printing_label_format
 #: model:ir.model.fields,field_description:printing_label_format.field_printing_label_size__create_uid
 msgid "Created by"
 msgstr ""
@@ -143,8 +149,32 @@ msgid "PDF"
 msgstr ""
 
 #. module: printing_label_format
+#. odoo-python
+#: code:addons/printing_label_format/models/ir_actions_report.py:0
+msgid "Printer %(printer)s cannot print %(report)s."
+msgstr ""
+
+#. module: printing_label_format
 #: model:ir.model,name:printing_label_format.model_ir_actions_report
 msgid "Report Action"
+msgstr ""
+
+#. module: printing_label_format
+#. odoo-python
+#: code:addons/printing_label_format/models/ir_actions_report.py:0
+msgid "Select a printer before printing."
+msgstr ""
+
+#. module: printing_label_format
+#. odoo-python
+#: code:addons/printing_label_format/models/ir_actions_report.py:0
+msgid "Select a target before printing."
+msgstr ""
+
+#. module: printing_label_format
+#. odoo-python
+#: code:addons/printing_label_format/models/ir_actions_report.py:0
+msgid "The selected report is not valid for the target."
 msgstr ""
 
 #. module: printing_label_format
