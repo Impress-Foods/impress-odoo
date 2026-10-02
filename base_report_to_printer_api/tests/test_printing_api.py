@@ -319,6 +319,32 @@ class TestPrintingApi(TransactionCase):
             ],
         )
 
+    def test_a_record_without_its_own_data_ships_no_sibling_payload(self):
+        """Printing several records from data keyed for only some of them.
+
+        The per-record entries are keyed by a database id, which means nothing
+        to the remote server, so one record's entry must never appear in another
+        record's request.
+        """
+        second_partner = self.env["res.partner"].create({"name": "Second Partner"})
+        report = self._report()
+        with patch(
+            REQUEST_TARGET,
+            return_value=self._success_response(),
+        ) as request:
+            report.print_document(
+                (self.partner + second_partner).ids,
+                data={str(self.partner.id): {"label_count": 1}},
+            )
+
+        payloads = [call.kwargs["json"] for call in request.call_args_list]
+        self.assertEqual(len(payloads), 2)
+        for payload in payloads:
+            self.assertNotIn(str(self.partner.id), payload)
+            self.assertNotIn(str(second_partner.id), payload)
+        self.assertEqual(payloads[0]["label_count"], 1)
+        self.assertNotIn("label_count", payloads[1])
+
     def test_direct_api_print_document_ignores_rendered_content(self):
         report = self._report()
         with patch(

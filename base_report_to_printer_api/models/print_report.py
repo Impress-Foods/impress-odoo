@@ -1,6 +1,6 @@
 from typing import Any
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class PrintReport(models.Model):
@@ -18,20 +18,44 @@ class PrintReport(models.Model):
         string="Field Mappings",
     )
 
+    @api.constrains("target_model_id")
+    def _check_mapping_fields(self):
+        """Revalidate the mappings when a profile is pointed at another model.
+
+        A ``print.field`` constraint does not fire when the model its own
+        profile targets changes, so without this a profile could be repointed
+        and keep mappings whose dotted paths no longer resolve against the new
+        model -- broken in exactly the way ``print.field`` now refuses to save.
+        """
+        for profile in self:
+            for mapping in profile.mapping_ids:
+                mapping._resolve_source_field()
+
     def _get_record_data(
         self, data: dict[str, Any] | None, record: models.Model
     ) -> dict[str, Any]:
-        """Extract per-record data while retaining global action options."""
+        """Return the part of ``data`` that belongs to ``record``.
+
+        ``data`` carries two kinds of key.  A key that spells a record id holds
+        the options for that one record, because a multi-record job sends one
+        request per record and each may need its own count.  Every other key is
+        an option for the job as a whole.
+
+        Only the global keys and this record's own entry reach the payload.
+        The other records' entries must not: they are keyed by an id the remote
+        server has no meaning for, so they would ship as literal fields on
+        somebody else's label.
+        """
         if not isinstance(data, dict):
             return {}
-
-        record_data = data.get(str(record.id), data.get(record.id))
-        if not isinstance(record_data, dict):
-            return data
 
         global_data = {
             key: value for key, value in data.items() if not str(key).isdigit()
         }
+        record_data = data.get(str(record.id), data.get(record.id))
+        if not isinstance(record_data, dict):
+            return global_data
+
         return global_data | record_data
 
     def _render_json_payloads(

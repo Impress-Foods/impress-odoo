@@ -35,33 +35,68 @@ class PrintField(models.Model):
                     self.env._("Target fields cannot start with '_'.")
                 )
 
+    @api.constrains("source_field", "static_value", "report_id")
+    def _check_source_field(self):
+        """Refuse to save a mapping that cannot be resolved.
+
+        Resolution is a compute, and a compute that raises takes the whole
+        record down with it.  ``field_type`` is read by the profile form, so a
+        mapping left pointing at a field that a dependency removed makes the
+        one screen needed to repair it fail to open, and the profile is only
+        recoverable through the database.  Validating here puts the error where
+        the mistake was made instead.
+
+        A change to the model the profile targets does not write this record,
+        so it is covered by ``print.report._check_mapping_fields`` instead.
+        """
+        for mapping in self:
+            mapping._resolve_source_field()
+
     @api.depends("source_field", "static_value", "report_id.target_model_id")
     def _compute_field_type(self):
         for mapping in self:
             if mapping.static_value:
                 mapping.field_type = "char"
                 continue
-            if not mapping.source_field or not mapping.target_model_id:
+            try:
+                field = mapping._resolve_source_field()
+            except ValidationError:
+                # ``_check_source_field`` reports this when the mapping is
+                # written.  A mapping can still reach here broken, from a
+                # profile repointed at another model, so the compute degrades
+                # to an empty type rather than taking the form down with it.
                 mapping.field_type = False
                 continue
+            mapping.field_type = field.type if field else False
 
-            model_name = mapping.target_model_id.model
-            model = self.env[model_name]
-            target_field = None
-            parts = mapping.source_field.split(".")
-            for index, part in enumerate(parts):
-                target_field = self._get_field(model, part)
-                if index < len(parts) - 1:
-                    if not target_field.relational:
-                        raise ValidationError(
-                            self.env._(
-                                "Field %(field)s on %(model)s is not relational.",
-                                field=target_field.string or part,
-                                model=model._name,
-                            )
+    def _resolve_source_field(self):
+        """Return the field ``source_field`` names, walking a dotted path.
+
+        ``None`` means there is nothing to resolve: a static value, no source,
+        or a profile without a model.  That is the same state ``field_type``
+        reports as empty.  Raises ``ValidationError`` when the path names a
+        field that does not exist, or crosses a field that cannot be walked.
+        """
+        self.ensure_one()
+        if self.static_value or not self.source_field or not self.target_model_id:
+            return None
+
+        parts = self.source_field.split(".")
+        model = self.env[self.target_model_id.model]
+        target_field = None
+        for index, part in enumerate(parts):
+            target_field = self._get_field(model, part)
+            if index < len(parts) - 1:
+                if not target_field.relational:
+                    raise ValidationError(
+                        self.env._(
+                            "Field %(field)s on %(model)s is not relational.",
+                            field=target_field.string or part,
+                            model=model._name,
                         )
-                    model = self.env[target_field.comodel_name]
-            mapping.field_type = target_field.type
+                    )
+                model = self.env[target_field.comodel_name]
+        return target_field
 
     @api.model
     def _get_field(self, model: models.Model, field_name: str):
