@@ -55,6 +55,37 @@ class TestPrintingLabelFormat(TransactionCase):
             {str(target.id): {"label_count": 2}},
         )
 
+    def test_a_transport_owned_report_still_receives_the_data(self):
+        """The count of labels reaches a transport that renders its own document.
+
+        A transport-owned report type has no QWeb renderer, so ``_print_label``
+        hands the printer a null document instead -- and it used to drop
+        ``data`` in the same breath.  Nothing else puts ``label_count`` in front
+        of the transport, so every copy count and every per-target option
+        silently disappeared for these report types.
+
+        The renderer is stubbed rather than the report type chosen, because the
+        only type that is both a label type and renderer-less, ``api``, belongs
+        to a module this one does not depend on.
+        """
+        report = self._make_report("PLF Transport Report", "qweb-html")
+        printer = self._make_printer("PLF Transport Printer", "pdf")
+        target = self.env["res.partner"].create({"name": "PLF Transport Partner"})
+        data = {str(target.id): {"label_count": 6, "product_uom_qty": 2.0}}
+
+        with (
+            patch.object(type(report), "_label_renderer_name", return_value=None),
+            patch.object(type(printer), "print_document", autospec=True) as spy,
+        ):
+            report._print_label(target, data=data, printer=printer)
+
+        # ``get`` rather than ``[]`` so a dropped key reports as a failure with
+        # a readable diff instead of a KeyError.
+        self.assertEqual(spy.call_args.kwargs.get("data"), data)
+        # self, report, content: the transport renders its own document, so the
+        # caller has none to offer but the data to build it from.
+        self.assertIsNone(spy.call_args.args[2])
+
     def test_the_report_declares_its_format(self):
         pdf_report = self._make_report("PLF PDF Label", "qweb-pdf")
         zpl_report = self._make_report("PLF ZPL Label", "qweb-text")
