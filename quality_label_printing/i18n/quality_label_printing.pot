@@ -62,8 +62,10 @@ msgstr ""
 #. module: quality_label_printing
 #: model:ir.model.fields,help:quality_label_printing.field_quality_point__label_report_id
 msgid ""
-"Label this step prints. Left empty, the printing dashboard picks a default "
-"for the product or the lot."
+"Label this step prints. Required: the step says which label it prints rather"
+" than falling back on one, because a step is configured once by whoever sets"
+" the line up and a report nobody chose is a configuration gap rather than a "
+"sensible default."
 msgstr ""
 
 #. module: quality_label_printing
