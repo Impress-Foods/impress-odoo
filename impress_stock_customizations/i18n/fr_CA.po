@@ -285,9 +285,21 @@ msgid "Canada"
 msgstr "Canada"
 
 #. module: impress_stock_customizations
+#. odoo-python
+#: code:addons/impress_stock_customizations/reports/label_data.py:0
+msgid "Cannot create a GS1 barcode without a product"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model:ir.model,name:impress_stock_customizations.model_res_partner
 msgid "Contact"
 msgstr "Contact"
+
+#. module: impress_stock_customizations
+#. odoo-python
+#: code:addons/impress_stock_customizations/reports/label_data.py:0
+msgid "Could not find base unit for %s"
+msgstr ""
 
 #. module: impress_stock_customizations
 #: model:ir.model,website_form_label:impress_stock_customizations.model_res_partner
@@ -316,6 +328,11 @@ msgstr "Description sur le transfert"
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_product_template__display_name
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_label_base__display_name
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_label_lot_zpl_2x4__display_name
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_label_lot_zpl_4x6__display_name
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_label_product_zpl_2x4__display_name
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_label_product_zpl_4x6__display_name
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_online_sales_summary__display_name
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_res_partner__display_name
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__display_name
@@ -336,6 +353,11 @@ msgstr "De"
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_product_template__id
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_label_base__id
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_label_lot_zpl_2x4__id
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_label_lot_zpl_4x6__id
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_label_product_zpl_2x4__id
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_label_product_zpl_4x6__id
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_online_sales_summary__id
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_res_partner__id
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__id
@@ -350,6 +372,11 @@ msgid "John Doe"
 msgstr "John Doe"
 
 #. module: impress_stock_customizations
+#: model:ir.model,name:impress_stock_customizations.model_report_impress_stock_customizations_label_base
+msgid "Label Base Report"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__life_remaining
 msgid "Life Remaining"
 msgstr "Vie restante"
@@ -360,9 +387,29 @@ msgid "Lot"
 msgstr "Lot"
 
 #. module: impress_stock_customizations
+#: model:ir.model,name:impress_stock_customizations.model_report_impress_stock_customizations_label_lot_zpl_2x4
+msgid "Lot Label Report 2x4"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.model,name:impress_stock_customizations.model_report_impress_stock_customizations_label_lot_zpl_4x6
+msgid "Lot Label Report 4x6"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model:ir.model,name:impress_stock_customizations.model_stock_lot
 msgid "Lot/Serial"
 msgstr "Lot/Numéro de série"
+
+#. module: impress_stock_customizations
+#: model:ir.actions.report,name:impress_stock_customizations.report_label_lot_zpl_2x4
+msgid "Lot/Serial Number (ZPL 2x4)"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.actions.report,name:impress_stock_customizations.report_label_lot_zpl_4x6
+msgid "Lot/Serial Number (ZPL 4x6)"
+msgstr ""
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_res_partner__minimum_shelf_life
@@ -446,6 +493,28 @@ msgid "Product"
 msgstr "Produit"
 
 #. module: impress_stock_customizations
+#. odoo-python
+#: code:addons/impress_stock_customizations/reports/label_data.py:0
+msgid "Product %s does not have a valid EAN"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.actions.report,name:impress_stock_customizations.report_label_product_product_zpl_2x4
+msgid "Product Label (ZPL 2x4)"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.actions.report,name:impress_stock_customizations.report_label_product_product_zpl_4x6
+msgid "Product Label (ZPL 4x6)"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.model,name:impress_stock_customizations.model_report_impress_stock_customizations_label_product_zpl_2x4
+#: model:ir.model,name:impress_stock_customizations.model_report_impress_stock_customizations_label_product_zpl_4x6
+msgid "Product Label Report"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.online_sales_summary
 msgid "Products"
 msgstr "Produits"
@@ -454,6 +523,12 @@ msgstr "Produits"
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.zpl_online_sales_content_view
 msgid "Qty"
 msgstr "Quantité"
+
+#. module: impress_stock_customizations
+#. odoo-python
+#: code:addons/impress_stock_customizations/reports/label_data.py:0
+msgid "Quantity cannot be negative!"
+msgstr ""
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__removal_date
