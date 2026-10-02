@@ -142,6 +142,19 @@ class TestPrintingApi(TransactionCase):
                 {"name": "Invalid", "url": "not-a-url"}
             )
 
+    def test_api_server_refuses_a_plaintext_url(self):
+        """The api_key is a bearer token on every job, so it may not go out in
+        cleartext just because the endpoint was typed without a scheme."""
+        for url in ("http://labels.example.test/print", "labels.example.test/print"):
+            with self.subTest(url=url), self.assertRaises(ValidationError):
+                self.env["printing.api.server"].create(
+                    {"name": "Plaintext", "url": url}
+                )
+
+    def test_api_server_still_refuses_an_existing_endpoint_being_downgraded(self):
+        with self.assertRaises(ValidationError):
+            self.server.write({"url": "http://labels.example.test/print"})
+
     def test_api_printer_requires_endpoint(self):
         with self.assertRaises(ValidationError):
             self.env["printing.printer"].create(
@@ -248,7 +261,8 @@ class TestPrintingApi(TransactionCase):
                 "label_count": 2,
                 "product_uom_qty": 12,
                 "label": "API Partner",
-                "_qty": 1,
+                # The dashboard's count, in Seagull's spelling.
+                "_qty": 2,
             },
         )
         self.assertNotIn("document", payload)
@@ -282,6 +296,53 @@ class TestPrintingApi(TransactionCase):
         ):
             report.print_document(self.partner.ids)
 
+    def test_client_action_reports_the_servers_own_refusal(self):
+        """The reason a label was refused has to reach the operator.
+
+        The upstream client entry point catches everything and returns nothing,
+        which is why this exists: the status code and the server's message are
+        only useful if they survive the trip back to the screen.
+        """
+        report = self._report()
+        response = Mock()
+        response.status_code = 422
+        response.json.return_value = {"error": "unknown template"}
+        response.text = "unknown template"
+
+        with patch(REQUEST_TARGET, return_value=response):
+            result = report.print_api_client_action(self.partner.ids)
+
+        self.assertFalse(result["success"])
+        self.assertIn("unknown template", result["message"])
+
+    def test_client_action_reports_a_connection_failure(self):
+        report = self._report()
+
+        with patch(REQUEST_TARGET, side_effect=requests.ConnectionError("offline")):
+            result = report.print_api_client_action(self.partner.ids)
+
+        self.assertFalse(result["success"])
+        self.assertIn("Could not reach", result["message"])
+
+    def test_client_action_reports_a_misconfigured_report(self):
+        """A guard in ``print_document`` is reported, not raised past the RPC."""
+        report = self._report()
+        report.printing_printer_id = self.base_printer
+
+        result = report.print_api_client_action(self.partner.ids)
+
+        self.assertFalse(result["success"])
+        self.assertIn("API report", result["message"])
+
+    def test_client_action_succeeds_when_the_job_is_accepted(self):
+        report = self._report()
+
+        with patch(REQUEST_TARGET, return_value=self._success_response()):
+            result = report.print_api_client_action(self.partner.ids)
+
+        self.assertTrue(result["success"])
+        self.assertEqual(result["message"], "")
+
     def test_api_sends_one_flat_request_per_record(self):
         second_partner = self.env["res.partner"].create({"name": "Second Partner"})
         report = self._report()
@@ -314,7 +375,8 @@ class TestPrintingApi(TransactionCase):
                     "_printer": "LABEL-01",
                     "label_count": 3,
                     "label": "Second Partner",
-                    "_qty": 1,
+                    # Each request carries its own record's count, not a default.
+                    "_qty": 3,
                 },
             ],
         )
@@ -344,6 +406,42 @@ class TestPrintingApi(TransactionCase):
             self.assertNotIn(str(second_partner.id), payload)
         self.assertEqual(payloads[0]["label_count"], 1)
         self.assertNotIn("label_count", payloads[1])
+
+    def test_the_dashboard_label_count_becomes_the_seagull_quantity(self):
+        """``label_count`` is the dashboard's spelling, ``_qty`` Seagull's.
+
+        Same fact, one request. Sending both names would let a template pick the
+        wrong one, so the transport renames at the boundary and only there.
+        """
+        report = self._report()
+        payload = report._get_printing_api_payload(
+            self.partner,
+            data={str(self.partner.id): {"label_count": 4}},
+        )
+        self.assertEqual(payload["_qty"], 4)
+        self.assertEqual(payload["label_count"], 4)
+
+    def test_a_direct_quantity_beats_the_dashboard_count(self):
+        """A caller that already said ``_qty`` has been more specific."""
+        report = self._report()
+        payload = report._get_printing_api_payload(
+            self.partner,
+            data={str(self.partner.id): {"label_count": 4, "_qty": 9}},
+        )
+        self.assertEqual(payload["_qty"], 9)
+
+    def test_the_quantity_defaults_to_one_without_a_count(self):
+        report = self._report()
+        self.assertEqual(report._get_printing_api_payload(self.partner)["_qty"], 1)
+
+    def test_a_zero_count_is_not_read_as_a_missing_one(self):
+        """Zero is a value, so the default must not swallow it."""
+        report = self._report()
+        payload = report._get_printing_api_payload(
+            self.partner,
+            data={str(self.partner.id): {"label_count": 0}},
+        )
+        self.assertEqual(payload["_qty"], 0)
 
     def test_direct_api_print_document_ignores_rendered_content(self):
         report = self._report()

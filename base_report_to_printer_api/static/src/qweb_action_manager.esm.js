@@ -38,21 +38,26 @@ async function apiReportActionHandler(action, options, env) {
         return true;
     }
 
+    // print_api_client_action, not print_document_client_action: the upstream
+    // one swallows every exception and returns nothing, so a refusal from the
+    // label server reaches the operator as a bare "could not send". This one
+    // hands back the server's own message, already translated for this user.
     const result = await orm.call(
         "ir.actions.report",
-        "print_document_client_action",
+        "print_api_client_action",
         [action.id, action.context?.active_ids || [], action.data || {}],
         {context}
     );
 
-    if (result) {
+    if (result.success) {
         notification.add(_t("Print data sent to the API printer."), {
             type: "success",
         });
     } else {
-        notification.add(_t("Could not send the print data to the API printer."), {
-            type: "danger",
-        });
+        notification.add(
+            result.message || _t("Could not send the print data to the API printer."),
+            {type: "danger"}
+        );
     }
     return true;
 }

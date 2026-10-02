@@ -6,10 +6,10 @@ from .test_common import TestCommon
 class TestPrintReport(TestCommon):
     """Payload assembly: how mappings, translations and extra data combine.
 
-    Every expectation carries ``_qty`` because the payload always reserves it
-    for the number of labels to print.  It is filled in here as the default of
-    one because these tests call the profile directly rather than through the
-    dashboard that supplies a real count.
+    The profile resolves mappings into a flat payload and merges whatever the
+    print action supplied.  Nothing here is aware of Seagull's reserved keys:
+    ``_qty`` is the transport's spelling of the dashboard's ``label_count`` and
+    is added when the request is built, not here.
     """
 
     def test_render_json_payload(self):
@@ -22,7 +22,6 @@ class TestPrintReport(TestCommon):
             "name_fr": name_fr,
             "name_en": name_en,
             "extra": "data",
-            "_qty": 1,
         }
 
         country = self.make_translated_country(name_en, name_fr)
@@ -43,7 +42,6 @@ class TestPrintReport(TestCommon):
         expected = {
             "name_fr": name_fr,
             "name_en": name_en,
-            "_qty": 1,
         }
         country = self.make_translated_country(name_en, name_fr)
 
@@ -55,17 +53,14 @@ class TestPrintReport(TestCommon):
         self.assertDictEqual(result, expected)
 
     def test_render_empty_mappings(self):
-        """Empty mapping_ids renders only extra_data and the reserved _qty"""
+        """Empty mapping_ids renders only extra_data"""
         country = self.make_translated_country("en", "fr")
         report, mapping = self.make_single_field_report("res.country", "name")
         mapping.unlink()
-        self.assertDictEqual(
-            report._render_json_payload(country),
-            {"_qty": 1},
-        )
+        self.assertDictEqual(report._render_json_payload(country), {})
         self.assertDictEqual(
             report._render_json_payload(country, extra_data={"a": "b"}),
-            {"a": "b", "_qty": 1},
+            {"a": "b"},
         )
 
     def test_render_non_translated_only(self):
@@ -73,14 +68,14 @@ class TestPrintReport(TestCommon):
         country = self.make_translated_country("plain en", "plain fr")
         report, _ = self.make_single_field_report("res.country", "name", "label")
         result = report._render_json_payload(country)
-        self.assertDictEqual(result, {"label": "plain en", "_qty": 1})
+        self.assertDictEqual(result, {"label": "plain en"})
 
     def test_render_translate_no_languages_skipped(self):
         """Translate=True with no languages contributes nothing"""
         country = self.make_translated_country("en", "fr")
         report, mapping = self.make_single_field_report("res.country", "name", "name")
         mapping.write({"translate": True})
-        self.assertDictEqual(report._render_json_payload(country), {"_qty": 1})
+        self.assertDictEqual(report._render_json_payload(country), {})
 
     def test_repointing_the_profile_revalidates_its_mappings(self):
         """A mapping is checked again when its profile changes model.

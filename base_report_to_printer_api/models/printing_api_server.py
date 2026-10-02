@@ -42,13 +42,18 @@ class PrintingApiServer(models.Model):
 
     @api.constrains("url")
     def _check_url(self):
+        """Require HTTPS.
+
+        ``api_key`` is sent as a bearer token on every job, so a plaintext
+        endpoint hands the credential to anyone on the network path. There is
+        no local development case worth that: the endpoint is a remote label
+        server, so anything reachable is reachable over TLS.
+        """
         for record in self:
             parsed_url = urlparse(record.url or "")
-            if parsed_url.scheme not in {"http", "https"} or not parsed_url.netloc:
+            if parsed_url.scheme != "https" or not parsed_url.netloc:
                 raise ValidationError(
-                    self.env._(
-                        "The API endpoint URL must be a valid HTTP or HTTPS URL."
-                    )
+                    self.env._("The API endpoint URL must be a valid HTTPS URL.")
                 )
 
     @api.constrains("timeout")

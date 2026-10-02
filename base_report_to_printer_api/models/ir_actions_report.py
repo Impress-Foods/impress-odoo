@@ -91,16 +91,55 @@ class IrActionsReport(models.Model):
             )
         return super().print_document(record_ids, data=data)
 
+    def print_api_client_action(self, record_ids, data=None) -> dict[str, Any]:
+        """Send the job and report what happened.
+
+        The upstream client entry point, ``print_document_client_action``, wraps
+        the print in ``except Exception: return``, so a remote server that
+        refuses a label leaves the operator with nothing but a failed print: the
+        status code and the server's own explanation of the refusal are both
+        discarded before the client ever sees them.  This returns them instead,
+        which is the only reason the API payload carries a message at all.
+
+        Deliberately not threaded the way its upstream counterpart is.  A job
+        sent from a second cursor has no way to answer the request that asked
+        for it, which is the very thing being fixed here.
+
+        Only ``UserError`` is caught.  Those are the refusings a remote server
+        and this module express deliberately; anything else is a bug, and it
+        should keep propagating to Odoo's own error reporting rather than being
+        dressed up as a print failure.
+        """
+        self.ensure_one()
+        try:
+            sent = self.print_document(record_ids, data=data)
+        except UserError as error:
+            return {"success": False, "message": str(error)}
+        return {"success": bool(sent), "message": ""}
+
     def _get_printing_api_payload(
         self, record: models.Model, data: dict[str, Any] | None = None
     ) -> dict[str, Any]:
-        """Return one flat Seagull-style payload for ``record``."""
+        """Return one flat Seagull-style payload for ``record``.
+
+        The profile builds the mapped fields and whatever the print action
+        supplied; the reserved keys the remote server configures the job with
+        are added around it.
+        """
         self.ensure_one()
         record.ensure_one()
         profile = self.print_report_id
         if not profile:
             return {}
-        return profile._render_json_payload(
+        payload = profile._render_json_payload(
             record,
             extra_data=profile._get_record_data(data, record),
         )
+        # ``label_count`` is the printing dashboard's name for the number of
+        # labels to print; ``_qty`` is Seagull's. They are one fact with two
+        # spellings, so it is translated here and only here: everything above
+        # this point speaks the dashboard's vocabulary, and the only vocabulary
+        # this request has to carry is Seagull's. A caller that already said
+        # ``_qty`` has been more specific than the dashboard and keeps it.
+        payload["_qty"] = payload.get("_qty", payload.get("label_count", 1))
+        return payload

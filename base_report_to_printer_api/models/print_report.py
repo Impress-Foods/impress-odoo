@@ -20,13 +20,7 @@ class PrintReport(models.Model):
 
     @api.constrains("target_model_id")
     def _check_mapping_fields(self):
-        """Revalidate the mappings when a profile is pointed at another model.
-
-        A ``print.field`` constraint does not fire when the model its own
-        profile targets changes, so without this a profile could be repointed
-        and keep mappings whose dotted paths no longer resolve against the new
-        model -- broken in exactly the way ``print.field`` now refuses to save.
-        """
+        """Revalidate the mappings when a profile is pointed at another model."""
         for profile in self:
             for mapping in profile.mapping_ids:
                 mapping._resolve_source_field()
@@ -78,9 +72,10 @@ class PrintReport(models.Model):
     ) -> dict[str, Any]:
         self.ensure_one()
         record.ensure_one()
+        # The profile resolves fields; it does not add the keys Seagull
+        # reserves for configuring the job. Those are added by the transport
+        # when it builds the request, so nothing here has to know Seagull.
         payload = dict(extra_data or {})
-        if "_qty" not in payload:
-            payload["_qty"] = 1
         for mapping in self.mapping_ids:
             if mapping.translate:
                 for language in mapping.languages:
