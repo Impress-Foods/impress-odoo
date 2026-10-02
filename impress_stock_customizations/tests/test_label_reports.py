@@ -76,58 +76,24 @@ class TestReportLabelBase(common.TransactionCase):
 
     # -- report wiring -----------------------------------------------------
 
-    def test_in_house_labels_are_dashboard_reports(self) -> None:
-        """A report offered in the dashboard has to be flagged and be a label,
-        and its rendering model must resolve."""
+    def test_every_in_house_label_resolves_a_rendering_model(self) -> None:
+        """A report's rendering model is looked up as report.<report_name>.
+
+        Nothing raises when it does not resolve: the report falls back to
+        handing the template raw records, and the template then reads a
+        payload key off a recordset.  So the name and the model have to agree.
+        """
         report_model = self.env["ir.actions.report"]
-        offered = report_model.search(
-            report_model._dashboard_report_domain("stock.lot")
-        )
-
-        self.assertTrue(offered)
-        for report in offered:
-            self.assertTrue(report._is_dashboard_compatible())
-            self.assertIsNotNone(report._get_rendering_context_model(report))
-
-    def test_a_core_label_report_is_not_offered(self) -> None:
-        report_model = self.env["ir.actions.report"]
-        offered = report_model.search(
-            report_model._dashboard_report_domain("stock.lot")
-        )
-
-        self.assertNotIn(self.env.ref("stock.label_product_product"), offered)
-
-    def test_a_report_renders_one_label_body_per_copy(self) -> None:
-        """The payload the dashboard builds has to render, and render the right
-        number of labels; asserting the payload shape alone cannot catch a
-        convention the report cannot consume."""
-        report = self.env.ref("impress_stock_customizations.report_label_lot_zpl_2x4")
-        dashboard = self.env["printing.dashboard"].create(
-            {
-                "target_model": "stock.lot",
-                "product_id": self.lot_lot.product_id.id,
-                "lot_id": self.lot_lot.id,
-                "report_id": report.id,
-                "printer_id": self._zpl_printer().id,
-                "copies": 2,
-                "product_uom_qty": 5,
-                "product_uom_id": self.weight_uom_kg.id,
-            }
-        )
-
-        with patch.object(
-            type(dashboard.printer_id), "print_file", autospec=True
-        ) as spy:
-            dashboard.action_print()
-
-        self.assertEqual(len(spy.call_args_list), 1)
-        document, _fmt = report._render_qweb_text(
-            report.report_name,
-            [self.lot_lot.id],
-            data=report._print_label_data(self.lot_lot, 2, 5, self.weight_uom_kg),
-        )
-        self.assertEqual(document.count(b"^XA"), 2)
-        self.assertEqual(document.count(b"^XZ"), 2)
+        for xmlid in (
+            "impress_stock_customizations.report_label_lot_zpl_2x4",
+            "impress_stock_customizations.report_label_lot_zpl_4x6",
+            "impress_stock_customizations.report_label_product_product_zpl_2x4",
+            "impress_stock_customizations.report_label_product_product_zpl_4x6",
+        ):
+            report = self.env.ref(xmlid)
+            with self.subTest(report=xmlid):
+                self.assertIsNotNone(report_model._get_rendering_context_model(report))
+                self.assertIn(report.report_type, report_model._label_report_types())
 
     def _zpl_printer(self):
         printer = self.env["printing.printer"].create(

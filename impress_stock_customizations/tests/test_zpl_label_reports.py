@@ -8,7 +8,7 @@ from odoo.tests import common
 _logger = logging.getLogger(__name__)
 
 
-class TestReportLabelBase(common.TransactionCase):
+class TestZplLabelBarcodes(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -102,7 +102,7 @@ class TestReportLabelBase(common.TransactionCase):
         cls.product_gtin12 = cls.product_template_gtin12.product_variant_id
 
         # Get the report model and nomenclature
-        cls.report = cls.env["report.label_printing_wizard.label_base"]
+        cls.report = cls.env["report.impress_stock_customizations.label_base"]
         cls.nomenclature = cls.env.ref(
             "barcodes_gs1_nomenclature.default_gs1_nomenclature"
         )
@@ -453,7 +453,7 @@ class TestReportLabelBase(common.TransactionCase):
         self.assertFalse(data.get("unit_type", False))
 
     @patch(
-        "odoo.addons.label_printing_wizard.reports.labels.ReportLabelBase._get_closest_uom_reference"
+        "odoo.addons.impress_stock_customizations.reports.label_data.ReportLabelBase._get_closest_uom_reference"
     )
     def test_prepare_label_data_no_closest_uom(
         self, mock_get_closest_uom_reference

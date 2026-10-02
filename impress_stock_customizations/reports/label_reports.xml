@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-model href="../../import_xml.rng" type="application/xml"?>
+<odoo>
+    <template id="label_lot_zpl_2x4">
+        <t t-foreach="docs" t-as="lot">
+            <t t-foreach="range(lot['label_count'])" t-as="count">
+                <t t-translation="off">
+                    <t name="setup">
+                        <t t-out="'^XA^CI28'" />
+                        <t t-out="'^PW812^LL406^LH0,0'" />
+                    </t>
+                    <t name="product_name">
+                        <t
+                            t-out="'^FO10,300^A0N,44,33^FB800,2,0,L^FD' + lot['display_name_markup'] + '^FS'"
+                        />
+                    </t>
+                    <t name="lot_name">
+                        <t
+                            t-out="'^FO10,50^A0N,88,66^FDLN/SN: ' + lot['name'] + '^FS'"
+                        />
+                    </t>
+                    <t t-if="lot['product_qty']" name="product_qty">
+                        <t
+                            t-set="product_uom"
+                            t-value="lot.get('product_uom', lot['lot_record'].product_id.uom_id)"
+                        />
+                        <t
+                            t-out="'^FO10,130^A0N,88,66^FDQTY: ' + str(lot['product_qty']) + ' ' +
+            product_uom.display_name + '^FS'"
+                        />
+                    </t>
+
+                    <t name="barcode">
+                        <t t-if="lot['gs1_barcode']">
+                            <t
+                                t-out="'^FO550,50^BY10,2,100^BXN,10,200^FD' + lot['gs1_barcode'] + '^FS'"
+                            />
+                        </t>
+                        <t t-elif="lot['lot_record'].product_id.barcode">
+                            <t
+                                t-out="'^FO550,50^BY10,2,100^BXN,10,200^FD' + lot['lot_record'].product_id.barcode + '^FS'"
+                            />
+                        </t>
+                    </t>
+                    <t name="footer">
+                        <t t-out="'^XZ'" />
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="label_lot_zpl_4x6">
+        <t t-foreach="docs" t-as="lot">
+            <t t-foreach="range(lot['label_count'])" t-as="count">
+                <t t-translation="off">
+                    <t name="setup">
+                        <t t-out="'^XA^CI28'" />
+                    </t>
+
+                    <t name="product_name">
+                        <t
+                            t-out="'^FO650,50^A0R,66,44^FB1100,2,0,L^FD' + lot['display_name_markup'] + '^FS'"
+                        />
+                    </t>
+                    <t name="lot_name">
+                        <t
+                            t-out="'^FO500,50^A0R,88,66^FDLN/SN: ' + lot['name'] + '^FS'"
+                        />
+                    </t>
+                    <t name="barcode">
+                        <t t-if="lot['gs1_barcode']">
+                            <t
+                                t-out="'^FO100,800^BY20,2,100^BXR,20,200^FD' + lot['gs1_barcode'] + '^FS'"
+                            />
+                        </t>
+                        <t t-elif="lot['lot_record'].product_id.barcode">
+                            <t
+                                t-out="'^FO100,800^BY20,2,100^BXR,20,200^FD' + lot['lot_record'].product_id.barcode + '^FS'"
+                            />
+                        </t>
+                    </t>
+
+                    <t t-if="lot['product_qty']" name="product_qty">
+                        <t
+                            t-set="product_uom"
+                            t-value="lot.get('product_uom', lot['lot_record'].product_id.uom_id)"
+                        />
+                        <t
+                            t-out="'^FO400,50^A0R,88,66^FDQTY: ' + str(lot['product_qty']) + ' ' + product_uom.display_name + '^FS'"
+                        />
+                    </t>
+                    <t name="footer">
+                        <t t-out="'^XZ'" />
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="label_product_zpl_2x4">
+        <t t-foreach="docs" t-as="product_info">
+            <t t-foreach="range(product_info['label_count'])" t-as="count">
+                <t t-set="product" t-value="product_info['product_record']" />
+                <t t-set="product_qty" t-value="product_info['product_quantity']" />
+                <t
+                    t-set="product_uom"
+                    t-value="product_info.get('product_uom', product.uom_id)"
+                />
+                <t t-translation="off">
+                    <t t-out="'^XA^CI28'" />
+                    <t t-out="'^PW812^LL406^LH0,0'" />
+                    <t name="product_name">
+                        <t
+                            t-out="'^FO10,10^A0N,66,44^FB800,2,0,L^FD' + product_info['display_name_markup'] + '^FS'"
+                        />
+                    </t>
+                    <t t-if="product_qty != 0" name="product_quantity">
+                        <t
+                            t-out="'^FO10,250^A0N,66,44^FB800,2,0,L^FDQTY: ' + str(product_qty) + ' ' + product_uom.display_name + '^FS'"
+                        />
+                    </t>
+
+                    <t name="barcode">
+                        <t t-if="product_info['gs1_barcode']">
+                            <t
+                                t-out="'^FO550,160^BY10,2,100^BXN,10,200^FD' + product_info['gs1_barcode'] + '^FS'"
+                            />
+                        </t>
+                        <t t-elif="product.barcode">
+                            <t
+                                t-out="'^FO550,160^BY10,2,100^BXN,10,200^FD' + product.barcode + '^FS'"
+                            />
+                        </t>
+                    </t>
+                    <t t-out="'^XZ'" />
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <template id="label_product_zpl_4x6">
+        <t t-foreach="docs" t-as="product_info">
+            <t t-foreach="range(product_info['label_count'])" t-as="count">
+                <t t-set="product" t-value="product_info['product_record']" />
+                <t t-set="product_qty" t-value="product_info['product_quantity']" />
+                <t
+                    t-set="product_uom"
+                    t-value="product_info.get('product_uom', product.uom_id)"
+                />
+                <t t-translation="off">
+                    <t name="setup">
+                        <t t-out="'^XA^CI28'" />
+                    </t>
+                    <t name="product_name">
+                        <t
+                            t-out="'^FO600,50^A0R,88,66^FB1100,2,0,L^FD' + product_info['display_name_markup'] + '^FS'"
+                        />
+                    </t>
+                    <t t-if="product_qty != 0" name="product_qty">
+                        <t
+                            t-out="'^FO400,50^A0R,88,66^FDQTY: ' + str(product_qty) + ' ' + product_uom.display_name + '^FS'"
+                        />
+                    </t>
+                    <t name="barcode">
+                        <t t-if="product_info['gs1_barcode']">
+                            <t
+                                t-out="'^FO100,800^BY20,2,100^BXR,20,200^FD' + product_info['gs1_barcode'] + '^FS'"
+                            />
+                        </t>
+                        <t t-elif="product.barcode">
+                            <t
+                                t-out="'^FO100,800^BY20,2,100^BXR,20,200^FD' + product.barcode + '^FS'"
+                            />
+                        </t>
+                    </t>
+                    <t name="footer">
+                        <t t-out="'^XZ'" />
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="report_label_lot_zpl_4x6" model="ir.actions.report">
+        <field name="name">Lot/Serial Number (ZPL 4x6)</field>
+        <field name="label_size_id" ref="printing_label_format.size_4x6" />
+        <field name="model">stock.lot</field>
+        <field name="report_type">qweb-text</field>
+        <field name="report_name">impress_stock_customizations.label_lot_zpl_4x6</field>
+        <field name="report_file">impress_stock_customizations.label_lot_zpl_4x6</field>
+        <field name="binding_model_id" ref="stock.model_stock_lot" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_label_lot_zpl_2x4" model="ir.actions.report">
+        <field name="name">Lot/Serial Number (ZPL 2x4)</field>
+        <field name="label_size_id" ref="printing_label_format.size_2x4" />
+        <field name="model">stock.lot</field>
+        <field name="report_type">qweb-text</field>
+        <field name="report_name">impress_stock_customizations.label_lot_zpl_2x4</field>
+        <field name="report_file">impress_stock_customizations.label_lot_zpl_2x4</field>
+        <field name="binding_model_id" ref="stock.model_stock_lot" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_label_product_product_zpl_4x6" model="ir.actions.report">
+        <field name="name">Product Label (ZPL 4x6)</field>
+        <field name="label_size_id" ref="printing_label_format.size_4x6" />
+        <field name="model">product.product</field>
+        <field name="report_type">qweb-text</field>
+        <field
+            name="report_name"
+        >impress_stock_customizations.label_product_zpl_4x6</field>
+        <field
+            name="report_file"
+        >impress_stock_customizations.label_product_zpl_4x6</field>
+        <field name="binding_model_id" ref="product.model_product_product" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_label_product_product_zpl_2x4" model="ir.actions.report">
+        <field name="name">Product Label (ZPL 2x4)</field>
+        <field name="label_size_id" ref="printing_label_format.size_2x4" />
+        <field name="model">product.product</field>
+        <field name="report_type">qweb-text</field>
+        <field
+            name="report_name"
+        >impress_stock_customizations.label_product_zpl_2x4</field>
+        <field
+            name="report_file"
+        >impress_stock_customizations.label_product_zpl_2x4</field>
+        <field name="binding_model_id" ref="product.model_product_product" />
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
