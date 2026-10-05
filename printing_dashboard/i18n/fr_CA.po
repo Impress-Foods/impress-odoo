@@ -53,12 +53,6 @@ msgid "Cancel"
 msgstr "Annuler"
 
 #. module: printing_dashboard
-#. odoo-python
-#: code:addons/printing_dashboard/models/ir_actions_report.py:0
-msgid "Copies must be greater than zero."
-msgstr "Le nombre de copies doit être plus grand que zéro."
-
-#. module: printing_dashboard
 #: model:ir.model.fields,field_description:printing_dashboard.field_printing_dashboard__create_uid
 msgid "Created by"
 msgstr "Créé par"
@@ -199,12 +193,6 @@ msgid "Printer"
 msgstr "Imprimante"
 
 #. module: printing_dashboard
-#. odoo-python
-#: code:addons/printing_dashboard/models/ir_actions_report.py:0
-msgid "Printer %(printer)s cannot print %(report)s."
-msgstr "L'imprimante %(printer)s ne peut pas imprimer le rapport %(report)s."
-
-#. module: printing_dashboard
 #: model:ir.model.fields,field_description:printing_dashboard.field_printing_dashboard__printer_has_report
 msgid "Printer Has Report"
 msgstr "L'imprimante a le rapport"
@@ -282,21 +270,9 @@ msgstr "Restriction des cibles"
 
 #. module: printing_dashboard
 #. odoo-python
-#: code:addons/printing_dashboard/models/ir_actions_report.py:0
-msgid "Select a printer before printing."
-msgstr "Sélectionnez une imprimante avec d'imprimer."
-
-#. module: printing_dashboard
-#. odoo-python
 #: code:addons/printing_dashboard/wizards/printing_dashboard.py:0
 msgid "Select a report before printing."
 msgstr "Sélectionner un rapport avant d'imprimer."
-
-#. module: printing_dashboard
-#. odoo-python
-#: code:addons/printing_dashboard/models/ir_actions_report.py:0
-msgid "Select a target before printing."
-msgstr "Sélectionner une cible avant d'imprimer."
 
 #. module: printing_dashboard
 #: model:ir.model.fields,field_description:printing_dashboard.field_printing_printer__show_in_dashboard
@@ -332,12 +308,6 @@ msgstr ""
 
 #. module: printing_dashboard
 #. odoo-python
-#: code:addons/printing_dashboard/models/ir_actions_report.py:0
-msgid "The selected report is not valid for the target."
-msgstr "Le rapport sélectionné est invalide pour la cible."
-
-#. module: printing_dashboard
-#. odoo-python
 #: code:addons/printing_dashboard/models/printing_dashboard_source.py:0
 msgid ""
 "The selected target is not part of %(record)s. Pick one of its own products "
@@ -360,3 +330,19 @@ msgstr "Ordre de travail"
 #: model_terms:ir.ui.view,arch_db:printing_dashboard.stock_picking_view_form_inherit_dashboard
 msgid "print_dashboard"
 msgstr "portail_d'impression"
+
+#~ msgid "Copies must be greater than zero."
+#~ msgstr "Le nombre de copies doit être plus grand que zéro."
+
+#~ msgid "Printer %(printer)s cannot print %(report)s."
+#~ msgstr ""
+#~ "L'imprimante %(printer)s ne peut pas imprimer le rapport %(report)s."
+
+#~ msgid "Select a printer before printing."
+#~ msgstr "Sélectionnez une imprimante avec d'imprimer."
+
+#~ msgid "Select a target before printing."
+#~ msgstr "Sélectionner une cible avant d'imprimer."
+
+#~ msgid "The selected report is not valid for the target."
+#~ msgstr "Le rapport sélectionné est invalide pour la cible."
