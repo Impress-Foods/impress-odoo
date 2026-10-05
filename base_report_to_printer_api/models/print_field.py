@@ -23,7 +23,15 @@ class PrintField(models.Model):
     target_model_id = fields.Many2one(related="report_id.target_model_id")
     field_type = fields.Char(compute="_compute_field_type")
     static_value = fields.Char()
-    formatting = fields.Char()
+    formatting = fields.Char(
+        help=(
+            "Formatting options for the field value. Dates use Python "
+            "strftime format strings, plus %q for the Canadian month code. "
+            "Strings use a comma-separated list of transforms: capitalize, "
+            "lower, lstrip, rstrip, strip, title, upper. Whitespace is always "
+            "trimmed and unrecognised transforms are ignored."
+        )
+    )
     translate = fields.Boolean()
     languages = fields.Many2many(comodel_name="res.lang")
 

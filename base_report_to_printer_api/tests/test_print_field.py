@@ -1,5 +1,6 @@
 from odoo.exceptions import ValidationError
 
+from ..tools import string_formatter
 from .test_common import TestCommon
 
 
@@ -97,3 +98,14 @@ class TestPrintField(TestCommon):
         _, mapping = self.make_single_field_report("res.country", "id")
         country = self.make_translated_country("int en", "int fr")
         self.assertEqual(mapping.get_formatted_value(country), country.id)
+
+    def test_formatting_help_lists_every_transform(self):
+        """The help text must name every transform the formatter will run.
+
+        Keeps the field's tooltip and ``STRING_TRANSFORMS`` from drifting apart.
+        """
+        help_text = self.env["print.field"].fields_get(["formatting"])["formatting"][
+            "help"
+        ]
+        for name in string_formatter.STRING_TRANSFORMS:
+            self.assertIn(name, help_text)

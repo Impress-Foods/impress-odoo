@@ -52,29 +52,11 @@ class PrintReport(models.Model):
 
         return global_data | record_data
 
-    def _render_json_payloads(
-        self, records: models.Model, data: dict[str, Any] | None = None
-    ) -> list[dict[str, Any]]:
-        self.ensure_one()
-        return [
-            {
-                "record_id": record.id,
-                "values": self._render_json_payload(
-                    record,
-                    extra_data=self._get_record_data(data, record),
-                ),
-            }
-            for record in records
-        ]
-
     def _render_json_payload(
         self, record: models.Model, extra_data: dict[str, Any] | None = None
     ) -> dict[str, Any]:
         self.ensure_one()
         record.ensure_one()
-        # The profile resolves fields; it does not add the keys Seagull
-        # reserves for configuring the job. Those are added by the transport
-        # when it builds the request, so nothing here has to know Seagull.
         payload = dict(extra_data or {})
         for mapping in self.mapping_ids:
             if mapping.translate:

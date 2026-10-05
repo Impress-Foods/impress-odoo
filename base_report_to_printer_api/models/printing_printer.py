@@ -146,8 +146,39 @@ class PrintingPrinter(models.Model):
             **kwargs,
         )
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        """Create API printers as available.
+
+        Odoo cannot query a label printer through the API server, so there is
+        no status to poll.  Leaving the default ``unknown`` would misreport a
+        working printer, so the status is set here and kept available below.
+        """
+        for vals in vals_list:
+            if vals.get("backend") == "api":
+                vals["status"] = "available"
+        return super().create(vals_list)
+
     def write(self, vals):
-        """Clear the API endpoint if the backend is changed away from API."""
-        if "backend" in vals and vals["backend"] == "api":
-            vals["status"] = "available"
-        return super().write(vals)
+        """Keep API printers available.
+
+        An API printer talks to a label server rather than a CUPS queue, so
+        Odoo has no way to read its real status.  Any write to one forces the
+        status back to available, so no other code path can leave it unknown
+        or stale.
+        """
+        if "backend" in vals:
+            # ``backend`` decides what these records are once the write lands.
+            api_printers = self if vals["backend"] == "api" else self.browse()
+        else:
+            api_printers = self.filtered(lambda printer: printer.backend == "api")
+
+        if not api_printers:
+            return super().write(vals)
+        if api_printers == self:
+            return super().write(dict(vals, status="available"))
+
+        # A mixed recordset: each side gets the values it needs.  The two
+        # writes below recurse once and land in the homogeneous branches above.
+        (self - api_printers).write(vals)
+        return api_printers.write(dict(vals, status="available"))

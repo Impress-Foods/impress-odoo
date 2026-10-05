@@ -63,6 +63,12 @@ class PrintingApiServer(models.Model):
                 raise ValidationError(
                     self.env._("The API timeout must be greater than zero.")
                 )
+            if record.timeout and record.timeout > 300:
+                raise ValidationError(
+                    self.env._(
+                        "The API timeout must be less than or equal to 300 seconds."
+                    )
+                )
 
     def toggle_debug(self):
         for record in self:
@@ -71,8 +77,6 @@ class PrintingApiServer(models.Model):
     def _get_headers(self) -> dict[str, str]:
         self.ensure_one()
         headers = {"Accept": "application/json"}
-        # The secret is manager-only in the UI/ORM, but the backend must be
-        # able to use it when a regular print user submits a job.
         api_key = self.sudo().api_key
         if api_key:
             headers["Authorization"] = f"Bearer {api_key}"

@@ -136,6 +136,24 @@ class TestPrintingApi(TransactionCase):
         printer._onchange_backend()
         self.assertFalse(printer.api_server_id)
 
+    def test_api_printer_is_created_available(self):
+        """Odoo cannot query a label printer, so it must not read as unknown."""
+        self.assertEqual(self.printer.status, "available")
+
+    def test_writing_an_api_printer_keeps_it_available(self):
+        self.printer.write({"status": "error"})
+        self.assertEqual(self.printer.status, "available")
+
+    def test_a_base_printer_status_is_not_forced(self):
+        self.base_printer.write({"status": "error"})
+        self.assertEqual(self.base_printer.status, "error")
+
+    def test_a_mixed_write_still_leaves_the_api_printer_available(self):
+        (self.printer + self.base_printer).write({"location": "somewhere"})
+        self.assertEqual(self.printer.status, "available")
+        self.assertEqual(self.printer.location, "somewhere")
+        self.assertEqual(self.base_printer.location, "somewhere")
+
     def test_api_server_requires_valid_url(self):
         with self.assertRaises(ValidationError):
             self.env["printing.api.server"].create(
