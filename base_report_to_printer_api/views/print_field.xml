@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="print_field_view_list" model="ir.ui.view">
+        <field name="name">print.field.list</field>
+        <field name="model">print.field</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="report_id" />
+                <field name="target_field" />
+                <field name="source_field" />
+                <field name="field_type" />
+            </list>
+        </field>
+    </record>
+
+    <record id="print_field_view_form" model="ir.ui.view">
+        <field name="name">print.field.form</field>
+        <field name="model">print.field</field>
+        <field name="arch" type="xml">
+            <form string="API Field Mapping">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="report_id" />
+                            <field name="target_field" />
+                            <field name="source_field" />
+                        </group>
+                        <group>
+                            <field name="field_type" readonly="1" />
+                            <field name="static_value" />
+                            <field name="formatting" />
+                            <field name="translate" />
+                            <field
+                                name="languages"
+                                widget="many2many_tags"
+                                invisible="not translate"
+                            />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_print_field" model="ir.actions.act_window">
+        <field name="name">API Field Mappings</field>
+        <field name="res_model">print.field</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
