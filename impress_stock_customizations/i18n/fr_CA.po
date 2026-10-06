@@ -83,10 +83,18 @@ msgstr "3.00"
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.stock_table_prep_with_checks
+msgid "<i class=\"fa fa-exclamation-triangle\"/> Missing"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.stock_table_prep_with_checks
+#, fuzzy
+#| msgid ""
+#| "<span>\n"
+#| "                            <i class=\"fa fa-exclamation-triangle\"/> No "
+#| "reservation for this product! </span>"
 msgid ""
-"<span>\n"
-"                                <i class=\"fa fa-exclamation-triangle\"/> No "
-"reservation for this product! </span>"
+"<i class=\"fa fa-exclamation-triangle\"/> No reservation for this product!"
 msgstr ""
 "<span>\n"
 "                                <i class=\"fa fa-exclamation-triangle\"/> "
@@ -771,6 +779,11 @@ msgid "days"
 msgstr "Jours"
 
 #. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.stock_table_prep_with_checks
+msgid "for this product!"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.zpl_online_sales_content_view
 msgid "of"
 msgstr "de"
@@ -780,6 +793,15 @@ msgstr "de"
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.stock_table_prep_with_checks
 msgid "units"
 msgstr "unités"
+
+#~ msgid ""
+#~ "<span>\n"
+#~ "                                <i class=\"fa fa-exclamation-triangle\"/> "
+#~ "No reservation for this product! </span>"
+#~ msgstr ""
+#~ "<span>\n"
+#~ "                                <i class=\"fa fa-exclamation-triangle\"/> "
+#~ "Aucune réservation pour ce produit! </span>"
 
 #~ msgid "1.00"
 #~ msgstr "1.00"
