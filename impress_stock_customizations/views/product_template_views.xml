@@ -12,6 +12,12 @@
             <xpath expr="//field[@name='uom_ids']" position="attributes">
                 <attribute name="string">UoMs</attribute>
             </xpath>
+            <xpath expr="//field[@name='categ_id']" position="after">
+                <field
+                    name="label_name"
+                    invisible="product_variant_count &gt; 1 and not is_product_variant"
+                />
+            </xpath>
         </field>
     </record>
 </odoo>

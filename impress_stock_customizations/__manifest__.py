@@ -1,6 +1,6 @@
 {
     "name": "Impress Stock Customizations",
-    "version": "19.0.1.4.0",
+    "version": "19.0.1.4.1",
     "depends": [
         "base",
         "impress",
@@ -15,15 +15,16 @@
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Inventory",
     "data": [
+        "views/stock_lot_views.xml",
+        "views/res_partner_views.xml",
+        "views/product_product_views.xml",
+        "views/product_template_views.xml",
         "reports/label_reports.xml",
         "reports/impress_stock_customizations_labels.xml",
         "reports/online_sale_labels.xml",
         "reports/stock_picking_document_views.xml",
-        "views/stock_lot_views.xml",
-        "views/res_partner_views.xml",
         "reports/stock_picking_with_checks_report.xml",
         "reports/report_deliveryslip.xml",
-        "views/product_template_views.xml",
         "reports/report_online_sales_summary_report.xml",
         "reports/report_packingslip.xml",
     ],
