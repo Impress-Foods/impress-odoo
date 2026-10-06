@@ -6,74 +6,78 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e-20260330\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2026-10-06 13:24+0000\n"
+"Last-Translator: Automatic translation add-on <noreply-addon-"
+"autotranslate@weblate.org>\n"
+"Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
+"impress-odoo/base_report_to_printer_api/fr_CA/>\n"
+"Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 2026.5\n"
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/print_field.py:0
 msgid "A record is required to read a mapped field."
-msgstr ""
+msgstr "Un enregistrement est requis pour lire un champ associé."
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields.selection,name:base_report_to_printer_api.selection__ir_actions_report__report_type__api
 #: model:ir.model.fields.selection,name:base_report_to_printer_api.selection__printing_printer__backend__api
 #: model:ir.model.fields.selection,name:base_report_to_printer_api.selection__printing_printer__label_format__api
 msgid "API"
-msgstr ""
+msgstr "API"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_printing_printer__api_server_id
 msgid "API Endpoint"
-msgstr ""
+msgstr "Point de terminaison API"
 
 #. module: base_report_to_printer_api
 #: model:ir.actions.act_window,name:base_report_to_printer_api.action_printing_api_server
 #: model:ir.ui.menu,name:base_report_to_printer_api.printing_api_server_menu
 msgid "API Endpoints"
-msgstr ""
+msgstr "Points de terminaison API"
 
 #. module: base_report_to_printer_api
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer_api.print_field_view_form
 msgid "API Field Mapping"
-msgstr ""
+msgstr "Association de champ API"
 
 #. module: base_report_to_printer_api
 #: model:ir.actions.act_window,name:base_report_to_printer_api.action_print_field
 msgid "API Field Mappings"
-msgstr ""
+msgstr "Associations de champ API"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_ir_actions_report__print_report_id
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer_api.print_report_view_form
 msgid "API Payload Profile"
-msgstr ""
+msgstr "Profil de requête API"
 
 #. module: base_report_to_printer_api
 #: model:ir.actions.act_window,name:base_report_to_printer_api.action_print_report
 #: model:ir.ui.menu,name:base_report_to_printer_api.print_report_menu
 msgid "API Payload Profiles"
-msgstr ""
+msgstr "Profils de requête API"
 
 #. module: base_report_to_printer_api
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer_api.printing_api_server_view_form
 msgid "API Printing Endpoint"
-msgstr ""
+msgstr "Points de terminaison d'impression API"
 
 #. module: base_report_to_printer_api
 #: model:ir.model,name:base_report_to_printer_api.model_print_field
 msgid "API payload field mapping"
-msgstr ""
+msgstr "Association de champ pour requête API"
 
 #. module: base_report_to_printer_api
 #: model:ir.model,name:base_report_to_printer_api.model_print_report
 msgid "API payload profile"
-msgstr ""
+msgstr "Profil de requête API"
 
 #. module: base_report_to_printer_api
 #. odoo-python
@@ -81,111 +85,121 @@ msgstr ""
 msgid ""
 "API reports are rendered by the external API and cannot be rendered locally."
 msgstr ""
+"Les rapports 'API' sont générés par l'API externe et ne peuvent pas être "
+"générés localement."
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_printing_api_server__active
 msgid "Active"
-msgstr ""
+msgstr "Actif"
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/printing_printer.py:0
 msgid "An API endpoint can only be assigned to an API printer."
 msgstr ""
+"Un point de terminaison API ne peut qu'être associé qu'à une imprimante de "
+"type 'API'."
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/ir_actions_report.py:0
 msgid "An API printer can only be used with a report of type API."
 msgstr ""
+"Une imprimante de type 'API' ne peut qu'être utilisée avec un rapport de "
+"type 'API'."
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/printing_printer.py:0
 msgid "An API printer can only print reports of type API."
 msgstr ""
+"Une imprimante de type 'API' ne peut qu'imprimer des rapports de type 'API'."
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/printing_printer.py:0
 msgid "An API printer must have an API endpoint configured."
 msgstr ""
+"Une imprimante de type 'API' doit être associée à un point de terminaison de "
+"type 'API'."
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/ir_actions_report.py:0
 msgid "An API report must have an API payload profile."
-msgstr ""
+msgstr "Un rapport de type 'API' doit être associé à un profil de requête API."
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/ir_actions_report.py:0
 msgid "An API report must use an API printer."
-msgstr ""
+msgstr "Un rapport de type 'API' doit utiliser une imprimante de type 'API'."
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_printing_api_server__api_key
 msgid "Api Key"
-msgstr ""
+msgstr "Clé API"
 
 #. module: base_report_to_printer_api
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer_api.printing_api_server_view_form
 msgid "Archived"
-msgstr ""
+msgstr "Archivé"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_printing_printer__backend
 msgid "Backend"
-msgstr ""
+msgstr "Backend"
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/printing_printer.py:0
 msgid "Cannot send an API print job without records."
-msgstr ""
+msgstr "Impossible d'envoyer une tâche d'impression API sans enregistrements."
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/printing_printer.py:0
 msgid "Configure an API payload profile before printing this report."
-msgstr ""
+msgstr "Configurer un profile de requête API avant d'imprimer ce rapport."
 
 #. module: base_report_to_printer_api
 #. odoo-javascript
 #: code:addons/base_report_to_printer_api/static/src/qweb_action_manager.esm.js:0
 msgid "Configure this API report to use an API printer and server printing."
-msgstr ""
+msgstr "Configurer ce rapport API afin d'utiliser une imprimante de type 'API'."
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/printing_api_server.py:0
 msgid "Could not reach the printing API. Please try again."
 msgstr ""
+"Impossible de rejoindre l'API d'impression. Veuillez essayer de nouveau."
 
 #. module: base_report_to_printer_api
 #. odoo-javascript
 #: code:addons/base_report_to_printer_api/static/src/qweb_action_manager.esm.js:0
 msgid "Could not send the print data to the API printer."
-msgstr ""
+msgstr "Erreur lors de l'envoi des données d'impressions à l'imprimante 'API'."
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_field__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_report__create_uid
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_printing_api_server__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Créé par"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_field__create_date
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_report__create_date
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_printing_api_server__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Créé le"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_printing_api_server__debug_logging
 msgid "Debug Logging"
-msgstr ""
+msgstr "Journalisation de déboggage"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_ir_actions_report__display_name
@@ -194,36 +208,36 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_printing_api_server__display_name
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_printing_printer__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom d'affichage"
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/printing_printer.py:0
 msgid "Failed to send the print job to the API: %(message)s"
-msgstr ""
+msgstr "Erreur lors de l'envoi de la tâche d'impression à l'API: %(message)s"
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/print_field.py:0
 msgid "Field %(field)s does not exist on model %(model)s."
-msgstr ""
+msgstr "Le champ %(field)s n'existe pas sur le modèle %(model)s."
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/print_field.py:0
 msgid "Field %(field)s on %(model)s is not relational."
-msgstr ""
+msgstr "Le champ %(field)s dans le modèle %(model)s n'est pas relationnel."
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_report__mapping_ids
 #: model_terms:ir.ui.view,arch_db:base_report_to_printer_api.print_report_view_form
 msgid "Field Mappings"
-msgstr ""
+msgstr "Associations de champ"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_field__field_type
 msgid "Field Type"
-msgstr ""
+msgstr "Type de champ"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,help:base_report_to_printer_api.field_printing_printer__label_format
@@ -232,11 +246,13 @@ msgid ""
 "so a report is only ever sent to a printer declared for its own. Leave empty "
 "only for a printer that no report is ever sent to."
 msgstr ""
+"Le format que cette imprimante est en mesure d'imprimer. Une imprimante ne "
+"peut imprimer qu'un seul format."
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_field__formatting
 msgid "Formatting"
-msgstr ""
+msgstr "Mise en forme"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,help:base_report_to_printer_api.field_print_field__formatting
@@ -246,22 +262,27 @@ msgid ""
 "list of transforms: capitalize, lower, lstrip, rstrip, strip, title, upper. "
 "Whitespace is always trimmed and unrecognised transforms are ignored."
 msgstr ""
+"Options de mise en forme pour ce champ. Les dates utilisent les instructions "
+"de mise en forme Python en plus de %q pour les codes de mois canadiens. Le "
+"texte utilise une liste de transformations séparées par des virgules: "
+"capitalize, lower, lstrip, rstrip, strip. upper. Les caractères vides sont "
+"toujours retirés et les transformations inconnues sont ignorées."
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields.selection,name:base_report_to_printer_api.selection__printing_api_server__method__get
 msgid "GET"
-msgstr ""
+msgstr "GET"
 
 #. module: base_report_to_printer_api
 #: model:ir.model,name:base_report_to_printer_api.model_printing_api_server
 msgid "HTTP API printing endpoint"
-msgstr ""
+msgstr "Point de terminaison API HTTP"
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/printing_api_server.py:0
 msgid "HTTP status %(status)s"
-msgstr ""
+msgstr "Code de status HTTP %(status)s"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_ir_actions_report__id
@@ -270,208 +291,217 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_printing_api_server__id
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_printing_printer__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_printing_printer__label_format
 msgid "Label Format"
-msgstr ""
+msgstr "Format d'étiquette"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_field__languages
 msgid "Languages"
-msgstr ""
+msgstr "Langues"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_field__write_uid
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_report__write_uid
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_printing_api_server__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Mis à jour par"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_field__write_date
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_report__write_date
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_printing_api_server__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Dernière mise à jour le"
 
 #. module: base_report_to_printer_api
 #: model:ir.model,name:base_report_to_printer_api.model_printing_printer
 msgid "Logical Printer"
-msgstr ""
+msgstr "Imprimante logique"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_printing_api_server__method
 msgid "Method"
-msgstr ""
+msgstr "Méthode"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_report__model
 msgid "Model"
-msgstr ""
+msgstr "Modèle"
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/print_field.py:0
 msgid "Multiple values found for mapping %(mapping)s on record %(record)s."
 msgstr ""
+"Plusieurs valeurs trouvées pour l'association %(mapping)s sur "
+"l'enregistrement %(record)s."
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_report__name
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_printing_api_server__name
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/printing_printer.py:0
 msgid "No printable records were found."
-msgstr ""
+msgstr "Aucun enregistrement imprimable n'a été trouvé."
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/print_field.py:0
 msgid "No value found for mapping %(mapping)s on record %(record)s."
 msgstr ""
+"Aucune valeur trouvée pour l'association %(mapping)s sur l'enregistrement %"
+"(record)s."
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/ir_actions_report.py:0
 msgid "Only API reports can have an API payload profile."
 msgstr ""
+"Seulement les rapports de type 'API' peuvent être associés avec un profil de "
+"requête API."
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields.selection,name:base_report_to_printer_api.selection__printing_api_server__method__patch
 msgid "PATCH"
-msgstr ""
+msgstr "PATCH"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields.selection,name:base_report_to_printer_api.selection__printing_api_server__method__post
 msgid "POST"
-msgstr ""
+msgstr "POST"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields.selection,name:base_report_to_printer_api.selection__printing_api_server__method__put
 msgid "PUT"
-msgstr ""
+msgstr "PUT"
 
 #. module: base_report_to_printer_api
 #. odoo-javascript
 #: code:addons/base_report_to_printer_api/static/src/qweb_action_manager.esm.js:0
 msgid "Print data sent to the API printer."
-msgstr ""
+msgstr "Données d'impression envoyées à l'imprimante API."
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_printing_api_server__printer_ids
 msgid "Printers"
-msgstr ""
+msgstr "Imprimantes"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_field__report_id
 msgid "Report"
-msgstr ""
+msgstr "Rapport"
 
 #. module: base_report_to_printer_api
 #: model:ir.model,name:base_report_to_printer_api.model_ir_actions_report
 msgid "Report Action"
-msgstr ""
+msgstr "Action de rapport"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_ir_actions_report__report_type
 msgid "Report Type"
-msgstr ""
+msgstr "Type de rapport"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_field__source_field
 msgid "Source Field"
-msgstr ""
+msgstr "Champ source"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_field__static_value
 msgid "Static Value"
-msgstr ""
+msgstr "Valeur statique"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,help:base_report_to_printer_api.field_ir_actions_report__print_report_id
 msgid "Structured field mappings used to build the API request."
 msgstr ""
+"Association de champs structurée utilisé afin de construire la requête API."
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_field__target_field
 msgid "Target Field"
-msgstr ""
+msgstr "Champ de destination"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_field__target_model_id
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_report__target_model_id
 msgid "Target Model"
-msgstr ""
+msgstr "Model objectif"
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/print_field.py:0
 msgid "Target fields cannot start with '_'."
-msgstr ""
+msgstr "Champs visés ne peuvent pas commencer par '_'."
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_report__template
 msgid "Template"
-msgstr ""
+msgstr "Modèle"
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/printing_api_server.py:0
 msgid "The API endpoint URL must be a valid HTTPS URL."
-msgstr ""
+msgstr "L'URL du point de terminaison API doit être un URL HTTPS valide."
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/ir_actions_report.py:0
 msgid "The API payload profile model must match the report model."
 msgstr ""
+"Le modèle du profil de requête API doit concorder avec le modèle du rapport."
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/printing_printer.py:0
 msgid "The API printer has no endpoint configured."
-msgstr ""
+msgstr "L'imprimante 'API' n'est pas configurée avec un point de terminaison."
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/printing_api_server.py:0
 msgid "The API timeout must be greater than zero."
-msgstr ""
+msgstr "Le délai d'attente pour l'API doit être plus grand que zéro."
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/printing_api_server.py:0
 msgid "The API timeout must be less than or equal to 300 seconds."
 msgstr ""
+"Le délai d'attente de l'API doit être plus petit ou égal à 300 secondes."
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/printing_api_server.py:0
 msgid "The print job contains invalid data."
-msgstr ""
+msgstr "Le tâche d'impression contient des données invalides."
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/printing_printer.py:0
 msgid "The printing API rejected the job."
-msgstr ""
+msgstr "L'API d'impression a rejeté la tâche."
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/print_field.py:0
 msgid "The source field is required for this mapping."
-msgstr ""
+msgstr "Un champ source est requis pour cette association."
 
 #. module: base_report_to_printer_api
 #. odoo-python
 #: code:addons/base_report_to_printer_api/models/print_field.py:0
 msgid "The target model is required for this mapping."
-msgstr ""
+msgstr "Un modèle source est requis pour cette association."
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,help:base_report_to_printer_api.field_ir_actions_report__report_type
@@ -481,18 +511,22 @@ msgid ""
 "browser PDF means the report will be rendered using Wkhtmltopdf and "
 "downloaded by the user."
 msgstr ""
+"The type of the report that will be rendered, each one having its own "
+"rendering method. HTML means the report will be opened directly in your "
+"browser PDF means the report will be rendered using Wkhtmltopdf and "
+"downloaded by the user."
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_printing_api_server__timeout
 msgid "Timeout"
-msgstr ""
+msgstr "Délai d'attente"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_print_field__translate
 msgid "Translate"
-msgstr ""
+msgstr "Traduire"
 
 #. module: base_report_to_printer_api
 #: model:ir.model.fields,field_description:base_report_to_printer_api.field_printing_api_server__url
 msgid "Url"
-msgstr ""
+msgstr "Url"
