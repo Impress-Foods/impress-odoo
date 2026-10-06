@@ -253,6 +253,11 @@
                                 t-out="format_number(move.quantity)"
                                 class="text-nowrap"
                             >3.00</span>
+
+                            <span
+                                t-out="' / ' + str(format_number(move.product_uom_qty))"
+                                class="text-nowrap"
+                            >3.00</span>
                             <span
                                 t-field="move.product_uom"
                                 groups="uom.group_uom"
@@ -265,7 +270,6 @@
                             /> <span t-field="move.packaging_uom_id.name" />) </span>
                         </td>
                         <td name="td_check_sm" />
-                        <!-- If a move contains only one move line, the move is summarized in the heading only -->
                         <td
                             class="text-start"
                             t-if="from_col_exists"
@@ -284,7 +288,6 @@
                                 </t>
                             </div>
                         </td>
-                        <!-- If a move contains only one move line, the move is summarized in the heading only -->
                         <td
                             class="text-start"
                             t-if="to_col_exists"
@@ -304,7 +307,6 @@
                             </div>
                         </td>
                         <td t-if="has_shelf_life" />
-                        <!-- We add the barcode column if any of the products has a barcode or if we have a tracked move -->
                         <td class="text-center" t-if="barcode_col_exists">
                             <span t-if="move.product_id and move.product_id.barcode">
                                 <div
@@ -321,11 +323,13 @@
                         </td>
                     </tr>
                 </t>
-                <t
-                    t-foreach="o.move_ids.filtered(lambda move: not move.quantity)"
-                    t-as="move"
-                >
-                    <tr>
+                <t t-foreach="o.move_ids" t-as="move">
+                    <t
+                        t-set="missing_qty"
+                        t-value="move.product_uom_qty - move.quantity"
+                    />
+
+                    <tr t-if="missing_qty &gt; 0">
                         <td class="text-start">
                             <span
                                 t-field="move.product_id.display_name"
@@ -333,7 +337,7 @@
                         </td>
                         <td class="o_td_quantity text-end">
                             <span
-                                t-out="format_number(move.product_uom_qty)"
+                                t-out="format_number(missing_qty)"
                                 class="text-nowrap"
                             >3.00</span>
                             <span
@@ -348,13 +352,19 @@
                             /> <span t-field="move.packaging_uom_id.name" />) </span>
                         </td>
 
-                        <t id="colspan-calculation" t-set="colspan" t-value="1" />
+                        <t id="colspan_calculation" t-set="colspan" t-value="1" />
                         <t
                             t-if="from_col_exists"
                             t-set="colspan"
                             t-value="colspan + 1"
+                            groups="stock.group_stock_multi_locations"
                         />
-                        <t t-if="to_col_exists" t-set="colspan" t-value="colspan + 1" />
+                        <t
+                            t-if="to_col_exists"
+                            t-set="colspan"
+                            t-value="colspan + 1"
+                            groups="stock.group_stock_multi_locations"
+                        />
                         <t
                             t-if="barcode_col_exists"
                             t-set="colspan"
@@ -367,12 +377,22 @@
                         />
 
                         <td t-att-colspan="colspan" class="text-center">
-                            <span>
+                            <span t-if="not move.quantity">
                                 <i
                                 class="fa fa-exclamation-triangle"
                             /> No reservation for this product! </span>
+                            <span t-else="">
+                                <i class="fa fa-exclamation-triangle" /> Missing <t
+                                t-out="format_number(missing_qty)"
+                            />
+                                    <span
+                                t-field="move.product_uom"
+                                groups="uom.group_uom"
+                            >units</span> for this product!
+                            </span>
                         </td>
                     </tr>
+                    <t t-else="" />
                 </t>
             </tbody>
         </table>
