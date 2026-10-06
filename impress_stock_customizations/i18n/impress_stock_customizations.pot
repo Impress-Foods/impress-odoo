@@ -303,6 +303,7 @@ msgid "Description on transfer"
 msgstr ""
 
 #. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_product_product__display_name
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_product_template__display_name
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_label_base__display_name
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_label_lot_zpl_2x4__display_name
@@ -328,6 +329,7 @@ msgid "From"
 msgstr ""
 
 #. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_product_product__id
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_product_template__id
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_label_base__id
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_label_lot_zpl_2x4__id
@@ -392,6 +394,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_res_users__minimum_shelf_life
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_picking__minimum_shelf_life
 msgid "Minimum Shelf Life"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_product_product__label_name
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_product_template__label_name
+msgid "Name on labels"
 msgstr ""
 
 #. module: impress_stock_customizations
@@ -491,6 +499,11 @@ msgid "Product Label Report"
 msgstr ""
 
 #. module: impress_stock_customizations
+#: model:ir.model,name:impress_stock_customizations.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.online_sales_summary
 msgid "Products"
 msgstr ""
@@ -541,6 +554,12 @@ msgstr ""
 msgid ""
 "This is the date on which the goods with this Serial Number start "
 "deteriorating, without being dangerous yet."
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.model.fields,help:impress_stock_customizations.field_product_product__label_name
+#: model:ir.model.fields,help:impress_stock_customizations.field_product_template__label_name
+msgid "This name will be used on labels instead of the product name."
 msgstr ""
 
 #. module: impress_stock_customizations
