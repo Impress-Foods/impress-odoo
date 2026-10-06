@@ -72,9 +72,12 @@ msgstr ""
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.stock_table_prep_with_checks
-msgid ""
-"<span>\n"
-"                                <i class=\"fa fa-exclamation-triangle\"/> No reservation for this product! </span>"
+msgid "<i class=\"fa fa-exclamation-triangle\"/> Missing"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.stock_table_prep_with_checks
+msgid "<i class=\"fa fa-exclamation-triangle\"/> No reservation for this product!"
 msgstr ""
 
 #. module: impress_stock_customizations
@@ -693,6 +696,11 @@ msgstr ""
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_delivery_document
 msgid "days"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.stock_table_prep_with_checks
+msgid "for this product!"
 msgstr ""
 
 #. module: impress_stock_customizations
