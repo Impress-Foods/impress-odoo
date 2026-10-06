@@ -329,6 +329,7 @@ msgid "Description on transfer"
 msgstr "Description sur le transfert"
 
 #. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_product_product__display_name
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_product_template__display_name
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_label_base__display_name
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_label_lot_zpl_2x4__display_name
@@ -354,6 +355,7 @@ msgid "From"
 msgstr "De"
 
 #. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_product_product__id
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_product_template__id
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_label_base__id
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_report_impress_stock_customizations_label_lot_zpl_2x4__id
@@ -419,6 +421,12 @@ msgstr "Lot/Numéro de série (ZPL 4x6)"
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_picking__minimum_shelf_life
 msgid "Minimum Shelf Life"
 msgstr "Durée de vie minimum"
+
+#. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_product_product__label_name
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_product_template__label_name
+msgid "Name on labels"
+msgstr ""
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_product_product__net_weight
@@ -517,6 +525,13 @@ msgid "Product Label Report"
 msgstr "Rapport étiquette de produit"
 
 #. module: impress_stock_customizations
+#: model:ir.model,name:impress_stock_customizations.model_product_product
+#, fuzzy
+#| msgid "Product"
+msgid "Product Variant"
+msgstr "Produit"
+
+#. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.online_sales_summary
 msgid "Products"
 msgstr "Produits"
@@ -575,6 +590,12 @@ msgid ""
 msgstr ""
 "La date à partir de laquelle les produits avec ce numéro de série commencent "
 "à se détériorer, sans être dangereux pour autant."
+
+#. module: impress_stock_customizations
+#: model:ir.model.fields,help:impress_stock_customizations.field_product_product__label_name
+#: model:ir.model.fields,help:impress_stock_customizations.field_product_template__label_name
+msgid "This name will be used on labels instead of the product name."
+msgstr ""
 
 #. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.stock_table_prep_with_checks
