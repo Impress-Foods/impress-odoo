@@ -1,4 +1,5 @@
 from odoo.exceptions import ValidationError
+from odoo.fields import Command
 
 from .test_common import TestCommon
 
@@ -28,6 +29,41 @@ class TestPrintReport(TestCommon):
 
         report, _ = self.make_single_field_report(
             "res.country", "name", "name", translate=True
+        )
+
+        result = report._render_json_payload(country, extra_data=extra_data)
+        self.assertDictEqual(result, expected)
+
+    def test_render_json_payload_single_language(self):
+        """Tests mappings + extra data merged"""
+        name = "name english"
+        extra_data = {"extra": "data"}
+
+        expected = {
+            "name": name,
+            "extra": "data",
+        }
+
+        country = self.make_translated_country(name, "INVALID")
+
+        report = self.env["print.report"].create(
+            {
+                "name": "test",
+                "template": "test",
+                "target_model_id": self.env["ir.model"]
+                .search([("model", "=", "res.country")], limit=1)
+                .id,
+                "mapping_ids": [
+                    Command.create(
+                        {
+                            "source_field": "name",
+                            "target_field": "name",
+                            "translate": True,
+                            "languages": [Command.set([self.en.id])],
+                        }
+                    )
+                ],
+            }
         )
 
         result = report._render_json_payload(country, extra_data=extra_data)

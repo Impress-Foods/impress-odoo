@@ -60,11 +60,18 @@ class PrintReport(models.Model):
         payload = dict(extra_data or {})
         for mapping in self.mapping_ids:
             if mapping.translate:
-                for language in mapping.languages:
-                    key = f"{mapping.target_field}_{language.code[:2]}"
+                if len(mapping.languages) == 1:
+                    language = mapping.languages[0]
+                    key = mapping.target_field
                     payload[key] = mapping.get_formatted_value(
                         record.with_context(lang=language.code)
                     )
+                else:
+                    for language in mapping.languages:
+                        key = f"{mapping.target_field}_{language.code[:2]}"
+                        payload[key] = mapping.get_formatted_value(
+                            record.with_context(lang=language.code)
+                        )
             else:
                 payload[mapping.target_field] = mapping.get_formatted_value(record)
         return payload
