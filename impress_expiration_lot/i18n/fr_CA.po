@@ -59,6 +59,11 @@ msgid "Lot/Serial"
 msgstr "Lot/Numéro de série"
 
 #. module: impress_expiration_lot
+#: model:ir.model.fields,field_description:impress_expiration_lot.field_stock_lot__origin_date
+msgid "Origin Date"
+msgstr ""
+
+#. module: impress_expiration_lot
 #: model:ir.actions.server,name:impress_expiration_lot.impress_expiration_parse_lot_number_action
 msgid "Parse lot number and set correct dates"
 msgstr "Analyser le numéro de lot et entrer les bonnes dates"
