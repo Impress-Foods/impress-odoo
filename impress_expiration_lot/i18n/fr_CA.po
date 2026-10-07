@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-09-29 15:58+0000\n"
+"PO-Revision-Date: 2026-10-07 14:15+0000\n"
 "Last-Translator: admin <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/impress_expiration_lot/fr_CA/>\n"
@@ -61,7 +61,7 @@ msgstr "Lot/Numéro de série"
 #. module: impress_expiration_lot
 #: model:ir.model.fields,field_description:impress_expiration_lot.field_stock_lot__origin_date
 msgid "Origin Date"
-msgstr ""
+msgstr "Date d'origine"
 
 #. module: impress_expiration_lot
 #: model:ir.actions.server,name:impress_expiration_lot.impress_expiration_parse_lot_number_action
