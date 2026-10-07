@@ -1,7 +1,7 @@
 {
     "name": "Report to Printer API",
     "summary": "Send structured Odoo print data to HTTP APIs",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "category": "Generic Modules/Base",
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
