@@ -1,6 +1,6 @@
 {
     "name": "Impress Stock Customizations",
-    "version": "19.0.1.4.1",
+    "version": "19.0.1.4.2",
     "depends": [
         "base",
         "impress",
