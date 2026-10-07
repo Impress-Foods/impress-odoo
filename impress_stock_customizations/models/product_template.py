@@ -18,6 +18,12 @@ class ProductTemplate(models.Model):
         compute="_compute_external_code", inverse="_inverse_external_code"
     )
 
+    product_format = fields.Char(
+        help="Format of the product, e.g. 6x355ml, 8x85g, etc.",
+        compute="_compute_product_format",
+        inverse="_inverse_product_format",
+    )
+
     def _compute_label_name(self):
         self._compute_template_field_from_variant_field("label_name")
 
@@ -30,6 +36,12 @@ class ProductTemplate(models.Model):
     def _inverse_external_code(self):
         self._set_product_variant_field("external_code")
 
+    def _compute_product_format(self):
+        self._compute_template_field_from_variant_field("product_format")
+
+    def _inverse_product_format(self):
+        self._set_product_variant_field("product_format")
+
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
@@ -41,3 +53,7 @@ class ProductProduct(models.Model):
     )
 
     external_code = fields.Char()
+
+    product_format = fields.Char(
+        help="Format of the product, e.g. 6x355ml, 8x85g, etc."
+    )

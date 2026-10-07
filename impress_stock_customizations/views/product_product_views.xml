@@ -8,7 +8,8 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='barcode']" position="after">
                 <field name="label_name" />
-                <field name="exernal_code" />
+                <field name="external_code" />
+                <field name="product_format" />
             </xpath>
         </field>
     </record>

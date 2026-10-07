@@ -21,6 +21,10 @@
                     name="external_code"
                     invisible="product_variant_count &gt; 1 and not is_product_variant"
                 />
+                <field
+                    name="product_format"
+                    invisible="product_variant_count &gt; 1 and not is_product_variant"
+                />
             </xpath>
         </field>
     </record>
