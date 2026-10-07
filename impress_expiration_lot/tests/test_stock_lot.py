@@ -65,11 +65,28 @@ class TestStockLot(TransactionCase):
         self.assertEqual(lot.alert_date.date(), alert_date.date())
 
     @freeze_time("2025-01-01")
-    def test_invalid_lot_number(self):
+    def test_invalid_lot_number_format(self):
         """Checks if invalid lot number uses default behavior"""
         date = datetime.today()
         lot = self.env["stock.lot"].create(
             {"name": "A15477", "product_id": self.product.id}
+        )
+        exp_date = date + timedelta(days=self.product.expiration_time)
+        best_before_date = exp_date - timedelta(days=self.product.use_time)
+        removal_date = exp_date - timedelta(days=self.product.removal_time)
+        alert_date = exp_date - timedelta(days=self.product.alert_time)
+
+        self.assertEqual(lot.expiration_date.date(), exp_date.date())
+        self.assertEqual(lot.use_date.date(), best_before_date.date())
+        self.assertEqual(lot.removal_date.date(), removal_date.date())
+        self.assertEqual(lot.alert_date.date(), alert_date.date())
+
+    @freeze_time("2025-01-01")
+    def test_invalid_lot_number_date(self):
+        """Checks if invalid lot number uses default behavior"""
+        date = datetime.today()
+        lot = self.env["stock.lot"].create(
+            {"name": "25367", "product_id": self.product.id}
         )
         exp_date = date + timedelta(days=self.product.expiration_time)
         best_before_date = exp_date - timedelta(days=self.product.use_time)
