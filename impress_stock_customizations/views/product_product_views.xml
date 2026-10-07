@@ -10,6 +10,7 @@
                 <field name="label_name" />
                 <field name="external_code" />
                 <field name="product_format" />
+                <field name="label_extra" />
             </xpath>
         </field>
     </record>

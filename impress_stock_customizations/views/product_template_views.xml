@@ -25,6 +25,10 @@
                     name="product_format"
                     invisible="product_variant_count &gt; 1 and not is_product_variant"
                 />
+                <field
+                    name="label_extra"
+                    invisible="product_variant_count &gt; 1 and not is_product_variant"
+                />
             </xpath>
         </field>
     </record>
