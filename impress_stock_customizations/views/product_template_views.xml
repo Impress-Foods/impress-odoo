@@ -17,6 +17,10 @@
                     name="label_name"
                     invisible="product_variant_count &gt; 1 and not is_product_variant"
                 />
+                <field
+                    name="external_code"
+                    invisible="product_variant_count &gt; 1 and not is_product_variant"
+                />
             </xpath>
         </field>
     </record>
