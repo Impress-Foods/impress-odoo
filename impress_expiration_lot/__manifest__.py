@@ -1,6 +1,6 @@
 {
     "name": "Impress - Lot Expiration",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.2.0",
     "depends": ["product_expiry"],
     "author": "Cédric Paradis",
     "category": "Inventory",
@@ -13,5 +13,6 @@
         "actions/server_actions.xml",
         "data/templates.xml",
         "actions/lot_cron.xml",
+        "views/stock_lot_views.xml",
     ],
 }

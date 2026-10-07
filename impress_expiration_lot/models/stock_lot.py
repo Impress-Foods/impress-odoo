@@ -6,6 +6,8 @@ from odoo import api, fields, models
 class StockLot(models.Model):
     _inherit = "stock.lot"
 
+    origin_date = fields.Datetime()
+
     def _get_date_vals(self, name, product_id=None):
         if not name or len(name) < 5:
             return {}
@@ -15,7 +17,7 @@ class StockLot(models.Model):
         year, day = "20" + lot_number[:2], int(lot_number[2:])
         production = datetime.combine(
             date(int(year), 1, 1) + timedelta(days=day - 1),
-            datetime.strptime("12:00", "%H:%M").time(),  # noqa: DTZ007
+            datetime.strptime("12:00", "%H:%M").time(),
         )
         if not product_id:
             return {"expiration_date": production.strftime("%Y-%m-%d %H:%M:%S")}
@@ -25,6 +27,7 @@ class StockLot(models.Model):
         tmpl = product.product_tmpl_id
         exp = production + timedelta(days=tmpl.expiration_time)
         return {
+            "origin_date": production.strftime("%Y-%m-%d %H:%M:%S"),
             "expiration_date": exp.strftime("%Y-%m-%d %H:%M:%S"),
             "use_date": (exp - timedelta(days=tmpl.use_time)).strftime(
                 "%Y-%m-%d %H:%M:%S"
@@ -54,6 +57,7 @@ class StockLot(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         res = super().create(vals_list)
+        res.write({"origin_date": fields.Datetime.now()})
         res._calculate_expiration_date()
         return res
 
