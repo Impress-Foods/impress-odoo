@@ -324,6 +324,18 @@ msgid "Expiration Date"
 msgstr ""
 
 #. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_product_product__external_code
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_product_template__external_code
+msgid "External Code"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.model.fields,help:impress_stock_customizations.field_product_product__product_format
+#: model:ir.model.fields,help:impress_stock_customizations.field_product_template__product_format
+msgid "Format of the product, e.g. 6x355ml, 8x85g, etc."
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.stock_table_prep_with_checks
 msgid "From"
 msgstr ""
@@ -480,6 +492,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/impress_stock_customizations/reports/label_data.py:0
 msgid "Product %s does not have a valid EAN"
+msgstr ""
+
+#. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_product_product__product_format
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_product_template__product_format
+msgid "Product Format"
 msgstr ""
 
 #. module: impress_stock_customizations
