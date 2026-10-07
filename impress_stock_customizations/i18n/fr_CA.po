@@ -356,6 +356,12 @@ msgid "External Code"
 msgstr "Référence externe"
 
 #. module: impress_stock_customizations
+#: model:ir.model.fields,help:impress_stock_customizations.field_product_product__label_extra
+#: model:ir.model.fields,help:impress_stock_customizations.field_product_template__label_extra
+msgid "Extra information for the label."
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model:ir.model.fields,help:impress_stock_customizations.field_product_product__product_format
 #: model:ir.model.fields,help:impress_stock_customizations.field_product_template__product_format
 msgid "Format of the product, e.g. 6x355ml, 8x85g, etc."
@@ -391,6 +397,12 @@ msgstr "John Doe"
 #: model:ir.model,name:impress_stock_customizations.model_report_impress_stock_customizations_label_base
 msgid "Label Base Report"
 msgstr "Rapport d'étiquette de base"
+
+#. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_product_product__label_extra
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_product_template__label_extra
+msgid "Label Extra"
+msgstr ""
 
 #. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__life_remaining
