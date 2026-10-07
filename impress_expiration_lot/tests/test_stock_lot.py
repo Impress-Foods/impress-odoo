@@ -32,11 +32,13 @@ class TestStockLot(TransactionCase):
             {"name": "25001", "product_id": self.product.id}
         )
 
+        prod_date = date
         exp_date = date + timedelta(days=self.product.expiration_time)
         best_before_date = exp_date - timedelta(days=self.product.use_time)
         removal_date = exp_date - timedelta(days=self.product.removal_time)
         alert_date = exp_date - timedelta(days=self.product.alert_time)
 
+        self.assertEqual(lot.origin_date.date(), prod_date.date())
         self.assertEqual(lot.expiration_date.date(), exp_date.date())
         self.assertEqual(lot.use_date.date(), best_before_date.date())
         self.assertEqual(lot.removal_date.date(), removal_date.date())
@@ -50,11 +52,13 @@ class TestStockLot(TransactionCase):
         )
         lot.write({"name": "25032"})
 
+        prod_date = date
         exp_date = date + timedelta(days=self.product.expiration_time)
         best_before_date = exp_date - timedelta(days=self.product.use_time)
         removal_date = exp_date - timedelta(days=self.product.removal_time)
         alert_date = exp_date - timedelta(days=self.product.alert_time)
 
+        self.assertEqual(lot.origin_date.date(), prod_date.date())
         self.assertEqual(lot.expiration_date.date(), exp_date.date())
         self.assertEqual(lot.use_date.date(), best_before_date.date())
         self.assertEqual(lot.removal_date.date(), removal_date.date())
@@ -87,6 +91,7 @@ class TestStockLot(TransactionCase):
             {"name": "25001", "product_id": self.product.id}
         )
 
+        self.assertEqual(lot_std.origin_date.date(), lot_julian.origin_date.date())
         self.assertEqual(
             lot_std.expiration_date.date(), lot_julian.expiration_date.date()
         )
