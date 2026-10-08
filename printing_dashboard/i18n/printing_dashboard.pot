@@ -307,8 +307,3 @@ msgstr ""
 #: model:ir.model,name:printing_dashboard.model_mrp_workorder
 msgid "Work Order"
 msgstr ""
-
-#. module: printing_dashboard
-#: model_terms:ir.ui.view,arch_db:printing_dashboard.stock_picking_view_form_inherit_dashboard
-msgid "print_dashboard"
-msgstr ""

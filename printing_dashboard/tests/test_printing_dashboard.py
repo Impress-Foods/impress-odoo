@@ -116,22 +116,43 @@ class TestPrintingDashboard(TransactionCase):
             }
         )
 
-    def _make_picking(self, product, qty=1.0, lot=None, extra_move=False):
-        move_line = Command.create(
-            {
-                "product_id": product.id,
-                "product_uom_id": product.uom_id.id,
-                "quantity": qty,
-                "lot_id": lot.id if lot else False,
-            }
-        )
+    def _make_picking(
+        self, product, qty=1.0, lot=None, extra_move=False, zero_lot=None
+    ):
+        """A transfer, optionally of a second product or a second lot.
+
+        ``zero_lot`` adds a line on ``product`` for a lot the transfer was sent
+        but received none of, which is what a zero quantity looks like on a
+        picking: the lot is one of its own, and the answer is zero.
+        """
+        move_lines = [
+            Command.create(
+                {
+                    "product_id": product.id,
+                    "product_uom_id": product.uom_id.id,
+                    "quantity": qty,
+                    "lot_id": lot.id if lot else False,
+                }
+            )
+        ]
+        if zero_lot:
+            move_lines.append(
+                Command.create(
+                    {
+                        "product_id": product.id,
+                        "product_uom_id": product.uom_id.id,
+                        "quantity": 0.0,
+                        "lot_id": zero_lot.id,
+                    }
+                )
+            )
         moves = [
             Command.create(
                 {
                     "product_id": product.id,
                     "product_uom_qty": qty,
                     "product_uom": product.uom_id.id,
-                    "move_line_ids": [move_line],
+                    "move_line_ids": move_lines,
                 }
             )
         ]
@@ -241,6 +262,54 @@ class TestPrintingDashboard(TransactionCase):
 
         self.assertEqual(dashboard.target, lot)
         self.assertEqual(dashboard.product_uom_qty, 7.0)
+
+    def test_retargeting_onto_a_lot_the_transfer_never_received_reads_zero(self):
+        """Zero is an answer, not an absence of one.
+
+        ``_label_quantity_for`` answers a lot the transfer received none of
+        with zero, which is falsy and so used to leave the previous target's
+        count on screen -- a label claiming five units for a lot that never
+        received any.
+        """
+        received = self.env["stock.lot"].create(
+            {"name": "DASHBOARD-QTY-GOT", "product_id": self.product.id}
+        )
+        empty = self.env["stock.lot"].create(
+            {"name": "DASHBOARD-QTY-NONE", "product_id": self.product.id}
+        )
+        picking = self._make_picking(
+            self.product, qty=5.0, lot=received, zero_lot=empty
+        )
+        # Driven through the form rather than ``.new()`` because retargeting
+        # means switching the model as well as the lot, and ``target`` follows
+        # ``target_model``.
+        form = Form(
+            self.env["printing.dashboard"].with_context(
+                **picking.action_open_print_dashboard()["context"]
+            ),
+            view="printing_dashboard.view_printing_dashboard_form",
+        )
+        self.assertEqual(form.product_uom_qty, 5.0)
+
+        form.target_model = "stock.lot"
+        form.lot_id = empty
+
+        self.assertEqual(form.product_uom_qty, 0.0)
+
+    def test_a_source_with_nothing_to_say_leaves_the_quantity_alone(self):
+        """A target the source cannot speak for is not an answer of zero."""
+        received = self.env["stock.lot"].create(
+            {"name": "DASHBOARD-QTY-KEEP", "product_id": self.product.id}
+        )
+        picking = self._make_picking(self.product, qty=3.0, lot=received)
+        dashboard = self._dashboard_from_action(picking.action_open_print_dashboard())
+
+        # No target at all: the operator has chosen nothing, so the number they
+        # last saw is not a stale reading of some other record's quantity.
+        dashboard.lot_id = False
+        dashboard._onchange_target()
+
+        self.assertEqual(dashboard.product_uom_qty, 3.0)
 
     def test_a_recordset_target_resolves_to_its_model_and_id(self):
         lot = self.env["stock.lot"].create(

@@ -105,16 +105,16 @@ class PrintingDashboard(models.TransientModel):
                     dashboard._printer_report_domain()
                 )
 
-    @api.depends("printer_id", "target_model")
+    @api.depends("printer_id", "available_report_ids")
     def _compute_printer_has_report(self) -> None:
         for dashboard in self:
             # An empty report list reads as a broken screen, and a machine set
             # up for a size no label uses yet is an ordinary thing to meet.
+            # ``available_report_ids`` is already the narrowed list, and with no
+            # printer chosen it is every label for the model, so the printer is
+            # what decides whether an empty list means anything.
             dashboard.printer_has_report = bool(
-                dashboard.printer_id
-                and self.env["ir.actions.report"].search(
-                    dashboard._printer_report_domain(), limit=1
-                )
+                dashboard.printer_id and dashboard.available_report_ids
             )
 
     def _get_source_record(self) -> models.Model:
@@ -186,7 +186,9 @@ class PrintingDashboard(models.TransientModel):
             if not source or not hasattr(source, "_label_quantity_for"):
                 continue
             quantity, uom = source._label_quantity_for(dashboard.target)
-            if quantity:
+            # Zero is an answer, not an absence of one: a lot the transfer
+            # received none of has to show none, not the previous target's count.
+            if quantity is not None:
                 dashboard.product_uom_qty = quantity
             if uom:
                 dashboard.product_uom_id = uom
@@ -307,17 +309,26 @@ class PrintingDashboard(models.TransientModel):
             return False
         return model.browse(res_id).action_open_print_dashboard()
 
+    def _context_reference(self, value: Any) -> int | bool:
+        """Return the id a context value names, in whichever form it arrived.
+
+        A source may name a record as the record, as its id, or as an XML id,
+        and all three mean the same reference.  Anything else means "not named",
+        which is the caller's cue to fall back to a default.
+        """
+        if isinstance(value, models.BaseModel):
+            return value.id
+        if isinstance(value, str):
+            return self.env.ref(value).id
+        return value or False
+
     @api.model
     def _prepare_dashboard_values(self, context: dict[str, Any]) -> dict[str, Any]:
         target_model, product_id, lot_id = self.env[
             "printing.dashboard.source"
         ]._resolve_target(context)
 
-        report_id = context.get("report_id")
-        if isinstance(report_id, models.BaseModel):
-            report_id = report_id.id
-        elif isinstance(report_id, str):
-            report_id = self.env.ref(report_id).id
+        report_id = self._context_reference(context.get("report_id"))
         if not report_id and target_model:
             report_id = (
                 self.env["ir.actions.report"]
@@ -325,20 +336,12 @@ class PrintingDashboard(models.TransientModel):
                 .id
             )
 
-        product_uom_id = context.get("product_uom_id")
-        if isinstance(product_uom_id, models.BaseModel):
-            product_uom_id = product_uom_id.id
-        elif isinstance(product_uom_id, str):
-            product_uom_id = self.env.ref(product_uom_id).id
+        product_uom_id = self._context_reference(context.get("product_uom_id"))
         if not product_uom_id and product_id:
             product_uom_id = self.env["product.product"].browse(product_id).uom_id.id
 
         # A source that knows the workstation's printer names it here.
-        printer_id = context.get("printer_id")
-        if isinstance(printer_id, models.BaseModel):
-            printer_id = printer_id.id
-        elif isinstance(printer_id, str):
-            printer_id = self.env.ref(printer_id).id
+        printer_id = self._context_reference(context.get("printer_id"))
         if not printer_id and report_id:
             printer_id = (
                 self.env["ir.actions.report"]

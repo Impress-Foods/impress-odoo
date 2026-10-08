@@ -103,22 +103,28 @@ class StockPicking(models.Model):
         return context
 
     def _label_quantity_for(self, target) -> tuple:
-        """Return the (quantity, uom) this transfer shows for ``target``."""
+        """Return the (quantity, uom) this transfer states for ``target``.
+
+        A quantity of ``None`` means the transfer says nothing about this target
+        at all, which is a different answer from zero of it: a lot this transfer
+        received none of has to state zero, or the dashboard would go on showing
+        whatever the previous target said.
+        """
         self.ensure_one()
         if not target:
-            return 0.0, self.env["uom.uom"]
+            return None, self.env["uom.uom"]
         if target._name == "stock.lot":
             lines = self.move_ids.move_line_ids.filtered(
                 lambda line, target=target: line.lot_id == target
             )
             if not lines:
-                return 0.0, self.env["uom.uom"]
+                return None, self.env["uom.uom"]
             return sum(lines.mapped("quantity")), lines[0].product_uom_id
         moves = self.move_ids.filtered(
             lambda move, target=target: move.product_id == target
         )
         if not moves:
-            return 0.0, self.env["uom.uom"]
+            return None, self.env["uom.uom"]
         return sum(moves.mapped("product_uom_qty")), moves[0].product_uom
 
     def _get_print_dashboard_target_ids(self) -> dict[str, list[int]]:

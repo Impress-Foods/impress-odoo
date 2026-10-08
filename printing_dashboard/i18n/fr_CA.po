@@ -326,10 +326,8 @@ msgstr "Transfert"
 msgid "Work Order"
 msgstr "Ordre de travail"
 
-#. module: printing_dashboard
-#: model_terms:ir.ui.view,arch_db:printing_dashboard.stock_picking_view_form_inherit_dashboard
-msgid "print_dashboard"
-msgstr "portail_d'impression"
+#~ msgid "print_dashboard"
+#~ msgstr "portail_d'impression"
 
 #~ msgid "Copies must be greater than zero."
 #~ msgstr "Le nombre de copies doit être plus grand que zéro."

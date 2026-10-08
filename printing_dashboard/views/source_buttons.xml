@@ -106,7 +106,7 @@
                     type="object"
                     icon="fa-print"
                     groups="base.group_user"
-                    title="print_dashboard"
+                    title="Print"
                 />
             </xpath>
         </field>
