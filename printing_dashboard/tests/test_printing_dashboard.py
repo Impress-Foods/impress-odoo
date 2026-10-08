@@ -2,6 +2,7 @@ from unittest.mock import patch
 
 from odoo import Command
 from odoo.exceptions import UserError, ValidationError
+from odoo.tests import Form
 from odoo.tests.common import TransactionCase
 from odoo.tools.view_validation import get_expression_field_names
 
@@ -44,11 +45,13 @@ class TestPrintingDashboard(TransactionCase):
         cls.wide_zpl_printer = cls._make_printer("Dashboard ZPL 4x6", "zpl", "4x6")
 
     @classmethod
-    def _make_report(cls, name, size="2x4", template="dashboard_test_label"):
+    def _make_report(
+        cls, name, size="2x4", template="dashboard_test_label", model="product.product"
+    ):
         return cls.env["ir.actions.report"].create(
             {
                 "name": name,
-                "model": "product.product",
+                "model": model,
                 "report_type": "qweb-text",
                 "label_size_id": cls._size(size).id,
                 "report_name": template,
@@ -81,6 +84,28 @@ class TestPrintingDashboard(TransactionCase):
         }
         return self.env["printing.dashboard"].new(defaults)
 
+    def _dashboard_form(self, **values):
+        """The dashboard as the dialog drives it, onchanges and all.
+
+        Only the Form runs the onchange the way the client does, re-running the
+        one belonging to a field another onchange wrote.  Calling an onchange
+        directly leaves the pair of them blind to each other, which is how two
+        of them clearing each other went unnoticed.
+        """
+        form = Form(
+            self.env["printing.dashboard"],
+            view="printing_dashboard.view_printing_dashboard_form",
+        )
+        form.target_model = "product.product"
+        form.product_id = values.pop("product_id", self.product)
+        for name, value in values.items():
+            # The Form takes records where the client takes ids.
+            if isinstance(value, int):
+                field = self.env["printing.dashboard"]._fields[name]
+                value = self.env[field.comodel_name].browse(value)
+            setattr(form, name, value)
+        return form
+
     def _dashboard(self, report, printer=None, product=None):
         product = product or self.product
         return self.env["printing.dashboard"].create(
@@ -91,22 +116,43 @@ class TestPrintingDashboard(TransactionCase):
             }
         )
 
-    def _make_picking(self, product, qty=1.0, lot=None, extra_move=False):
-        move_line = Command.create(
-            {
-                "product_id": product.id,
-                "product_uom_id": product.uom_id.id,
-                "quantity": qty,
-                "lot_id": lot.id if lot else False,
-            }
-        )
+    def _make_picking(
+        self, product, qty=1.0, lot=None, extra_move=False, zero_lot=None
+    ):
+        """A transfer, optionally of a second product or a second lot.
+
+        ``zero_lot`` adds a line on ``product`` for a lot the transfer was sent
+        but received none of, which is what a zero quantity looks like on a
+        picking: the lot is one of its own, and the answer is zero.
+        """
+        move_lines = [
+            Command.create(
+                {
+                    "product_id": product.id,
+                    "product_uom_id": product.uom_id.id,
+                    "quantity": qty,
+                    "lot_id": lot.id if lot else False,
+                }
+            )
+        ]
+        if zero_lot:
+            move_lines.append(
+                Command.create(
+                    {
+                        "product_id": product.id,
+                        "product_uom_id": product.uom_id.id,
+                        "quantity": 0.0,
+                        "lot_id": zero_lot.id,
+                    }
+                )
+            )
         moves = [
             Command.create(
                 {
                     "product_id": product.id,
                     "product_uom_qty": qty,
                     "product_uom": product.uom_id.id,
-                    "move_line_ids": [move_line],
+                    "move_line_ids": move_lines,
                 }
             )
         ]
@@ -216,6 +262,54 @@ class TestPrintingDashboard(TransactionCase):
 
         self.assertEqual(dashboard.target, lot)
         self.assertEqual(dashboard.product_uom_qty, 7.0)
+
+    def test_retargeting_onto_a_lot_the_transfer_never_received_reads_zero(self):
+        """Zero is an answer, not an absence of one.
+
+        ``_label_quantity_for`` answers a lot the transfer received none of
+        with zero, which is falsy and so used to leave the previous target's
+        count on screen -- a label claiming five units for a lot that never
+        received any.
+        """
+        received = self.env["stock.lot"].create(
+            {"name": "DASHBOARD-QTY-GOT", "product_id": self.product.id}
+        )
+        empty = self.env["stock.lot"].create(
+            {"name": "DASHBOARD-QTY-NONE", "product_id": self.product.id}
+        )
+        picking = self._make_picking(
+            self.product, qty=5.0, lot=received, zero_lot=empty
+        )
+        # Driven through the form rather than ``.new()`` because retargeting
+        # means switching the model as well as the lot, and ``target`` follows
+        # ``target_model``.
+        form = Form(
+            self.env["printing.dashboard"].with_context(
+                **picking.action_open_print_dashboard()["context"]
+            ),
+            view="printing_dashboard.view_printing_dashboard_form",
+        )
+        self.assertEqual(form.product_uom_qty, 5.0)
+
+        form.target_model = "stock.lot"
+        form.lot_id = empty
+
+        self.assertEqual(form.product_uom_qty, 0.0)
+
+    def test_a_source_with_nothing_to_say_leaves_the_quantity_alone(self):
+        """A target the source cannot speak for is not an answer of zero."""
+        received = self.env["stock.lot"].create(
+            {"name": "DASHBOARD-QTY-KEEP", "product_id": self.product.id}
+        )
+        picking = self._make_picking(self.product, qty=3.0, lot=received)
+        dashboard = self._dashboard_from_action(picking.action_open_print_dashboard())
+
+        # No target at all: the operator has chosen nothing, so the number they
+        # last saw is not a stale reading of some other record's quantity.
+        dashboard.lot_id = False
+        dashboard._onchange_target()
+
+        self.assertEqual(dashboard.product_uom_qty, 3.0)
 
     def test_a_recordset_target_resolves_to_its_model_and_id(self):
         lot = self.env["stock.lot"].create(
@@ -473,7 +567,13 @@ class TestPrintingDashboard(TransactionCase):
 
     # -- onchange: the printer and the label follow each other -------------
 
-    def test_changing_report_drops_a_printer_that_no_longer_fits(self):
+    def test_changing_report_drops_a_label_the_printer_cannot_print(self):
+        """The report is the one that goes.
+
+        The picker already narrows to what the printer prints, so this only ever
+        catches a report arriving from outside the picker, and the machine the
+        operator chose is not something to throw away with it.
+        """
         undeclared = self._make_printer("Dashboard Undeclared", False)
         dashboard = self.env["printing.dashboard"].new(
             {"report_id": self.report.id, "printer_id": undeclared.id}
@@ -482,7 +582,117 @@ class TestPrintingDashboard(TransactionCase):
         dashboard.report_id = self.label_report
         dashboard._onchange_report_id()
 
-        self.assertFalse(dashboard.printer_id.id)
+        self.assertEqual(dashboard.printer_id, undeclared)
+        self.assertFalse(dashboard.report_id.id)
+
+    def test_a_report_cleared_by_hand_leaves_the_printer_alone(self):
+        """An empty report is not an incompatibility.
+
+        ``_supports_report`` answers False for an empty report, so treating that
+        as a mismatch cost the operator the printer they had just picked.
+        """
+        form = self._dashboard_form(
+            report_id=self.label_report.id, printer_id=self.zpl_printer.id
+        )
+
+        form.report_id = self.env["ir.actions.report"]
+
+        self.assertEqual(form.printer_id, self.zpl_printer)
+        self.assertFalse(form.report_id.id)
+
+    def test_picking_a_printer_moves_the_label_onto_it(self):
+        """The pick survives, and the label follows it.
+
+        A printer with its own label gets that label rather than nothing: the
+        machine is what the operator knows, so narrowing the report to the
+        machine's own label keeps the form printable.
+        """
+        # Built here rather than in setUpClass: an extra dashboard report in the
+        # shared fixture changes which report _get_default_dashboard_report
+        # picks for every other test.
+        wide_report = self._make_report("Dashboard 4x6 Label", size="4x6")
+        form = self._dashboard_form(report_id=self.label_report.id)
+
+        form.printer_id = self.wide_zpl_printer
+
+        self.assertEqual(form.printer_id, self.wide_zpl_printer)
+        self.assertEqual(form.report_id, wide_report)
+        self.assertTrue(form.printer_has_report)
+
+    def test_a_printer_with_no_label_keeps_its_place(self):
+        """The machine stays put, so the warning explaining the gap is reachable.
+
+        Handing back two empty fields left the operator with a dashboard that
+        had silently reset itself and a machine they had to pick a second time.
+        """
+        unlabelled = self._make_printer("Dashboard 3x3", "zpl", "3x3")
+        form = self._dashboard_form(report_id=self.label_report.id)
+
+        form.printer_id = unlabelled
+
+        self.assertEqual(form.printer_id, unlabelled)
+        self.assertFalse(form.report_id.id)
+        self.assertFalse(form.printer_has_report)
+
+    def test_a_label_the_printer_already_prints_is_left_alone(self):
+        """Fitting the pair twice must not keep swapping them."""
+        form = self._dashboard_form(
+            report_id=self.label_report.id, printer_id=self.zpl_printer.id
+        )
+
+        form.printer_id = self.spare_zpl_printer
+
+        self.assertEqual(form.printer_id, self.spare_zpl_printer)
+        self.assertEqual(form.report_id, self.label_report)
+
+    def test_switching_target_model_keeps_the_printer(self):
+        """A new model brings the labels that machine prints, not a lost machine.
+
+        The reset used to ignore the printer and install whatever label the new
+        model offered first.  Here that model-blind default is the wrong size for
+        the printer, so it left the pair mismatched for the report onchange to
+        take apart -- which is how a switch of model cost the operator the
+        machine they had picked.
+        """
+        lot = self.env["stock.lot"].create(
+            {"name": "DASHBOARD-SWITCH-002", "product_id": self.product.id}
+        )
+        # Two stock.lot labels so the reset has a choice to get wrong: the
+        # model-blind default is the first by name, and it is the wrong size.
+        self._make_report("Dashboard 2x4 Lot Label", model="stock.lot")
+        lot_report = self._make_report(
+            "Dashboard 4x6 Lot Label", size="4x6", model="stock.lot"
+        )
+        reports = self.env["ir.actions.report"]
+        blind_default = reports._get_default_dashboard_report("stock.lot")
+        self.assertFalse(
+            self.wide_zpl_printer._supports_report(blind_default),
+            "the model-blind default has to be a label this printer cannot "
+            "print, or the reset below has nothing to get wrong",
+        )
+        form = self._dashboard_form(printer_id=self.wide_zpl_printer.id)
+
+        form.target_model = "stock.lot"
+
+        self.assertEqual(form.printer_id, self.wide_zpl_printer)
+        self.assertEqual(form.report_id, lot_report)
+
+        form.lot_id = lot
+        form.target_model = "product.product"
+
+        self.assertEqual(form.printer_id, self.wide_zpl_printer)
+
+    def test_switching_target_model_without_a_printer_takes_any_label(self):
+        """With no machine to fit, the reset is the model's own default."""
+        form = self._dashboard_form(report_id=self.label_report.id)
+
+        form.target_model = "stock.lot"
+
+        self.assertFalse(form.printer_id.id)
+        self.assertEqual(
+            form.report_id,
+            self.env["ir.actions.report"]._get_default_dashboard_report("stock.lot"),
+        )
 
     def test_changing_target_model_resets_the_report(self):
         lot = self.env["stock.lot"].create(

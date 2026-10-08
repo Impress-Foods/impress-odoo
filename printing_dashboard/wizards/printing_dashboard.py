@@ -105,16 +105,16 @@ class PrintingDashboard(models.TransientModel):
                     dashboard._printer_report_domain()
                 )
 
-    @api.depends("printer_id", "target_model")
+    @api.depends("printer_id", "available_report_ids")
     def _compute_printer_has_report(self) -> None:
         for dashboard in self:
             # An empty report list reads as a broken screen, and a machine set
             # up for a size no label uses yet is an ordinary thing to meet.
+            # ``available_report_ids`` is already the narrowed list, and with no
+            # printer chosen it is every label for the model, so the printer is
+            # what decides whether an empty list means anything.
             dashboard.printer_has_report = bool(
-                dashboard.printer_id
-                and self.env["ir.actions.report"].search(
-                    dashboard._printer_report_domain(), limit=1
-                )
+                dashboard.printer_id and dashboard.available_report_ids
             )
 
     def _get_source_record(self) -> models.Model:
@@ -186,43 +186,76 @@ class PrintingDashboard(models.TransientModel):
             if not source or not hasattr(source, "_label_quantity_for"):
                 continue
             quantity, uom = source._label_quantity_for(dashboard.target)
-            if quantity:
+            # Zero is an answer, not an absence of one: a lot the transfer
+            # received none of has to show none, not the previous target's count.
+            if quantity is not None:
                 dashboard.product_uom_qty = quantity
             if uom:
                 dashboard.product_uom_id = uom
 
     @api.onchange("printer_id")
-    def _onchange_printer_id(self):
+    def _onchange_printer_id(self) -> None:
+        """Move the label onto the printer rather than dropping it.
+
+        The machine is the thing the operator knows and the thing they have
+        just chosen, so it stays.  A printer with no label of its own keeps its
+        place and ``printer_has_report`` explains the gap, instead of the pair
+        of onchanges handing back two empty fields and losing the pick.
+        """
+        reports = self.env["ir.actions.report"]
         for dashboard in self:
-            if not dashboard.printer_id:
+            printer = dashboard.printer_id
+            if not printer:
                 continue
             report = dashboard.report_id
-            if report and not dashboard.printer_id._supports_report(report):
-                dashboard.report_id = False
+            if report and printer._supports_report(report):
+                continue
+            dashboard.report_id = reports._get_default_report_for_printer(
+                dashboard.target_model, printer
+            )
 
     @api.onchange("report_id")
     def _onchange_report_id(self) -> None:
+        """Drop a report the chosen printer cannot print, never the printer.
+
+        ``report_id`` is already narrowed to ``available_report_ids``, so this
+        only catches a report arriving from somewhere the picker does not cover
+        -- the ``default_`` context, or the model-blind default a target model
+        switch installs.  The report is what goes: the machine is what the
+        operator picked and what the report list is built from.  A report that
+        is merely empty is left empty, since that is a state the dashboard can
+        be printed from nothing and is not an incompatibility.
+        """
         for dashboard in self:
-            # A printer is only valid for the format of the report it will
-            # print, so changing the report drops a printer that no longer
-            # fits rather than leaving a mismatched pair to fail at print.
-            if dashboard.printer_id and not dashboard.printer_id._supports_report(
-                dashboard.report_id
+            printer = dashboard.printer_id
+            if (
+                printer
+                and dashboard.report_id
+                and not printer._supports_report(dashboard.report_id)
             ):
-                dashboard.printer_id = False
+                dashboard.report_id = False
 
     @api.onchange("target_model")
     def _onchange_target_model(self) -> None:
+        reports = self.env["ir.actions.report"]
         for dashboard in self:
             # ``product_id`` is deliberately kept when switching to a lot: it
             # stops being the target and becomes the filter for the lot picker.
             if dashboard.target_model == "product.product":
                 dashboard.lot_id = False
-            # The available reports depend on the model, so reset to that
-            # model's default report (or empty when it has none).
-            dashboard.report_id = self.env[
-                "ir.actions.report"
-            ]._get_default_dashboard_report(dashboard.target_model)
+            # The available reports depend on the model, so reset to that model's
+            # default report (or empty when it has none).  A chosen printer
+            # narrows that reset further, so switching the model lands on a
+            # label this machine prints rather than on one the picker has to
+            # take away again.
+            if dashboard.printer_id:
+                dashboard.report_id = reports._get_default_report_for_printer(
+                    dashboard.target_model, dashboard.printer_id
+                )
+            else:
+                dashboard.report_id = reports._get_default_dashboard_report(
+                    dashboard.target_model
+                )
 
     @api.onchange("product_id")
     def _onchange_product_id(self) -> None:
@@ -276,17 +309,26 @@ class PrintingDashboard(models.TransientModel):
             return False
         return model.browse(res_id).action_open_print_dashboard()
 
+    def _context_reference(self, value: Any) -> int | bool:
+        """Return the id a context value names, in whichever form it arrived.
+
+        A source may name a record as the record, as its id, or as an XML id,
+        and all three mean the same reference.  Anything else means "not named",
+        which is the caller's cue to fall back to a default.
+        """
+        if isinstance(value, models.BaseModel):
+            return value.id
+        if isinstance(value, str):
+            return self.env.ref(value).id
+        return value or False
+
     @api.model
     def _prepare_dashboard_values(self, context: dict[str, Any]) -> dict[str, Any]:
         target_model, product_id, lot_id = self.env[
             "printing.dashboard.source"
         ]._resolve_target(context)
 
-        report_id = context.get("report_id")
-        if isinstance(report_id, models.BaseModel):
-            report_id = report_id.id
-        elif isinstance(report_id, str):
-            report_id = self.env.ref(report_id).id
+        report_id = self._context_reference(context.get("report_id"))
         if not report_id and target_model:
             report_id = (
                 self.env["ir.actions.report"]
@@ -294,20 +336,12 @@ class PrintingDashboard(models.TransientModel):
                 .id
             )
 
-        product_uom_id = context.get("product_uom_id")
-        if isinstance(product_uom_id, models.BaseModel):
-            product_uom_id = product_uom_id.id
-        elif isinstance(product_uom_id, str):
-            product_uom_id = self.env.ref(product_uom_id).id
+        product_uom_id = self._context_reference(context.get("product_uom_id"))
         if not product_uom_id and product_id:
             product_uom_id = self.env["product.product"].browse(product_id).uom_id.id
 
         # A source that knows the workstation's printer names it here.
-        printer_id = context.get("printer_id")
-        if isinstance(printer_id, models.BaseModel):
-            printer_id = printer_id.id
-        elif isinstance(printer_id, str):
-            printer_id = self.env.ref(printer_id).id
+        printer_id = self._context_reference(context.get("printer_id"))
         if not printer_id and report_id:
             printer_id = (
                 self.env["ir.actions.report"]
