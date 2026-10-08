@@ -83,6 +83,28 @@ class IrActionsReport(models.Model):
         return self.browse()
 
     @api.model
+    def _get_default_report_for_printer(
+        self, model: str, printer: models.Model
+    ) -> models.Model:
+        """Return the dashboard report of ``model`` that ``printer`` prints, if any.
+
+        ``_get_default_dashboard_report`` narrows to the model and this narrows
+        to the machine as well, so moving a label onto a printer lands on a
+        label that printer prints rather than on nothing.  Same label-type order,
+        so a machine's own label wins over one merely printable on it.  Empty when
+        the printer declares no format or size: a machine set up for a label
+        nobody has written yet is an ordinary thing to meet.
+        """
+        domain = self._printable_reports_domain(model, printer)
+        for report_type in self._label_report_types():
+            report = self.search(
+                domain & Domain("report_type", "=", report_type), limit=1
+            )
+            if report:
+                return report
+        return self.browse()
+
+    @api.model
     def _get_default_printer(self) -> models.Model:
         """Return the printer this report is configured to print on, if any.
 

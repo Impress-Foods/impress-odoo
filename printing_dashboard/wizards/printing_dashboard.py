@@ -192,37 +192,68 @@ class PrintingDashboard(models.TransientModel):
                 dashboard.product_uom_id = uom
 
     @api.onchange("printer_id")
-    def _onchange_printer_id(self):
+    def _onchange_printer_id(self) -> None:
+        """Move the label onto the printer rather than dropping it.
+
+        The machine is the thing the operator knows and the thing they have
+        just chosen, so it stays.  A printer with no label of its own keeps its
+        place and ``printer_has_report`` explains the gap, instead of the pair
+        of onchanges handing back two empty fields and losing the pick.
+        """
+        reports = self.env["ir.actions.report"]
         for dashboard in self:
-            if not dashboard.printer_id:
+            printer = dashboard.printer_id
+            if not printer:
                 continue
             report = dashboard.report_id
-            if report and not dashboard.printer_id._supports_report(report):
-                dashboard.report_id = False
+            if report and printer._supports_report(report):
+                continue
+            dashboard.report_id = reports._get_default_report_for_printer(
+                dashboard.target_model, printer
+            )
 
     @api.onchange("report_id")
     def _onchange_report_id(self) -> None:
+        """Drop a report the chosen printer cannot print, never the printer.
+
+        ``report_id`` is already narrowed to ``available_report_ids``, so this
+        only catches a report arriving from somewhere the picker does not cover
+        -- the ``default_`` context, or the model-blind default a target model
+        switch installs.  The report is what goes: the machine is what the
+        operator picked and what the report list is built from.  A report that
+        is merely empty is left empty, since that is a state the dashboard can
+        be printed from nothing and is not an incompatibility.
+        """
         for dashboard in self:
-            # A printer is only valid for the format of the report it will
-            # print, so changing the report drops a printer that no longer
-            # fits rather than leaving a mismatched pair to fail at print.
-            if dashboard.printer_id and not dashboard.printer_id._supports_report(
-                dashboard.report_id
+            printer = dashboard.printer_id
+            if (
+                printer
+                and dashboard.report_id
+                and not printer._supports_report(dashboard.report_id)
             ):
-                dashboard.printer_id = False
+                dashboard.report_id = False
 
     @api.onchange("target_model")
     def _onchange_target_model(self) -> None:
+        reports = self.env["ir.actions.report"]
         for dashboard in self:
             # ``product_id`` is deliberately kept when switching to a lot: it
             # stops being the target and becomes the filter for the lot picker.
             if dashboard.target_model == "product.product":
                 dashboard.lot_id = False
-            # The available reports depend on the model, so reset to that
-            # model's default report (or empty when it has none).
-            dashboard.report_id = self.env[
-                "ir.actions.report"
-            ]._get_default_dashboard_report(dashboard.target_model)
+            # The available reports depend on the model, so reset to that model's
+            # default report (or empty when it has none).  A chosen printer
+            # narrows that reset further, so switching the model lands on a
+            # label this machine prints rather than on one the picker has to
+            # take away again.
+            if dashboard.printer_id:
+                dashboard.report_id = reports._get_default_report_for_printer(
+                    dashboard.target_model, dashboard.printer_id
+                )
+            else:
+                dashboard.report_id = reports._get_default_dashboard_report(
+                    dashboard.target_model
+                )
 
     @api.onchange("product_id")
     def _onchange_product_id(self) -> None:
