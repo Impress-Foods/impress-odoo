@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="channel_erp_test" model="queue.job.channel">
+        <field name="name">test</field>
+        <field name="parent_id" ref="connector_erp.channel_erp" />
+        <field name="removal_interval">30</field>
+    </record>
+
+    <record id="job_partner_import_record" model="queue.job.function">
+        <field name="model_id" ref="model_test_erp_partner" />
+        <field name="method">import_record</field>
+        <field name="channel_id" ref="channel_erp_test" />
+    </record>
+</odoo>

@@ -1,2 +1,2 @@
 from . import erp_backend
-from . import res_partner
+from . import erp_binding

@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <menuitem id="menu_connector" name="Connector" sequence="10" />
-    <menuitem
-        id="menu_connector_backend"
-        name="Backends"
-        parent="menu_connector"
-        sequence="10"
-        action="erp_backend_action"
-    />
 </odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_test_erp_backend,access_test_erp_backend,model_test_erp_backend,base.group_user,1,1,1,1
+access_test_erp_partner,access_test_erp_partner,model_test_erp_partner,base.group_user,1,1,1,1
+access_test_erp_product,access_test_erp_product,model_test_erp_product,base.group_user,1,1,1,1

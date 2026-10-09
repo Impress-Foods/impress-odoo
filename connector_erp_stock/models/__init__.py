@@ -1,3 +1,2 @@
-from . import product_product
-from . import erp_backend
-from . import erp_product
+from . import erp_product_binding
+from . import erp_picking_binding
