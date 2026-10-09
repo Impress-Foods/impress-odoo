@@ -25,7 +25,6 @@ class ErpBackend(models.AbstractModel):
     api_key = fields.Char()
     last_sync_date = fields.Datetime(readonly=True, copy=False)
     company_id = fields.Many2one("res.company")
-    partner_category_id = fields.Many2one("res.partner.category")
 
     def _make_client(self):
         """Return the low-level API client for this backend.
