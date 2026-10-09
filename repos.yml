@@ -100,3 +100,9 @@
     oca: https://github.com/OCA/web
   merges:
     - oca 19.0
+
+./connector:
+  remotes:
+    oca: https://github.com/OCA/connector
+  merges:
+    - oca 19.0
