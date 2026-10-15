@@ -86,7 +86,6 @@
   merges:
     - oca 19.0
     - oca refs/pull/2554/head
-    - oca refs/pull/2556/head
     - oca refs/pull/2557/head
 
 ./report_print_send:
