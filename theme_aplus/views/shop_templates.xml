@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-model href="../../import_xml.rng" type="application/xml"?>
 <odoo>
     <!-- All products page + category page-->
@@ -31,7 +31,7 @@
                                 <t t-set="col_height" t-value="td_product['y']" />
                                 <t
                                     t-set="col_width"
-                                    t-value="12 // ppr * td_product['x']"
+                                    t-value="2"
                                 />
                                 <t t-set="col_class" t-valuef="g-col-6" />
                                 <t
@@ -90,7 +90,7 @@
                             <t t-set="col_height" t-value="td_product['y']" />
                             <t
                                 t-set="col_width"
-                                t-value="12 // ppr * td_product['x']"
+                                t-value="2"
                             />
                             <t t-set="col_class" t-valuef="g-col-6" />
                             <t
