@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_lot_form_recursive_checks" model="ir.ui.view">
+        <field name="name">stock.lot.form.recursive.checks</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button
+                    name="action_open_recursive_quality_checks"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-sitemap"
+                    invisible="not recursive_check_qty"
+                    groups="quality.group_quality_user"
+                >
+                    <field
+                        name="recursive_check_qty"
+                        widget="statinfo"
+                        string="Quality Checks (All)"
+                    />
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>
