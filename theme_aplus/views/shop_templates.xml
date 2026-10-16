@@ -98,7 +98,7 @@
         <xpath expr="//section[@id='product_detail']" position="attributes">
             <attribute
                 name="t-attf-style"
-            >--highlight-color: {{product.product_page_text_color}};</attribute>
+            >--aplus-highlight-color: {{product.product_page_text_color}};</attribute>
         </xpath>
     </template>
 
@@ -174,7 +174,7 @@
             <t
                 t-if="is_view_active('theme_aplus.product_highlight_color')"
                 t-set="style"
-                t-value="'--highlight-color:' + product.product_page_text_color +';'"
+                t-value="'--aplus-highlight-color:' + product.product_page_text_color +';'"
             />
             <div id="vector_images" class="icon-block" t-att-style="style">
                 <t
