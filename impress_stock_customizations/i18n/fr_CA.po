@@ -71,17 +71,6 @@ msgid "(serial barcode)"
 msgstr "(code-barre du # de série)"
 
 #. module: impress_stock_customizations
-#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_packingslip_document
-msgid "2023-12-31"
-msgstr "2023-12-31"
-
-#. module: impress_stock_customizations
-#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.report_picking
-#: model_terms:ir.ui.view,arch_db:impress_stock_customizations.stock_table_prep_with_checks
-msgid "3.00"
-msgstr "3.00"
-
-#. module: impress_stock_customizations
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.stock_table_prep_with_checks
 msgid "<i class=\"fa fa-exclamation-triangle\"/> Missing"
 msgstr "<i class=\"fa fa-exclamation-triangle\"/> Il manque"
@@ -836,6 +825,12 @@ msgstr "de"
 #: model_terms:ir.ui.view,arch_db:impress_stock_customizations.stock_table_prep_with_checks
 msgid "units"
 msgstr "unités"
+
+#~ msgid "2023-12-31"
+#~ msgstr "2023-12-31"
+
+#~ msgid "3.00"
+#~ msgstr "3.00"
 
 #~ msgid ""
 #~ "<span>\n"

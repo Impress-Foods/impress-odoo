@@ -30,8 +30,9 @@ msgstr "Actif"
 
 #. module: documents_archive
 #. odoo-javascript
-#: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#, python-format
+#: code:addons/documents_archive/static/src/kanban/documents_kanban_controller.js:0
+#: code:addons/documents_archive/static/src/list/documents_list_controller.js:0
+#: model_terms:ir.ui.view,arch_db:documents_archive.product_document_kanban_inherit_archive
 msgid "Archive"
 msgstr "Archiver"
 
@@ -48,11 +49,18 @@ msgid "Contact"
 msgstr "Contact"
 
 #. module: documents_archive
-#. odoo-javascript
-#: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#, python-format
-msgid "Delete"
-msgstr "Supprimer"
+#: model:ir.model,website_form_label:documents_archive.model_res_partner
+#, fuzzy
+#| msgid "Create new document"
+msgid "Create a Customer"
+msgstr "Créer un nouveau document"
+
+#. module: documents_archive
+#: model:ir.model.fields,field_description:documents_archive.field_documents_document__display_name
+#: model:ir.model.fields,field_description:documents_archive.field_product_document__display_name
+#: model:ir.model.fields,field_description:documents_archive.field_res_partner__display_name
+msgid "Display Name"
+msgstr ""
 
 #. module: documents_archive
 #: model:ir.actions.act_window,name:documents_archive.see_partner_documents
@@ -61,67 +69,59 @@ msgid "Document"
 msgstr "Document"
 
 #. module: documents_archive
-#. odoo-javascript
-#: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#, python-format
-msgid "Download"
-msgstr "Télécharger"
+#: model:ir.model.fields,field_description:documents_archive.field_documents_document__id
+#: model:ir.model.fields,field_description:documents_archive.field_product_document__id
+#: model:ir.model.fields,field_description:documents_archive.field_res_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: documents_archive
+#: model:ir.model,name:documents_archive.model_product_document
+#, fuzzy
+#| msgid "Document"
+msgid "Product Document"
+msgstr "Document"
 
 #. module: documents_archive
 #. odoo-javascript
-#: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#, python-format
-msgid "Lock"
-msgstr "Verrouiller"
-
-#. module: documents_archive
-#. odoo-javascript
-#: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#, python-format
-msgid "Move to trash"
-msgstr "Déplacer à la corbeille"
-
-#. module: documents_archive
-#. odoo-javascript
-#: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#, python-format
-msgid "Open chatter"
-msgstr "Ouvrir le chatter"
-
-#. module: documents_archive
-#. odoo-javascript
-#: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#, python-format
-msgid "Replace"
-msgstr "Remplacer"
-
-#. module: documents_archive
-#. odoo-javascript
-#: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#, python-format
-msgid "Restore"
-msgstr "Rétablir"
-
-#. module: documents_archive
-#. odoo-javascript
-#: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#, python-format
-msgid "Share this selection"
-msgstr "Partager cette sélection"
-
-#. module: documents_archive
-#. odoo-javascript
-#: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#, python-format
-msgid "Split"
-msgstr "Séparer"
-
-#. module: documents_archive
-#. odoo-javascript
-#: code:addons/documents_archive/static/src/documents_inspector.xml:0
-#, python-format
+#: code:addons/documents_archive/static/src/kanban/documents_kanban_controller.js:0
+#: code:addons/documents_archive/static/src/list/documents_list_controller.js:0
+#: model_terms:ir.ui.view,arch_db:documents_archive.product_document_kanban_inherit_archive
 msgid "Unarchive"
 msgstr "Désarchiver"
 
-#~ msgid "Create new document"
-#~ msgstr "Créer un nouveau document"
+#, python-format
+#~ msgid "Delete"
+#~ msgstr "Supprimer"
+
+#, python-format
+#~ msgid "Download"
+#~ msgstr "Télécharger"
+
+#, python-format
+#~ msgid "Lock"
+#~ msgstr "Verrouiller"
+
+#, python-format
+#~ msgid "Move to trash"
+#~ msgstr "Déplacer à la corbeille"
+
+#, python-format
+#~ msgid "Open chatter"
+#~ msgstr "Ouvrir le chatter"
+
+#, python-format
+#~ msgid "Replace"
+#~ msgstr "Remplacer"
+
+#, python-format
+#~ msgid "Restore"
+#~ msgstr "Rétablir"
+
+#, python-format
+#~ msgid "Share this selection"
+#~ msgstr "Partager cette sélection"
+
+#, python-format
+#~ msgid "Split"
+#~ msgstr "Séparer"

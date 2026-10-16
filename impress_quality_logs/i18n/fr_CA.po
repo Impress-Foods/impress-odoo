@@ -19,16 +19,6 @@ msgstr ""
 "X-Generator: Weblate 2026.5\n"
 
 #. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_metal_log_line_form
-msgid "0000"
-msgstr "0000"
-
-#. module: impress_quality_logs
-#: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_hpp_log_line_form
-msgid "000000"
-msgstr "000000"
-
-#. module: impress_quality_logs
 #: model:ir.model.fields.selection,name:impress_quality_logs.selection__hpp_log_line__cycle_time__120sec
 msgid "120 seconds"
 msgstr "120 secondes"
@@ -1392,6 +1382,12 @@ msgstr "Registre de poids"
 #: model_terms:ir.ui.view,arch_db:impress_quality_logs.view_weight_log_line_form
 msgid "weight_log_line"
 msgstr "ligne_registre_poids"
+
+#~ msgid "0000"
+#~ msgstr "0000"
+
+#~ msgid "000000"
+#~ msgstr "000000"
 
 #~ msgid "<span class=\"o_stat_text\">LOMA Lines</span>"
 #~ msgstr "<span class=\"o_stat_text\">Lignes LOMA</span>"

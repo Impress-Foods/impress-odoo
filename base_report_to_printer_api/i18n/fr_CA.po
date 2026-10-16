@@ -167,7 +167,8 @@ msgstr "Configurer un profile de requête API avant d'imprimer ce rapport."
 #. odoo-javascript
 #: code:addons/base_report_to_printer_api/static/src/qweb_action_manager.esm.js:0
 msgid "Configure this API report to use an API printer and server printing."
-msgstr "Configurer ce rapport API afin d'utiliser une imprimante de type 'API'."
+msgstr ""
+"Configurer ce rapport API afin d'utiliser une imprimante de type 'API'."
 
 #. module: base_report_to_printer_api
 #. odoo-python

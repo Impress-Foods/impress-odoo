@@ -27,21 +27,6 @@ msgstr ""
 
 #. module: impress_sales_customizations
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
-msgid "2023-12-31"
-msgstr "2023-12-31"
-
-#. module: impress_sales_customizations
-#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
-msgid "25.00"
-msgstr "25.00"
-
-#. module: impress_sales_customizations
-#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
-msgid "27.00"
-msgstr "27.00"
-
-#. module: impress_sales_customizations
-#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "<span>Invoice total:</span>"
 msgstr "<span>Total de la facture:</span>"
 
@@ -294,3 +279,12 @@ msgstr "Code Postal"
 #: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
 msgid "units"
 msgstr "unités"
+
+#~ msgid "2023-12-31"
+#~ msgstr "2023-12-31"
+
+#~ msgid "25.00"
+#~ msgstr "25.00"
+
+#~ msgid "27.00"
+#~ msgstr "27.00"

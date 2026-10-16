@@ -366,7 +366,8 @@ msgstr "Date de production/expiration concorde l'entente avec le fournisseur?"
 #. module: impress_stock_worksheets
 #: model_terms:ir.ui.view,arch_db:impress_stock_worksheets.ws_receipt_qc_meat_20260522_form_view
 msgid "Provenance of product: canadian or foreign with import certificate."
-msgstr "Provenance des produits: canadien ou étranger avec certificat d'import."
+msgstr ""
+"Provenance des produits: canadien ou étranger avec certificat d'import."
 
 #. module: impress_stock_worksheets
 #: model:ir.model.fields,field_description:impress_stock_worksheets.receipt_qc_general_20260525_x_sample

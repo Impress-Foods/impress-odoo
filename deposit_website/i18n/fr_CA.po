@@ -24,6 +24,18 @@ msgid "Deposit"
 msgstr "Consigne"
 
 #. module: deposit_website
+#: model:ir.model.fields,field_description:deposit_website.field_sale_order__display_name
+#: model:ir.model.fields,field_description:deposit_website.field_sale_order_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: deposit_website
+#: model:ir.model.fields,field_description:deposit_website.field_sale_order__id
+#: model:ir.model.fields,field_description:deposit_website.field_sale_order_line__id
+msgid "ID"
+msgstr ""
+
+#. module: deposit_website
 #: model:ir.model,name:deposit_website.model_sale_order
 msgid "Sales Order"
 msgstr "Bon de vente"

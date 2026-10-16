@@ -48,9 +48,15 @@ msgid "ClickShip"
 msgstr "ClickShip"
 
 #. module: delivery_clickship
+#: model:delivery.carrier,name:delivery_clickship.delivery_carrier_clickship
+#, fuzzy
+#| msgid "ClickShip"
+msgid "Clickship"
+msgstr "ClickShip"
+
+#. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_carrier.py:0
-#, python-format
 msgid "Clickship API key is not set."
 msgstr "Clé API Clickship absente."
 
@@ -102,8 +108,10 @@ msgstr "Lien de suivi Clickship"
 
 #. module: delivery_clickship
 #: model:ir.model,name:delivery_clickship.model_clickship_payment_method
-msgid "ClickshipPayment_method"
-msgstr "ClickshipPayment_method"
+#, fuzzy
+#| msgid "Clickship Payment Method"
+msgid "ClickshipPaymentMethod"
+msgstr "Méthode de paiement Clickship"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_payment_method__code
@@ -113,24 +121,93 @@ msgstr "Code"
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
-#, python-format
 msgid "Could not book shipment"
 msgstr "L'expédition n'a pas pu être planifiée"
 
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
-#, python-format
+#, fuzzy
+#| msgid "Could not book shipment"
+msgid "Could not cancel the shipment"
+msgstr "L'expédition n'a pas pu être planifiée"
+
+#. module: delivery_clickship
+#. odoo-python
+#: code:addons/delivery_clickship/models/clickship_request.py:0
+msgid ""
+"Could not create destination \n"
+" %s"
+msgstr ""
+
+#. module: delivery_clickship
+#. odoo-python
+#: code:addons/delivery_clickship/models/clickship_request.py:0
+msgid ""
+"Could not create origin \n"
+" %s"
+msgstr ""
+
+#. module: delivery_clickship
+#. odoo-python
+#: code:addons/delivery_clickship/models/clickship_request.py:0
 msgid "Could not fetch any rates!"
 msgstr "Les taux n'ont pas pu êtres récupérés!"
 
 #. module: delivery_clickship
 #. odoo-python
+#: code:addons/delivery_clickship/models/stock_picking.py:0
+#, fuzzy
+#| msgid "Could not fetch any rates!"
+msgid "Could not find currency with name %s"
+msgstr "Les taux n'ont pas pu êtres récupérés!"
+
+#. module: delivery_clickship
+#. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
-#, python-format
-msgid "Could not get shipment status for {shipment_id}: {response}"
+#, fuzzy
+#| msgid "Could not fetch any rates!"
+msgid "Could not find email for %s"
+msgstr "Les taux n'ont pas pu êtres récupérés!"
+
+#. module: delivery_clickship
+#. odoo-python
+#: code:addons/delivery_clickship/models/clickship_request.py:0
+msgid "Could not find phone number for %s"
+msgstr ""
+
+#. module: delivery_clickship
+#. odoo-python
+#: code:addons/delivery_clickship/models/clickship_request.py:0
+#, fuzzy
+#| msgid "Could not get shipment status for {shipment_id}: {response}"
+msgid "Could not get shipment status for %(id): %(response)"
 msgstr ""
 "Impossible de récupérer le status de l'expédition {shipment_id}: {response}"
+
+#. module: delivery_clickship
+#. odoo-python
+#: code:addons/delivery_clickship/models/clickship_request.py:0
+msgid "Could not make address for %s"
+msgstr ""
+
+#. module: delivery_clickship
+#. odoo-python
+#: code:addons/delivery_clickship/models/clickship_request.py:0
+msgid ""
+"Could not make address. \n"
+" %s"
+msgstr ""
+
+#. module: delivery_clickship
+#. odoo-python
+#: code:addons/delivery_clickship/models/clickship_request.py:0
+#, fuzzy
+#| msgid "Could not book shipment"
+msgid ""
+"Could not make shipping details. \n"
+" %s"
+msgstr "L'expédition n'a pas pu être planifiée"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_payment_method__create_uid
@@ -159,6 +236,9 @@ msgstr "Transporteur"
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_payment_method__display_name
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_rate__display_name
+#: model:ir.model.fields,field_description:delivery_clickship.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:delivery_clickship.field_stock_package_type__display_name
+#: model:ir.model.fields,field_description:delivery_clickship.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:delivery_clickship.field_wizard_clickship_rates__display_name
 msgid "Display Name"
 msgstr "Nom d'affichage"
@@ -166,7 +246,6 @@ msgstr "Nom d'affichage"
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_carrier.py:0
-#, python-format
 msgid "Failed to cancel shipment!"
 msgstr "L'expédition n'a pas pu être annulée!"
 
@@ -179,19 +258,15 @@ msgstr "Récupérer les méthodes de paiement"
 #. odoo-javascript
 #: code:addons/delivery_clickship/static/src/main.xml:0
 #: model_terms:ir.ui.view,arch_db:delivery_clickship.view_stock_picking_form
-#, python-format
 msgid "Get Rates"
 msgstr "Récupérer les taux"
 
 #. module: delivery_clickship
-#: model_terms:ir.ui.view,arch_db:delivery_clickship.view_clickship_payment_method_search
-#: model_terms:ir.ui.view,arch_db:delivery_clickship.view_rate_search
-msgid "Group By"
-msgstr "Grouper par"
-
-#. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_payment_method__id
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_rate__id
+#: model:ir.model.fields,field_description:delivery_clickship.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:delivery_clickship.field_stock_package_type__id
+#: model:ir.model.fields,field_description:delivery_clickship.field_stock_picking__id
 #: model:ir.model.fields,field_description:delivery_clickship.field_wizard_clickship_rates__id
 msgid "ID"
 msgstr "ID"
@@ -273,14 +348,12 @@ msgstr "Il n'y a pas d'exemples. Cliquez ici pour en ajouter."
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
-#, python-format
 msgid "Timed Out!"
 msgstr "Délai d'attente dépassé!"
 
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
-#, python-format
 msgid "Timed out!"
 msgstr "Délai d'attente dépassé!"
 
@@ -316,17 +389,15 @@ msgid "Wizard Clickship_rates"
 msgstr "Assistant Clickship_rates"
 
 #. module: delivery_clickship
-#. odoo-python
-#: code:addons/delivery_clickship/wizards/wizard_clickship_rates.py:0
 #: model:ir.model,name:delivery_clickship.model_wizard_clickship_rates
-#, python-format
-msgid "WizardClickship_rates"
+#, fuzzy
+#| msgid "WizardClickship_rates"
+msgid "WizardClickshipRates"
 msgstr "Assistant Clickship_rates"
 
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
-#, python-format
 msgid "response not a dict"
 msgstr "La réponse n'est pas un dictionnaire"
 
@@ -338,13 +409,17 @@ msgstr "nom_du_service"
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
-#, python-format
 msgid "shipment not a dict"
 msgstr "Expédition n'est pas un dictionnaire"
 
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
-#, python-format
 msgid "shipment_id not a string"
 msgstr "shipment_id n'est pas un string"
+
+#~ msgid "ClickshipPayment_method"
+#~ msgstr "ClickshipPayment_method"
+
+#~ msgid "Group By"
+#~ msgstr "Grouper par"

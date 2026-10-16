@@ -46,6 +46,26 @@ msgid "Demand target - maps demand to external source"
 msgstr "Cible de demande - relie les demandes à une source externe"
 
 #. module: mrp_campaign_production_billing
+#: model:ir.model.fields,field_description:mrp_campaign_production_billing.field_mrp_campaign__display_name
+#: model:ir.model.fields,field_description:mrp_campaign_production_billing.field_mrp_campaign_demand__display_name
+#: model:ir.model.fields,field_description:mrp_campaign_production_billing.field_mrp_campaign_demand_target__display_name
+#: model:ir.model.fields,field_description:mrp_campaign_production_billing.field_mrp_campaign_line__display_name
+#: model:ir.model.fields,field_description:mrp_campaign_production_billing.field_mrp_campaign_wizard_creator__display_name
+#: model:ir.model.fields,field_description:mrp_campaign_production_billing.field_mrp_campaign_wizard_partition__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: mrp_campaign_production_billing
+#: model:ir.model.fields,field_description:mrp_campaign_production_billing.field_mrp_campaign__id
+#: model:ir.model.fields,field_description:mrp_campaign_production_billing.field_mrp_campaign_demand__id
+#: model:ir.model.fields,field_description:mrp_campaign_production_billing.field_mrp_campaign_demand_target__id
+#: model:ir.model.fields,field_description:mrp_campaign_production_billing.field_mrp_campaign_line__id
+#: model:ir.model.fields,field_description:mrp_campaign_production_billing.field_mrp_campaign_wizard_creator__id
+#: model:ir.model.fields,field_description:mrp_campaign_production_billing.field_mrp_campaign_wizard_partition__id
+msgid "ID"
+msgstr ""
+
+#. module: mrp_campaign_production_billing
 #: model:ir.model,name:mrp_campaign_production_billing.model_mrp_campaign
 msgid "Manufacturing Campaign"
 msgstr "Campagne de production"
@@ -58,7 +78,6 @@ msgstr "Ligne de demande de campagne"
 #. module: mrp_campaign_production_billing
 #. odoo-python
 #: code:addons/mrp_campaign_production_billing/models/mrp_campaign_demand.py:0
-#, python-format
 msgid "Multiple Sale Order Line for a single demand"
 msgstr "Plusieurs ligne de bon de commande pour une seule demande"
 

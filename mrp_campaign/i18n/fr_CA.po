@@ -631,7 +631,8 @@ msgstr "Est désynchronisé"
 #. module: mrp_campaign
 #: model:ir.model.fields,help:mrp_campaign.field_mrp_campaign_wizard_creator__available_lines
 msgid "JSON array of demand lines. Fields: id, name, qty, date, additional_ref"
-msgstr "JSON array of demand lines. Fields: id, name, qty, date, additional_ref"
+msgstr ""
+"JSON array of demand lines. Fields: id, name, qty, date, additional_ref"
 
 #. module: mrp_campaign
 #: model:ir.model.fields,help:mrp_campaign.field_mrp_campaign_wizard_creator__selected_line_ids
@@ -1286,15 +1287,13 @@ msgid "Workflow Type"
 msgstr "Type de processus"
 
 #. module: mrp_campaign
-#: model_terms:ir.ui.view,arch_db:mrp_campaign.report_mrp_campaign_document
-msgid "__________________"
-msgstr "__________________"
-
-#. module: mrp_campaign
 #. odoo-javascript
 #: code:addons/mrp_campaign/static/src/components/campaign_partition/campaign_node/campaign_node.xml:0
 msgid "min."
 msgstr "minimum."
+
+#~ msgid "__________________"
+#~ msgstr "__________________"
 
 #~ msgid "Add Demands"
 #~ msgstr "Ajouter des demandes"

@@ -40,6 +40,8 @@ msgstr "Peut contourner les POs verrouillés"
 
 #. module: impress_purchase_customizations
 #: model_terms:ir.ui.view,arch_db:impress_purchase_customizations.purchase_order_form
+#: model_terms:ir.ui.view,arch_db:impress_purchase_customizations.purchase_order_kpis_tree
+#: model_terms:ir.ui.view,arch_db:impress_purchase_customizations.purchase_order_list
 msgid "Create Bill"
 msgstr "Créer facture"
 
@@ -90,6 +92,11 @@ msgstr "Cet utilisateur sera en mesure de contourner les POs verrouillés."
 #: code:addons/impress_purchase_customizations/models/purchase_order.py:0
 msgid "You cannot unlock another user's PO!"
 msgstr "Vous ne pouvez pas déverrouiller le PO d'un autre utilisateur!"
+
+#. module: impress_purchase_customizations
+#: model_terms:ir.ui.view,arch_db:impress_purchase_customizations.report_purchaseorder_document
+msgid "x"
+msgstr ""
 
 #~ msgid "<strong>Total Qty</strong>"
 #~ msgstr "<strong>Qty Totale</strong>"

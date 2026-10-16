@@ -23,6 +23,12 @@ msgid "<span class=\"o_stat_text\">Documents</span>"
 msgstr "<span class=\"o_stat_text\">Documents</span>"
 
 #. module: maintenance_documents
+#: model:ir.model.fields,field_description:maintenance_documents.field_documents_document__display_name
+#: model:ir.model.fields,field_description:maintenance_documents.field_maintenance_equipment__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: maintenance_documents
 #: model:ir.model,name:maintenance_documents.model_documents_document
 msgid "Document"
 msgstr "Document"
@@ -35,7 +41,6 @@ msgstr "Nombre de documents"
 #. module: maintenance_documents
 #. odoo-python
 #: code:addons/maintenance_documents/models/maintenance_equipment.py:0
-#, python-format
 msgid "Documents"
 msgstr "Documents"
 
@@ -45,14 +50,19 @@ msgid "Equipment"
 msgstr "Équipement"
 
 #. module: maintenance_documents
+#: model:ir.model.fields,field_description:maintenance_documents.field_documents_document__id
+#: model:ir.model.fields,field_description:maintenance_documents.field_maintenance_equipment__id
+msgid "ID"
+msgstr ""
+
+#. module: maintenance_documents
 #. odoo-python
 #: code:addons/maintenance_documents/models/documents_document.py:0
-#, python-format
 msgid "Invalid equipment search"
 msgstr "Recherche d'équipements invalide"
 
 #. module: maintenance_documents
-#: model:documents.folder,name:maintenance_documents.documents_maintenance_folder
+#: model:documents.document,name:maintenance_documents.documents_maintenance_folder
 msgid "Maintenance"
 msgstr "Maintenance"
 
@@ -60,3 +70,11 @@ msgstr "Maintenance"
 #: model:ir.model,name:maintenance_documents.model_maintenance_equipment
 msgid "Maintenance Equipment"
 msgstr "Équipement de maintenance"
+
+#. module: maintenance_documents
+#. odoo-python
+#: code:addons/maintenance_documents/models/maintenance_equipment.py:0
+#, fuzzy
+#| msgid "Equipment"
+msgid "equipment_id"
+msgstr "Équipement"

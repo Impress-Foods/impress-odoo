@@ -39,6 +39,27 @@ msgid "Config Settings"
 msgstr "Configurations"
 
 #. module: delivery_auto_select_carrier
+#: model:ir.model.fields,field_description:delivery_auto_select_carrier.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:delivery_auto_select_carrier.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:delivery_auto_select_carrier.field_sale_order__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: delivery_auto_select_carrier
+#: model_terms:ir.ui.view,arch_db:delivery_auto_select_carrier.view_sale_order_form
+#, fuzzy
+#| msgid "Auto Selected Carrier"
+msgid "Get Carrier"
+msgstr "Transporteur auto-sélectionné"
+
+#. module: delivery_auto_select_carrier
+#: model:ir.model.fields,field_description:delivery_auto_select_carrier.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:delivery_auto_select_carrier.field_res_config_settings__id
+#: model:ir.model.fields,field_description:delivery_auto_select_carrier.field_sale_order__id
+msgid "ID"
+msgstr ""
+
+#. module: delivery_auto_select_carrier
 #: model:ir.model.fields,field_description:delivery_auto_select_carrier.field_delivery_carrier__priority
 msgid "Priority"
 msgstr "Priorité"

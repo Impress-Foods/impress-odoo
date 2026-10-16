@@ -24,16 +24,6 @@ msgstr "'Job Sheet - %s' % (object.name)"
 
 #. module: impress_manufacturing_customizations
 #: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
-msgid "12345678901"
-msgstr "12345678901"
-
-#. module: impress_manufacturing_customizations
-#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
-msgid "25"
-msgstr "25"
-
-#. module: impress_manufacturing_customizations
-#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
 msgid "8 GB RAM"
 msgstr "8 GB RAM"
 
@@ -293,3 +283,9 @@ msgstr "Tableau de bord d'ordres de travail"
 #: model:ir.actions.act_window,name:impress_manufacturing_customizations.action_workorder_dashboard
 msgid "Workorders"
 msgstr "Ordres de travail"
+
+#~ msgid "12345678901"
+#~ msgstr "12345678901"
+
+#~ msgid "25"
+#~ msgstr "25"
