@@ -387,7 +387,9 @@ msgstr "Variante de produit"
 
 #. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.products_item
-msgid "Product card for {{product.name}}"
+#, fuzzy
+#| msgid "Product card for {{product.name}}"
+msgid "Product card for {{0}}"
 msgstr "Carte de produit pour {{product.name}}"
 
 #. module: theme_aplus
