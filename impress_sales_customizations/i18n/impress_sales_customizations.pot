@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0+e-20260330\n"
+"Project-Id-Version: Odoo Server 19.0+e-20261014\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -17,21 +17,6 @@ msgstr ""
 #: model:ir.actions.report,print_report_name:impress_sales_customizations.action_report_commercial_invoice
 msgid ""
 "'Commercial Invoice - %s - %s' % (object.partner_id.name or '', object.name)"
-msgstr ""
-
-#. module: impress_sales_customizations
-#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
-msgid "2023-12-31"
-msgstr ""
-
-#. module: impress_sales_customizations
-#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
-msgid "25.00"
-msgstr ""
-
-#. module: impress_sales_customizations
-#: model_terms:ir.ui.view,arch_db:impress_sales_customizations.report_commercial_invoice_document
-msgid "27.00"
 msgstr ""
 
 #. module: impress_sales_customizations
