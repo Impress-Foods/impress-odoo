@@ -128,7 +128,7 @@
             itemscope="itemscope"
             itemtype="http://schema.org/Product"
             t-attf-style="background-color: {{product.card_secondary_color}};"
-            aria-label="Product card for {{product.name}}"
+            t-attf-aria-label="Product card for {{product.name}}"
             tabindex="0"
         >
             <a t-att-href="product_href" itemprop="url" class="ap_card_link">

@@ -15,7 +15,7 @@
         padding-bottom: 2rem;
         flex-wrap: wrap;
         .icon-block {
-            fill: var(--highlight-color, var(--o-color-1));
+            fill: var(--aplus-highlight-color, var(--o-color-1));
             display: flex;
             align-items: center;
             .vector-column {
@@ -28,7 +28,7 @@
                 }
                 span {
                     text-align: center;
-                    color: var(--highlight-color, var(--o-color-1));
+                    color: var(--aplus-highlight-color, var(--o-color-1));
                 }
             }
             .recipe-icons-plus {
@@ -169,38 +169,41 @@
     }
     .o_searchbar_form {
         .input-group {
-            border-color: var(--highlight-color, var(--o-color-1)) !important;
+            border-color: var(--aplus-highlight-color, var(--o-color-1)) !important;
             .oe_search_button {
-                border-color: var(--highlight-color, var(--o-color-1)) !important;
-                background-color: var(--highlight-color, var(--o-color-1)) !important;
+                border-color: var(--aplus-highlight-color, var(--o-color-1)) !important;
+                background-color: var(
+                    --aplus-highlight-color,
+                    var(--o-color-1)
+                ) !important;
             }
         }
     }
     #product_details {
         h1 {
-            color: var(--highlight-color, var(--o-color-1)) !important;
+            color: var(--aplus-highlight-color, var(--o-color-1)) !important;
         }
     }
 
     .oe_price {
-        color: var(--highlight-color, var(--o-color-1)) !important;
+        color: var(--aplus-highlight-color, var(--o-color-1)) !important;
     }
     #o_wsale_cta_wrapper {
         .css_quantity {
-            border-color: var(--highlight-color, var(--o-color-1)) !important;
+            border-color: var(--aplus-highlight-color, var(--o-color-1)) !important;
 
             .fa-plus,
             .fa-minus {
-                color: var(--highlight-color, var(--o-color-1)) !important;
+                color: var(--aplus-highlight-color, var(--o-color-1)) !important;
             }
         }
         #add_to_cart {
-            background-color: var(--highlight-color, var(--o-color-1)) !important;
-            border-color: var(--highlight-color, var(--o-color-1)) !important;
+            background-color: var(--aplus-highlight-color, var(--o-color-1)) !important;
+            border-color: var(--aplus-highlight-color, var(--o-color-1)) !important;
         }
     }
     .breadcrumb-item {
-        color: var(--highlight-color, var(--o-color-1)) !important;
+        color: var(--aplus-highlight-color, var(--o-color-1)) !important;
         a {
             color: inherit;
         }
@@ -208,21 +211,24 @@
 
     input.form-check-input {
         &:checked {
-            background-color: var(--highlight-color, var(--o-color-1)) !important;
-            border-color: var(--highlight-color, var(--o-color-1)) !important;
+            background-color: var(--aplus-highlight-color, var(--o-color-1)) !important;
+            border-color: var(--aplus-highlight-color, var(--o-color-1)) !important;
         }
         &:hover {
-            border-color: var(--highlight-color, var(--o-color-1)) !important;
+            border-color: var(--aplus-highlight-color, var(--o-color-1)) !important;
         }
     }
     .variant_attribute {
         .o_variant_pills.btn {
             background-color: var(--o-cc1-bg) !important;
-            border: 1px solid var(--highlight-color, var(--o-color-1)) !important;
-            color: var(--highlight-color, var(--o-color-1));
+            border: 1px solid var(--aplus-highlight-color, var(--o-color-1)) !important;
+            color: var(--aplus-highlight-color, var(--o-color-1));
             transition: scale 0.1s linear;
             &.active {
-                background-color: var(--highlight-color, var(--o-color-1)) !important;
+                background-color: var(
+                    --aplus-highlight-color,
+                    var(--o-color-1)
+                ) !important;
                 color: white !important;
             }
             &:hover {

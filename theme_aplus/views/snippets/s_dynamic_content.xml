@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <!-- Wave Cards -->
     <template id="dynamic_filter_template_product_template_wavy_card" name="Wavy Card">
@@ -219,11 +219,15 @@
     </template>
     <template id="minimalist_product_card_carousel" name="Minimalist Product Card">
         <div class="image-container">
-            <img
-                t-attf-src="{{ card_image_url }}"
-                t-attf-alt="{{ product_name }}"
-                class="product-image"
-            />
+            <a t-attf-href="{{ product_record.website_url }}"
+            >
+                <img
+                    t-attf-src="{{ card_image_url }}"
+                    t-attf-alt="{{ product_name }}"
+                    class="product-image"
+                />
+            </a>
+
         </div>
 
         <h2
@@ -243,5 +247,6 @@
             class="add-to-cart"
             t-attf-style="color:{{ primary_color }};border: 1px solid {{ primary_color }};"
         >Add to cart</a>
+
     </template>
 </odoo>
