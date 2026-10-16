@@ -1,6 +1,6 @@
 {
     "name": "Company Employees",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "category": "Human Resources/Employees",
     "summary": "Lightweight employee directory built on contacts.",
     "author": "Cédric Paradis",

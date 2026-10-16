@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Multi-company: only the companies the user may access. -->
+    <record id="company_timesheet_rule_employee_company" model="ir.rule">
+        <field name="name">Company Timesheet: multi-company</field>
+        <field name="model_id" ref="model_company_timesheet"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <!-- Internal users: own records plus their full manager downline. -->
+    <record id="company_timesheet_rule_user" model="ir.rule">
+        <field name="name">Company Timesheet: own and reports</field>
+        <field name="model_id" ref="model_company_timesheet"/>
+        <field name="domain_force">[('employee_id', 'in', user.timesheet_employee_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!-- HR users see everything. -->
+    <record id="company_timesheet_rule_hr" model="ir.rule">
+        <field name="name">Company Timesheet: HR all</field>
+        <field name="model_id" ref="model_company_timesheet"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('hr.group_hr_user'))]"/>
+    </record>
+
+    <!-- Portal users see only their own. -->
+    <record id="company_timesheet_rule_portal" model="ir.rule">
+        <field name="name">Company Timesheet: portal own</field>
+        <field name="model_id" ref="model_company_timesheet"/>
+        <field name="domain_force">[('employee_id.partner_id', '=', user.partner_id.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+    </record>
+
+    <!-- Punches are HR-only, but respect multi-company. -->
+    <record id="company_punch_rule_employee_company" model="ir.rule">
+        <field name="name">Company Punch: multi-company</field>
+        <field name="model_id" ref="model_company_punch"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="company_employee_source_ref_rule_employee_company" model="ir.rule">
+        <field name="name">Employee Source Reference: multi-company</field>
+        <field name="model_id" ref="model_company_employee_source_ref"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

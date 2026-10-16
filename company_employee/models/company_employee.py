@@ -17,6 +17,8 @@ class CompanyEmployee(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _inherits = {"res.partner": "partner_id"}
     _order = "name"
+    _parent_name = "parent_id"
+    _parent_store = True
 
     partner_id = fields.Many2one(
         "res.partner",
@@ -48,6 +50,7 @@ class CompanyEmployee(models.Model):
         string="Direct Reports",
         domain=[("active", "=", True)],
     )
+    parent_path = fields.Char(index=True)
 
     work_email = fields.Char()
     work_phone = fields.Char()

@@ -25,6 +25,17 @@ class TestCompanyEmployee(TransactionCase):
         second = self.Employee.create({"name": "Second"})
         self.assertNotEqual(first.employee_ref, second.employee_ref)
 
+    def test_manager_hierarchy_child_of(self):
+        top = self.Employee.create({"name": "Top"})
+        mid = self.Employee.create({"name": "Mid", "parent_id": top.id})
+        leaf = self.Employee.create({"name": "Leaf", "parent_id": mid.id})
+        self.assertEqual(
+            self.Employee.search([("id", "child_of", top.id)]), top | mid | leaf
+        )
+        self.assertEqual(self.Employee.search([("id", "child_of", mid.id)]), mid | leaf)
+        self.assertTrue(top.parent_path)
+        self.assertTrue(leaf.parent_path.startswith(mid.parent_path))
+
     def test_emergency_and_private_fields(self):
         employee = self.Employee.create(
             {
