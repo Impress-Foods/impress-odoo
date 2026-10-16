@@ -1,0 +1,3 @@
+odoo-addon-integration-queue-job @ git+https://github.com/Impress-Foods/integration-queue.git@19.0#subdirectory=integration_queue_job
+odoo-addon-connector @ git+https://github.com/Impress-Foods/connector.git@19.0#subdirectory=connector
+odoo-addon-component @ git+https://github.com/Impress-Foods/connector.git@19.0#subdirectory=component
