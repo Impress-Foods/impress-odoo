@@ -6,9 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-07-28 13:38+0000\n"
-"Last-Translator: Automatic translation add-on <noreply-addon-"
-"autotranslate@weblate.org>\n"
+"PO-Revision-Date: 2026-10-16 14:25+0000\n"
+"Last-Translator: admin <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/delivery_auto_select_carrier/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -43,21 +42,19 @@ msgstr "Configurations"
 #: model:ir.model.fields,field_description:delivery_auto_select_carrier.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:delivery_auto_select_carrier.field_sale_order__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom d'affichage"
 
 #. module: delivery_auto_select_carrier
 #: model_terms:ir.ui.view,arch_db:delivery_auto_select_carrier.view_sale_order_form
-#, fuzzy
-#| msgid "Auto Selected Carrier"
 msgid "Get Carrier"
-msgstr "Transporteur auto-sélectionné"
+msgstr "Obtenir le transporteur"
 
 #. module: delivery_auto_select_carrier
 #: model:ir.model.fields,field_description:delivery_auto_select_carrier.field_delivery_carrier__id
 #: model:ir.model.fields,field_description:delivery_auto_select_carrier.field_res_config_settings__id
 #: model:ir.model.fields,field_description:delivery_auto_select_carrier.field_sale_order__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: delivery_auto_select_carrier
 #: model:ir.model.fields,field_description:delivery_auto_select_carrier.field_delivery_carrier__priority

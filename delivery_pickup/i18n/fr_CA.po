@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-24 19:04+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2026-10-16 14:25+0000\n"
+"Last-Translator: admin <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/delivery_pickup/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -21,18 +21,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_pickup.field_delivery_carrier__display_name
 #: model:ir.model.fields,field_description:delivery_pickup.field_report_delivery_pickup_pickup_delivery_label__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom d'affichage"
 
 #. module: delivery_pickup
 #: model:ir.model.fields,field_description:delivery_pickup.field_delivery_carrier__id
 #: model:ir.model.fields,field_description:delivery_pickup.field_report_delivery_pickup_pickup_delivery_label__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: delivery_pickup
 #: model:ir.model,name:delivery_pickup.model_report_delivery_pickup_pickup_delivery_label
 msgid "Model for pickup_delivery_label report"
-msgstr ""
+msgstr "Modèle pour le rapport pickup_delivery_label"
 
 #. module: delivery_pickup
 #: model:ir.model.fields.selection,name:delivery_pickup.selection__delivery_carrier__delivery_type__pickup
@@ -41,8 +41,6 @@ msgstr "Ramassage"
 
 #. module: delivery_pickup
 #: model:delivery.carrier,name:delivery_pickup.delivery_carrier_pickup
-#, fuzzy
-#| msgid "Pick Up"
 msgid "Pickup"
 msgstr "Ramassage"
 

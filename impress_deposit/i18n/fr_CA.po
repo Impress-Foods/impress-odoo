@@ -7,9 +7,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-12 18:00+0000\n"
-"PO-Revision-Date: 2026-07-28 13:38+0000\n"
-"Last-Translator: Automatic translation add-on <noreply-addon-"
-"autotranslate@weblate.org>\n"
+"PO-Revision-Date: 2026-10-16 14:25+0000\n"
+"Last-Translator: admin <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/impress_deposit/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -37,7 +36,7 @@ msgstr "Contact"
 #. module: impress_deposit
 #: model:ir.model,website_form_label:impress_deposit.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Créer un client"
 
 #. module: impress_deposit
 #. odoo-python
@@ -49,10 +48,8 @@ msgstr "Consigne"
 
 #. module: impress_deposit
 #: model:ir.model.fields,field_description:impress_deposit.field_sale_order__deposit_line_id
-#, fuzzy
-#| msgid "Is Deposit Line"
 msgid "Deposit Line"
-msgstr "Est ligne de dépôt"
+msgstr "Ligne de dépôt"
 
 #. module: impress_deposit
 #: model_terms:ir.ui.view,arch_db:impress_deposit.view_res_config_settings_view_form_inherit_deposit
@@ -71,6 +68,8 @@ msgid ""
 "Deposit product is not configured. Configure it before creating an SO with "
 "container deposit"
 msgstr ""
+"Le produit de dépôt n'est pas configuré. Configurez-le avant de créer un bon "
+"de vente avec un dépôt"
 
 #. module: impress_deposit
 #: model:ir.model.fields,field_description:impress_deposit.field_product_product__display_name
@@ -82,7 +81,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:impress_deposit.field_stock_move_line__display_name
 #: model:ir.model.fields,field_description:impress_deposit.field_stock_picking__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom d'affichage"
 
 #. module: impress_deposit
 #: model:ir.model.fields,field_description:impress_deposit.field_product_product__id
@@ -94,7 +93,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:impress_deposit.field_stock_move_line__id
 #: model:ir.model.fields,field_description:impress_deposit.field_stock_picking__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: impress_deposit
 #: model:ir.model.fields,field_description:impress_deposit.field_sale_order_line__is_deposit_line
@@ -110,7 +109,7 @@ msgstr "Nombre de contenants expédiés"
 #. odoo-python
 #: code:addons/impress_deposit/models/sale_order.py:0
 msgid "Only one deposit line is allowed per sale order."
-msgstr ""
+msgstr "Seulement in ligne de dépôt est permise par bon de vente."
 
 #. module: impress_deposit
 #: model:ir.model,name:impress_deposit.model_product_template

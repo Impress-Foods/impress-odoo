@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-07-23 13:20+0000\n"
-"Last-Translator: Cédric Paradis <cedric@cedricparadis.ca>\n"
+"PO-Revision-Date: 2026-10-16 14:25+0000\n"
+"Last-Translator: admin <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/theme_aplus/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -63,13 +63,13 @@ msgstr "<span>Eau</span>"
 #: code:addons/theme_aplus/static/src/website_builder/background_shapes_option.js:0
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.snippets
 msgid "A+"
-msgstr ""
+msgstr "A+"
 
 #. module: theme_aplus
 #. odoo-javascript
 #: code:addons/theme_aplus/static/src/website_builder/product_page_option.js:0
 msgid "A+ Features"
-msgstr ""
+msgstr "Fonctionnalités A+"
 
 #. module: theme_aplus
 #. odoo-javascript
@@ -80,10 +80,8 @@ msgstr "Ajouter"
 #. module: theme_aplus
 #. odoo-javascript
 #: code:addons/theme_aplus/static/src/website_builder/image_marquee_option.xml:0
-#, fuzzy
-#| msgid " Add Images"
 msgid "Add Image"
-msgstr " Ajouter des images"
+msgstr "Ajouter une image"
 
 #. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.bottle_quantity_selector
@@ -99,7 +97,7 @@ msgstr "Ajouter au panier"
 #. odoo-javascript
 #: code:addons/theme_aplus/static/src/website_builder/product_page_option.xml:0
 msgid "Aliments du Québec Badge"
-msgstr ""
+msgstr "Badge Aliments du Québec"
 
 #. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.wavy_product_card
@@ -146,8 +144,6 @@ msgstr "Ordre dans le carousel"
 #. module: theme_aplus
 #. odoo-javascript
 #: code:addons/theme_aplus/static/src/website_builder/product_page_option.xml:0
-#, fuzzy
-#| msgid "Color highlights"
 msgid "Color Highlights"
 msgstr "Couleur d'emphase"
 
@@ -207,10 +203,8 @@ msgstr "Dynamique"
 #. module: theme_aplus
 #. odoo-javascript
 #: code:addons/theme_aplus/static/src/website_builder/product_page_option.xml:0
-#, fuzzy
-#| msgid "Show Fruit/Water/Maple"
 msgid "Fruit/Water/Maple Icons"
-msgstr "Montrer Fruit/Eau/Érable"
+msgstr "Icônes Fruit/Eau/Érable"
 
 #. module: theme_aplus
 #: model:ir.model.fields,field_description:theme_aplus.field_product_product__has_tvn
@@ -246,7 +240,7 @@ msgstr "Couleur de texte (Héro)"
 #. odoo-javascript
 #: code:addons/theme_aplus/static/src/website_builder/image_marquee_option.xml:0
 msgid "Hover Effect"
-msgstr ""
+msgstr "Effet de survol"
 
 #. module: theme_aplus
 #: model:ir.model.fields,field_description:theme_aplus.field_nutrition_fact_entry__id
@@ -259,7 +253,7 @@ msgstr "ID"
 #. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.snippets
 msgid "Image Marquee"
-msgstr ""
+msgstr "Marquee d'image"
 
 #. module: theme_aplus
 #. odoo-javascript
@@ -288,10 +282,8 @@ msgstr "Dernière mise à jour le"
 #. module: theme_aplus
 #. odoo-javascript
 #: code:addons/theme_aplus/static/src/website_builder/product_page_option.xml:0
-#, fuzzy
-#| msgid "Show Learn More Tabs"
 msgid "Learn More Tabs"
-msgstr "Montrer onglet \"En savoir plus\""
+msgstr "Onglets \"En savoir plus\""
 
 #. module: theme_aplus
 #: model:website.snippet.filter,name:theme_aplus.dynamic_filter_minimalist_card_filter
@@ -346,10 +338,8 @@ msgstr "Format informations nutritionnelles"
 #. module: theme_aplus
 #. odoo-javascript
 #: code:addons/theme_aplus/static/src/website_builder/product_page_option.xml:0
-#, fuzzy
-#| msgid "Show Nutrition Table"
 msgid "Nutrition Table"
-msgstr "Montrer tableau nutritionnel"
+msgstr "Tableau nutritionnel"
 
 #. module: theme_aplus
 #: model:ir.model,name:theme_aplus.model_nutrition_fact_entry
@@ -365,7 +355,7 @@ msgstr "Informations nutritionnelles"
 #. odoo-javascript
 #: code:addons/theme_aplus/static/src/website_builder/image_marquee_option.xml:0
 msgid "Pause on hover"
-msgstr ""
+msgstr "Pause au survol"
 
 #. module: theme_aplus
 #: model:ir.model,name:theme_aplus.model_product_template
@@ -382,10 +372,8 @@ msgstr "Couleur du texte (Page produit)"
 #. module: theme_aplus
 #. odoo-javascript
 #: code:addons/theme_aplus/static/src/website_builder/window_carousel_option.xml:0
-#, fuzzy
-#| msgid "Product names"
 msgid "Product Tags"
-msgstr "Nom des produits"
+msgstr "Étiquettes de produit"
 
 #. module: theme_aplus
 #: model:website.snippet.filter,name:theme_aplus.dynamic_filter_window_carousel_filter
@@ -411,10 +399,8 @@ msgstr "Réorganiser"
 #. module: theme_aplus
 #. odoo-javascript
 #: code:addons/theme_aplus/static/src/website_builder/product_page_option.xml:0
-#, fuzzy
-#| msgid "Show Related Flavors"
 msgid "Related Flavors"
-msgstr "Montrer saveurs associées"
+msgstr "Saveurs associées"
 
 #. module: theme_aplus
 #. odoo-javascript
@@ -425,10 +411,8 @@ msgstr "Tout retirer"
 #. module: theme_aplus
 #. odoo-javascript
 #: code:addons/theme_aplus/static/src/website_builder/image_marquee_option.xml:0
-#, fuzzy
-#| msgid "Remove all"
 msgid "Remove all images"
-msgstr "Tout retirer"
+msgstr "Retirer toutes les images"
 
 #. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.bottle_quantity_selector
@@ -449,34 +433,26 @@ msgstr "Acheter maintenant"
 #. module: theme_aplus
 #: model:ir.model.fields,field_description:theme_aplus.field_product_product__show_adq
 #: model:ir.model.fields,field_description:theme_aplus.field_product_template__show_adq
-#, fuzzy
-#| msgid "Show Alim du QC"
 msgid "Show Adq"
 msgstr "Montrer Aliments du Québec"
 
 #. module: theme_aplus
 #: model:ir.model.fields,field_description:theme_aplus.field_product_product__show_fruits
 #: model:ir.model.fields,field_description:theme_aplus.field_product_template__show_fruits
-#, fuzzy
-#| msgid "Show Ingredients"
 msgid "Show Fruits"
-msgstr "Montrer ingrédients"
+msgstr "Montrer Fruits"
 
 #. module: theme_aplus
 #: model:ir.model.fields,field_description:theme_aplus.field_product_product__show_maple
 #: model:ir.model.fields,field_description:theme_aplus.field_product_template__show_maple
-#, fuzzy
-#| msgid "Show Fruit/Water/Maple"
 msgid "Show Maple"
-msgstr "Montrer Fruit/Eau/Érable"
+msgstr "Montrer Érable"
 
 #. module: theme_aplus
 #: model:ir.model.fields,field_description:theme_aplus.field_product_product__show_water
 #: model:ir.model.fields,field_description:theme_aplus.field_product_template__show_water
-#, fuzzy
-#| msgid "Show Fruit/Water/Maple"
 msgid "Show Water"
-msgstr "Montrer Fruit/Eau/Érable"
+msgstr "Montrer Eau"
 
 #. module: theme_aplus
 #. odoo-javascript
@@ -495,25 +471,25 @@ msgstr "Image (Suggestion)"
 #: model:ir.model.fields,field_description:theme_aplus.field_product_product__tab_1_text
 #: model:ir.model.fields,field_description:theme_aplus.field_product_template__tab_1_text
 msgid "Tab 1 Text"
-msgstr ""
+msgstr "Texte onglet 1"
 
 #. module: theme_aplus
 #: model:ir.model.fields,field_description:theme_aplus.field_product_product__tab_1_title
 #: model:ir.model.fields,field_description:theme_aplus.field_product_template__tab_1_title
 msgid "Tab 1 Title"
-msgstr ""
+msgstr "Titre onglet 1"
 
 #. module: theme_aplus
 #: model:ir.model.fields,field_description:theme_aplus.field_product_product__tab_2_text
 #: model:ir.model.fields,field_description:theme_aplus.field_product_template__tab_2_text
 msgid "Tab 2 Text"
-msgstr ""
+msgstr "Texte onglet 2"
 
 #. module: theme_aplus
 #: model:ir.model.fields,field_description:theme_aplus.field_product_product__tab_2_title
 #: model:ir.model.fields,field_description:theme_aplus.field_product_template__tab_2_title
 msgid "Tab 2 Title"
-msgstr ""
+msgstr "Titre onglet 2"
 
 #. module: theme_aplus
 #: model:ir.model.fields,field_description:theme_aplus.field_product_product__text_color
@@ -550,26 +526,20 @@ msgstr "Voir les détails du produit"
 #. module: theme_aplus
 #. odoo-javascript
 #: code:addons/theme_aplus/static/src/website_builder/background_shapes_option.js:0
-#, fuzzy
-#| msgid "Wave Color"
 msgid "Wave 1"
-msgstr "Couleur de la vague"
+msgstr "Vague 1"
 
 #. module: theme_aplus
 #. odoo-javascript
 #: code:addons/theme_aplus/static/src/website_builder/background_shapes_option.js:0
-#, fuzzy
-#| msgid "Wave Color"
 msgid "Wave 2"
-msgstr "Couleur de la vague"
+msgstr "Vague 2"
 
 #. module: theme_aplus
 #. odoo-javascript
 #: code:addons/theme_aplus/static/src/website_builder/background_shapes_option.js:0
-#, fuzzy
-#| msgid "Wave Color"
 msgid "Wave 3"
-msgstr "Couleur de la vague"
+msgstr "Vague 3"
 
 #. module: theme_aplus
 #. odoo-javascript
@@ -579,10 +549,8 @@ msgstr "Couleur de la vague"
 
 #. module: theme_aplus
 #: model_terms:theme.ir.ui.view,arch:theme_aplus.snippets
-#, fuzzy
-#| msgid "Transition"
 msgid "Wave Transition"
-msgstr "Transition"
+msgstr "Transition Vague"
 
 #. module: theme_aplus
 #: model:website.snippet.filter,name:theme_aplus.dynamic_filter_wavy_card_filter

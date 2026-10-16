@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-09-11 17:52+0000\n"
+"PO-Revision-Date: 2026-10-16 14:25+0000\n"
 "Last-Translator: admin <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/delivery_clickship/fr_CA/>\n"
@@ -49,10 +49,8 @@ msgstr "ClickShip"
 
 #. module: delivery_clickship
 #: model:delivery.carrier,name:delivery_clickship.delivery_carrier_clickship
-#, fuzzy
-#| msgid "ClickShip"
 msgid "Clickship"
-msgstr "ClickShip"
+msgstr "Clickship"
 
 #. module: delivery_clickship
 #. odoo-python
@@ -108,10 +106,8 @@ msgstr "Lien de suivi Clickship"
 
 #. module: delivery_clickship
 #: model:ir.model,name:delivery_clickship.model_clickship_payment_method
-#, fuzzy
-#| msgid "Clickship Payment Method"
 msgid "ClickshipPaymentMethod"
-msgstr "Méthode de paiement Clickship"
+msgstr "ClickshipPaymentMethod"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_payment_method__code
@@ -127,10 +123,8 @@ msgstr "L'expédition n'a pas pu être planifiée"
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
-#, fuzzy
-#| msgid "Could not book shipment"
 msgid "Could not cancel the shipment"
-msgstr "L'expédition n'a pas pu être planifiée"
+msgstr "L'expédition n'a pas pu être annulée"
 
 #. module: delivery_clickship
 #. odoo-python
@@ -139,6 +133,8 @@ msgid ""
 "Could not create destination \n"
 " %s"
 msgstr ""
+"Impossible de créer la destination\n"
+" %s"
 
 #. module: delivery_clickship
 #. odoo-python
@@ -147,6 +143,8 @@ msgid ""
 "Could not create origin \n"
 " %s"
 msgstr ""
+"Impossible de créer l'origine\n"
+"%s"
 
 #. module: delivery_clickship
 #. odoo-python
@@ -157,39 +155,32 @@ msgstr "Les taux n'ont pas pu êtres récupérés!"
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/stock_picking.py:0
-#, fuzzy
-#| msgid "Could not fetch any rates!"
 msgid "Could not find currency with name %s"
-msgstr "Les taux n'ont pas pu êtres récupérés!"
+msgstr "Impossible de trouver une device nommée %s"
 
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
-#, fuzzy
-#| msgid "Could not fetch any rates!"
 msgid "Could not find email for %s"
-msgstr "Les taux n'ont pas pu êtres récupérés!"
+msgstr "Impossible de trouver le courriel pour %s"
 
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
 msgid "Could not find phone number for %s"
-msgstr ""
+msgstr "Impossible de trouver le numéro de téléphone pour %s"
 
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
-#, fuzzy
-#| msgid "Could not get shipment status for {shipment_id}: {response}"
 msgid "Could not get shipment status for %(id): %(response)"
-msgstr ""
-"Impossible de récupérer le status de l'expédition {shipment_id}: {response}"
+msgstr "Impossible de récupérer le status de l'expédition %(id): %(response)"
 
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
 msgid "Could not make address for %s"
-msgstr ""
+msgstr "Impossible de créer l’adresse pour %s"
 
 #. module: delivery_clickship
 #. odoo-python
@@ -198,16 +189,18 @@ msgid ""
 "Could not make address. \n"
 " %s"
 msgstr ""
+"Impossible de créer l'adresse pour\n"
+" %s"
 
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
-#, fuzzy
-#| msgid "Could not book shipment"
 msgid ""
 "Could not make shipping details. \n"
 " %s"
-msgstr "L'expédition n'a pas pu être planifiée"
+msgstr ""
+"Impossible de créer les détails d'expédition. \n"
+"%s"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_payment_method__create_uid
@@ -390,8 +383,6 @@ msgstr "Assistant Clickship_rates"
 
 #. module: delivery_clickship
 #: model:ir.model,name:delivery_clickship.model_wizard_clickship_rates
-#, fuzzy
-#| msgid "WizardClickship_rates"
 msgid "WizardClickshipRates"
 msgstr "Assistant Clickship_rates"
 
