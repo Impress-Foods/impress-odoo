@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0+e-20260330\n"
+"Project-Id-Version: Odoo Server 19.0+e-20261014\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,16 +16,6 @@ msgstr ""
 #. module: impress_manufacturing_customizations
 #: model:ir.actions.report,print_report_name:impress_manufacturing_customizations.action_report_job_sheet
 msgid "'Job Sheet - %s' % (object.name)"
-msgstr ""
-
-#. module: impress_manufacturing_customizations
-#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
-msgid "12345678901"
-msgstr ""
-
-#. module: impress_manufacturing_customizations
-#: model_terms:ir.ui.view,arch_db:impress_manufacturing_customizations.production_job_sheet
-msgid "25"
 msgstr ""
 
 #. module: impress_manufacturing_customizations
