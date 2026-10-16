@@ -10,102 +10,68 @@
         inherit_id="website_sale.products"
         priority="99"
     >
-        <xpath expr="//div[@id='wrap']" position="before">
-            <t
-                id="group_by_category_switch"
-                t-set="groupByCategory"
-                t-value="is_view_active('theme_aplus.group_by_categories')"
-            />
-        </xpath>
-
         <xpath expr="//section[@id='o_wsale_products_grid']" position="replace">
             <section
                 id="o_wsale_products_grid"
-                t-attf-class="o_wsale_products_grid_table grid {{website.shop_opt_products_design_classes}}"
+                t-attf-class="o_wsale_products_grid_table grid
+                    {{grid_md_allow_custom_cols and 'o_wsale_products_grid_table_md'}}
+                    {{website.shop_opt_products_design_classes}}"
                 t-attf-style="--o-wsale-ppr: {{ppr}}; --o-wsale-ppg: {{ppg}}; --o-wsale-products-grid-gap: {{gap}};"
+                t-att-data-name="grid_block_name"
             >
-                <t t-if="not groupByCategory">
-                    <t t-foreach="bins" t-as="tr_product">
-                        <t t-foreach="tr_product" t-as="td_product">
-                            <t t-if="td_product">
-                                <t t-set="col_height" t-value="td_product['y']" />
-                                <t
-                                    t-set="col_width"
-                                    t-value="2"
-                                />
-                                <t t-set="col_class" t-valuef="g-col-6" />
-                                <t
-                                    t-set="col_class_lg"
-                                    t-value="'g-col-lg-' + str(col_width)"
-                                />
-                                <div
-                                    t-attf-class="oe_product {{col_class}} {{col_class_md}} {{col_class_lg}}"
-                                    t-att-data-ribbon-id="td_product['ribbon'].id"
-                                    t-att-data-name="product_block_name"
-                                    t-attf-style="{{col_height > 1 and ('grid-row: span ' + str(col_height) + ';') or ''}}"
-                                >
-                                    <div
-                                        t-attf-class="o_wsale_product_grid_wrapper position-relative h-100
-                                o_wsale_product_grid_wrapper_#{td_product['x']}_#{td_product['y']}"
-                                    >
-                                        <t t-call="theme_aplus.products_item">
-                                            <t
-                                                t-set="product"
-                                                t-value="td_product['product']"
-                                            />
-                                        </t>
-                                    </div>
-                                </div>
-                            </t>
-                        </t>
-                    </t>
-                </t>
-                <t t-else="groupByCategory">
-                    <t
-                        t-set="flat_list"
-                        t-value="[item for sublist in bins for item in sublist if item]"
-                    />
-                    <t
-                        t-set="categories"
-                        t-value="list(set([cat for i in flat_list for cat in i['product'].public_categ_ids]))"
-                    />
-                    <t
-                        t-set="categories_sorted"
-                        t-value="sorted(categories, key=lambda x: x.sequence)"
-                    />
-                    <t t-foreach="categories_sorted" t-as="category">
-                        <t
-                            t-set="filtered_list"
-                            t-value="[i for i in flat_list if category in i['product'].public_categ_ids]"
-                        />
-                        <t t-if="len(categories) &gt; 1 and len(filtered_list) != 0">
-                            <div class="g-col-12 category-header">
-                                <div class="o_ws_category_separator">
-                                    <t t-out="category.name" />
-                                </div>
-                            </div>
-                        </t>
-
-                        <t t-foreach="filtered_list" t-as="td_product">
+                <!--
+                    The products are already ordered and grouped by category by
+                    `ThemeAPlusWebsiteSale._group_bins_by_category`, which hands
+                    back the same packed structure as core. Each cell keeps its
+                    own `x`/`y` spans, so the wrapper classes mirror
+                    `website_sale.products` and only the header is added.
+                -->
+                <t t-foreach="bins" t-as="tr_product">
+                    <t t-foreach="tr_product" t-as="td_product">
+                        <t t-if="td_product">
                             <t t-set="col_height" t-value="td_product['y']" />
                             <t
                                 t-set="col_width"
-                                t-value="2"
+                                t-value="int(12 / ppr) * td_product['x']"
                             />
                             <t t-set="col_class" t-valuef="g-col-6" />
                             <t
                                 t-set="col_class_lg"
                                 t-value="'g-col-lg-' + str(col_width)"
                             />
+                            <t
+                                t-set="col_class_md"
+                                t-value="grid_md_allow_custom_cols and ('g-col-md-' + str(col_width)) or grid_md_use_3col and 'g-col-md-4' or 'g-col-md-6'"
+                            />
+                            <t
+                                t-set="col_is_stretched"
+                                t-value="td_product['x'] &gt;= td_product['y'] * 2"
+                            />
+                            <t
+                                t-set="col_is_custom_portrait"
+                                t-value="not col_is_stretched and (col_height &gt; td_product['x'])"
+                            />
+
+                            <!-- Category separator, filled by the controller -->
+                            <t t-if="td_product.get('group_header')">
+                                <div class="g-col-12 category-header">
+                                    <div class="o_ws_category_separator">
+                                        <t t-out="td_product['group_header']" />
+                                    </div>
+                                </div>
+                            </t>
+
                             <div
-                                t-attf-class="oe_product {{col_class}} {{col_class_md}} {{col_class_lg}}"
+                                t-attf-class="oe_product {{col_is_custom_portrait and 'oe_product_custom_portrait'}} {{col_class}} {{col_class_md}} {{col_class_lg}} {{col_is_stretched and 'oe_product_size_stretch'}}"
                                 t-att-data-ribbon-id="td_product['ribbon'].id"
                                 t-att-data-name="product_block_name"
-                                t-attf-style="{{col_height > 1 and ('grid-row: span ' + str(col_height) + ';') or ''}}"
+                                t-attf-style="--o-wsale-products-grid-product-col-height: {{col_height}}; {{col_height > 1 and ('grid-row: span ' + str(col_height) + ';') or ''}}"
+                                t-att-data-colspan="td_product['x'] != 1 and td_product['x']"
+                                t-att-data-rowspan="td_product['y'] != 1 and td_product['y']"
                             >
                                 <div
                                     t-attf-class="o_wsale_product_grid_wrapper position-relative h-100
-                                o_wsale_product_grid_wrapper_#{td_product['x']}_#{td_product['y']}"
+                            o_wsale_product_grid_wrapper_#{td_product['x']}_#{td_product['y']}"
                                 >
                                     <t t-call="theme_aplus.products_item">
                                         <t

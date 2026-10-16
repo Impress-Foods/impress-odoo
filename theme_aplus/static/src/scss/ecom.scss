@@ -335,17 +335,20 @@
     height: 2px;
     background-color: var(--o-color-1);
 }
-#products_grid {
-    .o_wsale_products_grid_table_wrapper {
-        .product_row {
-            td.oe_product {
-                padding-bottom: 1rem;
-            }
-        }
-        td.category-header {
-            width: 100%;
-        }
-    }
+// Core's `.grid` rule is `repeat(var(--columns, 12), 1fr)`, which is unusable
+// here for two reasons:
+//  - `var()` inside `repeat()` does not take effect, so the count always falls
+//    back to 12 instead of the `--columns: 10` core sets for 5 per row;
+//  - `1fr` is shorthand for `minmax(auto, 1fr)`, and that `auto` minimum lets a
+//    card with a large intrinsic image width widen the tracks it spans, so one
+//    card ends up far wider than its neighbours.
+//
+// Stating the count literally, with the track minimum floored at 0, gives 12
+// equal columns: 2 cards per row on mobile (`g-col-6`) and 6 on `lg`
+// (`g-col-lg-2`). That matches core's own 12-column default, so no breakpoint
+// guard is needed.
+#o_wsale_products_grid.grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
 }
 
 .bg-light {
