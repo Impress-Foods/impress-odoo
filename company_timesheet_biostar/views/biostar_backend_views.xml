@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_biostar_backend_list" model="ir.ui.view">
+        <field name="name">biostar.backend.list</field>
+        <field name="model">biostar.backend</field>
+        <field name="arch" type="xml">
+            <list string="BioStar Backends">
+                <field name="name"/>
+                <field name="host"/>
+                <field name="port"/>
+                <field name="login_id"/>
+                <field name="tz" optional="show"/>
+                <field name="linked_employee_count" optional="show"/>
+                <field name="last_punches_sync" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_biostar_backend_form" model="ir.ui.view">
+        <field name="name">biostar.backend.form</field>
+        <field name="model">biostar.backend</field>
+        <field name="arch" type="xml">
+            <form string="BioStar Backend">
+                <header>
+                    <button name="action_test_connection" type="object"
+                            string="Test Connection" class="btn-secondary"/>
+                    <button name="action_sync_punches" type="object"
+                            string="Sync Punches"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg="bh"
+                            invisible="active"/>
+                    <group>
+                        <group name="server" string="Server">
+                            <field name="name"/>
+                            <field name="active" invisible="1"/>
+                            <field name="host"/>
+                            <field name="port"/>
+                            <field name="scheme"/>
+                            <field name="verify_ssl"
+                                   invisible="scheme != 'https'"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group name="credentials" string="Credentials">
+                            <field name="login_id"/>
+                            <field name="password" password="True"/>
+                            <field name="tz"/>
+                        </group>
+                        <group name="sync" string="Sync">
+                            <field name="linked_employee_count"/>
+                            <field name="import_days_back"/>
+                            <field name="last_punches_sync"/>
+                            <field name="last_connection_check"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_biostar_backend_search" model="ir.ui.view">
+        <field name="name">biostar.backend.search</field>
+        <field name="model">biostar.backend</field>
+        <field name="arch" type="xml">
+            <search string="BioStar Backends">
+                <field name="name" filter_domain="['|', ('name', 'ilike', self), ('host', 'ilike', self)]"/>
+                <field name="company_id"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_biostar_backend" model="ir.actions.act_window">
+        <field name="name">BioStar Backends</field>
+        <field name="res_model">biostar.backend</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_biostar_backend"
+              name="BioStar Backends"
+              parent="company_timesheet.menu_company_timesheet_root"
+              action="action_biostar_backend"
+              sequence="30"
+              groups="hr.group_hr_user"/>
+</odoo>
