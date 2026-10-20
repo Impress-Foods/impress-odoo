@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Multi-company: only the companies the user may access. -->
+    <record id="timesheet_rule_worker_company" model="ir.rule">
+        <field name="name">Workforce Timesheet: multi-company</field>
+        <field name="model_id" ref="model_workforce_timesheet"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <!-- Internal users: own records plus their full manager downline. -->
+    <record id="timesheet_rule_user" model="ir.rule">
+        <field name="name">Workforce Timesheet: own and reports</field>
+        <field name="model_id" ref="model_workforce_timesheet"/>
+        <field name="domain_force">[('worker_id', 'in', user.timesheet_worker_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!-- Officers see everything. -->
+    <record id="timesheet_rule_officer" model="ir.rule">
+        <field name="name">Workforce Timesheet: Officers all</field>
+        <field name="model_id" ref="model_workforce_timesheet"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(6, 0, [ref('workforce.group_workforce_officer')])]"/>
+    </record>
+
+    <!-- Portal users see their own sessions plus their manager downline,
+         mirroring the internal user rule's subtree scope. -->
+    <record id="timesheet_rule_portal" model="ir.rule">
+        <field name="name">Workforce Timesheet: portal own and reports</field>
+        <field name="model_id" ref="model_workforce_timesheet"/>
+        <field name="domain_force">[('worker_id', 'in', user.timesheet_worker_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+    </record>
+
+    <!-- Punches are HR-only, but respect multi-company. -->
+    <record id="punch_rule_worker_company" model="ir.rule">
+        <field name="name">Workforce Punch: multi-company</field>
+        <field name="model_id" ref="model_workforce_punch"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="source_ref_rule_worker_company" model="ir.rule">
+        <field name="name">Employee Source Reference: multi-company</field>
+        <field name="model_id" ref="model_workforce_employee_source_ref"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

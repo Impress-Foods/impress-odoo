@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="module_category_workforce" model="ir.module.category">
+        <field name="name">Workforce</field>
+        <field name="sequence">18</field>
+    </record>
+
+    <record id="res_groups_privilege_workforce" model="res.groups.privilege">
+        <field name="name">Workforce</field>
+        <field name="category_id" ref="module_category_workforce"/>
+    </record>
+
+    <record id="group_workforce_officer" model="res.groups">
+        <field name="name">Officer</field>
+        <field name="privilege_id" ref="res_groups_privilege_workforce"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Manage employees, departments, punches and timesheet
+            settings.</field>
+    </record>
+
+    <!-- Multi-company record rules: only records belonging to the companies the
+         user is allowed to access are visible. -->
+    <record id="workforce_employee_comp_rule" model="ir.rule">
+        <field name="name">Workforce Employee: multi-company</field>
+        <field name="model_id" ref="model_workforce_employee"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="workforce_department_comp_rule" model="ir.rule">
+        <field name="name">Workforce Department: multi-company</field>
+        <field name="model_id" ref="model_workforce_department"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

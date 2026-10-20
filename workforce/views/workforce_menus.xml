@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_workforce_root" name="Workforce"
+              sequence="85" groups="base.group_user"/>
+
+    <menuitem id="menu_workforce_employee" name="Employees"
+              parent="menu_workforce_root"
+              action="action_workforce_employee" sequence="10"
+              groups="workforce.group_workforce_officer"/>
+
+    <menuitem id="menu_workforce_department" name="Departments"
+              parent="menu_workforce_root"
+              action="action_workforce_department" sequence="20"
+              groups="workforce.group_workforce_officer"/>
+</odoo>

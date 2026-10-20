@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_biostar_backend_officer,biostar.backend.officer,model_biostar_backend,workforce.group_workforce_officer,1,1,1,1

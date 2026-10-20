@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_workforce_employee_list" model="ir.ui.view">
+        <field name="name">workforce.employee.list</field>
+        <field name="model">workforce.employee</field>
+        <field name="arch" type="xml">
+            <list string="Employees" multi_edit="1">
+                <field name="image_128" widget="image" width="40" options="{'size': [40, 40]}"/>
+                <field name="name"/>
+                <field name="worker_ref"/>
+                <field name="job_title"/>
+                <field name="department_id"/>
+                <field name="work_email" widget="email"/>
+                <field name="work_phone" widget="phone"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_workforce_employee_kanban" model="ir.ui.view">
+        <field name="name">workforce.employee.kanban</field>
+        <field name="model">workforce.employee</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" sample="1">
+                <field name="name"/>
+                <field name="image_128"/>
+                <field name="job_title"/>
+                <field name="work_email"/>
+                <field name="work_phone"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex">
+                            <field name="image_128" widget="image" class="o_image_64_contain me-2"/>
+                            <div class="flex-grow-1">
+                                <field name="name" class="fw-bold fs-5"/>
+                                <div t-if="record.job_title.value">
+                                    <field name="job_title"/>
+                                </div>
+                                <div t-if="record.work_email.value">
+                                    <i class="fa fa-envelope me-1" title="Email"/>
+                                    <field name="work_email"/>
+                                </div>
+                                <div t-if="record.work_phone.value">
+                                    <i class="fa fa-phone me-1" title="Phone"/>
+                                    <field name="work_phone"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_workforce_employee_search" model="ir.ui.view">
+        <field name="name">workforce.employee.search</field>
+        <field name="model">workforce.employee</field>
+        <field name="arch" type="xml">
+            <search string="Employees">
+                <field name="name"/>
+                <field name="worker_ref"/>
+                <field name="job_title"/>
+                <field name="department_id"/>
+                <field name="work_email"/>
+                <field name="parent_id"/>
+                <filter name="filter_active" string="Archived" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter name="group_department" string="Department"
+                        context="{'group_by': 'department_id'}"/>
+                <filter name="group_manager" string="Manager"
+                        context="{'group_by': 'parent_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_workforce_employee_form" model="ir.ui.view">
+        <field name="name">workforce.employee.form</field>
+        <field name="model">workforce.employee</field>
+        <field name="arch" type="xml">
+            <form string="Employee">
+                <header>
+                    <button name="action_invite_portal_user" type="object"
+                            string="Grant Portal Access" class="oe_highlight"
+                            invisible="user_id"/>
+                    <button name="action_view_portal_user" type="object"
+                            string="Portal Access" invisible="not user_id"/>
+                </header>
+                <sheet>
+                    <field name="image_1920" widget="image" class="oe_avatar"
+                           options="{'preview_image': 'image_128'}"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Employee Name"/>
+                        </h1>
+                        <group>
+                            <field name="job_title" placeholder="Job Title"/>
+                        </group>
+                    </div>
+                    <group>
+                        <group name="identification" string="Identification">
+                            <field name="worker_ref"/>
+                            <field name="department_id"/>
+                            <field name="parent_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group name="work_contact" string="Work Contact">
+                            <field name="work_email" widget="email"/>
+                            <field name="work_phone" widget="phone"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Contact Information" name="contact">
+                            <group>
+                                <group string="Personal">
+                                    <field name="email" widget="email"/>
+                                    <field name="phone" widget="phone"/>
+                                    <field name="private_phone" widget="phone"/>
+                                    <field name="private_email" widget="email"/>
+                                    <field name="birthday"/>
+                                </group>
+                            </group>
+                            <label for="street" string="Address"/>
+                            <div class="o_address_format">
+                                <field name="street" placeholder="Street..." class="o_address_street"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                <field name="city" placeholder="City" class="o_address_city"/>
+                                <field name="state_id" class="o_address_state" placeholder="State"
+                                       options="{'no_open': True}"/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                <field name="country_id" class="o_address_country" placeholder="Country"
+                                       options="{'no_open': True, 'no_create': True}"/>
+                            </div>
+                        </page>
+                        <page string="Emergency Contact" name="emergency">
+                            <group>
+                                <group string="Emergency Contact">
+                                    <field name="emergency_contact_name"/>
+                                    <field name="emergency_contact_relation"/>
+                                    <field name="emergency_contact_phone" widget="phone"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Logins" name="logins" groups="base.group_system">
+                            <field name="login_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="login"/>
+                                    <field name="share"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" placeholder="Internal notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_workforce_employee" model="ir.actions.act_window">
+        <field name="name">Employees</field>
+        <field name="res_model">workforce.employee</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_workforce_employee_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first employee
+            </p>
+            <p>
+                Store contact details, job information and emergency contacts for
+                your team.
+            </p>
+        </field>
+    </record>
+</odoo>

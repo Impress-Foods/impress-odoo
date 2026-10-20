@@ -1,6 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_company_timesheet_user,company.timesheet.user,model_company_timesheet,base.group_user,1,0,0,0
-access_company_timesheet_portal,company.timesheet.portal,model_company_timesheet,base.group_portal,1,0,0,0
-access_company_timesheet_hr_user,company.timesheet.hr.user,model_company_timesheet,hr.group_hr_user,1,0,0,0
-access_company_punch_hr_user,company.punch.hr.user,model_company_punch,hr.group_hr_user,1,1,1,1
-access_company_employee_source_ref_hr_user,company.employee.source.ref.hr.user,model_company_employee_source_ref,hr.group_hr_user,1,1,1,1

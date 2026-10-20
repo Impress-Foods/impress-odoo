@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_workforce_employee_user,workforce.employee.user,model_workforce_employee,base.group_user,1,0,0,0
+access_workforce_employee_officer,workforce.employee.officer,model_workforce_employee,workforce.group_workforce_officer,1,1,1,1
+access_workforce_department_user,workforce.department.user,model_workforce_department,base.group_user,1,0,0,0
+access_workforce_department_officer,workforce.department.officer,model_workforce_department,workforce.group_workforce_officer,1,1,1,1

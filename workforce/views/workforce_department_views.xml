@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_workforce_department_list" model="ir.ui.view">
+        <field name="name">workforce.department.list</field>
+        <field name="model">workforce.department</field>
+        <field name="arch" type="xml">
+            <list string="Departments">
+                <field name="complete_name"/>
+                <field name="manager_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_workforce_department_form" model="ir.ui.view">
+        <field name="name">workforce.department.form</field>
+        <field name="model">workforce.department</field>
+        <field name="arch" type="xml">
+            <form string="Department">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Department Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="parent_id"/>
+                            <field name="manager_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Employees" name="employees">
+                            <field name="worker_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="job_title"/>
+                                    <field name="work_email" widget="email"/>
+                                    <field name="work_phone" widget="phone"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Note" name="note">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_workforce_department_search" model="ir.ui.view">
+        <field name="name">workforce.department.search</field>
+        <field name="model">workforce.department</field>
+        <field name="arch" type="xml">
+            <search string="Departments">
+                <field name="name"/>
+                <field name="manager_id"/>
+                <separator/>
+                <filter name="group_parent" string="Parent Department"
+                        context="{'group_by': 'parent_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_workforce_department" model="ir.actions.act_window">
+        <field name="name">Departments</field>
+        <field name="res_model">workforce.department</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_workforce_department_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first department
+            </p>
+            <p>
+                Group employees into departments and assign managers.
+            </p>
+        </field>
+    </record>
+</odoo>

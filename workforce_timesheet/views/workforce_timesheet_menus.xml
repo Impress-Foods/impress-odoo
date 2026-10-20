@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_timesheet" name="Timesheets"
+              parent="workforce.menu_workforce_root"
+              action="action_timesheet" sequence="30"/>
+
+    <menuitem id="menu_punch" name="Punches"
+              parent="workforce.menu_workforce_root"
+              action="action_punch" sequence="40"
+              groups="workforce.group_workforce_officer"/>
+</odoo>

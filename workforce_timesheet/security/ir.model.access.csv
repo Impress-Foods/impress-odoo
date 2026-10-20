@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_timesheet_user,workforce.timesheet.user,model_workforce_timesheet,base.group_user,1,0,0,0
+access_timesheet_portal,workforce.timesheet.portal,model_workforce_timesheet,base.group_portal,1,0,0,0
+access_timesheet_officer,workforce.timesheet.officer,model_workforce_timesheet,workforce.group_workforce_officer,1,0,0,0
+access_punch_officer,workforce.punch.officer,model_workforce_punch,workforce.group_workforce_officer,1,1,1,1
+access_source_ref_officer,workforce.employee.source.ref.officer,model_workforce_employee_source_ref,workforce.group_workforce_officer,1,1,1,1

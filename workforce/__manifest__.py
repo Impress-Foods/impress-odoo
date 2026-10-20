@@ -1,0 +1,26 @@
+{
+    "name": "Workforce",
+    "version": "19.0.1.5.0",
+    "category": "Human Resources/Workforce",
+    "summary": "Lightweight workforce directory built on contacts.",
+    "author": "Cédric Paradis",
+    "website": "https://github.com/Impress-Foods/impress-odoo",
+    "license": "LGPL-3",
+    "depends": [
+        "base",
+        "mail",
+        "contacts",
+        "portal",
+    ],
+    "data": [
+        "security/workforce_security.xml",
+        "security/ir.model.access.csv",
+        "data/workforce_employee_data.xml",
+        "views/workforce_employee_views.xml",
+        "views/workforce_department_views.xml",
+        "views/res_partner_views.xml",
+        "views/workforce_menus.xml",
+    ],
+    "application": True,
+    "installable": True,
+}
