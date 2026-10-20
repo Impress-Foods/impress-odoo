@@ -1,6 +1,6 @@
 {
     "name": "Company Timesheets",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "category": "Human Resources/Employees",
     "summary": "Lean work-time sessions derived from batch-imported punch data.",
     "author": "Cédric Paradis",
@@ -18,6 +18,7 @@
         "data/company_timesheet_cron.xml",
         "views/company_timesheet_views.xml",
         "views/company_punch_views.xml",
+        "views/res_company_views.xml",
         "views/company_timesheet_menus.xml",
         "views/company_timesheet_portal_templates.xml",
     ],

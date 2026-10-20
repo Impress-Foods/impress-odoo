@@ -5,6 +5,12 @@
         <field name="model">company.timesheet</field>
         <field name="arch" type="xml">
             <list string="Timesheets" create="false" edit="false">
+                <header>
+                    <button name="action_recompute_sessions" type="object"
+                            string="Rebuild Sessions"
+                            groups="hr.group_hr_user"
+                            confirm="Rebuild all sessions from the stored punches of the related employees?"/>
+                </header>
                 <field name="employee_id"/>
                 <field name="date"/>
                 <field name="check_in"/>

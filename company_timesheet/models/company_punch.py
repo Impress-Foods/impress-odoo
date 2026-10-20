@@ -1,5 +1,5 @@
-from datetime import timezone
-from zoneinfo import ZoneInfo
+from datetime import timedelta, timezone
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
@@ -36,6 +36,11 @@ class CompanyPunch(models.Model):
     source = fields.Char(required=True, index=True)
     external_id = fields.Char(required=True)
     device = fields.Char()
+    timezone = fields.Char(
+        help="IANA timezone the punch was ingested with. Session rebuilds use "
+        "it to map the UTC timestamp back to a local work period; punches "
+        "without one are grouped in UTC.",
+    )
     session_id = fields.Many2one(
         "company.timesheet",
         ondelete="set null",
@@ -81,6 +86,21 @@ class CompanyPunch(models.Model):
     # ------------------------------------------------------------------
     # Bulk ingest API
     # ------------------------------------------------------------------
+    def _work_period_date(self, start_hour: int):
+        """Return the workday ``date`` this punch belongs to.
+
+        The UTC timestamp is converted to the punch's ingest timezone and
+        shifted behind the workday start hour, so punches between midnight
+        and the start hour count for the previous workday. Unparseable or
+        missing timezone values fall back to UTC.
+        """
+        try:
+            tzinfo = ZoneInfo(self.timezone) if self.timezone else timezone.utc
+            local = self.timestamp.replace(tzinfo=timezone.utc).astimezone(tzinfo)
+        except (ZoneInfoNotFoundError, ValueError, AttributeError):
+            local = self.timestamp.replace(tzinfo=timezone.utc)
+        return (local - timedelta(hours=start_hour)).date()
+
     @api.model
     def _get_ingest_schema(self):
         return schema
@@ -187,6 +207,7 @@ class CompanyPunch(models.Model):
                 "source": source,
                 "external_id": punch_event.external_id,
                 "device": punch_event.device,
+                "timezone": tz or None,
             }
             punch = existing.get(punch_event.external_id)
             if punch is None:
@@ -225,4 +246,5 @@ class CompanyPunch(models.Model):
             or punch.timestamp != vals["timestamp"]
             or punch.direction != vals["direction"]
             or (punch.device or None) != (vals["device"] or None)
+            or (punch.timezone or None) != (vals["timezone"] or None)
         )
