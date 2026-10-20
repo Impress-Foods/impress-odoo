@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="menu_company_timesheet_root" name="Timesheets"
-              sequence="86" groups="base.group_user"/>
-
     <menuitem id="menu_company_timesheet" name="Timesheets"
-              parent="menu_company_timesheet_root"
-              action="action_company_timesheet" sequence="10"/>
+              parent="company_employee.menu_company_employee_root"
+              action="action_company_timesheet" sequence="30"/>
 
     <menuitem id="menu_company_punch" name="Punches"
-              parent="menu_company_timesheet_root"
-              action="action_company_punch" sequence="20"
+              parent="company_employee.menu_company_employee_root"
+              action="action_company_punch" sequence="40"
               groups="hr.group_hr_user"/>
 </odoo>

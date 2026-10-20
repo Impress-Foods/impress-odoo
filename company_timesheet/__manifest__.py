@@ -1,6 +1,6 @@
 {
     "name": "Company Timesheets",
-    "version": "19.0.1.2.0",
+    "version": "19.0.1.3.0",
     "category": "Human Resources/Employees",
     "summary": "Lean work-time sessions derived from batch-imported punch data.",
     "author": "Cédric Paradis",

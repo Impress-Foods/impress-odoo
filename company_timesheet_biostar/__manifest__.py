@@ -1,6 +1,6 @@
 {
     "name": "Company Timesheets - BioStar 2",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.2.0",
     "category": "Human Resources/Employees",
     "summary": "Pull punches from a BioStar 2 into company.timesheet sessions.",
     "author": "Cédric Paradis",

@@ -79,8 +79,8 @@
 
     <menuitem id="menu_biostar_backend"
               name="BioStar Backends"
-              parent="company_timesheet.menu_company_timesheet_root"
+              parent="company_employee.menu_company_employee_root"
               action="action_biostar_backend"
-              sequence="30"
+              sequence="50"
               groups="hr.group_hr_user"/>
 </odoo>
