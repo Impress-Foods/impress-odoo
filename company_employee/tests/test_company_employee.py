@@ -91,6 +91,67 @@ class TestCompanyEmployee(TransactionCase):
         )
         self.assertEqual(self.env["hr.employee"].search_count([]), before)
 
+    def test_partner_and_user_open_employee_actions(self):
+        """Smart buttons on contact and login forms reach the employee record."""
+        employee = self.Employee.create({"name": "Button Worker"})
+        action = employee.partner_id.action_open_company_employee()
+        self.assertEqual(action["res_id"], employee.id)
+        self.assertEqual(action["view_mode"], "form")
+
+        linked_user = self.env["res.users"].create(
+            {
+                "name": "Button Worker",
+                "login": "button.worker",
+                "email": "button.worker@example.com",
+                "partner_id": employee.partner_id.id,
+            }
+        )
+        self.assertEqual(linked_user.company_employee_count, 1)
+        self.assertEqual(linked_user.partner_id.company_employee_count, 1)
+        action = linked_user.action_open_company_employee()
+        self.assertEqual(action["res_id"], employee.id)
+        self.assertEqual(action["view_mode"], "form")
+
+    def test_partner_open_employee_lists_multiple_employees(self):
+        """More than one employee on a contact opens a filtered list."""
+        first = self.Employee.create({"name": "First"})
+        second = self.Employee.create(
+            {"name": "Second", "partner_id": first.partner_id.id}
+        )
+        action = first.partner_id.action_open_company_employee()
+        self.assertNotIn("res_id", action)
+        self.assertEqual(action["domain"], [("id", "in", [first.id, second.id])])
+        self.assertEqual(first.partner_id.company_employee_count, 2)
+
+    def test_login_ids_link_through_employee_partner(self):
+        """Logins attach to the employee contact, not to a new hr.employee.
+
+        Adding a user through the employee form's Logins page sets the
+        user's Related Contact to the employee's contact, which is exactly
+        the link the timesheet record rules match on. The portal-computed
+        ``user_id`` intentionally ignores internal users.
+        """
+        employee = self.Employee.create(
+            {"name": "Linked Worker", "email": "linked.worker@example.com"}
+        )
+        employee.login_ids = [
+            (
+                0,
+                0,
+                {
+                    "name": "Linked Worker",
+                    "login": "linked.worker",
+                    "email": "linked.worker@example.com",
+                },
+            )
+        ]
+        user = self.env["res.users"].search([("login", "=", "linked.worker")])
+        self.assertEqual(user.partner_id, employee.partner_id)
+        self.assertFalse(user.share)
+        self.assertFalse(employee.user_id)
+        employee.invalidate_recordset()
+        self.assertIn(user.name, employee.login_ids.mapped("name"))
+
     def test_access_rights(self):
         employee = self.Employee.create({"name": "Target Employee"})
         basic_user = self.env["res.users"].create(

@@ -43,6 +43,10 @@ class CompanyTimesheet(models.Model):
         compute="_compute_worked_hours",
         store=True,
         aggregator="sum",
+        help="Sum of the session's in→out interval durations. Unpaid gaps "
+        "between intervals (breaks) are excluded, matching BioStar's Total "
+        "work time; the first-in/last-out span is visible through check_in "
+        "and check_out.",
     )
     department_id = fields.Many2one(
         related="employee_id.department_id",
@@ -92,14 +96,29 @@ class CompanyTimesheet(models.Model):
             start_hour = session.company_id.sudo().timesheet_day_start_hour
             session.date = (local - timedelta(hours=start_hour)).date()
 
-    @api.depends("check_in", "check_out")
+    @api.depends("punch_ids.timestamp", "punch_ids.direction")
     def _compute_worked_hours(self):
+        """Sum of in→out interval durations, unpaid gaps excluded.
+
+        Walks the linked punches chronologically: the first ``in`` opens an
+        interval, the next ``out`` closes it and adds its duration. Gaps
+        between intervals (breaks) and orphan ``out``s contribute nothing,
+        so the result matches BioStar's Total work time rather than the
+        first-in/last-out span (which is still visible through ``check_in``
+        /``check_out``). A stale punch (an ``out`` before the opened ``in``)
+        is skipped rather than subtracting.
+        """
         for session in self:
-            if session.check_in and session.check_out:
-                delta = session.check_out - session.check_in
-                session.worked_hours = delta.total_seconds() / 3600.0
-            else:
-                session.worked_hours = 0.0
+            worked = 0.0
+            open_in = None
+            for punch in session.punch_ids.sorted("timestamp"):
+                if punch.direction == "in":
+                    if open_in is None:
+                        open_in = punch.timestamp
+                elif open_in is not None and punch.timestamp > open_in:
+                    worked += (punch.timestamp - open_in).total_seconds() / 3600.0
+                    open_in = None
+            session.worked_hours = worked
 
     def action_recompute_sessions(self):
         """Rebuild the sessions of the related employees from stored punches."""
@@ -182,13 +201,14 @@ class CompanyTimesheet(models.Model):
         A work period covers one workday between two local
         ``timesheet_day_start_hour`` boundaries (3AM by default): punches up
         to that hour belong to the previous workday. A session opens with a
-        period's first ``in``; it closes at the last ``out`` of that period,
-        or of a consecutive period whose punches arrive without their own
-        ``in`` - an overnight shift ending past the boundary hour therefore
-        stays on its starting workday. Middle punches stay linked to the
-        session for traceability. An ``in`` while a session is already open
-        is ignored, and an orphan ``out`` before any ``in`` is left
-        unlinked, matching the raw ledger's dirty-data tolerance.
+        period's first ``in``; it closes at that period's last ``out`` -
+        unless the period's latest punch is an ``in``, which means the shift
+        is still running (or its ``out`` slipped into a later work period);
+        the next period then either provides the closing ``out`` or keeps
+        the session open. Middle punches stay linked to the session for
+        traceability. An ``in`` while a session is already open is ignored,
+        and an orphan ``out`` before any ``in`` is left unlinked, matching
+        the raw ledger's dirty-data tolerance.
         """
         start_hour = employee.company_id.sudo().timesheet_day_start_hour
         periods: dict[date, list[Any]] = {}
@@ -209,7 +229,12 @@ class CompanyTimesheet(models.Model):
             else:
                 # The session opened on an earlier workday; absorb this one.
                 period_punches.extend(group)
-            last_out = next(
+            # The session closes at the group's last ``out`` - but only when
+            # the group does not end with an ``in``: a trailing ``in`` means
+            # the shift is still running (its ``out`` must arrive with a
+            # later sync, possibly past the workday boundary).
+            last_punch = group[-1] if group else None
+            check_out = next(
                 (
                     punch
                     for punch in reversed(group)
@@ -217,8 +242,12 @@ class CompanyTimesheet(models.Model):
                 ),
                 None,
             )
-            if last_out is not None:
-                yield check_in, last_out, Punch.concat(*period_punches)
+            if last_punch is not None and last_punch.direction == "in":
+                # Still running: its closing ``out`` arrives with a later
+                # sync (possibly in a later work period).
+                continue
+            if check_out is not None:
+                yield check_in, check_out, Punch.concat(*period_punches)
                 check_in = None
                 period_punches = []
         if check_in is not None:

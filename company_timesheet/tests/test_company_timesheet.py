@@ -114,3 +114,46 @@ class TestCompanyTimesheet(TransactionCase):
         other_sessions = self.Timesheet.with_user(other_user).search([])
         self.assertTrue(other_sessions)
         self.assertNotIn(report, other_sessions.employee_id)
+
+    def test_record_rules_scope_department_manager_subtree(self):
+        """A department head sees department members without direct parent."""
+        head_user = self._make_internal_user("dept_head")
+        head = self.env["company.employee"].create(
+            {"name": "Dept Head", "partner_id": head_user.partner_id.id}
+        )
+        operations = self.env["company.department"].create(
+            {"name": "Operations", "manager_id": head.id}
+        )
+        warehouse = self.env["company.department"].create(
+            {"name": "Warehouse", "parent_id": operations.id}
+        )
+        member_user = self._make_internal_user("dept_member")
+        member = self.env["company.employee"].create(
+            {
+                "name": "Team Member",
+                "partner_id": member_user.partner_id.id,
+                "department_id": operations.id,
+            }
+        )
+        submember_user = self._make_internal_user("sub_member")
+        submember = self.env["company.employee"].create(
+            {
+                "name": "Sub Member",
+                "partner_id": submember_user.partner_id.id,
+                "department_id": warehouse.id,
+            }
+        )
+        for employee, tag in ((member, "dm"), (submember, "ds")):
+            self._punch("in", datetime(2026, 3, 2, 8, 0), f"{tag}1", employee)
+            self._punch("out", datetime(2026, 3, 2, 16, 0), f"{tag}2", employee)
+
+        expected = {
+            member.id,
+            submember.id,
+        }
+        self.assertEqual(
+            {e.id for e in head_user.timesheet_employee_ids if e != head},
+            expected,
+        )
+        sessions = self.Timesheet.with_user(head_user).search([])
+        self.assertEqual({s.employee_id.id for s in sessions} - {head.id}, expected)

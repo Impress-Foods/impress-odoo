@@ -38,6 +38,7 @@
                         <table class="table table-hover o_portal_my_doc_table">
                             <thead>
                                 <tr>
+                                    <th>Employee</th>
                                     <th>Date</th>
                                     <th>Check In</th>
                                     <th>Check Out</th>
@@ -46,6 +47,7 @@
                             </thead>
                             <tbody>
                                 <tr t-foreach="timesheets" t-as="timesheet">
+                                    <td><span t-field="timesheet.employee_id.name"/></td>
                                     <td><span t-field="timesheet.date"/></td>
                                     <td><span t-field="timesheet.check_in"/></td>
                                     <td><span t-field="timesheet.check_out"/></td>

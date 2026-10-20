@@ -140,6 +140,15 @@
                                 </group>
                             </group>
                         </page>
+                        <page string="Logins" name="logins" groups="base.group_system">
+                            <field name="login_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="login"/>
+                                    <field name="share"/>
+                                </list>
+                            </field>
+                        </page>
                         <page string="Notes" name="notes">
                             <field name="notes" placeholder="Internal notes..."/>
                         </page>

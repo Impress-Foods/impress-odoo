@@ -47,7 +47,9 @@ class TestWorkPeriodSessions(TransactionCase):
             (sessions.check_in, sessions.check_out),
             (datetime(2026, 2, 2, 8, 0), datetime(2026, 2, 2, 17, 0)),
         )
-        self.assertAlmostEqual(sessions.worked_hours, 9.0)
+        # Worked hours sum the two intervals (8-12 + 13-17 <> 9h span);
+        # the one-hour midday break is excluded.
+        self.assertAlmostEqual(sessions.worked_hours, 8.0)
         self.assertEqual(len(sessions.punch_ids), 4)
 
     def test_consecutive_days_stay_separate_sessions(self):
@@ -124,6 +126,41 @@ class TestWorkPeriodSessions(TransactionCase):
             (sessions[1].check_in, sessions[1].check_out),
             (datetime(2026, 10, 2, 9, 0), datetime(2026, 10, 2, 17, 0)),
         )
+
+    def test_worked_hours_ignores_extra_ins_and_gaps(self):
+        """Interval sum semantics: first in wins; breaks stay out."""
+        self._punch("in", datetime(2026, 2, 2, 8, 0), "w1")
+        self._punch("in", datetime(2026, 2, 2, 9, 0), "w2")  # double badge
+        self._punch("out", datetime(2026, 2, 2, 12, 0), "w3")
+        self._punch("in", datetime(2026, 2, 2, 13, 0), "w4")
+        self._punch("out", datetime(2026, 2, 2, 17, 0), "w5")
+
+        sessions = self._sessions()
+        self.assertEqual(len(sessions), 1)
+        self.assertAlmostEqual(sessions.worked_hours, 8.0)
+        self.assertEqual(
+            (sessions.check_in, sessions.check_out),
+            (datetime(2026, 2, 2, 8, 0), datetime(2026, 2, 2, 17, 0)),
+        )
+
+    def test_open_session_counts_closed_intervals_only(self):
+        self._punch("in", datetime(2026, 2, 2, 8, 0), "p1")
+        self._punch("out", datetime(2026, 2, 2, 12, 0), "p2")
+        self._punch("in", datetime(2026, 2, 2, 13, 0), "p3")
+
+        session = self._sessions()
+        self.assertEqual(len(session), 1)
+        self.assertFalse(session.check_out)
+        self.assertAlmostEqual(session.worked_hours, 4.0)
+
+    def test_stale_out_does_not_subtract_hours(self):
+        self._punch("out", datetime(2026, 2, 2, 7, 0), "s1")  # orphan out
+        self._punch("in", datetime(2026, 2, 2, 8, 0), "s2")
+        self._punch("out", datetime(2026, 2, 2, 16, 0), "s3")
+
+        session = self._sessions()
+        self.assertEqual(len(session), 1)
+        self.assertAlmostEqual(session.worked_hours, 8.0)
 
     def test_unclosed_in_is_the_only_open_session(self):
         self._punch("in", datetime(2026, 2, 2, 8, 0), "o1")

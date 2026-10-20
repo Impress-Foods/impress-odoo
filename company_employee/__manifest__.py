@@ -1,6 +1,6 @@
 {
     "name": "Company Employees",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.3.0",
     "category": "Human Resources/Employees",
     "summary": "Lightweight employee directory built on contacts.",
     "author": "Cédric Paradis",
@@ -19,6 +19,7 @@
         "data/company_employee_data.xml",
         "views/company_employee_views.xml",
         "views/company_department_views.xml",
+        "views/res_partner_views.xml",
         "views/company_employee_menus.xml",
     ],
     "application": True,

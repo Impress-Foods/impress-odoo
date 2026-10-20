@@ -77,6 +77,15 @@ class CompanyEmployee(models.Model):
         domain=[("share", "=", True)],
         help="Portal (external) user linked to this employee, if any.",
     )
+    login_ids = fields.One2many(
+        related="partner_id.user_ids",
+        readonly=False,
+        string="Logins",
+        help="User logins sharing the employee's contact. The timesheet "
+        "record rules scope visibility with the same link (a user sees the "
+        "employee whose contact is their Related Contact, plus that "
+        "employee's manager downline).",
+    )
     notes = fields.Html(string="Internal Notes")
 
     _employee_ref_uniq = models.Constraint(

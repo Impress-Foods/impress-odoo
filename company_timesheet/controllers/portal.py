@@ -8,10 +8,20 @@ ITEMS_PER_PAGE = 50
 
 
 class CompanyTimesheetPortal(CustomerPortal):
-    """Lets an employee review their own derived timesheet in the portal."""
+    """Lets an employee review their derived timesheet in the portal.
+
+    A login sees its own employee's sessions plus the sessions of every
+    employee in that employee's manager subtree (the same scope internal
+    users get from the read rules) - letting a supervisor follow their team
+    from the portal without becoming a back-office user.
+    """
 
     def _timesheet_domain(self):
-        return [("employee_id.partner_id", "=", request.env.user.partner_id.id)]
+        user = request.env.user
+        return [
+            ("employee_id", "in", user.timesheet_employee_ids.ids),
+            ("company_id", "in", user.company_ids.ids),
+        ]
 
     def _prepare_home_portal_values(self, counters):
         values = super()._prepare_home_portal_values(counters)
