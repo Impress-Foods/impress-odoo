@@ -39,14 +39,39 @@ class StockMove(models.Model):
         target = self.product_id
         if len(self.move_line_ids) == 1 and self.move_line_ids.lot_id:
             target = self.move_line_ids.lot_id
-        context.update(
-            {
-                "target": target,
-                "product_uom_qty": self.product_uom_qty,
-                "product_uom_id": self.product_uom,
-            }
-        )
+        values = self._label_print_values_for(target)
+        if not values:
+            # A move nothing has been recorded against yet still knows its own
+            # demand and unit, which is the best default available.
+            values = self._label_batch_values(
+                self.product_uom_qty,
+                self.product_uom,
+                self.env["uom.uom"],
+            )
+        context.update({"target": target, **values})
         return context
+
+    def _label_quantity_for(self, target) -> tuple:
+        """Return what this move's lines state for ``target``."""
+        self.ensure_one()
+        empty = self.env["uom.uom"]
+        if not target:
+            return None, empty, empty
+        lines = self.move_line_ids
+        if target._name == "stock.lot":
+            lines = lines.filtered(lambda line: line.lot_id == target)
+            if not lines:
+                return None, empty, empty
+            quantity, uom = self._total_line_quantity_and_uom(lines)
+        else:
+            lines = lines.filtered(lambda line: line.product_id == target)
+            if lines:
+                quantity, uom = self._total_line_quantity_and_uom(lines)
+            elif target == self.product_id:
+                quantity, uom = self.product_uom_qty, self.product_uom
+            else:
+                return None, empty, empty
+        return self._label_quantity_in_packaging_uom(quantity, uom, self)
 
     def _get_print_dashboard_target_ids(self) -> dict[str, list[int]]:
         self.ensure_one()
@@ -64,14 +89,30 @@ class StockMoveLine(models.Model):
         self.ensure_one()
         context = super()._get_print_dashboard_context()
         target = self.lot_id or self.product_id
-        context.update(
-            {
-                "target": target,
-                "product_uom_qty": self.quantity,
-                "product_uom_id": self.product_uom_id,
-            }
-        )
+        values = self._label_print_values_for(target)
+        if not values:
+            values = self._label_batch_values(
+                self.quantity,
+                self.product_uom_id,
+                self.env["uom.uom"],
+            )
+        context.update({"target": target, **values})
         return context
+
+    def _label_quantity_for(self, target) -> tuple:
+        """Return this line's quantity and unit when ``target`` names it."""
+        self.ensure_one()
+        empty = self.env["uom.uom"]
+        if not target:
+            return None, empty, empty
+        target_product = target.product_id if target._name == "stock.lot" else target
+        if target_product != self.product_id:
+            return None, empty, empty
+        if target._name == "stock.lot" and target != self.lot_id:
+            return None, empty, empty
+        return self._label_quantity_in_packaging_uom(
+            self.quantity, self.product_uom_id, self.move_id
+        )
 
     def _get_print_dashboard_target_ids(self) -> dict[str, list[int]]:
         self.ensure_one()
@@ -95,15 +136,11 @@ class StockPicking(models.Model):
             target = lots if len(lots) == 1 else move.product_id
         context["target"] = target
         if target:
-            quantity, uom = self._label_quantity_for(target)
-            if quantity:
-                context["product_uom_qty"] = quantity
-            if uom:
-                context["product_uom_id"] = uom
+            context.update(self._label_print_values_for(target))
         return context
 
     def _label_quantity_for(self, target) -> tuple:
-        """Return the (quantity, uom) this transfer states for ``target``.
+        """Return the (quantity, uom, packaging uom) this transfer states.
 
         A quantity of ``None`` means the transfer says nothing about this target
         at all, which is a different answer from zero of it: a lot this transfer
@@ -111,21 +148,30 @@ class StockPicking(models.Model):
         whatever the previous target said.
         """
         self.ensure_one()
+        empty = self.env["uom.uom"]
         if not target:
-            return None, self.env["uom.uom"]
+            return None, empty, empty
         if target._name == "stock.lot":
             lines = self.move_ids.move_line_ids.filtered(
                 lambda line, target=target: line.lot_id == target
             )
             if not lines:
-                return None, self.env["uom.uom"]
-            return sum(lines.mapped("quantity")), lines[0].product_uom_id
+                return None, empty, empty
+            quantity, uom = self._total_line_quantity_and_uom(lines)
+            return self._label_quantity_in_packaging_uom(quantity, uom, lines.move_id)
         moves = self.move_ids.filtered(
             lambda move, target=target: move.product_id == target
         )
         if not moves:
-            return None, self.env["uom.uom"]
-        return sum(moves.mapped("product_uom_qty")), moves[0].product_uom
+            return None, empty, empty
+        lines = moves.move_line_ids.filtered(
+            lambda line, target=target: line.product_id == target
+        )
+        if lines:
+            quantity, uom = self._total_line_quantity_and_uom(lines)
+            return self._label_quantity_in_packaging_uom(quantity, uom, lines.move_id)
+        quantity, uom = sum(moves.mapped("product_uom_qty")), moves[0].product_uom
+        return self._label_quantity_in_packaging_uom(quantity, uom, moves)
 
     def _get_print_dashboard_target_ids(self) -> dict[str, list[int]]:
         """Only this transfer's own lots and products are valid targets."""
