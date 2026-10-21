@@ -64,3 +64,9 @@ class QualityCheck(models.Model):
         # rather than being pointed at a record. The check travels that way.
         action["context"] = {"default_quality_check_id": self.id}
         return action
+
+    def _get_print_qty(self):
+        qty = super()._get_print_qty()
+        if self.point_id.print_for_units:
+            qty = qty * self.product_id.qty_multiple
+        return qty

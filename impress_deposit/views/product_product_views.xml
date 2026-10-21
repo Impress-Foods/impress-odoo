@@ -14,7 +14,6 @@
                     invisible="product_variant_count &gt; 1"
                 >
                     <field name="requires_deposit" />
-                    <field name="qty_multiple" />
                 </group>
             </xpath>
         </field>
