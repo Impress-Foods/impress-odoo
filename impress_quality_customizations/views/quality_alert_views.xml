@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding="utf-8"?>
+<odoo>
+    <record id="impress_quality_quality_alert_form" model="ir.ui.view">
+        <field name="name">impress.quality.quality.alert.form</field>
+        <field name="model">quality.alert</field>
+        <field name="inherit_id" ref="quality_control.quality_alert_view_form" />
+        <field name="priority">16</field>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button
+                    name="action_view_purchase_order"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-shopping-cart"
+                    invisible="not purchase_order_id"
+                >
+                    <span class="o_stat_text">Purchase Order</span>
+                </button>
+                <button
+                    name="action_view_sale_order"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-shopping-bag"
+                    invisible="not sale_order_id"
+                >
+                    <span class="o_stat_text">Sales Order</span>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='picking_id']" position="after">
+
+                <field name="alert_type" required="1" />
+                <field name="contacted_person" />
+                <field name="impact_on_product" required="1" />
+                <label for="quantity" string="Affected Quantity" />
+                <div class="o_row">
+                    <field name="quantity" />
+                    <field name="product_uom_id" options="{'no_open': True}" />
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='priority']" position="after">
+                <field name="purchase_order_id" options="{'no_create': True}" invisible="not purchase_order_id and sale_order_id" />
+                <field name="vendor_id" invisible="not purchase_order_id" />
+                <field name="sale_order_id" options="{'no_create': True}" invisible="not sale_order_id and purchase_order_id" />
+                <field name="customer_id" invisible="not sale_order_id" />
+                <field
+                    name="signature"
+                    widget="signature"
+                    options="{'size':[0,90]}"
+                />
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="string">Partner</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='miscellaneous']" position="after">
+                <page name="followup" string="Follow Up">
+                    <field name="follow_up" placeholder="Describe the follow up actions you did..." />
+                </page>
+            </xpath>
+
+            <!-- Rename and hide fields -->
+            <xpath expr="//page[@name='description']" position="attributes">
+                <attribute name="string">Cause</attribute>
+            </xpath>
+            <xpath expr="//field[@name='description']" position="attributes">
+                <attribute name="placeholder">Cause and Description</attribute>
+            </xpath>
+            <xpath expr="//page[@name='miscellaneous']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='reason_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='team_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='priority']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="impress_quality_quality_alert_tree" model="ir.ui.view">
+        <field name="name">impress.quality.quality.alert.list</field>
+        <field name="model">quality.alert</field>
+        <field name="inherit_id" ref="quality_control.quality_alert_view_tree" />
+        <field name="priority">16</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="alert_type" optional="show" />
+            </xpath>
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="quantity" optional="hide" />
+                <field name="product_uom_id" optional="hide" />
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="vendor_id" optional="hide" />
+                <field name="purchase_order_id" optional="hide" />
+                <field name="customer_id" optional="hide" />
+                <field name="sale_order_id" optional="hide" />
+                <field name="contacted_person" optional="hide" />
+                <field name="impact_on_product" optional="hide" />
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="string">Partner</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="impress_quality_quality_alert_search" model="ir.ui.view">
+        <field name="name">impress.quality.quality.alert.search</field>
+        <field name="model">quality.alert</field>
+        <field name="inherit_id" ref="quality.quality_alert_view_search" />
+        <field name="priority">16</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="alert_type" />
+                <field name="lot_ids" groups="stock.group_production_lot" />
+                <field name="vendor_id" />
+                <field name="customer_id" />
+                <field name="purchase_order_id" />
+                <field name="sale_order_id" />
+                <field name="contacted_person" />
+            </xpath>
+            <xpath expr="//filter[@name='myalerts']" position="after">
+                <filter
+                    string="Quality"
+                    name="filter_alert_type_quality"
+                    domain="[('alert_type', '=', 'quality')]"
+                />
+                <filter
+                    string="Salubrity"
+                    name="filter_alert_type_salubrity"
+                    domain="[('alert_type', '=', 'salubrity')]"
+                />
+            </xpath>
+            <xpath expr="//filter[@name='groupby_team_id']" position="after">
+                <filter
+                    string="Alert Type"
+                    name="groupby_alert_type"
+                    context="{'group_by': 'alert_type'}"
+                />
+                <filter
+                    string="Vendor"
+                    name="groupby_vendor"
+                    context="{'group_by': 'vendor_id'}"
+                />
+                <filter
+                    string="Customer"
+                    name="groupby_customer"
+                    context="{'group_by': 'customer_id'}"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="impress_quality_quality_alert_kanban" model="ir.ui.view">
+        <field name="name">impress.quality.quality.alert.kanban</field>
+        <field name="model">quality.alert</field>
+        <field name="inherit_id" ref="quality_control.quality_alert_view_kanban" />
+        <field name="priority">16</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_tmpl_id']" position="before">
+                <field name="alert_type" widget="badge" class="me-1" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
