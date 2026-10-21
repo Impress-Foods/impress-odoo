@@ -30,6 +30,12 @@ class ProductTemplate(models.Model):
         inverse="_inverse_label_extra",
     )
 
+    qty_multiple = fields.Integer(
+        "Quantity per unit",
+        compute="_compute_qty_multiple",
+        inverse="_inverse_qty_multiple",
+    )
+
     def _compute_label_name(self):
         self._compute_template_field_from_variant_field("label_name")
 
@@ -54,6 +60,12 @@ class ProductTemplate(models.Model):
     def _inverse_label_extra(self):
         self._set_product_variant_field("label_extra")
 
+    def _compute_qty_multiple(self):
+        self._compute_template_field_from_variant_field("qty_multiple")
+
+    def _inverse_qty_multiple(self):
+        self._set_product_variant_field("qty_multiple")
+
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
@@ -71,3 +83,5 @@ class ProductProduct(models.Model):
     )
 
     label_extra = fields.Char(help="Extra information for the label.")
+
+    qty_multiple = fields.Integer("Quantity per unit")

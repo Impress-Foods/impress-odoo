@@ -117,19 +117,22 @@ class TestPrintingDashboard(TransactionCase):
         )
 
     def _make_picking(
-        self, product, qty=1.0, lot=None, extra_move=False, zero_lot=None
+        self, product, qty=1.0, lot=None, extra_move=False, zero_lot=None, uom=None
     ):
         """A transfer, optionally of a second product or a second lot.
 
         ``zero_lot`` adds a line on ``product`` for a lot the transfer was sent
         but received none of, which is what a zero quantity looks like on a
-        picking: the lot is one of its own, and the answer is zero.
+        picking: the lot is one of its own, and the answer is zero.  ``uom``
+        records the move lines in another unit than the product's own, the way
+        a line entered as a packaging is.
         """
+        line_uom = uom or product.uom_id
         move_lines = [
             Command.create(
                 {
                     "product_id": product.id,
-                    "product_uom_id": product.uom_id.id,
+                    "product_uom_id": line_uom.id,
                     "quantity": qty,
                     "lot_id": lot.id if lot else False,
                 }
@@ -140,7 +143,7 @@ class TestPrintingDashboard(TransactionCase):
                 Command.create(
                     {
                         "product_id": product.id,
-                        "product_uom_id": product.uom_id.id,
+                        "product_uom_id": line_uom.id,
                         "quantity": 0.0,
                         "lot_id": zero_lot.id,
                     }
@@ -176,6 +179,25 @@ class TestPrintingDashboard(TransactionCase):
                 "location_dest_id": self.env.ref("stock.stock_location_stock").id,
                 "move_ids": moves,
             }
+        )
+
+    def _make_packaging(self, product, name="Dashboard Box", factor=12.0):
+        """A packaging unit of ``product``, usable on its move lines."""
+        uom = self.env["uom.uom"].create(
+            {
+                "name": name,
+                "relative_factor": factor,
+                "relative_uom_id": product.uom_id.id,
+            }
+        )
+        product.write({"uom_ids": [Command.link(uom.id)]})
+        return uom
+
+    def _form_from_action(self, action):
+        """The dialog as the client opens it, defaults and onchanges applied."""
+        return Form(
+            self.env["printing.dashboard"].with_context(**action["context"]),
+            view="printing_dashboard.view_printing_dashboard_form",
         )
 
     def _print_and_capture(self, dashboard):
@@ -262,6 +284,166 @@ class TestPrintingDashboard(TransactionCase):
 
         self.assertEqual(dashboard.target, lot)
         self.assertEqual(dashboard.product_uom_qty, 7.0)
+
+    def test_a_move_line_keeps_its_unit_when_the_dashboard_opens(self):
+        """A packaging count must not be restated in the product's own unit.
+
+        The move line hands the dialog "2 boxes", but the product onchange used
+        to rewrite the unit to the product's base unit, leaving a label that
+        said "2 units" for a line that recorded boxes.
+        """
+        box = self._make_packaging(self.product)
+        lot = self.env["stock.lot"].create(
+            {"name": "DASHBOARD-UOM-LINE", "product_id": self.product.id}
+        )
+        picking = self._make_picking(self.product, qty=2.0, lot=lot, uom=box)
+        line = picking.move_ids.move_line_ids
+
+        form = self._form_from_action(line.action_open_print_dashboard())
+
+        self.assertEqual(form.copies, 1)
+        self.assertEqual(form.product_uom_qty, 2.0)
+        self.assertEqual(form.product_uom_id, box)
+        dashboard = self._dashboard_from_action(line.action_open_print_dashboard())
+        self.assertIn(box, dashboard.available_uom_ids._origin)
+
+    def test_a_move_reads_the_unit_of_its_move_line(self):
+        """A move is printed in the unit its line recorded, not its demand.
+
+        Opening from a move used to state the move's own demand and unit, so a
+        line entered as two boxes showed twenty-four units.
+        """
+        box = self._make_packaging(self.product)
+        lot = self.env["stock.lot"].create(
+            {"name": "DASHBOARD-UOM-MOVE", "product_id": self.product.id}
+        )
+        picking = self._make_picking(self.product, qty=2.0, lot=lot, uom=box)
+        move = picking.move_ids
+
+        form = self._form_from_action(move.action_open_print_dashboard())
+
+        self.assertEqual(form.lot_id, lot)
+        self.assertEqual(form.product_uom_qty, 2.0)
+        self.assertEqual(form.product_uom_id, box)
+
+    def test_a_transfer_reads_the_unit_its_lines_are_recorded_in(self):
+        box = self._make_packaging(self.product)
+        lot = self.env["stock.lot"].create(
+            {"name": "DASHBOARD-UOM-PICKING", "product_id": self.product.id}
+        )
+        picking = self._make_picking(self.product, qty=2.0, lot=lot, uom=box)
+
+        form = self._form_from_action(picking.action_open_print_dashboard())
+
+        self.assertEqual(form.product_uom_qty, 2.0)
+        self.assertEqual(form.product_uom_id, box)
+
+    def test_a_purchase_receipt_uses_the_packaging_unit(self):
+        """A PO unit lives on the move, not on its base-unit move line.
+
+        Odoo records a receipt line in the product's base unit and keeps the
+        purchase unit on the move as ``packaging_uom_id``.  The dashboard has
+        to read it there, or a 20-bin receipt prints as 200 kg.  A whole
+        number of packages prints one label per package.
+        """
+        box = self._make_packaging(self.product, name="Dashboard 10kg Box", factor=10.0)
+        lot = self.env["stock.lot"].create(
+            {"name": "DASHBOARD-PACKAGING-001", "product_id": self.product.id}
+        )
+        picking = self._make_picking(self.product, qty=200.0, lot=lot)
+        move = picking.move_ids
+        move.packaging_uom_id = box
+        line = move.move_line_ids
+
+        for source in (picking, move, line):
+            with self.subTest(source=source._name):
+                form = self._form_from_action(source.action_open_print_dashboard())
+                self.assertEqual(form.copies, 20)
+                self.assertEqual(form.product_uom_qty, 1.0)
+                self.assertEqual(form.product_uom_id, box)
+
+    def test_a_partial_receipt_converts_the_received_quantity(self):
+        """The packaging quantity follows what was handled, not the demand.
+
+        ``packaging_uom_qty`` is computed from the move demand, so using it
+        directly would overstate a partial receipt.  The received line
+        quantity is converted instead.  A fractional package count cannot be
+        printed as one label per package, so it stays one label stating 1.5.
+        """
+        box = self._make_packaging(
+            self.product, name="Dashboard Partial Box", factor=10.0
+        )
+        lot = self.env["stock.lot"].create(
+            {"name": "DASHBOARD-PACKAGING-002", "product_id": self.product.id}
+        )
+        picking = self._make_picking(self.product, qty=15.0, lot=lot)
+        picking.move_ids.packaging_uom_id = box
+
+        form = self._form_from_action(picking.action_open_print_dashboard())
+
+        self.assertEqual(form.copies, 1)
+        self.assertEqual(form.product_uom_qty, 1.5)
+        self.assertEqual(form.product_uom_id, box)
+
+    def test_mixed_packaging_units_fall_back_to_the_recorded_unit(self):
+        """Two moves with different packagings are not guessed at.
+
+        Converting a mixed total into whichever packaging came first would
+        state a number that matches neither move.
+        """
+        box = self._make_packaging(
+            self.product, name="Dashboard Mixed Box", factor=10.0
+        )
+        unit = self.product.uom_id
+        picking = self.env["stock.picking"].create(
+            {
+                "picking_type_id": self.env.ref("stock.picking_type_in").id,
+                "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                "location_dest_id": self.env.ref("stock.stock_location_stock").id,
+                "move_ids": [
+                    Command.create(
+                        {
+                            "product_id": self.product.id,
+                            "product_uom_qty": 10.0,
+                            "product_uom": unit.id,
+                            "move_line_ids": [
+                                Command.create(
+                                    {
+                                        "product_id": self.product.id,
+                                        "product_uom_id": unit.id,
+                                        "quantity": 10.0,
+                                    }
+                                )
+                            ],
+                        }
+                    ),
+                    Command.create(
+                        {
+                            "product_id": self.product.id,
+                            "product_uom_qty": 10.0,
+                            "product_uom": unit.id,
+                            "price_unit": 1.0,
+                            "move_line_ids": [
+                                Command.create(
+                                    {
+                                        "product_id": self.product.id,
+                                        "product_uom_id": unit.id,
+                                        "quantity": 10.0,
+                                    }
+                                )
+                            ],
+                        }
+                    ),
+                ],
+            }
+        )
+        picking.move_ids[0].packaging_uom_id = box
+
+        quantity, uom, packaging_uom = picking._label_quantity_for(self.product)
+
+        self.assertEqual(quantity, 20.0)
+        self.assertEqual(uom, unit)
+        self.assertFalse(packaging_uom)
 
     def test_retargeting_onto_a_lot_the_transfer_never_received_reads_zero(self):
         """Zero is an answer, not an absence of one.

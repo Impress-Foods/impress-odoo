@@ -1,7 +1,7 @@
 {
     "name": "Quality Label Printing",
     "summary": "Print a quality step's label on the printer that step uses",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "category": "Manufacturing",
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",

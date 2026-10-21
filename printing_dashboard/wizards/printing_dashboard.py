@@ -162,8 +162,15 @@ class PrintingDashboard(models.TransientModel):
                 dashboard.available_uom_ids = False
                 continue
             product = dashboard.product_id
-            uoms = product.uom_id | product.product_uom_ids.uom_id
-            dashboard.available_uom_ids = uoms | product.uom_ids
+            dashboard.available_uom_ids = (
+                product.uom_id
+                | product.product_uom_ids.uom_id
+                | product.uom_ids
+                # The units a move line may legally carry.  A line recorded in
+                # a seller's unit has to stay selectable when the source hands
+                # that unit to the dashboard.
+                | product.seller_ids.product_uom_id
+            )
 
     @property
     def target(self) -> models.Model:
@@ -175,23 +182,25 @@ class PrintingDashboard(models.TransientModel):
 
     @api.onchange("target_model", "product_id", "lot_id")
     def _onchange_target(self) -> None:
-        """Re-read the quantity from a source that can derive one.
+        """Re-read the label batch from a source that can derive one.
 
         A transfer knows what it received for each of its own lots and
-        products, so retargeting has to bring the quantity and its unit of
-        measure along rather than leaving the previous target's numbers.
+        products, so retargeting has to bring the quantity, its unit of
+        measure and the number of labels along rather than leaving the
+        previous target's numbers.
         """
         for dashboard in self:
             source = dashboard._get_source_record()
-            if not source or not hasattr(source, "_label_quantity_for"):
+            if not source:
                 continue
-            quantity, uom = source._label_quantity_for(dashboard.target)
+            values = source._label_print_values_for(dashboard.target)
             # Zero is an answer, not an absence of one: a lot the transfer
             # received none of has to show none, not the previous target's count.
-            if quantity is not None:
-                dashboard.product_uom_qty = quantity
-            if uom:
-                dashboard.product_uom_id = uom
+            if not values:
+                continue
+            dashboard.product_uom_qty = values["product_uom_qty"]
+            dashboard.product_uom_id = values["product_uom_id"]
+            dashboard.copies = values["copies"]
 
     @api.onchange("printer_id")
     def _onchange_printer_id(self) -> None:
@@ -257,12 +266,44 @@ class PrintingDashboard(models.TransientModel):
                     dashboard.target_model
                 )
 
+    def _source_uom_for_target(self) -> models.Model:
+        """Return the unit the source states for the current target, if any.
+
+        A source opens the dashboard with both a quantity and the unit that
+        quantity is stated in.  The product onchange must keep that unit:
+        restating a packaging count in the product's own unit would silently
+        turn "2 boxes" into "2 units".
+        """
+        self.ensure_one()
+        source = self._get_source_record()
+        if not source:
+            return self.env["uom.uom"]
+        target = self.target
+        if not target:
+            return self.env["uom.uom"]
+        target_product = target.product_id if target._name == "stock.lot" else target
+        # A different product means the source no longer speaks for what is on
+        # screen, so its unit is not an answer for the new pick.
+        if target_product != self.product_id:
+            return self.env["uom.uom"]
+        _quantity, uom, _packaging_uom = source._label_quantity_for(target)
+        if uom:
+            return uom
+        # Sources that state a unit without a per-target quantity (a production
+        # order, for instance) still name it in the context they were opened
+        # with.
+        context = source._get_print_dashboard_context()
+        if context.get("target") == target:
+            return context.get("product_uom_id") or self.env["uom.uom"]
+        return self.env["uom.uom"]
+
     @api.onchange("product_id")
     def _onchange_product_id(self) -> None:
         # A product change invalidates the packaging chosen for the previous
-        # one, so fall back to the new product's own unit of measure.
+        # one, so fall back to the new product's own unit of measure -- unless
+        # the source already stated the unit its quantity is in.
         for dashboard in self:
-            dashboard.product_uom_id = (
+            dashboard.product_uom_id = dashboard._source_uom_for_target() or (
                 dashboard.product_id.uom_id if dashboard.product_id else False
             )
 
