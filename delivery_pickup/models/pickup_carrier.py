@@ -1,6 +1,9 @@
 import base64
+import logging
 
 from odoo import fields, models
+
+_logger = logging.getLogger(__name__)
 
 
 class PickupCarrier(models.Model):
@@ -31,29 +34,61 @@ class PickupCarrier(models.Model):
                 "tracking_number": "Pickup",
             }
 
-            report_data, data_format = self.env["ir.actions.report"]._render(
+            picking.delete_labels()
+
+            zpl_data, _ = self.env["ir.actions.report"]._render(
                 "delivery_pickup.pickup_delivery_label", [picking.id]
             )
-            att_id = self.env["ir.attachment"].create(
-                {
-                    "name": f"{picking.name} Shipping Label",
-                    "type": "binary",
-                    "datas": base64.b64encode(report_data).decode("utf-8"),
-                    "store_fname": f"{picking.name}-ShippingLabel.txt",
-                    "res_model": "stock.picking",
-                    "res_id": picking.id,
-                    "mimetype": "text/plain",
-                }
+            zpl_attachment = self._create_label_attachment(
+                picking,
+                zpl_data,
+                label="ZPL",
+                extension=".zpl",
+                mimetype="text/plain",
             )
-            picking.shipping_label_attachment_id = att_id.id
+            picking.shipping_label_zpl_id = zpl_attachment
+            picking.shipping_label_attachment_id = zpl_attachment
+
+            try:
+                pdf_data, _ = self.env["ir.actions.report"]._render(
+                    "delivery_pickup.pickup_delivery_label_pdf", [picking.id]
+                )
+            except Exception:
+                _logger.exception(
+                    "Could not render the PDF pickup label for %s", picking.name
+                )
+                picking.message_post(
+                    body=self.env._("Could not generate the PDF pickup label.")
+                )
+            else:
+                picking.shipping_label_pdf_id = self._create_label_attachment(
+                    picking,
+                    pdf_data,
+                    label="PDF",
+                    extension=".pdf",
+                    mimetype="application/pdf",
+                )
+
             res.append(data)
         return res
+
+    def _create_label_attachment(self, picking, data, *, label, extension, mimetype):
+        return self.env["ir.attachment"].create(
+            {
+                "name": f"{picking.name} {label} Shipping Labels{extension}",
+                "type": "binary",
+                "datas": base64.b64encode(data).decode("utf-8"),
+                "res_model": "stock.picking",
+                "res_id": picking.id,
+                "mimetype": mimetype,
+            }
+        )
 
     def pickup_get_tracking_link(self, picking):
         return ""
 
     def pickup_cancel_shipment(self, picking):
-        picking.shipping_label_attachment_id.unlink()
+        picking.delete_labels()
 
     def _pickup_get_default_custom_package_code(self):
         return ""
