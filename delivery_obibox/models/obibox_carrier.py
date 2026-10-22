@@ -1,4 +1,3 @@
-import base64
 import logging
 from typing import Any
 
@@ -56,20 +55,45 @@ class ObiboxCarrier(models.Model):
                 [x.tracking_number for x in booking["trackings"]]
             )
             picking.obibox_tracking_numbers = tracking_numbers
-            att_id = self.env["ir.attachment"].create(
-                {
-                    "name": f"{picking.name} Shipping Label",
-                    "type": "binary",
-                    "datas": base64.b64encode(booking["label_data"].encode()).decode(
-                        "utf-8"
-                    ),
-                    "store_fname": f"{picking.name}-ShippingLabel.txt",
-                    "res_model": "stock.picking",
-                    "res_id": picking.id,
-                    "mimetype": "text/plain",
-                }
-            )
-            picking.shipping_label_attachment_id = att_id.id
+
+            picking.delete_labels()
+
+            if booking.get("label_error"):
+                picking.message_post(
+                    body=self.env._(
+                        "Could not retrieve the shipping labels: %s",
+                        booking["label_error"],
+                    )
+                )
+
+            if booking.get("label_data"):
+                pdf_att_id = self.env["ir.attachment"].create(
+                    {
+                        "name": f"{picking.name} PDF Shipping Labels.pdf",
+                        "type": "binary",
+                        "datas": booking["label_data"]["pdf"],
+                        "res_model": "stock.picking",
+                        "res_id": picking.id,
+                        "mimetype": "application/pdf",
+                    }
+                )
+                zpl_att_id = self.env["ir.attachment"].create(
+                    {
+                        "name": f"{picking.name} ZPL Shipping Labels.zpl",
+                        "type": "binary",
+                        "datas": booking["label_data"]["zpl"],
+                        "res_model": "stock.picking",
+                        "res_id": picking.id,
+                        "mimetype": "text/plain",
+                    }
+                )
+                picking.shipping_label_zpl_id = zpl_att_id
+                picking.shipping_label_pdf_id = pdf_att_id
+                label_attachment = {
+                    "zpl": zpl_att_id,
+                    "pdf": pdf_att_id,
+                }.get(self.obibox_label_format or "zpl", zpl_att_id)
+                picking.shipping_label_attachment_id = label_attachment.id
         return res
 
     def obibox_get_tracking_link(self, picking: StockPicking) -> str:
@@ -80,8 +104,8 @@ class ObiboxCarrier(models.Model):
         sr = self._get_provider()
         for picking in pickings:
             sr.cancel_shipment(picking)
-            picking.shipping_label_attachment_id.unlink()
             picking.obibox_tracking_numbers = ""
+            picking.delete_labels()
 
     def _obibox_get_default_custom_package_code(self) -> str:
         return ""
