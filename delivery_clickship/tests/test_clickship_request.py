@@ -1,3 +1,4 @@
+import base64
 import json
 import logging
 from datetime import datetime
@@ -691,16 +692,132 @@ class TestClickshipRequest(TestDeliveryCommon):
         # Should return the last rate (service_2)
         self.assertEqual(result.service_id, "service_2")
 
-    @patch("odoo.addons.delivery_clickship.models.clickship_request.urlopen")
-    def test_fetch_label_data(self, mock_urlopen):
+    @patch(
+        "odoo.addons.delivery_clickship.models.clickship_request.requests.Session.get"
+    )
+    def test_fetch_label_data(self, mock_get):
         """Test fetching label data from URL"""
         mock_response = MagicMock()
-        mock_response.read.return_value = b"ZPL_LABEL_DATA"
-        mock_urlopen.return_value = mock_response
+        mock_response.content = b"ZPL_LABEL_DATA"
+        mock_get.return_value = mock_response
 
         result = self.sr._fetch_label_data("https://example.com/label.zpl")
 
-        self.assertEqual(result, "ZPL_LABEL_DATA")
-        mock_urlopen.assert_called_once_with(
-            "https://example.com/label.zpl", timeout=30
+        self.assertEqual(base64.b64encode(b"ZPL_LABEL_DATA").decode(), result)
+        mock_get.assert_called_once_with("https://example.com/label.zpl", timeout=30)
+
+    @patch(
+        "odoo.addons.delivery_clickship.models.clickship_request.requests.Session.get"
+    )
+    def test_fetch_label_data_http_error(self, mock_get):
+        """Test that HTTP errors while fetching labels are raised."""
+        mock_response = MagicMock()
+        mock_response.raise_for_status.side_effect = requests.HTTPError("Not found")
+        mock_get.return_value = mock_response
+
+        with self.assertRaises(requests.HTTPError):
+            self.sr._fetch_label_data("https://example.com/label.zpl")
+
+    def test_get_label_url(self):
+        labels = [
+            {"format": "zpl", "size": "4x6", "url": "wrong-size"},
+            {"format": "zpl", "size": "a6", "url": "zpl-url"},
+            {"format": "pdf", "size": "a6", "url": "pdf-url"},
+        ]
+
+        self.assertEqual("zpl-url", self.sr._get_label_url(labels, "zpl"))
+        self.assertEqual("pdf-url", self.sr._get_label_url(labels, "pdf"))
+
+    def test_get_label_url_missing(self):
+        with self.assertRaises(ValidationError):
+            self.sr._get_label_url([], "zpl")
+
+    @patch(
+        "odoo.addons.delivery_clickship.models.clickship_request.ClickshipProvider._get_shipment_status"
+    )
+    @patch(
+        "odoo.addons.delivery_clickship.models.clickship_request.ClickshipProvider._post_book_shipment"
+    )
+    @patch(
+        "odoo.addons.delivery_clickship.models.clickship_request.ClickshipProvider._fetch_label_data"
+    )
+    def test_book_shipment_labels(
+        self, mock_fetch_label, mock_post_book, mock_get_status
+    ):
+        shipment = MagicMock()
+        shipment.rate.total.value = "2500"
+        shipment.primary_tracking_number = "1234567890"
+        shipment.tracking_url = "https://tracking.clickship.com/1234567890"
+        shipment.labels = [
+            {"format": "zpl", "size": "a6", "url": "zpl-url"},
+            {"format": "pdf", "size": "a6", "url": "pdf-url"},
+        ]
+        mock_post_book.return_value = "shipment_123"
+        mock_get_status.return_value = shipment
+        mock_fetch_label.side_effect = ["zpl-base64", "pdf-base64"]
+
+        picking = self.make_picking()
+        picking.clickship_service_id = "test_service"
+        result = self.sr.book_shipment(picking, self.contact)
+
+        self.assertEqual(
+            {"zpl": "zpl-base64", "pdf": "pdf-base64"}, result["label_data"]
         )
+        self.assertFalse(result["label_error"])
+        self.assertEqual(2, mock_fetch_label.call_count)
+
+    @patch(
+        "odoo.addons.delivery_clickship.models.clickship_request.ClickshipProvider._get_shipment_status"
+    )
+    @patch(
+        "odoo.addons.delivery_clickship.models.clickship_request.ClickshipProvider._post_book_shipment"
+    )
+    def test_book_shipment_without_labels(self, mock_post_book, mock_get_status):
+        shipment = MagicMock()
+        shipment.rate.total.value = "2500"
+        shipment.primary_tracking_number = "1234567890"
+        shipment.tracking_url = "https://tracking.clickship.com/1234567890"
+        shipment.labels = None
+        mock_post_book.return_value = "shipment_123"
+        mock_get_status.return_value = shipment
+
+        picking = self.make_picking()
+        picking.clickship_service_id = "test_service"
+        result = self.sr.book_shipment(picking, self.contact)
+
+        self.assertEqual({}, result["label_data"])
+        self.assertTrue(result["label_error"])
+
+    @patch(
+        "odoo.addons.delivery_clickship.models.clickship_request.ClickshipProvider._get_shipment_status"
+    )
+    @patch(
+        "odoo.addons.delivery_clickship.models.clickship_request.ClickshipProvider._post_book_shipment"
+    )
+    @patch(
+        "odoo.addons.delivery_clickship.models.clickship_request.ClickshipProvider._fetch_label_data"
+    )
+    def test_book_shipment_pdf_failure_keeps_zpl(
+        self, mock_fetch_label, mock_post_book, mock_get_status
+    ):
+        shipment = MagicMock()
+        shipment.rate.total.value = "2500"
+        shipment.primary_tracking_number = "1234567890"
+        shipment.tracking_url = "https://tracking.clickship.com/1234567890"
+        shipment.labels = [
+            {"format": "zpl", "size": "a6", "url": "zpl-url"},
+            {"format": "pdf", "size": "a6", "url": "pdf-url"},
+        ]
+        mock_post_book.return_value = "shipment_123"
+        mock_get_status.return_value = shipment
+        mock_fetch_label.side_effect = [
+            "zpl-base64",
+            requests.RequestException("PDF unavailable"),
+        ]
+
+        picking = self.make_picking()
+        picking.clickship_service_id = "test_service"
+        result = self.sr.book_shipment(picking, self.contact)
+
+        self.assertEqual({"zpl": "zpl-base64"}, result["label_data"])
+        self.assertIn("PDF unavailable", result["label_error"])

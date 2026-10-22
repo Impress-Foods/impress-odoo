@@ -1,9 +1,9 @@
+import base64
 import json
 import logging
 import time
 from datetime import datetime
 from typing import Any
-from urllib.request import urlopen
 from zoneinfo import ZoneInfo
 
 import requests
@@ -115,25 +115,33 @@ class ClickshipProvider:
         shipment: Shipment = self._get_shipment_status(shipment_id)
 
         price = int(shipment.rate.total.value) / 100
-        labels = shipment.labels
-        label_data = None
-        if labels:
-            zpl_labels = [
-                x
-                for x in filter(
-                    lambda x: x["format"] == "zpl" and x["size"] == "a6", labels
-                )
-            ]
-
-            label_data = self._fetch_label_data(zpl_labels[0]["url"])
 
         res = {
             "exact_price": price,
             "tracking_number": shipment.primary_tracking_number,
-            "label_data": label_data,
+            "label_data": {},
+            "label_error": False,
             "tracking_url": shipment.tracking_url,
             "shipment_id": shipment_id,
         }
+
+        label_errors = []
+        for label_format in ("zpl", "pdf"):
+            try:
+                res["label_data"][label_format] = self._get_label_data(
+                    shipment.labels, label_format
+                )
+            except (ValidationError, requests.RequestException) as error:
+                _logger.exception(
+                    "Could not retrieve %s label for shipment %s",
+                    label_format,
+                    shipment.primary_tracking_number,
+                )
+                label_errors.append(str(error))
+
+        if label_errors:
+            res["label_error"] = "\n".join(label_errors)
+
         return res
 
     def cancel_shipment(self, shipment_id: str) -> bool:
@@ -542,6 +550,34 @@ class ClickshipProvider:
         )
         return request
 
+    def _get_label_data(self, labels: list[dict] | None, label_format: str) -> str:
+        return self._fetch_label_data(self._get_label_url(labels, label_format))
+
+    def _get_label_url(self, labels: list[dict] | None, label_format: str) -> str:
+        matching_labels = [
+            label
+            for label in labels or []
+            if label.get("format") == label_format and label.get("size") == "a6"
+        ]
+        if not matching_labels:
+            raise ValidationError(
+                self.env._(
+                    "Could not find a %(format)s shipping label.",
+                    format=label_format.upper(),
+                )
+            )
+
+        url = matching_labels[0].get("url")
+        if not url:
+            raise ValidationError(
+                self.env._(
+                    "Could not find the URL for the %s shipping label.",
+                    label_format.upper(),
+                )
+            )
+        return url
+
     def _fetch_label_data(self, url: str) -> str:
-        data = urlopen(url, timeout=30)
-        return data.read().decode("UTF-8")
+        response = self.session.get(url, timeout=30)
+        response.raise_for_status()
+        return base64.b64encode(response.content).decode()

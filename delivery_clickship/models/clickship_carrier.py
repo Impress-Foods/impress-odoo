@@ -1,4 +1,3 @@
-import base64
 import logging
 from typing import Any
 
@@ -82,19 +81,60 @@ class ClickShipCarrier(models.Model):
             res.append(booking)
             picking.clickship_tracking_url = booking["tracking_url"]
             picking.clickship_shipment_id = booking["shipment_id"]
-            att_id = self.env["ir.attachment"].create(
-                {
-                    "name": f"{picking.name} Shipping Label",
-                    "type": "binary",
-                    "datas": base64.b64encode(booking["label_data"].encode()),
-                    "store_fname": f"{picking.name}-ShippingLabel.txt",
-                    "res_model": "stock.picking",
-                    "res_id": picking.id,
-                    "mimetype": "text/plain",
-                }
+
+            picking.delete_labels()
+
+            if booking.get("label_error"):
+                picking.message_post(
+                    body=self.env._(
+                        "Could not retrieve the shipping labels: %s",
+                        booking["label_error"],
+                    )
+                )
+
+            label_data = booking.get("label_data") or {}
+            pdf_att_id = self._create_label_attachment(
+                picking,
+                label_data.get("pdf"),
+                label="PDF",
+                extension=".pdf",
+                mimetype="application/pdf",
             )
-            picking.shipping_label_attachment_id = att_id.id
+            zpl_att_id = self._create_label_attachment(
+                picking,
+                label_data.get("zpl"),
+                label="ZPL",
+                extension=".zpl",
+                mimetype="text/plain",
+            )
+
+            picking.shipping_label_pdf_id = pdf_att_id
+            picking.shipping_label_zpl_id = zpl_att_id
+            if zpl_att_id:
+                picking.shipping_label_attachment_id = zpl_att_id.id
         return res
+
+    def _create_label_attachment(
+        self,
+        picking: StockPicking,
+        data: str | None,
+        *,
+        label: str,
+        extension: str,
+        mimetype: str,
+    ) -> Any:
+        if not data:
+            return self.env["ir.attachment"]
+        return self.env["ir.attachment"].create(
+            {
+                "name": f"{picking.name} {label} Shipping Labels{extension}",
+                "type": "binary",
+                "datas": data,
+                "res_model": "stock.picking",
+                "res_id": picking.id,
+                "mimetype": mimetype,
+            }
+        )
 
     def clickship_get_tracking_link(self, picking: StockPicking) -> str:
         return picking.clickship_tracking_url
@@ -111,7 +151,7 @@ class ClickShipCarrier(models.Model):
         if res:
             picking.clickship_shipment_id = None
             picking.clickship_tracking_url = None
-            picking.shipping_label_attachment_id.unlink()
+            picking.delete_labels()
         else:
             raise ValidationError(self.env._("Failed to cancel shipment!"))
 
