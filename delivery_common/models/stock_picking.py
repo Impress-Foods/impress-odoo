@@ -1,6 +1,7 @@
 import logging
 
 from odoo import api, fields, models
+from odoo.exceptions import UserError
 from odoo.fields import Domain
 from odoo.tools import html2plaintext
 
@@ -15,6 +16,9 @@ class StockPicking(models.Model):
 
     tracking_email_sent = fields.Boolean(copy=False)
     shipping_label_attachment_id = fields.Many2one("ir.attachment", copy=False)
+    shipping_label_pdf_id = fields.Many2one("ir.attachment", copy=False)
+    shipping_label_zpl_id = fields.Many2one("ir.attachment", copy=False)
+
     delivery_instructions = fields.Char(
         compute="_compute_delivery_instructions",
         store=True,
@@ -48,18 +52,32 @@ class StockPicking(models.Model):
     def _get_autoprint_report_actions(self) -> list[dict]:
         report_actions: list[dict] = super()._get_autoprint_report_actions()
         pickings_print_delivery_label = self.filtered(
-            lambda p: p.picking_type_id.auto_print_delivery_label
+            lambda p: (
+                p.picking_type_id.auto_print_delivery_label
+                and p.shipping_label_attachment_id
+            )
         )
+        pdf_pickings = pickings_print_delivery_label.filtered(
+            lambda p: p.shipping_label_attachment_id.mimetype == "application/pdf"
+        )
+        zpl_pickings = pickings_print_delivery_label - pdf_pickings
         pickings_print_instructions_label = self.filtered(
             lambda p: (
                 p.picking_type_id.auto_print_instructions_label
                 and p.delivery_instructions
             )
         )
-        if pickings_print_delivery_label:
+        if zpl_pickings:
             action = self.env.ref(
                 "delivery_common.report_shipping_label"
-            ).report_action(pickings_print_delivery_label.ids, config=False)
+            ).report_action(zpl_pickings.ids, config=False)
+            clean_action(action, self.env)
+            report_actions.append(action)
+
+        if pdf_pickings:
+            action = self.env.ref(
+                "delivery_common.report_shipping_label_pdf"
+            ).report_action(pdf_pickings.ids, config=False)
             clean_action(action, self.env)
             report_actions.append(action)
 
@@ -71,6 +89,20 @@ class StockPicking(models.Model):
             report_actions.append(action)
 
         return report_actions
+
+    def action_print_shipping_label(self):
+        self.ensure_one()
+        attachment = self.shipping_label_attachment_id
+        if not attachment:
+            raise UserError(
+                self.env._("No shipping label is available for this picking.")
+            )
+        report_ref = (
+            "delivery_common.report_shipping_label_pdf"
+            if attachment.mimetype == "application/pdf"
+            else "delivery_common.report_shipping_label"
+        )
+        return self.env.ref(report_ref).report_action(self.ids, config=False)
 
     def _send_confirmation_email(self):
         res = super()._send_confirmation_email()
@@ -101,3 +133,19 @@ class StockPicking(models.Model):
             package_histories = self.env["stock.package.history"].search(domain)
             packages = package_histories.mapped("package_id")
             return packages
+
+    def delete_labels(self):
+        self.ensure_one()
+        attachments = (
+            self.shipping_label_pdf_id
+            | self.shipping_label_zpl_id
+            | self.shipping_label_attachment_id
+        )
+        attachments.unlink()
+        self.write(
+            {
+                "shipping_label_pdf_id": False,
+                "shipping_label_zpl_id": False,
+                "shipping_label_attachment_id": False,
+            }
+        )

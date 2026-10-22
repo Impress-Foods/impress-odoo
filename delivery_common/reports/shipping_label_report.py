@@ -15,8 +15,9 @@ class ReportShippingLabel(models.AbstractModel):
         labels = []
 
         for picking in pickings:
-            if picking.shipping_label_attachment_id:
-                data64 = picking.shipping_label_attachment_id.datas
+            attachment = picking.shipping_label_attachment_id
+            if attachment and attachment.mimetype != "application/pdf":
+                data64 = attachment.datas
                 string_data = base64.b64decode(data64).decode()
                 labels.append(string_data)
 

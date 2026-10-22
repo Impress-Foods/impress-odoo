@@ -10,8 +10,8 @@
             <xpath expr="//button[@name='do_print_picking']" position="after">
                 <field name="shipping_label_attachment_id" invisible="1" />
                 <button
-                    name="%(delivery_common.report_shipping_label)d"
-                    type="action"
+                    name="action_print_shipping_label"
+                    type="object"
                     string="Print Shipping Label"
                     invisible="not shipping_label_attachment_id"
                 />
