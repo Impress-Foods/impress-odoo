@@ -146,6 +146,12 @@ msgstr ""
 
 #. module: delivery_clickship
 #. odoo-python
+#: code:addons/delivery_clickship/models/clickship_request.py:0
+msgid "Could not find a %(format)s shipping label."
+msgstr ""
+
+#. module: delivery_clickship
+#. odoo-python
 #: code:addons/delivery_clickship/models/stock_picking.py:0
 msgid "Could not find currency with name %s"
 msgstr ""
@@ -160,6 +166,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
 msgid "Could not find phone number for %s"
+msgstr ""
+
+#. module: delivery_clickship
+#. odoo-python
+#: code:addons/delivery_clickship/models/clickship_request.py:0
+msgid "Could not find the URL for the %s shipping label."
 msgstr ""
 
 #. module: delivery_clickship
@@ -188,6 +200,12 @@ msgstr ""
 msgid ""
 "Could not make shipping details. \n"
 " %s"
+msgstr ""
+
+#. module: delivery_clickship
+#. odoo-python
+#: code:addons/delivery_clickship/models/clickship_carrier.py:0
+msgid "Could not retrieve the shipping labels: %s"
 msgstr ""
 
 #. module: delivery_clickship
