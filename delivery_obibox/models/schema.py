@@ -90,7 +90,7 @@ class Tracking(BaseObiboxModel):
     hub: str = Field(validation_alias="Hub")
     route_code: str = Field(validation_alias="RouteCode")
     tracking_number: str = Field(validation_alias="TrackingNumber")
-    waybill: str = Field(validation_alias="Waybill")
+    waybill: str | None = Field(default=None, validation_alias="Waybill")
 
 
 class Service(BaseObiboxModel):

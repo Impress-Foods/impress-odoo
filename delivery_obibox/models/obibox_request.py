@@ -1,3 +1,6 @@
+import base64
+import binascii
+import io
 import json
 import logging
 from datetime import date, datetime, timedelta
@@ -9,7 +12,7 @@ from pydantic import BaseModel
 from requests.auth import HTTPBasicAuth
 from werkzeug.urls import url_join
 
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 from odoo.orm.environments import Environment
 
 from odoo.addons.base.models.res_company import ResCompany
@@ -31,6 +34,18 @@ from .schema import (
 
 _logger = logging.getLogger(__name__)
 days = {"mon": 0, "tue": 1, "wed": 2, "thu": 3, "fri": 4}
+
+
+def make_base64_data(data: str | bytes | io.BytesIO) -> str:
+    if isinstance(data, io.BytesIO):
+        data = data.getvalue()
+    if isinstance(data, str):
+        data = data.encode()
+    return base64.b64encode(data).decode("utf-8")
+
+
+def base64_to_bytes(data: str) -> io.BytesIO:
+    return io.BytesIO(base64.b64decode(data))
 
 
 class ObiboxProvider:
@@ -83,18 +98,8 @@ class ObiboxProvider:
         price = rate.price_in_cad if rate else 0
         data = self._make_shipment_request(StockPicking)
 
-        label_format = StockPicking.carrier_id.obibox_label_format
-        params = {"withWaybill": True}
-
-        if label_format == "zpl":
-            params["pdf"] = False
-            params["zpl"] = True
-        else:
-            params["pdf"] = True
-            params["zpl"] = False
-
         response = self._make_api_request(
-            "Order/PostOrderMulti", method="POST", payload=data, params=params
+            "Order/PostOrderMulti", method="POST", payload=data
         )
 
         trackings = [Tracking.model_validate(tracking) for tracking in response]
@@ -102,9 +107,20 @@ class ObiboxProvider:
         res = {
             "exact_price": price,
             "tracking_number": trackings[0].tracking_number,
-            "label_data": "".join([x.waybill for x in trackings]),
             "trackings": trackings,
+            "label_data": {},
+            "label_error": False,
         }
+
+        try:
+            res["label_data"] = self._get_label_data(trackings)
+        except (UserError, ValidationError) as error:
+            _logger.exception(
+                "Could not retrieve labels for shipment %s",
+                trackings[0].tracking_number,
+            )
+            res["label_error"] = str(error)
+
         return res
 
     def cancel_shipment(self, picking: StockPicking) -> bool:
@@ -377,12 +393,75 @@ class ObiboxProvider:
         )
         return data
 
+    def _get_label_data(self, trackings: list[Tracking]) -> dict:
+        tracking_numbers = [tracking.tracking_number for tracking in trackings]
+
+        return {
+            "zpl": self._get_zpl_labels(tracking_numbers),
+            "pdf": self._get_pdf_labels(tracking_numbers),
+        }
+
+    def _get_waybill(self, tracking: str, *, zpl: bool) -> str:
+        params = (
+            {"withWaybill": True, "zpl": True}
+            if zpl
+            else {
+                "withWaybill": True,
+                "pdf": True,
+            }
+        )
+        resp = self._make_api_request(
+            f"Order/GetShipmentInfo/{tracking}",
+            params=params,
+        )
+
+        if not isinstance(resp, dict) or resp.get("errors"):
+            raise ValidationError(
+                self.env._(
+                    "Could not get the label for tracking %(tracking)s: %(error)s",
+                    tracking=tracking,
+                    error=resp.get("errors") if isinstance(resp, dict) else resp,
+                )
+            )
+
+        waybill = resp.get("Waybill")
+        if not waybill:
+            raise ValidationError(
+                self.env._("No label returned for tracking %s", tracking)
+            )
+        return waybill
+
+    def _get_zpl_labels(self, trackings: list[str]) -> str:
+        labels = []
+
+        for tracking in trackings:
+            labels.append(self._get_waybill(tracking, zpl=True))
+
+        return make_base64_data("".join(labels))
+
+    def _get_pdf_labels(self, trackings: list[str]) -> str:
+        labels = []
+        for tracking in trackings:
+            waybill = self._get_waybill(tracking, zpl=False)
+            try:
+                labels.append(base64_to_bytes(waybill))
+            except (binascii.Error, ValueError) as error:
+                raise ValidationError(
+                    self.env._(
+                        "Invalid PDF label data for tracking %s",
+                        tracking,
+                    )
+                ) from error
+
+        merged_pdfs = self.env["ir.actions.report"]._merge_pdfs(labels)
+        return make_base64_data(merged_pdfs)
+
     @staticmethod
     def _get_next_pickup_date(
         from_date: date, pickup_day: str, pickup_hour: int
     ) -> date:
         next_date = from_date + relativedelta(weekday=days[pickup_day])
-        if next_date == from_date and datetime.now().hour >= pickup_hour:  # noqa: DTZ005
+        if next_date == from_date and datetime.now().hour >= pickup_hour:
             next_date += timedelta(weeks=1)
         return next_date
 

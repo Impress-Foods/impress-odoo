@@ -10,6 +10,30 @@
         <field name="binding_type">report</field>
     </record>
 
+    <record id="paperformat_pickup_label" model="report.paperformat">
+        <field name="name">Pickup Label (A6)</field>
+        <field name="format">A6</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_spacing">0</field>
+        <field name="dpi">96</field>
+    </record>
+
+    <record id="report_pickup_delivery_label_pdf" model="ir.actions.report">
+        <field name="name">Pickup Label (PDF)</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">delivery_pickup.pickup_delivery_label_pdf</field>
+        <field name="report_file">delivery_pickup.pickup_delivery_label_pdf</field>
+        <field name="paperformat_id" ref="delivery_pickup.paperformat_pickup_label" />
+        <field name="print_report_name">'%s' % object.name</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="binding_type">report</field>
+    </record>
+
     <template id="pickup_delivery_label">
         <t t-set="contact" t-value="docs.partner_id" />
         <t t-set="picking_packages" t-value="packages[docs[0].id]" />
@@ -52,6 +76,97 @@
         />
 
         <t t-out="'^XZ'" />
+    </template>
+
+    <template id="pickup_delivery_label_pdf">
+        <t t-call="web.html_container">
+            <div class="article" style="margin: 0; padding: 0;">
+                <t t-foreach="labels" t-as="label">
+                    <t t-call="delivery_pickup.pickup_delivery_label_pdf_page">
+                        <t t-set="picking" t-value="label['picking']" />
+                        <t t-set="label_number" t-value="label['number']" />
+                        <t t-set="label_total" t-value="label['total']" />
+                        <t
+                            t-set="break_after"
+                            t-value="label_index + 1 != label_size"
+                        />
+                    </t>
+                </t>
+            </div>
+        </t>
+    </template>
+
+    <template id="pickup_delivery_label_pdf_page">
+        <div
+            class="page"
+            t-att-style="'page-break-after: always;' if break_after else ''"
+            style="font-family: Helvetica, Arial, sans-serif; padding: 5mm; color: #111;"
+        >
+            <div
+                style="border: 1.5px solid #111; padding: 5mm; min-height: 128mm;"
+            >
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="vertical-align: top; width: 58%;">
+                            <div
+                                style="font-size: 16pt; font-weight: bold; letter-spacing: 0.4pt; white-space: nowrap;"
+                            >
+                                Impress Foods
+                            </div>
+                            <div style="font-size: 9pt; color: #333; margin-top: 1mm;">
+                                1910 avenue du Sanctuaire
+                            </div>
+                            <div style="font-size: 9pt; color: #333;">
+                                Québec, QC, G1E 3L2
+                            </div>
+                            <div style="font-size: 9pt; color: #333;">Canada</div>
+                        </td>
+                        <td style="vertical-align: top; text-align: right;">
+                            <img
+                                t-att-src="logo_data_uri"
+                                alt="Impress Foods"
+                                style="width: 44mm;"
+                            />
+                        </td>
+                    </tr>
+                </table>
+                <div style="border-top: 1px solid #999; margin: 4mm 0;" />
+                <div
+                    style="font-size: 8pt; font-weight: bold; letter-spacing: 1pt; color: #555; text-transform: uppercase;"
+                >
+                    Deliver to
+                </div>
+                <div
+                    style="border: 1.5px solid #111; padding: 4mm; margin-top: 1.5mm; font-size: 15pt; font-weight: bold;"
+                    t-out="picking.partner_id.name"
+                />
+                <div
+                    style="margin-top: 10mm; font-size: 8pt; font-weight: bold; letter-spacing: 1pt; color: #555; text-transform: uppercase;"
+                >
+                    Reference
+                </div>
+                <div
+                    style="font-size: 26pt; font-weight: bold; line-height: 1.1; margin-top: 1mm; overflow-wrap: break-word;"
+                    t-out="picking.sale_id.name or picking.name"
+                />
+                <table style="width: 100%; border-collapse: collapse; margin-top: 12mm;">
+                    <tr>
+                        <td
+                            style="font-size: 28pt; font-weight: bold; letter-spacing: 0.5pt;"
+                        >
+                            PICK UP
+                        </td>
+                        <td style="text-align: right;">
+                            <span
+                                style="display: inline-block; border: 1.5px solid #111; padding: 2mm 4mm; font-size: 20pt; font-weight: bold;"
+                            >
+                                <t t-out="label_number" />/<t t-out="label_total" />
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </template>
 
     <template id="impress_zpl_logo">

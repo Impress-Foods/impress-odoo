@@ -1,3 +1,4 @@
+import base64
 from unittest.mock import patch
 
 from odoo.exceptions import ValidationError
@@ -105,10 +106,12 @@ class TestClickshipCarrier(TestDeliveryCommon):
     )
     def test_clickship_send_shipping(self, mock_book_shipment):
         """Test sending shipping with ClickShip"""
+        zpl_data = base64.b64encode(b"^XA^FDLabel^FS^XZ").decode()
+        pdf_data = base64.b64encode(b"%PDF-1.4\n%%EOF").decode()
         mock_booking = {
             "exact_price": 25.0,
             "tracking_number": "1234567890",
-            "label_data": "ZPL_LABEL_DATA",
+            "label_data": {"zpl": zpl_data, "pdf": pdf_data},
             "tracking_url": "https://tracking.clickship.com/1234567890",
             "shipment_id": "shipment_123",
         }
@@ -123,14 +126,121 @@ class TestClickshipCarrier(TestDeliveryCommon):
             picking.clickship_tracking_url, "https://tracking.clickship.com/1234567890"
         )
         self.assertEqual(picking.clickship_shipment_id, "shipment_123")
-        self.assertTrue(picking.shipping_label_attachment_id)
 
-        # Check attachment was created
-        attachment = picking.shipping_label_attachment_id
-        self.assertEqual(attachment.name, f"{picking.name} Shipping Label")
-        self.assertEqual(attachment.mimetype, "text/plain")
+        self.assertTrue(picking.shipping_label_zpl_id)
+        self.assertTrue(picking.shipping_label_pdf_id)
+        self.assertEqual(
+            picking.shipping_label_attachment_id, picking.shipping_label_zpl_id
+        )
+        self.assertEqual(
+            b"^XA^FDLabel^FS^XZ",
+            base64.b64decode(picking.shipping_label_zpl_id.datas),
+        )
+        self.assertEqual(
+            b"%PDF-1.4\n%%EOF",
+            base64.b64decode(picking.shipping_label_pdf_id.datas),
+        )
+        self.assertEqual("text/plain", picking.shipping_label_zpl_id.mimetype)
+        self.assertEqual("application/pdf", picking.shipping_label_pdf_id.mimetype)
+        self.assertEqual(
+            f"{picking.name} ZPL Shipping Labels.zpl",
+            picking.shipping_label_zpl_id.name,
+        )
+        self.assertEqual(
+            f"{picking.name} PDF Shipping Labels.pdf",
+            picking.shipping_label_pdf_id.name,
+        )
 
         mock_book_shipment.assert_called_once_with(picking, self.contact)
+
+    @patch(
+        "odoo.addons.delivery_clickship.models.clickship_request.ClickshipProvider.book_shipment"
+    )
+    def test_clickship_send_shipping_clears_previous_labels(self, mock_book_shipment):
+        """Test that rebooking replaces the previous labels."""
+        first_zpl = base64.b64encode(b"^XA^FDFirst^FS^XZ").decode()
+        first_pdf = base64.b64encode(b"%PDF-1.4\nfirst").decode()
+        second_zpl = base64.b64encode(b"^XA^FDSecond^FS^XZ").decode()
+        second_pdf = base64.b64encode(b"%PDF-1.4\nsecond").decode()
+
+        def booking(zpl_data, pdf_data):
+            return {
+                "exact_price": 25.0,
+                "tracking_number": "1234567890",
+                "label_data": {"zpl": zpl_data, "pdf": pdf_data},
+                "tracking_url": "https://tracking.clickship.com/1234567890",
+                "shipment_id": "shipment_123",
+            }
+
+        picking = self.make_picking()
+        mock_book_shipment.return_value = booking(first_zpl, first_pdf)
+        self.clickship_method.clickship_send_shipping(picking)  # type: ignore
+        first_attachments = (
+            picking.shipping_label_zpl_id | picking.shipping_label_pdf_id
+        )
+
+        mock_book_shipment.return_value = booking(second_zpl, second_pdf)
+        self.clickship_method.clickship_send_shipping(picking)  # type: ignore
+
+        self.assertFalse(first_attachments.exists())
+        self.assertEqual(
+            b"^XA^FDSecond^FS^XZ",
+            base64.b64decode(picking.shipping_label_zpl_id.datas),
+        )
+        self.assertEqual(
+            b"%PDF-1.4\nsecond",
+            base64.b64decode(picking.shipping_label_pdf_id.datas),
+        )
+        self.assertEqual(
+            picking.shipping_label_attachment_id, picking.shipping_label_zpl_id
+        )
+
+    @patch(
+        "odoo.addons.delivery_clickship.models.clickship_request.ClickshipProvider.book_shipment"
+    )
+    def test_clickship_send_shipping_without_zpl(self, mock_book_shipment):
+        """Test that a PDF-only label does not become the printed label."""
+        pdf_data = base64.b64encode(b"%PDF-1.4\n%%EOF").decode()
+        mock_book_shipment.return_value = {
+            "exact_price": 25.0,
+            "tracking_number": "1234567890",
+            "label_data": {"pdf": pdf_data},
+            "tracking_url": "https://tracking.clickship.com/1234567890",
+            "shipment_id": "shipment_123",
+        }
+
+        picking = self.make_picking()
+        self.clickship_method.clickship_send_shipping(picking)  # type: ignore
+
+        self.assertTrue(picking.shipping_label_pdf_id)
+        self.assertFalse(picking.shipping_label_zpl_id)
+        self.assertFalse(picking.shipping_label_attachment_id)
+
+    @patch(
+        "odoo.addons.delivery_clickship.models.clickship_request.ClickshipProvider.book_shipment"
+    )
+    def test_clickship_send_shipping_label_error(self, mock_book_shipment):
+        """Test that label errors do not prevent the shipment from being booked."""
+        mock_book_shipment.return_value = {
+            "exact_price": 25.0,
+            "tracking_number": "1234567890",
+            "label_data": {},
+            "label_error": "Label service unavailable",
+            "tracking_url": "https://tracking.clickship.com/1234567890",
+            "shipment_id": "shipment_123",
+        }
+
+        picking = self.make_picking()
+        self.clickship_method.clickship_send_shipping(picking)  # type: ignore
+
+        self.assertEqual(
+            picking.clickship_tracking_url, "https://tracking.clickship.com/1234567890"
+        )
+        self.assertEqual(picking.clickship_shipment_id, "shipment_123")
+        self.assertFalse(picking.shipping_label_attachment_id)
+        self.assertFalse(picking.shipping_label_zpl_id)
+        self.assertFalse(picking.shipping_label_pdf_id)
+        self.assertIn("Label service unavailable", picking.message_ids[0].body)
 
     def test_clickship_get_tracking_link(self):
         """Test getting tracking link"""
@@ -148,21 +258,33 @@ class TestClickshipCarrier(TestDeliveryCommon):
         mock_cancel_shipment.return_value = True
 
         picking = self.make_picking()
-        # Create a mock attachment
-        attachment = self.env["ir.attachment"].create(
+        zpl_attachment = self.env["ir.attachment"].create(
             {
-                "name": "Test Label",
+                "name": "Test ZPL Label",
                 "type": "binary",
-                "datas": b"test",
+                "datas": base64.b64encode(b"^XA^FDLabel^FS^XZ"),
                 "res_model": "stock.picking",
                 "res_id": picking.id,
+                "mimetype": "text/plain",
+            }
+        )
+        pdf_attachment = self.env["ir.attachment"].create(
+            {
+                "name": "Test PDF Label",
+                "type": "binary",
+                "datas": base64.b64encode(b"%PDF-1.4\n%%EOF"),
+                "res_model": "stock.picking",
+                "res_id": picking.id,
+                "mimetype": "application/pdf",
             }
         )
         picking.write(
             {
                 "clickship_shipment_id": "shipment_123",
                 "clickship_tracking_url": "https://tracking.clickship.com/1234567890",
-                "shipping_label_attachment_id": attachment.id,
+                "shipping_label_attachment_id": zpl_attachment.id,
+                "shipping_label_zpl_id": zpl_attachment.id,
+                "shipping_label_pdf_id": pdf_attachment.id,
             }
         )
 
@@ -170,8 +292,14 @@ class TestClickshipCarrier(TestDeliveryCommon):
 
         self.assertFalse(picking.clickship_shipment_id)
         self.assertFalse(picking.clickship_tracking_url)
-        # Check attachment was unlinked
-        self.assertFalse(self.env["ir.attachment"].search([("id", "=", attachment.id)]))
+        self.assertFalse(picking.shipping_label_attachment_id)
+        self.assertFalse(picking.shipping_label_zpl_id)
+        self.assertFalse(picking.shipping_label_pdf_id)
+        self.assertFalse(
+            self.env["ir.attachment"].search(
+                [("id", "in", (zpl_attachment | pdf_attachment).ids)]
+            )
+        )
         mock_cancel_shipment.assert_called_once_with("shipment_123")
 
     @patch(

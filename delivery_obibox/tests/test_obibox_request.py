@@ -1,9 +1,16 @@
+import base64
+import io
 import logging
 from datetime import datetime
+from unittest.mock import patch
 
 from freezegun import freeze_time
 
+from odoo import tools
+from odoo.exceptions import ValidationError
+
 from ..models import schema
+from ..models.obibox_request import make_base64_data
 from .test_delivery_common import TestDeliveryCommon
 
 _logger = logging.getLogger(__name__)
@@ -449,3 +456,70 @@ class TestObiboxRequest(TestDeliveryCommon):
         self.assertEqual(request.email, "bill@corp.com")
         # Ensure address is still from delivery partner
         self.assertEqual(request.to_address1, "123 Shipping St")
+
+    def test_make_base64_data(self):
+        expected = base64.b64encode(b"label").decode()
+
+        self.assertEqual(expected, make_base64_data("label"))
+        self.assertEqual(expected, make_base64_data(b"label"))
+        self.assertEqual(expected, make_base64_data(io.BytesIO(b"label")))
+
+    @patch(
+        "odoo.addons.delivery_obibox.models.obibox_request.ObiboxProvider._make_api_request"
+    )
+    def test_get_zpl_labels(self, mock_api):
+        mock_api.side_effect = [
+            {"Waybill": "^XA^FDLabel1^FS^XZ"},
+            {"Waybill": "^XA^FDLabel2^FS^XZ"},
+        ]
+
+        result = self.sr._get_zpl_labels(["tracking1", "tracking2"])
+
+        self.assertEqual(
+            "^XA^FDLabel1^FS^XZ^XA^FDLabel2^FS^XZ",
+            base64.b64decode(result).decode(),
+        )
+        self.assertEqual(2, mock_api.call_count)
+
+    @patch(
+        "odoo.addons.delivery_obibox.models.obibox_request.ObiboxProvider._make_api_request"
+    )
+    def test_get_pdf_labels(self, mock_api):
+        pdf = tools.file_open("base/tests/minimal.pdf", "rb").read()
+        waybill = base64.b64encode(pdf).decode()
+        mock_api.side_effect = [{"Waybill": waybill}, {"Waybill": waybill}]
+
+        result = self.sr._get_pdf_labels(["tracking1", "tracking2"])
+
+        merged = base64.b64decode(result)
+        self.assertTrue(merged.startswith(b"%PDF"))
+        reader = tools.pdf.OdooPdfFileReader(io.BytesIO(merged))
+        self.assertEqual(2, reader.getNumPages())
+        self.assertEqual(2, mock_api.call_count)
+
+    @patch(
+        "odoo.addons.delivery_obibox.models.obibox_request.ObiboxProvider._make_api_request"
+    )
+    def test_get_zpl_labels_api_error(self, mock_api):
+        mock_api.return_value = {"errors": {"message": "service unavailable"}}
+
+        with self.assertRaises(ValidationError):
+            self.sr._get_zpl_labels(["tracking1"])
+
+    @patch(
+        "odoo.addons.delivery_obibox.models.obibox_request.ObiboxProvider._make_api_request"
+    )
+    def test_get_zpl_labels_missing_waybill(self, mock_api):
+        mock_api.return_value = {"Waybill": ""}
+
+        with self.assertRaises(ValidationError):
+            self.sr._get_zpl_labels(["tracking1"])
+
+    @patch(
+        "odoo.addons.delivery_obibox.models.obibox_request.ObiboxProvider._make_api_request"
+    )
+    def test_get_pdf_labels_invalid_base64(self, mock_api):
+        mock_api.return_value = {"Waybill": "abc"}
+
+        with self.assertRaises(ValidationError):
+            self.sr._get_pdf_labels(["tracking1"])

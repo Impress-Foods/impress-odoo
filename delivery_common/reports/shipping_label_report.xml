@@ -17,6 +17,15 @@
         </t>
     </template>
 
+    <record id="report_shipping_label_pdf" model="ir.actions.report">
+        <field name="name">Shipping Label (PDF)</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">delivery_common.report_shipping_label_pdf</field>
+        <field name="report_file">delivery_common.report_shipping_label_pdf</field>
+        <field name="print_report_name">'%s' % object.name</field>
+    </record>
+
     <template id="report_delivery_instructions_label">
         <t t-foreach="docs" t-as="transfer">
             <t t-foreach="[1] * (len(transfer.package_history_ids) or 1)" t-as="pack">
