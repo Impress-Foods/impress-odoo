@@ -14,20 +14,63 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: delivery_pickup
+#: model:ir.actions.report,print_report_name:delivery_pickup.report_pickup_delivery_label_pdf
+msgid "'%s' % object.name"
+msgstr ""
+
+#. module: delivery_pickup
+#: model_terms:ir.ui.view,arch_db:delivery_pickup.pickup_delivery_label_pdf_page
+msgid "1910 avenue du Sanctuaire"
+msgstr ""
+
+#. module: delivery_pickup
+#: model_terms:ir.ui.view,arch_db:delivery_pickup.pickup_delivery_label_pdf_page
+msgid "Canada"
+msgstr ""
+
+#. module: delivery_pickup
+#. odoo-python
+#: code:addons/delivery_pickup/models/pickup_carrier.py:0
+msgid "Could not generate the PDF pickup label."
+msgstr ""
+
+#. module: delivery_pickup
+#: model_terms:ir.ui.view,arch_db:delivery_pickup.pickup_delivery_label_pdf_page
+msgid "Deliver to"
+msgstr ""
+
+#. module: delivery_pickup
 #: model:ir.model.fields,field_description:delivery_pickup.field_delivery_carrier__display_name
 #: model:ir.model.fields,field_description:delivery_pickup.field_report_delivery_pickup_pickup_delivery_label__display_name
+#: model:ir.model.fields,field_description:delivery_pickup.field_report_delivery_pickup_pickup_delivery_label_pdf__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: delivery_pickup
 #: model:ir.model.fields,field_description:delivery_pickup.field_delivery_carrier__id
 #: model:ir.model.fields,field_description:delivery_pickup.field_report_delivery_pickup_pickup_delivery_label__id
+#: model:ir.model.fields,field_description:delivery_pickup.field_report_delivery_pickup_pickup_delivery_label_pdf__id
 msgid "ID"
+msgstr ""
+
+#. module: delivery_pickup
+#: model_terms:ir.ui.view,arch_db:delivery_pickup.pickup_delivery_label_pdf_page
+msgid "Impress Foods"
 msgstr ""
 
 #. module: delivery_pickup
 #: model:ir.model,name:delivery_pickup.model_report_delivery_pickup_pickup_delivery_label
 msgid "Model for pickup_delivery_label report"
+msgstr ""
+
+#. module: delivery_pickup
+#: model:ir.model,name:delivery_pickup.model_report_delivery_pickup_pickup_delivery_label_pdf
+msgid "Model for pickup_delivery_label_pdf report"
+msgstr ""
+
+#. module: delivery_pickup
+#: model_terms:ir.ui.view,arch_db:delivery_pickup.pickup_delivery_label_pdf_page
+msgid "PICK UP"
 msgstr ""
 
 #. module: delivery_pickup
@@ -46,8 +89,23 @@ msgid "Pickup Label"
 msgstr ""
 
 #. module: delivery_pickup
+#: model:ir.actions.report,name:delivery_pickup.report_pickup_delivery_label_pdf
+msgid "Pickup Label (PDF)"
+msgstr ""
+
+#. module: delivery_pickup
 #: model:ir.model.fields,field_description:delivery_pickup.field_delivery_carrier__delivery_type
 msgid "Provider"
+msgstr ""
+
+#. module: delivery_pickup
+#: model_terms:ir.ui.view,arch_db:delivery_pickup.pickup_delivery_label_pdf_page
+msgid "Québec, QC, G1E 3L2"
+msgstr ""
+
+#. module: delivery_pickup
+#: model_terms:ir.ui.view,arch_db:delivery_pickup.pickup_delivery_label_pdf_page
+msgid "Reference"
 msgstr ""
 
 #. module: delivery_pickup
