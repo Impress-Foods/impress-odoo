@@ -99,3 +99,21 @@
     oca: https://github.com/OCA/web
   merges:
     - oca 19.0
+
+./edi:
+  remotes:
+    oca: https://github.com/OCA/edi
+  merges:
+    - oca 19.0
+
+./edi-framework:
+  remotes:
+    oca: https://github.com/OCA/edi-framework
+  merges:
+    - oca 19.0
+
+./storage:
+  remotes:
+    oca: https://github.com/OCA/storage
+  merges:
+    - oca 19.0
