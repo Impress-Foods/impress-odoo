@@ -49,6 +49,18 @@ msgid "Could not find zip code for partner %s"
 msgstr ""
 
 #. module: delivery_obibox
+#. odoo-python
+#: code:addons/delivery_obibox/models/obibox_request.py:0
+msgid "Could not get the label for tracking %(tracking)s: %(error)s"
+msgstr ""
+
+#. module: delivery_obibox
+#. odoo-python
+#: code:addons/delivery_obibox/models/obibox_carrier.py:0
+msgid "Could not retrieve the shipping labels: %s"
+msgstr ""
+
+#. module: delivery_obibox
 #: model:ir.model,website_form_label:delivery_obibox.model_res_partner
 msgid "Create a Customer"
 msgstr ""
@@ -92,6 +104,12 @@ msgid "ID"
 msgstr ""
 
 #. module: delivery_obibox
+#. odoo-python
+#: code:addons/delivery_obibox/models/obibox_request.py:0
+msgid "Invalid PDF label data for tracking %s"
+msgstr ""
+
+#. module: delivery_obibox
 #: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__obibox_label_format
 msgid "Label Format"
 msgstr ""
@@ -114,6 +132,12 @@ msgstr ""
 #. module: delivery_obibox
 #: model:ir.model.fields,field_description:delivery_obibox.field_obibox_delivery_schedule__next_pickup
 msgid "Next Pickup"
+msgstr ""
+
+#. module: delivery_obibox
+#. odoo-python
+#: code:addons/delivery_obibox/models/obibox_request.py:0
+msgid "No label returned for tracking %s"
 msgstr ""
 
 #. module: delivery_obibox
