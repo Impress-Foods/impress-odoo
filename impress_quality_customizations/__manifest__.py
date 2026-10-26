@@ -1,6 +1,6 @@
 {
     "name": "impress Quality Customizations",
-    "version": "19.0.1.3.0",
+    "version": "19.0.1.3.1",
     "depends": [
         "base",
         "quality_control",
