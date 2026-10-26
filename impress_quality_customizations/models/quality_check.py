@@ -30,3 +30,17 @@ class QualityCheck(models.Model):
             "views": [(False, "form")],
             "res_id": self.picking_id.id,
         }
+
+    def do_alert(self) -> dict:
+        """Keep the production and transfer the check was done on."""
+        self.ensure_one()
+        action = super().do_alert()
+        alert = self.env["quality.alert"].browse(action["res_id"])
+        values = {}
+        if self.picking_id and not alert.picking_id:
+            values["picking_id"] = self.picking_id.id
+        if self.production_id and not alert.production_id:
+            values["production_id"] = self.production_id.id
+        if values:
+            alert.write(values)
+        return action

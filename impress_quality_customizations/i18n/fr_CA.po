@@ -1,0 +1,298 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* impress_quality_customizations
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e-20261014\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: fr_CA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: impress_quality_customizations
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.impress_quality_quality_check_form
+msgid "<span class=\"o_stat_text\">Production</span>"
+msgstr "<span class=\"o_stat_text\">Production</span>"
+
+#. module: impress_quality_customizations
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.impress_quality_quality_alert_form
+msgid "<span class=\"o_stat_text\">Purchase Order</span>"
+msgstr "<span class=\"o_stat_text\">Bon de commande</span>"
+
+#. module: impress_quality_customizations
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.impress_quality_quality_alert_form
+msgid "<span class=\"o_stat_text\">Sales Order</span>"
+msgstr "<span class=\"o_stat_text\">Bon de vente</span>"
+
+#. module: impress_quality_customizations
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.impress_quality_quality_check_form
+msgid "<span class=\"o_stat_text\">Transfer</span>"
+msgstr "<span class=\"o_stat_text\">Transfert</span>"
+
+#. module: impress_quality_customizations
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.impress_quality_quality_alert_form
+msgid "Affected Quantity"
+msgstr "Quantité affectée"
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_alert__alert_type
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.impress_quality_quality_alert_search
+msgid "Alert Type"
+msgstr "Type d'alerte"
+
+#. module: impress_quality_customizations
+#: model:ir.ui.menu,name:impress_quality_customizations.impress_quality_logs_boswick
+msgid "Bostwick"
+msgstr "Bostwick"
+
+#. module: impress_quality_customizations
+#: model:ir.ui.menu,name:impress_quality_customizations.impress_quality_logs_brix
+msgid "Brix"
+msgstr "Brix"
+
+#. module: impress_quality_customizations
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.impress_quality_quality_alert_form
+msgid "Cause"
+msgstr "Cause"
+
+#. module: impress_quality_customizations
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.impress_quality_quality_alert_form
+msgid "Cause and Description"
+msgstr "Cause et description"
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_stock_lot__recursive_check_qty
+msgid "Checks (Tree)"
+msgstr "Contrôles Qualités (tout)"
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_alert__customer_id
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.impress_quality_quality_alert_search
+msgid "Customer"
+msgstr "Client"
+
+#. module: impress_quality_customizations
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.impress_quality_quality_alert_form
+msgid "Describe the follow up actions you did..."
+msgstr "Décrivez les actions de suivi que vous avez prises..."
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_alert__display_name
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_check__display_name
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_point__display_name
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_sale_order__display_name
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_stock_lot__display_name
+msgid "Display Name"
+msgstr "Nom d'affichage"
+
+#. module: impress_quality_customizations
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.impress_quality_quality_check_search
+msgid "Done"
+msgstr "Fait"
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_alert__follow_up
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.impress_quality_quality_alert_form
+msgid "Follow Up"
+msgstr "Suivi des mesures"
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_purchase_order__id
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_alert__id
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_check__id
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_point__id
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_sale_order__id
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_stock_lot__id
+msgid "ID"
+msgstr "ID"
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_alert__impact_on_product
+msgid "Impact on Product"
+msgstr "Impact sur le produit"
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_check__is_ccp
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_point__is_ccp
+msgid "Is Ccp"
+msgstr "Est un CCP"
+
+#. module: impress_quality_customizations
+#: model:ir.model,name:impress_quality_customizations.model_stock_lot
+msgid "Lot/Serial"
+msgstr "Lot/Numéro de série"
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields.selection,name:impress_quality_customizations.selection__quality_alert__impact_on_product__no
+msgid "No"
+msgstr "Non"
+
+#. module: impress_quality_customizations
+#: model_terms:ir.actions.act_window,help:impress_quality_customizations.impress_quality_quality_check_tree_action
+#: model_terms:ir.actions.act_window,help:impress_quality_customizations.impress_quality_quality_check_tree_action_bostwick
+#: model_terms:ir.actions.act_window,help:impress_quality_customizations.impress_quality_quality_check_tree_action_brix
+#: model_terms:ir.actions.act_window,help:impress_quality_customizations.impress_quality_quality_check_tree_action_organoleptic
+#: model_terms:ir.actions.act_window,help:impress_quality_customizations.impress_quality_quality_check_tree_action_ph
+msgid "No quality checks found"
+msgstr "Aucun contrôle qualité trouvé"
+
+#. module: impress_quality_customizations
+#: model:ir.ui.menu,name:impress_quality_customizations.impress_quality_logs_organoleptic
+msgid "Organoleptique"
+msgstr "Organoleptique"
+
+#. module: impress_quality_customizations
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.impress_quality_quality_alert_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.impress_quality_quality_alert_tree
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_alert__contacted_person
+msgid "Person Contacted"
+msgstr "Personne contactée"
+
+#. module: impress_quality_customizations
+#. odoo-python
+#: code:addons/impress_quality_customizations/models/quality_alert.py:0
+#: model:ir.model,name:impress_quality_customizations.model_purchase_order
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_alert__purchase_order_id
+msgid "Purchase Order"
+msgstr "Bon de commande"
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields.selection,name:impress_quality_customizations.selection__quality_alert__alert_type__quality
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.impress_quality_quality_alert_search
+#, fuzzy
+msgid "Quality"
+msgstr "Qualité"
+
+#. module: impress_quality_customizations
+#: model:ir.model,name:impress_quality_customizations.model_quality_alert
+msgid "Quality Alert"
+msgstr "Alerte qualité"
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_purchase_order__quality_alert_count
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_sale_order__quality_alert_count
+msgid "Quality Alert Count"
+msgstr "Nombre d'alertes qualité"
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_purchase_order__quality_alert_ids
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_sale_order__quality_alert_ids
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.impress_quality_purchase_order_form
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.impress_quality_sale_order_form
+msgid "Quality Alerts"
+msgstr "Alertes Qualité"
+
+#. module: impress_quality_customizations
+#: model:ir.model,name:impress_quality_customizations.model_quality_check
+msgid "Quality Check"
+msgstr "Contrôle Qualité"
+
+#. module: impress_quality_customizations
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.stock_lot_form_recursive_checks
+msgid "Quality Checks (All)"
+msgstr "Contrôles qualité (tous)"
+
+#. module: impress_quality_customizations
+#: model:ir.model,name:impress_quality_customizations.model_quality_point
+msgid "Quality Control Point"
+msgstr "Point de contrôle qualité"
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields,help:impress_quality_customizations.field_stock_lot__recursive_check_qty
+msgid ""
+"Quality checks on this lot and, recursively, on every lot that went into the "
+"productions it came from."
+msgstr ""
+"Contrôles qualités sur ce produit et sur tous les produits ayant contribués "
+"À la production de celui-ci."
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_alert__quantity
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: impress_quality_customizations
+#: model:ir.actions.act_window,name:impress_quality_customizations.impress_quality_quality_check_tree_action
+msgid "Registre"
+msgstr "Registre"
+
+#. module: impress_quality_customizations
+#: model:ir.actions.act_window,name:impress_quality_customizations.impress_quality_quality_check_tree_action_bostwick
+msgid "Registre Bostwick"
+msgstr "Registre Bostwick"
+
+#. module: impress_quality_customizations
+#: model:ir.actions.act_window,name:impress_quality_customizations.impress_quality_quality_check_tree_action_brix
+msgid "Registre Brix"
+msgstr "Registre Brix"
+
+#. module: impress_quality_customizations
+#: model:ir.actions.act_window,name:impress_quality_customizations.impress_quality_quality_check_tree_action_organoleptic
+msgid "Registre Organoleptique"
+msgstr "Registre Organoleptique"
+
+#. module: impress_quality_customizations
+#: model:ir.actions.act_window,name:impress_quality_customizations.impress_quality_quality_check_tree_action_ph
+#: model:ir.ui.menu,name:impress_quality_customizations.impress_quality_logs
+msgid "Registres"
+msgstr "Registres"
+
+#. module: impress_quality_customizations
+#. odoo-python
+#: code:addons/impress_quality_customizations/models/quality_alert.py:0
+#: model:ir.model,name:impress_quality_customizations.model_sale_order
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_alert__sale_order_id
+msgid "Sales Order"
+msgstr "Bons de vente"
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields.selection,name:impress_quality_customizations.selection__quality_alert__alert_type__salubrity
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.impress_quality_quality_alert_search
+msgid "Salubrity"
+msgstr "Salubrité"
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_alert__signature
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_check__signature
+msgid "Signature"
+msgstr "Signature"
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_alert__product_uom_id
+msgid "Unit of Measure"
+msgstr "Unité de mesure"
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields,field_description:impress_quality_customizations.field_quality_alert__vendor_id
+#: model_terms:ir.ui.view,arch_db:impress_quality_customizations.impress_quality_quality_alert_search
+msgid "Vendor"
+msgstr "Fournisseur"
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields.selection,name:impress_quality_customizations.selection__quality_alert__impact_on_product__yes
+msgid "Yes"
+msgstr "Oui"
+
+#. module: impress_quality_customizations
+#: model:ir.model.fields,help:impress_quality_customizations.field_quality_alert__vendor_id
+msgid "You can find a vendor by its Name, TIN, Email or Internal Reference."
+msgstr ""
+"Vous pouvez trouver un fournisseur par son nom, courriel ou référence interne"
+
+#. module: impress_quality_customizations
+#: model:ir.ui.menu,name:impress_quality_customizations.impress_quality_logs_ph
+msgid "pH"
+msgstr "pH"
+
+#~ msgid "Complaints"
+#~ msgstr "Plaintes"
