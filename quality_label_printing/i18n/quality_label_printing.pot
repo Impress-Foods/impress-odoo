@@ -29,6 +29,8 @@ msgid "Created on"
 msgstr ""
 
 #. module: quality_label_printing
+#: model:ir.model.fields,field_description:quality_label_printing.field_product_product__display_name
+#: model:ir.model.fields,field_description:quality_label_printing.field_product_template__display_name
 #: model:ir.model.fields,field_description:quality_label_printing.field_quality_check__display_name
 #: model:ir.model.fields,field_description:quality_label_printing.field_quality_check_printer_picker__display_name
 #: model:ir.model.fields,field_description:quality_label_printing.field_quality_point__display_name
@@ -43,6 +45,8 @@ msgid ""
 msgstr ""
 
 #. module: quality_label_printing
+#: model:ir.model.fields,field_description:quality_label_printing.field_product_product__id
+#: model:ir.model.fields,field_description:quality_label_printing.field_product_template__id
 #: model:ir.model.fields,field_description:quality_label_printing.field_quality_check__id
 #: model:ir.model.fields,field_description:quality_label_printing.field_quality_check_printer_picker__id
 #: model:ir.model.fields,field_description:quality_label_printing.field_quality_point__id
@@ -106,6 +110,11 @@ msgid "Print"
 msgstr ""
 
 #. module: quality_label_printing
+#: model:ir.model.fields,field_description:quality_label_printing.field_quality_point__print_for_units
+msgid "Print For Units"
+msgstr ""
+
+#. module: quality_label_printing
 #: model:ir.actions.act_window,name:quality_label_printing.quality_check_printer_picker_action
 #: model_terms:ir.ui.view,arch_db:quality_label_printing.quality_check_printer_picker_view_form
 msgid "Print Label"
@@ -139,6 +148,16 @@ msgid ""
 msgstr ""
 
 #. module: quality_label_printing
+#: model:ir.model,name:quality_label_printing.model_product_template
+msgid "Product"
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model,name:quality_label_printing.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: quality_label_printing
 #: model:ir.model,name:quality_label_printing.model_quality_check
 #: model:ir.model.fields,field_description:quality_label_printing.field_quality_check_printer_picker__quality_check_id
 msgid "Quality Check"
@@ -147,6 +166,12 @@ msgstr ""
 #. module: quality_label_printing
 #: model:ir.model,name:quality_label_printing.model_quality_point
 msgid "Quality Control Point"
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model.fields,field_description:quality_label_printing.field_product_product__qty_multiple
+#: model:ir.model.fields,field_description:quality_label_printing.field_product_template__qty_multiple
+msgid "Quantity per unit"
 msgstr ""
 
 #. module: quality_label_printing
@@ -162,6 +187,13 @@ msgstr ""
 #. module: quality_label_printing
 #: model:ir.model.fields,field_description:quality_label_printing.field_quality_check_printer_picker__report_label_size_id
 msgid "Report Label Size"
+msgstr ""
+
+#. module: quality_label_printing
+#: model:ir.model.fields,help:quality_label_printing.field_quality_point__print_for_units
+msgid ""
+"This step will print 'n' labels for each produced unit,based on the "
+"'qty_multiple' field of the product."
 msgstr ""
 
 #. module: quality_label_printing
