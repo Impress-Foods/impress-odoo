@@ -134,7 +134,9 @@ msgstr "Produit utilisé pour la consigne"
 #. module: impress_deposit
 #: model:ir.model.fields,field_description:impress_deposit.field_product_product__qty_multiple
 #: model:ir.model.fields,field_description:impress_deposit.field_product_template__qty_multiple
-msgid "Quantity per case"
+#, fuzzy
+#| msgid "Quantity per case"
+msgid "Quantity per unit"
 msgstr "Quantité par caisse"
 
 #. module: impress_deposit

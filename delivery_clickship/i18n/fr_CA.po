@@ -154,6 +154,14 @@ msgstr "Les taux n'ont pas pu êtres récupérés!"
 
 #. module: delivery_clickship
 #. odoo-python
+#: code:addons/delivery_clickship/models/clickship_request.py:0
+#, fuzzy
+#| msgid "Could not find email for %s"
+msgid "Could not find a %(format)s shipping label."
+msgstr "Impossible de trouver le courriel pour %s"
+
+#. module: delivery_clickship
+#. odoo-python
 #: code:addons/delivery_clickship/models/stock_picking.py:0
 msgid "Could not find currency with name %s"
 msgstr "Impossible de trouver une device nommée %s"
@@ -169,6 +177,14 @@ msgstr "Impossible de trouver le courriel pour %s"
 #: code:addons/delivery_clickship/models/clickship_request.py:0
 msgid "Could not find phone number for %s"
 msgstr "Impossible de trouver le numéro de téléphone pour %s"
+
+#. module: delivery_clickship
+#. odoo-python
+#: code:addons/delivery_clickship/models/clickship_request.py:0
+#, fuzzy
+#| msgid "Could not find email for %s"
+msgid "Could not find the URL for the %s shipping label."
+msgstr "Impossible de trouver le courriel pour %s"
 
 #. module: delivery_clickship
 #. odoo-python
@@ -198,6 +214,18 @@ msgstr ""
 msgid ""
 "Could not make shipping details. \n"
 " %s"
+msgstr ""
+"Impossible de créer les détails d'expédition. \n"
+"%s"
+
+#. module: delivery_clickship
+#. odoo-python
+#: code:addons/delivery_clickship/models/clickship_carrier.py:0
+#, fuzzy
+#| msgid ""
+#| "Could not make shipping details. \n"
+#| " %s"
+msgid "Could not retrieve the shipping labels: %s"
 msgstr ""
 "Impossible de créer les détails d'expédition. \n"
 "%s"

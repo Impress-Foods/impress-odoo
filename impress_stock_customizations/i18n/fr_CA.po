@@ -565,6 +565,12 @@ msgid "Quantity cannot be negative!"
 msgstr "La quantité ne peut pas être négative!"
 
 #. module: impress_stock_customizations
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_product_product__qty_multiple
+#: model:ir.model.fields,field_description:impress_stock_customizations.field_product_template__qty_multiple
+msgid "Quantity per unit"
+msgstr ""
+
+#. module: impress_stock_customizations
 #: model:ir.model.fields,field_description:impress_stock_customizations.field_stock_lot__removal_date
 msgid "Removal Date"
 msgstr "Date d'enlèvement"

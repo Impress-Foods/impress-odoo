@@ -24,6 +24,7 @@ msgstr "&amp;nbsp;-&amp;nbsp;"
 
 #. module: delivery_common
 #: model:ir.actions.report,print_report_name:delivery_common.report_shipping_label
+#: model:ir.actions.report,print_report_name:delivery_common.report_shipping_label_pdf
 msgid "'%s' % object.name"
 msgstr "'%s' % object.name"
 
@@ -58,6 +59,7 @@ msgstr "Instructions de livraison"
 
 #. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:delivery_common.field_ir_actions_report__display_name
 #: model:ir.model.fields,field_description:delivery_common.field_report_delivery_common_report_shipping_label_view__display_name
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking_type__display_name
@@ -71,6 +73,7 @@ msgstr "Courriels"
 
 #. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:delivery_common.field_ir_actions_report__id
 #: model:ir.model.fields,field_description:delivery_common.field_report_delivery_common_report_shipping_label_view__id
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking__id
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking_type__id
@@ -101,6 +104,18 @@ msgid "Instructions Label"
 msgstr "Étiquette d'instructions de livraison"
 
 #. module: delivery_common
+#. odoo-python
+#: code:addons/delivery_common/models/ir_actions_report.py:0
+msgid "No PDF shipping label is available for the selected pickings."
+msgstr ""
+
+#. module: delivery_common
+#. odoo-python
+#: code:addons/delivery_common/models/stock_picking.py:0
+msgid "No shipping label is available for this picking."
+msgstr ""
+
+#. module: delivery_common
 #: model:ir.model,name:delivery_common.model_stock_picking_type
 msgid "Picking Type"
 msgstr "Type de transfert"
@@ -116,6 +131,11 @@ msgid "Ready To Ship"
 msgstr "Prêt à envoyer"
 
 #. module: delivery_common
+#: model:ir.model,name:delivery_common.model_ir_actions_report
+msgid "Report Action"
+msgstr ""
+
+#. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_delivery_carrier__send_confirmation_email
 msgid "Send Confirmation Email"
 msgstr "Envoyer le courriel de confirmation"
@@ -126,9 +146,30 @@ msgid "Shipping Label"
 msgstr "Étiquette d'expédition"
 
 #. module: delivery_common
+#: model:ir.actions.report,name:delivery_common.report_shipping_label_pdf
+#, fuzzy
+#| msgid "Shipping labels (ZPL)"
+msgid "Shipping Label (PDF)"
+msgstr "Étiquettes d'expédition (ZPL)"
+
+#. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking__shipping_label_attachment_id
 msgid "Shipping Label Attachment"
 msgstr "Pièce jointe - Étiquette d'expédition"
+
+#. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking__shipping_label_pdf_id
+#, fuzzy
+#| msgid "Shipping Label"
+msgid "Shipping Label Pdf"
+msgstr "Étiquette d'expédition"
+
+#. module: delivery_common
+#: model:ir.model.fields,field_description:delivery_common.field_stock_picking__shipping_label_zpl_id
+#, fuzzy
+#| msgid "Shipping Label"
+msgid "Shipping Label Zpl"
+msgstr "Étiquette d'expédition"
 
 #. module: delivery_common
 #: model:ir.model,name:delivery_common.model_delivery_carrier
