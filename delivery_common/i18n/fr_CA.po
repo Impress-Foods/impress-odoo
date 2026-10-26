@@ -6,8 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-08-18 17:19+0000\n"
-"Last-Translator: admin <cparadis@impressfoods.com>\n"
+"PO-Revision-Date: 2026-10-26 18:14+0000\n"
+"Last-Translator: Automatic translation add-on <noreply-addon-"
+"autotranslate@weblate.org>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/delivery_common/fr_CA/>\n"
 "Language: fr_CA\n"
@@ -108,12 +109,14 @@ msgstr "Étiquette d'instructions de livraison"
 #: code:addons/delivery_common/models/ir_actions_report.py:0
 msgid "No PDF shipping label is available for the selected pickings."
 msgstr ""
+"Aucune étiquette d'expédition PDF n'est disponible pour les transferts "
+"sélectionnés."
 
 #. module: delivery_common
 #. odoo-python
 #: code:addons/delivery_common/models/stock_picking.py:0
 msgid "No shipping label is available for this picking."
-msgstr ""
+msgstr "Aucune étiquette d'expédition n'est disponible pour ce transfert."
 
 #. module: delivery_common
 #: model:ir.model,name:delivery_common.model_stock_picking_type
@@ -133,7 +136,7 @@ msgstr "Prêt à envoyer"
 #. module: delivery_common
 #: model:ir.model,name:delivery_common.model_ir_actions_report
 msgid "Report Action"
-msgstr ""
+msgstr "Action de rapport"
 
 #. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_delivery_carrier__send_confirmation_email
@@ -147,10 +150,8 @@ msgstr "Étiquette d'expédition"
 
 #. module: delivery_common
 #: model:ir.actions.report,name:delivery_common.report_shipping_label_pdf
-#, fuzzy
-#| msgid "Shipping labels (ZPL)"
 msgid "Shipping Label (PDF)"
-msgstr "Étiquettes d'expédition (ZPL)"
+msgstr "Étiquette d'expédition (PDF)"
 
 #. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking__shipping_label_attachment_id
@@ -159,17 +160,13 @@ msgstr "Pièce jointe - Étiquette d'expédition"
 
 #. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking__shipping_label_pdf_id
-#, fuzzy
-#| msgid "Shipping Label"
 msgid "Shipping Label Pdf"
-msgstr "Étiquette d'expédition"
+msgstr "Étiquette d'expédition PDF"
 
 #. module: delivery_common
 #: model:ir.model.fields,field_description:delivery_common.field_stock_picking__shipping_label_zpl_id
-#, fuzzy
-#| msgid "Shipping Label"
 msgid "Shipping Label Zpl"
-msgstr "Étiquette d'expédition"
+msgstr "Étiquette d'expédition ZPL"
 
 #. module: delivery_common
 #: model:ir.model,name:delivery_common.model_delivery_carrier

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-09-09 18:08+0000\n"
+"PO-Revision-Date: 2026-10-26 18:14+0000\n"
 "Last-Translator: admin <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/delivery_obibox/fr_CA/>\n"
@@ -57,12 +57,14 @@ msgstr "Code postal introuvable pour partenaire %s"
 #: code:addons/delivery_obibox/models/obibox_request.py:0
 msgid "Could not get the label for tracking %(tracking)s: %(error)s"
 msgstr ""
+"Impossible d'obtenir l'étiquette d'expédition pour le numéro de suivi %"
+"(tracking)s: %(error)s"
 
 #. module: delivery_obibox
 #. odoo-python
 #: code:addons/delivery_obibox/models/obibox_carrier.py:0
 msgid "Could not retrieve the shipping labels: %s"
-msgstr ""
+msgstr "Impossible de récupérer les étiquettes d'expédition: %s"
 
 #. module: delivery_obibox
 #: model:ir.model,website_form_label:delivery_obibox.model_res_partner
@@ -111,7 +113,7 @@ msgstr "ID"
 #. odoo-python
 #: code:addons/delivery_obibox/models/obibox_request.py:0
 msgid "Invalid PDF label data for tracking %s"
-msgstr ""
+msgstr "Étiquette PDF invalide pour le numéro de suivi %s"
 
 #. module: delivery_obibox
 #: model:ir.model.fields,field_description:delivery_obibox.field_delivery_carrier__obibox_label_format
@@ -142,7 +144,7 @@ msgstr "Prochain ramassage"
 #. odoo-python
 #: code:addons/delivery_obibox/models/obibox_request.py:0
 msgid "No label returned for tracking %s"
-msgstr ""
+msgstr "Aucune étiquette retournée pour le numéro de suivi %s"
 
 #. module: delivery_obibox
 #: model:delivery.carrier,name:delivery_obibox.delivery_carrier_obibox

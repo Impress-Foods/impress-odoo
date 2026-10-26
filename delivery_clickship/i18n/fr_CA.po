@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-10-16 14:25+0000\n"
+"PO-Revision-Date: 2026-10-26 18:14+0000\n"
 "Last-Translator: admin <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/delivery_clickship/fr_CA/>\n"
@@ -155,10 +155,8 @@ msgstr "Les taux n'ont pas pu êtres récupérés!"
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
-#, fuzzy
-#| msgid "Could not find email for %s"
 msgid "Could not find a %(format)s shipping label."
-msgstr "Impossible de trouver le courriel pour %s"
+msgstr "Aucune étiquette d'expédition en format %(format)s n'a été trouvée."
 
 #. module: delivery_clickship
 #. odoo-python
@@ -181,10 +179,8 @@ msgstr "Impossible de trouver le numéro de téléphone pour %s"
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_request.py:0
-#, fuzzy
-#| msgid "Could not find email for %s"
 msgid "Could not find the URL for the %s shipping label."
-msgstr "Impossible de trouver le courriel pour %s"
+msgstr "Impossible de trouver l'URL pour l'étiquette d'expédition %s."
 
 #. module: delivery_clickship
 #. odoo-python
@@ -221,14 +217,8 @@ msgstr ""
 #. module: delivery_clickship
 #. odoo-python
 #: code:addons/delivery_clickship/models/clickship_carrier.py:0
-#, fuzzy
-#| msgid ""
-#| "Could not make shipping details. \n"
-#| " %s"
 msgid "Could not retrieve the shipping labels: %s"
-msgstr ""
-"Impossible de créer les détails d'expédition. \n"
-"%s"
+msgstr "Impossible de récupérer les étiquettes d'expédition: %s"
 
 #. module: delivery_clickship
 #: model:ir.model.fields,field_description:delivery_clickship.field_clickship_payment_method__create_uid

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e-20240710\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-12 18:00+0000\n"
-"PO-Revision-Date: 2026-10-16 14:25+0000\n"
+"PO-Revision-Date: 2026-10-26 18:14+0000\n"
 "Last-Translator: admin <cparadis@impressfoods.com>\n"
 "Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
 "impress-odoo/impress_deposit/fr_CA/>\n"
@@ -134,10 +134,8 @@ msgstr "Produit utilisé pour la consigne"
 #. module: impress_deposit
 #: model:ir.model.fields,field_description:impress_deposit.field_product_product__qty_multiple
 #: model:ir.model.fields,field_description:impress_deposit.field_product_template__qty_multiple
-#, fuzzy
-#| msgid "Quantity per case"
 msgid "Quantity per unit"
-msgstr "Quantité par caisse"
+msgstr "Quantité par unité"
 
 #. module: impress_deposit
 #: model:ir.model.fields,field_description:impress_deposit.field_product_product__requires_deposit
