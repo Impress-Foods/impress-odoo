@@ -5,9 +5,6 @@ from odoo.exceptions import ValidationError
 class QualityPoint(models.Model):
     _inherit = "quality.point"
 
-    # One report and one printer per step. Whoever configures the step knows
-    # which label it prints and which machine that label is printed at, so
-    # neither is a question the operator is asked on the floor.
     label_report_id = fields.Many2one(
         "ir.actions.report",
         string="Label Report",
@@ -23,6 +20,11 @@ class QualityPoint(models.Model):
         help="Printer this workstation prints the label on. Left empty, the "
         "printer the report is already configured for is used. The operator "
         "can still print elsewhere when printing.",
+    )
+
+    print_for_units = fields.Boolean(
+        help="This step will print 'n' labels for each produced unit,"
+        "based on the 'qty_multiple' field of the product."
     )
 
     @api.constrains("label_report_id", "label_printer_id")
