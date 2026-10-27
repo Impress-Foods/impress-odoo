@@ -4,3 +4,4 @@ from . import test_rate_model
 from . import test_stock_picking
 from . import test_wizard_payment_method
 from . import test_clickship_carrier
+from . import test_clickship_label_attachment

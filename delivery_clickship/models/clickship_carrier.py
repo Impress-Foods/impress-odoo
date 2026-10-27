@@ -93,14 +93,14 @@ class ClickShipCarrier(models.Model):
                 )
 
             label_data = booking.get("label_data") or {}
-            pdf_att_id = self._create_label_attachment(
+            pdf_att_id = self._clickship_create_label_attachment(
                 picking,
                 label_data.get("pdf"),
                 label="PDF",
                 extension=".pdf",
                 mimetype="application/pdf",
             )
-            zpl_att_id = self._create_label_attachment(
+            zpl_att_id = self._clickship_create_label_attachment(
                 picking,
                 label_data.get("zpl"),
                 label="ZPL",
@@ -114,7 +114,7 @@ class ClickShipCarrier(models.Model):
                 picking.shipping_label_attachment_id = zpl_att_id.id
         return res
 
-    def _create_label_attachment(
+    def _clickship_create_label_attachment(
         self,
         picking: StockPicking,
         data: str | None,

@@ -1,6 +1,6 @@
 {
     "name": "Delivery - Pickup",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.1.1",
     "summary": """ Pickup Delivery Connector """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
