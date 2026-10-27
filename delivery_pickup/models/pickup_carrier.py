@@ -39,7 +39,7 @@ class PickupCarrier(models.Model):
             zpl_data, _ = self.env["ir.actions.report"]._render(
                 "delivery_pickup.pickup_delivery_label", [picking.id]
             )
-            zpl_attachment = self._create_label_attachment(
+            zpl_attachment = self._pickup_create_label_attachment(
                 picking,
                 zpl_data,
                 label="ZPL",
@@ -61,7 +61,7 @@ class PickupCarrier(models.Model):
                     body=self.env._("Could not generate the PDF pickup label.")
                 )
             else:
-                picking.shipping_label_pdf_id = self._create_label_attachment(
+                picking.shipping_label_pdf_id = self._pickup_create_label_attachment(
                     picking,
                     pdf_data,
                     label="PDF",
@@ -72,7 +72,9 @@ class PickupCarrier(models.Model):
             res.append(data)
         return res
 
-    def _create_label_attachment(self, picking, data, *, label, extension, mimetype):
+    def _pickup_create_label_attachment(
+        self, picking, data, *, label, extension, mimetype
+    ):
         return self.env["ir.attachment"].create(
             {
                 "name": f"{picking.name} {label} Shipping Labels{extension}",
