@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_rithum_partner_list" model="ir.ui.view">
+        <field name="name">edi.rithum.partner.list</field>
+        <field name="model">edi.rithum.partner</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="x12_qualifier" />
+                <field name="x12_id" />
+                <field name="backend_id" />
+                <field name="active" column_invisible="1" />
+            </list>
+        </field>
+    </record>
+
+    <record id="view_rithum_partner_form" model="ir.ui.view">
+        <field name="name">edi.rithum.partner.form</field>
+        <field name="model">edi.rithum.partner</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        invisible="active"
+                    />
+                    <group>
+                        <field name="active" invisible="1" />
+                        <field name="name" />
+                        <field name="backend_id" />
+                    </group>
+                    <group string="The retailer">
+                        <field name="x12_qualifier" />
+                        <field name="x12_id" />
+                    </group>
+                    <group string="Us, only if different from the backend">
+                        <field name="own_qualifier" />
+                        <field name="own_id" />
+                    </group>
+                    <group string="How its files are read" groups="base.group_no_one">
+                        <field name="map_set" />
+                        <field name="intake_model" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_rithum_partner" model="ir.actions.act_window">
+        <field name="name">Rithum partners</field>
+        <field name="res_model">edi.rithum.partner</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem
+        id="menu_rithum_partner"
+        name="Rithum partners"
+        parent="edi_core_oca.menu_edi_config"
+        action="action_rithum_partner"
+        groups="base_edi.group_edi_manager"
+    />
+
+</odoo>

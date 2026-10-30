@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="rithum_backend" model="edi.backend">
+        <field name="name">Rithum</field>
+        <field name="backend_type_id" ref="edi_x12.edi_backend_x12"/>
+        <field name="x12_partner_scheme">X12</field>
+    </record>
+
+</odoo>

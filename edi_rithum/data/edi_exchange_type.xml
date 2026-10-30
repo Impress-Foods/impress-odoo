@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- The 997 we send back for every file we receive, except 997s. -->
+    <record id="rithum_997_out" model="edi.exchange.type">
+        <field name="name">Rithum 997 (Out)</field>
+        <field name="code">rithum_997_out</field>
+        <field name="backend_type_id" ref="edi_x12.edi_backend_x12"/>
+        <field name="backend_id" ref="edi_rithum.rithum_backend" />
+        <field name="direction">output</field>
+        <field name="encoding">cp1252</field>
+        <field name="exchange_file_ext">intchg</field>
+        <field name="generate_model_id" ref="edi_x12.model_edi_x12_handler_generate" />
+        <field name="send_model_id" ref="edi_storage_oca.model_edi_oca_storage_handler" />
+        <field name="advanced_settings_edit">x12:
+  map_set: edi_rithum/x12_maps
+  mapping: edi.rithum.mapping.997
+  filename: "HUB{control:09d}"
+</field>
+    </record>
+
+    <!--
+        Everything the retailers send lands here. The files are named by serial
+        number and hash, so the sender and the document are read from the content
+        when processing. The maps of this type hold the 997 only: a document is
+        checked with the maps of the partner that sent it.
+    -->
+    <record id="rithum_in" model="edi.exchange.type">
+        <field name="name">Rithum (In)</field>
+        <field name="code">rithum_in</field>
+        <field name="backend_type_id" ref="edi_x12.edi_backend_x12"/>
+        <field name="backend_id" ref="edi_rithum.rithum_backend" />
+        <field name="direction">input</field>
+        <!-- Rithum sends Windows-1252 (accented characters are single bytes). -->
+        <field name="encoding">cp1252</field>
+        <field name="process_model_id" ref="edi_x12.model_edi_x12_handler_process" />
+        <field name="receive_model_id" ref="edi_storage_oca.model_edi_oca_storage_handler" />
+        <field name="input_validate_model_id" ref="edi_rithum.model_edi_rithum_handler_input_validate" />
+        <field name="ack_type_id" ref="rithum_997_out" />
+        <field name="advanced_settings_edit">x12:
+  map_set: edi_rithum/x12_maps
+  mapping: edi.rithum.mapping.inbound
+</field>
+    </record>
+
+    <!--
+        Rithum requires a 997 for every file, whether it was processed or refused.
+        Both events fire after the record's own processing is saved. A 997 itself
+        is never acknowledged: x12_acknowledge skips it.
+    -->
+    <record id="rithum_acknowledge_on_done" model="edi.configuration">
+        <field name="name">Rithum: send the 997 once processed</field>
+        <field name="is_global" eval="True" />
+        <field name="trigger_id" ref="edi_core_oca.edi_config_trigger_record_done" />
+        <field name="backend_id" ref="rithum_backend" />
+        <field name="type_id" ref="rithum_in" />
+        <field name="snippet_do">record.x12_acknowledge()</field>
+    </record>
+
+    <record id="rithum_acknowledge_on_error" model="edi.configuration">
+        <field name="name">Rithum: send the 997 when refused</field>
+        <field name="is_global" eval="True" />
+        <field name="trigger_id" ref="edi_core_oca.edi_config_trigger_record_error" />
+        <field name="backend_id" ref="rithum_backend" />
+        <field name="type_id" ref="rithum_in" />
+        <field name="snippet_do">record.x12_acknowledge()</field>
+    </record>
+
+</odoo>
