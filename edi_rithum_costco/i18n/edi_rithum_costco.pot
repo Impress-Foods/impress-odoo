@@ -1,0 +1,943 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* edi_rithum_costco
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e-20261022\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/wizards/cancellation.py:0
+msgid "%(product)s: cancel between 0 and the %(open)s still open."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_856.py:0
+msgid "(none)"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.constraint,message:edi_rithum_costco.constraint_edi_rithum_costco_code_code_unique
+msgid "A code can appear only once per type."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_sale_order__costco_can_cancel
+msgid "A confirmed order from Costco with units not yet delivered."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_stock_picking__costco_can_confirm
+msgid "A finished delivery of a Costco order with something to confirm."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.constraint,message:edi_rithum_costco.constraint_edi_rithum_costco_product_backend_product_unique
+msgid "A product can be bound to a backend only once."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_product__active
+msgid "Active"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_product__backend_id
+#: model_terms:ir.ui.view,arch_db:edi_rithum_costco.view_costco_product_search
+msgid "Backend"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:edi.rithum.costco.code,name:edi_rithum_costco.cancel_reason_bad_address
+msgid "Bad Address"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:edi.rithum.costco.code,name:edi_rithum_costco.cancel_reason_bad_sku
+msgid "Bad SKU"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model_terms:ir.ui.view,arch_db:edi_rithum_costco.edi_backend_view_form
+msgid "Bind Costco products"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation_line__quantity
+msgid "Cancel"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields.selection,name:edi_rithum_costco.selection__edi_rithum_costco_code__code_type__cancel_reason
+msgid "Cancel reason"
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/sale_order.py:0
+#: model_terms:ir.ui.view,arch_db:edi_rithum_costco.view_cancellation_form
+#: model_terms:ir.ui.view,arch_db:edi_rithum_costco.view_order_form
+msgid "Cancel with Costco"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation_line__cancellation_id
+msgid "Cancellation"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields.selection,name:edi_rithum_costco.selection__edi_rithum_costco_cancellation__state__done
+msgid "Cancelled"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:edi.rithum.costco.code,name:edi_rithum_costco.cancel_reason_merchant_request
+msgid "Cancelled at Merchant's Request"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_sale_order__costco_shipping_method
+msgid ""
+"Carrier and service Costco asked for (TD505 of the 850). It is repeated on "
+"the shipment confirmation."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:edi.rithum.costco.code,name:edi_rithum_costco.cancel_reason_carrier_does_not_service_area
+msgid "Carrier does not service delivery location"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_code__code
+msgid "Code"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_code__code_type
+msgid "Code Type"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__company_id
+msgid "Company"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model,name:edi_rithum_costco.model_edi_rithum_costco_mapping_inventory
+msgid "Costco 846 Inventory"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model,name:edi_rithum_costco.model_edi_rithum_costco_mapping_850
+msgid "Costco 850 to Sale Order"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model,name:edi_rithum_costco.model_edi_rithum_costco_mapping_cancel
+msgid "Costco 856 Cancellation"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model,name:edi_rithum_costco.model_edi_rithum_costco_mapping_856
+msgid "Costco 856 Shipment Confirmation"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model,name:edi_rithum_costco.model_edi_rithum_costco_mapping_997
+msgid "Costco 997 Acknowledgment"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_sale_order__costco_can_cancel
+msgid "Costco Can Cancel"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_stock_picking__costco_can_confirm
+msgid "Costco Can Confirm"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model,name:edi_rithum_costco.model_edi_rithum_costco_cancellation
+msgid "Costco Cancellation"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model,name:edi_rithum_costco.model_edi_rithum_costco_cancellation_line
+msgid "Costco Cancellation Line"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model,name:edi_rithum_costco.model_edi_rithum_costco_code
+msgid "Costco Message Code"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model,name:edi_rithum_costco.model_edi_rithum_costco_product
+msgid "Costco Product"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_product__costco_sku
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_sale_order_line__costco_sku
+msgid "Costco SKU"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_delivery_carrier__costco_shipping_method
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_sale_order__costco_shipping_method
+msgid "Costco Shipping Method"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.actions.act_window,name:edi_rithum_costco.action_cancellation
+msgid "Costco cancellations"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model,name:edi_rithum_costco.model_edi_rithum_costco_handler_input_validate
+msgid "Costco file integrity check"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model,name:edi_rithum_costco.model_edi_rithum_costco_mapping_inbound
+msgid "Costco inbound documents"
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/edi_backend.py:0
+msgid "Costco inventory"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.actions.act_window,name:edi_rithum_costco.action_costco_product
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_backend__costco_product_count
+#: model:ir.ui.menu,name:edi_rithum_costco.menu_costco_product
+#: model_terms:ir.ui.view,arch_db:edi_rithum_costco.edi_backend_view_form
+msgid "Costco products"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_delivery_carrier__costco_shipping_method
+msgid ""
+"Costco's code for this carrier and service (TD505 of the shipment "
+"confirmation), for example UPSN_CG. CommerceHub supplies the list."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_sale_order_line__costco_sku
+msgid ""
+"Costco's own item number for the line (PO107 of the 850). Our item number is"
+" the product's internal reference."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_edi_rithum_costco_product__costco_sku
+msgid "Costco's own item number for the product (LIN05 of the 846)."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.actions.server,name:edi_rithum_costco.ir_cron_costco_inventory_ir_actions_server
+msgid "Costco: send the inventory"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__create_uid
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation_line__create_uid
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_code__create_uid
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_product__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__create_date
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation_line__create_date
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_code__create_date
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_product__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:edi.rithum.costco.code,name:edi_rithum_costco.cancel_reason_customer_request
+msgid "Customer Changed Mind"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_code__name
+msgid "Description"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__edi_disable_auto
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_stock_picking__edi_disable_auto
+msgid "Disable auto"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model_terms:ir.ui.view,arch_db:edi_rithum_costco.view_costco_product_search
+msgid "Discontinued"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_product__discontinued_on
+msgid "Discontinued On"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_backend__display_name
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__display_name
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation_line__display_name
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_code__display_name
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_handler_input_validate__display_name
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_mapping_850__display_name
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_mapping_856__display_name
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_mapping_997__display_name
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_mapping_cancel__display_name
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_mapping_inbound__display_name
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_mapping_inventory__display_name
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_product__display_name
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_sale_order__display_name
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_sale_order_line__display_name
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_stock_warehouse__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields.selection,name:edi_rithum_costco.selection__edi_rithum_costco_cancellation__state__draft
+msgid "Draft"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:edi.rithum.costco.code,name:edi_rithum_costco.cancel_reason_duplicate_order
+msgid "Duplicate Order"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model,name:edi_rithum_costco.model_edi_backend
+msgid "EDI Backend"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__origin_exchange_type_id
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_stock_picking__origin_exchange_type_id
+msgid "EDI origin exchange type"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__origin_exchange_record_id
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_stock_picking__origin_exchange_record_id
+msgid "EDI origin record"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_edi_rithum_costco_cancellation__origin_exchange_record_id
+#: model:ir.model.fields,help:edi_rithum_costco.field_stock_picking__origin_exchange_record_id
+msgid "EDI record that originated this document."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__edi_config
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_stock_picking__edi_config
+msgid "Edi Config"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__edi_has_form_config
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_stock_picking__edi_has_form_config
+msgid "Edi Has Form Config"
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/wizards/cancellation.py:0
+msgid "Enter the quantity to cancel on a line."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__exchange_record_ids
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_stock_picking__exchange_record_ids
+msgid "Exchange Record"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__exchange_record_count
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_stock_picking__exchange_record_count
+msgid "Exchange Record Count"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__exchange_related_record_ids
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_stock_picking__exchange_related_record_ids
+msgid "Exchange Related Record"
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_inbound.py:0
+msgid "Expected one kind of document in the file, found: %(found)s."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_edi_rithum_costco_cancellation__note
+msgid "Free text sent with the reason."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_997.py:0
+msgid "Group reason code %(code)s."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_backend__id
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__id
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation_line__id
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_code__id
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_handler_input_validate__id
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_mapping_850__id
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_mapping_856__id
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_mapping_997__id
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_mapping_cancel__id
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_mapping_inbound__id
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_mapping_inventory__id
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_product__id
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_sale_order__id
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_sale_order_line__id
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_stock_picking__id
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_stock_warehouse__id
+msgid "ID"
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_850.py:0
+msgid "ISA15 is '%(found)s' but this backend expects '%(expected)s'."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_edi_rithum_costco_cancellation__name
+msgid "Identifies the message (BSN02) in Costco's system."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_edi_rithum_costco_cancellation__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_edi_rithum_costco_cancellation__message_has_error
+#: model:ir.model.fields,help:edi_rithum_costco.field_edi_rithum_costco_cancellation__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model_terms:ir.ui.view,arch_db:edi_rithum_costco.view_costco_product_search
+msgid "Inactive"
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_850.py:0
+#: code:addons/edi_rithum_costco/models/mapping_997.py:0
+msgid "Invalid X12 document: %(issues)s"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__write_uid
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation_line__write_uid
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_code__write_uid
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_product__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__write_date
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation_line__write_date
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_code__write_date
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_product__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__line_ids
+msgid "Line"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:edi.rithum.costco.code,name:edi_rithum_costco.cancel_reason_min_order_not_met
+msgid "Minimum Order Not Met"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__name
+msgid "Name"
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/wizards/cancellation.py:0
+msgid "New"
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/edi_backend.py:0
+msgid "No Costco order line was found."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_inventory.py:0
+msgid ""
+"No file was received from Costco yet, so its interchange ID is not known. "
+"Receive an order first."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_997.py:0
+msgid "No file we sent has the control number %(number)s."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_856.py:0
+msgid "No line of the Costco order was shipped."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_inventory.py:0
+msgid "No product is bound to %(name)s."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_850.py:0
+msgid "No unit of measure has UNECE code %(code)s."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__note
+msgid "Note"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_edi_rithum_costco_cancellation__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_edi_rithum_costco_cancellation__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation_line__open_quantity
+msgid "Open Quantity"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__order_id
+msgid "Order"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:edi.rithum.costco.code,name:edi_rithum_costco.cancel_reason_order_entry_error
+msgid "Order Entry Error"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:edi.rithum.costco.code,name:edi_rithum_costco.cancel_reason_info_missing
+msgid "Order Info Missing"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation_line__sale_line_id
+msgid "Order line"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_edi_rithum_costco_cancellation_line__open_quantity
+msgid "Ordered units not yet delivered."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:edi.rithum.costco.code,name:edi_rithum_costco.cancel_reason_out_of_stock
+msgid "Out of Stock"
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_850.py:0
+msgid "PO %(po)s already exists as %(order)s."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_850.py:0
+msgid "PO1 line %(line)s has no vendor item number (PO109, VN)."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation_line__product_id
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_product__product_id
+msgid "Product"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:edi.rithum.costco.code,name:edi_rithum_costco.cancel_reason_discontinued
+msgid "Product Has Been Discontinued"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_edi_backend__costco_product_count
+msgid "Products bound to this backend, inactive ones included."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_856.py:0
+msgid ""
+"Put every shipped item in a package before confirming the shipment: "
+"%(products)s."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__reason_id
+msgid "Reason"
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_997.py:0
+msgid "Reason code %(code)s."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model_terms:ir.ui.view,arch_db:edi_rithum_costco.view_picking_form
+msgid "Resend Costco shipment confirmation"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_stock_warehouse__costco_warehouse_code
+msgid "Costco warehouse ID"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model,name:edi_rithum_costco.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model,name:edi_rithum_costco.model_sale_order_line
+msgid "Sales Order Line"
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_997.py:0
+msgid "Segment %(id)s, position %(position)s, error code %(code)s."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model_terms:ir.ui.view,arch_db:edi_rithum_costco.edi_backend_view_form
+msgid "Send Costco inventory"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model_terms:ir.ui.view,arch_db:edi_rithum_costco.view_cancellation_form
+msgid "Send again"
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_856.py:0
+msgid ""
+"Set a Costco shipping method on the delivery method %(carrier)s: Costco "
+"needs the code of the carrier and service that was used, and does not accept"
+" %(unspecified)s."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_inventory.py:0
+msgid "Set the Costco warehouse ID on at least one warehouse."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_856.py:0
+msgid ""
+"Set the Costco warehouse ID on the warehouse %(name)s: Costco rejects a "
+"shipment confirmation unless it names a warehouse already registered for "
+"Costco in your Rithum account."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/stock_picking.py:0
+msgid "Shipment confirmation"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model,name:edi_rithum_costco.model_delivery_carrier
+msgid "Shipping Methods"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__state
+msgid "State"
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_inbound.py:0
+msgid "The Costco document %(set)s (group %(group)s) is not supported."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_stock_warehouse__costco_warehouse_code
+msgid ""
+"The ID of this warehouse as registered for Costco in the Rithum portal. "
+"Costco needs it on every shipment confirmation (N104 of the warehouse name "
+"segment) and rejects the confirmation if it does not know it. It must also "
+"match the warehouse IDs of the inventory file."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_856.py:0
+msgid ""
+"The components of %(kit)s in package %(package)s do not make whole kits."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_edi_rithum_costco_product__discontinued_on
+msgid ""
+"The date replenishment stops. It is reported with the stock and must stay on"
+" every update until the product runs out."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_856.py:0
+msgid "The delivery %(name)s has no shipping weight."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_856.py:0
+msgid ""
+"The delivery has %(packages)s package(s) but %(numbers)s tracking number(s):"
+" Costco needs one for each package."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/handler_input_validate.py:0
+msgid ""
+"The file does not match the MD5 in its name (expected %(expected)s, found "
+"%(found)s): it was damaged in transfer."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/edi_backend.py:0
+msgid "The inventory was sent (%(name)s)."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_856.py:0
+msgid "The order %(name)s was not created from an EDI file."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/wizards/cancellation.py:0
+msgid "The order did not come from Costco."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_850.py:0
+msgid ""
+"The packing slip language %(code)s has no installed language, so the "
+"delivery contact has none set."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_997.py:0
+msgid "The partner rejected the file (status %s)."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/stock_picking.py:0
+msgid "The shipment confirmation was sent."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_edi_rithum_costco_code__code
+msgid "The value sent in the message."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/sale_order.py:0
+msgid "There is nothing to cancel on this order."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/sale_order.py:0
+msgid ""
+"This Costco order has units still to deliver: use \"Cancel with Costco\" so "
+"that Costco is told and given a reason."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/wizards/cancellation.py:0
+msgid "This cancellation was already made."
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/stock_picking.py:0
+msgid "This delivery has no Costco shipment to confirm."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:edi.rithum.costco.code,name:edi_rithum_costco.cancel_reason_close_and_reissue
+msgid "To close order and allow reissue"
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_997.py:0
+msgid "Transaction %(set)s %(number)s: %(status)s."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model,name:edi_rithum_costco.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:edi.rithum.costco.code,name:edi_rithum_costco.cancel_reason_unable_to_contact_recipient
+msgid "Unable to contact recipient"
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_850.py:0
+msgid "Unit %(unit)s has no UNECE mapping."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_edi_rithum_costco_cancellation_line__quantity
+msgid "Units to cancel."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_edi_rithum_costco_product__active
+msgid "Untick to stop reporting the product in the inventory."
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model,name:edi_rithum_costco.model_stock_warehouse
+msgid "Warehouse"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,field_description:edi_rithum_costco.field_edi_rithum_costco_cancellation__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_edi_rithum_costco_cancellation__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: edi_rithum_costco
+#: model:ir.model.fields,help:edi_rithum_costco.field_edi_rithum_costco_cancellation__edi_disable_auto
+#: model:ir.model.fields,help:edi_rithum_costco.field_stock_picking__edi_disable_auto
+msgid "When marked, EDI automatic processing will be avoided"
+msgstr ""
+
+#. module: edi_rithum_costco
+#. odoo-python
+#: code:addons/edi_rithum_costco/models/mapping_inbound.py:0
+msgid "none"
+msgstr ""

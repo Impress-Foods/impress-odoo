@@ -96,3 +96,6 @@ mypy.ini
 /.extra_modules
 .claude
 CLAUDE.md
+
+# edi_rithum_costco: partner interchanges pulled from SFTP
+edi_rithum_costco/*.intchg
