@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Scheme under which a partner's X12 interchange sender ID (ISA06) is stored. -->
+    <record id="id_category_x12" model="res.partner.id_category">
+        <field name="name">X12 interchange ID</field>
+        <field name="code">X12</field>
+    </record>
+
+</odoo>
