@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="edi_backend_x12" model="edi.backend.type">
+        <field name="name">X12</field>
+        <field name="code">x12</field>
+    </record>
+
+</odoo>

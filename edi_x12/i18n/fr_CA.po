@@ -1,0 +1,165 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* edi_x12
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e-20261022\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr_CA\n"
+
+#. module: edi_x12
+#. odoo-python
+#: code:addons/edi_x12/models/edi_exchange_record.py:0
+msgid "%(type)s could not be sent: %(error)s"
+msgstr ""
+
+#. module: edi_x12
+#: model:ir.model.fields,field_description:edi_x12.field_edi_backend__display_name
+#: model:ir.model.fields,field_description:edi_x12.field_edi_exchange_record__display_name
+#: model:ir.model.fields,field_description:edi_x12.field_edi_exchange_type__display_name
+#: model:ir.model.fields,field_description:edi_x12.field_edi_x12_handler_generate__display_name
+#: model:ir.model.fields,field_description:edi_x12.field_edi_x12_handler_process__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: edi_x12
+#: model:ir.model,name:edi_x12.model_edi_backend
+msgid "EDI Backend"
+msgstr ""
+
+#. module: edi_x12
+#: model:ir.model,name:edi_x12.model_edi_exchange_type
+msgid "EDI Exchange Type"
+msgstr ""
+
+#. module: edi_x12
+#: model:ir.model,name:edi_x12.model_edi_x12_handler_generate
+msgid "EDI X12 Handler Generate"
+msgstr ""
+
+#. module: edi_x12
+#: model:ir.model,name:edi_x12.model_edi_x12_handler_process
+msgid "EDI X12 Handler Process"
+msgstr ""
+
+#. module: edi_x12
+#: model:ir.model,name:edi_x12.model_edi_exchange_record
+msgid "EDI exchange Record"
+msgstr ""
+
+#. module: edi_x12
+#. odoo-python
+#: code:addons/edi_x12/models/edi_exchange_type.py:0
+msgid ""
+"Exchange type %(type)s needs %(key)s under x12 in its advanced settings."
+msgstr ""
+
+#. module: edi_x12
+#: model:ir.model.fields,field_description:edi_x12.field_edi_backend__id
+#: model:ir.model.fields,field_description:edi_x12.field_edi_exchange_record__id
+#: model:ir.model.fields,field_description:edi_x12.field_edi_exchange_type__id
+#: model:ir.model.fields,field_description:edi_x12.field_edi_x12_handler_generate__id
+#: model:ir.model.fields,field_description:edi_x12.field_edi_x12_handler_process__id
+msgid "ID"
+msgstr ""
+
+#. module: edi_x12
+#: model:ir.model.fields,help:edi_x12.field_edi_backend__x12_sender_qualifier
+msgid "ISA05 of the interchanges we send."
+msgstr ""
+
+#. module: edi_x12
+#: model:ir.model.fields,help:edi_x12.field_edi_exchange_record__x12_control_number
+msgid ""
+"Interchange control number (ISA13) of the file we sent. The partner's "
+"acknowledgment refers to the file by it."
+msgstr ""
+
+#. module: edi_x12
+#: model:ir.model.fields,help:edi_x12.field_edi_backend__x12_sender_id
+msgid "Our interchange ID (ISA06, GS02) on the interchanges we send."
+msgstr ""
+
+#. module: edi_x12
+#: model_terms:ir.ui.view,arch_db:edi_x12.edi_backend_view_form
+msgid "Our side"
+msgstr ""
+
+#. module: edi_x12
+#: model:ir.model.fields,help:edi_x12.field_edi_backend__x12_partner_scheme
+msgid ""
+"Partner ID scheme (res.partner.id_category code) that holds the X12 "
+"interchange sender ID of a trading partner."
+msgstr ""
+
+#. module: edi_x12
+#: model:ir.model.fields,help:edi_x12.field_edi_backend__x12_production
+msgid ""
+"Production backend: inbound files must carry ISA15 'P'. Test backends take "
+"'T'."
+msgstr ""
+
+#. module: edi_x12
+#. odoo-python
+#: code:addons/edi_x12/models/edi_backend.py:0
+msgid ""
+"Set the X12 sender ID on the backend %(name)s: it is our interchange ID on "
+"every file we send."
+msgstr ""
+
+#. module: edi_x12
+#: model_terms:ir.ui.view,arch_db:edi_x12.edi_backend_view_form
+msgid "Trading partners"
+msgstr ""
+
+#. module: edi_x12
+#: model:ir.model.fields,help:edi_x12.field_edi_exchange_record__x12_document
+msgid "Transaction set the file holds, for example 850 or 997."
+msgstr ""
+
+#. module: edi_x12
+#: model_terms:ir.ui.view,arch_db:edi_x12.edi_backend_view_form
+msgid "X12"
+msgstr ""
+
+#. module: edi_x12
+#: model:ir.model.fields,field_description:edi_x12.field_edi_backend__x12_partner_scheme
+msgid "X12 Partner Scheme"
+msgstr ""
+
+#. module: edi_x12
+#: model:ir.model.fields,field_description:edi_x12.field_edi_backend__x12_production
+msgid "X12 Production"
+msgstr ""
+
+#. module: edi_x12
+#: model:ir.model.fields,field_description:edi_x12.field_edi_exchange_record__x12_control_number
+msgid "X12 control number"
+msgstr ""
+
+#. module: edi_x12
+#: model:ir.model.fields,field_description:edi_x12.field_edi_exchange_record__x12_document
+msgid "X12 document"
+msgstr ""
+
+#. module: edi_x12
+#: model:res.partner.id_category,name:edi_x12.id_category_x12
+msgid "X12 interchange ID"
+msgstr ""
+
+#. module: edi_x12
+#: model:ir.model.fields,field_description:edi_x12.field_edi_backend__x12_sender_id
+msgid "X12 sender ID"
+msgstr ""
+
+#. module: edi_x12
+#: model:ir.model.fields,field_description:edi_x12.field_edi_backend__x12_sender_qualifier
+msgid "X12 sender qualifier"
+msgstr ""

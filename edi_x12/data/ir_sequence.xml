@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- ISA13 and GS06 of the interchanges we send. -->
+    <record id="seq_x12_interchange_control" model="ir.sequence">
+        <field name="name">X12 interchange control number</field>
+        <field name="code">edi.x12.interchange_control</field>
+        <field name="implementation">no_gap</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="padding">0</field>
+    </record>
+
+</odoo>

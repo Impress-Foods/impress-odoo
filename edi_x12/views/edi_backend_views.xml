@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="edi_backend_view_form" model="ir.ui.view">
+        <field name="name">edi.backend.form.x12</field>
+        <field name="model">edi.backend</field>
+        <field name="inherit_id" ref="edi_core_oca.edi_backend_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='auto_cleanup']" position="after">
+                <page
+                    name="x12_config"
+                    string="X12"
+                    invisible="backend_type_code != 'x12'"
+                >
+                    <group name="x12_identity" string="Our side">
+                        <field name="x12_sender_qualifier" />
+                        <field name="x12_sender_id" />
+                        <field name="x12_production" />
+                    </group>
+                    <group name="x12_partner" string="Trading partners">
+                        <field name="x12_partner_scheme" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

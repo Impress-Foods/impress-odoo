@@ -1,2 +1,5 @@
 # generated from manifests external_dependencies
+defusedxml>=0.7
+odoo_upgrade @ git+https://github.com/odoo/upgrade-util@master
 pydantic>=2.0.0
+pyx12==4.0.0
