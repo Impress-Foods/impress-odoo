@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- The shipment confirmation we send when a Costco delivery is done. -->
+    <record id="costco_856_out" model="edi.exchange.type">
+        <field name="name">Costco 856 (Out)</field>
+        <field name="code">costco_856_out</field>
+        <field name="backend_type_id" ref="edi_x12.edi_backend_x12"/>
+        <field name="backend_id" ref="edi_rithum.rithum_backend" />
+        <field name="direction">output</field>
+        <field name="encoding">cp1252</field>
+        <field name="exchange_file_ext">intchg</field>
+        <field name="generate_model_id" ref="edi_x12.model_edi_x12_handler_generate" />
+        <field name="send_model_id" ref="edi_storage_oca.model_edi_oca_storage_handler" />
+        <!-- Costco answers with a 997, which arrives as a Rithum (In) file. -->
+        <field name="ack_type_id" ref="edi_rithum.rithum_in" />
+        <field name="advanced_settings_edit">x12:
+  map_set: edi_rithum_costco/x12_maps
+  mapping: edi.rithum.costco.mapping.856
+  filename: "HUB{control:09d}"
+</field>
+    </record>
+
+    <!-- The stock of the products bound to Costco, sent on a schedule or on demand. -->
+    <record id="costco_846_out" model="edi.exchange.type">
+        <field name="name">Costco 846 Inventory (Out)</field>
+        <field name="code">costco_846_out</field>
+        <field name="backend_type_id" ref="edi_x12.edi_backend_x12"/>
+        <field name="backend_id" ref="edi_rithum.rithum_backend" />
+        <field name="direction">output</field>
+        <field name="encoding">cp1252</field>
+        <field name="exchange_file_ext">intchg</field>
+        <field name="generate_model_id" ref="edi_x12.model_edi_x12_handler_generate" />
+        <field name="send_model_id" ref="edi_storage_oca.model_edi_oca_storage_handler" />
+        <field name="ack_type_id" ref="edi_rithum.rithum_in" />
+        <field name="advanced_settings_edit">x12:
+  map_set: edi_rithum_costco/x12_maps
+  mapping: edi.rithum.costco.mapping.inventory
+  filename: "HUB{control:09d}"
+</field>
+    </record>
+
+    <!-- The cancellation of units we will not ship, made from a sale order. -->
+    <record id="costco_cancel_out" model="edi.exchange.type">
+        <field name="name">Costco 856 Cancellation (Out)</field>
+        <field name="code">costco_cancel_out</field>
+        <field name="backend_type_id" ref="edi_x12.edi_backend_x12"/>
+        <field name="backend_id" ref="edi_rithum.rithum_backend" />
+        <field name="direction">output</field>
+        <field name="encoding">cp1252</field>
+        <field name="exchange_file_ext">intchg</field>
+        <field name="generate_model_id" ref="edi_x12.model_edi_x12_handler_generate" />
+        <field name="send_model_id" ref="edi_storage_oca.model_edi_oca_storage_handler" />
+        <field name="ack_type_id" ref="edi_rithum.rithum_in" />
+        <field name="advanced_settings_edit">x12:
+  map_set: edi_rithum_costco/x12_maps
+  mapping: edi.rithum.costco.mapping.cancel
+  filename: "HUB{control:09d}"
+</field>
+    </record>
+
+</odoo>

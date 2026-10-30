@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="seq_cancellation" model="ir.sequence">
+        <field name="name">Costco cancellation</field>
+        <field name="code">edi.rithum.costco.cancellation</field>
+        <field name="prefix">COSTCO-CXL/</field>
+        <field name="padding">5</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_costco_code_user,edi.rithum.costco.code user,model_edi_rithum_costco_code,base.group_user,1,0,0,0
+access_costco_code_manager,edi.rithum.costco.code manager,model_edi_rithum_costco_code,sales_team.group_sale_manager,1,1,1,1
+access_costco_cancellation_salesman,edi.rithum.costco.cancellation salesman,model_edi_rithum_costco_cancellation,sales_team.group_sale_salesman,1,1,1,0
+access_costco_cancellation_manager,edi.rithum.costco.cancellation manager,model_edi_rithum_costco_cancellation,sales_team.group_sale_manager,1,1,1,1
+access_costco_cancellation_line_salesman,edi.rithum.costco.cancellation.line salesman,model_edi_rithum_costco_cancellation_line,sales_team.group_sale_salesman,1,1,1,0
+access_costco_cancellation_line_manager,edi.rithum.costco.cancellation.line manager,model_edi_rithum_costco_cancellation_line,sales_team.group_sale_manager,1,1,1,1
+access_costco_product_manager,edi.rithum.costco.product manager,model_edi_rithum_costco_product,sales_team.group_sale_manager,1,1,1,1

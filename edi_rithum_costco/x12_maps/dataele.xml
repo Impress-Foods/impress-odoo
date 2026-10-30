@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Element catalog; generated from general.yaml -->
+<data_elements>
+  <data_ele ele_num="1005" data_type="ID" min_len="4" max_len="4" name="Hierarchical Structure Code" />
+  <data_ele ele_num="124" data_type="AN" min_len="2" max_len="15" name="124" />
+  <data_ele ele_num="127" data_type="AN" min_len="1" max_len="30" name="Reference Identification" />
+  <data_ele ele_num="128" data_type="ID" min_len="2" max_len="3" name="Reference Identification Qualifier" />
+  <data_ele ele_num="133" data_type="ID" min_len="1" max_len="2" name="Routing Sequence Code" />
+  <data_ele ele_num="142" data_type="AN" min_len="2" max_len="15" name="Application Senders Code" />
+  <data_ele ele_num="143" data_type="ID" min_len="3" max_len="3" name="Transaction Set Identifier Code" />
+  <data_ele ele_num="1705" data_type="AN" min_len="1" max_len="35" name="Implementation Convention Reference" />
+  <data_ele ele_num="187" data_type="ID" min_len="1" max_len="2" name="Weight Qualifier" />
+  <data_ele ele_num="234" data_type="AN" min_len="1" max_len="48" name="Product/Service ID" />
+  <data_ele ele_num="235" data_type="ID" min_len="2" max_len="2" name="Product/Service ID Qualifier" />
+  <data_ele ele_num="28" data_type="N0" min_len="1" max_len="9" name="Group Control Number" />
+  <data_ele ele_num="324" data_type="AN" min_len="1" max_len="22" name="Purchase Order Number" />
+  <data_ele ele_num="329" data_type="AN" min_len="4" max_len="9" name="Transaction Set Control Number" />
+  <data_ele ele_num="330" data_type="R" min_len="1" max_len="15" name="Quantity Ordered" />
+  <data_ele ele_num="337" data_type="TM" min_len="4" max_len="8" name="Time" />
+  <data_ele ele_num="349" data_type="ID" min_len="1" max_len="1" name="Item Description Type" />
+  <data_ele ele_num="350" data_type="AN" min_len="1" max_len="20" name="Assigned Identification" />
+  <data_ele ele_num="352" data_type="AN" min_len="1" max_len="80" name="Description" />
+  <data_ele ele_num="353" data_type="ID" min_len="2" max_len="2" name="Transaction Set Purpose Code" />
+  <data_ele ele_num="354" data_type="N0" min_len="1" max_len="6" name="Number of Line Items" />
+  <data_ele ele_num="355" data_type="ID" min_len="2" max_len="2" name="Unit or Basis for Measurement Code" />
+  <data_ele ele_num="373" data_type="DT" min_len="8" max_len="8" name="Date" />
+  <data_ele ele_num="374" data_type="ID" min_len="3" max_len="3" name="Date/Time Qualifier" />
+  <data_ele ele_num="380" data_type="R" min_len="1" max_len="15" name="Quantity" />
+  <data_ele ele_num="382" data_type="R" min_len="1" max_len="10" name="Number of Units Shipped" />
+  <data_ele ele_num="387" data_type="AN" min_len="1" max_len="35" name="Routing" />
+  <data_ele ele_num="396" data_type="AN" min_len="2" max_len="30" name="Shipment Identification" />
+  <data_ele ele_num="447" data_type="AN" min_len="1" max_len="6" name="Loop Identifier Code" />
+  <data_ele ele_num="455" data_type="ID" min_len="1" max_len="2" name="Responsible Agency Code" />
+  <data_ele ele_num="479" data_type="ID" min_len="2" max_len="2" name="Functional Identifier Code" />
+  <data_ele ele_num="480" data_type="AN" min_len="1" max_len="12" name="Version / Release / Industry Identifier Code" />
+  <data_ele ele_num="623" data_type="ID" min_len="2" max_len="2" name="Time Code" />
+  <data_ele ele_num="628" data_type="AN" min_len="1" max_len="12" name="Hierarchical ID Number" />
+  <data_ele ele_num="66" data_type="ID" min_len="1" max_len="2" name="Identification Code Qualifier" />
+  <data_ele ele_num="668" data_type="ID" min_len="2" max_len="2" name="Line Item Status Code" />
+  <data_ele ele_num="67" data_type="AN" min_len="2" max_len="80" name="Identification Code" />
+  <data_ele ele_num="673" data_type="ID" min_len="2" max_len="2" name="Quantity Qualifier" />
+  <data_ele ele_num="734" data_type="AN" min_len="1" max_len="12" name="Hierarchical Parent ID Number" />
+  <data_ele ele_num="735" data_type="ID" min_len="1" max_len="2" name="Hierarchical Level Code" />
+  <data_ele ele_num="750" data_type="ID" min_len="2" max_len="3" name="Product/Process Characteristic Code" />
+  <data_ele ele_num="755" data_type="ID" min_len="2" max_len="2" name="Report Type Code" />
+  <data_ele ele_num="81" data_type="R" min_len="1" max_len="10" name="Weight" />
+  <data_ele ele_num="87" data_type="AN" min_len="1" max_len="48" name="Marks and Numbers" />
+  <data_ele ele_num="88" data_type="ID" min_len="1" max_len="2" name="Marks and Numbers Qualifier" />
+  <data_ele ele_num="96" data_type="N0" min_len="1" max_len="10" name="Number of Included Segments" />
+  <data_ele ele_num="97" data_type="N0" min_len="1" max_len="6" name="97" />
+  <data_ele ele_num="98" data_type="ID" min_len="2" max_len="3" name="Entity Identifier Code" />
+  <data_ele ele_num="G128" data_type="AN" min_len="1" max_len="128" name="Wide text element (values not enforced)" />
+  <data_ele ele_num="G80" data_type="AN" min_len="1" max_len="80" name="Generic text element (values not enforced)" />
+  <data_ele ele_num="I01" data_type="ID" min_len="2" max_len="2" name="I01" />
+  <data_ele ele_num="I02" data_type="AN" min_len="10" max_len="10" name="I02" />
+  <data_ele ele_num="I03" data_type="ID" min_len="2" max_len="2" name="I03" />
+  <data_ele ele_num="I04" data_type="AN" min_len="10" max_len="10" name="I04" />
+  <data_ele ele_num="I05" data_type="ID" min_len="2" max_len="2" name="I05" />
+  <data_ele ele_num="I06" data_type="AN" min_len="15" max_len="15" name="I06" />
+  <data_ele ele_num="I07" data_type="AN" min_len="15" max_len="15" name="I07" />
+  <data_ele ele_num="I08" data_type="DT" min_len="6" max_len="6" name="I08" />
+  <data_ele ele_num="I09" data_type="TM" min_len="4" max_len="4" name="I09" />
+  <data_ele ele_num="I10" data_type="ID" min_len="1" max_len="1" name="I10" />
+  <data_ele ele_num="I11" data_type="ID" min_len="5" max_len="5" name="I11" />
+  <data_ele ele_num="I12" data_type="N0" min_len="9" max_len="9" name="I12" />
+  <data_ele ele_num="I13" data_type="ID" min_len="1" max_len="1" name="I13" />
+  <data_ele ele_num="I14" data_type="ID" min_len="1" max_len="1" name="I14" />
+  <data_ele ele_num="I15" data_type="AN" min_len="1" max_len="1" name="I15" />
+  <data_ele ele_num="I16" data_type="N0" min_len="1" max_len="5" name="I16" />
+</data_elements>

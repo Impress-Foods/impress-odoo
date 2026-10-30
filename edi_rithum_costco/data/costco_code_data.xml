@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Cancel reason codes Costco accepts (REF*TD of the 856). -->
+    <record id="cancel_reason_bad_address" model="edi.rithum.costco.code">
+        <field name="code_type">cancel_reason</field>
+        <field name="code">bad_address</field>
+        <field name="name">Bad Address</field>
+    </record>
+
+    <record id="cancel_reason_bad_sku" model="edi.rithum.costco.code">
+        <field name="code_type">cancel_reason</field>
+        <field name="code">bad_sku</field>
+        <field name="name">Bad SKU</field>
+    </record>
+
+    <record id="cancel_reason_merchant_request" model="edi.rithum.costco.code">
+        <field name="code_type">cancel_reason</field>
+        <field name="code">merchant_request</field>
+        <field name="name">Cancelled at Merchant's Request</field>
+    </record>
+
+    <record id="cancel_reason_carrier_does_not_service_area" model="edi.rithum.costco.code">
+        <field name="code_type">cancel_reason</field>
+        <field name="code">carrier_does_not_service_area</field>
+        <field name="name">Carrier does not service delivery location</field>
+    </record>
+
+    <record id="cancel_reason_customer_request" model="edi.rithum.costco.code">
+        <field name="code_type">cancel_reason</field>
+        <field name="code">customer_request</field>
+        <field name="name">Customer Changed Mind</field>
+    </record>
+
+    <record id="cancel_reason_duplicate_order" model="edi.rithum.costco.code">
+        <field name="code_type">cancel_reason</field>
+        <field name="code">duplicate_order</field>
+        <field name="name">Duplicate Order</field>
+    </record>
+
+    <record id="cancel_reason_min_order_not_met" model="edi.rithum.costco.code">
+        <field name="code_type">cancel_reason</field>
+        <field name="code">min_order_not_met</field>
+        <field name="name">Minimum Order Not Met</field>
+    </record>
+
+    <record id="cancel_reason_order_entry_error" model="edi.rithum.costco.code">
+        <field name="code_type">cancel_reason</field>
+        <field name="code">order_entry_error</field>
+        <field name="name">Order Entry Error</field>
+    </record>
+
+    <record id="cancel_reason_info_missing" model="edi.rithum.costco.code">
+        <field name="code_type">cancel_reason</field>
+        <field name="code">info_missing</field>
+        <field name="name">Order Info Missing</field>
+    </record>
+
+    <record id="cancel_reason_out_of_stock" model="edi.rithum.costco.code">
+        <field name="code_type">cancel_reason</field>
+        <field name="code">out_of_stock</field>
+        <field name="name">Out of Stock</field>
+    </record>
+
+    <record id="cancel_reason_discontinued" model="edi.rithum.costco.code">
+        <field name="code_type">cancel_reason</field>
+        <field name="code">discontinued</field>
+        <field name="name">Product Has Been Discontinued</field>
+    </record>
+
+    <record id="cancel_reason_close_and_reissue" model="edi.rithum.costco.code">
+        <field name="code_type">cancel_reason</field>
+        <field name="code">close_and_reissue</field>
+        <field name="name">To close order and allow reissue</field>
+    </record>
+
+    <record id="cancel_reason_unable_to_contact_recipient" model="edi.rithum.costco.code">
+        <field name="code_type">cancel_reason</field>
+        <field name="code">unable_to_contact_recipient</field>
+        <field name="name">Unable to contact recipient</field>
+    </record>
+
+</odoo>

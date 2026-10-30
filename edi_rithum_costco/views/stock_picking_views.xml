@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form.costco</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='action_cancel']" position="before">
+                <field name="costco_can_confirm" invisible="1" />
+                <button
+                    name="action_costco_resend_confirmation"
+                    string="Resend Costco shipment confirmation"
+                    type="object"
+                    invisible="not costco_can_confirm"
+                    groups="stock.group_stock_user"
+                />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

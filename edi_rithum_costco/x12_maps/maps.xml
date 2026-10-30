@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Index keyed on icvn / fic / vriic -->
+<maps>
+  <version icvn="00401">
+    <map vriic="004010" fic="IB" abbr="846">846.004010.xml</map>
+    <map vriic="004010" fic="PO" abbr="850">850.004010.xml</map>
+    <map vriic="004010" fic="SH" abbr="856">856.004010.xml</map>
+    <map vriic="004010" fic="FA" abbr="997">997.004010.xml</map>
+  </version>
+</maps>

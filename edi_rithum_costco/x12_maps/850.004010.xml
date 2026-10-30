@@ -1,0 +1,1205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 850 map; generated -->
+<transaction xid="850">
+  <name>Purchase Order</name>
+  <loop xid="ISA_LOOP">
+    <name>Interchange Control Header</name>
+    <usage>R</usage>
+    <pos>001</pos>
+    <repeat>&gt;1</repeat>
+    <segment xid="ISA">
+      <name>Interchange Control Header</name>
+      <usage>R</usage>
+      <pos>010</pos>
+      <max_use>1</max_use>
+      <element xid="ISA01">
+        <data_ele>I01</data_ele>
+        <name>Authorization Information Qualifier</name>
+        <usage>R</usage>
+        <seq>01</seq>
+      </element>
+      <element xid="ISA02">
+        <data_ele>I02</data_ele>
+        <name>Authorization Information</name>
+        <usage>R</usage>
+        <seq>02</seq>
+      </element>
+      <element xid="ISA03">
+        <data_ele>I03</data_ele>
+        <name>Security Information Qualifier</name>
+        <usage>R</usage>
+        <seq>03</seq>
+      </element>
+      <element xid="ISA04">
+        <data_ele>I04</data_ele>
+        <name>Security Information</name>
+        <usage>R</usage>
+        <seq>04</seq>
+      </element>
+      <element xid="ISA05">
+        <data_ele>I05</data_ele>
+        <name>Interchange ID Qualifier</name>
+        <usage>R</usage>
+        <seq>05</seq>
+      </element>
+      <element xid="ISA06">
+        <data_ele>I06</data_ele>
+        <name>Interchange Sender ID</name>
+        <usage>R</usage>
+        <seq>06</seq>
+      </element>
+      <element xid="ISA07">
+        <data_ele>I05</data_ele>
+        <name>Interchange ID Qualifier</name>
+        <usage>R</usage>
+        <seq>07</seq>
+      </element>
+      <element xid="ISA08">
+        <data_ele>I07</data_ele>
+        <name>Interchange Receiver ID</name>
+        <usage>R</usage>
+        <seq>08</seq>
+      </element>
+      <element xid="ISA09">
+        <data_ele>I08</data_ele>
+        <name>Interchange Date</name>
+        <usage>R</usage>
+        <seq>09</seq>
+      </element>
+      <element xid="ISA10">
+        <data_ele>I09</data_ele>
+        <name>Interchange Time</name>
+        <usage>R</usage>
+        <seq>10</seq>
+      </element>
+      <element xid="ISA11">
+        <data_ele>I10</data_ele>
+        <name>Interchange Control Standards Identifier</name>
+        <usage>R</usage>
+        <seq>11</seq>
+      </element>
+      <element xid="ISA12">
+        <data_ele>I11</data_ele>
+        <name>Interchange Control Version Number</name>
+        <usage>R</usage>
+        <seq>12</seq>
+      </element>
+      <element xid="ISA13">
+        <data_ele>I12</data_ele>
+        <name>Interchange Control Number</name>
+        <usage>R</usage>
+        <seq>13</seq>
+      </element>
+      <element xid="ISA14">
+        <data_ele>I13</data_ele>
+        <name>Acknowledgment Requested</name>
+        <usage>R</usage>
+        <seq>14</seq>
+      </element>
+      <element xid="ISA15">
+        <data_ele>I14</data_ele>
+        <name>Usage Indicator</name>
+        <usage>R</usage>
+        <seq>15</seq>
+      </element>
+      <element xid="ISA16">
+        <data_ele>I15</data_ele>
+        <name>Component Element Separator</name>
+        <usage>R</usage>
+        <seq>16</seq>
+      </element>
+    </segment>
+    <loop xid="GS_LOOP">
+      <name>Functional Group Header</name>
+      <usage>R</usage>
+      <pos>020</pos>
+      <repeat>&gt;1</repeat>
+      <segment xid="GS">
+        <name>Functional Group Header</name>
+        <usage>R</usage>
+        <pos>010</pos>
+        <max_use>1</max_use>
+        <element xid="GS01">
+          <data_ele>479</data_ele>
+          <name>Functional Identifier Code</name>
+          <usage>R</usage>
+          <seq>01</seq>
+        </element>
+        <element xid="GS02">
+          <data_ele>142</data_ele>
+          <name>Application Sender's Code</name>
+          <usage>R</usage>
+          <seq>02</seq>
+        </element>
+        <element xid="GS03">
+          <data_ele>124</data_ele>
+          <name>Application Receiver's Code</name>
+          <usage>R</usage>
+          <seq>03</seq>
+        </element>
+        <element xid="GS04">
+          <data_ele>373</data_ele>
+          <name>Date</name>
+          <usage>R</usage>
+          <seq>04</seq>
+        </element>
+        <element xid="GS05">
+          <data_ele>337</data_ele>
+          <name>Time</name>
+          <usage>R</usage>
+          <seq>05</seq>
+        </element>
+        <element xid="GS06">
+          <data_ele>28</data_ele>
+          <name>Group Control Number</name>
+          <usage>R</usage>
+          <seq>06</seq>
+        </element>
+        <element xid="GS07">
+          <data_ele>455</data_ele>
+          <name>Responsible Agency Code</name>
+          <usage>R</usage>
+          <seq>07</seq>
+        </element>
+        <element xid="GS08">
+          <data_ele>480</data_ele>
+          <name>Version / Release / Industry Identifier Code</name>
+          <usage>R</usage>
+          <seq>08</seq>
+        </element>
+      </segment>
+      <loop xid="ST_LOOP">
+        <name>Transaction Set Header</name>
+        <usage>R</usage>
+        <pos>020</pos>
+        <repeat>&gt;1</repeat>
+        <segment xid="ST">
+          <name>Transaction Set Header</name>
+          <usage>R</usage>
+          <pos>005</pos>
+          <max_use>1</max_use>
+          <element xid="ST01">
+            <data_ele>143</data_ele>
+            <name>Transaction Set Identifier Code</name>
+            <usage>R</usage>
+            <seq>01</seq>
+          </element>
+          <element xid="ST02">
+            <data_ele>329</data_ele>
+            <name>Transaction Set Control Number</name>
+            <usage>R</usage>
+            <seq>02</seq>
+          </element>
+        </segment>
+        <segment xid="BEG">
+          <name>Beginning Segment for Purchase Order</name>
+          <usage>R</usage>
+          <pos>010</pos>
+          <max_use>1</max_use>
+          <element xid="BEG01">
+            <data_ele>G80</data_ele>
+            <name>Transaction Set Purpose Code</name>
+            <usage>S</usage>
+            <seq>01</seq>
+          </element>
+          <element xid="BEG02">
+            <data_ele>G80</data_ele>
+            <name>Purchase Order Type Code</name>
+            <usage>S</usage>
+            <seq>02</seq>
+          </element>
+          <element xid="BEG03">
+            <data_ele>G80</data_ele>
+            <name>Purchase Order Number</name>
+            <usage>S</usage>
+            <seq>03</seq>
+          </element>
+          <element xid="BEG04">
+            <data_ele>G80</data_ele>
+            <name>BEG04</name>
+            <usage>S</usage>
+            <seq>04</seq>
+          </element>
+          <element xid="BEG05">
+            <data_ele>G80</data_ele>
+            <name>Date</name>
+            <usage>S</usage>
+            <seq>05</seq>
+          </element>
+        </segment>
+        <segment xid="REF">
+          <name>Reference Identification</name>
+          <usage>S</usage>
+          <pos>020</pos>
+          <max_use>99</max_use>
+          <element xid="REF01">
+            <data_ele>G80</data_ele>
+            <name>Reference Identification Qualifier</name>
+            <usage>S</usage>
+            <seq>01</seq>
+          </element>
+          <element xid="REF02">
+            <data_ele>G80</data_ele>
+            <name>Reference Identification</name>
+            <usage>S</usage>
+            <seq>02</seq>
+          </element>
+          <element xid="REF03">
+            <data_ele>G80</data_ele>
+            <name>Description</name>
+            <usage>S</usage>
+            <seq>03</seq>
+          </element>
+        </segment>
+        <segment xid="CSH">
+          <name>Sales Requirements</name>
+          <usage>S</usage>
+          <pos>030</pos>
+          <max_use>99</max_use>
+          <element xid="CSH01">
+            <data_ele>G80</data_ele>
+            <name>Sales Requirement Code</name>
+            <usage>S</usage>
+            <seq>01</seq>
+          </element>
+          <element xid="CSH02">
+            <data_ele>G80</data_ele>
+            <name>CSH02</name>
+            <usage>S</usage>
+            <seq>02</seq>
+          </element>
+          <element xid="CSH03">
+            <data_ele>G80</data_ele>
+            <name>Amount</name>
+            <usage>S</usage>
+            <seq>03</seq>
+          </element>
+        </segment>
+        <loop xid="SAC_LOOP">
+          <name>SAC</name>
+          <usage>S</usage>
+          <pos>040</pos>
+          <repeat>&gt;1</repeat>
+          <segment xid="SAC">
+            <name>Service, Promotion, Allowance, or</name>
+            <usage>S</usage>
+            <pos>010</pos>
+            <max_use>99</max_use>
+            <element xid="SAC01">
+              <data_ele>G80</data_ele>
+              <name>Allowance or Charge Indicator</name>
+              <usage>S</usage>
+              <seq>01</seq>
+            </element>
+            <element xid="SAC02">
+              <data_ele>G80</data_ele>
+              <name>Service, Promotion, Allowance, or Charge Code</name>
+              <usage>S</usage>
+              <seq>02</seq>
+            </element>
+            <element xid="SAC03">
+              <data_ele>G80</data_ele>
+              <name>SAC03</name>
+              <usage>S</usage>
+              <seq>03</seq>
+            </element>
+            <element xid="SAC04">
+              <data_ele>G80</data_ele>
+              <name>SAC04</name>
+              <usage>S</usage>
+              <seq>04</seq>
+            </element>
+            <element xid="SAC05">
+              <data_ele>G80</data_ele>
+              <name>SAC05</name>
+              <usage>S</usage>
+              <seq>05</seq>
+            </element>
+            <element xid="SAC06">
+              <data_ele>G80</data_ele>
+              <name>SAC06</name>
+              <usage>S</usage>
+              <seq>06</seq>
+            </element>
+            <element xid="SAC07">
+              <data_ele>G80</data_ele>
+              <name>SAC07</name>
+              <usage>S</usage>
+              <seq>07</seq>
+            </element>
+            <element xid="SAC08">
+              <data_ele>G80</data_ele>
+              <name>SAC08</name>
+              <usage>S</usage>
+              <seq>08</seq>
+            </element>
+            <element xid="SAC09">
+              <data_ele>G80</data_ele>
+              <name>SAC09</name>
+              <usage>S</usage>
+              <seq>09</seq>
+            </element>
+            <element xid="SAC10">
+              <data_ele>G80</data_ele>
+              <name>SAC10</name>
+              <usage>S</usage>
+              <seq>10</seq>
+            </element>
+            <element xid="SAC11">
+              <data_ele>G80</data_ele>
+              <name>SAC11</name>
+              <usage>S</usage>
+              <seq>11</seq>
+            </element>
+            <element xid="SAC12">
+              <data_ele>G80</data_ele>
+              <name>SAC12</name>
+              <usage>S</usage>
+              <seq>12</seq>
+            </element>
+            <element xid="SAC13">
+              <data_ele>G80</data_ele>
+              <name>SAC13</name>
+              <usage>S</usage>
+              <seq>13</seq>
+            </element>
+            <element xid="SAC14">
+              <data_ele>G80</data_ele>
+              <name>SAC14</name>
+              <usage>S</usage>
+              <seq>14</seq>
+            </element>
+            <element xid="SAC15">
+              <data_ele>G80</data_ele>
+              <name>Description</name>
+              <usage>S</usage>
+              <seq>15</seq>
+            </element>
+          </segment>
+        </loop>
+        <segment xid="DTM">
+          <name>Date/Time Reference</name>
+          <usage>S</usage>
+          <pos>050</pos>
+          <max_use>99</max_use>
+          <element xid="DTM01">
+            <data_ele>G80</data_ele>
+            <name>Date/Time Qualifier</name>
+            <usage>S</usage>
+            <seq>01</seq>
+          </element>
+          <element xid="DTM02">
+            <data_ele>G80</data_ele>
+            <name>Date</name>
+            <usage>S</usage>
+            <seq>02</seq>
+          </element>
+          <element xid="DTM03">
+            <data_ele>G80</data_ele>
+            <name>Time</name>
+            <usage>S</usage>
+            <seq>03</seq>
+          </element>
+          <element xid="DTM04">
+            <data_ele>G80</data_ele>
+            <name>Time Code</name>
+            <usage>S</usage>
+            <seq>04</seq>
+          </element>
+        </segment>
+        <segment xid="TD5">
+          <name>Carrier Details (Routing</name>
+          <usage>S</usage>
+          <pos>060</pos>
+          <max_use>99</max_use>
+          <element xid="TD501">
+            <data_ele>G80</data_ele>
+            <name>TD501</name>
+            <usage>S</usage>
+            <seq>01</seq>
+          </element>
+          <element xid="TD502">
+            <data_ele>G80</data_ele>
+            <name>TD502</name>
+            <usage>S</usage>
+            <seq>02</seq>
+          </element>
+          <element xid="TD503">
+            <data_ele>G80</data_ele>
+            <name>TD503</name>
+            <usage>S</usage>
+            <seq>03</seq>
+          </element>
+          <element xid="TD504">
+            <data_ele>G80</data_ele>
+            <name>TD504</name>
+            <usage>S</usage>
+            <seq>04</seq>
+          </element>
+          <element xid="TD505">
+            <data_ele>G80</data_ele>
+            <name>Routing</name>
+            <usage>S</usage>
+            <seq>05</seq>
+          </element>
+        </segment>
+        <segment xid="CTB">
+          <name>Restrictions/Conditions</name>
+          <usage>S</usage>
+          <pos>070</pos>
+          <max_use>99</max_use>
+          <element xid="CTB01">
+            <data_ele>G80</data_ele>
+            <name>Restrictions/Conditions Qualifier</name>
+            <usage>S</usage>
+            <seq>01</seq>
+          </element>
+          <element xid="CTB02">
+            <data_ele>G80</data_ele>
+            <name>Description</name>
+            <usage>S</usage>
+            <seq>02</seq>
+          </element>
+        </segment>
+        <loop xid="N9_LOOP">
+          <name>N9</name>
+          <usage>S</usage>
+          <pos>080</pos>
+          <repeat>&gt;1</repeat>
+          <segment xid="N9">
+            <name>Reference Identification</name>
+            <usage>S</usage>
+            <pos>010</pos>
+            <max_use>99</max_use>
+            <element xid="N901">
+              <data_ele>G80</data_ele>
+              <name>Reference Identification Qualifier</name>
+              <usage>S</usage>
+              <seq>01</seq>
+            </element>
+            <element xid="N902">
+              <data_ele>G80</data_ele>
+              <name>Reference Identification</name>
+              <usage>S</usage>
+              <seq>02</seq>
+            </element>
+          </segment>
+          <segment xid="MSG">
+            <name>Message Text</name>
+            <usage>S</usage>
+            <pos>020</pos>
+            <max_use>99</max_use>
+            <element xid="MSG01">
+              <data_ele>G80</data_ele>
+              <name>Free-Form Message Text</name>
+              <usage>S</usage>
+              <seq>01</seq>
+            </element>
+          </segment>
+        </loop>
+        <loop xid="N1_LOOP">
+          <name>N1</name>
+          <usage>S</usage>
+          <pos>090</pos>
+          <repeat>&gt;1</repeat>
+          <segment xid="N1">
+            <name>Name</name>
+            <usage>S</usage>
+            <pos>010</pos>
+            <max_use>99</max_use>
+            <element xid="N101">
+              <data_ele>G80</data_ele>
+              <name>Entity Identifier Code</name>
+              <usage>S</usage>
+              <seq>01</seq>
+            </element>
+            <element xid="N102">
+              <data_ele>G80</data_ele>
+              <name>Name</name>
+              <usage>S</usage>
+              <seq>02</seq>
+            </element>
+            <element xid="N103">
+              <data_ele>G80</data_ele>
+              <name>Identification Code Qualifier</name>
+              <usage>S</usage>
+              <seq>03</seq>
+            </element>
+            <element xid="N104">
+              <data_ele>G80</data_ele>
+              <name>Identification Code</name>
+              <usage>S</usage>
+              <seq>04</seq>
+            </element>
+          </segment>
+          <segment xid="N3">
+            <name>Address Information</name>
+            <usage>S</usage>
+            <pos>020</pos>
+            <max_use>99</max_use>
+            <element xid="N301">
+              <data_ele>G80</data_ele>
+              <name>Address Information</name>
+              <usage>S</usage>
+              <seq>01</seq>
+            </element>
+            <element xid="N302">
+              <data_ele>G80</data_ele>
+              <name>Address Information</name>
+              <usage>S</usage>
+              <seq>02</seq>
+            </element>
+          </segment>
+          <segment xid="N4">
+            <name>Geographic Location</name>
+            <usage>S</usage>
+            <pos>030</pos>
+            <max_use>99</max_use>
+            <element xid="N401">
+              <data_ele>G80</data_ele>
+              <name>City Name</name>
+              <usage>S</usage>
+              <seq>01</seq>
+            </element>
+            <element xid="N402">
+              <data_ele>G80</data_ele>
+              <name>State or Province Code</name>
+              <usage>S</usage>
+              <seq>02</seq>
+            </element>
+            <element xid="N403">
+              <data_ele>G80</data_ele>
+              <name>Postal Code</name>
+              <usage>S</usage>
+              <seq>03</seq>
+            </element>
+            <element xid="N404">
+              <data_ele>G80</data_ele>
+              <name>Country Code</name>
+              <usage>S</usage>
+              <seq>04</seq>
+            </element>
+          </segment>
+          <segment xid="PER">
+            <name>Administrative Communications</name>
+            <usage>S</usage>
+            <pos>040</pos>
+            <max_use>99</max_use>
+            <element xid="PER01">
+              <data_ele>G80</data_ele>
+              <name>Contact Function Code</name>
+              <usage>S</usage>
+              <seq>01</seq>
+            </element>
+            <element xid="PER02">
+              <data_ele>G80</data_ele>
+              <name>Name</name>
+              <usage>S</usage>
+              <seq>02</seq>
+            </element>
+            <element xid="PER03">
+              <data_ele>G80</data_ele>
+              <name>Communication Number Qualifier</name>
+              <usage>S</usage>
+              <seq>03</seq>
+            </element>
+            <element xid="PER04">
+              <data_ele>G80</data_ele>
+              <name>Communication Number</name>
+              <usage>S</usage>
+              <seq>04</seq>
+            </element>
+            <element xid="PER05">
+              <data_ele>G80</data_ele>
+              <name>Communication Number Qualifier</name>
+              <usage>S</usage>
+              <seq>05</seq>
+            </element>
+            <element xid="PER06">
+              <data_ele>G80</data_ele>
+              <name>Communication Number</name>
+              <usage>S</usage>
+              <seq>06</seq>
+            </element>
+            <element xid="PER07">
+              <data_ele>G80</data_ele>
+              <name>Communication Number Qualifier</name>
+              <usage>S</usage>
+              <seq>07</seq>
+            </element>
+            <element xid="PER08">
+              <data_ele>G80</data_ele>
+              <name>Communication Number</name>
+              <usage>S</usage>
+              <seq>08</seq>
+            </element>
+          </segment>
+        </loop>
+        <loop xid="PO1_LOOP">
+          <name>PO1</name>
+          <usage>R</usage>
+          <pos>100</pos>
+          <repeat>&gt;1</repeat>
+          <segment xid="PO1">
+            <name>Baseline Item Data</name>
+            <usage>R</usage>
+            <pos>010</pos>
+            <max_use>99</max_use>
+            <element xid="PO101">
+              <data_ele>G80</data_ele>
+              <name>Assigned Identification</name>
+              <usage>S</usage>
+              <seq>01</seq>
+            </element>
+            <element xid="PO102">
+              <data_ele>G80</data_ele>
+              <name>Quantity Ordered</name>
+              <usage>S</usage>
+              <seq>02</seq>
+            </element>
+            <element xid="PO103">
+              <data_ele>G80</data_ele>
+              <name>Unit or Basis for Measurement Code</name>
+              <usage>S</usage>
+              <seq>03</seq>
+            </element>
+            <element xid="PO104">
+              <data_ele>G80</data_ele>
+              <name>Unit Price</name>
+              <usage>S</usage>
+              <seq>04</seq>
+            </element>
+            <element xid="PO105">
+              <data_ele>G80</data_ele>
+              <name>Basis of Unit Price Code</name>
+              <usage>S</usage>
+              <seq>05</seq>
+            </element>
+            <element xid="PO106">
+              <data_ele>G80</data_ele>
+              <name>Product/Service ID Qualifier</name>
+              <usage>S</usage>
+              <seq>06</seq>
+            </element>
+            <element xid="PO107">
+              <data_ele>G80</data_ele>
+              <name>Product/Service ID</name>
+              <usage>S</usage>
+              <seq>07</seq>
+            </element>
+            <element xid="PO108">
+              <data_ele>G80</data_ele>
+              <name>Product/Service ID Qualifier</name>
+              <usage>S</usage>
+              <seq>08</seq>
+            </element>
+            <element xid="PO109">
+              <data_ele>G80</data_ele>
+              <name>Product/Service ID</name>
+              <usage>S</usage>
+              <seq>09</seq>
+            </element>
+            <element xid="PO110">
+              <data_ele>G80</data_ele>
+              <name>PO110</name>
+              <usage>S</usage>
+              <seq>10</seq>
+            </element>
+            <element xid="PO111">
+              <data_ele>G80</data_ele>
+              <name>PO111</name>
+              <usage>S</usage>
+              <seq>11</seq>
+            </element>
+          </segment>
+          <loop xid="PID_LOOP">
+            <name>PID</name>
+            <usage>S</usage>
+            <pos>020</pos>
+            <repeat>&gt;1</repeat>
+            <segment xid="PID">
+              <name>Product/Item Description</name>
+              <usage>S</usage>
+              <pos>010</pos>
+              <max_use>99</max_use>
+              <element xid="PID01">
+                <data_ele>G80</data_ele>
+                <name>Item Description Type</name>
+                <usage>S</usage>
+                <seq>01</seq>
+              </element>
+              <element xid="PID02">
+                <data_ele>G80</data_ele>
+                <name>Product/Process Characteristic Code</name>
+                <usage>S</usage>
+                <seq>02</seq>
+              </element>
+              <element xid="PID03">
+                <data_ele>G80</data_ele>
+                <name>Agency Qualifier Code</name>
+                <usage>S</usage>
+                <seq>03</seq>
+              </element>
+              <element xid="PID04">
+                <data_ele>G80</data_ele>
+                <name>Product Description Code</name>
+                <usage>S</usage>
+                <seq>04</seq>
+              </element>
+              <element xid="PID05">
+                <data_ele>G128</data_ele>
+                <name>Description</name>
+                <usage>S</usage>
+                <seq>05</seq>
+              </element>
+            </segment>
+            <segment xid="PO4">
+              <name>Item Physical Details</name>
+              <usage>S</usage>
+              <pos>020</pos>
+              <max_use>99</max_use>
+              <element xid="PO401">
+                <data_ele>G80</data_ele>
+                <name>PO401</name>
+                <usage>S</usage>
+                <seq>01</seq>
+              </element>
+              <element xid="PO402">
+                <data_ele>G80</data_ele>
+                <name>PO402</name>
+                <usage>S</usage>
+                <seq>02</seq>
+              </element>
+              <element xid="PO403">
+                <data_ele>G80</data_ele>
+                <name>PO403</name>
+                <usage>S</usage>
+                <seq>03</seq>
+              </element>
+              <element xid="PO404">
+                <data_ele>G80</data_ele>
+                <name>PO404</name>
+                <usage>S</usage>
+                <seq>04</seq>
+              </element>
+              <element xid="PO405">
+                <data_ele>G80</data_ele>
+                <name>PO405</name>
+                <usage>S</usage>
+                <seq>05</seq>
+              </element>
+              <element xid="PO406">
+                <data_ele>G80</data_ele>
+                <name>Gross Weight per Pack</name>
+                <usage>S</usage>
+                <seq>06</seq>
+              </element>
+              <element xid="PO407">
+                <data_ele>G80</data_ele>
+                <name>Unit or Basis for Measurement Code</name>
+                <usage>S</usage>
+                <seq>07</seq>
+              </element>
+            </segment>
+            <segment xid="REF">
+              <name>Reference Identification</name>
+              <usage>S</usage>
+              <pos>030</pos>
+              <max_use>99</max_use>
+              <element xid="REF01">
+                <data_ele>G80</data_ele>
+                <name>Reference Identification Qualifier</name>
+                <usage>S</usage>
+                <seq>01</seq>
+              </element>
+              <element xid="REF02">
+                <data_ele>G80</data_ele>
+                <name>Reference Identification</name>
+                <usage>S</usage>
+                <seq>02</seq>
+              </element>
+              <element xid="REF03">
+                <data_ele>G80</data_ele>
+                <name>Description</name>
+                <usage>S</usage>
+                <seq>03</seq>
+              </element>
+            </segment>
+          </loop>
+          <loop xid="SAC_LOOP">
+            <name>SAC</name>
+            <usage>S</usage>
+            <pos>030</pos>
+            <repeat>&gt;1</repeat>
+            <segment xid="SAC">
+              <name>Service, Promotion, Allowance, or</name>
+              <usage>S</usage>
+              <pos>010</pos>
+              <max_use>99</max_use>
+              <element xid="SAC01">
+                <data_ele>G80</data_ele>
+                <name>Allowance or Charge Indicator</name>
+                <usage>S</usage>
+                <seq>01</seq>
+              </element>
+              <element xid="SAC02">
+                <data_ele>G80</data_ele>
+                <name>Service, Promotion, Allowance, or Charge Code</name>
+                <usage>S</usage>
+                <seq>02</seq>
+              </element>
+              <element xid="SAC03">
+                <data_ele>G80</data_ele>
+                <name>SAC03</name>
+                <usage>S</usage>
+                <seq>03</seq>
+              </element>
+              <element xid="SAC04">
+                <data_ele>G80</data_ele>
+                <name>SAC04</name>
+                <usage>S</usage>
+                <seq>04</seq>
+              </element>
+              <element xid="SAC05">
+                <data_ele>G80</data_ele>
+                <name>SAC05</name>
+                <usage>S</usage>
+                <seq>05</seq>
+              </element>
+              <element xid="SAC06">
+                <data_ele>G80</data_ele>
+                <name>SAC06</name>
+                <usage>S</usage>
+                <seq>06</seq>
+              </element>
+              <element xid="SAC07">
+                <data_ele>G80</data_ele>
+                <name>SAC07</name>
+                <usage>S</usage>
+                <seq>07</seq>
+              </element>
+              <element xid="SAC08">
+                <data_ele>G80</data_ele>
+                <name>SAC08</name>
+                <usage>S</usage>
+                <seq>08</seq>
+              </element>
+              <element xid="SAC09">
+                <data_ele>G80</data_ele>
+                <name>SAC09</name>
+                <usage>S</usage>
+                <seq>09</seq>
+              </element>
+              <element xid="SAC10">
+                <data_ele>G80</data_ele>
+                <name>SAC10</name>
+                <usage>S</usage>
+                <seq>10</seq>
+              </element>
+              <element xid="SAC11">
+                <data_ele>G80</data_ele>
+                <name>SAC11</name>
+                <usage>S</usage>
+                <seq>11</seq>
+              </element>
+              <element xid="SAC12">
+                <data_ele>G80</data_ele>
+                <name>SAC12</name>
+                <usage>S</usage>
+                <seq>12</seq>
+              </element>
+              <element xid="SAC13">
+                <data_ele>G80</data_ele>
+                <name>SAC13</name>
+                <usage>S</usage>
+                <seq>13</seq>
+              </element>
+              <element xid="SAC14">
+                <data_ele>G80</data_ele>
+                <name>SAC14</name>
+                <usage>S</usage>
+                <seq>14</seq>
+              </element>
+              <element xid="SAC15">
+                <data_ele>G80</data_ele>
+                <name>Description</name>
+                <usage>S</usage>
+                <seq>15</seq>
+              </element>
+            </segment>
+          </loop>
+          <segment xid="DTM">
+            <name>Date/Time Reference</name>
+            <usage>S</usage>
+            <pos>040</pos>
+            <max_use>99</max_use>
+            <element xid="DTM01">
+              <data_ele>G80</data_ele>
+              <name>Date/Time Qualifier</name>
+              <usage>S</usage>
+              <seq>01</seq>
+            </element>
+            <element xid="DTM02">
+              <data_ele>G80</data_ele>
+              <name>Date</name>
+              <usage>S</usage>
+              <seq>02</seq>
+            </element>
+            <element xid="DTM03">
+              <data_ele>G80</data_ele>
+              <name>Time</name>
+              <usage>S</usage>
+              <seq>03</seq>
+            </element>
+            <element xid="DTM04">
+              <data_ele>G80</data_ele>
+              <name>Time Code</name>
+              <usage>S</usage>
+              <seq>04</seq>
+            </element>
+          </segment>
+          <segment xid="TD5">
+            <name>Carrier Details (Routing</name>
+            <usage>S</usage>
+            <pos>050</pos>
+            <max_use>99</max_use>
+            <element xid="TD501">
+              <data_ele>G80</data_ele>
+              <name>TD501</name>
+              <usage>S</usage>
+              <seq>01</seq>
+            </element>
+            <element xid="TD502">
+              <data_ele>G80</data_ele>
+              <name>TD502</name>
+              <usage>S</usage>
+              <seq>02</seq>
+            </element>
+            <element xid="TD503">
+              <data_ele>G80</data_ele>
+              <name>TD503</name>
+              <usage>S</usage>
+              <seq>03</seq>
+            </element>
+            <element xid="TD504">
+              <data_ele>G80</data_ele>
+              <name>TD504</name>
+              <usage>S</usage>
+              <seq>04</seq>
+            </element>
+            <element xid="TD505">
+              <data_ele>G80</data_ele>
+              <name>Routing</name>
+              <usage>S</usage>
+              <seq>05</seq>
+            </element>
+          </segment>
+          <loop xid="N1_LOOP">
+            <name>N1</name>
+            <usage>S</usage>
+            <pos>060</pos>
+            <repeat>&gt;1</repeat>
+            <segment xid="N1">
+              <name>Name</name>
+              <usage>S</usage>
+              <pos>010</pos>
+              <max_use>99</max_use>
+              <element xid="N101">
+                <data_ele>G80</data_ele>
+                <name>Entity Identifier Code</name>
+                <usage>S</usage>
+                <seq>01</seq>
+              </element>
+              <element xid="N102">
+                <data_ele>G80</data_ele>
+                <name>Name</name>
+                <usage>S</usage>
+                <seq>02</seq>
+              </element>
+              <element xid="N103">
+                <data_ele>G80</data_ele>
+                <name>Identification Code Qualifier</name>
+                <usage>S</usage>
+                <seq>03</seq>
+              </element>
+              <element xid="N104">
+                <data_ele>G80</data_ele>
+                <name>Identification Code</name>
+                <usage>S</usage>
+                <seq>04</seq>
+              </element>
+            </segment>
+            <segment xid="N3">
+              <name>Address Information</name>
+              <usage>S</usage>
+              <pos>020</pos>
+              <max_use>99</max_use>
+              <element xid="N301">
+                <data_ele>G80</data_ele>
+                <name>Address Information</name>
+                <usage>S</usage>
+                <seq>01</seq>
+              </element>
+              <element xid="N302">
+                <data_ele>G80</data_ele>
+                <name>Address Information</name>
+                <usage>S</usage>
+                <seq>02</seq>
+              </element>
+            </segment>
+            <segment xid="N4">
+              <name>Geographic Location</name>
+              <usage>S</usage>
+              <pos>030</pos>
+              <max_use>99</max_use>
+              <element xid="N401">
+                <data_ele>G80</data_ele>
+                <name>City Name</name>
+                <usage>S</usage>
+                <seq>01</seq>
+              </element>
+              <element xid="N402">
+                <data_ele>G80</data_ele>
+                <name>State or Province Code</name>
+                <usage>S</usage>
+                <seq>02</seq>
+              </element>
+              <element xid="N403">
+                <data_ele>G80</data_ele>
+                <name>Postal Code</name>
+                <usage>S</usage>
+                <seq>03</seq>
+              </element>
+              <element xid="N404">
+                <data_ele>G80</data_ele>
+                <name>Country Code</name>
+                <usage>S</usage>
+                <seq>04</seq>
+              </element>
+            </segment>
+            <segment xid="PER">
+              <name>Administrative Communications</name>
+              <usage>S</usage>
+              <pos>040</pos>
+              <max_use>99</max_use>
+              <element xid="PER01">
+                <data_ele>G80</data_ele>
+                <name>Contact Function Code</name>
+                <usage>S</usage>
+                <seq>01</seq>
+              </element>
+              <element xid="PER02">
+                <data_ele>G80</data_ele>
+                <name>Name</name>
+                <usage>S</usage>
+                <seq>02</seq>
+              </element>
+              <element xid="PER03">
+                <data_ele>G80</data_ele>
+                <name>Communication Number Qualifier</name>
+                <usage>S</usage>
+                <seq>03</seq>
+              </element>
+              <element xid="PER04">
+                <data_ele>G80</data_ele>
+                <name>Communication Number</name>
+                <usage>S</usage>
+                <seq>04</seq>
+              </element>
+              <element xid="PER05">
+                <data_ele>G80</data_ele>
+                <name>Communication Number Qualifier</name>
+                <usage>S</usage>
+                <seq>05</seq>
+              </element>
+              <element xid="PER06">
+                <data_ele>G80</data_ele>
+                <name>Communication Number</name>
+                <usage>S</usage>
+                <seq>06</seq>
+              </element>
+              <element xid="PER07">
+                <data_ele>G80</data_ele>
+                <name>Communication Number Qualifier</name>
+                <usage>S</usage>
+                <seq>07</seq>
+              </element>
+              <element xid="PER08">
+                <data_ele>G80</data_ele>
+                <name>Communication Number</name>
+                <usage>S</usage>
+                <seq>08</seq>
+              </element>
+            </segment>
+          </loop>
+        </loop>
+        <segment xid="CTT">
+          <name>Transaction Totals</name>
+          <usage>S</usage>
+          <pos>110</pos>
+          <max_use>1</max_use>
+          <element xid="CTT01">
+            <data_ele>G80</data_ele>
+            <name>Number of Line Items</name>
+            <usage>S</usage>
+            <seq>01</seq>
+          </element>
+        </segment>
+        <segment xid="SE">
+          <name>Transaction Set Trailer</name>
+          <usage>R</usage>
+          <pos>200</pos>
+          <max_use>1</max_use>
+          <element xid="SE01">
+            <data_ele>96</data_ele>
+            <name>Number of Included Segments</name>
+            <usage>R</usage>
+            <seq>01</seq>
+          </element>
+          <element xid="SE02">
+            <data_ele>329</data_ele>
+            <name>Transaction Set Control Number</name>
+            <usage>R</usage>
+            <seq>02</seq>
+          </element>
+        </segment>
+      </loop>
+      <segment xid="GE">
+        <name>Functional Group Trailer</name>
+        <usage>R</usage>
+        <pos>030</pos>
+        <max_use>1</max_use>
+        <element xid="GE01">
+          <data_ele>97</data_ele>
+          <name>Number of Transaction Sets Included</name>
+          <usage>R</usage>
+          <seq>01</seq>
+        </element>
+        <element xid="GE02">
+          <data_ele>28</data_ele>
+          <name>Group Control Number</name>
+          <usage>R</usage>
+          <seq>02</seq>
+        </element>
+      </segment>
+    </loop>
+    <segment xid="IEA">
+      <name>Interchange Control Trailer</name>
+      <usage>R</usage>
+      <pos>030</pos>
+      <max_use>1</max_use>
+      <element xid="IEA01">
+        <data_ele>I16</data_ele>
+        <name>Number of Included Functional Groups</name>
+        <usage>R</usage>
+        <seq>01</seq>
+      </element>
+      <element xid="IEA02">
+        <data_ele>I12</data_ele>
+        <name>Interchange Control Number</name>
+        <usage>R</usage>
+        <seq>02</seq>
+      </element>
+    </segment>
+  </loop>
+</transaction>
