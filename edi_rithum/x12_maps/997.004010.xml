@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 997 map; generated -->
+<transaction xid="997">
+  <name>Functional Acknowledgment</name>
+  <loop xid="ISA_LOOP">
+    <name>Interchange Control Header</name>
+    <usage>R</usage>
+    <pos>001</pos>
+    <repeat>&gt;1</repeat>
+    <segment xid="ISA">
+      <name>Interchange Control Header</name>
+      <usage>R</usage>
+      <pos>010</pos>
+      <max_use>1</max_use>
+      <element xid="ISA01">
+        <data_ele>I01</data_ele>
+        <name>Authorization Information Qualifier</name>
+        <usage>R</usage>
+        <seq>01</seq>
+      </element>
+      <element xid="ISA02">
+        <data_ele>I02</data_ele>
+        <name>Authorization Information</name>
+        <usage>R</usage>
+        <seq>02</seq>
+      </element>
+      <element xid="ISA03">
+        <data_ele>I03</data_ele>
+        <name>Security Information Qualifier</name>
+        <usage>R</usage>
+        <seq>03</seq>
+      </element>
+      <element xid="ISA04">
+        <data_ele>I04</data_ele>
+        <name>Security Information</name>
+        <usage>R</usage>
+        <seq>04</seq>
+      </element>
+      <element xid="ISA05">
+        <data_ele>I05</data_ele>
+        <name>Interchange ID Qualifier</name>
+        <usage>R</usage>
+        <seq>05</seq>
+      </element>
+      <element xid="ISA06">
+        <data_ele>I06</data_ele>
+        <name>Interchange Sender ID</name>
+        <usage>R</usage>
+        <seq>06</seq>
+      </element>
+      <element xid="ISA07">
+        <data_ele>I05</data_ele>
+        <name>Interchange ID Qualifier</name>
+        <usage>R</usage>
+        <seq>07</seq>
+      </element>
+      <element xid="ISA08">
+        <data_ele>I07</data_ele>
+        <name>Interchange Receiver ID</name>
+        <usage>R</usage>
+        <seq>08</seq>
+      </element>
+      <element xid="ISA09">
+        <data_ele>I08</data_ele>
+        <name>Interchange Date</name>
+        <usage>R</usage>
+        <seq>09</seq>
+      </element>
+      <element xid="ISA10">
+        <data_ele>I09</data_ele>
+        <name>Interchange Time</name>
+        <usage>R</usage>
+        <seq>10</seq>
+      </element>
+      <element xid="ISA11">
+        <data_ele>I10</data_ele>
+        <name>Interchange Control Standards Identifier</name>
+        <usage>R</usage>
+        <seq>11</seq>
+      </element>
+      <element xid="ISA12">
+        <data_ele>I11</data_ele>
+        <name>Interchange Control Version Number</name>
+        <usage>R</usage>
+        <seq>12</seq>
+      </element>
+      <element xid="ISA13">
+        <data_ele>I12</data_ele>
+        <name>Interchange Control Number</name>
+        <usage>R</usage>
+        <seq>13</seq>
+      </element>
+      <element xid="ISA14">
+        <data_ele>I13</data_ele>
+        <name>Acknowledgment Requested</name>
+        <usage>R</usage>
+        <seq>14</seq>
+      </element>
+      <element xid="ISA15">
+        <data_ele>I14</data_ele>
+        <name>Usage Indicator</name>
+        <usage>R</usage>
+        <seq>15</seq>
+      </element>
+      <element xid="ISA16">
+        <data_ele>I15</data_ele>
+        <name>Component Element Separator</name>
+        <usage>R</usage>
+        <seq>16</seq>
+      </element>
+    </segment>
+    <loop xid="GS_LOOP">
+      <name>Functional Group Header</name>
+      <usage>R</usage>
+      <pos>020</pos>
+      <repeat>&gt;1</repeat>
+      <segment xid="GS">
+        <name>Functional Group Header</name>
+        <usage>R</usage>
+        <pos>010</pos>
+        <max_use>1</max_use>
+        <element xid="GS01">
+          <data_ele>479</data_ele>
+          <name>Functional Identifier Code</name>
+          <usage>R</usage>
+          <seq>01</seq>
+        </element>
+        <element xid="GS02">
+          <data_ele>142</data_ele>
+          <name>Application Sender's Code</name>
+          <usage>R</usage>
+          <seq>02</seq>
+        </element>
+        <element xid="GS03">
+          <data_ele>124</data_ele>
+          <name>Application Receiver's Code</name>
+          <usage>R</usage>
+          <seq>03</seq>
+        </element>
+        <element xid="GS04">
+          <data_ele>373</data_ele>
+          <name>Date</name>
+          <usage>R</usage>
+          <seq>04</seq>
+        </element>
+        <element xid="GS05">
+          <data_ele>337</data_ele>
+          <name>Time</name>
+          <usage>R</usage>
+          <seq>05</seq>
+        </element>
+        <element xid="GS06">
+          <data_ele>28</data_ele>
+          <name>Group Control Number</name>
+          <usage>R</usage>
+          <seq>06</seq>
+        </element>
+        <element xid="GS07">
+          <data_ele>455</data_ele>
+          <name>Responsible Agency Code</name>
+          <usage>R</usage>
+          <seq>07</seq>
+        </element>
+        <element xid="GS08">
+          <data_ele>480</data_ele>
+          <name>Version / Release / Industry Identifier Code</name>
+          <usage>R</usage>
+          <seq>08</seq>
+        </element>
+      </segment>
+      <loop xid="ST_LOOP">
+        <name>Transaction Set Header</name>
+        <usage>R</usage>
+        <pos>020</pos>
+        <repeat>&gt;1</repeat>
+        <segment xid="ST">
+          <name>Transaction Set Header</name>
+          <usage>R</usage>
+          <pos>005</pos>
+          <max_use>1</max_use>
+          <element xid="ST01">
+            <data_ele>143</data_ele>
+            <name>Transaction Set Identifier Code</name>
+            <usage>R</usage>
+            <seq>01</seq>
+          </element>
+          <element xid="ST02">
+            <data_ele>329</data_ele>
+            <name>Transaction Set Control Number</name>
+            <usage>R</usage>
+            <seq>02</seq>
+          </element>
+        </segment>
+        <segment xid="AK1">
+          <name>Functional Group Response Header</name>
+          <usage>R</usage>
+          <pos>010</pos>
+          <max_use>99</max_use>
+          <element xid="AK101">
+            <data_ele>G80</data_ele>
+            <name>Functional Identifier Code</name>
+            <usage>S</usage>
+            <seq>01</seq>
+          </element>
+          <element xid="AK102">
+            <data_ele>G80</data_ele>
+            <name>Group Control Number</name>
+            <usage>S</usage>
+            <seq>02</seq>
+          </element>
+        </segment>
+        <loop xid="AK2_LOOP">
+          <name>AK2</name>
+          <usage>S</usage>
+          <pos>020</pos>
+          <repeat>&gt;1</repeat>
+          <segment xid="AK2">
+            <name>Transaction Set Response Header</name>
+            <usage>S</usage>
+            <pos>010</pos>
+            <max_use>99</max_use>
+            <element xid="AK201">
+              <data_ele>G80</data_ele>
+              <name>Transaction Set Identifier Code</name>
+              <usage>S</usage>
+              <seq>01</seq>
+            </element>
+            <element xid="AK202">
+              <data_ele>G80</data_ele>
+              <name>Transaction Set Control Number</name>
+              <usage>S</usage>
+              <seq>02</seq>
+            </element>
+          </segment>
+          <loop xid="AK3_LOOP">
+            <name>AK3</name>
+            <usage>S</usage>
+            <pos>020</pos>
+            <repeat>&gt;1</repeat>
+            <segment xid="AK3">
+              <name>Data Segment Note</name>
+              <usage>S</usage>
+              <pos>010</pos>
+              <max_use>99</max_use>
+              <element xid="AK301">
+                <data_ele>G80</data_ele>
+                <name>Segment ID Code</name>
+                <usage>S</usage>
+                <seq>01</seq>
+              </element>
+              <element xid="AK302">
+                <data_ele>G80</data_ele>
+                <name>Segment Position in Transaction Set</name>
+                <usage>S</usage>
+                <seq>02</seq>
+              </element>
+              <element xid="AK303">
+                <data_ele>G80</data_ele>
+                <name>Loop Identifier Code</name>
+                <usage>S</usage>
+                <seq>03</seq>
+              </element>
+              <element xid="AK304">
+                <data_ele>G80</data_ele>
+                <name>Segment Syntax Error Code</name>
+                <usage>S</usage>
+                <seq>04</seq>
+              </element>
+            </segment>
+            <segment xid="AK4">
+              <name>Data Element Note</name>
+              <usage>S</usage>
+              <pos>020</pos>
+              <max_use>99</max_use>
+              <element xid="AK401">
+                <data_ele>G80</data_ele>
+                <name>AK401</name>
+                <usage>S</usage>
+                <seq>01</seq>
+              </element>
+              <element xid="AK402">
+                <data_ele>G80</data_ele>
+                <name>Data Element Reference Number</name>
+                <usage>S</usage>
+                <seq>02</seq>
+              </element>
+              <element xid="AK403">
+                <data_ele>G80</data_ele>
+                <name>Data Element Syntax Error Code</name>
+                <usage>S</usage>
+                <seq>03</seq>
+              </element>
+              <element xid="AK404">
+                <data_ele>G80</data_ele>
+                <name>Copy of Bad Data Element</name>
+                <usage>S</usage>
+                <seq>04</seq>
+              </element>
+            </segment>
+          </loop>
+          <segment xid="AK5">
+            <name>Transaction Set Response Trailer</name>
+            <usage>R</usage>
+            <pos>030</pos>
+            <max_use>99</max_use>
+            <element xid="AK501">
+              <data_ele>G80</data_ele>
+              <name>Transaction Set Acknowledgment Code</name>
+              <usage>S</usage>
+              <seq>01</seq>
+            </element>
+            <element xid="AK502">
+              <data_ele>G80</data_ele>
+              <name>Transaction Set Syntax Error Code</name>
+              <usage>S</usage>
+              <seq>02</seq>
+            </element>
+            <element xid="AK503">
+              <data_ele>G80</data_ele>
+              <name>Transaction Set Syntax Error Code</name>
+              <usage>S</usage>
+              <seq>03</seq>
+            </element>
+            <element xid="AK504">
+              <data_ele>G80</data_ele>
+              <name>Transaction Set Syntax Error Code</name>
+              <usage>S</usage>
+              <seq>04</seq>
+            </element>
+            <element xid="AK505">
+              <data_ele>G80</data_ele>
+              <name>Transaction Set Syntax Error Code</name>
+              <usage>S</usage>
+              <seq>05</seq>
+            </element>
+            <element xid="AK506">
+              <data_ele>G80</data_ele>
+              <name>Transaction Set Syntax Error Code</name>
+              <usage>S</usage>
+              <seq>06</seq>
+            </element>
+          </segment>
+        </loop>
+        <segment xid="AK9">
+          <name>Functional Group Response Trailer</name>
+          <usage>R</usage>
+          <pos>030</pos>
+          <max_use>99</max_use>
+          <element xid="AK901">
+            <data_ele>G80</data_ele>
+            <name>Functional Group Acknowledge Code</name>
+            <usage>S</usage>
+            <seq>01</seq>
+          </element>
+          <element xid="AK902">
+            <data_ele>G80</data_ele>
+            <name>Number of Transaction Sets Included</name>
+            <usage>S</usage>
+            <seq>02</seq>
+          </element>
+          <element xid="AK903">
+            <data_ele>G80</data_ele>
+            <name>Number of Received Transaction Sets</name>
+            <usage>S</usage>
+            <seq>03</seq>
+          </element>
+          <element xid="AK904">
+            <data_ele>G80</data_ele>
+            <name>Number of Accepted Transaction Sets</name>
+            <usage>S</usage>
+            <seq>04</seq>
+          </element>
+          <element xid="AK905">
+            <data_ele>G80</data_ele>
+            <name>Functional Group Syntax Error Code</name>
+            <usage>S</usage>
+            <seq>05</seq>
+          </element>
+          <element xid="AK906">
+            <data_ele>G80</data_ele>
+            <name>Functional Group Syntax Error Code</name>
+            <usage>S</usage>
+            <seq>06</seq>
+          </element>
+          <element xid="AK907">
+            <data_ele>G80</data_ele>
+            <name>Functional Group Syntax Error Code</name>
+            <usage>S</usage>
+            <seq>07</seq>
+          </element>
+          <element xid="AK908">
+            <data_ele>G80</data_ele>
+            <name>Functional Group Syntax Error Code</name>
+            <usage>S</usage>
+            <seq>08</seq>
+          </element>
+          <element xid="AK909">
+            <data_ele>G80</data_ele>
+            <name>Functional Group Syntax Error Code</name>
+            <usage>S</usage>
+            <seq>09</seq>
+          </element>
+        </segment>
+        <segment xid="SE">
+          <name>Transaction Set Trailer</name>
+          <usage>R</usage>
+          <pos>200</pos>
+          <max_use>1</max_use>
+          <element xid="SE01">
+            <data_ele>96</data_ele>
+            <name>Number of Included Segments</name>
+            <usage>R</usage>
+            <seq>01</seq>
+          </element>
+          <element xid="SE02">
+            <data_ele>329</data_ele>
+            <name>Transaction Set Control Number</name>
+            <usage>R</usage>
+            <seq>02</seq>
+          </element>
+        </segment>
+      </loop>
+      <segment xid="GE">
+        <name>Functional Group Trailer</name>
+        <usage>R</usage>
+        <pos>030</pos>
+        <max_use>1</max_use>
+        <element xid="GE01">
+          <data_ele>97</data_ele>
+          <name>Number of Transaction Sets Included</name>
+          <usage>R</usage>
+          <seq>01</seq>
+        </element>
+        <element xid="GE02">
+          <data_ele>28</data_ele>
+          <name>Group Control Number</name>
+          <usage>R</usage>
+          <seq>02</seq>
+        </element>
+      </segment>
+    </loop>
+    <segment xid="IEA">
+      <name>Interchange Control Trailer</name>
+      <usage>R</usage>
+      <pos>030</pos>
+      <max_use>1</max_use>
+      <element xid="IEA01">
+        <data_ele>I16</data_ele>
+        <name>Number of Included Functional Groups</name>
+        <usage>R</usage>
+        <seq>01</seq>
+      </element>
+      <element xid="IEA02">
+        <data_ele>I12</data_ele>
+        <name>Interchange Control Number</name>
+        <usage>R</usage>
+        <seq>02</seq>
+      </element>
+    </segment>
+  </loop>
+</transaction>

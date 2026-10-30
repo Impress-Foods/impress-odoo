@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rithum_partner_user,edi.rithum.partner user,model_edi_rithum_partner,base.group_user,1,0,0,0
+access_rithum_partner_manager,edi.rithum.partner manager,model_edi_rithum_partner,base_edi.group_edi_manager,1,1,1,1
