@@ -2,6 +2,7 @@ from . import test_846
 from . import test_856
 from . import test_997
 from . import test_acknowledgment_flow
+from . import test_backorder
 from . import test_cancellation
 from . import test_compliance_850
 from . import test_flow_850
