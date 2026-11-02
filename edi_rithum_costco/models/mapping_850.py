@@ -175,9 +175,20 @@ class EdiRithumCostcoMapping850(models.AbstractModel):
         shipping = self.env["business.document.import"]._match_shipping_partner(
             shipping_dict, partner, chatter, domain=own_contacts, raise_exception=False
         )
-        return shipping or self._create_shipping_partner(
-            ship_to, partner, country, language, chatter
-        )
+        if not shipping:
+            return self._create_shipping_partner(
+                ship_to, partner, country, language, chatter
+            )
+        # The carrier needs the recipient's latest number and address: refresh
+        # what the order gives, and keep what it does not.
+        details = self._contact_details(ship_to)
+        shipping.write({k: v for k, v in details.items() if shipping[k] != v})
+        return shipping
+
+    def _contact_details(self, ship_to: Party) -> dict[str, str]:
+        """The recipient's phone and email the order gives, which the label needs."""
+        details = {"phone": ship_to.phone, "email": ship_to.email}
+        return {field: value for field, value in details.items() if value}
 
     def _ship_to_country(self, ship_to: Party, partner: ResPartner) -> ResCountry:
         """The ship-to country, or the customer's when the file leaves it out."""
@@ -212,6 +223,7 @@ class EdiRithumCostcoMapping850(models.AbstractModel):
                 "state_id": state.id,
                 "country_id": country.id,
                 "lang": self._language(language, chatter),
+                **self._contact_details(ship_to),
             }
         )
 
