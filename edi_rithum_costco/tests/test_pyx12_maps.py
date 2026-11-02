@@ -60,7 +60,7 @@ class TestMapContent(TestCaseBase):
             if element.find("valid_codes") is not None
         }
         self.assertEqual(codes["BSN05"], ["0002"])
-        self.assertEqual(codes["SN108"], ["AC", "ID"])
+        self.assertEqual(codes["SN108"], ["AC", "IB", "ID"])
         self.assertEqual(codes["DTM04"][0], "UT")
         self.assertEqual(codes["MAN01"], ["CP"])
 

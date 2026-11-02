@@ -382,6 +382,7 @@
               <seq>01</seq>
               <valid_codes>
                 <code>011</code>
+                <code>079</code>
               </valid_codes>
             </element>
             <element xid="DTM02">
@@ -798,6 +799,7 @@
                   <seq>08</seq>
                   <valid_codes>
                     <code>AC</code>
+                    <code>IB</code>
                     <code>ID</code>
                   </valid_codes>
                 </element>
@@ -830,10 +832,71 @@
                   <seq>03</seq>
                 </element>
               </segment>
+              <segment xid="DTM">
+                <name>Date/Time Reference (promised ship date of a backorder)</name>
+                <usage>S</usage>
+                <pos>050</pos>
+                <max_use>99</max_use>
+                <element xid="DTM01">
+                  <data_ele>374</data_ele>
+                  <name>Date/Time Qualifier</name>
+                  <usage>R</usage>
+                  <seq>01</seq>
+                  <valid_codes>
+                    <code>011</code>
+                    <code>079</code>
+                  </valid_codes>
+                </element>
+                <element xid="DTM02">
+                  <data_ele>373</data_ele>
+                  <name>Date</name>
+                  <usage>R</usage>
+                  <seq>02</seq>
+                </element>
+                <element xid="DTM03">
+                  <data_ele>337</data_ele>
+                  <name>Time</name>
+                  <usage>R</usage>
+                  <seq>03</seq>
+                </element>
+                <element xid="DTM04">
+                  <data_ele>623</data_ele>
+                  <name>Time Code</name>
+                  <usage>R</usage>
+                  <seq>04</seq>
+                  <valid_codes>
+                    <code>UT</code>
+                    <code>01</code>
+                    <code>02</code>
+                    <code>03</code>
+                    <code>04</code>
+                    <code>05</code>
+                    <code>06</code>
+                    <code>07</code>
+                    <code>08</code>
+                    <code>09</code>
+                    <code>10</code>
+                    <code>11</code>
+                    <code>12</code>
+                    <code>13</code>
+                    <code>14</code>
+                    <code>15</code>
+                    <code>16</code>
+                    <code>17</code>
+                    <code>18</code>
+                    <code>19</code>
+                    <code>20</code>
+                    <code>21</code>
+                    <code>22</code>
+                    <code>23</code>
+                    <code>24</code>
+                  </valid_codes>
+                </element>
+              </segment>
               <loop xid="N1_LOOP">
                 <name>N1</name>
                 <usage>S</usage>
-                <pos>050</pos>
+                <pos>060</pos>
                 <repeat>&gt;1</repeat>
                 <segment xid="N1">
                   <name>Name (shipping warehouse)</name>
@@ -875,7 +938,7 @@
               <loop xid="HL_P_LOOP">
                 <name>HL_P</name>
                 <usage>S</usage>
-                <pos>060</pos>
+                <pos>070</pos>
                 <repeat>&gt;1</repeat>
                 <segment xid="HL">
                   <name>Hierarchical Level - Pack</name>
