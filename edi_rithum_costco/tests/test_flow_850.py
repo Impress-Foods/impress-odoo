@@ -22,6 +22,9 @@ def _order_text(
     ship_to_state="AK",
     packing_language="",
     quantity="2",
+    ship_to_name="SHIP TO",
+    street="1 MAIN ST",
+    street2="",
 ) -> str:
     nodes = [
         Segment(
@@ -49,9 +52,16 @@ def _order_text(
                 [
                     Segment(
                         "N1",
-                        {"N101": "ST", "N102": "SHIP TO", "N103": "ZZ", "N104": "0001"},
+                        {
+                            "N101": "ST",
+                            "N102": ship_to_name,
+                            "N103": "ZZ",
+                            "N104": "0001",
+                        },
                     ),
-                    Segment("N3", {"N301": "1 MAIN ST"}),
+                    Segment(
+                        "N3", {"N301": street, **({"N302": street2} if street2 else {})}
+                    ),
                     Segment(
                         "N4",
                         {
@@ -155,6 +165,39 @@ class TestFlow850(TransactionCase):
             self.mapping.create_orders(
                 _order_text(po_number="PO-DUP"), SCHEME, MAP_PATH
             )
+
+    def test_both_lines_of_the_street_are_kept_in_the_order_they_were_sent(self):
+        # Costco puts "care of" or the apartment first and the street second.
+        (order,) = self.mapping.create_orders(
+            _order_text(
+                po_number="PO-2LINES",
+                street="Care of Jane Sample",
+                street2="4 Kingsway",
+            ),
+            SCHEME,
+            MAP_PATH,
+        )
+        shipping = order.partner_shipping_id
+        self.assertEqual(shipping.street, "Care of Jane Sample")
+        self.assertEqual(shipping.street2, "4 Kingsway")
+
+    def test_the_same_ship_to_twice_reuses_the_contact(self):
+        first = self.mapping.create_orders(
+            _order_text(po_number="PO-A", street2="Unit 2"), SCHEME, MAP_PATH
+        )
+        second = self.mapping.create_orders(
+            _order_text(po_number="PO-B", street2="Unit 2"), SCHEME, MAP_PATH
+        )
+        self.assertEqual(first.partner_shipping_id, second.partner_shipping_id)
+
+    def test_an_address_that_differs_only_by_street2_is_another_contact(self):
+        first = self.mapping.create_orders(
+            _order_text(po_number="PO-U1", street2="Unit 1"), SCHEME, MAP_PATH
+        )
+        second = self.mapping.create_orders(
+            _order_text(po_number="PO-U2", street2="Unit 2"), SCHEME, MAP_PATH
+        )
+        self.assertNotEqual(first.partner_shipping_id, second.partner_shipping_id)
 
     def test_unknown_product_is_refused(self):
         with self.assertRaises(UserError):

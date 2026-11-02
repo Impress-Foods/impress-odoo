@@ -160,6 +160,7 @@ class EdiRithumCostcoMapping850(models.AbstractModel):
         shipping_dict = {
             "name": ship_to.name,
             "street": ship_to.address,
+            "street2": ship_to.address2,
             "city": ship_to.city,
             "zip": ship_to.postal_code,
             "state_code": ship_to.state,
@@ -199,6 +200,7 @@ class EdiRithumCostcoMapping850(models.AbstractModel):
                 "type": "delivery",
                 "name": ship_to.name,
                 "street": ship_to.address,
+                "street2": ship_to.address2,
                 "city": ship_to.city,
                 "zip": ship_to.postal_code,
                 "state_id": state.id,

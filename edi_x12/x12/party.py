@@ -14,7 +14,8 @@ class Party:
     """A named party and its address."""
 
     name: str
-    address: str = ""
+    address: str = ""  # N301
+    address2: str = ""  # N302
     city: str = ""
     state: str = ""
     postal_code: str = ""
@@ -31,6 +32,7 @@ def read_ship_to(loop: Loop) -> Party | None:
     return Party(
         name=n1.required("N102"),
         address=text_or_empty(n3, "N301"),
+        address2=text_or_empty(n3, "N302"),
         city=text_or_empty(n4, "N401"),
         state=text_or_empty(n4, "N402"),
         postal_code=text_or_empty(n4, "N403"),
