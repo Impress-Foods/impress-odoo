@@ -130,6 +130,18 @@ class TestInventoryAdvice(TestCaseBase):
             with self.subTest(missing=name), self.assertRaisesRegex(ValueError, name):
                 tset_846.build_body(_advice(**changes))
 
+    def test_the_sub_element_separator_is_the_one_costcos_own_files_use(self):
+        text = _render(_advice())
+        self.assertEqual(text[104:106], ">~")
+
+    def test_a_colon_in_a_product_name_is_ordinary_text(self):
+        item = dataclasses.replace(
+            _advice().items[0], description="Juice: Apple 250 ml"
+        )
+        text = _render(_advice(items=(item,)))
+        self._valid(text)
+        self.assertIn("PID*F*08***Juice: Apple 250 ml~", text)
+
     def test_a_long_description_is_cut_to_what_the_element_allows(self):
         item = dataclasses.replace(_advice().items[0], description="x" * 120)
         text = _render(_advice(items=(item,)))

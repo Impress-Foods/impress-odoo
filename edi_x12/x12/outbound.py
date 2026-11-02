@@ -8,10 +8,11 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Final
 
-from .engine import Issue, validate_document
+from .engine import ISA_LENGTH, Issue, validate_document
 from .simple_xml import Loop, Segment
 
-COMPONENT_SEPARATOR: Final = ":"
+# ISA16, as in Costco's own orders. A colon is common in names and notes; ">" is not.
+COMPONENT_SEPARATOR: Final = ">"
 REPETITION_SEPARATOR: Final = "^"
 DEFAULT_QUALIFIER: Final = "ZZ"
 ENVELOPE_CONTROL_WIDTH: Final = 9
@@ -151,7 +152,18 @@ def to_x12(simple_xml: str) -> str:
 
     out = io.StringIO()
     convert(io.StringIO(simple_xml), out)
-    return out.getvalue()
+    return _with_component_separator(out.getvalue())
+
+
+def _with_component_separator(text: str) -> str:
+    """The interchange with ISA16 set to ours.
+
+    pyx12's converter writes its own delimiters whatever the XML says. We use no
+    composite elements, so ISA16 is the only place a sub-element separator
+    appears and, being a fixed-width segment, it is at a known position.
+    """
+    index = ISA_LENGTH - 2
+    return text[:index] + COMPONENT_SEPARATOR + text[index + 1 :]
 
 
 def render(envelope_tree: Loop, map_path: str) -> str:
