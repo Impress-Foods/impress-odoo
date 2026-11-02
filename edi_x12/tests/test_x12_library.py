@@ -14,6 +14,7 @@ from odoo.tools import mute_logger
 
 from ..x12 import engine, outbound
 from ..x12.fields import parse_date, parse_decimal, time_code
+from ..x12.party import Party, read_ship_to
 from ..x12.reading import (
     isa_control_number,
     isa_receiver,
@@ -218,6 +219,78 @@ class TestIsaReaders(TransactionCase):
 
     def test_leading_blanks_are_ignored(self):
         self.assertEqual(isa_sender("\n  " + self.ISA), ("12", "SENDERQUAL"))
+
+
+class TestShipToParty(TransactionCase):
+    def _loop(self, *per: dict) -> Loop:
+        return Loop(
+            "N1_LOOP",
+            [
+                Segment("N1", {"N101": "ST", "N102": "JANE"}),
+                Segment("N3", {"N301": "Care of Jane", "N302": "4 Kingsway"}),
+                Segment("N4", {"N401": "BURNABY", "N402": "BC", "N403": "V5H1Z9"}),
+                *[Segment("PER", values) for values in per],
+            ],
+        )
+
+    def test_the_address_lines_and_the_contact_numbers_are_read(self):
+        party = read_ship_to(
+            self._loop(
+                {
+                    "PER01": "BD",
+                    "PER03": "TE",
+                    "PER04": "555-555-5555",
+                    "PER07": "EM",
+                    "PER08": "jane@sample.com",
+                }
+            )
+        )
+        self.assertEqual(
+            party,
+            Party(
+                name="JANE",
+                address="Care of Jane",
+                address2="4 Kingsway",
+                city="BURNABY",
+                state="BC",
+                postal_code="V5H1Z9",
+                phone="555-555-5555",
+                email="jane@sample.com",
+            ),
+        )
+
+    def test_the_qualifier_not_the_position_tells_a_phone_from_an_email(self):
+        party = read_ship_to(
+            self._loop(
+                {
+                    "PER01": "BD",
+                    "PER03": "EM",
+                    "PER04": "a@b.com",
+                    "PER05": "TE",
+                    "PER06": "555",
+                }
+            )
+        )
+        self.assertEqual((party.phone, party.email), ("555", "a@b.com"))
+
+    def test_the_first_number_of_a_kind_wins_and_other_kinds_are_ignored(self):
+        party = read_ship_to(
+            self._loop(
+                {
+                    "PER01": "BD",
+                    "PER03": "TE",
+                    "PER04": "111",
+                    "PER05": "NP",
+                    "PER06": "222",
+                },
+                {"PER01": "BD", "PER03": "TE", "PER04": "333"},
+            )
+        )
+        self.assertEqual(party.phone, "111")
+
+    def test_a_party_without_a_contact_segment_has_no_numbers(self):
+        party = read_ship_to(self._loop())
+        self.assertEqual((party.phone, party.email), ("", ""))
 
 
 class TestOutcome(TransactionCase):

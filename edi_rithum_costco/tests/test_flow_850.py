@@ -14,6 +14,17 @@ SENDER = "COSTCOTEST00001"
 SCHEME = "X12"
 
 
+def _contact(phone: str, email: str) -> list[Segment]:
+    """A PER with the recipient's phone and email, as Costco sends it."""
+    values = {"PER01": "BD"}
+    if phone:
+        values |= {"PER03": "TE", "PER04": phone}
+    if email:
+        values |= {"PER07" if phone else "PER05": "EM"}
+        values["PER08" if phone else "PER06"] = email
+    return [Segment("PER", values)] if len(values) > 1 else []
+
+
 def _order_text(
     po_number="PO-7741",
     vendor_sku="999999",
@@ -25,6 +36,8 @@ def _order_text(
     ship_to_name="SHIP TO",
     street="1 MAIN ST",
     street2="",
+    phone="",
+    email="",
 ) -> str:
     nodes = [
         Segment(
@@ -71,6 +84,7 @@ def _order_text(
                             "N404": ship_to_country,
                         },
                     ),
+                    *_contact(phone, email),
                 ],
             )
         )
@@ -261,6 +275,62 @@ class TestFlow850(TransactionCase):
             _order_text(po_number="PO-R2", ship_to_name="BOB"), SCHEME, MAP_PATH
         )
         self.assertNotEqual(first.partner_shipping_id, second.partner_shipping_id)
+
+    def test_the_recipients_phone_and_email_go_on_the_delivery_contact(self):
+        (order,) = self.mapping.create_orders(
+            _order_text(
+                po_number="PO-PHONE", phone="555-555-5555", email="jane@sample.com"
+            ),
+            SCHEME,
+            MAP_PATH,
+        )
+        shipping = order.partner_shipping_id
+        self.assertEqual(
+            (shipping.phone, shipping.email), ("555-555-5555", "jane@sample.com")
+        )
+
+    def test_a_recipient_with_only_a_phone_has_no_email(self):
+        (order,) = self.mapping.create_orders(
+            _order_text(po_number="PO-ONLYPHONE", phone="555-555-1111"),
+            SCHEME,
+            MAP_PATH,
+        )
+        shipping = order.partner_shipping_id
+        self.assertEqual((shipping.phone, shipping.email), ("555-555-1111", False))
+
+    def test_a_new_number_updates_the_recipients_contact(self):
+        first = self.mapping.create_orders(
+            _order_text(po_number="PO-N1", phone="555-555-1111"), SCHEME, MAP_PATH
+        )
+        second = self.mapping.create_orders(
+            _order_text(
+                po_number="PO-N2", phone="555-555-2222", email="new@sample.com"
+            ),
+            SCHEME,
+            MAP_PATH,
+        )
+        self.assertEqual(first.partner_shipping_id, second.partner_shipping_id)
+        contact = second.partner_shipping_id
+        self.assertEqual(
+            (contact.phone, contact.email), ("555-555-2222", "new@sample.com")
+        )
+
+    def test_an_order_without_contact_details_keeps_those_already_known(self):
+        first = self.mapping.create_orders(
+            _order_text(
+                po_number="PO-K1", phone="555-555-1111", email="keep@sample.com"
+            ),
+            SCHEME,
+            MAP_PATH,
+        )
+        second = self.mapping.create_orders(
+            _order_text(po_number="PO-K2"), SCHEME, MAP_PATH
+        )
+        contact = second.partner_shipping_id
+        self.assertEqual(contact, first.partner_shipping_id)
+        self.assertEqual(
+            (contact.phone, contact.email), ("555-555-1111", "keep@sample.com")
+        )
 
     def test_unknown_product_is_refused(self):
         with self.assertRaises(UserError):
