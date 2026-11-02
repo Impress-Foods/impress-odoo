@@ -54,7 +54,8 @@ class TestShipmentFlow(CostcoShipmentCase):
         line.quantity = 1  # two kits' worth of A but only one B
         send = self._validate(picking)
         self.assertEqual(picking.state, "done")
-        send.assert_not_called()
+        # the confirmation fails; only the notice of what is now backordered goes out
+        send.assert_called_once()
         record = self._confirmation(picking)
         self.assertIn("do not make whole kits", record.exchange_error)
         self.assertIn("could not be sent", " ".join(picking.message_ids.mapped("body")))

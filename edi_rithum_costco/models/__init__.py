@@ -5,6 +5,7 @@ from . import edi_backend
 from . import intake
 from . import mapping_850
 from . import mapping_856
+from . import mapping_backorder
 from . import mapping_cancel
 from . import mapping_inventory
 from . import sale_order

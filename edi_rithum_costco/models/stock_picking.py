@@ -31,16 +31,35 @@ class StockPicking(models.Model):
         self._costco_confirm_shipments()
         return result
 
-    def _costco_confirm_shipments(self) -> None:
-        """Send the shipment confirmation of each finished Costco delivery."""
-        exchange_type = self.env.ref("edi_rithum_costco.costco_856_out")
-        for picking in self.filtered(lambda p: p._costco_is_shipment(exchange_type)):
-            picking._costco_send_confirmation(exchange_type)
+    def _create_backorder(self, backorder_moves=None) -> "StockPicking":
+        """Extends stock.picking._create_backorder: tell Costco what is backordered.
 
-    def _costco_send_confirmation(
-        self, exchange_type: EDIExchangeType
-    ) -> EDIExchangeRecord:
-        """Create a confirmation record for this delivery and send it.
+        Odoo creates the backorder while it validates the delivery, before the
+        shipment confirmation of this delivery is sent, so Costco gets the
+        backorder first.
+        """
+        backorders = super()._create_backorder(backorder_moves=backorder_moves)
+        backorders._costco_send_backorder_notices()
+        return backorders
+
+    def _costco_send_backorder_notices(self) -> None:
+        """Send the backorder 856 of each backorder of a Costco delivery."""
+        exchange_type = self.env.ref("edi_rithum_costco.costco_backorder_out")
+        for backorder in self.filtered(lambda p: p._costco_is_backorder()):
+            backorder._costco_send_notice(exchange_type)
+
+    def _costco_is_backorder(self) -> bool:
+        """A delivery created to finish a Costco delivery, with Costco lines."""
+        self.ensure_one()
+        return bool(
+            self.backorder_id
+            and self.picking_type_code == "outgoing"
+            and self.sale_id._costco_is_order()
+            and self.move_ids.sale_line_id.filtered("costco_sku")
+        )
+
+    def _costco_send_notice(self, exchange_type: EDIExchangeType) -> EDIExchangeRecord:
+        """Create an exchange record of this type for the delivery and send it.
 
         A failure never blocks the delivery: it stays on the exchange record
         and is posted here, and the record can be generated again once fixed.
@@ -51,6 +70,24 @@ class StockPicking(models.Model):
             on_error=lambda message: self.message_post(body=html_escape(message))
         )
         return record
+
+    def _costco_notification(self, title: str, message: str, failed: bool) -> dict:
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "title": title,
+                "message": message,
+                "type": "danger" if failed else "success",
+                "sticky": failed,
+            },
+        }
+
+    def _costco_confirm_shipments(self) -> None:
+        """Send the shipment confirmation of each finished Costco delivery."""
+        exchange_type = self.env.ref("edi_rithum_costco.costco_856_out")
+        for picking in self.filtered(lambda p: p._costco_is_shipment(exchange_type)):
+            picking._costco_send_notice(exchange_type)
 
     def action_costco_resend_confirmation(self) -> dict:
         """Send the shipment confirmation again, even if one was already sent.
@@ -65,19 +102,12 @@ class StockPicking(models.Model):
             raise UserError(
                 self.env._("This delivery has no Costco shipment to confirm.")
             )
-        record = self._costco_send_confirmation(exchange_type)
-        failed = bool(record.exchange_error)
-        return {
-            "type": "ir.actions.client",
-            "tag": "display_notification",
-            "params": {
-                "title": self.env._("Shipment confirmation"),
-                "message": record.exchange_error
-                or self.env._("The shipment confirmation was sent."),
-                "type": "danger" if failed else "success",
-                "sticky": failed,
-            },
-        }
+        record = self._costco_send_notice(exchange_type)
+        return self._costco_notification(
+            self.env._("Shipment confirmation"),
+            record.exchange_error or self.env._("The shipment confirmation was sent."),
+            failed=bool(record.exchange_error),
+        )
 
     def _costco_is_shipment(
         self, exchange_type: EDIExchangeType, resend: bool = False
