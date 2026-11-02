@@ -199,6 +199,42 @@ class TestFlow850(TransactionCase):
         )
         self.assertNotEqual(first.partner_shipping_id, second.partner_shipping_id)
 
+    def test_a_po_number_can_come_again_once_its_order_is_cancelled(self):
+        (order,) = self.mapping.create_orders(
+            _order_text(po_number="PO-AGAIN"), SCHEME, MAP_PATH
+        )
+        order._action_cancel()
+        (again,) = self.mapping.create_orders(
+            _order_text(po_number="PO-AGAIN"), SCHEME, MAP_PATH
+        )
+        self.assertNotEqual(again, order)
+
+    def test_a_po_number_can_come_again_once_its_order_is_delivered(self):
+        # Costco recycles the numbers of closed orders: they are not duplicates.
+        (order,) = self.mapping.create_orders(
+            _order_text(po_number="PO-CLOSED"), SCHEME, MAP_PATH
+        )
+        order.action_confirm()
+        picking = order.picking_ids
+        picking.move_ids.quantity = picking.move_ids.product_uom_qty
+        picking.move_ids.picked = True
+        picking.with_context(skip_immediate=True, skip_backorder=True).button_validate()
+        self.assertEqual(order.delivery_status, "full")
+        (again,) = self.mapping.create_orders(
+            _order_text(po_number="PO-CLOSED"), SCHEME, MAP_PATH
+        )
+        self.assertNotEqual(again, order)
+
+    def test_a_po_number_still_open_is_a_duplicate(self):
+        (order,) = self.mapping.create_orders(
+            _order_text(po_number="PO-OPEN"), SCHEME, MAP_PATH
+        )
+        order.action_confirm()
+        with self.assertRaisesRegex(UserError, "PO-OPEN already exists"):
+            self.mapping.create_orders(
+                _order_text(po_number="PO-OPEN"), SCHEME, MAP_PATH
+            )
+
     def test_unknown_product_is_refused(self):
         with self.assertRaises(UserError):
             self.mapping.create_orders(
