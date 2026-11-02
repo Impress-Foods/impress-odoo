@@ -51,6 +51,13 @@ def _cancel(
     )
 
 
+def _backorder(line: str, quantity: str, promised: datetime | None = None):
+    promised = promised or datetime(2026, 11, 5, tzinfo=EST)
+    return tset_856.BackorderedItem(
+        line, "8888" + line, "9999" + line, Decimal(quantity), promised
+    )
+
+
 def _confirmation(**changes) -> tset_856.ShipmentConfirmation:
     confirmation = tset_856.ShipmentConfirmation(
         shipment_id="WH/OUT/00001",
@@ -182,6 +189,40 @@ class TestShipmentConfirmation(TestCaseBase):
             item.segment("SN1").value("SN108") for item in walk_loops(st, "HL_I_LOOP")
         ]
         self.assertEqual(statuses, ["AC", "ID"])
+
+    def test_a_backorder_alone_names_the_units_and_the_promised_date(self):
+        text = _render(
+            tset_856.ShipmentConfirmation(
+                shipment_id="WH/OUT/00002-BO",
+                po_number="00000100000001",
+                created_at=datetime(2026, 10, 29, 16, 45, tzinfo=EST),
+                backordered=(_backorder("2", "3"),),
+            )
+        )
+        self._st_loop(text)
+        self.assertIn("SN1**0*EA**3*EA**IB~", text)
+        # midnight, with the UTC offset code Costco asks for even without a time
+        self.assertIn("DTM*079*20261105*0000*20~", text)
+        for absent in ("TD1*", "TD5*", "N1*", "MAN*", "REF*IV", "REF*TD", "DTM*011"):
+            self.assertNotIn(f"\n{absent}", text)
+
+    def test_a_backorder_can_travel_with_a_shipment(self):
+        text = _render(_confirmation(backordered=(_backorder("3", "2"),)))
+        st = self._st_loop(text)
+        statuses = [
+            i.segment("SN1").value("SN108") for i in walk_loops(st, "HL_I_LOOP")
+        ]
+        self.assertEqual(statuses, ["AC", "AC", "IB"])
+
+    def test_the_map_itself_refuses_a_backorder_without_a_date_qualifier(self):
+        text = _render(_confirmation(backordered=(_backorder("3", "2"),)))
+        text = text.replace("DTM*079*", "DTM*999*")
+        self.assertFalse(validate_document(text, MAP_PATH).ok)
+
+    def test_a_backorder_needs_a_time_zone_on_its_date(self):
+        naive = _backorder("2", "3", promised=datetime(2026, 11, 5))
+        with self.assertRaisesRegex(ValueError, "promised_at"):
+            tset_856.build_body(_confirmation(shipped=(), backordered=(naive,)))
 
     def test_a_missing_value_is_refused_before_anything_is_sent(self):
         item = _confirmation().shipped[0]

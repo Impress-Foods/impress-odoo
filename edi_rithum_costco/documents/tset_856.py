@@ -1,8 +1,8 @@
 """Shipment confirmation (856), Standard Carton: shipment, order, item, pack.
 
-An item either ships (``SN102``) or is cancelled (``SN105``), never both, so a
-line that is partly shipped and partly cancelled takes two item loops. An item
-shipped in several boxes carries one pack loop per box.
+An item ships (``SN102``), is cancelled or is backordered (``SN105``), never two of
+these at once, so a line that is partly shipped and partly cancelled takes two item
+loops. An item shipped in several boxes carries one pack loop per box.
 """
 
 from __future__ import annotations
@@ -37,6 +37,8 @@ BUYER_QUALIFIER: Final = "SK"  # LIN04: LIN05 is the buyer's SKU
 EACH: Final = "EA"
 ITEM_SHIPPED: Final = "AC"  # SN108
 ITEM_CANCELLED: Final = "ID"  # SN108
+ITEM_BACKORDERED: Final = "IB"  # SN108
+PROMISED_FOR_SHIPMENT: Final = "079"  # DTM01 of an item: when the backorder ships
 
 
 @dataclass(frozen=True)
@@ -63,8 +65,19 @@ class CancelledItem:
 
 
 @dataclass(frozen=True)
+class BackorderedItem:
+    """Units of one order line that cannot ship yet, and when they will."""
+
+    line_number: str
+    vendor_sku: str
+    buyer_sku: str
+    quantity: Decimal  # SN105
+    promised_at: datetime  # DTM*079: timezone-aware, a date at midnight
+
+
+@dataclass(frozen=True)
 class ShipmentConfirmation:
-    """What happened to one purchase order: units shipped and/or cancelled.
+    """What happened to one purchase order: units shipped, cancelled, backordered.
 
     The carrier, weight, warehouse, invoice and ship time are only needed (and
     only written) when something shipped.
@@ -75,6 +88,7 @@ class ShipmentConfirmation:
     created_at: datetime  # BSN03 and BSN04
     shipped: tuple[ShippedItem, ...] = ()
     cancelled: tuple[CancelledItem, ...] = ()
+    backordered: tuple[BackorderedItem, ...] = ()
     invoice_number: str = ""  # REF*IV
     shipping_method: str = ""  # TD505: the buyer's code for carrier and service
     weight: Decimal = Decimal(0)  # TD107, in pounds
@@ -102,6 +116,9 @@ def build_body(confirmation: ShipmentConfirmation) -> Loop:
         order.children.append(loop)
     for item in confirmation.cancelled:
         order.children.append(_cancelled_loop(next_id, item))
+        next_id += 1
+    for item in confirmation.backordered:
+        order.children.append(_backordered_loop(next_id, item))
         next_id += 1
     shipment = Loop("HL_S_LOOP", [_hl(1, None, "S")])
     if confirmation.shipped:
@@ -157,7 +174,7 @@ def _shipped_on(moment: datetime) -> Segment:
     )
 
 
-def _lin(item: ShippedItem | CancelledItem) -> Segment:
+def _lin(item: ShippedItem | CancelledItem | BackorderedItem) -> Segment:
     return Segment(
         "LIN",
         {
@@ -242,6 +259,35 @@ def _cancelled_loop(number: int, item: CancelledItem) -> Loop:
     )
 
 
+def _backordered_loop(number: int, item: BackorderedItem) -> Loop:
+    return Loop(
+        "HL_I_LOOP",
+        [
+            _hl(number, 2, "I"),
+            _lin(item),
+            Segment(
+                "SN1",
+                {
+                    "SN102": "0",
+                    "SN103": EACH,
+                    "SN105": format_quantity(item.quantity),
+                    "SN106": EACH,
+                    "SN108": ITEM_BACKORDERED,
+                },
+            ),
+            Segment(
+                "DTM",
+                {
+                    "DTM01": PROMISED_FOR_SHIPMENT,
+                    "DTM02": format_date(item.promised_at),
+                    "DTM03": format_time(item.promised_at),
+                    "DTM04": time_code(item.promised_at),
+                },
+            ),
+        ],
+    )
+
+
 def _check(confirmation: ShipmentConfirmation) -> None:
     """Refuse a confirmation that lacks a value the buyer requires."""
     missing = [
@@ -249,7 +295,12 @@ def _check(confirmation: ShipmentConfirmation) -> None:
         for name, value in (
             ("shipment_id", confirmation.shipment_id),
             ("po_number", confirmation.po_number),
-            ("items", confirmation.shipped or confirmation.cancelled),
+            (
+                "items",
+                confirmation.shipped
+                or confirmation.cancelled
+                or confirmation.backordered,
+            ),
         )
         if not value
     ]
@@ -274,13 +325,17 @@ def _check(confirmation: ShipmentConfirmation) -> None:
         if not item.reason:
             missing.append("reason")
         missing += _item_gaps(item)
+    for item in confirmation.backordered:
+        if item.promised_at.tzinfo is None:
+            missing.append("promised_at")
+        missing += _item_gaps(item)
     if missing:
         raise ValueError(
             "shipment confirmation lacks: " + ", ".join(dict.fromkeys(missing))
         )
 
 
-def _item_gaps(item: ShippedItem | CancelledItem) -> list[str]:
+def _item_gaps(item: ShippedItem | CancelledItem | BackorderedItem) -> list[str]:
     gaps = [
         name
         for name, value in (
