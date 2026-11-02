@@ -169,8 +169,11 @@ class EdiRithumCostcoMapping850(models.AbstractModel):
             "state_code": ship_to.state,
             "country_code": country.code or "",
         }
+        # The matcher falls back to any partner with the same address, so it is
+        # told to look only at this customer's contacts, and for this recipient.
+        own_contacts = [("parent_id", "=", partner.id), ("name", "=", ship_to.name)]
         shipping = self.env["business.document.import"]._match_shipping_partner(
-            shipping_dict, partner, chatter, raise_exception=False
+            shipping_dict, partner, chatter, domain=own_contacts, raise_exception=False
         )
         return shipping or self._create_shipping_partner(
             ship_to, partner, country, language, chatter

@@ -235,6 +235,33 @@ class TestFlow850(TransactionCase):
                 _order_text(po_number="PO-OPEN"), SCHEME, MAP_PATH
             )
 
+    def test_a_stranger_at_the_same_address_is_never_the_delivery_contact(self):
+        stranger = self.env["res.partner"].create(
+            {
+                "name": "Someone Else",
+                "type": "delivery",
+                "street": "1 MAIN ST",
+                "city": "ANYTOWN",
+                "zip": "99501",
+                "country_id": self.env.ref("base.us").id,
+            }
+        )
+        (order,) = self.mapping.create_orders(
+            _order_text(po_number="PO-STRANGER"), SCHEME, MAP_PATH
+        )
+        shipping = order.partner_shipping_id
+        self.assertNotEqual(shipping, stranger)
+        self.assertEqual((shipping.name, shipping.parent_id), ("SHIP TO", self.partner))
+
+    def test_another_recipient_at_the_same_address_is_another_contact(self):
+        first = self.mapping.create_orders(
+            _order_text(po_number="PO-R1", ship_to_name="ANNE"), SCHEME, MAP_PATH
+        )
+        second = self.mapping.create_orders(
+            _order_text(po_number="PO-R2", ship_to_name="BOB"), SCHEME, MAP_PATH
+        )
+        self.assertNotEqual(first.partner_shipping_id, second.partner_shipping_id)
+
     def test_unknown_product_is_refused(self):
         with self.assertRaises(UserError):
             self.mapping.create_orders(
