@@ -128,12 +128,15 @@ class EdiRithumCostcoMapping850(models.AbstractModel):
         return order
 
     def _check_not_duplicate(self, partner: ResPartner, po_number: str) -> None:
-        """Refuse a second order for the same PO, so a resent 850 is not duplicated."""
+        """Refuse a second order for a PO that is still open, so a resent 850 is not
+        duplicated. Costco recycles the numbers of closed orders (cancelled, or
+        delivered in full), which are not duplicates."""
         existing = self.env["sale.order"].search(
             [
                 ("client_order_ref", "=", po_number),
                 ("partner_id", "child_of", partner.commercial_partner_id.id),
                 ("state", "!=", "cancel"),
+                ("delivery_status", "!=", "full"),
             ],
             limit=1,
         )
