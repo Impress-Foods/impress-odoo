@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo noupdate="1">
+<odoo>
 
-    <!-- ISA13 and GS06 of the interchanges we send. -->
+    <!--
+        ISA13 and GS06 of the interchanges we send. A control number only has to be
+        unique, so gaps are fine. A gap-free sequence keeps a row lock until the end of
+        the transaction, which makes two sends at once fail. The next number is not set
+        here: an upgrade must never reset the counter.
+    -->
     <record id="seq_x12_interchange_control" model="ir.sequence">
         <field name="name">X12 interchange control number</field>
         <field name="code">edi.x12.interchange_control</field>
-        <field name="implementation">no_gap</field>
-        <field name="number_next">1</field>
+        <field name="implementation">standard</field>
         <field name="number_increment">1</field>
         <field name="padding">0</field>
     </record>

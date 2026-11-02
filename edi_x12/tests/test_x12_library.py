@@ -293,6 +293,15 @@ class TestShipToParty(TransactionCase):
         self.assertEqual((party.phone, party.email), ("", ""))
 
 
+class TestControlNumbers(TransactionCase):
+    def test_the_sequence_allows_gaps_so_two_sends_never_wait_for_each_other(self):
+        sequence = self.env.ref("edi_x12.seq_x12_interchange_control")
+        self.assertEqual(sequence.implementation, "standard")
+        first = int(self.env["ir.sequence"].next_by_code(sequence.code))
+        second = int(self.env["ir.sequence"].next_by_code(sequence.code))
+        self.assertGreater(second, first)
+
+
 class TestOutcome(TransactionCase):
     def test_the_summary_joins_the_findings(self):
         issues = (
