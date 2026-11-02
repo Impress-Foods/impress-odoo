@@ -2,7 +2,7 @@
 
 import re
 from collections import defaultdict
-from datetime import datetime
+from datetime import date, datetime, time
 from decimal import Decimal
 
 import pytz
@@ -121,10 +121,16 @@ class EdiRithumCostcoMapping856(models.AbstractModel):
             )
         return Decimal(str(pounds))
 
+    def _timezone(self, company: ResCompany) -> pytz.BaseTzInfo:
+        return pytz.timezone(company.partner_id.tz or self.env.user.tz or "UTC")
+
     def _local(self, company: ResCompany, moment: datetime) -> datetime:
         """``moment`` (naive UTC) in the time zone of ``company``."""
-        name = company.partner_id.tz or self.env.user.tz or "UTC"
-        return pytz.utc.localize(moment).astimezone(pytz.timezone(name))
+        return pytz.utc.localize(moment).astimezone(self._timezone(company))
+
+    def _local_midnight(self, company: ResCompany, day: date) -> datetime:
+        """The start of ``day`` in the time zone of ``company``."""
+        return self._timezone(company).localize(datetime.combine(day, time.min))
 
     def _shipped_items(self, picking: StockPicking) -> list[tset_856.ShippedItem]:
         """One item per Costco order line shipped, with the boxes it travelled in."""
