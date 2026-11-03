@@ -39,6 +39,10 @@ module_whitelist:
   - developer_menu
   - server_action_mass_edit
   - sequence_check_digit
+  # stock-logistics-availability
+  - stock_available
+  - stock_available_immediately
+  - sale_stock_available_info_popup
   # stock-logistics-workflow
   - stock_no_negative
   - stock_picking_back2draft

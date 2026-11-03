@@ -117,3 +117,9 @@
     oca: https://github.com/OCA/storage
   merges:
     - oca 19.0
+
+./stock-logistics-availability:
+  remotes:
+    oca: https://github.com/OCA/stock-logistics-availability
+  merges:
+    - oca 19.0
