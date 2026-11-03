@@ -1,12 +1,14 @@
 {
     "name": "Impress Accounting",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.2.0",
     "summary": """ Accounting specific changes for Impress Foods """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
     "depends": ["base", "account", "account_reports", "l10n_ca_check_printing"],
-    "data": [],
+    "data": [
+        "views/account_move_views.xml",
+    ],
     "assets": {
         "web.assets_backend": [
             "impress_accounting/static/src/account_report.xml",
