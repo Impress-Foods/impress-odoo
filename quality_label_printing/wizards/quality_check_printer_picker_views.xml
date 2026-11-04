@@ -19,6 +19,13 @@
                         data-hotkey="q"
                     />
                     <button
+                        name="action_skip"
+                        string="Skip"
+                        type="object"
+                        class="btn-secondary"
+                        data-hotkey="s"
+                    />
+                    <button
                         string="Cancel"
                         class="btn-secondary"
                         special="cancel"
