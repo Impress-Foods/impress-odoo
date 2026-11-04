@@ -313,3 +313,15 @@ class TestQualityLabelPrinting(TransactionCase):
                     "label_printer_id": pdf_printer.id,
                 }
             )
+
+    def test_skip_button_passes_check(self):
+        check, _product = self._make_check(
+            {"label_report_id": self.report.id, "label_printer_id": self.printer.id}
+        )
+        self._with_lot(check)
+        picker = self._open_picker(check)
+
+        action = picker.action_skip()
+
+        self.assertEqual(action["type"], "ir.actions.act_window_close")
+        self.assertEqual(check.quality_state, "pass")

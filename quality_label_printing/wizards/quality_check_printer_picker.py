@@ -85,3 +85,8 @@ class QualityCheckPrinterPicker(models.TransientModel):
         )
         check._next()
         return {"type": "ir.actions.act_window_close"}
+
+    def action_skip(self):
+        self.ensure_one()
+        self.quality_check_id._next()
+        return {"type": "ir.actions.act_window_close"}
