@@ -3,6 +3,7 @@ from ast import literal_eval
 from datetime import datetime
 
 from odoo import api, fields, models
+from odoo.exceptions import UserError
 
 from odoo.addons.mrp.models.mrp_production import MrpProduction
 from odoo.addons.quality.models.quality import QualityCheck
@@ -68,6 +69,25 @@ class LogMixin(models.AbstractModel):
     def _compute_production_id(self):
         for rec in self:
             rec.production_id = rec.quality_check_id.production_id or rec.production_id
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_has_lines(self):
+        """Refuse to delete a log that still has lines (extends BaseModel.unlink).
+
+        Deleting it would leave its lines without a log. A log without lines
+        (including every coding log, which has none) can be deleted.
+        """
+        if "log_line_ids" not in self._fields:
+            return
+        logs_with_lines = self.filtered("log_line_ids")
+        if logs_with_lines:
+            raise UserError(
+                self.env._(
+                    "These logs still have lines and cannot be deleted: "
+                    "%(logs)s. Delete their lines first.",
+                    logs=", ".join(logs_with_lines.mapped("display_name")),
+                )
+            )
 
     @api.model
     def _get_or_create_for_production(
