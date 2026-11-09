@@ -38,5 +38,7 @@ class MetalLog(models.Model):
             "type": "ir.actions.act_window",
             "view_mode": "list,form",
             "domain": Domain("metal_log_id", "=", self.id),
+            # Lines created from this list belong to this log.
+            "context": {"default_metal_log_id": self.id},
         }
         return action

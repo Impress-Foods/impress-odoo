@@ -16,9 +16,8 @@ class WeightLogLine(models.Model):
     )
 
     sequence = fields.Char(default=lambda self: self.env._("New"), copy=False)
-    weight_log_id = fields.Many2one(
-        comodel_name="weight.log", compute="_compute_weight_log_id", store=True
-    )
+    _log_field = "weight_log_id"
+    weight_log_id = fields.Many2one(comodel_name="weight.log")
 
     nominal_weight = fields.Float(
         related="weight_log_id.nominal_weight",
@@ -34,16 +33,6 @@ class WeightLogLine(models.Model):
 
     is_seal_ok = fields.Boolean("Seal Ok")
     is_weight_ok = fields.Boolean("Weight Ok")
-
-    @api.depends("quality_check_id")
-    def _compute_weight_log_id(self):
-        for record in self:
-            # Get the current worksheet field
-            ws = record.active_worksheet_field
-            if ws:
-                record.weight_log_id = record[ws].x_weight_log_id
-            else:
-                record.weight_log_id = False
 
     @api.model_create_multi
     def create(self, vals_list):

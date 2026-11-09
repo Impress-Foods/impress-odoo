@@ -14,11 +14,18 @@ class LogLineMixin(models.AbstractModel):
     notes = fields.Text()
     signature = fields.Binary()
 
+    # Name of the Many2one to the log on the concrete line model
+    # (e.g. "hpp_log_id"). The worksheet field pointing to that log is
+    # expected to be named "x_" + _log_field (e.g. "x_hpp_log_id").
+    _log_field: str = ""
+
     quality_check_id = fields.Many2one("quality.check", "Quality Check")
+    # The log is the source of truth for the production. Lines without a log
+    # fall back to their check, which was the only source before 19.0.1.1.0.
     production_id = fields.Many2one(
         "mrp.production",
         "Production Order",
-        related="quality_check_id.production_id",
+        compute="_compute_production_id",
         store=True,
     )
     product_id = fields.Many2one(
@@ -31,11 +38,23 @@ class LogLineMixin(models.AbstractModel):
         "stock.lot", "Lot", store=True, compute="_compute_product_lot_id"
     )
 
-    quality_check_id = fields.Many2one("quality.check", "Quality Check")
+    # Deprecated since 19.0.1.1.0: no longer used for linking. Kept so the
+    # stored column stays readable by any filter or report relying on it.
     active_worksheet_field = fields.Char(
         compute="_compute_active_worksheet_field", store=True
     )
     is_locked = fields.Boolean("Locked")
+
+    @api.depends(
+        lambda self: ([f"{self._log_field}.production_id"] if self._log_field else [])
+        + ["quality_check_id.production_id"]
+    )
+    def _compute_production_id(self):
+        for record in self:
+            log = record[record._log_field] if record._log_field else None
+            record.production_id = (
+                log and log.production_id
+            ) or record.quality_check_id.production_id
 
     @api.depends("production_id", "production_id.lot_producing_ids")
     def _compute_product_lot_id(self):
@@ -83,23 +102,77 @@ class LogLineMixin(models.AbstractModel):
                     # the first (and only) one in the list
                     record.active_worksheet_field = found_field
 
-    # Hooking into the quality_wizard_id context to be able to set
-    # the current quality.check id when creating a new log line.
-    # This is used as a work around to the fact that the first log line is
-    # created before the worksheet is linked to the quality check.
-    # We then always get the quality check id from the wizard
-    # context when creating a new log line.
     @api.model_create_multi
     def create(self, vals_list):
-        if "quality_wizard_id" in self.env.context:
-            wizard = self.env["quality.check.wizard"].browse(
-                [self.env.context["quality_wizard_id"]]
-            )
-            for vals in vals_list:
-                if "quality_check_id" not in vals:
-                    vals["quality_check_id"] = wizard.current_check_id.id
-        record = super().create(vals_list)
-        return record
+        """Link new lines to their check and log (extends BaseModel.create).
+
+        Log: an explicit value or a default_<log field> context wins (e.g. the
+        log's "view lines" list); otherwise the log of the worksheet.
+
+        Check, first one found: the quality check wizard context (the
+        worksheet form is opened from it), the worksheet the line is created
+        in, then the check of the line's log.
+        """
+        wizard_check = self._get_wizard_check()
+        default_log_key = f"default_{self._log_field}"
+        for vals in vals_list:
+            worksheet = self._get_worksheet_from_vals(vals)
+            if (
+                self._log_field
+                and not vals.get(self._log_field)
+                and default_log_key not in self.env.context
+                and worksheet
+            ):
+                log = self._get_worksheet_log(worksheet)
+                if log:
+                    vals[self._log_field] = log.id
+
+            if "quality_check_id" not in vals and wizard_check:
+                vals["quality_check_id"] = wizard_check.id
+            if not vals.get("quality_check_id") and worksheet:
+                vals["quality_check_id"] = worksheet.x_quality_check_id.id
+            if not vals.get("quality_check_id"):
+                log = self._get_log_from_vals(vals)
+                if log.quality_check_id:
+                    vals["quality_check_id"] = log.quality_check_id.id
+        return super().create(vals_list)
+
+    @api.model
+    def _get_log_from_vals(self, vals: dict) -> models.BaseModel:
+        """Return the log the line will belong to: from vals or context default."""
+        if not self._log_field:
+            return self.env["log.mixin"]
+        log_id = vals.get(self._log_field) or self.env.context.get(
+            f"default_{self._log_field}"
+        )
+        return self.env[self._fields[self._log_field].comodel_name].browse(log_id)
+
+    def _get_wizard_check(self):
+        wizard_id = self.env.context.get("quality_wizard_id")
+        if not wizard_id:
+            return self.env["quality.check"]
+        return self.env["quality.check.wizard"].browse(wizard_id).current_check_id
+
+    @api.model
+    def _get_worksheet_from_vals(self, vals: dict) -> models.BaseModel | None:
+        """Return the worksheet set in ``vals`` through an x_worksheet_* field."""
+        for name, value in vals.items():
+            field = self._fields.get(name)
+            if (
+                value
+                and name.startswith("x_worksheet")
+                and field is not None
+                and field.type == "many2one"
+            ):
+                return self.env[field.comodel_name].browse(value)
+        return None
+
+    @api.model
+    def _get_worksheet_log(self, worksheet: models.BaseModel) -> models.BaseModel:
+        worksheet_log_field = f"x_{self._log_field}"
+        if worksheet_log_field not in worksheet._fields:
+            return self.env[self._fields[self._log_field].comodel_name]
+        return worksheet[worksheet_log_field]
 
     def _check_lock(self, vals):
         if "is_locked" in vals and not vals["is_locked"]:

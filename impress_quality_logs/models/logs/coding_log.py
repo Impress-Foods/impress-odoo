@@ -11,7 +11,16 @@ class CodingLog(models.Model):
     _name = "coding.log"
     _description = "Coding Log"
 
-    shelf_life = fields.Integer(related="product_id.expiration_time")
+    # Frozen when the log is created: the shelf life the operator checked the
+    # codes against, not the product's current one. The compute deliberately
+    # depends on product_id only, NOT on product_id.expiration_time, so later
+    # edits of the product do not rewrite past logs. Shown on the coding
+    # worksheets through their stored x_shelf_life (related to this field).
+    shelf_life = fields.Integer(
+        string="Expiration Date",
+        compute="_compute_shelf_life",
+        store=True,
+    )
     case_code = fields.Char()
     unit_code = fields.Char()
 
@@ -43,6 +52,11 @@ class CodingLog(models.Model):
     )
 
     operator_signature = fields.Binary()
+
+    @api.depends("product_id")
+    def _compute_shelf_life(self):
+        for rec in self:
+            rec.shelf_life = rec.product_id.expiration_time
 
     @api.depends(
         "unit_check",
