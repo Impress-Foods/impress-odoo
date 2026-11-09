@@ -29,17 +29,11 @@
             eval="
 'for rec in self:\n
     if not rec.x_metal_log_id:\n
-        existing_log = rec.env[\'metal.log\'].search([\n
-            (\'name\', \'=\', rec.x_quality_check_id.production_id.name)\n
-        ])\n
-        if not existing_log:\n
-            rec[\'x_metal_log_id\'] = rec.env[\'metal.log\'].create({\n
-                \'name\': rec.x_quality_check_id.production_id.name,\n
-                \'quality_check_id\': rec.x_quality_check_id.id\n
-            })\n
-        else: \n
-            rec[\'x_metal_log_id\'] = existing_log[0]
-            '"
+        check = rec.x_quality_check_id\n
+        rec[\'x_metal_log_id\'] = rec.env[\'metal.log\']._get_or_create_for_production(\n
+            check.production_id, check\n
+        )\n
+'"
         />
     </record>
 

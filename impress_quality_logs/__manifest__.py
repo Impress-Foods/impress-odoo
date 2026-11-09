@@ -1,6 +1,6 @@
 {
     "name": "Impress Quality Logs",
-    "version": "19.0.1.0.3",
+    "version": "19.0.1.1.0",
     "summary": """ Implements many quality logs used by
     Impress Foods for quality control """,
     "author": "Cédric Paradis",

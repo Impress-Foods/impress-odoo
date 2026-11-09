@@ -1,6 +1,9 @@
-"""Characterization: how worksheets, logs, log lines and quality checks link today."""
+"""How worksheets, logs, log lines and quality checks link together."""
+
+from psycopg2 import IntegrityError
 
 from odoo.tests import tagged
+from odoo.tools import mute_logger
 
 from .common import LINE_LOG_FIELD, TEMPLATES, WorksheetCase
 
@@ -88,6 +91,76 @@ class TestWorksheetLogCreation(WorksheetCase):
         self.assertTrue(first.x_hpp_log_id)
         self.assertFalse(first.x_hpp_log_id.name)
         self.assertEqual(second.x_hpp_log_id, first.x_hpp_log_id)
+
+
+@tagged("post_install", "-at_install")
+class TestLogOwnsProduction(WorksheetCase):
+    """The log is the anchor: one per type per production, found by production."""
+
+    def test_split_mo_keeps_its_log(self):
+        """Splitting an MO renames it to <name>-001; its log must still be found.
+
+        Before 19.0.1.1.0 the lookup matched on name, so the next worksheet
+        created a second log (seen in production on 138 logs).
+        """
+        for key, (_xmlid, log_field, _lines, log_model) in TEMPLATES.items():
+            with self.subTest(template=key):
+                production = self._create_production()
+                first = self.create_worksheet(key, self.create_check(key, production))
+                production.name = f"{production.name}-001"
+
+                second = self.create_worksheet(key, self.create_check(key, production))
+
+                self.assertEqual(second[log_field], first[log_field])
+                self.assertEqual(
+                    self.env[log_model].search_count(
+                        [("production_id", "=", production.id)]
+                    ),
+                    1,
+                )
+
+    def test_get_or_create_sets_production_explicitly(self):
+        production = self._create_production()
+        check = self.create_check("metal_20250203", production)
+
+        log = self.env["metal.log"]._get_or_create_for_production(production, check)
+
+        self.assertEqual(log.production_id, production)
+        self.assertEqual(log.quality_check_id, check)
+        self.assertEqual(log.name, production.name)
+        self.assertEqual(
+            self.env["metal.log"]._get_or_create_for_production(production, check),
+            log,
+        )
+
+    def test_log_created_with_check_only_gets_production(self):
+        """Legacy creation path: production is filled from the check."""
+        production = self._create_production()
+        check = self.create_check("weight_20260305", production)
+
+        log = self.env["weight.log"].create(
+            {"name": production.name, "quality_check_id": check.id}
+        )
+
+        self.assertEqual(log.production_id, production)
+
+    def test_one_log_per_type_per_production(self):
+        production = self._create_production()
+        self.env["x_ray.log"].create({"production_id": production.id})
+        with (
+            mute_logger("odoo.sql_db"),
+            self.assertRaises(IntegrityError),
+            self.env.cr.savepoint(),
+        ):
+            self.env["x_ray.log"].create({"production_id": production.id})
+            self.env.flush_all()
+
+    def test_same_production_different_log_types_allowed(self):
+        production = self._create_production()
+        metal = self.env["metal.log"].create({"production_id": production.id})
+        coding = self.env["coding.log"].create({"production_id": production.id})
+        self.env.flush_all()
+        self.assertEqual(metal.production_id, coding.production_id)
 
 
 @tagged("post_install", "-at_install")
