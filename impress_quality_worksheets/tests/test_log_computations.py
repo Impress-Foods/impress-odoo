@@ -162,17 +162,53 @@ class TestCodingLog(WorksheetCase):
         with self.assertRaises(ValueError):
             worksheet.x_barcode_check = "na"
 
-    def test_shelf_life_follows_product_live(self):
-        """Known exposure: past coding logs show the product's current shelf life."""
-        worksheet = self.create_worksheet(
-            "coding_20260810", self.create_check("coding_20260810")
+    def test_shelf_life_frozen_when_log_is_created(self):
+        """Past coding logs keep the shelf life the operator checked against.
+
+        Before 19.0.1.1.1 they showed the product's current shelf life.
+        """
+        for key in ("coding_20250303", "coding_20260810"):
+            with self.subTest(template=key):
+                self.product.expiration_time = 30
+                worksheet = self.create_worksheet(
+                    key, self.create_check(key, self._create_production())
+                )
+                self.assertEqual(worksheet.x_shelf_life, 30)
+
+                self.product.expiration_time = 45
+                self.env.flush_all()
+                self.env.invalidate_all()
+
+                self.assertEqual(worksheet.x_coding_log_id.shelf_life, 30)
+                self.assertEqual(worksheet.x_shelf_life, 30)
+
+    def test_new_log_captures_current_shelf_life(self):
+        self.create_worksheet(
+            "coding_20260810",
+            self.create_check("coding_20260810", self._create_production()),
         )
-        self.assertEqual(worksheet.x_shelf_life, 30)
+        self.product.expiration_time = 60
 
-        self.product.expiration_time = 45
+        worksheet = self.create_worksheet(
+            "coding_20260810",
+            self.create_check("coding_20260810", self._create_production()),
+        )
 
-        self.assertEqual(worksheet.x_coding_log_id.shelf_life, 45)
-        self.assertEqual(worksheet.x_shelf_life, 45)
+        self.assertEqual(worksheet.x_shelf_life, 60)
+
+    def test_second_worksheet_shows_the_log_shelf_life(self):
+        """A worksheet reusing an existing log shows that log's frozen value."""
+        production = self._create_production()
+        self.create_worksheet(
+            "coding_20260810", self.create_check("coding_20260810", production)
+        )
+        self.product.expiration_time = 90
+
+        second = self.create_worksheet(
+            "coding_20260810", self.create_check("coding_20260810", production)
+        )
+
+        self.assertEqual(second.x_shelf_life, 30)
 
 
 @tagged("post_install", "-at_install")
