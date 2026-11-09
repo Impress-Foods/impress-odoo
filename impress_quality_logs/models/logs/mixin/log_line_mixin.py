@@ -106,20 +106,17 @@ class LogLineMixin(models.AbstractModel):
     def create(self, vals_list):
         """Link new lines to their check and log (extends BaseModel.create).
 
-        Check: from the quality check wizard context (the worksheet form is
-        opened from it), otherwise from the worksheet the line is created in.
-
         Log: an explicit value or a default_<log field> context wins (e.g. the
         log's "view lines" list); otherwise the log of the worksheet.
+
+        Check, first one found: the quality check wizard context (the
+        worksheet form is opened from it), the worksheet the line is created
+        in, then the check of the line's log.
         """
         wizard_check = self._get_wizard_check()
         default_log_key = f"default_{self._log_field}"
         for vals in vals_list:
             worksheet = self._get_worksheet_from_vals(vals)
-            if "quality_check_id" not in vals and wizard_check:
-                vals["quality_check_id"] = wizard_check.id
-            if not vals.get("quality_check_id") and worksheet:
-                vals["quality_check_id"] = worksheet.x_quality_check_id.id
             if (
                 self._log_field
                 and not vals.get(self._log_field)
@@ -129,7 +126,26 @@ class LogLineMixin(models.AbstractModel):
                 log = self._get_worksheet_log(worksheet)
                 if log:
                     vals[self._log_field] = log.id
+
+            if "quality_check_id" not in vals and wizard_check:
+                vals["quality_check_id"] = wizard_check.id
+            if not vals.get("quality_check_id") and worksheet:
+                vals["quality_check_id"] = worksheet.x_quality_check_id.id
+            if not vals.get("quality_check_id"):
+                log = self._get_log_from_vals(vals)
+                if log.quality_check_id:
+                    vals["quality_check_id"] = log.quality_check_id.id
         return super().create(vals_list)
+
+    @api.model
+    def _get_log_from_vals(self, vals: dict) -> models.BaseModel:
+        """Return the log the line will belong to: from vals or context default."""
+        if not self._log_field:
+            return self.env["log.mixin"]
+        log_id = vals.get(self._log_field) or self.env.context.get(
+            f"default_{self._log_field}"
+        )
+        return self.env[self._fields[self._log_field].comodel_name].browse(log_id)
 
     def _get_wizard_check(self):
         wizard_id = self.env.context.get("quality_wizard_id")

@@ -226,7 +226,7 @@ class TestLogLineLinking(WorksheetCase):
 
         Uses the context returned by each log's action_view_<type>_lines, i.e.
         what the list's "New" button receives. Before 19.0.1.1.0 those lines
-        were orphaned (13 in production). They have no check, and take their
+        were orphaned (13 in production). They take their check and their
         production from the log.
         """
         actions = {
@@ -254,7 +254,8 @@ class TestLogLineLinking(WorksheetCase):
                 self.assertEqual(line[LINE_LOG_FIELD[log_model]], log)
                 self.assertIn(line, log.log_line_ids)
                 self.assertIn(line, line.search(action["domain"]))
-                self.assertFalse(line.quality_check_id)
+                self.assertEqual(line.quality_check_id, log.quality_check_id)
+                self.assertTrue(line.quality_check_id)
                 self.assertEqual(line.production_id, production)
 
     def test_explicit_log_wins_over_worksheet_log(self):
@@ -271,6 +272,45 @@ class TestLogLineLinking(WorksheetCase):
         line = worksheet.x_metal_log_line_ids
         self.assertEqual(line.metal_log_id, other_log)
         self.assertEqual(line.production_id, other_log.production_id)
+
+    def test_line_on_log_takes_the_log_check(self):
+        """Outside a worksheet and the wizard, the check comes from the log."""
+        production = self._create_production()
+        check = self.create_check("metal_20250203", production)
+        log = self.env["metal.log"]._get_or_create_for_production(production, check)
+
+        line = self.env["metal.log.line"].create({"metal_log_id": log.id})
+
+        self.assertEqual(line.quality_check_id, check)
+
+    def test_line_on_log_without_check_has_no_check(self):
+        log = self.env["metal.log"].create(
+            {"production_id": self._create_production().id}
+        )
+        line = (
+            self.env["metal.log.line"]
+            .with_context(**log.action_view_metal_lines()["context"])
+            .create({"notes": "no check on log"})
+        )
+        self.assertEqual(line.metal_log_id, log)
+        self.assertFalse(line.quality_check_id)
+
+    def test_worksheet_check_wins_over_log_check(self):
+        """A second check on the same production keeps its own lines' check."""
+        production = self._create_production()
+        first_check = self.create_check("metal_20250203", production)
+        second_check = self.create_check("metal_20250203", production)
+        self.create_worksheet("metal_20250203", first_check)
+
+        worksheet = self.create_worksheet(
+            "metal_20250203",
+            second_check,
+            [self.line_vals("metal_20250203")],
+            use_wizard=False,
+        )
+
+        self.assertEqual(worksheet.x_metal_log_id.quality_check_id, first_check)
+        self.assertEqual(worksheet.x_metal_log_line_ids.quality_check_id, second_check)
 
 
 @tagged("post_install", "-at_install")
