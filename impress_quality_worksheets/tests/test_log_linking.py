@@ -201,35 +201,36 @@ class TestLogLineLinking(WorksheetCase):
                 self.assertTrue(ws_field.startswith("x_worksheet_"))
                 self.assertEqual(line[ws_field], worksheet)
 
-    def test_lines_without_wizard_context_get_no_check(self):
-        """Outside the wizard flow, lines are not linked to the check.
+    def test_lines_without_wizard_context_get_check_from_worksheet(self):
+        """Outside the wizard flow, the check comes from the worksheet.
 
-        They still reach the log, because the log comes from the worksheet.
+        Before 19.0.1.1.0 these lines had no check and no production (13
+        weight lines in production, created from the shop floor).
         """
         for key in LINE_TEMPLATES:
             _xmlid, log_field, lines_field, log_model = TEMPLATES[key]
             with self.subTest(template=key):
                 production = self._create_production()
+                check = self.create_check(key, production)
                 worksheet = self.create_worksheet(
-                    key,
-                    self.create_check(key, production),
-                    [self.line_vals(key)],
-                    use_wizard=False,
+                    key, check, [self.line_vals(key)], use_wizard=False
                 )
 
                 line = worksheet[lines_field]
-                self.assertFalse(line.quality_check_id)
-                self.assertFalse(line.production_id)
+                self.assertEqual(line.quality_check_id, check)
+                self.assertEqual(line.production_id, production)
                 self.assertEqual(line[LINE_LOG_FIELD[log_model]], worksheet[log_field])
 
-    def test_line_created_from_log_line_list_is_not_linked(self):
-        """Known gap: lines created from the log's "view lines" list are orphaned.
+    def test_line_created_from_log_line_list_is_linked(self):
+        """Lines created from the log's "view lines" list belong to the log.
 
-        action_view_hpp_lines passes default_hpp_log_id, but hpp_log_id is a
-        read-only compute, so the default is ignored. The list allows "New".
+        action_view_hpp_lines passes default_hpp_log_id. Before 19.0.1.1.0 it
+        was ignored and those lines were orphaned. They have no check, and
+        take their production from the log.
         """
+        production = self._create_production()
         worksheet = self.create_worksheet(
-            "hpp_20250203", self.create_check("hpp_20250203")
+            "hpp_20250203", self.create_check("hpp_20250203", production)
         )
         log = worksheet.x_hpp_log_id
 
@@ -239,9 +240,72 @@ class TestLogLineLinking(WorksheetCase):
             .create(self.line_vals("hpp_20250203", 7))
         )
 
-        self.assertFalse(line.hpp_log_id)
-        self.assertNotIn(line, log.log_line_ids)
-        self.assertFalse(line.active_worksheet_field)
+        self.assertEqual(line.hpp_log_id, log)
+        self.assertIn(line, log.log_line_ids)
+        self.assertFalse(line.quality_check_id)
+        self.assertEqual(line.production_id, production)
+
+    def test_explicit_log_wins_over_worksheet_log(self):
+        production = self._create_production()
+        other_log = self.env["metal.log"].create(
+            {"production_id": self._create_production().id}
+        )
+        worksheet = self.create_worksheet(
+            "metal_20250203",
+            self.create_check("metal_20250203", production),
+            [{**self.line_vals("metal_20250203"), "metal_log_id": other_log.id}],
+        )
+
+        line = worksheet.x_metal_log_line_ids
+        self.assertEqual(line.metal_log_id, other_log)
+        self.assertEqual(line.production_id, other_log.production_id)
+
+
+@tagged("post_install", "-at_install")
+class TestLineProductionFromLog(WorksheetCase):
+    """The line's production comes from its log, or its check when it has none."""
+
+    def test_line_follows_its_log_production(self):
+        worksheet = self.create_worksheet(
+            "weight_20260305",
+            self.create_check("weight_20260305"),
+            [self.line_vals("weight_20260305")],
+        )
+        line = worksheet.x_weight_log_line_ids
+        new_production = self._create_production()
+
+        line.weight_log_id.production_id = new_production
+
+        self.assertEqual(line.production_id, new_production)
+        self.assertEqual(line.product_id, new_production.product_id)
+
+    def test_line_moved_to_another_log_takes_its_production(self):
+        worksheet = self.create_worksheet(
+            "x_ray_20250303",
+            self.create_check("x_ray_20250303"),
+            [self.line_vals("x_ray_20250303")],
+        )
+        line = worksheet.x_x_ray_log_line_ids
+        other_production = self._create_production()
+        other_log = self.env["x_ray.log"].create({"production_id": other_production.id})
+
+        line.x_ray_log_id = other_log
+
+        self.assertEqual(line.production_id, other_production)
+
+    def test_line_without_log_keeps_its_check_production(self):
+        """Fallback that keeps existing log-less lines (19 in production) intact."""
+        production = self._create_production()
+        check = self.create_check("metal_20250203", production)
+
+        line = self.env["metal.log.line"].create({"quality_check_id": check.id})
+
+        self.assertFalse(line.metal_log_id)
+        self.assertEqual(line.production_id, production)
+
+    def test_line_without_log_or_check_has_no_production(self):
+        line = self.env["metal.log.line"].create({"notes": "orphan"})
+        self.assertFalse(line.production_id)
         self.assertFalse(line.quality_check_id)
 
 

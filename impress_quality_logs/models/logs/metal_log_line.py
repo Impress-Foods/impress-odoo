@@ -16,9 +16,8 @@ class MetalLogLine(models.Model):
         "Sequence Number must be unique!",
     )
 
-    metal_log_id = fields.Many2one(
-        comodel_name="metal.log", compute="_compute_metal_log_id", store=True
-    )
+    _log_field = "metal_log_id"
+    metal_log_id = fields.Many2one(comodel_name="metal.log")
 
     sequence = fields.Char(default=lambda self: self.env._("New"), copy=False)
 
@@ -66,16 +65,6 @@ class MetalLogLine(models.Model):
                     ejection_check,
                 ]
             )
-
-    @api.depends("quality_check_id")
-    def _compute_metal_log_id(self):
-        for record in self:
-            # Get the current worksheet field
-            ws = record.active_worksheet_field
-            if ws:
-                record.metal_log_id = record[ws].x_metal_log_id
-            else:
-                record.metal_log_id = False
 
     @api.model_create_multi
     def create(self, vals_list):

@@ -17,9 +17,8 @@ class Xray_log_line(models.Model):
 
     sequence = fields.Char(default=lambda self: self.env._("New"), copy=False)
 
-    x_ray_log_id = fields.Many2one(
-        "x_ray.log", compute="_compute_x_ray_log_id", store=True
-    )
+    _log_field = "x_ray_log_id"
+    x_ray_log_id = fields.Many2one(comodel_name="x_ray.log")
 
     reject_value = fields.Integer()
 
@@ -39,16 +38,6 @@ class Xray_log_line(models.Model):
     total_qty = fields.Integer("Total Quantity")
     reject_qty = fields.Integer("Reject Quantity")
     average = fields.Integer()
-
-    @api.depends("quality_check_id")
-    def _compute_x_ray_log_id(self):
-        for record in self:
-            # Get the current worksheet field
-            ws = record.active_worksheet_field
-            if ws:
-                record.x_ray_log_id = record[ws].x_x_ray_log_id
-            else:
-                record.x_ray_log_id = False
 
     @api.model_create_multi
     def create(self, vals_list):

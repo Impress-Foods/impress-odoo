@@ -13,9 +13,8 @@ class HPPLogLine(models.Model):
 
     _rec_name = "cycle_number"
 
-    hpp_log_id = fields.Many2one(
-        comodel_name="hpp.log", compute="_compute_hpp_log_id", store=True
-    )
+    _log_field = "hpp_log_id"
+    hpp_log_id = fields.Many2one(comodel_name="hpp.log")
 
     _check_cycle_number = models.Constraint(
         "UNIQUE(cycle_number, production_id)",
@@ -54,16 +53,6 @@ class HPPLogLine(models.Model):
                 + record.barrel_3_qty
                 + record.barrel_4_qty
             )
-
-    @api.depends("quality_check_id")
-    def _compute_hpp_log_id(self):
-        for record in self:
-            # Get the current worksheet field
-            ws = record.active_worksheet_field
-            if ws:
-                record.hpp_log_id = record[ws].x_hpp_log_id
-            else:
-                record.hpp_log_id = False
 
     def _cleaning_cycle_check(self):
         for record in self:
