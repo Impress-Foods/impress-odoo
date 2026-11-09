@@ -24,5 +24,7 @@ class weightLog(models.Model):
             "type": "ir.actions.act_window",
             "view_mode": "list,form",
             "domain": Domain("weight_log_id", "=", self.id),
+            # Lines created from this list belong to this log.
+            "context": {"default_weight_log_id": self.id},
         }
         return action

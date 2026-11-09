@@ -224,26 +224,38 @@ class TestLogLineLinking(WorksheetCase):
     def test_line_created_from_log_line_list_is_linked(self):
         """Lines created from the log's "view lines" list belong to the log.
 
-        action_view_hpp_lines passes default_hpp_log_id. Before 19.0.1.1.0 it
-        was ignored and those lines were orphaned. They have no check, and
-        take their production from the log.
+        Uses the context returned by each log's action_view_<type>_lines, i.e.
+        what the list's "New" button receives. Before 19.0.1.1.0 those lines
+        were orphaned (13 in production). They have no check, and take their
+        production from the log.
         """
-        production = self._create_production()
-        worksheet = self.create_worksheet(
-            "hpp_20250203", self.create_check("hpp_20250203", production)
-        )
-        log = worksheet.x_hpp_log_id
+        actions = {
+            "hpp_20250203": "action_view_hpp_lines",
+            "metal_20250203": "action_view_metal_lines",
+            "weight_20260305": "action_view_weight_lines",
+            "x_ray_20250303": "action_view_x_ray_lines",
+        }
+        for key, method in actions.items():
+            _xmlid, log_field, _lines, log_model = TEMPLATES[key]
+            with self.subTest(template=key):
+                production = self._create_production()
+                worksheet = self.create_worksheet(
+                    key, self.create_check(key, production)
+                )
+                log = worksheet[log_field]
+                action = getattr(log, method)()
 
-        line = (
-            self.env["hpp.log.line"]
-            .with_context(default_hpp_log_id=log.id)
-            .create(self.line_vals("hpp_20250203", 7))
-        )
+                line = (
+                    self.env[action["res_model"]]
+                    .with_context(**action["context"])
+                    .create(self.line_vals(key, 7))
+                )
 
-        self.assertEqual(line.hpp_log_id, log)
-        self.assertIn(line, log.log_line_ids)
-        self.assertFalse(line.quality_check_id)
-        self.assertEqual(line.production_id, production)
+                self.assertEqual(line[LINE_LOG_FIELD[log_model]], log)
+                self.assertIn(line, log.log_line_ids)
+                self.assertIn(line, line.search(action["domain"]))
+                self.assertFalse(line.quality_check_id)
+                self.assertEqual(line.production_id, production)
 
     def test_explicit_log_wins_over_worksheet_log(self):
         production = self._create_production()
