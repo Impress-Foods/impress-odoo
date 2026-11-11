@@ -987,12 +987,6 @@ msgid "Remove all"
 msgstr ""
 
 #. module: mrp_campaign
-#. odoo-javascript
-#: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
-msgid "Remove from selection"
-msgstr ""
-
-#. module: mrp_campaign
 #: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_tree
 msgid "Reset"
 msgstr ""
