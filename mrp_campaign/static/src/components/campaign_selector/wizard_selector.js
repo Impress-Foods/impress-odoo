@@ -145,6 +145,14 @@ export class WizardSelector extends Component {
         }
     }
 
+    toggleSelected(item) {
+        if (this.selectedList.items.some((i) => i.id === item.id)) {
+            this.removeFromSelected(item);
+        } else {
+            this.addToSelected(item);
+        }
+    }
+
     addAllToSelected() {
         this.selectedList.items = [
             ...this.selectedList.items,
