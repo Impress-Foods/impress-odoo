@@ -1014,12 +1014,6 @@ msgid "Remove all"
 msgstr "Tout retirer"
 
 #. module: mrp_campaign
-#. odoo-javascript
-#: code:addons/mrp_campaign/static/src/components/campaign_selector/wizard_selector_templates.xml:0
-msgid "Remove from selection"
-msgstr "Retirer de la sélection"
-
-#. module: mrp_campaign
 #: model_terms:ir.ui.view,arch_db:mrp_campaign.view_mrp_campaign_tree
 msgid "Reset"
 msgstr "Réinitialiser"
@@ -1291,6 +1285,9 @@ msgstr "Type de processus"
 #: code:addons/mrp_campaign/static/src/components/campaign_partition/campaign_node/campaign_node.xml:0
 msgid "min."
 msgstr "minimum."
+
+#~ msgid "Remove from selection"
+#~ msgstr "Retirer de la sélection"
 
 #~ msgid "__________________"
 #~ msgstr "__________________"
