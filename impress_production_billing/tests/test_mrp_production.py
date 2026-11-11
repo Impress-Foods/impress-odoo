@@ -61,6 +61,30 @@ class TestMrpProduction(TransactionCase):
         self.assertEqual(mo.billing_sale_order_id, so)
         self.assertEqual(mo.billing_sale_order_line_id, so_line)
 
+    def test_set_sol_directly(self):
+        reference = hash(datetime.now().strftime("%Y%m%d%H%M%S"))
+        so = self.so_model.create(
+            {"partner_id": self.partner.id, "client_order_ref": reference}
+        )
+        so_line = self.so_line_model.create(
+            {
+                "order_id": so.id,
+                "product_id": self.billing_product.id,
+                "product_uom_qty": 1,
+            }
+        )
+
+        mo = self.mo_model.create(
+            {
+                "product_id": self.product.id,
+                "product_uom_qty": 1,
+                "billing_sale_order_line_id": so_line.id,
+            }
+        )
+
+        self.assertEqual(mo.billing_sale_order_id, so)
+        self.assertEqual(mo.billing_sale_order_line_id, so_line)
+
     def test_link_mo_to_so_wrong_product(self):
         reference = hash(datetime.now().strftime("%Y%m%d%H%M%S"))
         so = self.so_model.create(
