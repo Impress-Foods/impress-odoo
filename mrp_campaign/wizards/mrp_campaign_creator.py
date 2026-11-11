@@ -68,6 +68,7 @@ class MrpCampaignCreator(models.Model):
                         "name": f"{move.origin or 'No origin'} "
                         f"| {move.product_id.display_name}",
                         "qty": qty,
+                        "uom": move.product_uom.display_name,
                         "date": move.date_deadline.isoformat()
                         if move.date_deadline
                         else None,

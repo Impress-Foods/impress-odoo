@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <templates id="template" xml:space="preserve">
     <t t-name="mrp_campaign.WizardSelector">
         <div
@@ -24,38 +24,9 @@
                 </div>
                 <div class="list-group overflow-auto" style="max-height: 35vh;">
                     <t t-foreach="displayedAvailable" t-as="item" t-key="item.id">
-                        <div
-                            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2"
-                        >
-                            <div
-                                class="flex-grow-1 me-2"
-                                style="cursor: pointer; overflow: hidden;"
-                                t-on-click="() => this.addToSelected(item)"
-                            >
-                                <div class="fw-bold text-truncate" t-esc="item.name" />
-                                <div class="small text-muted">
-                                    <span t-if="item.qty" t-esc="item.qty" />
-                                    <span
-                                        t-if="item.date"
-                                        class="ms-2"
-                                        t-esc="this.formatDate(item.date)"
-                                    />
-                                    <span
-                                        t-if="item.additional_ref"
-                                        class="ms-2 text-truncate"
-                                        t-esc="item.additional_ref"
-                                    />
-                                </div>
-                            </div>
-                            <button
-                                type="button"
-                                class="btn btn-sm btn-outline-primary flex-shrink-0"
-                                title="Add to selection"
-                                t-on-click="() => this.addToSelected(item)"
-                            >
-                                <i class="fa fa-plus" />
-                            </button>
-                        </div>
+                        <t t-call="mrp_campaign.WizardSourceLine">
+                            <t t-set="mode" t-value="'add'" />
+                        </t>
                     </t>
                     <t t-if="displayedAvailable.length === 0">
                         <div class="list-group-item text-center py-3 text-muted">
@@ -105,38 +76,9 @@
                 </div>
                 <div class="list-group overflow-auto" style="max-height: 35vh;">
                     <t t-foreach="displayedSelected" t-as="item" t-key="item.id">
-                        <div
-                            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2"
-                        >
-                            <div
-                                class="flex-grow-1 me-2"
-                                style="cursor: pointer; overflow: hidden;"
-                                t-on-click="() => this.removeFromSelected(item)"
-                            >
-                                <div class="fw-bold text-truncate" t-esc="item.name" />
-                                <div class="small text-muted">
-                                    <span t-if="item.qty" t-esc="item.qty" />
-                                    <span
-                                        t-if="item.date"
-                                        class="ms-2"
-                                        t-esc="this.formatDate(item.date)"
-                                    />
-                                    <span
-                                        t-if="item.additional_ref"
-                                        class="ms-2 text-truncate"
-                                        t-esc="item.additional_ref"
-                                    />
-                                </div>
-                            </div>
-                            <button
-                                type="button"
-                                class="btn btn-sm btn-outline-danger flex-shrink-0"
-                                title="Remove from selection"
-                                t-on-click="() => this.removeFromSelected(item)"
-                            >
-                                <i class="fa fa-minus" />
-                            </button>
-                        </div>
+                        <t t-call="mrp_campaign.WizardSourceLine">
+                            <t t-set="mode" t-value="'remove'" />
+                        </t>
                     </t>
                     <t t-if="displayedSelected.length === 0">
                         <div class="list-group-item text-center py-3 text-muted">
@@ -145,6 +87,46 @@
                     </t>
                 </div>
             </div>
+        </div>
+    </t>
+    <t t-name="mrp_campaign.WizardSourceLine">
+        <div
+            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2"
+        >
+            <div
+                class="flex-grow-1 me-2"
+                style="cursor: pointer; overflow: hidden;"
+                t-on-click="() => this.toggleSelected(item)"
+            >
+                <div class="fw-bold text-truncate" t-esc="item.name" />
+                <div class="small text-muted">
+                    <div class="d-flex flex-column">
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex gap-1">
+                                <span t-if="item.qty" t-esc="item.qty" />
+                                <span t-if="item.uom" t-esc="item.uom" />
+                            </div>
+                        <span
+                            t-if="item.date"
+                            t-esc="this.formatDate(item.date)"
+                        />
+                        </div>
+                        <span
+                            t-if="item.additional_ref"
+                            class="text-truncate"
+                            t-esc="item.additional_ref"
+                        />
+                    </div>
+                </div>
+            </div>
+            <button
+                type="button"
+                class="btn btn-sm btn-outline-primary flex-shrink-0"
+                title="Add to selection"
+                t-on-click="() => this.toggleSelected(item)"
+            >
+                <i t-attf-class="fa {{mode =='remove' ? 'fa-minus' : 'fa-plus'}}" />
+            </button>
         </div>
     </t>
 </templates>

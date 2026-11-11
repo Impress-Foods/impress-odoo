@@ -59,6 +59,7 @@ class MrpCampaignCreator(models.Model):
                         "name": f"{sol.order_id.name} | "
                         f"{sol.order_id.client_order_ref or ''}",
                         "qty": remaining,
+                        "uom": sol.product_uom_id.display_name,
                         "date": sol.order_id.date_order.isoformat()
                         if sol.order_id.date_order
                         else None,
