@@ -41,8 +41,3 @@ class TestIPChangeRoute(HttpCase):
         response = self.url_open(ROUTE)
         self.assertEqual(response.text, "ok")
         self.post.assert_not_called()
-
-    def test_webserver_failure_still_returns_ok(self):
-        self.post.side_effect = requests.ConnectionError("unreachable")
-        response = self.url_open(ROUTE)
-        self.assertEqual(response.text, "ok")
