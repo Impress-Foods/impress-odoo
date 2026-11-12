@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-name="ReportMRPLines" t-inherit="stock.ReportMRPLines" t-inherit-mode="extension" owl="1">
+        <xpath expr="//td[1]/span[last()]" position="after">
+            <span
+                t-elif="col and col_last"
+                t-att-class="line.usage === 'out' ? 'text-danger' : line.usage === 'in' ? 'text-success' : ''"
+                t-esc="col"
+
+            />
+        </xpath>
+    </t>
+</templates>
