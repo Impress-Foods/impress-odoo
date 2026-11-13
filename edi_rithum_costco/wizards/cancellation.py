@@ -60,7 +60,7 @@ class EdiRithumCostcoCancellation(models.Model):
         """
         for cancellation in self:
             cancellation._check_can_cancel()
-            cancellation._reduce_order()
+            cancellation.with_context(costco_cancelling=True)._reduce_order()
             cancellation.state = "done"
             cancellation.send()
 

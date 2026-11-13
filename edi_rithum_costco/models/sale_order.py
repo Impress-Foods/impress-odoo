@@ -29,14 +29,14 @@ class SaleOrder(models.Model):
 
     costco_can_cancel = fields.Boolean(
         compute="_compute_costco_can_cancel",
-        help="A confirmed order from Costco with units not yet delivered.",
+        help="An order from Costco, not cancelled, with units not yet delivered.",
     )
 
     @api.depends("state", "rithum_partner_id.intake_model", "order_line.qty_delivered")
     def _compute_costco_can_cancel(self) -> None:
         for order in self:
             order.costco_can_cancel = (
-                order.state == "sale"
+                order.state != "cancel"
                 and order._costco_is_order()
                 and any(order._costco_open_lines())
             )
@@ -56,6 +56,18 @@ class SaleOrder(models.Model):
                 )
             )
         return super().action_cancel()
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_costco_order(self) -> None:
+        """A Costco order is a record of what was promised.
+
+        Deleting it would drop units Costco was never told about. Cancel it with
+        Costco instead. This runs before sale.order.unlink deletes anything.
+        """
+        if any(order._costco_is_order() for order in self):
+            raise UserError(
+                self.env._("A Costco order cannot be deleted: cancel it with Costco.")
+            )
 
     def _costco_is_order(self) -> bool:
         """Whether this order was created from a file received from Costco.

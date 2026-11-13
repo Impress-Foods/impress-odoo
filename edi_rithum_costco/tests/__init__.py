@@ -6,6 +6,7 @@ from . import test_backorder
 from . import test_cancellation
 from . import test_compliance_850
 from . import test_flow_850
+from . import test_guards
 from . import test_inbound_routing
 from . import test_inventory_flow
 from . import test_jobs

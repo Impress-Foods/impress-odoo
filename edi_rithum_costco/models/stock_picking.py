@@ -1,9 +1,10 @@
 from odoo import api, fields, models
 from odoo.exceptions import UserError
-from odoo.tools import html_escape
+from odoo.tools import float_compare, html_escape
 
 from odoo.addons.edi_core_oca.models.edi_exchange_record import EDIExchangeRecord
 from odoo.addons.edi_core_oca.models.edi_exchange_type import EDIExchangeType
+from odoo.addons.stock.models.stock_move import StockMove
 
 
 class StockPicking(models.Model):
@@ -26,10 +27,78 @@ class StockPicking(models.Model):
             )
 
     def _action_done(self) -> bool:
-        """Extends stock.picking._action_done: confirm Costco shipments once done."""
+        """Extends stock.picking._action_done.
+
+        Refuse to drop units Costco is owed (validating with "No backorder"), then
+        confirm Costco shipments once done.
+        """
+        if self.env.context.get("cancel_backorder"):
+            self._costco_check_nothing_owed()
         result = super()._action_done()
         self._costco_confirm_shipments()
         return result
+
+    def _costco_check_nothing_owed(self) -> None:
+        """Refuse "No backorder" while Costco lines are short of their order.
+
+        The units left would be dropped without Costco being told. Cancel them
+        with Costco first: that lowers the order, and the delivery with it.
+        """
+        for picking in self.filtered(lambda p: p._costco_is_open_delivery()):
+            short = picking._costco_open_moves().filtered(
+                lambda move: float_compare(
+                    move.product_uom_qty,
+                    move.quantity,
+                    precision_rounding=move.product_uom.rounding,
+                )
+                > 0
+            )
+            if short:
+                raise UserError(
+                    self.env._(
+                        "Costco is owed units that this delivery does not send "
+                        "(%(products)s). Cancel them with Costco on the order, or "
+                        "validate with a backorder.",
+                        products=", ".join(short.product_id.mapped("display_name")),
+                    )
+                )
+
+    def _costco_open_moves(self) -> StockMove:
+        """Moves of Costco lines that are neither done nor cancelled."""
+        self.ensure_one()
+        return self.move_ids.filtered(
+            lambda move: move.sale_line_id.costco_sku
+            and move.state not in ("done", "cancel")
+        )
+
+    def _costco_is_open_delivery(self) -> bool:
+        """An unfinished delivery of a Costco order with Costco lines to deliver."""
+        self.ensure_one()
+        return bool(
+            self.picking_type_code == "outgoing"
+            and self.sale_id._costco_is_order()
+            and self._costco_open_moves()
+        )
+
+    def action_cancel(self) -> bool:
+        """Extends stock.picking.action_cancel.
+
+        Cancelling a delivery that still holds Costco lines drops units Costco was
+        promised, and sends it nothing. Only the cancellation made with Costco,
+        which tells it and gives a reason, may do it.
+        """
+        if not self.env.context.get("costco_cancelling") and any(
+            picking.state != "done" and picking._costco_is_open_delivery()
+            for picking in self
+        ):
+            raise UserError(
+                self.env._(
+                    "This delivery holds units Costco is waiting for: use "
+                    '"Cancel with Costco" on the order so that Costco is told and '
+                    "given a reason."
+                )
+            )
+        return super().action_cancel()
 
     def _create_backorder(self, backorder_moves=None) -> "StockPicking":
         """Extends stock.picking._create_backorder: tell Costco what is backordered.

@@ -50,6 +50,10 @@ class EdiRithumCostcoMapping850(models.AbstractModel):
             production=backend.x12_production,
             exchange_record=exchange_record,
         )
+        # A Costco order is a commitment: confirm it at once, so its delivery
+        # exists and the guards on cancelling units apply from the start. No
+        # email goes to the customer (the context key `send_email` is not set).
+        orders.action_confirm()
         exchange_record._set_related_record(orders)
         self.env["edi.rithum.costco.product"].bind_order_lines(
             backend, orders.order_line
