@@ -12,6 +12,7 @@
         <field name="exchange_file_ext">intchg</field>
         <field name="generate_model_id" ref="edi_x12.model_edi_x12_handler_generate" />
         <field name="send_model_id" ref="edi_storage_oca.model_edi_oca_storage_handler" />
+        <field name="check_model_id" ref="edi_x12.model_edi_x12_handler_check" />
         <!-- Costco answers with a 997, which arrives as a Rithum (In) file. -->
         <field name="ack_type_id" ref="edi_rithum.rithum_in" />
         <field name="advanced_settings_edit">x12:
@@ -32,6 +33,7 @@
         <field name="exchange_file_ext">intchg</field>
         <field name="generate_model_id" ref="edi_x12.model_edi_x12_handler_generate" />
         <field name="send_model_id" ref="edi_storage_oca.model_edi_oca_storage_handler" />
+        <field name="check_model_id" ref="edi_x12.model_edi_x12_handler_check" />
         <field name="ack_type_id" ref="edi_rithum.rithum_in" />
         <field name="advanced_settings_edit">x12:
   map_set: edi_rithum_costco/x12_maps
@@ -51,6 +53,7 @@
         <field name="exchange_file_ext">intchg</field>
         <field name="generate_model_id" ref="edi_x12.model_edi_x12_handler_generate" />
         <field name="send_model_id" ref="edi_storage_oca.model_edi_oca_storage_handler" />
+        <field name="check_model_id" ref="edi_x12.model_edi_x12_handler_check" />
         <field name="ack_type_id" ref="edi_rithum.rithum_in" />
         <field name="advanced_settings_edit">x12:
   map_set: edi_rithum_costco/x12_maps
@@ -70,6 +73,7 @@
         <field name="exchange_file_ext">intchg</field>
         <field name="generate_model_id" ref="edi_x12.model_edi_x12_handler_generate" />
         <field name="send_model_id" ref="edi_storage_oca.model_edi_oca_storage_handler" />
+        <field name="check_model_id" ref="edi_x12.model_edi_x12_handler_check" />
         <field name="ack_type_id" ref="edi_rithum.rithum_in" />
         <field name="advanced_settings_edit">x12:
   map_set: edi_rithum_costco/x12_maps

@@ -149,6 +149,23 @@ class TestInboundRouting(TransactionCase):
         self.assertIn("Segment BSN, position 2, error code 2", chatter)
         self.assertIn("Reason code 4", chatter)
 
+    def test_the_output_cron_leaves_a_rejected_file_alone(self):
+        sent = self._sent_file()
+        rejection = _acknowledgment(
+            "16", tset_997.REJECTED, errors=(tset_997.SegmentError("BSN", 2, "2"),)
+        )
+        self._process(self._receive(_file_997(rejection)))
+        self.assertEqual(sent.edi_exchange_state, "output_sent_and_error")
+        self.backend._check_output_exchange_sync(record_ids=sent.ids)
+        self.assertEqual(sent.edi_exchange_state, "output_sent_and_error")
+
+    def test_every_outbound_type_has_a_check_handler(self):
+        types = self.env["edi.exchange.type"].search(
+            [("backend_id", "=", self.backend.id), ("direction", "=", "output")]
+        )
+        self.assertTrue(types)
+        self.assertFalse(types.filtered(lambda t: not t.check_model_id))
+
     def test_a_997_for_a_file_we_did_not_send_is_an_error(self):
         record = self._process(self._receive(_file_997(_acknowledgment("99", "A"))))
         self.assertEqual(record.edi_exchange_state, "input_processed_error")
