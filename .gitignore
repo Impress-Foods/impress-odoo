@@ -96,3 +96,8 @@ mypy.ini
 /.extra_modules
 .claude
 CLAUDE.md
+
+
+**/*.intchg
+**/*.md
+!README.md
