@@ -15,6 +15,7 @@ class TestAcknowledgmentFlow(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, queue_job__no_delay=True))
         cls.backend = cls.env.ref("edi_rithum.rithum_backend")
         cls.backend.write({"x12_sender_id": OUR_ID})
         cls.env.ref("edi_rithum_costco.rithum_partner_costco").x12_id = SENDER

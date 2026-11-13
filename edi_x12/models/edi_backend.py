@@ -1,6 +1,8 @@
 from odoo import fields, models
 from odoo.exceptions import UserError
 
+from odoo.addons.integration_queue_job.exception import RetryableJobError
+
 from ..x12.outbound import DEFAULT_QUALIFIER, Envelope
 from ..x12.reading import isa_receiver, isa_sender
 
@@ -28,6 +30,23 @@ class EdiBackend(models.Model):
         string="X12 sender ID",
         help="Our interchange ID (ISA06, GS02) on the interchanges we send.",
     )
+
+    def _send_retryable_exceptions(self) -> tuple[type[Exception], ...]:
+        """Extends edi.backend._send_retryable_exceptions.
+
+        Inside an X12 send job, a failed upload (the server is down, the network
+        dropped) is retried by the job. Anywhere else nothing would catch the
+        retryable error, so the standard handling applies.
+        """
+        if self.env.context.get("x12_in_job"):
+            return (IOError, OSError)
+        return super()._send_retryable_exceptions()
+
+    def _retryable_exception(self) -> type[Exception]:
+        """Extends edi.backend._retryable_exception: the queue job's own error."""
+        if self.env.context.get("x12_in_job"):
+            return RetryableJobError
+        return super()._retryable_exception()
 
     def x12_reply_envelope(self, received: str, functional_id: str) -> Envelope:
         """The envelope of an interchange answering ``received``.

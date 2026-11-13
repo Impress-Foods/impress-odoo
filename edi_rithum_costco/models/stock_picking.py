@@ -105,7 +105,8 @@ class StockPicking(models.Model):
         record = self._costco_send_notice(exchange_type)
         return self._costco_notification(
             self.env._("Shipment confirmation"),
-            record.exchange_error or self.env._("The shipment confirmation was sent."),
+            record.exchange_error
+            or self.env._("The shipment confirmation was queued for sending."),
             failed=bool(record.exchange_error),
         )
 

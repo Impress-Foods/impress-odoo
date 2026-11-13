@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- The files of X12 backends are sent and processed by jobs, after commit. -->
+    <record id="channel_edi_x12" model="queue.job.channel">
+        <field name="name">edi_x12</field>
+        <field name="parent_id" ref="integration_queue_job.channel_root" />
+    </record>
+
+    <!-- Upload failures (network, server down) are retried: 1 min, then 10, then 1 h. -->
+    <record id="job_function_x12_send" model="queue.job.function">
+        <field name="model_id" ref="edi_core_oca.model_edi_exchange_record" />
+        <field name="method">x12_send_job</field>
+        <field name="channel_id" ref="channel_edi_x12" />
+        <field name="edit_retry_pattern">{1: 60, 2: 600, 3: 3600}</field>
+    </record>
+
+    <record id="job_function_x12_receive_process" model="queue.job.function">
+        <field name="model_id" ref="edi_core_oca.model_edi_exchange_record" />
+        <field name="method">x12_receive_process_job</field>
+        <field name="channel_id" ref="channel_edi_x12" />
+        <field name="edit_retry_pattern">{1: 60, 2: 600, 3: 3600}</field>
+    </record>
+
+</odoo>

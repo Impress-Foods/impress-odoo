@@ -4,3 +4,4 @@ from . import edi_exchange_type
 from . import handler_check
 from . import handler_generate
 from . import handler_process
+from . import queue_job

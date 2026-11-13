@@ -54,7 +54,8 @@ class EdiBackend(models.Model):
                 "title": self.env._("Costco inventory"),
                 "message": "; ".join(errors)
                 or self.env._(
-                    "The inventory was sent (%(name)s).", name=record.exchange_filename
+                    "The inventory was queued for sending (%(name)s).",
+                    name=record.exchange_filename,
                 ),
                 "type": "danger" if failed else "success",
                 "sticky": failed,

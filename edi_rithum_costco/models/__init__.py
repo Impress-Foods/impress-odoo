@@ -2,6 +2,7 @@ from . import costco_code
 from . import costco_product
 from . import delivery_carrier
 from . import edi_backend
+from . import edi_exchange_record
 from . import intake
 from . import mapping_850
 from . import mapping_856

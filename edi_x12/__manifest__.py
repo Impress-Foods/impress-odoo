@@ -7,13 +7,16 @@
     "category": "Hidden",
     "depends": [
         "edi_core_oca",
+        "integration_queue_job",
         "partner_identification_import",
     ],
     "data": [
         "data/edi_backend_type.xml",
         "data/partner_id_category.xml",
         "data/ir_sequence.xml",
+        "data/queue_job.xml",
         "views/edi_backend_views.xml",
+        "views/edi_exchange_record_views.xml",
     ],
     "external_dependencies": {
         "python": ["defusedxml>=0.7", "pyx12==4.0.0"],

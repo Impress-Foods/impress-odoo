@@ -812,7 +812,7 @@ msgstr ""
 #. module: edi_rithum_costco
 #. odoo-python
 #: code:addons/edi_rithum_costco/models/edi_backend.py:0
-msgid "The inventory was sent (%(name)s)."
+msgid "The inventory was queued for sending (%(name)s)."
 msgstr ""
 
 #. module: edi_rithum_costco
@@ -844,7 +844,7 @@ msgstr ""
 #. module: edi_rithum_costco
 #. odoo-python
 #: code:addons/edi_rithum_costco/models/stock_picking.py:0
-msgid "The shipment confirmation was sent."
+msgid "The shipment confirmation was queued for sending."
 msgstr ""
 
 #. module: edi_rithum_costco

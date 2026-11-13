@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="edi_exchange_record_view_form" model="ir.ui.view">
+        <field name="name">edi.exchange.record.form.x12</field>
+        <field name="model">edi.exchange.record</field>
+        <field name="inherit_id" ref="edi_core_oca.edi_exchange_record_view_form" />
+        <field name="arch" type="xml">
+            <button name="action_retry" position="after">
+                <button
+                    name="action_x12_resend"
+                    type="object"
+                    string="Send again"
+                    invisible="not x12_is_x12 or direction != 'output' or edi_exchange_state not in ('new', 'output_pending', 'output_error_on_send')"
+                    help="Generate the file if needed and queue it for sending."
+                />
+                <field name="x12_is_x12" invisible="1" />
+            </button>
+        </field>
+    </record>
+
+</odoo>
