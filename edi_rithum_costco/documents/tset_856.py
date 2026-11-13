@@ -13,6 +13,8 @@ from decimal import Decimal
 from typing import Final
 
 from odoo.addons.edi_x12.x12.fields import (
+    check_identifier,
+    clean_text,
     format_date,
     format_quantity,
     format_time,
@@ -21,6 +23,7 @@ from odoo.addons.edi_x12.x12.fields import (
 from odoo.addons.edi_x12.x12.simple_xml import Loop, Segment
 
 TSET: Final = "856"
+NOTE_WIDTH: Final = 80  # REF03 (data element 352)
 STRUCTURE_CODE: Final = "0002"  # BSN05: shipment, order, item, packaging
 ORIGINAL: Final = "00"  # BSN01
 SHIPMENT_ROUTING: Final = "B"  # TD501: origin/delivery carrier
@@ -101,13 +104,23 @@ def build_body(confirmation: ShipmentConfirmation) -> Loop:
     _check(confirmation)
     order = Loop(
         "HL_O_LOOP",
-        [_hl(2, 1, "O"), Segment("PRF", {"PRF01": confirmation.po_number})],
+        [
+            _hl(2, 1, "O"),
+            Segment(
+                "PRF", {"PRF01": check_identifier(confirmation.po_number, "PO number")}
+            ),
+        ],
     )
     if confirmation.shipped:
         order.children.append(
             Segment(
                 "REF",
-                {"REF01": INVOICE_QUALIFIER, "REF02": confirmation.invoice_number},
+                {
+                    "REF01": INVOICE_QUALIFIER,
+                    "REF02": check_identifier(
+                        confirmation.invoice_number, "invoice number"
+                    ),
+                },
             )
         )
     next_id = 3
@@ -135,7 +148,7 @@ def build_body(confirmation: ShipmentConfirmation) -> Loop:
         "BSN",
         {
             "BSN01": ORIGINAL,
-            "BSN02": confirmation.shipment_id,
+            "BSN02": check_identifier(confirmation.shipment_id, "shipment ID"),
             "BSN03": format_date(confirmation.created_at),
             "BSN04": format_time(confirmation.created_at),
             "BSN05": STRUCTURE_CODE,
@@ -180,9 +193,9 @@ def _lin(item: ShippedItem | CancelledItem | BackorderedItem) -> Segment:
         {
             "LIN01": item.line_number,
             "LIN02": VENDOR_QUALIFIER,
-            "LIN03": item.vendor_sku,
+            "LIN03": check_identifier(item.vendor_sku, "item number"),
             "LIN04": BUYER_QUALIFIER,
-            "LIN05": item.buyer_sku,
+            "LIN05": check_identifier(item.buyer_sku, "buyer item number"),
         },
     )
 
@@ -210,7 +223,7 @@ def _shipped_loop(number: int, item: ShippedItem, warehouse: str) -> tuple[Loop,
                         {
                             "N101": WAREHOUSE,
                             "N103": WAREHOUSE_QUALIFIER,
-                            "N104": warehouse,
+                            "N104": check_identifier(warehouse, "warehouse ID"),
                         },
                     )
                 ],
@@ -226,7 +239,12 @@ def _shipped_loop(number: int, item: ShippedItem, warehouse: str) -> tuple[Loop,
                     _hl(next_id, number, "P"),
                     Segment(
                         "MAN",
-                        {"MAN01": TRACKING_QUALIFIER, "MAN02": tracking_number},
+                        {
+                            "MAN01": TRACKING_QUALIFIER,
+                            "MAN02": check_identifier(
+                                tracking_number, "tracking number"
+                            ),
+                        },
                     ),
                 ],
             )
@@ -238,7 +256,7 @@ def _shipped_loop(number: int, item: ShippedItem, warehouse: str) -> tuple[Loop,
 def _cancelled_loop(number: int, item: CancelledItem) -> Loop:
     reason = {"REF01": REASON_QUALIFIER, "REF02": item.reason}
     if item.note:
-        reason["REF03"] = item.note
+        reason["REF03"] = clean_text(item.note, NOTE_WIDTH)
     return Loop(
         "HL_I_LOOP",
         [

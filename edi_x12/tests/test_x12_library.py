@@ -13,7 +13,13 @@ from odoo.tests.common import TransactionCase
 from odoo.tools import mute_logger
 
 from ..x12 import engine, outbound
-from ..x12.fields import parse_date, parse_decimal, time_code
+from ..x12.fields import (
+    check_identifier,
+    clean_text,
+    parse_date,
+    parse_decimal,
+    time_code,
+)
 from ..x12.party import Party, read_ship_to
 from ..x12.reading import (
     isa_control_number,
@@ -481,3 +487,35 @@ class TestBackendForm(TransactionCase):
         ):
             with self.subTest(field=name):
                 self.assertIn(f'name="{name}"', arch)
+
+
+class TestTextHelpers(TransactionCase):
+    def test_delimiters_and_control_characters_become_a_space(self):
+        for text, expected in (
+            ("Box 6*250g", "Box 6 250g"),
+            ("A > B", "A B"),
+            ("Tilde ~ here", "Tilde here"),
+            ("a\tb", "a b"),
+            ("line\r\nbreak", "line break"),
+        ):
+            with self.subTest(text=text):
+                self.assertEqual(clean_text(text, 80), " ".join(expected.split()))
+
+    def test_text_the_encoding_cannot_hold_is_transliterated(self):
+        self.assertEqual(clean_text("Œuf → œuf", 80), "Œuf ? œuf")
+        self.assertEqual(clean_text("Hélène", 80), "Hélène")
+        self.assertEqual(clean_text("ǆ", 80), "dz")
+        clean_text("emoji \U0001f600", 80).encode("cp1252")
+
+    def test_the_text_is_cut_to_the_width_after_cleaning(self):
+        self.assertEqual(clean_text("a**b", 3), "a b")
+        self.assertEqual(clean_text("abcdef", 3), "abc")
+
+    def test_an_identifier_is_returned_as_it_is(self):
+        self.assertEqual(check_identifier("SKU-1/A b", "item number"), "SKU-1/A b")
+
+    def test_an_identifier_with_a_delimiter_is_refused_by_name(self):
+        for value in ("A*B", "A~B", "A>B", "A\nB", "A\tB", "A→B"):
+            with self.subTest(value=value):
+                with self.assertRaisesRegex(ValueError, "item number"):
+                    check_identifier(value, "item number")

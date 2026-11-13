@@ -11,6 +11,10 @@ from typing import Final
 from .engine import ISA_LENGTH, Issue, validate_document
 from .simple_xml import Loop, Segment
 
+# The separators of the files we write. pyx12's converter picks the element
+# separator and the segment terminator; ISA16 is ours.
+ELEMENT_SEPARATOR: Final = "*"
+SEGMENT_TERMINATOR: Final = "~"
 # ISA16, as in Costco's own orders. A colon is common in names and notes; ">" is not.
 COMPONENT_SEPARATOR: Final = ">"
 REPETITION_SEPARATOR: Final = "^"

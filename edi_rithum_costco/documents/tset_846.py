@@ -6,7 +6,11 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Final
 
-from odoo.addons.edi_x12.x12.fields import format_date
+from odoo.addons.edi_x12.x12.fields import (
+    check_identifier,
+    clean_text,
+    format_date,
+)
 from odoo.addons.edi_x12.x12.simple_xml import Loop, Segment
 
 TSET: Final = "846"
@@ -85,9 +89,9 @@ def _item_loop(item: InventoryItem) -> Loop:
                 "LIN",
                 {
                     "LIN02": VENDOR_QUALIFIER,
-                    "LIN03": item.vendor_sku,
+                    "LIN03": check_identifier(item.vendor_sku, "item number"),
                     "LIN04": BUYER_QUALIFIER,
-                    "LIN05": item.buyer_sku,
+                    "LIN05": check_identifier(item.buyer_sku, "buyer item number"),
                 },
             ),
             Loop(
@@ -98,7 +102,7 @@ def _item_loop(item: InventoryItem) -> Loop:
                         {
                             "PID01": FREE_FORM,
                             "PID02": PRODUCT,
-                            "PID05": item.description[:DESCRIPTION_WIDTH],
+                            "PID05": clean_text(item.description, DESCRIPTION_WIDTH),
                         },
                     )
                 ],
@@ -132,7 +136,9 @@ def _item_loop(item: InventoryItem) -> Loop:
                                 "REF",
                                 {
                                     "REF01": WAREHOUSE_QUALIFIER,
-                                    "REF02": stock.warehouse,
+                                    "REF02": check_identifier(
+                                        stock.warehouse, "warehouse ID"
+                                    ),
                                     "REF03": str(stock.quantity),
                                 },
                             )

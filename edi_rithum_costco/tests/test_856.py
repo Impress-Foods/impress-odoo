@@ -175,6 +175,23 @@ class TestShipmentConfirmation(TestCaseBase):
         for name in ("TD1", "TD5", "DTM", "N1", "MAN", "REF*IV"):
             self.assertNotIn(f"\n{name}*", text)
 
+    def test_a_cancellation_note_with_delimiters_is_cleaned(self):
+        text = _render(
+            tset_856.ShipmentConfirmation(
+                shipment_id="CANCEL-1",
+                po_number="00000100000001",
+                created_at=datetime(2026, 10, 29, 16, 45, tzinfo=EST),
+                cancelled=(_cancel("1", "3", "bad_sku", "6*250g ~ none\nleft → x"),),
+            )
+        )
+        self._st_loop(text)
+        self.assertIn("REF*TD*bad_sku*6 250g none left ? x~", text)
+
+    def test_a_tracking_number_with_a_delimiter_is_refused_not_altered(self):
+        item = _item("1", "88880601", "99990601", "5", "1Z*999")
+        with self.assertRaisesRegex(ValueError, "tracking number '1Z\\*999'"):
+            _render(_confirmation(shipped=(item,)))
+
     def test_a_line_partly_shipped_and_partly_cancelled_takes_two_items(self):
         text = _render(
             _confirmation(

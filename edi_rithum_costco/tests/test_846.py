@@ -158,3 +158,21 @@ class TestInventoryAdvice(TestCaseBase):
             line for line in text.split("\n") if not line.startswith("PID*")
         )
         self.assertFalse(validate_document(text, MAP_PATH).ok)
+
+    def test_a_product_name_with_delimiters_is_cleaned_not_refused(self):
+        item = dataclasses.replace(
+            _advice().items[0], description="Box 6*250g ~ A > B\tŒuf → œuf"
+        )
+        text = _render(_advice(items=(item,)))
+        self._valid(text)
+        self.assertIn("PID*F*08***Box 6 250g A B Œuf ? œuf~", text)
+        text.encode("cp1252")
+
+    def test_an_identifier_with_a_delimiter_is_refused_and_named(self):
+        item = dataclasses.replace(_advice().items[0], vendor_sku="88*80601")
+        with self.assertRaisesRegex(ValueError, "item number '88\\*80601'"):
+            _render(_advice(items=(item,)))
+        stock = _stock("20*01", 3)
+        item = dataclasses.replace(_advice().items[0], stock=(stock,))
+        with self.assertRaisesRegex(ValueError, "warehouse ID"):
+            _render(_advice(items=(item,)))
