@@ -57,17 +57,25 @@ class EdiRithumCostcoMapping856(models.AbstractModel):
     def _envelope(
         self, exchange_record: EDIExchangeRecord, order: SaleOrder
     ) -> outbound.Envelope:
-        """Addressed to whoever sent the 850 that created the order."""
+        """Addressed to whoever sent the 850 that created the order.
+
+        The file the order came from says who that was and which of our IDs it was
+        sent to. When the backend's retention has deleted it, the order still
+        knows its retailer, and the message is addressed from the retailer's
+        settings.
+        """
         origin = order.origin_exchange_record_id
-        if not origin.exchange_file:
-            raise UserError(
-                self.env._(
-                    "The order %(name)s was not created from an EDI file.",
-                    name=order.name,
-                )
+        if origin.exchange_file:
+            return exchange_record.backend_id.x12_reply_envelope(
+                origin._get_file_content(), FUNCTIONAL_ID
             )
-        return exchange_record.backend_id.x12_reply_envelope(
-            origin._get_file_content(), FUNCTIONAL_ID
+        if order.rithum_partner_id:
+            return order.rithum_partner_id.x12_envelope(FUNCTIONAL_ID)
+        raise UserError(
+            self.env._(
+                "The order %(name)s was not created from an EDI file.",
+                name=order.name,
+            )
         )
 
     def _invoice_reference(self, order: SaleOrder) -> str:

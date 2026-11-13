@@ -9,6 +9,7 @@ from . import test_flow_850
 from . import test_inbound_routing
 from . import test_inventory_flow
 from . import test_jobs
+from . import test_migration
 from . import test_inbound_850
 from . import test_price_protection
 from . import test_pyx12_maps

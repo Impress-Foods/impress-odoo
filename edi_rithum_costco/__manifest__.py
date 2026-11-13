@@ -1,6 +1,6 @@
 {
     "name": "EDI Rithum Costco",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "summary": """ Costco purchase orders over Rithum (HubEDI), X12 4010 """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",

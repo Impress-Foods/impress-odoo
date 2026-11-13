@@ -73,14 +73,15 @@ class TestBackorder(CostcoShipmentCase):
 
     def test_a_notice_that_cannot_be_sent_does_not_block_the_delivery(self):
         order, picking = self._order(kits=3)
-        # the order's file is what the notice is addressed from
+        # without its file, the order is addressed from its retailer's settings
         order.origin_exchange_record_id.exchange_file = False
+        order.rithum_partner_id.x12_id = False
         self._pack(picking, [2])
         self._validate(picking, tracking=TRACKING[:1])
         backorder = order.picking_ids - picking
         self.assertEqual(picking.state, "done")
         (record,) = self._records(backorder, NOTICE)
-        self.assertIn("not created from an EDI file", record.exchange_error)
+        self.assertIn("Set the interchange ID", record.exchange_error)
         chatter = " ".join(backorder.message_ids.mapped("body"))
         self.assertIn("could not be sent", chatter)
 

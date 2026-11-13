@@ -116,6 +116,7 @@ class EdiRithumCostcoMapping850(models.AbstractModel):
                 "client_order_ref": purchase_order.po_number,
                 "date_order": datetime.combine(purchase_order.created_on, time()),
                 "origin_exchange_record_id": exchange_record.id,
+                "rithum_partner_id": exchange_record.rithum_partner_id.id,
                 "order_line": [
                     Command.create(self._order_line_vals(line, chatter))
                     for line in purchase_order.lines

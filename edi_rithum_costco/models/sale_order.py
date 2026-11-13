@@ -16,14 +16,23 @@ class SaleOrder(models.Model):
         "repeated on the shipment confirmation.",
     )
 
+    rithum_partner_id = fields.Many2one(
+        "edi.rithum.partner",
+        string="Rithum partner",
+        index=True,
+        copy=False,
+        readonly=True,
+        ondelete="restrict",
+        help="The retailer whose file created the order. It is kept on the order "
+        "itself: the exchange record can be deleted by the backend's retention.",
+    )
+
     costco_can_cancel = fields.Boolean(
         compute="_compute_costco_can_cancel",
         help="A confirmed order from Costco with units not yet delivered.",
     )
 
-    @api.depends(
-        "state", "origin_exchange_record_id.type_id", "order_line.qty_delivered"
-    )
+    @api.depends("state", "rithum_partner_id.intake_model", "order_line.qty_delivered")
     def _compute_costco_can_cancel(self) -> None:
         for order in self:
             order.costco_can_cancel = (
@@ -53,8 +62,7 @@ class SaleOrder(models.Model):
 
         An empty recordset, such as the order of a delivery without one, is not.
         """
-        partner = self.origin_exchange_record_id.rithum_partner_id
-        return partner.intake_model == COSTCO_INTAKE
+        return self.rithum_partner_id.intake_model == COSTCO_INTAKE
 
     def _costco_open_lines(self) -> SaleOrderLine:
         """Costco lines with units still to deliver."""

@@ -162,22 +162,25 @@ class TestCancellation(CostcoShipmentCase):
 
     def test_a_failed_send_keeps_the_cancellation_and_can_be_sent_again(self):
         order, __ = self._order(kits=3)
-        # the order's file is what the cancellation is addressed from
+        # without its file, the order is addressed from its retailer's settings
         file = order.origin_exchange_record_id.exchange_file
         order.origin_exchange_record_id.exchange_file = False
+        partner = order.rithum_partner_id
+        x12_id, partner.x12_id = partner.x12_id, False
         cancellation = self._cancellation(order, 1)
         send = self._confirm(cancellation)
         send.assert_not_called()
         self.assertEqual(order.order_line.product_uom_qty, 2)
         self.assertEqual(cancellation.state, "done")
         self.assertIn(
-            "not created from an EDI file",
+            "Set the interchange ID",
             cancellation.exchange_record_ids.exchange_error,
         )
         self.assertIn(
             "could not be sent", " ".join(cancellation.message_ids.mapped("body"))
         )
         order.origin_exchange_record_id.exchange_file = file
+        partner.x12_id = x12_id
         with mock.patch.object(
             self.env.registry["edi.backend"], "exchange_send"
         ) as send:
@@ -257,9 +260,7 @@ class TestCancellation(CostcoShipmentCase):
 
     def test_an_order_from_another_partners_file_is_not_a_costco_order(self):
         order, __ = self._order(kits=3)
-        order.origin_exchange_record_id.rithum_partner_id = self.env[
-            "edi.rithum.partner"
-        ].create(
+        order.rithum_partner_id = self.env["edi.rithum.partner"].create(
             {
                 "name": "Another retailer",
                 "x12_id": "OTHERRETAILER01",
@@ -269,3 +270,19 @@ class TestCancellation(CostcoShipmentCase):
         )
         self.assertFalse(order._costco_is_order())
         self.assertFalse(order.costco_can_cancel)
+
+    def test_the_order_survives_the_deletion_of_its_file(self):
+        order, picking = self._order(kits=3)
+        record = order.origin_exchange_record_id
+        record.unlink()
+        self.assertFalse(order.origin_exchange_record_id)
+        self.assertTrue(order._costco_is_order())
+        self.assertTrue(order.costco_can_cancel)
+        with self.assertRaises(UserError):
+            order.action_cancel()
+        # the shipment confirmation is still produced, from the retailer's settings
+        self._pack(picking, [3])
+        self._validate(picking, tracking=TRACKING[:1])
+        (confirmation,) = picking.exchange_record_ids
+        self.assertFalse(confirmation.exchange_error, confirmation.exchange_error)
+        self.assertIn("BSN*", self._text(confirmation))
