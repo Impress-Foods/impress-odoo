@@ -150,10 +150,13 @@ class EdiExchangeRecord(models.Model):
         if self._x12_is_acknowledgment():
             return None
         ack = self.exchange_create_ack_record()
-        ack.x12_generate_send(
-            on_error=lambda message: self._notify_related_record(message, "error")
-        )
+        ack.x12_generate_send(on_error=self._x12_report_ack_failure)
         return ack
+
+    def _x12_report_ack_failure(self, message: str) -> None:
+        """Say on this record, and on what it created, that its 997 failed."""
+        self.message_post(body=message)
+        self._notify_related_record(message, "error")
 
     def _x12_is_acknowledgment(self) -> bool:
         """Whether the file is a functional acknowledgment (never acknowledged)."""

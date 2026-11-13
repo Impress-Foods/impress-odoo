@@ -27,6 +27,8 @@ from ..x12.reading import (
     isa_sender,
     isa_usage_indicator,
     qualifier_pairs,
+    segments,
+    split_transactions,
     transactions,
 )
 from ..x12.simple_xml import Loop, Segment, parse, walk_loops
@@ -519,3 +521,46 @@ class TestTextHelpers(TransactionCase):
             with self.subTest(value=value):
                 with self.assertRaisesRegex(ValueError, "item number"):
                     check_identifier(value, "item number")
+
+
+class TestSplitTransactions(TransactionCase):
+    ISA = (
+        "ISA*00*          *00*          *ZZ*SENDER         *ZZ*RECEIVER       "
+        "*261030*1508*U*00401*000000007*0*T*>~"
+    )
+
+    def _file(self, ending="\r\n"):
+        segments_ = [
+            self.ISA,
+            "GS*PO*SENDER*RECEIVER*20261030*1508*42*X*004010~",
+            "ST*850*0001~",
+            "BEG*00*SA*PO-1~",
+            "SE*3*0001~",
+            "ST*850*0002~",
+            "BEG*00*SA*PO-2~",
+            "SE*3*0002~",
+            "GE*2*42~",
+            "IEA*1*000000007~",
+        ]
+        return ending.join(segments_) + ending
+
+    def test_each_transaction_becomes_a_complete_interchange(self):
+        parts = split_transactions(self._file())
+        self.assertEqual(len(parts), 2)
+        for number, part in enumerate(parts, start=1):
+            self.assertTrue(part.startswith(self.ISA + "\r\n"))
+            self.assertEqual(isa_control_number(part), 7)
+            names = [seg[0] for seg in segments(part)]
+            self.assertEqual(names, ["ISA", "GS", "ST", "BEG", "SE", "GE", "IEA"])
+            self.assertIn(f"BEG*00*SA*PO-{number}~", part)
+            self.assertIn("GE*1*42~", part)
+            self.assertIn("IEA*1*000000007~", part)
+
+    def test_the_line_ending_is_kept(self):
+        for ending in ("\r\n", "\n", ""):
+            with self.subTest(ending=ending):
+                parts = split_transactions(self._file(ending))
+                self.assertTrue(parts[0].endswith("IEA*1*000000007~" + ending))
+
+    def test_a_file_with_no_transaction_gives_none(self):
+        self.assertEqual(split_transactions(self.ISA + "IEA*0*000000007~"), [])

@@ -11,5 +11,6 @@ from . import mapping_cancel
 from . import mapping_inventory
 from . import sale_order
 from . import sale_order_line
+from . import splitter_850
 from . import stock_picking
 from . import stock_warehouse

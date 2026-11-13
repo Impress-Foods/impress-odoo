@@ -12,4 +12,5 @@ from . import test_jobs
 from . import test_inbound_850
 from . import test_price_protection
 from . import test_pyx12_maps
+from . import test_split_850
 from . import test_shipment_flow

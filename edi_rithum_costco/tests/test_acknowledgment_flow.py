@@ -86,7 +86,12 @@ class TestAcknowledgmentFlow(TransactionCase):
         # The 997 only says the file was well formed; the unknown item is ours to fix.
         record = self._receive(_order_text(po_number="PO-SKU", vendor_sku="000000"))
         self._process(record)
-        self.assertEqual(record.edi_exchange_state, "input_processed_error")
+        # The file is processed: the failure is on the record of the order.
+        self.assertEqual(record.edi_exchange_state, "input_processed")
+        (order_record,) = self.env["edi.exchange.record"].search(
+            [("parent_id", "=", record.id), ("type_id.code", "=", "costco_850_in")]
+        )
+        self.assertEqual(order_record.edi_exchange_state, "input_processed_error")
         self.assertIn("AK5*A~", self._ack_text(record))
 
     def test_a_record_is_acknowledged_only_once(self):
@@ -94,7 +99,10 @@ class TestAcknowledgmentFlow(TransactionCase):
         self._process(record)
         with mock.patch.object(self.env.registry["edi.backend"], "exchange_send"):
             self.assertFalse(record.x12_acknowledge())
-        self.assertEqual(len(record.related_exchange_ids), 1)
+        acks = record.related_exchange_ids.filtered(
+            lambda r: r.type_id.code == "rithum_997_out"
+        )
+        self.assertEqual(len(acks), 1)
 
     def test_a_failing_acknowledgment_does_not_undo_the_processing(self):
         record = self._receive(_order_text(po_number="PO-FAIL"))
@@ -107,8 +115,8 @@ class TestAcknowledgmentFlow(TransactionCase):
         ):
             self._process(record)
         self.assertEqual(record.edi_exchange_state, "input_processed")
-        self.assertTrue(record.related_record_ids)
-        self.assertIn("could not be built", record.related_exchange_ids.exchange_error)
+        self.assertIn("could not be built", record.ack_exchange_id.exchange_error)
+        self.assertIn("could not be built", " ".join(record.message_ids.mapped("body")))
 
     def test_a_backend_without_an_id_still_answers_as_the_id_the_file_names(self):
         self.backend.x12_sender_id = False

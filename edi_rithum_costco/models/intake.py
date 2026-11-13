@@ -7,4 +7,4 @@ class EdiRithumCostcoIntake(models.AbstractModel):
     _description = "Costco intake"
 
     # The documents Costco sends that we read. Its 997s are read by edi_rithum.
-    ROUTES = {("PO", "850"): "edi.rithum.costco.mapping.850"}
+    ROUTES = {("PO", "850"): "edi.rithum.costco.splitter.850"}

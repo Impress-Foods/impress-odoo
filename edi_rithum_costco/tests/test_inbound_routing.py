@@ -104,7 +104,10 @@ class TestInboundRouting(TransactionCase):
         self.assertEqual(record.edi_exchange_state, "input_processed")
         self.assertEqual(record.x12_document, "850")
         order = self.env["sale.order"].search([("client_order_ref", "=", "PO-ROUTED")])
-        self.assertEqual(order.origin_exchange_record_id, record)
+        child = order.origin_exchange_record_id
+        self.assertEqual(child.parent_id, record)
+        self.assertEqual(child.type_id.code, "costco_850_in")
+        self.assertEqual(child.rithum_partner_id, record.rithum_partner_id)
 
     def test_a_997_is_not_treated_as_a_purchase_order(self):
         sent = self._sent_file()

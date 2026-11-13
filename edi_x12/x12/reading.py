@@ -46,6 +46,7 @@ ISA_RECEIVER_QUALIFIER: Final = 7  # ISA07
 ISA_RECEIVER_ID: Final = 8  # ISA08
 ISA_CONTROL_NUMBER: Final = 13  # ISA13
 ISA_USAGE_INDICATOR: Final = 15  # ISA15: T for test, P for production
+ISA_GS_CONTROL: Final = 6  # GS06
 
 
 def _delimiters(text: str) -> tuple[str, str, str]:
@@ -103,4 +104,40 @@ def document_sets(text: str) -> list[tuple[str, str]]:
             group = segment[1]
         elif segment[0] == "ST" and len(segment) > 1:
             found.append((group, segment[1]))
+    return found
+
+
+def split_transactions(text: str) -> list[str]:
+    """One interchange per transaction set of ``text``.
+
+    Each holds the same ISA and GS as the original, a single ST to SE and a GE
+    and IEA that count exactly that, so it is a complete file on its own. The
+    segment terminator and the line ending after it are kept as they were.
+    """
+    text, element, terminator = _delimiters(text)
+    body = text[ISA_LENGTH:]
+    line_ending = body[: len(body) - len(body.lstrip())]
+    parts = [part.strip() for part in text.split(terminator)]
+    parsed = [part.split(element) for part in parts if part]
+    isa, group = parsed[0], None
+    found: list[str] = []
+    current: list[list[str]] | None = None
+    for segment in parsed[1:]:
+        if segment[0] == "GS":
+            group = segment
+        elif segment[0] == "ST":
+            current = [segment]
+        elif current is not None:
+            current.append(segment)
+            if segment[0] == "SE":
+                envelope = [isa, group, *current]
+                envelope.append(["GE", "1", group[ISA_GS_CONTROL]])
+                envelope.append(["IEA", "1", isa[ISA_CONTROL_NUMBER]])
+                found.append(
+                    "".join(
+                        element.join(part) + terminator + line_ending
+                        for part in envelope
+                    )
+                )
+                current = None
     return found

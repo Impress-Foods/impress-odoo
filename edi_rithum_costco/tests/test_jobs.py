@@ -179,7 +179,9 @@ class TestJobs(CostcoShipmentCase):
         )
         record.x12_receive_process_job()
         record.x12_receive_process_job()
-        acks = self.env["edi.exchange.record"].search([("parent_id", "=", record.id)])
+        acks = self.env["edi.exchange.record"].search(
+            [("parent_id", "=", record.id), ("type_id.code", "=", "rithum_997_out")]
+        )
         self.assertEqual(len(acks), 1)
         self.assertEqual(record.ack_exchange_id, acks)
 

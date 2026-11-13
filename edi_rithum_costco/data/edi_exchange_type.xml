@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!--
+        One purchase order of a Costco interchange. The intake splits the file it
+        receives into one record of this type per order, so each order has its own
+        state, error and retry. The 997 answers the whole file and stays on the
+        Rithum (In) record: this type has no acknowledgment.
+    -->
+    <record id="costco_850_in" model="edi.exchange.type">
+        <field name="name">Costco 850 (In)</field>
+        <field name="code">costco_850_in</field>
+        <field name="backend_type_id" ref="edi_x12.edi_backend_x12"/>
+        <field name="backend_id" ref="edi_rithum.rithum_backend" />
+        <field name="direction">input</field>
+        <field name="encoding">cp1252</field>
+        <field name="exchange_file_ext">intchg</field>
+        <field name="process_model_id" ref="edi_x12.model_edi_x12_handler_process" />
+        <field name="advanced_settings_edit">x12:
+  map_set: edi_rithum_costco/x12_maps
+  mapping: edi.rithum.costco.mapping.850
+</field>
+    </record>
+
     <!-- The shipment confirmation we send when a Costco delivery is done. -->
     <record id="costco_856_out" model="edi.exchange.type">
         <field name="name">Costco 856 (Out)</field>
