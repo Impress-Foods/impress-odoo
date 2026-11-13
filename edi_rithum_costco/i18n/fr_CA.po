@@ -778,7 +778,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/edi_rithum_costco/models/mapping_856.py:0
 msgid ""
-"The components of %(kit)s in package %(package)s do not make whole kits."
+"The components of %(kit)s in this delivery do not make whole kits."
 msgstr ""
 
 #. module: edi_rithum_costco

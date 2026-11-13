@@ -42,6 +42,21 @@ class TestShipmentFlow(CostcoShipmentCase):
         self.assertEqual(record.x12_control_number, str(int(control)))
         self.assertEqual(record.exchange_filename, f"HUB{int(control):09d}.intchg")
 
+    def test_the_components_of_a_kit_may_travel_in_different_boxes(self):
+        __, picking = self._order(kits=3)
+        packages = self._pack(picking, [3, 0])
+        for line in picking.move_line_ids:
+            if line.product_id.default_code == "COMP-B":
+                line.result_package_id = packages[1]
+        self._validate(picking)
+        self.assertEqual(picking.state, "done")
+        record = self._confirmation(picking)
+        self.assertFalse(record.exchange_error, record.exchange_error)
+        text = self._text(record)
+        self.assertEqual(text.count("LIN*"), 1)
+        self.assertIn("SN1**3*EA*****AC~", text)
+        self.assertEqual(text.count("MAN*CP*"), 2)
+
     def test_components_that_do_not_make_whole_kits_are_not_sent(self):
         __, picking = self._order(kits=3)
         packages = self._pack(picking, [2, 1])

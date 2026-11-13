@@ -164,22 +164,11 @@ class EdiRithumCostcoMapping856(models.AbstractModel):
     ) -> tset_856.ShippedItem:
         """The units of one order line over all its packages, and their tracking."""
         own = lines.filtered(lambda line: line.move_id.sale_line_id == sale_line)
-        quantity = sum(
-            (
-                self._shipped_quantity(
-                    sale_line,
-                    own.filtered(lambda line, p=package: line.result_package_id == p),
-                    package,
-                )
-                for package in own.result_package_id
-            ),
-            Decimal(0),
-        )
         return tset_856.ShippedItem(
             line_number=sale_line.edi_id or "",
             vendor_sku=sale_line.product_id.default_code or "",
             buyer_sku=sale_line.costco_sku or "",
-            quantity=quantity,
+            quantity=self._shipped_quantity(sale_line, own),
             tracking_numbers=tuple(
                 tracking[package.id] for package in own.result_package_id
             ),
@@ -204,9 +193,9 @@ class EdiRithumCostcoMapping856(models.AbstractModel):
         return numbers
 
     def _shipped_quantity(
-        self, sale_line: SaleOrderLine, lines: StockMoveLine, package
+        self, sale_line: SaleOrderLine, lines: StockMoveLine
     ) -> Decimal:
-        """Units of the ordered product in this package; kits count whole kits."""
+        """Units of the ordered product on this order line; kits count whole kits."""
         bom = sale_line.move_ids.bom_line_id.bom_id.filtered(
             lambda b: b.type == "phantom"
         )[:1]
@@ -221,15 +210,18 @@ class EdiRithumCostcoMapping856(models.AbstractModel):
                     )
                 )
             )
-        return self._kits_in(bom, sale_line, lines, package)
+        return self._kits_in(bom, sale_line, lines)
 
-    def _kits_in(
-        self, bom, sale_line: SaleOrderLine, lines: StockMoveLine, package
-    ) -> Decimal:
-        """How many whole kits the components in this package make up."""
+    def _kits_in(self, bom, sale_line: SaleOrderLine, lines: StockMoveLine) -> Decimal:
+        """How many whole kits the components shipped for this line make up.
+
+        The components of one kit may travel in different packages, so they are
+        counted over all the packages of the line together. What must hold is
+        that the delivery as a whole makes whole kits.
+        """
         ratios = self._components_per_kit(bom, sale_line.product_id)
         if set(lines.product_id) - set(ratios):
-            raise self._partial_kit(sale_line, package)
+            raise self._partial_kit(sale_line)
         counts = {
             product: sum(
                 line.quantity_product_uom
@@ -244,7 +236,7 @@ class EdiRithumCostcoMapping856(models.AbstractModel):
         if whole <= 0 or any(
             abs(c - whole) > WHOLE_KIT_TOLERANCE for c in counts.values()
         ):
-            raise self._partial_kit(sale_line, package)
+            raise self._partial_kit(sale_line)
         return Decimal(whole)
 
     def _components_per_kit(self, bom, product) -> dict:
@@ -257,12 +249,10 @@ class EdiRithumCostcoMapping856(models.AbstractModel):
             )
         return ratios
 
-    def _partial_kit(self, sale_line: SaleOrderLine, package) -> UserError:
+    def _partial_kit(self, sale_line: SaleOrderLine) -> UserError:
         return UserError(
             self.env._(
-                "The components of %(kit)s in package %(package)s do not make "
-                "whole kits.",
+                "The components of %(kit)s in this delivery do not make whole kits.",
                 kit=sale_line.product_id.display_name,
-                package=package.display_name,
             )
         )
