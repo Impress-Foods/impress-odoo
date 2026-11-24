@@ -1,15 +1,16 @@
 {
     "name": "Impress Purchase Customizations",
-    "version": "19.0.1.1.1",
+    "version": "19.0.1.2.0",
     "summary": """ Impress Foods specific purchase customizations """,
     "author": "Cédric Paradis",
     "website": "https://github.com/Impress-Foods/impress-odoo",
     "category": "Hidden",
-    "depends": ["base", "purchase"],
+    "depends": ["base", "purchase", "purchase_stock"],
     "data": [
         "report/purchase_order_report.xml",
         "security/groups.xml",
         "views/purchase_order_views.xml",
+        "views/orderpoint_views.xml",
     ],
     "application": False,
     "installable": True,
