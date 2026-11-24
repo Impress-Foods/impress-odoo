@@ -48,12 +48,14 @@ msgstr "Créer facture"
 #. module: impress_purchase_customizations
 #: model:ir.model.fields,field_description:impress_purchase_customizations.field_purchase_order__display_name
 #: model:ir.model.fields,field_description:impress_purchase_customizations.field_purchase_order_line__display_name
+#: model:ir.model.fields,field_description:impress_purchase_customizations.field_stock_warehouse_orderpoint__display_name
 msgid "Display Name"
 msgstr "Nom d'affichage"
 
 #. module: impress_purchase_customizations
 #: model:ir.model.fields,field_description:impress_purchase_customizations.field_purchase_order__id
 #: model:ir.model.fields,field_description:impress_purchase_customizations.field_purchase_order_line__id
+#: model:ir.model.fields,field_description:impress_purchase_customizations.field_stock_warehouse_orderpoint__id
 msgid "ID"
 msgstr "ID"
 
@@ -61,6 +63,11 @@ msgstr "ID"
 #: model:ir.model.fields,field_description:impress_purchase_customizations.field_purchase_order_line__invoiced_uom_qty
 msgid "Invoiced Uom Qty"
 msgstr "Quantité facturée (unité du produit)"
+
+#. module: impress_purchase_customizations
+#: model:ir.model,name:impress_purchase_customizations.model_stock_warehouse_orderpoint
+msgid "Minimum Inventory Rule"
+msgstr ""
 
 #. module: impress_purchase_customizations
 #: model:ir.model,name:impress_purchase_customizations.model_purchase_order
@@ -86,6 +93,13 @@ msgstr "Quantité reçue (UoM du produit)"
 #: model:res.groups,comment:impress_purchase_customizations.can_bypass_po_locks
 msgid "This user will be able to bypass PO locks."
 msgstr "Cet utilisateur sera en mesure de contourner les POs verrouillés."
+
+#. module: impress_purchase_customizations
+#: model:ir.model.fields,field_description:impress_purchase_customizations.field_stock_warehouse_orderpoint__vendor_id
+#: model_terms:ir.ui.view,arch_db:impress_purchase_customizations.stock_reorder_report_search
+#: model_terms:ir.ui.view,arch_db:impress_purchase_customizations.view_warehouse_orderpoint_tree_editable
+msgid "Vendor"
+msgstr ""
 
 #. module: impress_purchase_customizations
 #. odoo-python
