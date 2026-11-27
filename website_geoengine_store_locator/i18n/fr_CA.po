@@ -6,40 +6,43 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2026-11-27 20:51+0000\n"
+"Last-Translator: admin <cparadis@impressfoods.com>\n"
+"Language-Team: French (Canada) <http://translate.impressfoods.ca/projects/"
+"impress-odoo/website_geoengine_store_locator/fr_CA/>\n"
+"Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 2026.5\n"
 
 #. module: website_geoengine_store_locator
 #: model_terms:ir.ui.view,arch_db:website_geoengine_store_locator.s_openlayer_store_locator_options
 msgid "200"
-msgstr ""
+msgstr "200"
 
 #. module: website_geoengine_store_locator
 #: model_terms:ir.ui.view,arch_db:website_geoengine_store_locator.s_openlayer_store_locator_options
 msgid "Max number of results"
-msgstr ""
+msgstr "Nombre maximum de résultats"
 
 #. module: website_geoengine_store_locator
 #: model_terms:ir.ui.view,arch_db:website_geoengine_store_locator.website_geoengine_store_locator_snipet
 msgid "OCA/Geospatial"
-msgstr ""
+msgstr "OCA/Geospatial"
 
 #. module: website_geoengine_store_locator
 #: model_terms:ir.ui.view,arch_db:website_geoengine_store_locator.s_openlayer_store_locator
 msgid "Search store"
-msgstr ""
+msgstr "Chercher un magasin"
 
 #. module: website_geoengine_store_locator
 #: model_terms:ir.ui.view,arch_db:website_geoengine_store_locator.website_geoengine_store_locator_snipet
 msgid "Store Locator"
-msgstr ""
+msgstr "Localisateur de magasin"
 
 #. module: website_geoengine_store_locator
 #: model_terms:ir.ui.view,arch_db:website_geoengine_store_locator.website_geoengine_store_locator_snipet
 msgid "map, store"
-msgstr ""
+msgstr "carte, magasin"
