@@ -3,7 +3,7 @@
     <t t-name="website_geoengine_store_locator.OpenLayerStoreLocatorOption">
         <BuilderRow label.translate="Options">
             <BuilderNumberInput
-                dataAttributeAction="max-results"
+                dataAttributeAction="'maxResults'"
                 default="200"
                 min="0"
                 step="1"
