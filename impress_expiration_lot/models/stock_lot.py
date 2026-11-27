@@ -1,3 +1,4 @@
+from collections import defaultdict
 from datetime import datetime, timedelta
 
 from odoo import api, fields, models
@@ -40,15 +41,37 @@ class StockLot(models.Model):
         }
 
     @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            vals.update({"origin_date": fields.Datetime.now()})
-            if "name" in vals and "product_id" in vals:
-                product = self.env["product.product"].browse(vals["product_id"])
-                date_vals = self._get_date_vals(vals["name"], product)
-                vals.update(date_vals)
+    def create(self, vals_list: list[dict]) -> "StockLot":
+        """Extend stock.lot.create (product_expiry) to derive dates from the lot name.
 
-        return super().create(vals_list)
+        Dates are computed on the created records rather than from vals, because
+        name and product_id are often absent from vals: name_create() and form
+        creation take the product from the default_product_id context key, and the
+        name can be precomputed from the product's lot sequence.
+        """
+        now = fields.Datetime.now()
+        for vals in vals_list:
+            vals.setdefault("origin_date", now)
+
+        lots = super().create(vals_list)
+        lots._calculate_expiration_date()
+        return lots
+
+    def _calculate_expiration_date(self) -> None:
+        """Set origin and expiry dates from Julian (YYDDD) lot names.
+
+        Lots whose name does not parse, or whose product does not use expiration
+        dates, are left untouched. Lots sharing the same computed dates are written
+        together to keep the number of queries independent of the lot count.
+        """
+        lots_by_vals: dict[tuple, StockLot] = defaultdict(lambda: self.browse())
+        for lot in self:
+            date_vals = self._get_date_vals(lot.name, lot.product_id)
+            if date_vals:
+                lots_by_vals[tuple(sorted(date_vals.items()))] |= lot
+
+        for date_items, lots in lots_by_vals.items():
+            lots.write(dict(date_items))
 
     def write(self, vals):
         if "name" in vals and "expiration_date" not in vals:
